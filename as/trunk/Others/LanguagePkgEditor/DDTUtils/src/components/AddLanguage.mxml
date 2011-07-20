@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<mx:Window xmlns:mx="http://www.adobe.com/2006/mxml" 
+		title="Add Language" 
+		layout="vertical" 
+		minWidth="300" width="500" 
+		minHeight="190" height="190"
+		maximizable="false"
+		minimizable="false"
+		resizable="false" applicationActivate="this.activate()">
+		<mx:Metadata>
+			[Event(name="save", type="events.LanguageEvent")]
+		</mx:Metadata>
+		
+		<mx:Script>
+			<![CDATA[
+				import mx.controls.Alert;
+				import events.LanguageEvent;
+				import utils.StringHelper;
+				import code.LanguageBindModel;
+				
+				private function clickHandler():void
+				{
+					var language:LanguageBindModel = new LanguageBindModel();
+					
+					language.Key = languageKey.text;
+					language.Value = languageValue.text;
+					language.Description = languageDescription.text;
+					
+					if(StringHelper.isNullOrEmpty(language.Key) || StringHelper.isNullOrEmpty(language.Value))
+					{
+						Alert.show("The value of 'Key' or 'Value' can't empty","Error",4,this);
+						return;
+					}
+					
+					dispatchEvent(new LanguageEvent("save",language));
+					
+					Clipboard.generalClipboard.clear();
+					Clipboard.generalClipboard.setData(ClipboardFormats.TEXT_FORMAT,language.toString());
+					
+					this.close();
+				}
+			]]>
+		</mx:Script>
+		
+		<mx:Form width="100%">
+			<mx:FormItem label="Key:" width="100%">
+				<mx:TextInput id="languageKey" width="100%" />
+			</mx:FormItem>
+			<mx:FormItem label="Value:" width="100%">
+				<mx:TextInput id="languageValue" width="100%" />
+			</mx:FormItem>
+			<mx:FormItem label="Description:" width="100%">
+				<mx:TextInput id="languageDescription" width="100%" />
+			</mx:FormItem>
+		</mx:Form>
+		<mx:ControlBar horizontalAlign="center" width="100%">
+			<mx:Button label="Save" click="clickHandler()" />
+			<mx:Button label="Cancel" click="close()" />
+		</mx:ControlBar>
+	</mx:Window>

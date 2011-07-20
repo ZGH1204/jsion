@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C5AA64EB-F939-40B3-A110-D8499B9172F2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SJSCAN.HandlersLib</RootNamespace>
+    <AssemblyName>SJSCAN.HandlersLib</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Excel">
+      <HintPath>..\..\..\VisualStudio\trunk\dlls\Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AjaxHandlerAttribute.cs" />
+    <Compile Include="AjaxHandlerMgr.cs" />
+    <Compile Include="AttributeHelper.cs" />
+    <Compile Include="eHandlerTypes.cs" />
+    <Compile Include="Handlers\AddBookingHandler.cs" />
+    <Compile Include="Handlers\AddShopHandler.cs" />
+    <Compile Include="Handlers\AddTradeHandler.cs" />
+    <Compile Include="Handlers\AddUserHandler.cs" />
+    <Compile Include="Handlers\BookingOnlineHandler.cs" />
+    <Compile Include="Handlers\CancelBookingedHandler.cs" />
+    <Compile Include="Handlers\DeductionHandler.cs" />
+    <Compile Include="Handlers\DelBookingHandler.cs" />
+    <Compile Include="Handlers\DelBookingShopHandler.cs" />
+    <Compile Include="Handlers\DelShopHandler.cs" />
+    <Compile Include="Handlers\DelTradeHandler.cs" />
+    <Compile Include="Handlers\DelUserHandler.cs" />
+    <Compile Include="Handlers\DisableUserHandler.cs" />
+    <Compile Include="Handlers\EditShopHandler.cs" />
+    <Compile Include="Handlers\EditTradeHandler.cs" />
+    <Compile Include="Handlers\EnableUserHandler.cs" />
+    <Compile Include="Handlers\ExportXLSHandler.cs" />
+    <Compile Include="Handlers\FinishBookingHandler.cs" />
+    <Compile Include="Handlers\GetBalanceListHandler.cs" />
+    <Compile Include="Handlers\GetBookingedListHandler.cs" />
+    <Compile Include="Handlers\GetBookingListByDateHandler.cs" />
+    <Compile Include="Handlers\GetBookingListHandler.cs" />
+    <Compile Include="Handlers\GetBookingRecordListHandler.cs" />
+    <Compile Include="Handlers\GetBookingShopListByDateHandler.cs" />
+    <Compile Include="Handlers\GetBookingshopOnlineListHandler.cs" />
+    <Compile Include="Handlers\GetBookingShopListHandler.cs" />
+    <Compile Include="Handlers\GetCurrentBookingedListHandler.cs" />
+    <Compile Include="Handlers\GetDeductionRecordListHandler.cs" />
+    <Compile Include="Handlers\GetShopListHandler.cs" />
+    <Compile Include="Handlers\GetTradeListHandler.cs" />
+    <Compile Include="Handlers\GetUserInfoHandler.cs" />
+    <Compile Include="Handlers\GetUserListHandler.cs" />
+    <Compile Include="Handlers\InstallSysHandler.cs" />
+    <Compile Include="Handlers\JoinBookingHandler.cs" />
+    <Compile Include="Handlers\LoginAjaxHandler.cs" />
+    <Compile Include="Handlers\LogoutHandler.cs" />
+    <Compile Include="Handlers\QueryBookingedListHandler.cs" />
+    <Compile Include="Handlers\QueryBookingShopListByDateHandler.cs" />
+    <Compile Include="Handlers\ResetPasswdHandler.cs" />
+    <Compile Include="Handlers\ReturnCashHandler.cs" />
+    <Compile Include="Handlers\SetAdminHandler.cs" />
+    <Compile Include="Handlers\SetNormalHandler.cs" />
+    <Compile Include="Handlers\UserBalanceHandler.cs" />
+    <Compile Include="Interfaces\IAjaxHandler.cs" />
+    <Compile Include="Interfaces\IResponder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Sjs.Common\Sjs.Common.csproj">
+      <Project>{18DF7CA2-8BA7-4A24-AC67-E9D666D24FDC}</Project>
+      <Name>Sjs.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sjs.Data\Sjs.Data.csproj">
+      <Project>{35352A2A-6B75-4BFC-94BD-13EF8E6A01EE}</Project>
+      <Name>Sjs.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SJSCAN.BLL\SJSCAN.BLL.csproj">
+      <Project>{9C69FB3B-65D1-406A-8CC4-4590BDBC0F3E}</Project>
+      <Name>SJSCAN.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SJSCAN.Entity\SJSCAN.Entity.csproj">
+      <Project>{ABA2F357-8E0F-4D3F-819D-062BA83C19BD}</Project>
+      <Name>SJSCAN.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

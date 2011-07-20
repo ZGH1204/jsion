@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="C:\Users\Jsion\Desktop\BookingSystem" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="发布到文件系统" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="Install.aspx" publishTime="03/24/2011 15:41:07" />
+    <file relUrl="ImportData.aspx" publishTime="03/24/2011 15:41:07" />
+    <file relUrl="安装.txt" publishTime="03/24/2011 15:41:07" />
+    <file relUrl="Scripts/jquery-1.4.1-vsdoc.js" publishTime="03/24/2011 15:41:05" />
+    <file relUrl="Styles/Site.css" publishTime="03/24/2011 15:39:31" />
+    <file relUrl="SqlScripts/BookingDB.sql" publishTime="03/24/2011 15:41:05" />
+    <file relUrl="Scripts/utils.js" publishTime="04/29/2011 10:06:57" />
+    <file relUrl="Scripts/jquery-1.4.1.js" publishTime="03/24/2011 15:41:05" />
+    <file relUrl="bin/Sjs.Data.SqlServer.dll" publishTime="04/28/2011 18:25:34" />
+    <file relUrl="bin/WebApplication.dll" publishTime="05/04/2011 11:44:36" />
+    <file relUrl="ShopAndTrade.xml" publishTime="03/24/2011 15:41:07" />
+    <file relUrl="Ajax.aspx" publishTime="03/24/2011 15:41:07" />
+    <file relUrl="Global.asax" publishTime="03/24/2011 15:41:07" />
+    <file relUrl="bin/Sjs.Config.dll" publishTime="04/28/2011 18:25:33" />
+    <file relUrl="Scripts/sys.js" publishTime="04/29/2011 10:07:18" />
+    <file relUrl="bin/SJSCAN.Entity.dll" publishTime="04/28/2011 18:25:33" />
+    <file relUrl="SJS.config" publishTime="03/24/2011 15:41:07" />
+    <file relUrl="bin/Excel.dll" publishTime="04/14/2011 15:04:52" />
+    <file relUrl="Scripts/common-text.js" publishTime="03/24/2011 15:41:05" />
+    <file relUrl="Scripts/jquery-1.4.1.min.js" publishTime="03/24/2011 15:41:05" />
+    <file relUrl="Scripts/validate-ext.js" publishTime="03/24/2011 15:41:05" />
+    <file relUrl="bin/SJSCAN.HandlersLib.dll" publishTime="05/04/2011 11:44:35" />
+    <file relUrl="Scripts/default.js" publishTime="03/24/2011 15:41:05" />
+    <file relUrl="bin/Newtonsoft.Json.dll" publishTime="04/13/2011 10:59:38" />
+    <file relUrl="bin/Sjs.Data.dll" publishTime="04/28/2011 18:25:34" />
+    <file relUrl="bin/SJSCAN.BLL.dll" publishTime="04/28/2011 18:25:35" />
+    <file relUrl="User.xml" publishTime="03/24/2011 15:41:07" />
+    <file relUrl="Default.aspx" publishTime="03/24/2011 15:41:07" />
+    <file relUrl="Styles/AccountMain.css" publishTime="03/24/2011 15:39:31" />
+    <file relUrl="Scripts/common-int.js" publishTime="03/24/2011 15:41:05" />
+    <file relUrl="bin/Sjs.Common.dll" publishTime="04/28/2011 18:25:33" />
+    <file relUrl="Scripts/vswd-ext_2.0.2.js" publishTime="03/24/2011 15:41:05" />
+    <file relUrl="Web.config" publishTime="04/28/2011 19:03:11" />
+  </publishProfile>
+</publishData>

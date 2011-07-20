@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	height="100%" 
+	horizontalCenter="true">
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ListEvent;
+			import mx.events.DataGridEvent;
+			import dataType.TextFile;
+			import code.LanguageFile;
+			import utils.StringHelper;
+			import mx.controls.dataGridClasses.DataGridColumn;
+			import mx.events.CloseEvent;
+			import mx.controls.Alert;
+			import code.LanguageBindModel;
+			import events.LanguageEvent;
+			import mx.collections.ArrayCollection;
+			
+			private var win:DDTUtils;
+			private var _languageFile:LanguageFile;
+			
+			[Bindable]
+			public var hasChange:Boolean = false;
+			
+			public function setup($win:DDTUtils, languagePath:String):void
+			{
+				win = $win;
+				_languageFile = new LanguageFile(languagePath);
+				setLanguageFile(_languageFile);
+				win.addEventListener(Event.CLOSING,__closingHandler);
+			}
+			
+			private function __closingHandler(e:Event):void
+			{
+				win.removeEventListener(Event.CLOSING,__closingHandler);
+				if(add)
+				{
+					add.close();
+				}
+				add = null;
+			}
+			
+			private function setLanguageFile(file:LanguageFile):void
+			{
+				if(win)
+					win.status = "Loading language pack...";
+				file.loadTextAsync(languageLoadComplete);
+			}
+			
+			private function languageLoadComplete(file:TextFile):void
+			{
+				_languageFile.generateLanguageData();
+				languages.dataProvider = _languageFile.acLanguage;
+				if(win)
+					win.status = "Language pack loaded to complete";
+			}
+			private var add:AddLanguage;
+			private function addLanguage(e:MouseEvent):void
+			{
+				if(add)
+				{
+					add.activate();
+					return;
+				}
+				
+				add = new AddLanguage();
+				add.owner = this;
+				add.open();
+				add.addEventListener("save", __saveHandler);
+				add.addEventListener(Event.CLOSE, __closeHandler);
+				addBtn.enabled = false;
+			}
+			
+			private function __saveHandler(e:LanguageEvent):void
+			{
+				var data:ArrayCollection = languages.dataProvider as ArrayCollection;
+				
+				data.addItem(e.LanguageInfo);
+				
+				data.refresh();
+				
+				hasChange = true;
+				
+				Alert.show("Add a language successfully and copy to GeneralClipboard successfully!","Information");
+			}
+			
+			private function __closeHandler(e:Event):void
+			{
+				if(add)
+				{
+					add.removeEventListener("save", __saveHandler);
+					add.removeEventListener(Event.CLOSE, __closeHandler);
+				}
+				addBtn.enabled = true;
+			}
+			
+			private function delLanguage(e:MouseEvent):void
+			{
+				Alert.show("Are you sure you want to delete all selected items?","Warning",Alert.YES | Alert.NO,null,_closeHandler,null,Alert.YES | Alert.NO);
+			}
+			
+			private function _closeHandler(e:CloseEvent):void
+			{
+				if(e.detail == 1)
+					delData(languages.selectedItems);
+			}
+			
+			private function delData(array:Array):void
+			{
+				_languageFile.deleteLanguage(array);
+				
+				hasChange = true;
+				
+				if(win)
+					win.status = "Delete language success";
+			}
+			
+			private function inputKeyDownHandler(e:KeyboardEvent):void
+			{
+				if(e.keyCode == Keyboard.ENTER)
+					searchLanguage(null);
+			}
+			
+			private function searchLanguage(e:MouseEvent):void
+			{
+				if(StringHelper.isNullOrEmpty(searchInput.text))
+				{
+					if(languages.dataProvider != _languageFile.acLanguage)
+						languages.dataProvider = _languageFile.acLanguage;
+				}
+				else
+				{
+					_languageFile.generateSearchLanguageData(searchInput.text,true,true);
+					
+					languages.dataProvider = _languageFile.searchLanguage;
+				}
+			}
+			
+			private function columnEditEndHandler(e:DataGridEvent):void
+			{
+				var dg:DataGrid = e.target as DataGrid;
+				var input:TextInput = dg.itemEditorInstance as TextInput;
+				var original:String = getEditingString(e, dg.dataProvider as ArrayCollection);
+				
+				if(original != input.text)
+					hasChange = true;
+			}
+			
+			private function getEditingString(e:DataGridEvent,ac:ArrayCollection):String
+			{
+				var result:String;
+				
+				switch(e.columnIndex)
+				{
+					case 0:
+						result = ac.getItemAt(e.rowIndex).Key;
+						break;
+					case 1:
+						result = ac.getItemAt(e.rowIndex).Value;
+						break;
+					case 2:
+						result = ac.getItemAt(e.rowIndex).Description;
+						break;
+				}
+				
+				return result;
+			}
+			
+			private function saveLanguageFile(e:MouseEvent):void
+			{
+				_languageFile.saveToFile();
+			}
+			
+			private function showRepeatHandler(e:MouseEvent):void
+			{
+				_languageFile.generateRepeatLanguageData(true,true);
+				repeatLanguages.dataProvider = _languageFile.repeatLanguage;
+			}
+			
+			private function delRepeatLanguage(e:MouseEvent):void
+			{
+				Alert.show("Are you sure you want to delete all selected items?","Warning",Alert.YES | Alert.NO,null,_closeRepeatHandler,null,Alert.YES | Alert.NO);
+			}
+			
+			private function _closeRepeatHandler(e:CloseEvent):void
+			{
+				if(e.detail == 1)
+					delData(repeatLanguages.selectedItems);
+			}
+			
+			private function analyzeInput(e:MouseEvent):void
+			{
+				if(parseInput.text == "")
+				{
+					languages.dataProvider = _languageFile.acLanguage;
+					return;
+				}
+				var lm:LanguageBindModel = new LanguageBindModel();
+				lm.parseLanguage(parseInput.text);
+				
+				if(lm.Key == "" || lm.Value == "")
+					return;
+				var array:Array = _languageFile.searchLanguageForAnalyze(lm.Key);
+				if(array.length != 0 && array.length == 1)
+				{
+					if(languages.dataProvider != _languageFile.acLanguage)
+						languages.dataProvider = _languageFile.acLanguage;
+					
+					languages.selectedItem = array[0];
+					array[0].Value = lm.Value;
+					array[0].Description = lm.Description;
+					_languageFile.acLanguage.refresh();
+				}
+				else
+				{
+					_languageFile.searchLanguage = new ArrayCollection(array);
+					languages.dataProvider = _languageFile.searchLanguage;
+				}
+			}
+			
+			public function dispose():void
+			{
+				if(win)
+					win.removeEventListener(Event.CLOSING,__closingHandler);
+				win = null;
+				
+				if(add)
+				{
+					add.removeEventListener("save", __saveHandler);
+					add.removeEventListener(Event.CLOSE, __closeHandler);
+					add.close();
+				}
+				add = null;
+				
+				if(parent)
+					parent.removeChild(this);
+			}
+		]]>
+	</mx:Script>
+	<mx:HBox width="100%" height="100%">
+		<mx:Panel title="Language Package" height="100%">
+			<mx:HBox paddingBottom="-5">
+				<mx:TextInput id="parseInput"  width="414"/>
+				<mx:Button id="parseBtn" label="Analyze" click="analyzeInput(event)" />
+			</mx:HBox>
+			<mx:DataGrid id="languages"
+				width="500"
+				allowMultipleSelection="true"
+				editable="true" height="100%"
+				itemEditEnd="columnEditEndHandler(event)">
+				<mx:columns>
+					<mx:DataGridColumn headerText="Key" dataField="Key" />
+					<mx:DataGridColumn headerText="Value" dataField="Value" />
+					<mx:DataGridColumn headerText="Interpret" dataField="Interpret" />
+					<mx:DataGridColumn headerText="Description" dataField="Description" sortable="false" />
+				</mx:columns>
+			</mx:DataGrid>
+				<mx:ControlBar width="100%" height="100%" horizontalAlign="right">
+					<mx:TextInput id="searchInput" keyDown="inputKeyDownHandler(event)" />
+					<mx:Button label="Search" click="searchLanguage(event)" />
+					<mx:Button id="addBtn" label="Add" click="addLanguage(event)" />
+					<mx:Button label="Delete" click="delLanguage(event)" enabled="{languages.selectedIndex != -1}" />
+					<mx:Button label="Save" click="saveLanguageFile(event)" enabled="{hasChange}" />
+				</mx:ControlBar>
+		</mx:Panel>
+		
+		<mx:Panel title="Repeat Items" height="100%">
+			<mx:DataGrid id="repeatLanguages" 
+				width="400" 
+				allowMultipleSelection="true" 
+				editable="true" height="100%"
+				itemEditEnd="columnEditEndHandler(event)">
+				<mx:columns>
+					<mx:DataGridColumn headerText="Key" dataField="Key" />
+					<mx:DataGridColumn headerText="Value" dataField="Value" />
+					<mx:DataGridColumn headerText="Interpret" dataField="Interpret" />
+					<mx:DataGridColumn headerText="Description" dataField="Description" sortable="false" />
+				</mx:columns>
+			</mx:DataGrid>
+			<mx:ControlBar width="100%" horizontalAlign="right" height="100%">
+				<mx:Button label="Show Repeat" click="showRepeatHandler(event)" />
+				<mx:Button label="Delete" click="delRepeatLanguage(event)" enabled="{repeatLanguages.selectedIndex != -1}" />
+			</mx:ControlBar>
+		</mx:Panel>
+	</mx:HBox>
+</mx:Canvas>

@@ -1,0 +1,32 @@
+﻿.x-panel-header-text{
+    font-size: 12px;
+}
+html, body {
+    font: normal 13px verdana;
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    overflow: hidden;
+    height: 100%;
+}
+.empty .x-panel-body {
+    padding-top:10px;
+}
+.leftmenuitem {
+	text-align: center;
+	height: 25px;
+	line-height: 25px;
+}
+.leftmenuitem a {
+	display: block;
+}
+.leftmenuitem a:link, .leftmenuitem a:visited {
+	color: #069;
+}
+.leftmenuitem a:over, .leftmenuitem a:active {
+	color: #AEF000;
+}
+.hidehtml
+{
+    display: none;
+}

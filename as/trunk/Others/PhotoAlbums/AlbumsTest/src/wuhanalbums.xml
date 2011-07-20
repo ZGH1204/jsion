@@ -1,0 +1,637 @@
+﻿<root>
+	<!--
+	  以下配置的配置规则:
+		可配置的属性名仅包含以下所有列出的属性,其他属性名配置进去不报错,但无任何作用.
+		
+		相册配置保留属性关键字,即不允许配置的属性名,包括:
+		loading、cover、backc、photoPageList、slovePath.
+		
+		任何一个节点的属性都可以在其父节点或父节点的扩展节点上进入配置,
+		这意味着可以将当前节点的属性移动到其父节点或父节点的扩展节点上,并将影响所有当前节点的兄弟节点.
+		如果当前节点中存在与其父节点或父节点的扩展节点上相同的属性则以当前节点的属性为最终值.
+		所有配置节点都可以包含扩展节点(extend)的子节点,在extend上配置的属性只属于其父节点.
+	-->
+	<AlbumsList defaultAlbums="1">
+		<extend albumListBg="wuhan/ListBg.png" listContainerX="13" listContainerY="30" listContainerWidth="517" listContainerHeight="354" />
+		<extend itemWidth="90" itemHeight="90" itemSpacing="10" cols="5" rows="3" />
+		<extend pageNumberBtn="wuhan/pageNumberBtn.png" pageNumberBtnOver="wuhan/pageNumberBtnOver.png" pageNumberX="430" pageNumberY="323" pageNumberSpacing="5" />
+		<extend pageNumberFont="" pageNumberSize="" pageNumberColor="" pageNumberBold="false" pageNumberItalic="false" />
+		<extend listTitle="选择相册" listTitleX="3" listTitleY="2" listTitleFont="" listTitleSize="12" listTitleColor="" listTitleBold="false" listTitleItalic="false" />
+		
+		
+		<extend prePageBtn="wuhan/PreBtn.png" prePageBtnOver="" prePageBtnX="365" prePageBtnY="572" />
+		<extend nextPageBtn="wuhan/NextBtn.png" nextPageBtnOver="" nextPageBtnX="540" nextPageBtnY="572" />
+		<extend selectAlbumsBtn="wuhan/SelectBtn.png" selectAlbumsBtnOver="" selectAlbumsBtnX="445" selectAlbumsBtnY="572" />
+		<extend closeBtn="wuhan/closeBtn.png" closeBtnOver="assets/closeBtnOver.png" />
+		<extend directoryText="" directoryBtn="wuhan/PhotoIndexBtn.png" directoryBtnOver="" directoryBtnX="80" directoryBtnY="580" directoryFont="" directorySize="" directoryColor="" directoryBold="false" directoryItalic="false" />
+		<extend coverBtnText="" coverBtn="wuhan/CoverBtn.png" coverBtnOver="" coverBtnX="18" coverBtnY="580" coverBtnFont="" coverBtnSize="" coverBtnColor="" coverBtnBold="false" coverBtnItalic="false" />
+		<extend backcBtnText="" backcBtn="wuhan/BackcBtn.png" backcBtnOver="" backcBtnX="935" backcBtnY="580" backcBtnFont="" backcBtnSize="" backcBtnColor="" backcBtnBold="false" backcBtnItalic="false" />
+		<extend printName="" printFont="" printSize="20" printColor="0xFFFF00" printBold="true" printItalic="false" printUrl="" printPage="" printPageOver="" printPageX="" printPageY="" />
+		<extend commentsName="" commentsFont="" commentsSize="20" commentsColor="0xFFFF00" commentsBold="true" commentsItalic="false" commentsUrl="" commentsPage="" commentsPageOver="" commentsPageX="" commentsPageY="" />
+		
+		<extend pageWidth="476" pageHeight="496" />
+		<extend background="wuhan/AlbumsBg.png" x="12" y="0" />
+		<extend stageBackColor="" stageBackground="wuhan/StageBg.png" stageBgX="0" stageBgY="0" />
+		<extend leftPage="wuhan/LeftPageBg.png" leftPageX="21" leftPageY="77" rightPage="wuhan/RightPageBg.png" rightPageX="497" rightPageY="77" />
+		<extend photoListBg="wuhan/PhotoIndexBg.png" photoListX="30" photoListY="77" photoCols="4" photoRows="2" />
+		<extend doublePhotoList="true" photoLeftListX="24" photoLeftListY="40" photoRightListX="503" photoRightListY="40" />
+		<extend photoListWidth="955" photoListHeight="494" indexCloseBtnPX="6" indexCloseBtnPY="8" thumbnailWidth="100" thumbnailHeight="100" thumbnailSpacing="10" />
+		<extend photoPageNumberBg="wuhan/pageNumberBtn.png" photoPageNumberBgOver="wuhan/pageNumberBtnOver.png" photoPageNumberX="13" photoPageNumberY="13" photoPageNumberFont="" photoPageNumberSize="" photoPageNumberColor="" photoPageNumberBold="false" photoPageNumberItalic="false" />
+		
+		
+		
+		<albums albumsWidth="1000" albumsHeight="620" photoRoot="" photoError="" layerOut="">
+			<loading backColor="0xFFFFFF" backColorAlpha="1" backPic="" backLayerOut="tile" drawColor="true" showBack="false" showPercentNum="true" showAnimation="true" showProgress="false" photoRoot="">
+				<extend percentX="" percentY="" percentFont="" percentSize="" percentColor="" percentBold="false" percentItalic="false" />
+				<extend animationX="460" animationY="270" animationPic="wuhan/Assets.png" animationWidth="85" animationHeight="81" frameInterval="2" />
+				<extend progressX="" progressY="" progressBarBg="" progressBar="" progressBarX="" progressBarY="" progressBarWidth="" />
+			</loading>
+			
+			<btn />
+			
+			<extend name="相册名称" nameFont="" nameSize="20" nameColor="0xFFFF00" nameBold="true" nameItalic="false" nameX="100" nameY="26" />
+			<extend author="作者" authorX="200" authorY="35" authorFont="" authorSize="11" authorColor="" authorBold="false" authorItalic="false" />
+			<extend description="拍摄于2010.11.18 | 8张照片" dscptFont="" dscptSize="" dscptColor="" dscptBold="false" dscptItalic="false" dscptX="410" dscptY="30" />
+			<extend coverPage="wuhan/AlbumsCoverBg.png" coverPageX="21" coverPageY="77" backcPage="wuhan/AlbumsBackcBg.png" backcPageX="497" backcPageY="77" />
+			<extend albumListCoverPic="photos/2rssadgsdf.jpg" albumListCoverPicX="" albumListCoverPicY="" closeBtnPaddingX="5" closeBtnPaddingY="3" />
+			<extend enableMusic="true" musicListIndex="1" playSkinIndex="1" enableSetPlayerPos="true" playerX="710" playerY="27" />
+			
+			
+			
+			
+			<extend font="" size="" color="" bold="false" italic="false" textX="40" textY="340" />
+			<extend isPreface="false" prefacePic="" prefacePicX="" prefacePicY="" prefacePicWidth="" prefacePicHeight="" />
+			<extend picX="0" picY="0" closeBtnPaddingX="8" closeBtnPaddingY="8" />
+			<extend picWidth="416" picHeight="300" />
+			<extend topPic="" topPicX="" topPicY="" topPicRotate="" />
+			<extend bottomPic="" bottomPicX="" bottomPicY="" bottomPicRotate="" />
+			<extend enableClick="true" enableScroll="true" enableScale="true" containerX="30" containerY="30" />
+			<extend showMiddleExtend1="false" middlePicX1="" middlePicY1="" middlePicRotate1="" />
+			<extend showMiddleExtend2="false" middlePicX2="" middlePicY2="" middlePicRotate2="" />
+			<extend />
+			
+			
+			
+			<cover authorX="50" authorY="400" link="" photoRoot="">
+				<extend text="首页文字" font="微软雅黑,宋体" size="20" color="" bold="true" italic="false" textX="50" textY="420" />
+				<extend enableClick="false" enableScroll="false" />
+				<extend containerX="1" containerY="40" />
+				<extend picWidth="474" picHeight="267" />
+				<extend middlePic="photos/dfgasdf.png" middlePicX="" middlePicY="" middlePicRotate="" />
+			</cover>
+			<backc author="" authorX="" authorY="" link="" photoRoot="">
+				<extend text="" font="" size="" color="" bold="false" italic="false" textX="" textY="" />
+				<extend enableClick="false" enableScroll="false" />
+				<extend containerX="2" containerY="160" />
+				<extend picWidth="474" picHeight="267" />
+				<extend middlePic="photos/dfgasdf.png" middlePicX="" middlePicY="" middlePicRotate="" />
+			</backc>
+			<page link="" photoRoot="">
+				<extend text="" font="" size="" color="" bold="false" italic="false" textX="" textY="" />
+				<extend isPreface="true" prefacePic="wuhan/prefacePic.png" prefacePicX="330" prefacePicY="45" prefacePicWidth="100" prefacePicHeight="100" prefacePicSpacing="10" firstPicX="120" firstPicY="360" direction="H" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend enableClick="true" enableScroll="false" />
+				<extend picWidth="470" picHeight="495" />
+				<extend topPic="photos/2rssadgsdf.jpg" />
+				<extend middlePic="photos/http_imgload.jpg" />
+				<extend bottomPic="photos/fghfdhg.jpg" />
+			</page>
+			
+			<page link="" photoRoot="">
+				<extend text="图片1" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/2rssadgsdf.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片2" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/http_imgload.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片3" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/fghfdhg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片4" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/asdfgfhdfg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片5" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/jkgfhsfg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片6" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/rytreyt.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片7" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/ghjghj.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片8" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/xcvcvbcvb.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+		</albums>
+		
+		<albums albumsWidth="1000" albumsHeight="620" photoRoot="" photoError="" layerOut="">
+			<loading backColor="" backColorAlpha="1" backPic="" backLayerOut="tile" drawColor="true" showBack="false" showPercentNum="true" showAnimation="false" showProgress="false" photoRoot="">
+				<extend percentX="" percentY="" percentFont="" percentSize="" percentColor="" percentBold="false" percentItalic="false" />
+				<extend animationX="" animationY="" animationPic="" animationWidth="" animationHeight="" frameInterval="" />
+				<extend progressX="" progressY="" progressBarBg="" progressBar="" progressBarX="" progressBarY="" progressBarWidth="" />
+			</loading>
+			
+			<btn />
+			
+			<extend name="相册名称" nameFont="" nameSize="20" nameColor="0xFFFF00" nameBold="true" nameItalic="false" nameX="100" nameY="26" />
+			<extend author="作者" authorX="200" authorY="35" authorFont="" authorSize="11" authorColor="" authorBold="false" authorItalic="false" />
+			<extend description="拍摄于2010.11.18 | 8张照片" dscptFont="" dscptSize="" dscptColor="" dscptBold="false" dscptItalic="false" dscptX="410" dscptY="30" />
+			<extend coverPage="wuhan/AlbumsCoverBg.png" coverPageX="21" coverPageY="77" backcPage="wuhan/AlbumsBackcBg.png" backcPageX="497" backcPageY="77" />
+			<extend albumListCoverPic="photos/2rssadgsdf.jpg" albumListCoverPicX="" albumListCoverPicY="" closeBtnPaddingX="5" closeBtnPaddingY="3" />
+			<extend enableMusic="true" musicListIndex="1" playSkinIndex="1" enableSetPlayerPos="true" playerX="710" playerY="27" />
+			
+			
+			
+			
+			<extend font="" size="" color="" bold="false" italic="false" textX="40" textY="340" />
+			<extend isPreface="false" prefacePic="" prefacePicX="" prefacePicY="" prefacePicWidth="" prefacePicHeight="" />
+			<extend picX="0" picY="0" closeBtnPaddingX="8" closeBtnPaddingY="8" />
+			<extend picWidth="416" picHeight="300" />
+			<extend topPic="" topPicX="" topPicY="" topPicRotate="" />
+			<extend bottomPic="" bottomPicX="" bottomPicY="" bottomPicRotate="" />
+			<extend enableClick="true" enableScroll="true" enableScale="true" containerX="30" containerY="30" />
+			<extend showMiddleExtend1="false" middlePicX1="" middlePicY1="" middlePicRotate1="" />
+			<extend showMiddleExtend2="false" middlePicX2="" middlePicY2="" middlePicRotate2="" />
+			<extend />
+			
+			
+			
+			<cover authorX="50" authorY="400" link="" photoRoot="">
+				<extend text="首页文字" font="微软雅黑,宋体" size="20" color="" bold="true" italic="false" textX="50" textY="420" />
+				<extend enableClick="false" enableScroll="false" />
+				<extend containerX="1" containerY="40" />
+				<extend picWidth="474" picHeight="267" />
+				<extend middlePic="photos/dfgasdf.png" middlePicX="" middlePicY="" middlePicRotate="" />
+			</cover>
+			<backc author="" authorX="" authorY="" link="" photoRoot="">
+				<extend text="" font="" size="" color="" bold="false" italic="false" textX="" textY="" />
+				<extend enableClick="false" enableScroll="false" />
+				<extend containerX="2" containerY="160" />
+				<extend picWidth="474" picHeight="267" />
+				<extend middlePic="photos/dfgasdf.png" middlePicX="" middlePicY="" middlePicRotate="" />
+			</backc>
+			<page link="" photoRoot="">
+				<extend text="" font="" size="" color="" bold="false" italic="false" textX="" textY="" />
+				<extend isPreface="true" prefacePic="wuhan/prefacePic.png" prefacePicX="330" prefacePicY="45" prefacePicWidth="100" prefacePicHeight="100" prefacePicSpacing="10" firstPicX="120" firstPicY="360" direction="H" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="-62" thumbnailY="" />
+				<extend enableClick="true" enableScroll="false" />
+				<extend picWidth="470" picHeight="495" />
+				<extend topPic="photos/2rssadgsdf.jpg" />
+				<extend middlePic="photos/http_imgload.jpg" />
+				<extend bottomPic="photos/fghfdhg.jpg" />
+			</page>
+			
+			<page link="" photoRoot="">
+				<extend text="图片1" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/2rssadgsdf.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片2" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/http_imgload.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片3" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/fghfdhg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片4" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/asdfgfhdfg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片5" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/jkgfhsfg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片6" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/rytreyt.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片7" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/ghjghj.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片8" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/xcvcvbcvb.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+		</albums>
+		
+		<albums albumsWidth="1000" albumsHeight="620" photoRoot="" photoError="" layerOut="">
+			<loading backColor="" backColorAlpha="1" backPic="" backLayerOut="tile" drawColor="true" showBack="false" showPercentNum="true" showAnimation="false" showProgress="false" photoRoot="">
+				<extend percentX="" percentY="" percentFont="" percentSize="" percentColor="" percentBold="false" percentItalic="false" />
+				<extend animationX="" animationY="" animationPic="" animationWidth="" animationHeight="" frameInterval="" />
+				<extend progressX="" progressY="" progressBarBg="" progressBar="" progressBarX="" progressBarY="" progressBarWidth="" />
+			</loading>
+			
+			<btn />
+			
+			<extend name="相册名称" nameFont="" nameSize="20" nameColor="0xFFFF00" nameBold="true" nameItalic="false" nameX="100" nameY="26" />
+			<extend author="作者" authorX="200" authorY="35" authorFont="" authorSize="11" authorColor="" authorBold="false" authorItalic="false" />
+			<extend description="拍摄于2010.11.18 | 8张照片" dscptFont="" dscptSize="" dscptColor="" dscptBold="false" dscptItalic="false" dscptX="410" dscptY="30" />
+			<extend coverPage="wuhan/AlbumsCoverBg.png" coverPageX="21" coverPageY="77" backcPage="wuhan/AlbumsBackcBg.png" backcPageX="497" backcPageY="77" />
+			<extend albumListCoverPic="photos/2rssadgsdf.jpg" albumListCoverPicX="" albumListCoverPicY="" closeBtnPaddingX="5" closeBtnPaddingY="3" />
+			<extend enableMusic="true" musicListIndex="1" playSkinIndex="1" enableSetPlayerPos="true" playerX="710" playerY="27" />
+			
+			
+			
+			
+			<extend font="" size="" color="" bold="false" italic="false" textX="40" textY="340" />
+			<extend isPreface="false" prefacePic="" prefacePicX="" prefacePicY="" prefacePicWidth="" prefacePicHeight="" />
+			<extend picX="0" picY="0" closeBtnPaddingX="8" closeBtnPaddingY="8" />
+			<extend picWidth="416" picHeight="300" />
+			<extend topPic="" topPicX="" topPicY="" topPicRotate="" />
+			<extend bottomPic="" bottomPicX="" bottomPicY="" bottomPicRotate="" />
+			<extend enableClick="true" enableScroll="true" enableScale="true" containerX="30" containerY="30" />
+			<extend showMiddleExtend1="false" middlePicX1="" middlePicY1="" middlePicRotate1="" />
+			<extend showMiddleExtend2="false" middlePicX2="" middlePicY2="" middlePicRotate2="" />
+			<extend />
+			
+			
+			
+			<cover authorX="50" authorY="400" link="" photoRoot="">
+				<extend text="首页文字" font="微软雅黑,宋体" size="20" color="" bold="true" italic="false" textX="50" textY="420" />
+				<extend enableClick="false" enableScroll="false" />
+				<extend containerX="1" containerY="40" />
+				<extend picWidth="474" picHeight="267" />
+				<extend middlePic="photos/dfgasdf.png" middlePicX="" middlePicY="" middlePicRotate="" />
+			</cover>
+			<backc author="" authorX="" authorY="" link="" photoRoot="">
+				<extend text="" font="" size="" color="" bold="false" italic="false" textX="" textY="" />
+				<extend enableClick="false" enableScroll="false" />
+				<extend containerX="2" containerY="160" />
+				<extend picWidth="474" picHeight="267" />
+				<extend middlePic="photos/dfgasdf.png" middlePicX="" middlePicY="" middlePicRotate="" />
+			</backc>
+			<page link="" photoRoot="">
+				<extend text="" font="" size="" color="" bold="false" italic="false" textX="" textY="" />
+				<extend isPreface="true" prefacePic="wuhan/prefacePic.png" prefacePicX="330" prefacePicY="45" prefacePicWidth="100" prefacePicHeight="100" prefacePicSpacing="10" firstPicX="120" firstPicY="360" direction="H" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="-62" thumbnailY="" />
+				<extend enableClick="true" enableScroll="false" />
+				<extend picWidth="470" picHeight="495" />
+				<extend topPic="photos/2rssadgsdf.jpg" />
+				<extend middlePic="photos/http_imgload.jpg" />
+				<extend bottomPic="photos/fghfdhg.jpg" />
+			</page>
+			
+			<page link="" photoRoot="">
+				<extend text="图片1" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/2rssadgsdf.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片2" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/http_imgload.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片3" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/fghfdhg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片4" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/asdfgfhdfg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片5" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/jkgfhsfg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片6" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/rytreyt.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片7" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/ghjghj.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片8" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/xcvcvbcvb.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+		</albums>
+		
+		<albums albumsWidth="1000" albumsHeight="620" photoRoot="" photoError="" layerOut="">
+			<loading backColor="" backColorAlpha="1" backPic="" backLayerOut="tile" drawColor="true" showBack="false" showPercentNum="true" showAnimation="false" showProgress="false" photoRoot="">
+				<extend percentX="" percentY="" percentFont="" percentSize="" percentColor="" percentBold="false" percentItalic="false" />
+				<extend animationX="" animationY="" animationPic="" animationWidth="" animationHeight="" frameInterval="" />
+				<extend progressX="" progressY="" progressBarBg="" progressBar="" progressBarX="" progressBarY="" progressBarWidth="" />
+			</loading>
+			
+			<btn />
+			
+			<extend name="相册名称" nameFont="" nameSize="20" nameColor="0xFFFF00" nameBold="true" nameItalic="false" nameX="100" nameY="26" />
+			<extend author="作者" authorX="200" authorY="35" authorFont="" authorSize="11" authorColor="" authorBold="false" authorItalic="false" />
+			<extend description="拍摄于2010.11.18 | 8张照片" dscptFont="" dscptSize="" dscptColor="" dscptBold="false" dscptItalic="false" dscptX="410" dscptY="30" />
+			<extend coverPage="wuhan/AlbumsCoverBg.png" coverPageX="21" coverPageY="77" backcPage="wuhan/AlbumsBackcBg.png" backcPageX="497" backcPageY="77" />
+			<extend albumListCoverPic="photos/2rssadgsdf.jpg" albumListCoverPicX="" albumListCoverPicY="" closeBtnPaddingX="5" closeBtnPaddingY="3" />
+			<extend enableMusic="true" musicListIndex="1" playSkinIndex="1" enableSetPlayerPos="true" playerX="710" playerY="27" />
+			
+			
+			
+			
+			<extend font="" size="" color="" bold="false" italic="false" textX="40" textY="340" />
+			<extend isPreface="false" prefacePic="" prefacePicX="" prefacePicY="" prefacePicWidth="" prefacePicHeight="" />
+			<extend picX="0" picY="0" closeBtnPaddingX="8" closeBtnPaddingY="8" />
+			<extend picWidth="416" picHeight="300" />
+			<extend topPic="" topPicX="" topPicY="" topPicRotate="" />
+			<extend bottomPic="" bottomPicX="" bottomPicY="" bottomPicRotate="" />
+			<extend enableClick="true" enableScroll="true" enableScale="true" containerX="30" containerY="30" />
+			<extend showMiddleExtend1="false" middlePicX1="" middlePicY1="" middlePicRotate1="" />
+			<extend showMiddleExtend2="false" middlePicX2="" middlePicY2="" middlePicRotate2="" />
+			<extend />
+			
+			
+			
+			<cover authorX="50" authorY="400" link="" photoRoot="">
+				<extend text="首页文字" font="微软雅黑,宋体" size="20" color="" bold="true" italic="false" textX="50" textY="420" />
+				<extend enableClick="false" enableScroll="false" />
+				<extend containerX="1" containerY="40" />
+				<extend picWidth="474" picHeight="267" />
+				<extend middlePic="photos/dfgasdf.png" middlePicX="" middlePicY="" middlePicRotate="" />
+			</cover>
+			<backc author="" authorX="" authorY="" link="" photoRoot="">
+				<extend text="" font="" size="" color="" bold="false" italic="false" textX="" textY="" />
+				<extend enableClick="false" enableScroll="false" />
+				<extend containerX="2" containerY="160" />
+				<extend picWidth="474" picHeight="267" />
+				<extend middlePic="photos/dfgasdf.png" middlePicX="" middlePicY="" middlePicRotate="" />
+			</backc>
+			<page link="" photoRoot="">
+				<extend text="" font="" size="" color="" bold="false" italic="false" textX="" textY="" />
+				<extend isPreface="true" prefacePic="wuhan/prefacePic.png" prefacePicX="330" prefacePicY="45" prefacePicWidth="100" prefacePicHeight="100" prefacePicSpacing="10" firstPicX="120" firstPicY="360" direction="H" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="-62" thumbnailY="" />
+				<extend enableClick="true" enableScroll="false" />
+				<extend picWidth="470" picHeight="495" />
+				<extend topPic="photos/2rssadgsdf.jpg" />
+				<extend middlePic="photos/http_imgload.jpg" />
+				<extend bottomPic="photos/fghfdhg.jpg" />
+			</page>
+			
+			<page link="" photoRoot="">
+				<extend text="图片1" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/2rssadgsdf.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片2" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/http_imgload.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片3" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/fghfdhg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片4" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/asdfgfhdfg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片5" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/jkgfhsfg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片6" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/rytreyt.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片7" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/ghjghj.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片8" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/xcvcvbcvb.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+		</albums>
+		
+		<albums albumsWidth="1000" albumsHeight="620" photoRoot="" photoError="" layerOut="">
+			<loading backColor="" backColorAlpha="1" backPic="" backLayerOut="tile" drawColor="true" showBack="false" showPercentNum="true" showAnimation="false" showProgress="false" photoRoot="">
+				<extend percentX="" percentY="" percentFont="" percentSize="" percentColor="" percentBold="false" percentItalic="false" />
+				<extend animationX="" animationY="" animationPic="" animationWidth="" animationHeight="" frameInterval="" />
+				<extend progressX="" progressY="" progressBarBg="" progressBar="" progressBarX="" progressBarY="" progressBarWidth="" />
+			</loading>
+			
+			<btn />
+			
+			<extend name="相册名称" nameFont="" nameSize="20" nameColor="0xFFFF00" nameBold="true" nameItalic="false" nameX="100" nameY="26" />
+			<extend author="作者" authorX="200" authorY="35" authorFont="" authorSize="11" authorColor="" authorBold="false" authorItalic="false" />
+			<extend description="拍摄于2010.11.18 | 8张照片" dscptFont="" dscptSize="" dscptColor="" dscptBold="false" dscptItalic="false" dscptX="410" dscptY="30" />
+			<extend coverPage="wuhan/AlbumsCoverBg.png" coverPageX="21" coverPageY="77" backcPage="wuhan/AlbumsBackcBg.png" backcPageX="497" backcPageY="77" />
+			<extend albumListCoverPic="photos/2rssadgsdf.jpg" albumListCoverPicX="" albumListCoverPicY="" closeBtnPaddingX="5" closeBtnPaddingY="3" />
+			<extend enableMusic="true" musicListIndex="1" playSkinIndex="1" enableSetPlayerPos="true" playerX="710" playerY="27" />
+			
+			
+			
+			
+			<extend font="" size="" color="" bold="false" italic="false" textX="40" textY="340" />
+			<extend isPreface="false" prefacePic="" prefacePicX="" prefacePicY="" prefacePicWidth="" prefacePicHeight="" />
+			<extend picX="0" picY="0" closeBtnPaddingX="8" closeBtnPaddingY="8" />
+			<extend picWidth="416" picHeight="300" />
+			<extend topPic="" topPicX="" topPicY="" topPicRotate="" />
+			<extend bottomPic="" bottomPicX="" bottomPicY="" bottomPicRotate="" />
+			<extend enableClick="true" enableScroll="true" enableScale="true" containerX="30" containerY="30" />
+			<extend showMiddleExtend1="false" middlePicX1="" middlePicY1="" middlePicRotate1="" />
+			<extend showMiddleExtend2="false" middlePicX2="" middlePicY2="" middlePicRotate2="" />
+			<extend />
+			
+			
+			
+			<cover authorX="50" authorY="400" link="" photoRoot="">
+				<extend text="首页文字" font="微软雅黑,宋体" size="20" color="" bold="true" italic="false" textX="50" textY="420" />
+				<extend enableClick="false" enableScroll="false" />
+				<extend containerX="1" containerY="40" />
+				<extend picWidth="474" picHeight="267" />
+				<extend middlePic="photos/dfgasdf.png" middlePicX="" middlePicY="" middlePicRotate="" />
+			</cover>
+			<backc author="" authorX="" authorY="" link="" photoRoot="">
+				<extend text="" font="" size="" color="" bold="false" italic="false" textX="" textY="" />
+				<extend enableClick="false" enableScroll="false" />
+				<extend containerX="2" containerY="160" />
+				<extend picWidth="474" picHeight="267" />
+				<extend middlePic="photos/dfgasdf.png" middlePicX="" middlePicY="" middlePicRotate="" />
+			</backc>
+			<page link="" photoRoot="">
+				<extend text="" font="" size="" color="" bold="false" italic="false" textX="" textY="" />
+				<extend isPreface="true" prefacePic="wuhan/prefacePic.png" prefacePicX="330" prefacePicY="45" prefacePicWidth="100" prefacePicHeight="100" prefacePicSpacing="10" firstPicX="120" firstPicY="360" direction="H" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="-62" thumbnailY="" />
+				<extend enableClick="true" enableScroll="false" />
+				<extend picWidth="470" picHeight="495" />
+				<extend topPic="photos/2rssadgsdf.jpg" />
+				<extend middlePic="photos/http_imgload.jpg" />
+				<extend bottomPic="photos/fghfdhg.jpg" />
+			</page>
+			
+			<page link="" photoRoot="">
+				<extend text="图片1" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/2rssadgsdf.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片2" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/http_imgload.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片3" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/fghfdhg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片4" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/asdfgfhdfg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片5" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/jkgfhsfg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片6" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/rytreyt.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片7" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/ghjghj.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片8" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/xcvcvbcvb.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+		</albums>
+		
+		<albums albumsWidth="1000" albumsHeight="620" photoRoot="" photoError="" layerOut="">
+			<loading backColor="" backColorAlpha="1" backPic="" backLayerOut="tile" drawColor="true" showBack="false" showPercentNum="true" showAnimation="false" showProgress="false" photoRoot="">
+				<extend percentX="" percentY="" percentFont="" percentSize="" percentColor="" percentBold="false" percentItalic="false" />
+				<extend animationX="" animationY="" animationPic="" animationWidth="" animationHeight="" frameInterval="" />
+				<extend progressX="" progressY="" progressBarBg="" progressBar="" progressBarX="" progressBarY="" progressBarWidth="" />
+			</loading>
+			
+			<btn />
+			
+			<extend name="相册名称" nameFont="" nameSize="20" nameColor="0xFFFF00" nameBold="true" nameItalic="false" nameX="100" nameY="26" />
+			<extend author="作者" authorX="200" authorY="35" authorFont="" authorSize="11" authorColor="" authorBold="false" authorItalic="false" />
+			<extend description="拍摄于2010.11.18 | 8张照片" dscptFont="" dscptSize="" dscptColor="" dscptBold="false" dscptItalic="false" dscptX="410" dscptY="30" />
+			<extend coverPage="wuhan/AlbumsCoverBg.png" coverPageX="21" coverPageY="77" backcPage="wuhan/AlbumsBackcBg.png" backcPageX="497" backcPageY="77" />
+			<extend albumListCoverPic="photos/2rssadgsdf.jpg" albumListCoverPicX="" albumListCoverPicY="" closeBtnPaddingX="5" closeBtnPaddingY="3" />
+			<extend enableMusic="true" musicListIndex="1" playSkinIndex="1" enableSetPlayerPos="true" playerX="710" playerY="27" />
+			
+			
+			
+			
+			<extend font="" size="" color="" bold="false" italic="false" textX="40" textY="340" />
+			<extend isPreface="false" prefacePic="" prefacePicX="" prefacePicY="" prefacePicWidth="" prefacePicHeight="" />
+			<extend picX="0" picY="0" closeBtnPaddingX="8" closeBtnPaddingY="8" />
+			<extend picWidth="416" picHeight="300" />
+			<extend topPic="" topPicX="" topPicY="" topPicRotate="" />
+			<extend bottomPic="" bottomPicX="" bottomPicY="" bottomPicRotate="" />
+			<extend enableClick="true" enableScroll="true" enableScale="true" containerX="30" containerY="30" />
+			<extend showMiddleExtend1="false" middlePicX1="" middlePicY1="" middlePicRotate1="" />
+			<extend showMiddleExtend2="false" middlePicX2="" middlePicY2="" middlePicRotate2="" />
+			<extend />
+			
+			
+			
+			<cover authorX="50" authorY="400" link="" photoRoot="">
+				<extend text="首页文字" font="微软雅黑,宋体" size="20" color="" bold="true" italic="false" textX="50" textY="420" />
+				<extend enableClick="false" enableScroll="false" />
+				<extend containerX="1" containerY="40" />
+				<extend picWidth="474" picHeight="267" />
+				<extend middlePic="photos/dfgasdf.png" middlePicX="" middlePicY="" middlePicRotate="" />
+			</cover>
+			<backc author="" authorX="" authorY="" link="" photoRoot="">
+				<extend text="" font="" size="" color="" bold="false" italic="false" textX="" textY="" />
+				<extend enableClick="false" enableScroll="false" />
+				<extend containerX="2" containerY="160" />
+				<extend picWidth="474" picHeight="267" />
+				<extend middlePic="photos/dfgasdf.png" middlePicX="" middlePicY="" middlePicRotate="" />
+			</backc>
+			<page link="" photoRoot="">
+				<extend text="" font="" size="" color="" bold="false" italic="false" textX="" textY="" />
+				<extend isPreface="true" prefacePic="wuhan/prefacePic.png" prefacePicX="330" prefacePicY="45" prefacePicWidth="100" prefacePicHeight="100" prefacePicSpacing="10" firstPicX="120" firstPicY="360" direction="H" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="-62" thumbnailY="" />
+				<extend enableClick="true" enableScroll="false" />
+				<extend picWidth="470" picHeight="495" />
+				<extend topPic="photos/2rssadgsdf.jpg" />
+				<extend middlePic="photos/http_imgload.jpg" />
+				<extend bottomPic="photos/fghfdhg.jpg" />
+			</page>
+			
+			<page link="" photoRoot="">
+				<extend text="图片1" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/2rssadgsdf.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片2" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/http_imgload.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片3" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/fghfdhg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片4" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/asdfgfhdfg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片5" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/jkgfhsfg.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片6" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/rytreyt.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片7" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/ghjghj.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+			<page link="" photoRoot="">
+				<extend text="图片8" />
+				<extend thumbnail="photos/2rssadgsdf.jpg" thumbnailX="" thumbnailY="" />
+				<extend middlePic="photos/xcvcvbcvb.jpg" middlePicX="" middlePicY="" middlePicRotate="" />
+			</page>
+		</albums>
+	</AlbumsList>
+</root>

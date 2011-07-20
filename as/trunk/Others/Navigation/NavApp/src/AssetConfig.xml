@@ -1,0 +1,362 @@
+<Provinces SelectedIndex="0">
+	<Province name="福建省">
+		<extend provinceFont="" provinceSize="" provinceColor="" provinceBold="false" provinceItalic="false" />
+		<extend topPic="assets.province.FuJianProvinceTopAsset" topPicX="362.45" topPicY="251.5" />
+		<extend bottomPic="assets.province.FuJianProvinceBottomAsset" bottomPicX="362.45" bottomPicY="251.5" />
+		
+		<!--乡镇弹出框配置-->
+		<extend background="assets.dialog.BackgroundAsset" dialogWidth="" dialogHeight="" />
+		<extend dialogClose="assets.dialog.CloseBtnAsset" dialogCloseX="450" dialogCloseY="10" />
+		<extend townContainerX="30" townContainerY="50" townColumns="2" townItemWidth="200" townItemHeight="30" />
+		<extend linkType="_blank" />
+		
+		<City name="福州市" up="assets.city.FuZhouCityAsset" over="" x="444.5" y="231.5">
+			<extend cityFont="" citySize="" cityColor="" cityBold="false" cityItalic="false" cityX="-20" cityY="-10" />
+			<extend topPic="assets.city.FuZhouCityTopAsset" topPicX="352.45" topPicY="251.5" />
+			<extend bottomPic="assets.city.FuZhouCityBottomAsset" bottomPicX="352.45" bottomPicY="251.5" />
+			
+			<County name="福州" up="assets.county.FuZhouCountyAsset" over="" x="421" y="195">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="10" />
+				<extend topPic="" topPicX="" topPicY="" />
+				<extend bottomPic="" bottomPicX="" bottomPicY="" />
+				
+				<Town name="鼓楼" townUrl="http://www.163.com/" up="" over="" x="" y="">
+					<extend townFont="" townSize="" townColor="" townBold="false" townItalic="false" />
+				</Town>
+				<Town name="鼓楼" townUrl="http://www.163.com/" up="" over="" x="" y="">
+					<extend townFont="" townSize="" townColor="" townBold="false" townItalic="false" />
+				</Town>
+				<Town name="鼓楼" townUrl="http://www.163.com/" up="" over="" x="" y="">
+					<extend townFont="" townSize="" townColor="" townBold="false" townItalic="false" />
+				</Town>
+				<Town name="鼓楼" townUrl="http://www.163.com/" up="" over="" x="" y="">
+					<extend townFont="" townSize="" townColor="" townBold="false" townItalic="false" />
+				</Town>
+				<Town name="鼓楼" townUrl="http://www.163.com/" up="" over="" x="" y="">
+					<extend townFont="" townSize="" townColor="" townBold="false" townItalic="false" />
+				</Town>
+				<Town name="鼓楼" townUrl="http://www.163.com/" up="" over="" x="" y="">
+					<extend townFont="" townSize="" townColor="" townBold="false" townItalic="false" />
+				</Town>
+				<Town name="鼓楼" townUrl="http://www.163.com/" up="" over="" x="" y="">
+					<extend townFont="" townSize="" townColor="" townBold="false" townItalic="false" />
+				</Town>
+			</County>
+			
+			<County name="福清" up="assets.county.FuQingCountyAsset" over="" x="434" y="381">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-30" />
+			</County>
+			<County name="罗源" up="assets.county.LuoYuanCountyAsset" over="" x="425" y="88">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="0" />
+			</County>
+			<County name="闽候" up="assets.county.MinHouCountyAsset" over="" x="348" y="196">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="10" />
+			</County>
+			<County name="连江" up="assets.county.LianJiangCountyAsset" over="" x="470.5" y="152">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-10" />
+			</County>
+			<County name="长乐" up="assets.county.ChangLeCountyAsset" over="" x="472" y="284">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-10" />
+			</County>
+			<County name="闽清" up="assets.county.MinQingCountyAsset" over="" x="226" y="199">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="0" countyY="10" />
+			</County>
+			<County name="永泰" up="assets.county.YongTaiCountyAsset" over="" x="257" y="326">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="10" />
+			</County>
+		</City>
+		
+		<City name="龙岩市" up="assets.city.LongYanCityAsset" over="" x="269.5" y="326">
+			<extend cityFont="" citySize="" cityColor="" cityBold="false" cityItalic="false" cityX="-20" cityY="-10" />
+			<extend topPic="assets.city.LongYanCityTopAsset" topPicX="352.45" topPicY="251.5" />
+			<extend bottomPic="assets.city.LongYanCityBottomAsset" bottomPicX="352.45" bottomPicY="251.5" />
+			
+			<County name="连城县" up="assets.county.LianChengCountyAsset" over="" x="362.5" y="155">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-10" />
+			</County>
+			
+			<County name="龙岩" up="assets.county.LongYanCountyAsset" over="" x="406.2" y="243">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="0" countyY="-30" />
+			</County>
+			
+			<County name="上杭县" up="assets.county.ShanghangCountyAsset" over="" x="310" y="281">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="0" />
+			</County>
+			
+			<County name="武平县" up="assets.county.WuPingCountyAsset" over="" x="203.5" y="279">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="0" />
+			</County>
+			
+			<County name="永定县" up="assets.county.YongDingCountyAsset" over="" x="358" y="368">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-10" countyY="-15" />
+			</County>
+			
+			<County name="漳平市" up="assets.county.ZhangPingCountyAsset" over="" x="506" y="197">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-15" countyY="-30" />
+			</County>
+			
+			<County name="长厅县" up="assets.county.ChangeTingCountyAsset" over="" x="236.5" y="140">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-10" />
+			</County>
+		</City>
+		
+		<City name="南平市" up="assets.city.NanPingCityAsset" over="" x="348.45" y="130.5">
+			<extend cityFont="" citySize="" cityColor="" cityBold="false" cityItalic="false" cityX="-20" cityY="-10" />
+			<extend topPic="assets.city.NanPingCityTopAsset" topPicX="362.45" topPicY="251.5" />
+			<extend bottomPic="assets.city.NanPingCityBottomAsset" bottomPicX="362.45" bottomPicY="251.5" />
+			
+			
+			<County name="光泽县" up="assets.county.GuangZheCountyAsset" over="" x="213" y="212">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-15" countyY="-10" />
+			</County>
+			
+			<County name="建瓯市" up="assets.county.JianOuCountyAsset" over="" x="429.5" y="314.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-10" />
+			</County>
+			
+			<County name="建阳市" up="assets.county.JianYangCountyAsset" over="" x="351" y="247">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="" />
+			</County>
+			
+			<County name="南平市" up="assets.county.NanPingCountyAsset" over="" x="410" y="402">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-10" />
+			</County>
+			
+			<County name="浦城县" up="assets.county.PuChengCountyAsset" over="" x="418.2" y="127">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-10" />
+			</County>
+			
+			<County name="诏武市" up="assets.county.ShaoWuCountyAsset" over="" x="243" y="285.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-10" countyY="-10" />
+			</County>
+			
+			<County name="顺昌县" up="assets.county.ShunChangCountyAsset" over="" x="328.5" y="348">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-20" countyY="-10" />
+			</County>
+			
+			<County name="松溪县" up="assets.county.SongXiCountyAsset" over="" x="464" y="182">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-20" countyY="0" />
+			</County>
+			
+			<County name="武夷山市" up="assets.county.WuYiShanCountyAsset" over="" x="328.4" y="169.3">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="10" />
+			</County>
+			
+			<County name="政和县" up="assets.county.ZhengHeCountyAsset" over="" x="503" y="244">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="0" countyY="-17" />
+			</County>
+		</City>
+		
+		<City name="宁德市" up="assets.city.NingDeCityAsset" over="" x="459.7" y="150.85">
+			<extend cityFont="" citySize="" cityColor="" cityBold="false" cityItalic="false" cityX="-20" cityY="-10" />
+			<extend topPic="assets.city.NingDeCityTopAsset" topPicX="360" topPicY="250" />
+			<extend bottomPic="assets.city.NingDeCityBottomAsset" bottomPicX="360" bottomPicY="250" />
+			
+			
+			<County name="福安市" up="assets.county.FuAnCountyAsset" over="" x="383" y="210">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-20" countyY="0" />
+			</County>
+			
+			<County name="福鼎市" up="assets.county.FuDingCountAsset" over="" x="513" y="147">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-20" countyY="10" />
+			</County>
+			
+			<County name="古田县" up="assets.county.GuTianCountAsset" over="" x="241.2" y="376.3">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-50" countyY="-30" />
+			</County>
+			
+			<County name="宁德" up="assets.county.NingDeCountAsset" over="" x="359" y="301">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-10" />
+			</County>
+			
+			<County name="屏南县" up="assets.county.PinNanCountAsset" over="" x="224" y="265.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-10" countyY="0" />
+			</County>
+			
+			<County name="寿宁县" up="assets.county.ShouNingCountAsset" over="" x="333.6" y="116.3">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="0" />
+			</County>
+			
+			<County name="霞浦县" up="assets.county.XiaPuCountAsset" over="" x="480.5" y="269.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-35" countyY="-40" />
+			</County>
+			
+			<County name="柘荣县" up="assets.county.ZheRongCountAsset" over="" x="445" y="162.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-10" />
+			</County>
+			
+			<County name="周宁县" up="assets.county.ZhouNingCountAsset" over="" x="305.5" y="212.2">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-10" />
+			</County>
+		</City>
+		
+		<City name="蒲田市" up="assets.city.PuTianCityAsset" over="" x="432.5" y="282.85">
+			<extend cityFont="" citySize="" cityColor="" cityBold="false" cityItalic="false" cityX="-30" cityY="-10" />
+			<extend topPic="assets.city.PuTianCityTopAsset" topPicX="362" topPicY="250" />
+			<extend bottomPic="assets.city.PuTianCityBottomAsset" bottomPicX="362" bottomPicY="250" />
+			
+			
+			<County name="城厢" up="assets.county.ChengXiangCountyAsset" over="" x="373.25" y="269.9">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-10" />
+			</County>
+			
+			<County name="涵江" up="assets.county.HanJiangCountyAsset" over="" x="416.25" y="153.55">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-40" />
+			</County>
+			
+			<County name="荔城" up="assets.county.LiChengCountyAsset" over="" x="468.25" y="251.55">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-35" countyY="15" />
+			</County>
+			
+			<County name="仙游县" up="assets.county.XianYouCountyAsset" over="" x="226.95" y="270.9">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-10" />
+			</County>
+			
+			<County name="秀屿" up="assets.county.XiuYuCountyAsset" over="" x="524.25" y="373.9">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-55" countyY="-45" />
+			</County>
+		</City>
+		
+		<City name="泉州市" up="assets.city.QuanZhouCityAsset" over="" x="387.4" y="307">
+			<extend cityFont="" citySize="" cityColor="" cityBold="false" cityItalic="false" cityX="-30" cityY="0" />
+			<extend topPic="assets.city.QuanZhouCityTopAsset" topPicX="362" topPicY="250" />
+			<extend bottomPic="assets.city.QuanZhouCityBottomAsset" bottomPicX="362" bottomPicY="250" />
+			
+			
+			<County name="安溪县" up="assets.county.AnXiCountyAsset" over="" x="271" y="276">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-23" countyY="-15" />
+			</County>
+			
+			<County name="德化县" up="assets.county.DeHuaCountyAsset" over="" x="328.2" y="115.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-23" countyY="-5" />
+			</County>
+			
+			<County name="惠安县" up="assets.county.HuiAnCountyAsset" over="" x="496.85" y="264">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-28" countyY="0" />
+			</County>
+			
+			<County name="晋江市" up="assets.county.JinJiangCountyAsset" over="" x="441.85" y="362">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-37" countyY="-27" />
+			</County>
+			
+			<County name="南安市" up="assets.county.NanAnCountyAsset" over="" x="377.2" y="303.85">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-10" countyY="-25" />
+			</County>
+			
+			<County name="泉州市" up="assets.county.QuanZhouCountyAsset" over="" x="440.2" y="259.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-23" countyY="-15" />
+			</County>
+			
+			<County name="石狮市" up="assets.county.ShiShiCountyAsset" over="" x="461.85" y="361.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-28" countyY="0" />
+			</County>
+			
+			<County name="永春县" up="assets.county.YongChunCountyAsset" over="" x="304.2" y="196.85">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="0" countyY="-5" />
+			</County>
+		</City>
+		
+		<City name="三明市" up="assets.city.SanMingCityAsset" over="" x="315.8" y="225.85">
+			<extend cityFont="" citySize="" cityColor="" cityBold="false" cityItalic="false" cityX="-30" cityY="0" />
+			<extend topPic="assets.city.SanMingCityTopAsset" topPicX="362" topPicY="250" />
+			<extend bottomPic="assets.city.SanMingCityBottomAsset" bottomPicX="362" bottomPicY="250" />
+			
+			
+			<County name="大田县" up="assets.county.DaTianCountyAsset" over="" x="437.4" y="368">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-20" countyY="10" />
+			</County>
+			
+			<County name="建宁县" up="assets.county.JianNingCountyAsset" over="" x="168.8" y="133.4">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-20" countyY="-5" />
+			</County>
+			
+			<County name="将乐县" up="assets.county.JiangLeCountyAsset" over="" x="313.25" y="140">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-17" countyY="0" />
+			</County>
+			
+			<County name="明溪县" up="assets.county.MingXiCountyAsset" over="" x="275.3" y="240">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-5" countyY="0" />
+			</County>
+			
+			<County name="宁化县" up="assets.county.NingHuaCountyAsset" over="" x="169" y="274.55">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-40" countyY="7" />
+			</County>
+			
+			<County name="清流县" up="assets.county.QingLiuCountyAsset" over="" x="223.3" y="327.55">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-13" countyY="-40" />
+			</County>
+			
+			<County name="三明市" up="assets.county.SanMingCountyAsset" over="" x="365" y="270.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-20" countyY="-7" />
+			</County>
+			
+			<County name="沙县" up="assets.county.ShaCountyAsset" over="" x="424.25" y="219.7">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-16" countyY="-25" />
+			</County>
+			
+			<County name="泰宁县" up="assets.county.TaiNingCountyAsset" over="" x="251.95" y="120.55">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-35" countyY="-16" />
+			</County>
+			
+			<County name="永定县" up="assets.county.SanYongDingCountyAsset" over="" x="333" y="369.2">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-25" countyY="-30" />
+			</County>
+			
+			<County name="尤溪县" up="assets.county.YouXiCountyAsset" over="" x="531.9" y="272.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-25" countyY="-15" />
+			</County>
+		</City>
+		
+		<City name="漳州市" up="assets.city.ZhangZhouCityAsset" over="" x="336" y="388.5">
+			<extend cityFont="" citySize="" cityColor="" cityBold="false" cityItalic="false" cityX="-30" cityY="-10" />
+			<extend topPic="assets.city.ZhangZhouCityTopAsset" topPicX="362.5" topPicY="250.5" />
+			<extend bottomPic="assets.city.ZhangZhouCityBottomAsset" bottomPicX="359" bottomPicY="250" />
+			
+			<County name="华安县" up="assets.county.HuaAnCountyAsset" over="" x="342.3" y="112.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-25" countyY="5" />
+			</County>
+			
+			<County name="龙海市" up="assets.county.LongHaiCountyAsset" over="" x="431" y="233.4">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-55" countyY="5" />
+			</County>
+			
+			<County name="南靖县" up="assets.county.NanJinCountyAsset" over="" x="306.3" y="171">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="7" />
+			</County>
+			
+			<County name="平和县" up="assets.county.PingHeCountyAsset" over="" x="289.3" y="280.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-20" countyY="-20" />
+			</County>
+			
+			<County name="云霄县" up="assets.county.YunXiaoCountyAsset" over="" x="328.3" y="350.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-25" countyY="-10" />
+			</County>
+			
+			<County name="漳浦县" up="assets.county.ZhangPuCountyAsset" over="" x="413.65" y="328.85">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-30" countyY="-35" />
+			</County>
+			
+			<County name="漳州市" up="assets.county.ZhangZhouCountyAsset" over="" x="374.65" y="191.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-22" countyY="-11" />
+			</County>
+			
+			<County name="长泰县" up="assets.county.ChangTaiCountyAsset" over="" x="410.65" y="151.85">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-20" countyY="-15" />
+			</County>
+			
+			<County name="诏安县" up="assets.county.ZhaoAnCountyAsset" over="" x="289.3" y="384.5">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-15" countyY="5" />
+			</County>
+		</City>
+		
+		<City name="厦门市" up="assets.city.XiaMenCityAsset" over="" x="385.5" y="357.85">
+			<extend cityFont="" citySize="" cityColor="" cityBold="false" cityItalic="false" cityX="-30" cityY="-10" />
+			<extend topPic="assets.city.XiaMenCityTopAsset" topPicX="362" topPicY="250" />
+			<extend bottomPic="assets.city.XiaMenCityBottomAsset" bottomPicX="362" bottomPicY="250" />
+			
+			<County name="厦门市" up="assets.county.XiaMenCountyAsset" over="" x="361.35" y="250.85">
+				<extend countyFont="" countySize="" countyColor="" countyBold="false" countyItalic="false" countyX="-25" countyY="-15" />
+			</County>
+		</City>
+	</Province>
+</Provinces>

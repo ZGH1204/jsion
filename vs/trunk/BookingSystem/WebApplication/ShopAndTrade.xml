@@ -1,0 +1,670 @@
+<shops>
+    <Shop Id="1" Shopname="邹记" Phone="22567726 13635223688">
+        <Trade Id="1" Shopid="1" Tradename="扣肉套餐" Tradevalue="8">
+        </Trade>
+        <Trade Id="2" Shopid="1" Tradename="鸡腿套餐" Tradevalue="8.5">
+        </Trade>
+        <Trade Id="3" Shopid="1" Tradename="鱿鱼套餐" Tradevalue="8.5">
+        </Trade>
+        <Trade Id="4" Shopid="1" Tradename="牛腩套餐" Tradevalue="9">
+        </Trade>
+        <Trade Id="5" Shopid="1" Tradename="带鱼套餐" Tradevalue="9">
+        </Trade>
+        <Trade Id="6" Shopid="1" Tradename="荔枝肉套餐" Tradevalue="9">
+        </Trade>
+        <Trade Id="7" Shopid="1" Tradename="炒米粉" Tradevalue="6">
+        </Trade>
+        <Trade Id="8" Shopid="1" Tradename="梅菜扣肉套餐" Tradevalue="8">
+        </Trade>
+        <Trade Id="9" Shopid="1" Tradename="红烧上排套餐" Tradevalue="9">
+        </Trade>
+        <Trade Id="10" Shopid="1" Tradename="咖喱鸡饭套餐" Tradevalue="10">
+        </Trade>
+        <Trade Id="11" Shopid="1" Tradename="猪舌套餐" Tradevalue="12">
+        </Trade>
+        <Trade Id="12" Shopid="1" Tradename="蹄包套餐" Tradevalue="12">
+        </Trade>
+        <Trade Id="13" Shopid="1" Tradename="咸干饭" Tradevalue="6">
+        </Trade>
+    </Shop>
+    <Shop Id="2" Shopname="珍食坊" Phone="83994359 13275901322">
+        <Trade Id="1" Shopid="2" Tradename="爽脆猪肝饭" Tradevalue="11">
+        </Trade>
+        <Trade Id="2" Shopid="2" Tradename="香辣鱼片饭" Tradevalue="11">
+        </Trade>
+        <Trade Id="3" Shopid="2" Tradename="腊肠双拼饭" Tradevalue="11">
+        </Trade>
+        <Trade Id="4" Shopid="2" Tradename="豉汁排骨饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="5" Shopid="2" Tradename="冬菇滑鸡饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="6" Shopid="2" Tradename="孜然田鸡饭" Tradevalue="13">
+        </Trade>
+        <Trade Id="7" Shopid="2" Tradename="香芋扣肉饭" Tradevalue="13">
+        </Trade>
+        <Trade Id="8" Shopid="2" Tradename="秘制牛腩饭" Tradevalue="13">
+        </Trade>
+        <Trade Id="9" Shopid="2" Tradename="港式卤肉饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="10" Shopid="2" Tradename="港式卤鸭饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="11" Shopid="2" Tradename="潮州鸡腿饭" Tradevalue="11">
+        </Trade>
+        <Trade Id="12" Shopid="2" Tradename="秘制鸡翅饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="13" Shopid="2" Tradename="卤水拼盘饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="14" Shopid="2" Tradename="腊肠炒饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="15" Shopid="2" Tradename="海鲜炒饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="16" Shopid="2" Tradename="海鲜粉" Tradevalue="8">
+        </Trade>
+        <Trade Id="17" Shopid="2" Tradename="猪肝粉" Tradevalue="8">
+        </Trade>
+        <Trade Id="18" Shopid="2" Tradename="牛腩粉" Tradevalue="8">
+        </Trade>
+    </Shop>
+    <Shop Id="3" Shopname="食话食说" Phone="87625202  87625212">
+        <Trade Id="1" Shopid="3" Tradename="浙式鱼片饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="2" Shopid="3" Tradename="红烧带鱼饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="3" Shopid="3" Tradename="酱汁鸭肉饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="4" Shopid="3" Tradename="青椒鱿鱼饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="5" Shopid="3" Tradename="梅菜扣肉饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="6" Shopid="3" Tradename="酱汁鸡腿饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="7" Shopid="3" Tradename="黑椒牛柳饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="8" Shopid="3" Tradename="咖喱鸡块饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="9" Shopid="3" Tradename="香酥大排饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="10" Shopid="3" Tradename="鱼香肉丝饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="11" Shopid="3" Tradename="糖醋排骨饭" Tradevalue="10">
+        </Trade>
+    </Shop>
+    <Shop Id="4" Shopname="速来客" Phone="4006065917">
+        <Trade Id="1" Shopid="4" Tradename="港式烤鸭饭" Tradevalue="13">
+        </Trade>
+        <Trade Id="2" Shopid="4" Tradename="叉烧瘦肉饭" Tradevalue="13">
+        </Trade>
+        <Trade Id="3" Shopid="4" Tradename="叉烧五花肉饭" Tradevalue="13">
+        </Trade>
+        <Trade Id="4" Shopid="4" Tradename="五香排骨饭" Tradevalue="13">
+        </Trade>
+        <Trade Id="5" Shopid="4" Tradename="五味排骨饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="6" Shopid="4" Tradename="梅菜扣肉饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="7" Shopid="4" Tradename="酱香鸡腿饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="8" Shopid="4" Tradename="红烧肉饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="9" Shopid="4" Tradename="红烧带鱼饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="10" Shopid="4" Tradename="酱香鸭肉饭" Tradevalue="10">
+        </Trade>
+    </Shop>
+    <Shop Id="5" Shopname="巴厘风味馆" Phone="62036019 13705915232">
+        <Trade Id="1" Shopid="5" Tradename="巴东牛肉饭" Tradevalue="14">
+        </Trade>
+        <Trade Id="2" Shopid="5" Tradename="印尼咖喱鸡饭" Tradevalue="13">
+        </Trade>
+        <Trade Id="3" Shopid="5" Tradename="巴东鸭肉饭" Tradevalue="13">
+        </Trade>
+        <Trade Id="4" Shopid="5" Tradename="酸辣鱼饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="5" Shopid="5" Tradename="沙爹猪肉饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="6" Shopid="5" Tradename="椰汁鸡饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="7" Shopid="5" Tradename="咖喱虾饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="8" Shopid="5" Tradename="香爆鸡柳饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="9" Shopid="5" Tradename="富贵牛腩饭" Tradevalue="14">
+        </Trade>
+        <Trade Id="10" Shopid="5" Tradename="梅菜扣肉饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="11" Shopid="5" Tradename="咸鱼肉饼饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="12" Shopid="5" Tradename="咸蛋肉饼饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="13" Shopid="5" Tradename="红烧猪蹄饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="14" Shopid="5" Tradename="蒜香排骨饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="15" Shopid="5" Tradename="亚三鱼饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="16" Shopid="5" Tradename="印尼卤鸭饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="17" Shopid="5" Tradename="鳕鱼饭" Tradevalue="12">
+        </Trade>
+    </Shop>
+    <Shop Id="6" Shopname="有名仔" Phone="87567985">
+        <Trade Id="1" Shopid="6" Tradename="台式卤肉饭" Tradevalue="6">
+        </Trade>
+        <Trade Id="2" Shopid="6" Tradename="爆炒田鸡饭" Tradevalue="6">
+        </Trade>
+        <Trade Id="3" Shopid="6" Tradename="梅菜扣肉饭" Tradevalue="7">
+        </Trade>
+        <Trade Id="4" Shopid="6" Tradename="烤秋刀鱼饭" Tradevalue="7">
+        </Trade>
+        <Trade Id="5" Shopid="6" Tradename="酱烧猪脚饭" Tradevalue="7">
+        </Trade>
+        <Trade Id="6" Shopid="6" Tradename="五味排骨饭" Tradevalue="7">
+        </Trade>
+        <Trade Id="7" Shopid="6" Tradename="福州荔枝肉饭" Tradevalue="7">
+        </Trade>
+        <Trade Id="8" Shopid="6" Tradename="红烧肉饭" Tradevalue="7">
+        </Trade>
+        <Trade Id="9" Shopid="6" Tradename="美味鸡腿饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="10" Shopid="6" Tradename="咖喱鸡肉饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="11" Shopid="6" Tradename="红烧大排饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="12" Shopid="6" Tradename="香酥烤鸭饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="13" Shopid="6" Tradename="黑椒牛柳饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="14" Shopid="6" Tradename="鱼香肉丝饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="15" Shopid="6" Tradename="叉烧排骨饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="16" Shopid="6" Tradename="日式牛肉饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="17" Shopid="6" Tradename="咖喱牛肉饭" Tradevalue="9">
+        </Trade>
+        <Trade Id="18" Shopid="6" Tradename="红烧牛腩饭" Tradevalue="9">
+        </Trade>
+        <Trade Id="19" Shopid="6" Tradename="日式烤鳗鱼饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="20" Shopid="6" Tradename="糖醋鸡排饭" Tradevalue="7">
+        </Trade>
+        <Trade Id="21" Shopid="6" Tradename="骨肉相连饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="22" Shopid="6" Tradename="香辣鸡排饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="23" Shopid="6" Tradename="川香鸡柳饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="24" Shopid="6" Tradename="香烤鸡翅饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="25" Shopid="6" Tradename="板烧鱿鱼饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="26" Shopid="6" Tradename="黑胡椒鸡块饭" Tradevalue="8">
+        </Trade>
+    </Shop>
+    <Shop Id="7" Shopname="荷香木桶饭" Phone="87563020  88563683">
+        <Trade Id="1" Shopid="7" Tradename="美味鸡腿饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="2" Shopid="7" Tradename="美味卤肉饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="3" Shopid="7" Tradename="红烧茄子饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="4" Shopid="7" Tradename="家常豆腐饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="5" Shopid="7" Tradename="尖椒肉丝饭" Tradevalue="11">
+        </Trade>
+        <Trade Id="6" Shopid="7" Tradename="海蛎煎蛋饭" Tradevalue="11">
+        </Trade>
+        <Trade Id="7" Shopid="7" Tradename="冬菇滑鸡饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="8" Shopid="7" Tradename="青椒牛肉饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="9" Shopid="7" Tradename="酸菜牛肚饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="10" Shopid="7" Tradename="红烧鱼块饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="11" Shopid="7" Tradename="西芹鲜鱿饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="12" Shopid="7" Tradename="梅菜扣肉饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="13" Shopid="7" Tradename="蒜苔猪肝饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="14" Shopid="7" Tradename="五香牛腩饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="15" Shopid="7" Tradename="红烧猪脚饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="16" Shopid="7" Tradename="酱汁排骨饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="17" Shopid="7" Tradename="青菜瘦肉粥" Tradevalue="6">
+        </Trade>
+        <Trade Id="18" Shopid="7" Tradename="青菜皮蛋粥" Tradevalue="6">
+        </Trade>
+        <Trade Id="19" Shopid="7" Tradename="皮蛋瘦肉粥" Tradevalue="6">
+        </Trade>
+        <Trade Id="20" Shopid="7" Tradename="红枣红糖粥" Tradevalue="6">
+        </Trade>
+        <Trade Id="21" Shopid="7" Tradename="冬菇滑鸡粥" Tradevalue="8">
+        </Trade>
+        <Trade Id="22" Shopid="7" Tradename="白糖银耳粥" Tradevalue="8">
+        </Trade>
+        <Trade Id="23" Shopid="7" Tradename="猪心粥" Tradevalue="10">
+        </Trade>
+        <Trade Id="24" Shopid="7" Tradename="猪肚粥" Tradevalue="10">
+        </Trade>
+    </Shop>
+    <Shop Id="8" Shopname="食为天" Phone="87886253  87886273">
+        <Trade Id="1" Shopid="8" Tradename="酱烧秋刀鱼饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="2" Shopid="8" Tradename="毛氏红烧肉饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="3" Shopid="8" Tradename="干煎带鱼饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="4" Shopid="8" Tradename="蒜香排骨饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="5" Shopid="8" Tradename="滑溜鸡片饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="6" Shopid="8" Tradename="湘川一品肉片饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="7" Shopid="8" Tradename="蚝油牛肉饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="8" Shopid="8" Tradename="滑蛋肉丝饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="9" Shopid="8" Tradename="芹香焖鱼块饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="10" Shopid="8" Tradename="香卤鸡腿饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="11" Shopid="8" Tradename="香辣双鲜饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="12" Shopid="8" Tradename="白米饭" Tradevalue="1">
+        </Trade>
+    </Shop>
+    <Shop Id="9" Shopname="多福豆花" Phone="88310037">
+        <Trade Id="1" Shopid="9" Tradename="香炸猪排饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="2" Shopid="9" Tradename="香炸鸡排饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="3" Shopid="9" Tradename="香卤鸡腿饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="4" Shopid="9" Tradename="茄汁猪排饭" Tradevalue="11">
+        </Trade>
+        <Trade Id="5" Shopid="9" Tradename="精品荔枝肉饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="6" Shopid="9" Tradename="香辣鸡翅饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="7" Shopid="9" Tradename="红烧猪脚饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="8" Shopid="9" Tradename="潮州卤鸭饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="9" Shopid="9" Tradename="红烧带鱼饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="10" Shopid="9" Tradename="台湾卤肉饭" Tradevalue="11">
+        </Trade>
+        <Trade Id="11" Shopid="9" Tradename="西红柿炒蛋盖浇饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="12" Shopid="9" Tradename="香炸猪排豆花盖浇饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="13" Shopid="9" Tradename="台湾香肠豆花盖浇饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="14" Shopid="9" Tradename="咖喱虾仁豆花盖浇饭" Tradevalue="15">
+        </Trade>
+        <Trade Id="15" Shopid="9" Tradename="红烧牛腩豆花盖浇饭" Tradevalue="15">
+        </Trade>
+        <Trade Id="16" Shopid="9" Tradename="咖喱牛肉豆花盖浇饭" Tradevalue="15">
+        </Trade>
+        <Trade Id="17" Shopid="9" Tradename="黑椒牛肉豆花盖浇饭" Tradevalue="15">
+        </Trade>
+        <Trade Id="18" Shopid="9" Tradename="日式烤鳗豆花盖浇饭" Tradevalue="20">
+        </Trade>
+        <Trade Id="19" Shopid="9" Tradename="扬州炒饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="20" Shopid="9" Tradename="香肠炒饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="21" Shopid="9" Tradename="番茄蛋炒饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="22" Shopid="9" Tradename="虾仁蛋炒饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="23" Shopid="9" Tradename="黑椒牛肉炒饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="24" Shopid="9" Tradename="香菇肉丝炒饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="25" Shopid="9" Tradename="宫保鸡丁炒饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="26" Shopid="9" Tradename="炸酱面" Tradevalue="8">
+        </Trade>
+        <Trade Id="27" Shopid="9" Tradename="特色卤面" Tradevalue="10">
+        </Trade>
+        <Trade Id="28" Shopid="9" Tradename="白米饭" Tradevalue="1">
+        </Trade>
+        <Trade Id="29" Shopid="9" Tradename="鸡蛋青菜粉/面" Tradevalue="7">
+        </Trade>
+        <Trade Id="30" Shopid="9" Tradename="港式蛋仔粉/面" Tradevalue="7">
+        </Trade>
+        <Trade Id="31" Shopid="9" Tradename="西红柿蛋面/粉" Tradevalue="7">
+        </Trade>
+        <Trade Id="32" Shopid="9" Tradename="重庆酸辣粉/面" Tradevalue="8">
+        </Trade>
+        <Trade Id="33" Shopid="9" Tradename="榨菜肉丝粉/面" Tradevalue="8">
+        </Trade>
+        <Trade Id="34" Shopid="9" Tradename="梅菜笋丝粉/面" Tradevalue="8">
+        </Trade>
+        <Trade Id="35" Shopid="9" Tradename="香菇肉丝粉/面" Tradevalue="8">
+        </Trade>
+        <Trade Id="36" Shopid="9" Tradename="猪肝瘦肉粉/面" Tradevalue="10">
+        </Trade>
+        <Trade Id="37" Shopid="9" Tradename="红烧猪脚粉/面" Tradevalue="10">
+        </Trade>
+        <Trade Id="38" Shopid="9" Tradename="海蛎瘦肉粉/面" Tradevalue="10">
+        </Trade>
+        <Trade Id="39" Shopid="9" Tradename="牛肉粉/面" Tradevalue="12">
+        </Trade>
+        <Trade Id="40" Shopid="9" Tradename="红烧排骨粉/面" Tradevalue="12">
+        </Trade>
+        <Trade Id="41" Shopid="9" Tradename="红烧牛腩粉/面" Tradevalue="12">
+        </Trade>
+        <Trade Id="42" Shopid="9" Tradename="皮蛋瘦肉粥" Tradevalue="6">
+        </Trade>
+        <Trade Id="43" Shopid="9" Tradename="玉米瘦肉粥" Tradevalue="6">
+        </Trade>
+        <Trade Id="44" Shopid="9" Tradename="梅菜笋丝粥" Tradevalue="6">
+        </Trade>
+        <Trade Id="45" Shopid="9" Tradename="猪肝瘦肉粥" Tradevalue="7">
+        </Trade>
+        <Trade Id="46" Shopid="9" Tradename="皮蛋猪肝粥" Tradevalue="7">
+        </Trade>
+    </Shop>
+    <Shop Id="10" Shopname="佳佳商务套餐" Phone="87475816  83529271">
+        <Trade Id="1" Shopid="10" Tradename="梅菜扣肉饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="2" Shopid="10" Tradename="椒盐大排饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="3" Shopid="10" Tradename="椒盐鸡柳串饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="4" Shopid="10" Tradename="椒盐带鱼饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="5" Shopid="10" Tradename="青椒肉丝饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="6" Shopid="10" Tradename="青椒炒鱿鱼饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="7" Shopid="10" Tradename="荔枝肉饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="8" Shopid="10" Tradename="五香鸡腿饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="9" Shopid="10" Tradename="五香鸭肉饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="10" Shopid="10" Tradename="爆炒腊肉饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="11" Shopid="10" Tradename="五香红烧肉饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="12" Shopid="10" Tradename="辣子鸡块饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="13" Shopid="10" Tradename="素菜饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="14" Shopid="10" Tradename="白米饭" Tradevalue="1">
+        </Trade>
+    </Shop>
+    <Shop Id="11" Shopname="东池便当" Phone="87560408  87560499">
+        <Trade Id="1" Shopid="11" Tradename="虾卷饭" Tradevalue="15">
+        </Trade>
+        <Trade Id="2" Shopid="11" Tradename="香肠饭" Tradevalue="13">
+        </Trade>
+        <Trade Id="3" Shopid="11" Tradename="花枝排饭" Tradevalue="13">
+        </Trade>
+        <Trade Id="4" Shopid="11" Tradename="招牌饭" Tradevalue="13">
+        </Trade>
+        <Trade Id="5" Shopid="11" Tradename="肉燥饭" Tradevalue="13">
+        </Trade>
+        <Trade Id="6" Shopid="11" Tradename="鸡腿饭" Tradevalue="18">
+        </Trade>
+        <Trade Id="7" Shopid="11" Tradename="红烧排骨饭" Tradevalue="16">
+        </Trade>
+        <Trade Id="8" Shopid="11" Tradename="鲁肉饭" Tradevalue="15">
+        </Trade>
+        <Trade Id="9" Shopid="11" Tradename="排骨饭" Tradevalue="15">
+        </Trade>
+    </Shop>
+    <Shop Id="12" Shopname="池上饭包" Phone="87859773">
+        <Trade Id="1" Shopid="12" Tradename="营养素餐" Tradevalue="8">
+        </Trade>
+        <Trade Id="2" Shopid="12" Tradename="招牌饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="3" Shopid="12" Tradename="咖喱饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="4" Shopid="12" Tradename="爌肉饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="5" Shopid="12" Tradename="香酥虾卷饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="6" Shopid="12" Tradename="香酥鸡卷饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="7" Shopid="12" Tradename="台湾香肠饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="8" Shopid="12" Tradename="秋刀鱼饭" Tradevalue="12">
+        </Trade>
+        <Trade Id="9" Shopid="12" Tradename="香酥鸡排" Tradevalue="13">
+        </Trade>
+        <Trade Id="10" Shopid="12" Tradename="鸡翅饭" Tradevalue="13">
+        </Trade>
+        <Trade Id="11" Shopid="12" Tradename="卤排骨饭" Tradevalue="15">
+        </Trade>
+        <Trade Id="12" Shopid="12" Tradename="香酥排骨饭" Tradevalue="15">
+        </Trade>
+        <Trade Id="13" Shopid="12" Tradename="红烧牛肉饭" Tradevalue="15">
+        </Trade>
+        <Trade Id="14" Shopid="12" Tradename="卤猪脚饭" Tradevalue="15">
+        </Trade>
+        <Trade Id="15" Shopid="12" Tradename="肉骨茶饭" Tradevalue="15">
+        </Trade>
+        <Trade Id="16" Shopid="12" Tradename="牛肉招牌饭" Tradevalue="15">
+        </Trade>
+        <Trade Id="17" Shopid="12" Tradename="卤鸡腿饭" Tradevalue="18">
+        </Trade>
+        <Trade Id="18" Shopid="12" Tradename="香酥鳕鱼饭" Tradevalue="18">
+        </Trade>
+        <Trade Id="19" Shopid="12" Tradename="浦烧鳗鱼饭" Tradevalue="18">
+        </Trade>
+        <Trade Id="20" Shopid="12" Tradename="香酥鸡腿饭" Tradevalue="18">
+        </Trade>
+        <Trade Id="21" Shopid="12" Tradename="白米饭" Tradevalue="1">
+        </Trade>
+    </Shop>
+    <Shop Id="13" Shopname="百味居" Phone="87628997  87628957">
+        <Trade Id="1" Shopid="13" Tradename="滑蛋肉丝饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="2" Shopid="13" Tradename="香辣田鸡饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="3" Shopid="13" Tradename="蒜香排骨饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="4" Shopid="13" Tradename="干烧鲫鱼饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="5" Shopid="13" Tradename="海南酱鸡饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="6" Shopid="13" Tradename="红烧狮子头饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="7" Shopid="13" Tradename="火爆三层肉饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="8" Shopid="13" Tradename="红烧猪蹄饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="9" Shopid="13" Tradename="滑溜肉片饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="10" Shopid="13" Tradename="酱烤鸡腿饭" Tradevalue="10">
+        </Trade>
+    </Shop>
+    <Shop Id="14" Shopname="天厨居" Phone="87527560  87527573">
+        <Trade Id="1" Shopid="14" Tradename="红烧黄瓜鱼饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="2" Shopid="14" Tradename="椒盐大排饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="3" Shopid="14" Tradename="五香鸭肉饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="4" Shopid="14" Tradename="青椒肉丝饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="5" Shopid="14" Tradename="辣子鸡块饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="6" Shopid="14" Tradename="油焖田鸡饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="7" Shopid="14" Tradename="五香鸡腿饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="8" Shopid="14" Tradename="青椒炒鱿鱼" Tradevalue="8">
+        </Trade>
+        <Trade Id="9" Shopid="14" Tradename="爆炒腊肉饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="10" Shopid="14" Tradename="梅菜扣肉饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="11" Shopid="14" Tradename="五香红烧肉饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="12" Shopid="14" Tradename="荔枝肉饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="13" Shopid="14" Tradename="椒盐带鱼饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="14" Shopid="14" Tradename="椒盐鸡柳串饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="15" Shopid="14" Tradename="素菜饭" Tradevalue="8">
+        </Trade>
+    </Shop>
+    <Shop Id="15" Shopname="晖龙快餐" Phone="4007707077">
+        <Trade Id="1" Shopid="15" Tradename="台湾卤肉饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="2" Shopid="15" Tradename="鱼香肉丝饭" Tradevalue="8">
+        </Trade>
+        <Trade Id="3" Shopid="15" Tradename="京门带鱼套餐" Tradevalue="15">
+        </Trade>
+        <Trade Id="4" Shopid="15" Tradename="香烤鸡腿套餐" Tradevalue="15">
+        </Trade>
+        <Trade Id="5" Shopid="15" Tradename="红烧猪蹄套餐" Tradevalue="10">
+        </Trade>
+        <Trade Id="6" Shopid="15" Tradename="黑椒上排套餐" Tradevalue="10">
+        </Trade>
+        <Trade Id="7" Shopid="15" Tradename="白切鸡套餐" Tradevalue="10">
+        </Trade>
+        <Trade Id="8" Shopid="15" Tradename="京都红烧肉套餐" Tradevalue="10">
+        </Trade>
+        <Trade Id="9" Shopid="15" Tradename="香酥鳗鱼套餐" Tradevalue="12">
+        </Trade>
+        <Trade Id="10" Shopid="15" Tradename="日式叉烧套餐" Tradevalue="12">
+        </Trade>
+        <Trade Id="11" Shopid="15" Tradename="极品秋刀鱼套餐" Tradevalue="12">
+        </Trade>
+        <Trade Id="12" Shopid="15" Tradename="飘香烧鹅套餐" Tradevalue="12">
+        </Trade>
+        <Trade Id="13" Shopid="15" Tradename="日式烤鱿鱼套餐" Tradevalue="10">
+        </Trade>
+        <Trade Id="14" Shopid="15" Tradename="秘制洋烧排套餐" Tradevalue="12">
+        </Trade>
+        <Trade Id="15" Shopid="15" Tradename="白米饭" Tradevalue="1">
+        </Trade>
+    </Shop>
+    <Shop Id="16" Shopname="粉面世家" Phone="87504797">
+        <Trade Id="1" Shopid="16" Tradename="鸡蛋炒面/粉" Tradevalue="9">
+        </Trade>
+        <Trade Id="2" Shopid="16" Tradename="肉丝炒面/粉" Tradevalue="9">
+        </Trade>
+        <Trade Id="3" Shopid="16" Tradename="炒广东细粉" Tradevalue="9">
+        </Trade>
+        <Trade Id="4" Shopid="16" Tradename="正宗兴化炒粉" Tradevalue="10">
+        </Trade>
+        <Trade Id="5" Shopid="16" Tradename="牛肉炒面粉" Tradevalue="10">
+        </Trade>
+        <Trade Id="6" Shopid="16" Tradename="三丝炒粉" Tradevalue="10">
+        </Trade>
+        <Trade Id="7" Shopid="16" Tradename="香菇家鸡罐罐面" Tradevalue="12">
+        </Trade>
+        <Trade Id="8" Shopid="16" Tradename="猪尾红菇罐罐面" Tradevalue="12">
+        </Trade>
+        <Trade Id="9" Shopid="16" Tradename="茶菇排骨罐罐面" Tradevalue="14">
+        </Trade>
+        <Trade Id="10" Shopid="16" Tradename="目鱼水鸭罐罐面" Tradevalue="14">
+        </Trade>
+        <Trade Id="11" Shopid="16" Tradename="秘制猪手罐罐面" Tradevalue="14">
+        </Trade>
+        <Trade Id="12" Shopid="16" Tradename="当归牛肉罐罐面" Tradevalue="14">
+        </Trade>
+        <Trade Id="13" Shopid="16" Tradename="冬菇乌鸡罐罐面" Tradevalue="15">
+        </Trade>
+        <Trade Id="14" Shopid="16" Tradename="游水三鲜罐罐面" Tradevalue="16">
+        </Trade>
+        <Trade Id="15" Shopid="16" Tradename="香菇田鸡罐罐面" Tradevalue="16">
+        </Trade>
+        <Trade Id="16" Shopid="16" Tradename="羊肉红菇罐罐面" Tradevalue="16">
+        </Trade>
+        <Trade Id="17" Shopid="16" Tradename="鱼丸罐罐面" Tradevalue="12">
+        </Trade>
+        <Trade Id="18" Shopid="16" Tradename="牛腩砂锅粉" Tradevalue="12">
+        </Trade>
+        <Trade Id="19" Shopid="16" Tradename="牛肉砂锅粉" Tradevalue="12">
+        </Trade>
+        <Trade Id="20" Shopid="16" Tradename="秘制猪手砂锅粉" Tradevalue="12">
+        </Trade>
+        <Trade Id="21" Shopid="16" Tradename="肥肠砂锅粉" Tradevalue="12">
+        </Trade>
+        <Trade Id="22" Shopid="16" Tradename="干妈排骨砂锅粉" Tradevalue="12">
+        </Trade>
+        <Trade Id="23" Shopid="16" Tradename="鸭胗砂锅粉" Tradevalue="12">
+        </Trade>
+        <Trade Id="24" Shopid="16" Tradename="鸭血砂锅粉" Tradevalue="12">
+        </Trade>
+        <Trade Id="25" Shopid="16" Tradename="猪血砂锅粉" Tradevalue="12">
+        </Trade>
+        <Trade Id="26" Shopid="16" Tradename="冬菇家鸡妈祖面" Tradevalue="12">
+        </Trade>
+        <Trade Id="27" Shopid="16" Tradename="花旗参乌鸡妈祖面" Tradevalue="12">
+        </Trade>
+        <Trade Id="28" Shopid="16" Tradename="清炖羊肉妈祖面" Tradevalue="12">
+        </Trade>
+        <Trade Id="29" Shopid="16" Tradename="清补凉排骨妈祖面" Tradevalue="12">
+        </Trade>
+        <Trade Id="30" Shopid="16" Tradename="卤水鸭+卤蛋饭" Tradevalue="14">
+        </Trade>
+        <Trade Id="31" Shopid="16" Tradename="卤鸡腿+卤蛋饭" Tradevalue="14">
+        </Trade>
+        <Trade Id="32" Shopid="16" Tradename="卤水肥肠头+鸭肾饭" Tradevalue="14">
+        </Trade>
+        <Trade Id="33" Shopid="16" Tradename="京味酱骨架饭" Tradevalue="14">
+        </Trade>
+        <Trade Id="34" Shopid="16" Tradename="红烧猪手饭" Tradevalue="14">
+        </Trade>
+        <Trade Id="35" Shopid="16" Tradename="卤水牛腩饭" Tradevalue="14">
+        </Trade>
+        <Trade Id="36" Shopid="16" Tradename="豉汁排骨饭" Tradevalue="14">
+        </Trade>
+        <Trade Id="37" Shopid="16" Tradename="台湾卤肉饭" Tradevalue="14">
+        </Trade>
+        <Trade Id="38" Shopid="16" Tradename="椒盐排骨饭" Tradevalue="20">
+        </Trade>
+        <Trade Id="39" Shopid="16" Tradename="红烧带鱼饭" Tradevalue="20">
+        </Trade>
+        <Trade Id="40" Shopid="16" Tradename="蛋炒饭" Tradevalue="10">
+        </Trade>
+        <Trade Id="41" Shopid="16" Tradename="青菜粉/面" Tradevalue="5">
+        </Trade>
+        <Trade Id="42" Shopid="16" Tradename="酸辣粉面" Tradevalue="6">
+        </Trade>
+        <Trade Id="43" Shopid="16" Tradename="猪血粉/面" Tradevalue="7">
+        </Trade>
+        <Trade Id="44" Shopid="16" Tradename="猪肝粉面" Tradevalue="8">
+        </Trade>
+        <Trade Id="45" Shopid="16" Tradename="肉丝粉/面" Tradevalue="8">
+        </Trade>
+        <Trade Id="46" Shopid="16" Tradename="卤水牛腩粉/面" Tradevalue="9">
+        </Trade>
+        <Trade Id="47" Shopid="16" Tradename="五香牛肉粉/面" Tradevalue="9">
+        </Trade>
+        <Trade Id="48" Shopid="16" Tradename="卤水肥肠粉" Tradevalue="10">
+        </Trade>
+        <Trade Id="49" Shopid="16" Tradename="干妈排骨粉/面" Tradevalue="10">
+        </Trade>
+        <Trade Id="50" Shopid="16" Tradename="白切猪肚粉/面" Tradevalue="10">
+        </Trade>
+        <Trade Id="51" Shopid="16" Tradename="秘制猪手粉/面" Tradevalue="10">
+        </Trade>
+        <Trade Id="52" Shopid="16" Tradename="京味酱骨架粉/面" Tradevalue="10">
+        </Trade>
+        <Trade Id="53" Shopid="16" Tradename="皮蛋瘦肉粥" Tradevalue="7">
+        </Trade>
+        <Trade Id="54" Shopid="16" Tradename="猪肝粥" Tradevalue="7">
+        </Trade>
+        <Trade Id="55" Shopid="16" Tradename="鸭血葱花粥" Tradevalue="7">
+        </Trade>
+        <Trade Id="56" Shopid="16" Tradename="田鸡粥" Tradevalue="8">
+        </Trade>
+        <Trade Id="57" Shopid="16" Tradename="牛肉葱花粥" Tradevalue="8">
+        </Trade>
+    </Shop>
+</shops>
