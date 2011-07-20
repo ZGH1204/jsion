@@ -44,6 +44,7 @@ package jcore.org.loader
 		override protected function setContent(data:*):void
 		{
 			_content = _imgLoader.content;
+			_imgLoader.unload();
 		}
 		
 		override public function dispose():void
