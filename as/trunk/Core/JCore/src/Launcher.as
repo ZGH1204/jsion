@@ -98,6 +98,12 @@ package
 		{
 			//trace("加载完成");
 			
+			if(loaders.hasError)
+			{
+				throw new Error("启动模块加载失败。");
+				return;
+			}
+			
 			DisposeUtil.free(_configLoader);
 			_configLoader = null;
 			

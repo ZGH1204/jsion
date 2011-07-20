@@ -119,6 +119,9 @@ package jcore.org.loader
 		protected var _listTemp:Array = [];
 		
 		
+		protected var _hasError:Boolean = false;
+		
+		
 		
 		/**
 		 * 构造函数
@@ -167,6 +170,14 @@ package jcore.org.loader
 		public function get numLoadings():int
 		{
 			return _numLoadings;
+		}
+		
+		/**
+		 * 是否有资源加载失败。
+		 */		
+		public function get hasError():Boolean
+		{
+			return _hasError;
 		}
 
 		/**
@@ -723,6 +734,8 @@ package jcore.org.loader
 				
 				_numLoadings++;
 			}
+			
+			if(_numLoadings <= 0) tryComplete();
 		}
 		
 		/**
@@ -803,9 +816,12 @@ package jcore.org.loader
 			if(_loadingList.length == 0 && _waitList.length == 0)
 			{
 				if(DictionaryUtil.hasValue(_errorListDic))
+				{
+					_hasError = true;
 					dispatchEvent(new JLoaderEvent(JLoaderEvent.Error, "批量加载中存在部分加载错误"));
-				dispatchEvent(new JLoaderEvent(JLoaderEvent.Complete));
+				}
 				if(_callback != null) _callback(this);
+				dispatchEvent(new JLoaderEvent(JLoaderEvent.Complete));
 			}
 		}
 		
