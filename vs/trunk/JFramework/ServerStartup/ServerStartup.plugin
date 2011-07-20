@@ -1,0 +1,19 @@
+﻿<PlugIn   name="Server"
+          author="Jsion"
+          description="测试">
+  <Manifest>
+    <Identity name="ServerStartup" />
+  </Manifest>
+  
+  <Runtime>
+    <Import assembly="ServerStartup.dll">
+      <!--解析器配置-->
+      <Doozer name="Start" class="ServerStartup.Start" />
+    </Import>
+  </Runtime>
+
+  <Path name = "/App/Startup">
+    <!--节点名称为解析器名称-->
+    <Start id="Server1" />
+  </Path>
+</PlugIn>

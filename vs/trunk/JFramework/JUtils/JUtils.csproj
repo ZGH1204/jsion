@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{77C3A3A3-4F05-4705-B7CE-DB306E977D1A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JUtils</RootNamespace>
+    <AssemblyName>JUtils</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\dlls\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="zlib.net">
+      <HintPath>..\..\dlls\zlib.net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppConfigAbstract.cs" />
+    <Compile Include="AppUtil.cs" />
+    <Compile Include="ArrayExts.cs" />
+    <Compile Include="AssemblyLocator.cs" />
+    <Compile Include="Attributes\AppConfigAttribute.cs" />
+    <Compile Include="Attributes\MsgHandlerAttribute.cs" />
+    <Compile Include="CompileUtil.cs" />
+    <Compile Include="CryptUtil.cs" />
+    <Compile Include="ManagedThreadPool.cs" />
+    <Compile Include="Marshal.cs" />
+    <Compile Include="Messages\DefaultReceiver.cs" />
+    <Compile Include="Messages\IMsgReceiver.cs" />
+    <Compile Include="Messages\JMethodInfo.cs" />
+    <Compile Include="Messages\Message.cs" />
+    <Compile Include="Messages\MsgAction.cs" />
+    <Compile Include="Messages\MsgMonitor.cs" />
+    <Compile Include="Messages\MsgType.cs" />
+    <Compile Include="Net\AllDelegate.cs" />
+    <Compile Include="Net\ByteArray.cs" />
+    <Compile Include="Net\FSM.cs" />
+    <Compile Include="Net\IPacketCryptor.cs" />
+    <Compile Include="Net\NoneCryptor.cs" />
+    <Compile Include="Net\Packet.cs" />
+    <Compile Include="Net\JSocket.cs" />
+    <Compile Include="Net\PacketCryptor.cs" />
+    <Compile Include="Net\PacketReader.cs" />
+    <Compile Include="Net\PacketSender.cs" />
+    <Compile Include="Net\SocketAccepter.cs" />
+    <Compile Include="Net\SocketConnecter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomChinese.cs" />
+    <Compile Include="ResourceUtil.cs" />
+    <Compile Include="SerializationUtil.cs" />
+    <Compile Include="ServerUtil.cs" />
+    <Compile Include="StringExt.cs" />
+    <Compile Include="TypeParse.cs" />
+    <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="LogConfig.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
