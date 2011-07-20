@@ -173,6 +173,11 @@ package jcore.org.loader
 		function get numLoadings():int;
 		
 		/**
+		 * 是否有资源加载失败。
+		 */		
+		function get hasError():Boolean;
+		
+		/**
 		 * 当前批量加载器默认配置，配置项如下：<br /><br />
 		 * 
 		 * 	<table>

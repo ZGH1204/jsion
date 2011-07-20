@@ -955,9 +955,9 @@ package jcore.org.loader
 				removeLoadEvent(e.currentTarget as EventDispatcher);
 				removeBytesTotalEvent(e.currentTarget as EventDispatcher);
 				
-				dispatchEvent(new JLoaderEvent(JLoaderEvent.Error, e.text));
-				
 				if(_callback != null) _callback(this);
+				
+				dispatchEvent(new JLoaderEvent(JLoaderEvent.Error, e.text));
 				
 				LoaderMonitor.completeLoad(this);
 			}
@@ -977,9 +977,9 @@ package jcore.org.loader
 			removeLoadEvent(e.currentTarget as EventDispatcher);
 			removeBytesTotalEvent(e.currentTarget as EventDispatcher);
 			
-			dispatchEvent(new JLoaderEvent(JLoaderEvent.Error, e.text));
-			
 			if(_callback != null) _callback(this);
+			
+			dispatchEvent(new JLoaderEvent(JLoaderEvent.Error, e.text));
 			
 			LoaderMonitor.completeLoad(this);
 		}
@@ -1018,9 +1018,9 @@ package jcore.org.loader
 			removeLoadEvent(e.currentTarget as EventDispatcher);
 			removeBytesTotalEvent(e.currentTarget as EventDispatcher);
 			
-			dispatchEvent(new JLoaderEvent(JLoaderEvent.Complete));
-			
 			if(_callback != null) _callback(this);
+			
+			dispatchEvent(new JLoaderEvent(JLoaderEvent.Complete));
 			
 			LoaderMonitor.completeLoad(this);
 		}

@@ -23,7 +23,7 @@
 		ResRoot="" 
 	/>
 	<Modules>
-		<Module id="GameLoading" cls="jloading.LoadingModule" file="JLoadingModule.swc" target="_child" crypt="false" startup="true" />
+		<Module id="GameLoading" cls="jloading.LoadingModule" file="JLoadingModule2.swc" target="_child" crypt="false" startup="true" />
 	</Modules>
 	<Policys>
 		<policy file="crossdomain.xml" />
