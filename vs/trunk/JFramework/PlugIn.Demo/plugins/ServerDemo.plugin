@@ -1,0 +1,18 @@
+﻿<PlugIn   name="Demo"
+          author="Jsion"
+          description="测试">
+  <Manifest>
+    <Identity name="PlugIn.Demo" />
+  </Manifest>
+  <Runtime>
+    <Import assembly="kj.dll">
+      <!--解析器配置-->
+      <Doozer name="Class" class="" />
+    </Import>
+  </Runtime>
+
+  <Path name = "/App/Startup">
+    <!--节点名称为解析器名称-->
+    <Class id="" />
+  </Path>
+</PlugIn>

@@ -1,0 +1,21 @@
+﻿<PlugIn   name="NetWork"
+          author="Jsion"
+          description="网络通讯插件">
+  <Manifest>
+    <Identity name="NetWork" />
+  </Manifest>
+  
+  <Runtime>
+    <Import assembly="NetWork.dll">
+      <!--解析器配置-->
+      <Doozer name="Listener" class="NetWork.ListenerDoozer" />
+      <Doozer name="Connecter" class="NetWork.ConnecterDoozer" />
+    </Import>
+  </Runtime>
+
+  <Path name = "/CenterServer/Startup">
+    <!--节点名称为解析器名称-->
+    <Listener id="ListenLocal" />
+    <Connecter id="ConnectTest" />
+  </Path>
+</PlugIn>
