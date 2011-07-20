@@ -1,0 +1,11 @@
+1.在数据库服务器上运行 SqlScripts 文件夹下的 BookingDB.sql 脚本 创建数据库
+
+2.把网站程序目录内的所有文件全部Copy到网站根目录下
+
+3.在目录下的 SJS.config 文件中配置数据库连接地址和数据库名
+
+4.解压目录下的 Ext.rar 文件,选择解压到当前目录
+
+5.访问网站根 Install.aspx 进行系统初始化
+
+6.(可选)在/Scripts/common-text.js和/Scripts/common-int.js中可以配置部分文本和数值

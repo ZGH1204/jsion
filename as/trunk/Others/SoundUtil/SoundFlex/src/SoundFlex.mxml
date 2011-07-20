@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="598" height="294" minWidth="660" minHeight="300" 
+			   addedToStage="application1_addedToStageHandler(event)">
+
+	<fx:Script>
+		<![CDATA[
+			import com.data.LoopType;
+			import com.manager.MusicManager;
+			import com.manager.SoundManager;
+			
+			import mx.controls.Alert;
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				var gPoint:Point;
+				var loops:int = 0;
+				
+				var pos:Array = soundPoint_txt.text.split(",");
+				
+				if(soundPoint_txt.text != "" && soundPoint_txt.text.indexOf(",") == soundPoint_txt.text.lastIndexOf(","))
+					gPoint = new Point(pos[0], pos[1]);
+				
+				if(soundLoop_txt.text != "")
+					loops = int(soundLoop_txt.text);
+				
+				SoundManager.Instance.playSound(soundName_txt.text, gPoint, allowManager_ck.selected, allowMultiSound_ck.selected, loops);
+			}
+
+
+			protected function button4_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				SoundManager.Instance.setSynchronous(int(soundSync_txt.text));
+			}
+
+
+			protected function button5_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				SoundManager.Instance.setConcurrentDelay(int(soundDelay_txt.text));
+			}
+			
+			
+			protected function button6_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				event.stopPropagation();
+				stage.addEventListener(MouseEvent.CLICK, __stageClickHandler);
+			}
+
+
+			protected function application1_addedToStageHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				SoundManager.Instance.setup(stage);
+				MusicManager.Instance.setup("", stage);
+				soundPoint_txt.text = stage.stageWidth / 2 + "," + (stage.stageHeight / 2);
+				
+//				var lParam:LoopParam = new LoopParam();
+				
+//				var mList:String = "1003,1004";//,1003,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,1016,1017,1018,1019,1020";
+				
+//				MusicManager.Instance.playBattleMusic(mList.split(","), [5, 40]);
+//				MusicManager.Instance.playMusic(mList.split(","), 0);
+			}
+			
+			protected function __stageClickHandler(e:MouseEvent):void
+			{
+				stage.removeEventListener(MouseEvent.CLICK, __stageClickHandler);
+				soundPoint_txt.text = stage.mouseX + "," + stage.mouseY;
+			}
+
+
+			protected function button7_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub设置音量
+				MusicManager.Instance.setVolume(int(volume_txt.text));
+			}
+
+
+			protected function button8_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub普通播放
+				if(musicList_txt.text == "")
+				{
+					Alert.show("请根据背景音乐范围选择背景音乐输入播放列表框", "播放列表");
+					return;
+				}
+				var list:Array = musicList_txt.text.split(",");
+				var loopType:String = "";
+				
+				if(single_rb.selected)
+					loopType = LoopType.SINGLE_PLAY;
+				else if(cycle_rb.selected)
+					loopType = LoopType.CIRCULATORY_PLAY;
+				else if(radom_rb.selected)
+					loopType = LoopType.RANDOM_PLAY;
+				
+				MusicManager.Instance.playMusic(list, 0, loopType);
+			}
+
+
+			protected function button9_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub战斗播放
+				if(musicList_txt.text == "")
+				{
+					Alert.show("请根据背景音乐范围选择背景音乐输入播放列表框", "播放列表");
+					return;
+				}
+				if(sectionList_txt.text == "")
+				{
+					Alert.show("请根据播放列表框个数输入相应的播放时间", "时间控制");
+					return;
+				}
+				
+				var mList:Array = musicList_txt.text.split(",");
+				var tList:Array = sectionList_txt.text.split(",");
+				
+				if(mList.length != tList.length)
+				{
+					Alert.show("播放列表与时间控制个数不一致", "战斗播放");
+					return;
+				}
+				
+				MusicManager.Instance.setInterrupt(allowInterrupt_ck.selected);
+				MusicManager.Instance.playBattleMusic(mList, tList);
+			}
+
+
+			protected function button10_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub停止播放
+				MusicManager.Instance.stopMusic();
+			}
+
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<s:RadioButtonGroup id="radiogroup1"/>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Group x="10" y="10" width="286" height="275">
+		<s:Button x="204" y="244" label="播放" click="button1_clickHandler(event)" />
+		<s:Label x="9" y="40" text="音效名称:"/>
+		<s:TextInput x="65" y="34" text="Sound0002" id="soundName_txt" width="210"/>
+		<s:Label x="9" y="70" text="音效发生坐标:"/>
+		<s:TextInput x="92" y="64" width="126" id="soundPoint_txt"/>
+		<s:CheckBox x="10" y="186" label="是否启用音效并发限制" width="265" id="allowManager_ck"/>
+		<s:CheckBox x="11" y="212" label="是否允许同时播放同一音效" width="265" id="allowMultiSound_ck" selected="true"/>
+		<s:Label x="9" y="99" text="音效循环次数:"/>
+		<s:TextInput x="92" y="94" width="183" id="soundLoop_txt" text="0"/>
+		<s:Button x="226" y="64" label="取点" width="45" click="button6_clickHandler(event)"/>
+		<s:Label x="32" y="10" text="音效范围为:Sound0002~Sound003D(Hex)"/>
+		<s:Button x="204" y="125" label="设置" click="button4_clickHandler(event)" />
+		<s:Label x="10" y="131" text="连续音效个数:"/>
+		<s:TextInput x="97" y="125" width="95" id="soundSync_txt" text="8"/>
+		<s:TextInput x="105" y="156" width="89" id="soundDelay_txt" text="0"/>
+		<s:Label x="10" y="162" text="音效Delay(毫秒):"/>
+		<s:Button x="204" y="157" label="设置" click="button5_clickHandler(event)"/>
+	</s:Group>
+	<s:Group x="304" y="10" width="286" height="275">
+		<s:Label x="35" y="11" text="背景音乐范围:1001-1020(两个一组)"/>
+		<s:TextInput x="69" y="96" width="207" id="musicList_txt" text="1003,1004"/>
+		<s:Label x="10" y="102" text="播放列表:"/>
+		<s:Label x="10" y="132" text="时间控制:"/>
+		<s:TextInput x="69" y="127" width="207" id="sectionList_txt" text="5,40"/>
+		<s:Label x="10" y="188" text="音量设置:"/>
+		<s:TextInput x="69" y="183" width="129" text="100" id="volume_txt"/>
+		<s:Button x="206" y="183" label="设置" click="button7_clickHandler(event)"/>
+		<s:CheckBox x="10" y="213" label="启用播放中断控制(战斗播放)" id="allowInterrupt_ck"/>
+		<s:RadioButton x="69" y="157" label="单曲" groupName="radiogroup1" id="single_rb"/>
+		<s:RadioButton x="119" y="157" label="循环" groupName="radiogroup1" selected="true" id="cycle_rb"/>
+		<s:RadioButton x="169" y="157" label="顺序" groupName="radiogroup1" id="queue_rb"/>
+		<s:Label x="10" y="161" text="播放类型:"/>
+		<s:Button x="49" y="244" label="战斗播放" click="button9_clickHandler(event)"/>
+		<s:Button x="127" y="244" label="普通播放" click="button8_clickHandler(event)"/>
+		<s:TextArea x="10" y="31" width="266" height="57" editable="false" verticalAlign="middle" text="播放列表与时间控制都以逗号隔开.战斗播放时播放列表与时间控制的个数必需一致."/>
+		<s:RadioButton x="219" y="157" label="随机" id="radom_rb" groupName="radiogroup1"/>
+		<s:Button x="206" y="244" label="停止播放" click="button10_clickHandler(event)"/>
+	</s:Group>
+</s:Application>

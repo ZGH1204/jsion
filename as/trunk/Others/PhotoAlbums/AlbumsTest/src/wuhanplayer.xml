@@ -1,0 +1,19 @@
+﻿<root>
+	<PlayerSkins defaultSkin="1">
+		<skin playerX="" playerY="" skinRoot="" titleStep="1" titleScrollWidth="" titleScrollHeight="">
+			<extend titleX="" titleY="" titleBg="wuhan/playerTitleBg.png" titleBgX="" titleBgY="" />
+			<extend titleTextX="" titleTextY="3" titleFont="" titleSize="" titleColor="0xFFFFFF" titleBold="false" titleItalic="false" />
+			<extend preTrackBtn="wuhan/playerPreBtn.png" preTrackBtnOver="" preTrackBtnX="125" preTrackBtnY="" />
+			<extend nextTrackBtn="wuhan/playerNextBtn.png" nextTrackBtnOver="" nextTrackBtnX="195" nextTrackBtnY="" />
+			<extend playBtn="wuhan/playerPlayBtn.png" playBtnOver="" pauseBtn="wuhan/PlayerPauseBtn.png" pauseBtnOver="" playBtnX="160" playBtnY="" />
+			<extend stopBtn="" stopBtnOver="" stopBtnX="" stopBtnY="" />
+			<extend muteBtn="wuhan/playerMuteBtn.png" muteBtnOver="" unMuteBtn="wuhan/unMuteBtn.png" unMuteBtnOver="" muteBtnX="230" muteBtnY="" />
+		</skin>
+	</PlayerSkins>
+	<PlayLists defaultList="1">
+		<list musicRoot="" playMode="2" autoPlay="true">
+			<item musicRoot="" url="1.mp3" songName="我在那一角落患过伤风" artist="冯曦妤" />
+			<item musicRoot="" url="2.mp3" songName="避风港" artist="冯曦妤" />
+		</list>
+	</PlayLists>
+</root>

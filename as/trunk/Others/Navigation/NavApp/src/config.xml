@@ -1,0 +1,15 @@
+<root>
+	<debug enabled="true" enableError="true" enableMsg="true" enableWarning="true" enablePerformance="true" />
+	<version from="1" to="2">
+		<file value="*" />
+	</version>
+	
+	<POLICY_FILES>
+        <file value="http://192.168.16.251/crossdomain.xml" />
+	</POLICY_FILES>
+	
+	<AssetFiles Config="AssetConfig.xml" ConfigScale="5">
+		<File Url="assets/Assets.swf" Scale="95" />
+	</AssetFiles>
+	
+</root>

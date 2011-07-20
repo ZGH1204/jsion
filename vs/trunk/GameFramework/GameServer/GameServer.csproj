@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6A0D9874-9347-4704-8AD1-F159478F5F46}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GameServer</RootNamespace>
+    <AssemblyName>GameServer</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\VisualStudio\trunk\dlls\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CenterServer.cs" />
+    <Compile Include="Commands\AllocBufferCmd.cs" />
+    <Compile Include="Commands\ClearConsoleCmd.cs" />
+    <Compile Include="Commands\ClientCountCmd.cs" />
+    <Compile Include="Commands\ExitCmd.cs" />
+    <Compile Include="Commands\ListenLocalCmd.cs" />
+    <Compile Include="Commands\LoadGameServerConfigCmd.cs" />
+    <Compile Include="Commands\SetupPackageHandlerCmd.cs" />
+    <Compile Include="FightServer.cs" />
+    <Compile Include="GameClient.cs" />
+    <Compile Include="GameServerConfig.cs" />
+    <Compile Include="GSServer.cs" />
+    <Compile Include="Interfaces\ICenterPackageHandler.cs" />
+    <Compile Include="Interfaces\ICenterPackageSendLib.cs" />
+    <Compile Include="Interfaces\IFightPackageHandler.cs" />
+    <Compile Include="Interfaces\IFightPackageSendLib.cs" />
+    <Compile Include="Interfaces\IPackageHandler.cs" />
+    <Compile Include="Interfaces\IPackageSendLib.cs" />
+    <Compile Include="Managers\ClientMgr.cs" />
+    <Compile Include="Managers\FightServerMgr.cs" />
+    <Compile Include="Managers\GameServerMgr.cs" />
+    <Compile Include="Managers\GSConfigMgr.cs" />
+    <Compile Include="Packages\CenterPackageHandlers.cs" />
+    <Compile Include="Packages\CenterPackageSendLib.cs" />
+    <Compile Include="Packages\FightPackageHandlers.cs" />
+    <Compile Include="Packages\FightPackageSendLib.cs" />
+    <Compile Include="Packages\Handlers\Client\TestPackageHandler.cs" />
+    <Compile Include="Packages\PackageHandlers.cs" />
+    <Compile Include="Packages\PackageSendLib.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JsionFramework\JsionFramework.csproj">
+      <Project>{446EE1F7-33D0-4AD0-8B67-A28E621228BD}</Project>
+      <Name>JsionFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerCommon\ServerCommon.csproj">
+      <Project>{078FDF00-3BA2-4DA2-9DE2-07C2725FDA33}</Project>
+      <Name>ServerCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Packages\Handlers\Fight\" />
+    <Folder Include="Packages\Handlers\Server\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:components="components.*" minWidth="800" minHeight="600" width="1000" height="600">
+	<mx:Style>
+		global {
+			fontSize:12;
+		}
+	</mx:Style>
+	<mx:Script>
+		<![CDATA[
+			import components.ProjectEditorCanvas;
+			import dataType.TextFile;
+			import code.LanguageBindModel;
+			import code.LanguageFile;
+			import mx.containers.Canvas;
+			import components.LanguageEditorCanvas;
+			import mx.events.FlexNativeMenuEvent;
+			import mx.utils.ObjectProxy;
+			import mx.collections.ArrayCollection;
+			
+			private var _languageFilePath:String;
+			
+			[Bindable]
+			private var acl:ArrayCollection;
+			
+			public var currentView:Canvas;
+			
+			private function resetMenuItem(array:Array,nativeMenuItem:NativeMenuItem):void
+			{
+				setMenuItemEnable(array);
+				if(nativeMenuItem)
+					nativeMenuItem.enabled = false;
+			}
+			
+			private function setMenuItemEnable(array:Array):void
+			{
+				for each(var item:NativeMenuItem in array)
+				{
+					if(item.submenu != null)
+					{
+						setMenuItemEnable(item.submenu.items);
+					}
+					
+					item.enabled = true;
+				}
+			}
+			
+			private function itemClickHandler(e:FlexNativeMenuEvent):void
+			{
+				resetMenuItem(utilMenu.nativeMenu.items,e.nativeMenuItem);
+				if(e.label == "打开语言包")
+				{
+					browseLanguageFile(e);
+				}
+				else if(e.label == "搜索中文")
+				{
+					browseProjectDirectory(e);
+				}
+			}
+			
+			private function browseProjectDirectory(e:FlexNativeMenuEvent):void
+			{
+				var file:File = new File();
+				
+				file.addEventListener(Event.SELECT, __selectProjectPathHandler);
+				file.addEventListener(Event.CANCEL, __cancelOpenHandler);
+				
+				file.browseForDirectory("Please select the project directory");
+			}
+			
+			private function __selectProjectPathHandler(e:Event):void
+			{
+				var file:File = e.target as File;
+				file.removeEventListener(Event.SELECT, __selectProjectPathHandler);
+				file.removeEventListener(Event.CANCEL, __cancelOpenHandler);
+				
+				if(file.isDirectory == false)
+				{
+					resetMenuItem(utilMenu.nativeMenu.items,null);
+					return;
+				}
+				
+				var projectEditorCanvas:ProjectEditorCanvas = new ProjectEditorCanvas();
+				
+				setState(projectEditorCanvas);
+				
+				projectEditorCanvas.setup(this, "file:///" + file.nativePath);
+			}
+			
+			private function browseLanguageFile(e:FlexNativeMenuEvent):void
+			{
+				var file:File = new File();
+				
+				file.addEventListener(Event.SELECT, __selectLanguagePathHandler);
+				file.addEventListener(Event.CANCEL, __cancelOpenHandler);
+				
+				file.browseForOpen("Please select the language pack location",[new FileFilter("Documents", "*.txt")]);
+			}
+			
+			private function __cancelOpenHandler(e:Event):void
+			{
+				var file:File = e.target as File;
+				file.removeEventListener(Event.CANCEL, __cancelOpenHandler);
+				file.removeEventListener(Event.SELECT, __selectLanguagePathHandler);
+				file.removeEventListener(Event.SELECT, __selectProjectPathHandler);
+				resetMenuItem(utilMenu.nativeMenu.items,null);
+			}
+			
+			private function __selectLanguagePathHandler(e:Event):void
+			{
+				var file:File = e.target as File;
+				file.removeEventListener(Event.CANCEL, __cancelOpenHandler);
+				file.removeEventListener(Event.SELECT, __selectLanguagePathHandler);
+				openLanguage("file:///" + file.nativePath);
+				
+			}
+			
+			private function openLanguage(path:String):void
+			{
+				_languageFilePath = path;
+				
+				var language:LanguageEditorCanvas = new LanguageEditorCanvas();
+				
+				setState(language);
+				
+				language.setup(this,_languageFilePath);
+			}
+			
+			private function setState(state:Canvas):void
+			{
+				if(currentView && currentView.parent)
+				{
+					currentView.parent.removeChild(currentView);
+				}
+				currentView = state;
+				
+				if(currentView)
+					addChild(currentView);
+			}
+		]]>
+	</mx:Script>
+	<mx:XML format="e4x" id="myMenuData">
+        <root>
+            <menuitem label="文件">
+                <menuitem label="搜索中文" key="" />
+                <menuitem label="打开语言包" key="" />
+            </menuitem>
+        </root>
+    </mx:XML>
+
+	<mx:menu>
+		
+		<mx:FlexNativeMenu id="utilMenu" dataProvider="{myMenuData}"
+			showRoot="false" 
+			labelField="@label" 
+			keyEquivalentField="@key"
+			itemClick="itemClickHandler(event)">
+			
+		</mx:FlexNativeMenu>
+	    
+	</mx:menu>
+	
+</mx:WindowedApplication>
