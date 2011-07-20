@@ -1,0 +1,31 @@
+<root>
+	<version from="0" to="1">
+		<file value="*.png" />
+	</version>
+	<config 
+		Ver="Alpha 1.0" 
+		Copyright="" 
+		Agent="Demo" 
+		AgentID="1" 
+		
+		Language="zh-CN" 
+		GameWidth="900" 
+		GameHeight="600" 
+		SrvIP="192.168.16.251" 
+		SrvPort="4505" 
+		
+		UserPlugInsDir="plugins/" 
+		UserPlugInsList="PlugInList.xml" 
+		
+		LoginUrl="" 
+		PayUrl="" 
+		ForumUrl="" 
+		ResRoot="" 
+	/>
+	<Modules>
+		<Module id="GameLoading" cls="jloading.LoadingModule" file="JLoadingModule.swc" target="_child" crypt="false" startup="true" />
+	</Modules>
+	<Policys>
+		<policy file="crossdomain.xml" />
+	</Policys>
+</root>
