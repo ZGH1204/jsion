@@ -5,6 +5,7 @@ package
 	import flash.events.Event;
 	import flash.system.Security;
 	
+	import jcore.org.events.JLoaderEvent;
 	import jcore.org.loader.ILoaders;
 	import jcore.org.loader.XmlLoader;
 	import jcore.org.message.DefaultMsg;
@@ -23,6 +24,8 @@ package
 		private var _sprite:Sprite;
 		private var _otherInitFn:Function;
 		
+		private var _callback:Function;
+		
 		public var stage:Stage;
 		
 		public var config:XML;
@@ -40,8 +43,9 @@ package
 			}
 		}
 		
-		public function launch():void
+		public function launch(callback:Function = null):void
 		{
+			if(callback != null) _callback = callback;
 			if(_sprite.stage)
 			{
 				loadConfig();
@@ -91,7 +95,19 @@ package
 			ModuleInfoMgr.setup(config);
 			
 			//trace("加载启动模块..");
-			ModuleInfoMgr.loadModuleFiles(ModuleInfoMgr.startupModuleInfoList).start(loadStartupsCallback);
+			var loaders:ILoaders = ModuleInfoMgr.loadModuleFiles(ModuleInfoMgr.startupModuleInfoList);
+			
+			loaders.addEventListener(JLoaderEvent.Complete, __startupModulesLoadCompleteHandler);
+			
+			loaders.start();
+		}
+		
+		private function __startupModulesLoadCompleteHandler(e:JLoaderEvent):void
+		{
+			var loaders:ILoaders = e.currentTarget as ILoaders;
+			loaders.removeEventListener(JLoaderEvent.Complete, __startupModulesLoadCompleteHandler);
+			
+			loadStartupsCallback(loaders);
 		}
 		
 		private function loadStartupsCallback(loaders:ILoaders):void
@@ -114,7 +130,10 @@ package
 				geters.push(moduleInfo.id);
 			}
 			
-			MessageMonitor.createAndPostMsg(ModuleDefaultMsg.Install, "Launcher", geters);
+			MessageMonitor.createAndSendMsg(ModuleDefaultMsg.Install, "Launcher", geters);
+			
+			if(_callback != null) _callback();
+			_callback = null;
 		}
 		
 		/**

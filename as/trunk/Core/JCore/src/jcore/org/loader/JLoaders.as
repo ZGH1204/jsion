@@ -813,7 +813,7 @@ package jcore.org.loader
 		 */		
 		protected function tryComplete():void
 		{
-			if(_loadingList.length == 0 && _waitList.length == 0)
+			if(_loadingList && _loadingList.length == 0 && _waitList && _waitList.length == 0)
 			{
 				if(DictionaryUtil.hasValue(_errorListDic))
 				{

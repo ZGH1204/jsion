@@ -1,7 +1,7 @@
 package jsocket
 {
 	/**
-	 * Socket模块消息标识（0——20）
+	 * Socket模块消息标识（0——50）
 	 * @author Jsion
 	 * 
 	 */	
