@@ -141,7 +141,7 @@ package jcore.org.moduls
 					return;
 				}
 				
-				return Function(_msgHandleFnList[msg.msg]).apply(null, msg);
+				return _msgHandleFnList[msg.msg].apply(null, [msg]);
 			}
 			
 			if(msg.msg == ModuleDefaultMsg.Install)

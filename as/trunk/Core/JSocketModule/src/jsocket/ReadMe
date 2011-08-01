@@ -1,4 +1,4 @@
-Socket模块预留消息标识（0——20）可参见 jsocket.SocketMessage 类
+Socket模块预留消息标识（0——50）可参见 jsocket.SocketMessage 类
 
 
 初始化模块消息标识：
