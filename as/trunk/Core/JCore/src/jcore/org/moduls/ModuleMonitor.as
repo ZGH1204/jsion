@@ -4,6 +4,7 @@ package jcore.org.moduls
 	
 	import jutils.org.util.AppDomainUtil;
 	import jutils.org.util.DictionaryUtil;
+	import jutils.org.util.DisposeUtil;
 	import jutils.org.util.StringUtil;
 
 	public class ModuleMonitor
@@ -82,7 +83,11 @@ package jcore.org.moduls
 				return null;
 			}
 			
-			return DictionaryUtil.delKey(loadedModuleDic, moduleInfo.id);
+			var delItem:DefaultModule = DictionaryUtil.delKey(loadedModuleDic, moduleInfo.id);
+			
+			DisposeUtil.free(delItem);
+			
+			return delItem;
 		}
 	}
 }
