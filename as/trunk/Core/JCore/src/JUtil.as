@@ -75,7 +75,7 @@ package
 			if(endIndex == -1) endIndex = url.length;
 			
 			var name:String = url.substring(startIndex, endIndex);
-			var dotIndex:int = name.indexOf(".");
+			var dotIndex:int = name.lastIndexOf(".");
 			if(dotIndex == -1) return null;
 			var ext:String = name.substr(dotIndex + 1);
 			return ext;
