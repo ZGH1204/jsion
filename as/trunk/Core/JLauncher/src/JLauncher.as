@@ -1,6 +1,7 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	import flash.utils.ByteArray;
 	
 	import jcore.org.loader.BinaryLoader;
@@ -17,12 +18,20 @@ package
 		{
 			_launcher = new Launcher(this, "config.xml", JStartup);
 			
-			_launcher.launch(loadTest);
+			_launcher.launch();
+			
+			stage.addEventListener(MouseEvent.CLICK, onClickHandler);
+		}
+		
+		private function onClickHandler(e:MouseEvent):void
+		{
+			loadTest();
 		}
 		
 		private function loadTest():void
 		{
-			_loader = new BinaryLoader("JCore.swc", {rnd: true});
+			_loader = new BinaryLoader("../../JCore/bin/JCore.swc", {rnd: true});
+			//_loader = new BinaryLoader("JLauncher.swf", {rnd: true});
 			
 			_loader.loadAsync(loadCallback);
 		}

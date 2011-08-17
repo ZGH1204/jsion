@@ -6,6 +6,11 @@ package jpromiscuous
 	import jcore.org.moduls.DefaultModule;
 	import jcore.org.moduls.ModuleInfo;
 	
+	import jpromiscuous.vo.RectRecord;
+	import jpromiscuous.vo.SwfReader;
+	import jpromiscuous.vo.Tag;
+	import jpromiscuous.vo.TagTypes;
+	
 	import jutils.org.zip.ZipEntry;
 	import jutils.org.zip.ZipFile;
 	
@@ -34,9 +39,7 @@ package jpromiscuous
 		
 		protected function promiscSwfCodeHandler(msg:Message):Object
 		{
-			var bytes:ByteArray = msg.wParam as ByteArray;
-			
-			trace("SWF文件大小：" + bytes.length);
+			swfParser(msg.wParam as ByteArray);
 			
 			return null;
 		}
@@ -57,6 +60,35 @@ package jpromiscuous
 			m.wParam = swfBytes;
 			
 			return promiscSwfCodeHandler(m);
+		}
+		
+		private function swfParser(bytes:ByteArray):void
+		{
+			var reader:SwfReader = new SwfReader(bytes);
+			
+			reader.readHeader();
+			
+			var list:Array = reader.readTags();
+			
+			var abcList:Array = [];
+			
+			for each(var tag:Tag in list)
+			{
+				if(tag.tagType == TagTypes.TAG_DOABC2) abcList.push(tag);
+			}
+			
+			trace(abcList.length);
+			
+			//reader.toBinary();
+			
+//			trace("SWF文件大小：" + reader.length);
+//			trace(String.fromCharCode(reader.readByte()));
+//			trace(String.fromCharCode(reader.readByte()));
+//			trace(String.fromCharCode(reader.readByte()));
+//			trace("Version: " + reader.readByte());
+//			trace("File length: " + reader.readUnsignedInt());
+//			trace("FrameSize: " + reader.readUnsignedInt());
+//			var rect:RectRecord = reader.readRECT();
 		}
 	}
 }
