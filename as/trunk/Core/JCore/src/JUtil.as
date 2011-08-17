@@ -68,7 +68,7 @@ package
 		 */		
 		public static function getExtension(url:String):String
 		{
-			var startIndex:int = url.indexOf("/");
+			var startIndex:int = url.lastIndexOf("/");
 			if(startIndex == -1) startIndex = 0;
 			
 			var endIndex:int = url.indexOf("?");

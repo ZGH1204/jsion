@@ -66,7 +66,7 @@ package jcore.org.moduls
 			for each(var xml:XML in modulXL)
 			{
 				var modul:ModuleInfo = new ModuleInfo();
-				XmlUtil.decodeWithProperty(modul, xml);
+				XmlUtil.decodeWithProperty(modul, xml, true);
 				if(StringUtil.isNullOrEmpty(modul.file)) continue;
 				if(modul.startup) _startupModuleInfoList.push(modul);
 				registeModuleInfo(modul);

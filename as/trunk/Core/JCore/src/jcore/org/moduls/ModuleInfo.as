@@ -4,7 +4,7 @@ package jcore.org.moduls
 	
 	import jutils.org.reflection.Assembly;
 
-	public class ModuleInfo
+	public dynamic class ModuleInfo
 	{
 		/**
 		 * 模块文件
