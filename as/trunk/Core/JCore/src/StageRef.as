@@ -4,6 +4,9 @@ package
 	import flash.display.Stage;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	
+	import jcore.org.action.Action;
+	import jcore.org.action.ActionLine;
 
 	/**
 	 * 舞台全局引用
@@ -17,6 +20,7 @@ package
 	public class StageRef
 	{
 		private static var _stage:Stage;
+		private static var _actionLine:ActionLine;
 		
 		public static function setup(stage:Stage):void
 		{
@@ -25,6 +29,13 @@ package
 			_stage.stageFocusRect = false;
 			_stage.align = StageAlign.TOP_LEFT;
 			_stage.scaleMode = StageScaleMode.NO_SCALE;
+			
+			_actionLine = new ActionLine(true);
+		}
+		
+		public static function act(action:Action):void
+		{
+			_actionLine.act(action);
 		}
 		
 		public static function get stageWidth():int
@@ -35,6 +46,16 @@ package
 		public static function get stageHeight():int
 		{
 			return _stage.stageHeight;
+		}
+		
+		public static function get mouseX():Number
+		{
+			return _stage.mouseX;
+		}
+		
+		public static function get mouseY():Number
+		{
+			return _stage.mouseY;
 		}
 		
 		public static function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
