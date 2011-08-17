@@ -24,7 +24,7 @@
 	/>
 	<Modules>
 		<Module id="GameLoading" cls="jloading.LoadingModule" file="../../JLoadingModule/bin/JLoadingModule.swc" target="_child" crypt="false" startup="true" files="asdfsadf" />
-		<!--<Module id="Promiscuous" cls="jpromiscuous.PromiscuousModule" file="../../JPromiscuousModule/bin/JPromiscuousModule.swc" target="_child" crypt="false" startup="true" />-->
+		<Module id="Promiscuous" cls="jpromiscuous.PromiscuousModule" file="../../JPromiscuousModule/bin/JPromiscuousModule.swc" target="_child" crypt="false" startup="true" />
 	</Modules>
 	<Policys>
 		<policy file="crossdomain.xml" />
