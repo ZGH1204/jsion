@@ -1,16 +1,23 @@
 package jcore.org.ddrop
 {
 	import flash.display.DisplayObject;
+	import flash.display.IBitmapDrawable;
 	import flash.events.IEventDispatcher;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 
-	public interface IDragDrop extends IEventDispatcher
+	public interface IDragDrop extends IEventDispatcher, IBitmapDrawable
 	{
 		function get x():Number;
 		function set x(value:Number):void;
 		
 		function get y():Number;
 		function set y(value:Number):void;
+		
+		function get width():Number;
+		function get height():Number;
+		
+		function contains(child:DisplayObject):Boolean;
 		
 		function localToGlobal(point:Point):Point;
 		function globalToLocal(point:Point):Point;
@@ -52,6 +59,6 @@ package jcore.org.ddrop
 		 * @param dragger 拖动对象
 		 * @param data 传递数据
 		 */		
-		function dropHitCallback(dragger:Object, data:*):void;
+		function dropHitCallback(dragger:IDragDrop, data:*):void;
 	}
 }

@@ -1,12 +1,17 @@
 package jcore.org.ddrop
 {
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.IBitmapDrawable;
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
 	import flash.events.MouseEvent;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 	
+	import jutils.org.util.DepthUtil;
 	import jutils.org.util.DictionaryUtil;
 	import jutils.org.util.DisposeUtil;
 	import jutils.org.util.StringUtil;
@@ -165,6 +170,25 @@ package jcore.org.ddrop
 		}
 		
 		/**
+		 * 释放拖动,清除拖动时产生的所有数据.
+		 */		
+		private static function stopDraging():void
+		{
+			if(_draging == false) return;
+			
+			_draging = false;
+			if(_dragIcon != _dragger)
+				DisposeUtil.free(_dragIcon);
+			
+			_dragger = null;
+			_transData = null;
+			_dragingGroup = null;
+			
+			_dragIcon = null;
+			_dragIconStartPoint = null;
+		}
+		
+		/**
 		 * 移除拖拽中的事件监听
 		 */		
 		private static function removeDragingEvent():void
@@ -179,14 +203,132 @@ package jcore.org.ddrop
 			StageRef.removeEventListener(MouseEvent.ROLL_OUT, __dropAbortHandler);
 		}
 		
+		/**
+		 * 正常拖动放下后检测是否有碰撞当前拖拽分组内的对象
+		 */		
+		private static function checkDropHits():void
+		{
+			if(_draging == false || _dragger == null || _dragingGroup == null) return;
+			
+			var list:Array = _dragingGroup.toArray();
+			
+			var dropPoint:Point = new Point(StageRef.mouseX, StageRef.mouseY);
+			
+			var objects:Array = StageRef.getObjectsUnderPoint(dropPoint);
+			
+			
+			
+			
+			
+			var dropHitList:Array = [];
+			
+			for each(var display:DisplayObject in objects)
+			{
+				if(display == _dragger || display == _dragIcon) continue;
+				
+				for each(var item:IDragDrop in list)
+				{
+					if(item.contains(display))
+					{
+						dropHitList.push(item);
+						break;
+					}
+				}
+			}
+			
+			if(dropHitList.length == 0)
+			{
+				return;
+			}
+			else if(dropHitList.length == 1)
+			{
+				IDragDrop(dropHitList[0]).dropHitCallback(_dragger, _transData);
+			}
+			else
+			{
+				var topDis:DisplayObject = null;
+				
+				for(var i:int = 0; i < dropHitList.length; i++)
+				{
+					if(topDis == null)
+					{
+						topDis = dropHitList[i] as DisplayObject;
+						continue;
+					}
+					
+					var tmpDis:DisplayObject = dropHitList[i] as DisplayObject;
+					
+					if(tmpDis != null && DepthUtil.isBelow(topDis, tmpDis))
+					{
+						topDis = tmpDis;
+					}
+				}
+				
+				IDragDrop(topDis).dropHitCallback(_dragger, _transData);
+			}
+			
+			
+			
+			
+			
+//			var rect:Rectangle = new Rectangle();
+//			
+//			var tmpRect:Rectangle = new Rectangle();
+//			
+//			var bmd:BitmapData = new BitmapData(1, 1, true, 0);
+//			
+//			for each(var ddragger:IDragDrop in list)
+//			{
+//				rect = StageRef.getBounds(_dragger as DisplayObject);
+//				
+//				if(rect.containsPoint(dropPoint))
+//				{
+//					bmd.fillRect(bmd.rect, 0);
+//					StageRef.drawTo(bmd, rect.x, rect.y);
+//					var stageColor:uint = bmd.getPixel32(0, 0);
+//					
+//					bmd.fillRect(bmd.rect, 0);
+//					var point:Point = _dragger.globalToLocal(dropPoint);
+//					var matrix:Matrix = new Matrix();
+//					matrix.translate(point.x, point.y);
+//					bmd.draw(_dragger as IBitmapDrawable, matrix);
+//					var draggerColor:uint = bmd.getPixel32(0, 0);
+//					
+//					if(stageColor == draggerColor)
+//						ddragger.dropHitCallback(_dragger, _transData);
+//				}
+//			}
+		}
+		
 		private static function __dragStartHandler(e:MouseEvent):void
 		{
 			if(_draging || e.currentTarget != e.target) return;
+			
+			_draging = true;
 			
 			//保存拖动数据
 			_dragger = IDragDrop(e.currentTarget);
 			_transData = _dragger.transData;
 			_dragingGroup = getDDGroupByDragger(_dragger);
+			
+			//更新视图处理
+			_dragIcon = _dragger.dragingIcon;
+			if(_dragIcon == null)
+			{
+				stopDraging();
+				return;
+			}
+			_dragStartPoint.x = _dragger.x;
+			_dragStartPoint.y = _dragger.y;
+			_dragStartGlobarPoint.x = StageRef.mouseX;
+			_dragStartGlobarPoint.y = StageRef.mouseY;
+			_dragIconStartPoint = _dragger.localToGlobal(Constant.ZeroPoint);
+			if(_dragIcon != _dragger)
+			{
+				_dragIcon.x = _dragIconStartPoint.x;
+				_dragIcon.y = _dragIconStartPoint.y;
+				StageRef.addChild(_dragIcon);
+			}
 			
 			//添加拖动是的事件监听
 			if(_useFPS) StageRef.addEventListener(Event.ENTER_FRAME, __dragingHandler);
@@ -198,31 +340,43 @@ package jcore.org.ddrop
 			StageRef.addEventListener(MouseEvent.MOUSE_OUT, __dropAbortHandler);
 			StageRef.addEventListener(MouseEvent.ROLL_OUT, __dropAbortHandler);
 			
-			//视图处理
-			_dragStartGlobarPoint.x = StageRef.mouseX;
-			_dragStartGlobarPoint.y = StageRef.mouseY;
-			_dragStartPoint.x = _dragger.x;
-			_dragStartPoint.y = _dragger.y;
-			_dragIconStartPoint = _dragger.localToGlobal(Constant.ZeroPoint);
-			_dragIcon = _dragger.dragingIcon;
-			_dragIcon.x = _dragIconStartPoint.x;
-			_dragIcon.y = _dragIconStartPoint.y;
-			StageRef.addChild(_dragIcon);
+			//回调
+			_dragger.startDragCallback();
 		}
 		
 		private static function __dragingHandler(e:Event):void
 		{
+			if(_dragIcon == null) return;
 			
+			if(_dragIcon != _dragger)
+			{
+				_dragIcon.x = _dragIconStartPoint.x + StageRef.mouseX - _dragStartGlobarPoint.x;
+				_dragIcon.y = _dragIconStartPoint.y + StageRef.mouseY - _dragStartGlobarPoint.y;
+			}
+			else
+			{
+				_dragIcon.x = _dragStartPoint.x + StageRef.mouseX - _dragStartGlobarPoint.x;
+				_dragIcon.y = _dragStartPoint.y + StageRef.mouseY - _dragStartGlobarPoint.y;
+			}
+			
+			//回调
+			_dragger.dragingCallback();
 		}
 		
 		private static function __dropHandler(e:MouseEvent):void
 		{
+			checkDropHits();
+			stopDraging();
 			removeDragingEvent();
+			_dragger.dropCallback();
 		}
 		
 		private static function __dropAbortHandler(e:Event):void
 		{
+			stopDraging();
 			removeDragingEvent();
 		}
+		
+		
 	}
 }

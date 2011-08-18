@@ -1,9 +1,13 @@
 package 
 {
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Stage;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import flash.geom.Matrix;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import jcore.org.action.Action;
 	import jcore.org.action.ActionLine;
@@ -56,6 +60,23 @@ package
 		public static function get mouseY():Number
 		{
 			return _stage.mouseY;
+		}
+		
+		public static function getBounds(display:DisplayObject):Rectangle
+		{
+			return display.getBounds(_stage);
+		}
+		
+		public static function getObjectsUnderPoint(point:Point):Array
+		{
+			return _stage.getObjectsUnderPoint(point);
+		}
+		
+		public static function drawTo(bmd:BitmapData, dx:Number, dy:Number):void
+		{
+			var matrix:Matrix = new Matrix();
+			matrix.translate(dx, dy);
+			bmd.draw(_stage, matrix);
 		}
 		
 		public static function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
