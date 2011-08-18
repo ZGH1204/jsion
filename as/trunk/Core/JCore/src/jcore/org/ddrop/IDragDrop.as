@@ -23,6 +23,11 @@ package jcore.org.ddrop
 		function globalToLocal(point:Point):Point;
 		
 		/**
+		 * 是否为鼠标点击时拖动,false表示鼠标按下时拖动.
+		 */		
+		function get isClickDrag():Boolean;
+		
+		/**
 		 * 是否锁定到中心位置
 		 */		
 		function get lockCenter():Boolean;
