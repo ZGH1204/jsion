@@ -77,7 +77,7 @@ package jpromiscuous
 				if(tag.tagType == TagTypes.TAG_DOABC2) abcList.push(tag);
 			}
 			
-			trace(abcList.length);
+			//trace(abcList.length);
 			
 			//reader.toBinary();
 			

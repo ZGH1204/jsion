@@ -10,7 +10,11 @@ package jpromiscuous.vo.tags
 	
 	public class DoABCTag extends Tag
 	{
-		public var abcFile:ABCFile;
+		public var flags:uint;
+		
+		public var name:String;
+		
+		public var abcfile:ABCFile;
 		
 		public function DoABCTag()
 		{
@@ -19,14 +23,10 @@ package jpromiscuous.vo.tags
 		
 		override public function parse():void
 		{
-			abcFile = new ABCFile();
-			//trace(ByteArrayUtil.toHexDump("DoABC:",data, 0, data.length));
-			abcFile.flags = data.readUnsignedInt();
-			abcFile.name = SwfReader.readString(data);
-			abcFile.minorVer = data.readUnsignedShort();
-			abcFile.majorVer = data.readUnsignedShort();
+			flags = readUnsignedInt();
+			name = readString();
 			
-			//abcFile.constantPool.intCount = SwfReader.readABCU30(data);
+			abcfile = new ABCFile(data);
 		}
 	}
 }
