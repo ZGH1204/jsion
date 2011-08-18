@@ -2,11 +2,14 @@ package jpromiscuous.vo
 {
 	import flash.utils.ByteArray;
 
-	public class Tag
+	public class Tag extends Reader
 	{
 		public var tagType:uint;
 		
-		public var data:ByteArray = new ByteArray();
+		public function Tag()
+		{
+			_data = new ByteArray();
+		}
 		
 		public function parse():void
 		{
