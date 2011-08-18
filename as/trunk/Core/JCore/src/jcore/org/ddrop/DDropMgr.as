@@ -65,7 +65,7 @@ package jcore.org.ddrop
 		 * @param group 拖拽分组
 		 * @param isClickDrag true表示鼠标点击后拖动,false表示鼠标按下后拖动.
 		 */		
-		public static function registeDrag(dragger:IDragDrop, group:String = null, isClickDrag:Boolean = false):void
+		public static function registeDrag(dragger:IDragDrop, group:String = null):void
 		{
 			var g:DDGroup = getDDGroup(group);
 			
@@ -73,7 +73,7 @@ package jcore.org.ddrop
 			
 			g.add(dragger);
 			
-			if(isClickDrag) dragger.addEventListener(MouseEvent.CLICK, __dragStartHandler);
+			if(dragger.isClickDrag) dragger.addEventListener(MouseEvent.CLICK, __dragStartHandler);
 			else dragger.addEventListener(MouseEvent.MOUSE_DOWN, __dragStartHandler);
 		}
 		
@@ -194,7 +194,7 @@ package jcore.org.ddrop
 		private static function removeDragingEvent():void
 		{
 			StageRef.removeEventListener(Event.ENTER_FRAME, __dragingHandler);
-			StageRef.removeEventListener(MouseEvent.MOUSE_OVER, __dragingHandler);
+			StageRef.removeEventListener(MouseEvent.MOUSE_MOVE, __dragingHandler);
 			StageRef.removeEventListener(MouseEvent.CLICK, __dropHandler);
 			StageRef.removeEventListener(MouseEvent.MOUSE_UP, __dropHandler);
 			StageRef.removeEventListener(Event.DEACTIVATE, __dropAbortHandler);
@@ -332,13 +332,21 @@ package jcore.org.ddrop
 			
 			//添加拖动是的事件监听
 			if(_useFPS) StageRef.addEventListener(Event.ENTER_FRAME, __dragingHandler);
-			else StageRef.addEventListener(MouseEvent.MOUSE_OVER, __dragingHandler);
-			if(e.type == MouseEvent.CLICK) StageRef.addEventListener(MouseEvent.CLICK, __dropHandler);
-			else StageRef.addEventListener(MouseEvent.MOUSE_UP, __dropHandler);
+			else StageRef.addEventListener(MouseEvent.MOUSE_MOVE, __dragingHandler);
+			if(e.type == MouseEvent.CLICK)
+			{
+				StageRef.addEventListener(MouseEvent.CLICK, __dropHandler);
+				e.stopImmediatePropagation();
+				e.stopPropagation();
+			}
+			else
+			{
+				StageRef.addEventListener(MouseEvent.MOUSE_UP, __dropHandler);
+			}
 			StageRef.addEventListener(Event.DEACTIVATE, __dropAbortHandler);
 			StageRef.addEventListener(Event.MOUSE_LEAVE, __dropAbortHandler);
 			StageRef.addEventListener(MouseEvent.MOUSE_OUT, __dropAbortHandler);
-			StageRef.addEventListener(MouseEvent.ROLL_OUT, __dropAbortHandler);
+//			StageRef.addEventListener(MouseEvent.ROLL_OUT, __dropAbortHandler);
 			
 			//回调
 			_dragger.startDragCallback();
@@ -365,14 +373,34 @@ package jcore.org.ddrop
 		
 		private static function __dropHandler(e:MouseEvent):void
 		{
+			if(StageRef.mouseX > StageRef.stageWidth)
+			{
+				_dragIcon.x = (_dragIcon != _dragger ? _dragIconStartPoint.x : _dragStartPoint.x) + StageRef.stageWidth - _dragStartGlobarPoint.x - 5;
+			}
+			else if(StageRef.mouseX < 0)
+			{
+				_dragIcon.x = (_dragIcon != _dragger ? _dragIconStartPoint.x : _dragStartPoint.x) + 0 - _dragStartGlobarPoint.x + 5;
+			}
+			
+			if(StageRef.mouseY > StageRef.stageHeight)
+			{
+				_dragIcon.y = (_dragIcon != _dragger ? _dragIconStartPoint.y : _dragStartPoint.y) + StageRef.stageHeight - _dragStartGlobarPoint.y - 5;
+			}
+			else if(StageRef.mouseY < 0)
+			{
+				_dragIcon.y = (_dragIcon != _dragger ? _dragIconStartPoint.y : _dragStartPoint.y) + 0 - _dragStartGlobarPoint.y + 5;
+			}
+			
+			_dragger.dropCallback();
 			checkDropHits();
 			stopDraging();
 			removeDragingEvent();
-			_dragger.dropCallback();
 		}
 		
 		private static function __dropAbortHandler(e:Event):void
 		{
+			if(_dragger.isClickDrag == false) return;
+			if(e.type == MouseEvent.MOUSE_OUT && MouseEvent(e).relatedObject != null) return;
 			stopDraging();
 			removeDragingEvent();
 		}
