@@ -6,5 +6,10 @@ package jui.org
 		{
 			super();
 		}
+		
+		public function remove(component:Component):void
+		{
+			
+		}
 	}
 }

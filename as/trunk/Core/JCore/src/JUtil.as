@@ -158,5 +158,25 @@ package
 				return new IntDimension(Math.ceil(TEXT_FIELD_EXT.textWidth), Math.ceil(TEXT_FIELD_EXT.textHeight));
 			}
 		}
+		
+		public static function isDisplayObjectShowing(dis:DisplayObject):Boolean
+		{
+			if(dis == null || dis.stage == null)
+			{
+				return false;
+			}
+			
+			while(dis != null && dis.visible == true)
+			{
+				if(dis == dis.stage)
+				{
+					return true;
+				}
+				
+				dis = dis.parent;
+			}
+			
+			return false;
+		}
 	}
 }
