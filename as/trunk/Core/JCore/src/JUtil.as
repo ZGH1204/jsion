@@ -4,6 +4,12 @@ package
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFieldType;
+	import flash.text.TextFormat;
+	
+	import jui.org.JFont;
 
 	/**
 	 * 其他特殊工具方法集合
@@ -16,6 +22,12 @@ package
 	 */	
 	public class JUtil
 	{
+		private static var TEXT_FIELD_EXT:TextField = new TextField();
+		{
+			TEXT_FIELD_EXT.autoSize = TextFieldAutoSize.LEFT;
+			TEXT_FIELD_EXT.type = TextFieldType.DYNAMIC;
+		}
+		
 		private static var sprite:Sprite = new Sprite();
 		
 		/**
@@ -102,6 +114,49 @@ package
 				pa = pa.parent;
 			}
 			return false;
+		}
+		
+		public static function computeStringSize(tf:TextFormat, str:String, includeGutters:Boolean = true, textField:TextField = null):IntDimension
+		{
+			if(textField)
+			{
+				TEXT_FIELD_EXT.embedFonts = textField.embedFonts;
+				TEXT_FIELD_EXT.antiAliasType = textField.antiAliasType;
+				TEXT_FIELD_EXT.gridFitType = textField.gridFitType;
+				TEXT_FIELD_EXT.sharpness = textField.sharpness;
+				TEXT_FIELD_EXT.thickness = textField.thickness;
+			}
+			
+			TEXT_FIELD_EXT.text = str;
+			TEXT_FIELD_EXT.setTextFormat(tf);
+			
+			if(includeGutters)
+			{
+				return new IntDimension(Math.ceil(TEXT_FIELD_EXT.width), Math.ceil(TEXT_FIELD_EXT.height));
+			}
+			else
+			{
+				return new IntDimension(Math.ceil(TEXT_FIELD_EXT.textWidth), Math.ceil(TEXT_FIELD_EXT.textHeight));
+			}
+		}
+		
+		public static function computeStringSizeWithFont(font:JFont, str:String, includeGutters:Boolean = true):IntDimension
+		{
+			if(!font.isFullFeatured())
+			{
+				throw new Error("Font is not full featured : " + font);
+			}
+			
+			TEXT_FIELD_EXT.text = str;
+			font.apply(TEXT_FIELD_EXT);
+			if(includeGutters)
+			{
+				return new IntDimension(Math.ceil(TEXT_FIELD_EXT.width), Math.ceil(TEXT_FIELD_EXT.height));
+			}
+			else
+			{
+				return new IntDimension(Math.ceil(TEXT_FIELD_EXT.textWidth), Math.ceil(TEXT_FIELD_EXT.textHeight));
+			}
 		}
 	}
 }

@@ -185,7 +185,8 @@ package
 		 */		
 		public function clear():void
 		{
-			if(isEmpty() == false){
+			if(isEmpty() == false)
+			{
 				_elements.splice(0);
 				_elements = [];
 			}

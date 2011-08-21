@@ -62,6 +62,11 @@ package
 			return _stage.mouseY;
 		}
 		
+		public static function invalidate():void
+		{
+			_stage.invalidate();
+		}
+		
 		public static function getBounds(display:DisplayObject):Rectangle
 		{
 			return display.getBounds(_stage);

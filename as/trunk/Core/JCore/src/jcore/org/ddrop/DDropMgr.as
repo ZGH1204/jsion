@@ -200,7 +200,7 @@ package jcore.org.ddrop
 			StageRef.removeEventListener(Event.DEACTIVATE, __dropAbortHandler);
 			StageRef.removeEventListener(Event.MOUSE_LEAVE, __dropAbortHandler);
 			StageRef.removeEventListener(MouseEvent.MOUSE_OUT, __dropAbortHandler);
-			StageRef.removeEventListener(MouseEvent.ROLL_OUT, __dropAbortHandler);
+			//StageRef.removeEventListener(MouseEvent.ROLL_OUT, __dropAbortHandler);
 		}
 		
 		/**
@@ -346,7 +346,7 @@ package jcore.org.ddrop
 			StageRef.addEventListener(Event.DEACTIVATE, __dropAbortHandler);
 			StageRef.addEventListener(Event.MOUSE_LEAVE, __dropAbortHandler);
 			StageRef.addEventListener(MouseEvent.MOUSE_OUT, __dropAbortHandler);
-//			StageRef.addEventListener(MouseEvent.ROLL_OUT, __dropAbortHandler);
+			//StageRef.addEventListener(MouseEvent.ROLL_OUT, __dropAbortHandler);
 			
 			//回调
 			_dragger.startDragCallback();
