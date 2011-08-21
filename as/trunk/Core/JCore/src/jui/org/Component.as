@@ -1,7 +1,9 @@
 package jui.org
 {
+	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.sampler.getSize;
 	import flash.utils.getTimer;
 	
@@ -46,7 +48,12 @@ package jui.org
 			
 			bounds = new IntRectangle();
 			
+			border = DefaultResource.INSTANCE;
+			foregroundProvider = DefaultResource.INSTANCE;
+			backgroundProvider = DefaultResource.INSTANCE;
+			
 			font = DefaultResource.DEFAULT_FONT;
+			
 			background = DefaultResource.DEFAULT_BACKGROUND_COLOR;
 			foreground = DefaultResource.DEFAULT_FOREGROUND_COLOR;
 			mideground = DefaultResource.DEFAULT_MIDEGROUND_COLOR;
@@ -514,7 +521,9 @@ package jui.org
 		{
 			if(isVisible() && isReadyToPaint())
 			{
-				paint(bounds);
+				var paintBounds:IntRectangle = getPaintBoundsInRoot();
+				layoutMaskAndTrigger(null);
+				paint(paintBounds);
 			}
 		}
 		
@@ -534,12 +543,156 @@ package jui.org
 				ui.paint(this, g, bound.clone());
 			}
 			
+			if(border != null)
+			{
+				border.updateBorder(this, g, getInsets().getOutsideBounds(bound.clone()));
+			}
+			
 			if(foregroundProvider)
 			{
 				foregroundProvider.update(this, g, bound.clone());
 			}
 		}
 		
+		private function layoutMaskAndTrigger(paintBounds:IntRectangle):void
+		{
+			if(paintBounds == null)
+			{
+				var b:IntRectangle = new IntRectangle(0, 0, width, height);
+				
+				var r:IntRectangle = getPaintBoundsInRoot();
+				
+				var x1:int = Math.max(b.x, r.x);
+				var x2:int = Math.min(b.x + b.width, r.x + r.width);
+				var y1:int = Math.max(b.y, r.y);
+				var y2:int = Math.min(b.y + b.height, r.y + r.height);
+				
+				paintBounds = new IntRectangle(x1, y1, x2 - x1, y2 - y1);
+			}
+			else
+			{
+				paintBounds = paintBounds.clone();
+			}
+			
+			if(maskBounds != null)
+			{
+				paintBounds.x = Math.max(paintBounds.x, maskBounds.x);
+				paintBounds.y = Math.max(paintBounds.y, maskBounds.y);
+				paintBounds.width = Math.min(paintBounds.width, maskBounds.width);
+				paintBounds.height = Math.min(paintBounds.height, maskBounds.height);
+			}
+			
+			setMaskRect(paintBounds);
+		}
+		
+		private function getPaintBoundsInRoot():IntRectangle
+		{
+			var minSize:IntDimension = getMinimumSize();
+			var maxSize:IntDimension = getMaximumSize();
+			var size:IntDimension = getSize();
+			
+			var paintBounds:IntRectangle = new IntRectangle(0, 0, size.width, size.height);
+			//if it size max than maxsize, draw it as maxsize and then locate it in it size(the size max than maxsize)
+			if(size.width > maxSize.width)
+			{
+				paintBounds.width = maxSize.width;
+				paintBounds.x = (size.width - paintBounds.width) * getAlignmentX();
+			}
+			if(size.height > maxSize.height)
+			{
+				paintBounds.height = maxSize.height;
+				paintBounds.y = (size.height - paintBounds.height) * getAlignmentY();
+			}
+			//cannot paint its min than minsize
+			if(paintBounds.width < minSize.width) paintBounds.width = minSize.width;
+			if(paintBounds.height < minSize.height) paintBounds.height = minSize.height;
+			
+			return paintBounds;
+		}
+		
+		
+		
+		
+		
+		
+		//=======================================
+		/*
+		* Component's mask bounds.
+		*/
+		//=======================================
+		
+		protected var maskBounds:IntRectangle;
+		
+		public function setClipSize(size:IntDimension):void
+		{
+			var b:IntRectangle = new IntRectangle();
+			
+			if(maskBounds != null)
+			{
+				b.setLocation(maskBounds.getLocation());
+			}
+			
+			b.setSize(size);
+			setMaskBounds(b);
+		}
+		
+		public function setMaskBounds(b:IntRectangle):void
+		{
+			if(b == null && maskBounds == null)
+			{
+				return;
+			}
+			
+			var changed:Boolean = false;
+			
+			if(b == null && maskBounds != null)
+			{
+				maskBounds = null;
+				changed = true;
+			}
+			else
+			{
+				if(!b.equals(maskBounds))
+				{
+					maskBounds = b.clone();
+					changed = true;
+				}
+			}
+			
+			if(changed)
+			{
+				layoutMaskAndTrigger(null);
+			}
+		}
+		
+		
+		
+		
+		
+		//=======================================
+		/*
+		 * Returns the alignment along the x(y) axis. 
+		 * This specifies how the component would like to be aligned relative 
+		 * to its size when its size is maxer than its maximumSize. 
+		 * The value should be a number between 0 and 1 where 0 
+		 * represents alignment start from left, 1 is aligned the furthest 
+		 * away from the left, 0.5 is centered, etc. 
+		 * @return the alignment along the x(y) axis, 0 by default
+		 */
+		//=======================================
+		
+		private var alignmentX:Number;
+		private var alignmentY:Number;
+		
+		public function getAlignmentX():Number
+		{
+			return alignmentX;
+		}
+		
+		public function getAlignmentY():Number
+		{
+			return alignmentY;
+		}
 		
 		
 		
@@ -554,6 +707,20 @@ package jui.org
 		private static const Default_Trigger_Brush:IBrush = new TransparentBrush();
 		private var transparentTriggerDrawn:Boolean = false;
 		private var drawTransparentTrigger:Boolean = true;
+		
+		public function isDrawTransparentTrigger():Boolean
+		{
+			return drawTransparentTrigger;
+		}
+		
+		public function setDrawTransparentTrigger(b:Boolean):void
+		{
+			if(b != drawTransparentTrigger)
+			{
+				drawTransparentTrigger = b;
+				repaint();
+			}
+		}
 		
 		internal function checkDrawTransparentTrigger():void
 		{
@@ -618,6 +785,42 @@ package jui.org
 			return r;
 		}
 		
+		public function removeFromContainer():void
+		{
+			if(getParent() != null)
+			{
+				getParent().remove(this);
+			}
+			
+			if(parent != null)
+			{
+				parent.removeChild(this);
+			}
+		}
+		
+		
+		
+		//=======================================
+		/*
+		* Set component's constraints property.
+		*/
+		//=======================================
+		
+		protected var constraints:Object;
+		
+		public function setConstraints(constraints:Object):void
+		{
+			this.constraints = constraints;	
+		}
+		
+		public function getConstraints():Object
+		{
+			return constraints;
+		}
+		
+		
+		
+		
 		
 		
 		//=======================================
@@ -651,13 +854,73 @@ package jui.org
 		*/
 		//=======================================
 		
+		override public function getBounds(targetCoordinateSpace:DisplayObject):Rectangle
+		{
+			return super.getBounds(targetCoordinateSpace);
+		}
+		
 		public function setBounds(b:IntRectangle):void
+		{
+			setComponentBounds(b);
+		}
+		
+		public function getComponentBounds(rv:IntRectangle = null):IntRectangle
+		{
+			if(rv != null)
+			{
+				rv.setRect(bounds);
+				
+				return rv;
+			}
+			else
+			{
+				return new IntRectangle(bounds.x, bounds.y, bounds.width, bounds.height);
+			}
+		}
+		
+		public function setComponentBounds(b:IntRectangle):void
 		{
 			setLocationXY(b.x, b.y);
 			setSizeWH(b.width, b.height);
 		}
 		
+		public function setComponentBoundsXYWH(x:int, y:int, w:int, h:int):void
+		{
+			setLocationXY(x, y);
+			setSizeWH(w, h);
+		}
 		
+		
+		
+		
+		public function isOnStage():Boolean
+		{
+			return stage != null;
+		}
+		
+		public function isShowing():Boolean
+		{
+			if(isOnStage() && isVisible())
+			{
+				//here, parent is stage means this is the top component(ex root)
+				if(parent == stage)
+				{
+					return true;
+				}
+				else
+				{
+					if(getParent() != null)
+					{
+						return getParent().isShowing();
+					}
+					else
+					{
+						return JUtil.isDisplayObjectShowing(parent);
+					}
+				}
+			}
+			return false;
+		}
 		
 		
 		
@@ -724,18 +987,6 @@ package jui.org
 			}
 		}
 		
-		public function setGlobalLocation(gp:IntPoint):void
-		{
-			var newPos:Point = parent.globalToLocal(new Point(gp.x, gp.y));
-			
-			setLocationXY(newPos.x, newPos.y);
-		}
-		
-		public function setGlobalLocationXY(x:int, y:int):void
-		{
-			setGlobalLocation(new IntPoint(x, y));
-		}
-		
 		protected function locate():void
 		{
 			var _x:int = getX();
@@ -755,7 +1006,46 @@ package jui.org
 			super.y = value;
 		}
 		
+		public function getGlobalLocation(rv:IntPoint = null):IntPoint
+		{
+			var gp:Point = localToGlobal(new Point(0, 0));
+			
+			if(rv != null)
+			{
+				rv.setLocationXY(gp.x, gp.y);
+				return rv;
+			}
+			else
+			{
+				return new IntPoint(gp.x, gp.y);
+			}
+		}
 		
+		public function setGlobalLocation(gp:IntPoint):void
+		{
+			var newPos:Point = parent.globalToLocal(new Point(gp.x, gp.y));
+			
+			setLocationXY(newPos.x, newPos.y);
+		}
+		
+		public function setGlobalLocationXY(x:int, y:int):void
+		{
+			setGlobalLocation(new IntPoint(x, y));
+		}
+		
+		public function globalToComponent(p:IntPoint):IntPoint
+		{
+			var np:Point = new Point(p.x, p.y);
+			np = globalToLocal(np);
+			return new IntPoint(np.x, np.y);
+		}
+		
+		public function componentToGlobal(p:IntPoint):IntPoint
+		{
+			var np:Point = new Point(p.x, p.y);
+			np = localToGlobal(np);
+			return new IntPoint(np.x, np.y);
+		}
 		
 		
 		
@@ -892,23 +1182,6 @@ package jui.org
 			}
 		}
 		
-		private function fixSetSize(counted:IntDimension, setted:IntDimension):IntDimension
-		{
-			if(setted != null)
-			{
-				if(setted.width > 0)
-				{
-					counted.width = setted.width;
-				}
-				else if(setted.height > 0)
-				{
-					counted.height = setted.height;
-				}
-			}
-			
-			return counted;
-		}
-		
 		public function isCachePreferSizes():Boolean
 		{
 			return cachePreferSizes;
@@ -918,16 +1191,6 @@ package jui.org
 		{
 			cachePreferSizes = value;
 			if(!value) clearCacheSize();
-		}
-		
-		protected function clearCacheSize():void
-		{
-			cachedPreferredSize = null;
-		}
-		
-		private function isDirectReturnSize(s:IntDimension):Boolean
-		{
-			return s != null && (s.width > 0 && s.height > 0);
 		}
 		
 		protected function countPreferredSize():IntDimension
@@ -978,6 +1241,280 @@ package jui.org
 		
 		
 		
+		
+		//=======================================
+		/*
+		* Component's maximum-size operation.
+		*/
+		//=======================================
+		
+		protected var maximumSize:IntDimension;
+		protected var cachedMaximumSize:IntDimension;
+		
+		public function getMaximumSize():IntDimension
+		{
+			if(isDirectReturnSize(maximumSize))
+			{
+				return maximumSize.clone();
+			}
+			else if(isCachePreferSizes() && cachedMaximumSize != null)
+			{
+				return cachedMaximumSize.clone();
+			}
+			else
+			{
+				var tempSize:IntDimension = fixSetSize(countMaximumSize(), maximumSize);
+				if(isCachePreferSizes())
+				{
+					cachedMaximumSize = tempSize;
+					return cachedMaximumSize.clone();
+				}
+				else
+				{
+					return tempSize;
+				}
+			}
+		}
+		
+		public function setMaximumSize(maximumSize:IntDimension):void
+		{
+			if(maximumSize == null)
+			{
+				this.maximumSize = null;
+			}
+			else
+			{
+				this.maximumSize = maximumSize.clone();
+			}
+		}
+		
+		public function getMaximumWidth():int
+		{
+			return getMaximumSize().width;
+		}
+		
+		public function setMaximumWidth(maximumWidth:int):void 
+		{
+			if(maximumSize == null)
+			{
+				maximumSize = new IntDimension(-1, -1);
+			}
+			
+			maximumSize.width = maximumWidth;
+		}
+		
+		public function getMaximumHeight():int 
+		{
+			return getMaximumSize().height;
+		}
+		
+		public function setMaximumHeight(maximumHeight:int):void
+		{
+			if(maximumSize == null)
+			{
+				maximumSize = new IntDimension(-1, -1);
+			}
+			
+			maximumSize.height = maximumHeight;
+		}
+		
+		protected function countMaximumSize():IntDimension
+		{
+			if(ui != null)
+			{
+				return ui.getMaximumSize(this);
+			}
+			else
+			{
+				return IntDimension.createBigDimension();
+			}
+		}
+		
+		
+		
+		
+		
+		//=======================================
+		/*
+		* Component's maximum-size operation.
+		*/
+		//=======================================
+		
+		protected var minimumSize:IntDimension;
+		protected var cachedMinimumSize:IntDimension;
+		
+		public function getMinimumSize():IntDimension
+		{
+			if(isDirectReturnSize(minimumSize))
+			{
+				return minimumSize.clone();
+			}
+			else if(isCachePreferSizes() && cachedMinimumSize != null)
+			{
+				return cachedMinimumSize.clone();
+			}
+			else
+			{
+				var tempSize:IntDimension = fixSetSize(countMinimumSize(), minimumSize);			
+				if(isCachePreferSizes())
+				{
+					cachedMinimumSize = tempSize;
+					return cachedMinimumSize.clone();
+				}
+				else
+				{
+					return tempSize;
+				}
+			}
+		}
+		
+		public function setMinimumSize(minimumSize:IntDimension):void
+		{
+			if(minimumSize == null)
+			{
+				this.minimumSize = null;
+			}
+			else
+			{
+				this.minimumSize = minimumSize.clone();
+			}
+		}
+		
+		public function getMinimumWidth():int
+		{
+			return getMinimumSize().width;
+		}
+		
+		public function setMinimumWidth(minimumWidth:int):void
+		{
+			if(minimumSize == null)
+			{
+				minimumSize = new IntDimension(-1, -1);
+			}
+			
+			minimumSize.width = minimumWidth;
+		}
+		
+		public function getMinimumHeight():int 
+		{
+			return getMinimumSize().height;
+		}
+		
+		public function setMinimumHeight(minimumHeight:int):void
+		{
+			if(minimumSize == null)
+			{
+				minimumSize = new IntDimension(-1, -1);
+			}
+			
+			minimumSize.height = minimumHeight;
+		}
+		
+		protected function countMinimumSize():IntDimension
+		{
+			if(ui != null)
+			{
+				return ui.getMinimumSize(this);
+			}
+			else
+			{
+				return getInsets().getOutsideSize(new IntDimension(0, 0));
+			}
+		}
+		
+		
+		
+		
+		
+		//=======================================
+		/*
+		* Get mouse position by type of IntPoint.
+		*/
+		//=======================================
+		
+		protected var border:IBorder;
+		
+		public function getBorder():IBorder
+		{
+			return border;
+		}
+		
+		public function setBorder(b:IBorder):void
+		{
+			if(b != border)
+			{
+				if(border != null && border.getDisplay(this) != null)
+				{
+					removeChild(border.getDisplay(this));
+				}
+				
+				border = b;
+				
+				if(border != null && border.getDisplay(this) != null)
+				{
+					addChildAt(border.getDisplay(this), getLowestIndexAboveBackground());
+				}
+				
+				repaint();
+				revalidate();
+			}
+		}
+		
+		public function getInsets():Insets
+		{
+			if(border == null)
+			{
+				return new Insets();
+			}
+			else
+			{
+				return border.getBorderInsets(this, getSize().getBounds());
+			}
+		}
+		
+		
+		
+		
+		private function fixSetSize(counted:IntDimension, setted:IntDimension):IntDimension
+		{
+			if(setted != null)
+			{
+				if(setted.width > 0)
+				{
+					counted.width = setted.width;
+				}
+				else if(setted.height > 0)
+				{
+					counted.height = setted.height;
+				}
+			}
+			
+			return counted;
+		}
+		
+		public function invalidatePreferSizeCaches():void
+		{
+			clearCacheSize();
+			
+			var par:Container = getParent();
+			
+			if(par != null)
+			{
+				par.invalidatePreferSizeCaches();
+			}
+		}
+		
+		protected function clearCacheSize():void
+		{
+			cachedMinimumSize = null;
+			cachedMaximumSize = null;
+			cachedPreferredSize = null;
+		}
+		
+		private function isDirectReturnSize(s:IntDimension):Boolean
+		{
+			return s != null && (s.width > 0 && s.height > 0);
+		}
 		
 		
 		
