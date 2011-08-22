@@ -75,7 +75,10 @@ package jutils.org.util
 			//if(bmp.parent) bmp.parent.removeChild(bmp);
 			disposeDisplayObject(bmp);
 			
-			disposeBitMapData(bmp.bitmapData, destroyBitMapData);
+			var bmd:BitmapData = bmp.bitmapData;
+			bmp.bitmapData = null;
+			
+			disposeBitMapData(bmd, destroyBitMapData);
 		}
 		
 		private static function disposeBitMapData(bmd:BitmapData, destroyBitMapData:Boolean):void
