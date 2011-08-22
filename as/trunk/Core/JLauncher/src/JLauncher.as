@@ -7,6 +7,8 @@ package
 	import jcore.org.loader.BinaryLoader;
 	import jcore.org.message.MessageMonitor;
 	
+	import jui.org.coms.img.Scale9Image;
+	
 	[SWF(width="900", height="600", frameRate="30")]
 	public class JLauncher extends Sprite
 	{
@@ -36,9 +38,24 @@ package
 			_loader.loadAsync(loadCallback);
 		}
 		
+		private var comp:Scale9Image;
+		
+		private var size:int = 50;
+		
 		private function loadCallback(loader:BinaryLoader):void
 		{
-			MessageMonitor.createAndPostMsg(1, "JLauncher", ["Promiscuous"], loader.content);
+			//MessageMonitor.createAndPostMsg(1, "JLauncher", ["Promiscuous"], loader.content);
+			
+			if(comp == null)
+			{
+				comp = new Scale9Image(new TV_ViewAsset(0, 0), new Insets(10, 3, 15, 3));
+				addChild(comp);
+			}
+			else
+			{
+				comp.setSizeWH(size += 50, size);
+			}
+			
 		}
 	}
 }

@@ -8,7 +8,7 @@ package jui.org
 		
 		function paint(component:Component, graphics:Graphics2D, bound:IntRectangle):void;
 		
-		function getPreferredSize():IntDimension;
+		function getPreferredSize(c:Component):IntDimension;
 		
 		function getMinimumSize(c:Component):IntDimension;
 		
