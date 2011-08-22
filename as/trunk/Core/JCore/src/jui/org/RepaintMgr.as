@@ -96,6 +96,8 @@ package jui.org
 					trace(err.getStackTrace());
 				}
 			}
+			
+			GC.collect();
 		}
 		
 		public static function get Instance():RepaintMgr

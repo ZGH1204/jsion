@@ -46,6 +46,8 @@ package jui.org
 			
 			ui = null;
 			
+			enabled = true;
+			
 			bounds = new IntRectangle();
 			
 			border = DefaultResource.INSTANCE;
@@ -479,7 +481,7 @@ package jui.org
 			}
 		}
 		
-		protected function invalidate():void
+		public function invalidate():void
 		{
 			validated = false;
 			invalidateParent();
@@ -725,6 +727,7 @@ package jui.org
 		internal function checkDrawTransparentTrigger():void
 		{
 			var need:Boolean = isNeedDrawTransparentTrigger();
+			
 			if(need != transparentTriggerDrawn)
 			{
 				repaint();
@@ -749,6 +752,18 @@ package jui.org
 		protected function isNeedDrawTransparentTrigger():Boolean
 		{
 			if(!isEnabled() || !drawTransparentTrigger) return false;
+			
+			var c:Container = container;
+			
+			while(c != null)
+			{
+				if(!c.isChildrenDrawTransparentTrigger())
+				{
+					return false;
+				}
+				
+				c = c.container;
+			}
 			
 			return true;
 		}
@@ -1195,7 +1210,7 @@ package jui.org
 		
 		protected function countPreferredSize():IntDimension
 		{
-			if(ui != null) return ui.getPreferredSize();
+			if(ui != null) return ui.getPreferredSize(this);
 			else return getSize();
 		}
 		

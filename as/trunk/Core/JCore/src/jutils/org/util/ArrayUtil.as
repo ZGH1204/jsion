@@ -85,6 +85,31 @@ package jutils.org.util
 		}
 		
 		/**
+		 * 将指定对象放入到数组的指定位置，如果数组中存在则不放。
+		 * @param array 数组对象
+		 * @param obj 要放入的对象
+		 * @param index 指定的索引位置
+		 * @return 数组中已存在时返回-1，否则返回指定对象的索引。
+		 * 
+		 */		
+		public static function insert(array:Array, obj:Object, index:int):int
+		{
+			if(index < 0)
+			{
+				return push(array, obj);
+			}
+			
+			if(index >= array.length)
+			{
+				return -1;
+			}
+			
+			array.splice(index, 0, obj);
+			
+			return index;
+		}
+		
+		/**
 		 * 移除数组中的指定对象
 		 * @param array 数组对象
 		 * @param obj 要移除的对象
