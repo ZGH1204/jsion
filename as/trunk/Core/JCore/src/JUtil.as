@@ -9,6 +9,7 @@ package
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	
+	import jui.org.JColor;
 	import jui.org.JFont;
 
 	/**
@@ -177,6 +178,30 @@ package
 			}
 			
 			return false;
+		}
+		
+		public static function applyTextColor(text:TextField, color:JColor):void
+		{
+			if(text.textColor !== color.getRGB())
+			{
+				text.textColor = color.getRGB();
+			}
+			
+			if(text.alpha !== color.getAlpha())
+			{
+				text.alpha = color.getAlpha();
+			}
+		}
+		
+		public static function applyTextFont(text:TextField, font:JFont):void
+		{
+			font.apply(text);
+		}
+		
+		public static function applyTextFontAndColor(text:TextField, font:JFont, color:JColor):void
+		{
+			applyTextFont(text, font);
+			applyTextColor(text, color);
 		}
 	}
 }

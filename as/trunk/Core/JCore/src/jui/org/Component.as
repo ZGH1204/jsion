@@ -413,6 +413,11 @@ package jui.org
 		*/
 		//=======================================
 		
+		public function getForegroundProvider():ICanUpdateProvider
+		{
+			return foregroundProvider;
+		}
+		
 		public function setForegroundProvider(fg:ICanUpdateProvider):void
 		{
 			if(fg != foregroundProvider)
@@ -430,6 +435,11 @@ package jui.org
 					setForegroundChild(null);
 				}
 			}
+		}
+		
+		public function getBackgroundProvider():ICanUpdateProvider
+		{
+			return backgroundProvider;
 		}
 		
 		public function setBackgroundProvider(bg:ICanUpdateProvider):void
