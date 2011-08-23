@@ -1706,6 +1706,18 @@ package jui.org
 			super.dispose();
 		}
 		
+		public function hitTestMouse():Boolean
+		{
+			if(isOnStage())
+			{
+				return hitTestPoint(stage.mouseX, stage.mouseY, false);
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
 		override public function toString():String
 		{
 			return typeof(this) + "[asset:" + super.toString() + "]";

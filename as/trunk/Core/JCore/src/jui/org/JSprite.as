@@ -81,6 +81,16 @@ package jui.org
 		
 		
 		
+		override public function hitTestPoint(x:Number, y:Number, shapeFlag:Boolean=false):Boolean
+		{
+			return maskShape.hitTestPoint(x, y, shapeFlag);
+		}
+		
+		override public function hitTestObject(obj:DisplayObject):Boolean
+		{
+			return maskShape.hitTestObject(obj);
+		}
+		
 		
 		
 		

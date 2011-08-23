@@ -4,6 +4,8 @@ package jui.org.events
 	
 	public class JEvent extends Event
 	{
+		public static const ACT:String = "act";
+		
 		public static const SHOWN:String = "shown";
 		
 		public static const HIDDEN:String = "hidden";
