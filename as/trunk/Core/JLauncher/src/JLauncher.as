@@ -61,7 +61,7 @@ package
 			if(comp == null)
 			{
 				comp = new ScaleImageByTileBitmap(new TV_ViewAsset(0, 0), new Insets(10, 3, 15, 3));
-				//comp.setScale9Type(Scale9Image.SCALE_TILE);
+				comp.setScale9Type(Scale9Image.SCALE_TILE);
 				addChild(comp);
 			}
 			else

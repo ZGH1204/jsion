@@ -1,6 +1,6 @@
 package jui.org
 {
-	public interface IComponentUI
+	public interface IComponentUI extends IDispose
 	{
 		function installUI(component:Component):void;
 		

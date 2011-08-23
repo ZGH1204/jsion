@@ -1,11 +1,9 @@
 package jui.org.coms.img
 {
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.geom.Matrix;
-	import flash.geom.Point;
 	
-	import jutils.org.util.DisposeUtil;
+	import jui.org.DefaultUI;
+	import jui.org.uis.imgs.BasicImageUI;
 	
 	public class Scale9Image extends Image
 	{
@@ -24,19 +22,17 @@ package jui.org.coms.img
 		 */		
 		protected var assetInsets:Insets;
 		
-		protected var changed:Boolean;
-		
 		protected var scale9Type:int;
 		
 		public function Scale9Image(bmd:BitmapData = null, assetInset:Insets = null)
 		{
 			super(bmd.clone());
 			
-			changed = false;
-			
 			scale9Type = SCALE_STRETCHED;
 			
 			setAssetInsets(assetInset);
+			
+			updateUI();
 		}
 		
 		public function getScale9Type():int
@@ -91,11 +87,6 @@ package jui.org.coms.img
 				
 				bmp.bitmapData = bmd;
 				
-				if(bmp.parent == null)
-				{
-					addChild(bmp);
-				}
-				
 				var size:IntDimension = getSize();
 				
 				if(size.width > 0 && size.height > 0)
@@ -111,19 +102,24 @@ package jui.org.coms.img
 		
 		override protected function paint(bound:IntRectangle):void
 		{
-			paintAsset(bound);
 			super.paint(bound);
+			changed = false;
 			GC.collect();
 		}
 		
-		protected function paintAsset(bound:IntRectangle):void
+		override public function getDefaultBasicUIClass():Class
 		{
-			
+			return BasicImageUI;
+		}
+		
+		override protected function getDefaultUIClassID():String
+		{
+			return DefaultUI.Scale9ImageUI;
 		}
 		
 		
 		//左上
-		protected function getTopLeftRect(size:IntDimension):IntRectangle
+		public function getTopLeftRect(size:IntDimension):IntRectangle
 		{
 			var rect:IntRectangle = new IntRectangle();
 			
@@ -134,7 +130,7 @@ package jui.org.coms.img
 		}
 		
 		//上中
-		protected function getTopCenterRect(size:IntDimension):IntRectangle
+		public function getTopCenterRect(size:IntDimension):IntRectangle
 		{
 			var rect:IntRectangle = new IntRectangle();
 			
@@ -147,7 +143,7 @@ package jui.org.coms.img
 		}
 		
 		//右上
-		protected function getTopRightRect(size:IntDimension):IntRectangle
+		public function getTopRightRect(size:IntDimension):IntRectangle
 		{
 			var rect:IntRectangle = new IntRectangle();
 			
@@ -159,7 +155,7 @@ package jui.org.coms.img
 		}
 		
 		//左中
-		protected function getMiddleLeftRect(size:IntDimension):IntRectangle
+		public function getMiddleLeftRect(size:IntDimension):IntRectangle
 		{
 			var rect:IntRectangle = new IntRectangle();
 			
@@ -172,7 +168,7 @@ package jui.org.coms.img
 		}
 		
 		//中间
-		protected function getMiddleCenterRect(size:IntDimension):IntRectangle
+		public function getMiddleCenterRect(size:IntDimension):IntRectangle
 		{
 			var rect:IntRectangle = new IntRectangle();
 			
@@ -189,7 +185,7 @@ package jui.org.coms.img
 		}
 		
 		//右中
-		protected function getMiddleRightRect(size:IntDimension):IntRectangle
+		public function getMiddleRightRect(size:IntDimension):IntRectangle
 		{
 			var rect:IntRectangle = new IntRectangle();
 			
@@ -204,7 +200,7 @@ package jui.org.coms.img
 		}
 		
 		//左下
-		protected function getBottomLeftRect(size:IntDimension):IntRectangle
+		public function getBottomLeftRect(size:IntDimension):IntRectangle
 		{
 			var rect:IntRectangle = new IntRectangle();
 			
@@ -216,7 +212,7 @@ package jui.org.coms.img
 		}
 		
 		//下中
-		protected function getBottomCenterRect(size:IntDimension):IntRectangle
+		public function getBottomCenterRect(size:IntDimension):IntRectangle
 		{
 			var rect:IntRectangle = new IntRectangle();
 			
@@ -230,7 +226,7 @@ package jui.org.coms.img
 		}
 		
 		//右下
-		protected function getBottomRightRect(size:IntDimension):IntRectangle
+		public function getBottomRightRect(size:IntDimension):IntRectangle
 		{
 			var rect:IntRectangle = new IntRectangle();
 			
@@ -240,6 +236,13 @@ package jui.org.coms.img
 			rect.height = assetInsets.bottom;
 			
 			return rect;
+		}
+		
+		override public function dispose():void
+		{
+			assetInsets = null;
+			
+			super.dispose();
 		}
 	}
 }

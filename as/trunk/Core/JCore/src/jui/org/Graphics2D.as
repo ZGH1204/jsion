@@ -2,7 +2,7 @@ package jui.org
 {
 	import flash.display.Graphics;
 
-	public class Graphics2D
+	public class Graphics2D implements IDispose
 	{
 		private var target:Graphics;
 		private var brush:IBrush;
@@ -179,6 +179,13 @@ package jui.org
 			}
 			
 			target.lineTo(0, 0);
+		}
+		
+		public function dispose():void
+		{
+			target = null;
+			
+			brush = null;
 		}
 	}
 }

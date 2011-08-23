@@ -1,6 +1,6 @@
 package jui.org
 {
-	public interface ILayoutManager
+	public interface ILayoutManager extends IDispose
 	{
 		function addLayoutComponent(component:Component, constraints:Object):void;
 		

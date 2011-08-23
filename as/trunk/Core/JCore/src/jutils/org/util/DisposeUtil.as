@@ -43,14 +43,16 @@ package jutils.org.util
 			else if(obj is Array)
 			{
 				var array:Array = obj as Array;
-				for each(var arrayItem:Object in array)
+				
+				while(array.length > 0)
 				{
-					free(arrayItem, freeBmd);
+					free(array.pop(), freeBmd);
 				}
 			}
 			else if(obj is Dictionary)
 			{
 				var keys:Array = DictionaryUtil.getKeys(obj as Dictionary);
+				
 				for each(var str:* in keys)
 				{
 					free(obj[str], freeBmd);

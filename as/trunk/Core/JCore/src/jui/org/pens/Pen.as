@@ -106,5 +106,10 @@ package jui.org.pens
 		{
 			target.lineStyle(_thickness, _color.getRGB(), _color.getAlpha(), _pixelHinting,_scaleMode,_caps,_joints,_miterLimit);
 		}
+		
+		public function dispose():void
+		{
+			_color = null;
+		}
 	}
 }

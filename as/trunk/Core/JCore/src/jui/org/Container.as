@@ -5,9 +5,12 @@ package jui.org
 	import jui.org.layouts.EmptyLayout;
 	
 	import jutils.org.util.ArrayUtil;
+	import jutils.org.util.DisposeUtil;
 
 	public class Container extends Component
 	{
+		protected var autoFreeChildren:Boolean;
+		
 		protected var children:Array;
 		protected var layout:ILayoutManager;
 		
@@ -19,11 +22,23 @@ package jui.org
 			
 			setName("Container");
 			
+			autoFreeChildren = true;
+			
 			drawChildrenTransparentTrigger = true;
 			
 			children = new Array();
 			
 			layout = new EmptyLayout();
+		}
+		
+		public function isAutoFreeChildren():Boolean
+		{
+			return autoFreeChildren;
+		}
+		
+		public function setAutoFreeChildren(value:Boolean):void
+		{
+			autoFreeChildren = value;
 		}
 		
 		public function isChildrenDrawTransparentTrigger():Boolean
@@ -400,19 +415,16 @@ package jui.org
 		
 		protected function removeAtImp(i:int):Component
 		{
-			if(i < 0)
-			{
-				return null;
-			}
+			if(i < 0) return null;
 			
-			var com:Component = children[i];
+			var comp:Component = children[i];
 			
-			if(com != null)
+			if(comp != null)
 			{
 				children.splice(i, 1);
-				super.removeChild(com);
-				com.container = null;
-				layout.removeLayoutComponent(com);
+				super.removeChild(comp);
+				comp.container = null;
+				layout.removeLayoutComponent(comp);
 				
 				if (validated)
 				{
@@ -424,7 +436,7 @@ package jui.org
 				}
 			}
 			
-			return com;
+			return comp;
 		}
 		
 		public function removeAll():void
@@ -433,6 +445,28 @@ package jui.org
 			{
 				removeAt(children.length - 1);
 			}
+		}
+		
+		public function removeAllAndFree():void
+		{
+			while(children.length > 0)
+			{
+				var child:* = removeAt(children.length - 1);
+				
+				DisposeUtil.free(child);
+			}
+		}
+		
+		override public function dispose():void
+		{
+			if(autoFreeChildren) removeAllAndFree();
+			else removeAll();
+			children = null;
+			
+			DisposeUtil.free(layout);
+			layout = null;
+			
+			super.dispose();
 		}
 	}
 }
