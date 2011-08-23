@@ -103,7 +103,7 @@ package jui.org.coms.img
 		
 		public function getDisplay(component:Component):DisplayObject
 		{
-			return bmp;
+			return this;
 		}
 	}
 }
