@@ -16,5 +16,11 @@ package jui.org
 		public static const Scale9ImageUI:String = "Scale9ImageUI";
 		
 		public static const LabelUI:String = "LabelUI";
+		
+		
+		
+		
+		
+		public static const LabelResourcePrefix:String = "Label.";
 	}
 }

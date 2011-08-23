@@ -5,6 +5,7 @@ package jui.org.uis.labels
 	import flash.text.TextFieldAutoSize;
 	
 	import jui.org.Component;
+	import jui.org.DefaultUI;
 	import jui.org.Graphics2D;
 	import jui.org.Icon;
 	import jui.org.JFont;
@@ -27,7 +28,7 @@ package jui.org.uis.labels
 		
 		protected function getPrefix():String
 		{
-			return "Label.";
+			return DefaultUI.LabelResourcePrefix;
 		}
 		
 		override public function installUI(component:Component):void
