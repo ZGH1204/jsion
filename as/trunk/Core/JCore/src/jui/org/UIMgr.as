@@ -47,7 +47,10 @@ package jui.org
 		
 		
 		
-		
+		public static function containsDefaultsKey(key:String):Boolean
+		{
+			return getDefaults().containsDefaultsKey(key);
+		}
 		
 		public static function getConstructor(key:String):Class
 		{

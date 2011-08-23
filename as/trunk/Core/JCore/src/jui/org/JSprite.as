@@ -92,14 +92,22 @@ package jui.org
 		
 		protected function d_addChild(child:DisplayObject):DisplayObject
 		{
+			
 			return super.addChild(child);
 		}
 		
 		override public function addChild(child:DisplayObject):DisplayObject
 		{
+			if(child == null) return null;
+			
 			var dis:DisplayObject = d_addChild(child);
 			if(foregroundChild) swapChildren(child, foregroundChild);
 			return dis;
+		}
+		
+		public function isChild(dis:DisplayObject):Boolean
+		{
+			return (dis && dis.parent == this);
 		}
 		
 		protected function getForegroundChild():DisplayObject

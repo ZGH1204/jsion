@@ -15,6 +15,11 @@ package jui.org
 			}
 		}
 		
+		public function containsDefaultsKey(key:String):Boolean
+		{
+			return this.containsKey(key);
+		}
+		
 		public function getConstructor(key:String):Class
 		{
 			return this.get(key) as Class;

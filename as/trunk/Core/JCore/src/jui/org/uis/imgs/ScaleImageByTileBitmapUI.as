@@ -97,6 +97,7 @@ package jui.org.uis.imgs
 		
 		override public function paint(component:Component, graphics:Graphics2D, bound:IntRectangle):void
 		{
+			super.paint(component, graphics, bound);
 			paintAsset(component, bound);
 		}
 		
