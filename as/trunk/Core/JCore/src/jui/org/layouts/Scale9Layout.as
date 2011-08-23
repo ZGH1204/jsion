@@ -6,5 +6,10 @@ package jui.org.layouts
 		{
 			super();
 		}
+		
+		override public function dispose():void
+		{
+			super.dispose();
+		}
 	}
 }

@@ -72,5 +72,10 @@ package jui.org
 		public function update(com:Component, g:Graphics2D, bounds:IntRectangle):void
 		{
 		}
+		
+		public function dispose():void
+		{
+			
+		}
 	}
 }

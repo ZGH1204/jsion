@@ -8,6 +8,8 @@ package jui.org
 	
 	import jui.org.events.ReleaseEvent;
 	
+	import jutils.org.util.DisposeUtil;
+	
 	[Event(name="release", type="jui.org.events.ReleaseEvent")]
 	
 	[Event(name="releaseOutSide", type="jui.org.events.ReleaseEvent")]
@@ -265,6 +267,16 @@ package jui.org
 			removeEventListener(Event.REMOVED_FROM_STAGE, __jStageRemoveFromHandler);
 			
 			pressedTarget = null;
+			
+			DisposeUtil.free(foregroundChild);
+			foregroundChild = null;
+			
+			DisposeUtil.free(backgroundChild);
+			backgroundChild = null;
+			
+			maskRect = null;
+			DisposeUtil.free(maskShape);
+			maskShape = null;
 		}
 		
 		override public function toString():String

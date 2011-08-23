@@ -3,8 +3,10 @@ package jui.org
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
+	
+	import jutils.org.util.DisposeUtil;
 
-	public class JFont
+	public class JFont implements IDispose
 	{
 		private var textFormat:TextFormat;
 		private var fullFeatured:Boolean = false;
@@ -290,6 +292,14 @@ package jui.org
 		public function toString():String
 		{
 			return "JFont[" + "textFormat : " + textFormat + "]";
+		}
+		
+		public function dispose():void
+		{
+			textFormat = null;
+			
+			DisposeUtil.free(advancedProperties);
+			advancedProperties = null;
 		}
 	}
 }

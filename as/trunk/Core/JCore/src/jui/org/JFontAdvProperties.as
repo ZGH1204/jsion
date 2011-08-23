@@ -2,7 +2,7 @@ package jui.org
 {
 	import flash.text.TextField;
 
-	public class JFontAdvProperties
+	public class JFontAdvProperties implements IDispose
 	{
 		private var fullFeatured:Boolean = false;
 		private var antiAliasType:String;
@@ -139,6 +139,15 @@ package jui.org
 				+ ", sharpness : " + sharpness 
 				+ ", thickness : " + thickness 
 				+ "]";
+		}
+		
+		public function dispose():void
+		{
+			sharpness = null;
+			
+			thickness = null;
+			
+			embedFonts = null;
 		}
 	}
 }

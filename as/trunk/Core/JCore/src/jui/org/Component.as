@@ -14,6 +14,7 @@ package jui.org
 	import jui.org.events.ResizedEvent;
 	
 	import jutils.org.util.AppDomainUtil;
+	import jutils.org.util.DisposeUtil;
 	import jutils.org.util.InstanceUtil;
 	import jutils.org.util.NameUtil;
 	import jutils.org.util.ReflectionUtil;
@@ -393,7 +394,7 @@ package jui.org
 		
 		protected function updateUI():void
 		{
-			
+			setUI(UIMgr.getUI(this));
 		}
 		
 		protected function getDefaultUIClassID():String
@@ -554,6 +555,9 @@ package jui.org
 			{
 				foregroundProvider.update(this, g, bound.clone());
 			}
+			
+			DisposeUtil.free(g);
+			g = null;
 		}
 		
 		private function layoutMaskAndTrigger(paintBounds:IntRectangle):void
@@ -1650,9 +1654,46 @@ package jui.org
 		
 		override public function dispose():void
 		{
-			super.dispose();
-			
 			removeEventListener(MouseEvent.CLICK, __mouseClickHandler);
+			
+			if(ui) ui.uninstallUI(this);
+			
+			removeFromContainer();
+			
+			DisposeUtil.free(foregroundProvider);
+			foregroundProvider = null;
+			
+			DisposeUtil.free(backgroundProvider);
+			backgroundProvider = null;
+			
+			if(border != DefaultResource.INSTANCE)
+				DisposeUtil.free(border);
+			border = null;
+			
+			if(font != DefaultResource.DEFAULT_FONT && font != EmptyUIResources.FONT)
+				DisposeUtil.free(font);
+			font = null;
+			
+			if(styleTune != DefaultResource.NULL_STYLE_TUNE)
+				DisposeUtil.free(styleTune);
+			styleTune = null;
+			
+			_lastClickPoint = null;
+			preferredSize = null;
+			cachedPreferredSize = null;
+			maximumSize = null;	
+			cachedMaximumSize = null;
+			cachedMinimumSize = null;
+			minimumSize = null;
+			constraints = null;
+			maskBounds = null;
+			styleProxy = null;
+			foreground = null;
+			mideground = null;
+			background = null;
+			bounds = null;
+			
+			super.dispose();
 		}
 		
 		override public function toString():String

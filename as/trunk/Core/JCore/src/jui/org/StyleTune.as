@@ -6,7 +6,7 @@ package jui.org
 	 * This is used to affect the component's UI style.
 	 * </p>
 	 */
-	public class StyleTune
+	public class StyleTune implements IDispose
 	{
 		/**
 		 * Gradient brightness range of content color [-1, 1]
@@ -135,8 +135,14 @@ package jui.org
 			return round;
 		}
 		
-		public function toString() : String {
+		public function toString():String
+		{
 			return "StyleTune{cGradient:" + cGradient + ", bOffset:" + bOffset + ", bGradient:" + bGradient + ", shadowAlpha:" + shadowAlpha + ", round:" + round + (mideAdjuster != this ? "mide:" + mideAdjuster.toString() : "") + "}";
+		}
+		
+		public function dispose():void
+		{
+			mideAdjuster = null;
 		}
 	}
 }

@@ -50,5 +50,10 @@ package jui.org.layouts
 		public function invalidateLayout(target:Container):void
 		{
 		}
+		
+		public function dispose():void
+		{
+			
+		}
 	}
 }

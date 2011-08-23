@@ -18,5 +18,10 @@ package jui.org.brushs
 		{
 			target.endFill();
 		}
+		
+		public function dispose():void
+		{
+			
+		}
 	}
 }
