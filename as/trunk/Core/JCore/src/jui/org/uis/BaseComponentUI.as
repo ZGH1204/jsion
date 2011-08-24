@@ -12,6 +12,7 @@ package jui.org.uis
 	import jui.org.StyleTune;
 	import jui.org.UIDefaults;
 	import jui.org.UIMgr;
+	import jui.org.brushs.SolidBrush;
 	import jui.org.errors.ImpMissError;
 	
 	import jutils.org.util.DisposeUtil;
@@ -34,8 +35,22 @@ package jui.org.uis
 			throw new ImpMissError();
 		}
 		
+		public function refreshStyleProperties():void
+		{
+			
+		}
+		
 		public function paint(component:Component, graphics:Graphics2D, bound:IntRectangle):void
 		{
+			paintBackGround(component, graphics, bound);
+		}
+		
+		protected function paintBackGround(c:Component, g:Graphics2D, b:IntRectangle):void
+		{
+			if(c.isOpaque())
+			{
+				g.fillRect(new SolidBrush(c.getBackground()), b.x, b.y, b.width, b.height);
+			}
 		}
 		
 		public function getPreferredSize(c:Component):IntDimension

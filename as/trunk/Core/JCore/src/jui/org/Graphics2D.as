@@ -181,11 +181,26 @@ package jui.org
 			target.lineTo(0, 0);
 		}
 		
+		public function fillRectangleRingWithThickness(brush:IBrush, x:Number, y:Number, width:Number, height:Number, thickness:Number):void
+		{
+			startBrush(brush);
+			rectangle(x, y, width, height);
+			rectangle(x+thickness, y+thickness, width -thickness*2, height - thickness*2);
+			endBrush();
+		}
+		
 		public function dispose():void
 		{
 			target = null;
 			
 			brush = null;
+		}
+		
+		public function drawLine(p:IPen, x1:Number, y1:Number, x2:Number, y2:Number):void
+		{
+			startPen(p);
+			line(x1, y1, x2, y2);
+			endPen();
 		}
 	}
 }

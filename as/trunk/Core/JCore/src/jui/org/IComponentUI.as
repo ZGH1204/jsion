@@ -6,6 +6,8 @@ package jui.org
 		
 		function uninstallUI(component:Component):void;
 		
+		function refreshStyleProperties():void;
+		
 		function paint(component:Component, graphics:Graphics2D, bound:IntRectangle):void;
 		
 		function getPreferredSize(c:Component):IntDimension;

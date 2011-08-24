@@ -2,6 +2,38 @@ package jui.org
 {
 	public class JColor
 	{
+		public static const WHITE:JColor = new JColor(0xffffff);
+		
+		public static const LIGHT_GRAY:JColor = new JColor(0xc0c0c0);
+		
+		public static const GRAY:JColor = new JColor(0x808080);
+		
+		public static const DARK_GRAY:JColor = new JColor(0x404040);
+		
+		public static const BLACK:JColor = new JColor(0x000000);
+		
+		public static const RED:JColor = new JColor(0xff0000);
+		
+		public static const PINK:JColor = new JColor(0xffafaf);
+		
+		public static const ORANGE:JColor = new JColor(0xffc800);
+		
+		public static const HALO_ORANGE:JColor = new JColor(0xFFC200);
+		
+		public static const YELLOW:JColor = new JColor(0xffff00);
+		
+		public static const GREEN:JColor = new JColor(0x00ff00);
+		
+		public static const HALO_GREEN:JColor = new JColor(0x80FF4D);
+		
+		public static const MAGENTA:JColor = new JColor(0xff00ff);
+		
+		public static const CYAN:JColor = new JColor(0x00ffff);
+		
+		public static const BLUE:JColor = new JColor(0x0000ff);
+		
+		public static const HALO_BLUE:JColor = new JColor(0x2BF5F5);
+		
 		protected var rgb:uint;
 		protected var alpha:Number;
 		

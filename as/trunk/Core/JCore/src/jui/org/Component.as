@@ -720,9 +720,9 @@ package jui.org
 		*/
 		//=======================================
 		
-		private static const Default_Trigger_Brush:IBrush = new TransparentBrush();
-		private var transparentTriggerDrawn:Boolean = false;
-		private var drawTransparentTrigger:Boolean = true;
+		protected static const Default_Trigger_Brush:IBrush = new TransparentBrush();
+		protected var transparentTriggerDrawn:Boolean = false;
+		protected var drawTransparentTrigger:Boolean = true;
 		
 		public function isDrawTransparentTrigger():Boolean
 		{
@@ -1568,6 +1568,29 @@ package jui.org
 		* Get and change alpha method.
 		*/
 		//=======================================
+		
+		protected var opaque:Boolean = false;
+		protected var opaqueSet:Boolean = false;
+		
+		public function isOpaque():Boolean
+		{
+			return opaque;
+		}
+		
+		public function setOpaque(b:Boolean):void
+		{
+			setOpaqueSet(true);
+			if(opaque != b)
+			{
+				opaque = b;
+				repaint();
+			}
+		}
+		
+		public function setOpaqueSet(b:Boolean):void
+		{
+			opaqueSet = b;
+		}
 		
 		public function setAlpha(alpha:Number):void
 		{

@@ -34,6 +34,8 @@ package jui.org
 		
 		function setSelected(b:Boolean):void;
 		
+		function getGroup():ButtonGroup;
+		
 		function setGroup(group:ButtonGroup):void;	
 	}
 }
