@@ -8,6 +8,8 @@ package
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
+	
+	import jcomponent.org.basic.ASFont;
 
 	/**
 	 * 其他特殊工具方法集合
@@ -127,6 +129,26 @@ package
 			
 			TEXT_FIELD_EXT.text = str;
 			TEXT_FIELD_EXT.setTextFormat(tf);
+			
+			if(includeGutters)
+			{
+				return new IntDimension(Math.ceil(TEXT_FIELD_EXT.width), Math.ceil(TEXT_FIELD_EXT.height));
+			}
+			else
+			{
+				return new IntDimension(Math.ceil(TEXT_FIELD_EXT.textWidth), Math.ceil(TEXT_FIELD_EXT.textHeight));
+			}
+		}
+		
+		public static function computeStringSizeWithFont(font:ASFont, str:String, includeGutters:Boolean = true):IntDimension
+		{
+			if(!font.isFullFeatured())
+			{
+				throw new Error("Font is not full featured : " + font);
+			}
+			
+			TEXT_FIELD_EXT.text = str;
+			font.apply(TEXT_FIELD_EXT);
 			
 			if(includeGutters)
 			{
