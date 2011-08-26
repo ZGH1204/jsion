@@ -491,8 +491,7 @@ package jcomponent.org.basic
 
 			if(m_needDrawTransparentTrigger && m_enabled)
 			{
-				var g:Graphics2D = new Graphics2D(graphics);
-				g.fillRectangle(bg_trigger_brush, bounds.x, bounds.y, bounds.width, bounds.height);
+				paintTrigger();
 			}
 
 			if(m_backgroundDecorator) m_backgroundDecorator.updateDecorator(this, m_ui, bounds);
@@ -500,6 +499,12 @@ package jcomponent.org.basic
 			if(m_ui) m_ui.paint(this, bounds);
 
 			if(m_foregroundDecorator) m_foregroundDecorator.updateDecorator(this, m_ui, bounds);
+		}
+		
+		protected function paintTrigger():void
+		{
+			var g:Graphics2D = new Graphics2D(graphics);
+			g.fillRectangle(bg_trigger_brush, bounds.x, bounds.y, bounds.width, bounds.height);
 		}
 
 		private function __addToStageHandler(e:Event):void

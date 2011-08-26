@@ -238,7 +238,8 @@ package jcore.org.moduls
 					moduleInfo.isError = false;
 					moduleInfo.assembly = loader.content as Assembly;
 					
-					var module:DefaultModule = ModuleMonitor.createModule(moduleInfo);
+					ModuleMonitor.createModule(moduleInfo);
+					//var module:DefaultModule = ModuleMonitor.createModule(moduleInfo);
 					//MessageMonitor.registeReceiver(module);
 					
 					_loadingModuleInfoList.splice(i, 1);

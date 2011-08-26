@@ -13,6 +13,7 @@ package
 	import jcore.org.moduls.ModuleDefaultMsg;
 	import jcore.org.moduls.ModuleInfo;
 	import jcore.org.moduls.ModuleInfoMgr;
+	import jcore.org.timeline.TimeLineDefaultMsg;
 	
 	import jutils.org.util.DisposeUtil;
 	import jutils.org.util.StringUtil;
@@ -131,6 +132,8 @@ package
 			}
 			
 			MessageMonitor.createAndSendMsg(ModuleDefaultMsg.Install, "Launcher", geters);
+			
+			MessageMonitor.createAndSendMsg(TimeLineDefaultMsg.TimerStart, "Launcher");
 			
 			if(_callback != null) _callback();
 			_callback = null;
