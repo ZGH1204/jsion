@@ -1,7 +1,7 @@
 package jcore.org.moduls
 {
 	/**
-	 * 模块公共消息标识(4294967276 - 4294967285)
+	 * 模块全局唯一公共消息标识(4294967176 - 4294967285)
 	 * @author Jsion
 	 * 
 	 */	
@@ -9,14 +9,14 @@ package jcore.org.moduls
 	{
 		/**
 		 * 安装模块消息
-		 * <p><b>消息标识：</b>4294967276</p>
+		 * <p><b>消息标识：</b>4294967176</p>
 		 */		
-		public static const Install:uint = 4294967276;
+		public static const Install:uint = 4294967176;
 		
 		/**
 		 * 卸载模块消息
-		 * <p><b>消息标识：</b>4294967277</p>
+		 * <p><b>消息标识：</b>4294967177</p>
 		 */		
-		public static const Uninstall:uint = 4294967277;
+		public static const Uninstall:uint = 4294967177;
 	}
 }

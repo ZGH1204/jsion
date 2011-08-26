@@ -3,6 +3,8 @@ package
 	import flash.display.Stage;
 	import flash.system.Security;
 	
+	import jcore.org.timeline.TimeLineMgr;
+	
 	import jutils.org.util.InternetExplorerUtil;
 
 	/**
@@ -28,6 +30,8 @@ package
 		StageRef.setup(stage);
 		
 		Cache.setup(config);
+		
+		TimeLineMgr.setup();
 		
 		InternetExplorerUtil.setup(stage.root);
 	}

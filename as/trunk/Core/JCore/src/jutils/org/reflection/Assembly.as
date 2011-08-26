@@ -2,6 +2,7 @@ package jutils.org.reflection
 {
 	import flash.events.EventDispatcher;
 	import flash.utils.describeType;
+	import flash.utils.getQualifiedClassName;
 	
 	import jutils.org.util.AppDomainUtil;
 	import jutils.org.util.ReflectionUtil;
@@ -60,6 +61,13 @@ package jutils.org.reflection
 				if(type) tList.push(type);
 			}
 			return tList;
+		}
+		
+		public function getTypeByObject(obj:Object):Type
+		{
+			var cls:String = getQualifiedClassName(obj);
+			
+			return getType(cls);
 		}
 		
 		public function getType(clsPath:String):Type
