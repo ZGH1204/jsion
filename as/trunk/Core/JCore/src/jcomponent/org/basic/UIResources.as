@@ -15,7 +15,7 @@ package jcomponent.org.basic
 			list = new HashMap();
 		}
 		
-		public function putDefaults(keyValueList:Array):void
+		public function putResources(keyValueList:Array):void
 		{
 			for(var i:Number = 0; i < keyValueList.length; i += 2)
 			{

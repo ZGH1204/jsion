@@ -1,11 +1,12 @@
 package jcomponent.org.mgrs
 {
-	import jutils.org.util.InstanceUtil;
 	import jcomponent.org.basic.Component;
+	
+	import jutils.org.util.InstanceUtil;
 
 	public class ComponentMgr
 	{
-		private var components:HashMap;
+		private var components:HashMap = new HashMap();
 
 		public function registe(component:Component):void
 		{

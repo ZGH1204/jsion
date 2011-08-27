@@ -4,7 +4,7 @@ package jcomponent.org.basic
 
 	public interface IUIResources extends IDispose
 	{
-		function putDefaults(keyValueList:Array):void;
+		function putResources(keyValueList:Array):void;
 		
 		function getUI(target:Component):IComponentUI;
 		

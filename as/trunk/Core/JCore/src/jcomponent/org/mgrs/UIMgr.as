@@ -26,7 +26,7 @@ package jcomponent.org.mgrs
 		public static function setLookAndFeel(laf:LookAndFeel):void
 		{
 			lookAndFeel = laf;
-			setLookAndFeelResources(laf.getDefaults());
+			setLookAndFeelResources(laf.getResources());
 		}
 		
 		public static function getResources():IUIResources

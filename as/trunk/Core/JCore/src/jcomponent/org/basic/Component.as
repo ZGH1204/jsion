@@ -9,6 +9,7 @@ package jcomponent.org.basic
 	import jcomponent.org.basic.graphics.Graphics2D;
 	import jcomponent.org.basic.graphics.SolidBrush;
 	import jcomponent.org.mgrs.ComponentMgr;
+	import jcomponent.org.mgrs.UIMgr;
 	
 	import jutils.org.util.DepthUtil;
 	import jutils.org.util.DisposeUtil;
@@ -23,15 +24,8 @@ package jcomponent.org.basic
 		public function Component(id:String = null)
 		{
 			this.id = id;
-
-			if(isOnStage())
-			{
-				initialize();
-			}
-			else
-			{
-				addEventListener(Event.ADDED_TO_STAGE, __addToStageHandler);
-			}
+			
+			initialize();
 		}
 
 		private var m_backcolor:ASColor;
@@ -65,6 +59,8 @@ package jcomponent.org.basic
 		private var m_ui:IComponentUI;
 
 		private var m_uiClassID:String;
+		
+		private var m_readyToInvalidate:Boolean;
 
 		private var m_waiteRender:Boolean;
 		
@@ -231,8 +227,6 @@ package jcomponent.org.basic
 			DisposeUtil.free(m_border);
 			m_border = null;
 
-			m_bounds = null;
-
 			DisposeUtil.free(m_font);
 			m_font = null;
 
@@ -256,6 +250,7 @@ package jcomponent.org.basic
 			
 			container = null;
 			
+			m_bounds = null;
 
 			ComponentMgr.Instance.unregiste(m_id);
 		}
@@ -333,6 +328,11 @@ package jcomponent.org.basic
 				setForeground(null);
 			}
 		}
+		
+		public function pack():void
+		{
+			setSize(getPreferredSize());
+		}
 
 		public function getHighestIndexBelowForeground():int
 		{
@@ -392,10 +392,10 @@ package jcomponent.org.basic
 
 		public function invalidate():void
 		{
-			if(stage && m_waiteRender)
+			if(!m_waiteRender && m_readyToInvalidate)
 			{
-				stage.addEventListener(Event.RENDER, __renderHandler);
-				stage.invalidate();
+				StageRef.addEventListener(Event.RENDER, __renderHandler);
+				StageRef.invalidate();
 				m_waiteRender = true;
 			}
 		}
@@ -464,6 +464,8 @@ package jcomponent.org.basic
 		{
 			if(w != bounds.width || h != bounds.height)
 			{
+				m_readyToInvalidate = true;
+				
 				bounds.width = w;
 				bounds.height = h;
 
@@ -487,7 +489,7 @@ package jcomponent.org.basic
 
 		public function updateUI():void
 		{
-
+			UI = UIMgr.getUI(this);
 		}
 
 		override public function get width():Number
@@ -837,12 +839,10 @@ package jcomponent.org.basic
 
 		protected function paint():void
 		{
+			setMaskSize(bounds.getSize());
+			
 			graphics.clear();
-
-			if(m_needDrawTransparentTrigger && m_enabled)
-			{
-				paintTrigger();
-			}
+			if(m_needDrawTransparentTrigger && m_enabled) paintTrigger();
 
 			if(m_backgroundDecorator) m_backgroundDecorator.updateDecorator(this, m_ui, bounds);
 
@@ -851,20 +851,25 @@ package jcomponent.org.basic
 			if(m_foregroundDecorator) m_foregroundDecorator.updateDecorator(this, m_ui, bounds);
 		}
 		
+		private function setMaskSize(s:IntDimension):void
+		{
+			if(m_mask)
+			{
+				m_mask.width = s.width;
+				m_mask.height = s.height;
+			}
+		}
+		
 		protected function paintTrigger():void
 		{
 			var g:Graphics2D = new Graphics2D(graphics);
 			g.fillRectangle(bg_trigger_brush, bounds.x, bounds.y, bounds.width, bounds.height);
 		}
 
-		private function __addToStageHandler(e:Event):void
-		{
-			initialize();
-		}
-
 		private function __renderHandler(e:Event):void
 		{
 			stage.removeEventListener(Event.RENDER, __renderHandler);
+			
 			m_waiteRender = false;
 
 			paint();
@@ -872,8 +877,6 @@ package jcomponent.org.basic
 
 		private function initialize():void
 		{
-			removeEventListener(Event.ADDED_TO_STAGE, __addToStageHandler);
-
 			enabled = true;
 			m_bounds = new IntRectangle();
 			m_font = DefaultRes.DEFAULT_FONT;
@@ -889,6 +892,8 @@ package jcomponent.org.basic
 
 			addChild(m_mask);
 			mask = m_mask;
+			
+			//updateUI();
 
 			invalidate();
 		}
