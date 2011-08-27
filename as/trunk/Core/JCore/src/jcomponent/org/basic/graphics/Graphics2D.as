@@ -68,6 +68,7 @@ package jcomponent.org.basic.graphics
 
 		protected function dispose():void{
 			target = null;
+			brush = null;
 		}
 
 		private function startPen(p:IPen):void{

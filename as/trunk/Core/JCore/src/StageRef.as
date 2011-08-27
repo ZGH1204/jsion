@@ -42,6 +42,11 @@ package
 			_actionLine.act(action);
 		}
 		
+		public static function get fps():int
+		{
+			return _stage.frameRate;
+		}
+		
 		public static function get stageWidth():int
 		{
 			return _stage.stageWidth;
