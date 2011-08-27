@@ -19,6 +19,9 @@ package jcomponent.org.basic
 
 		public function dispose():void
 		{
+			if(this == DefaultRes.DEFAULT_GROUNDDECORATOR) return;
+			
+			
 		}
 	}
 }

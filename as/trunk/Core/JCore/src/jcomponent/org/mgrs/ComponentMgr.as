@@ -1,6 +1,7 @@
-package jcomponent.org.basic
+package jcomponent.org.mgrs
 {
 	import jutils.org.util.InstanceUtil;
+	import jcomponent.org.basic.Component;
 
 	public class ComponentMgr
 	{

@@ -4,13 +4,17 @@ package jcomponent.org.basic
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	
 	import jcomponent.org.basic.borders.IBorder;
 	import jcomponent.org.basic.graphics.Graphics2D;
 	import jcomponent.org.basic.graphics.SolidBrush;
+	import jcomponent.org.mgrs.ComponentMgr;
+	
 	import jutils.org.util.DepthUtil;
 	import jutils.org.util.DisposeUtil;
 	import jutils.org.util.NameUtil;
 	import jutils.org.util.StringUtil;
+	
 	public class Component extends Sprite implements IDispose
 	{
 
@@ -32,7 +36,7 @@ package jcomponent.org.basic
 
 		private var m_backcolor:ASColor;
 
-		private var m_background:DisplayObject;
+		internal var m_background:DisplayObject;
 
 		private var m_backgroundDecorator:IGroundDecorator;
 
@@ -63,6 +67,23 @@ package jcomponent.org.basic
 		private var m_uiClassID:String;
 
 		private var m_waiteRender:Boolean;
+		
+		
+		private var m_preferredSize:IntDimension;
+		private var m_cachePreferredSize:Boolean;
+		private var m_cachedPreferredSize:IntDimension;
+		
+		private var m_minimumSize:IntDimension;
+		private var m_cacheMinimumSize:Boolean;
+		private var m_cachedMinimumSize:IntDimension;
+		
+		private var m_maximumSize:IntDimension;
+		private var m_cacheMaximumSize:Boolean;
+		private var m_cachedMaximumSize:IntDimension;
+		
+		
+		internal var container:Container;
+		
 
 		public function get UI():IComponentUI
 		{
@@ -221,6 +242,20 @@ package jcomponent.org.basic
 			if(m_ui) m_ui.uninstall(this);
 			DisposeUtil.free(m_ui);
 			m_ui = null;
+			
+			
+			m_preferredSize = null;
+			m_cachedPreferredSize = null;
+			
+			m_minimumSize = null;
+			m_cachedMinimumSize = null;
+			
+			m_maximumSize = null;
+			m_cachedMaximumSize = null;;
+			
+			
+			container = null;
+			
 
 			ComponentMgr.Instance.unregiste(m_id);
 		}
@@ -412,6 +447,13 @@ package jcomponent.org.basic
 			bounds.x = x;
 			bounds.y = y;
 		}
+		
+		public function getSize(s:IntDimension = null):IntDimension
+		{
+			var ss:IntDimension = bounds.getSize();
+			if(s) s.setSize(ss);
+			return ss;
+		}
 
 		public function setSize(size:IntDimension):void
 		{
@@ -478,6 +520,314 @@ package jcomponent.org.basic
 		{
 			bounds.y;
 			yPos = value;
+		}
+		
+		public function get preferredSize():IntDimension
+		{
+			return m_preferredSize;
+		}
+		
+		public function set preferredSize(value:IntDimension):void
+		{
+			if(value) m_preferredSize = value.clone();
+		}
+		
+		public function get preferredWidth():int
+		{
+			if(m_preferredSize) return m_preferredSize.width;
+			
+			return 0;
+		}
+		
+		public function set preferredWidth(value:int):void
+		{
+			if(m_preferredSize == null) m_preferredSize = new IntDimension(-1, -1);
+			
+			m_preferredSize.width = value;
+		}
+		
+		public function get preferredHeight():int
+		{
+			if(m_preferredSize) return m_preferredSize.height;
+			
+			return 0;
+		}
+		
+		public function set preferredHeight(value:int):void
+		{
+			if(m_preferredSize == null) m_preferredSize = new IntDimension(-1, -1);
+			
+			m_preferredSize.height = value;
+		}
+		
+		public function get cachePreferredSize():Boolean
+		{
+			return m_cachePreferredSize;
+		}
+		
+		public function set cachePreferredSize(value:Boolean):void
+		{
+			m_cachePreferredSize = value;
+		}
+		
+		public function getPreferredSize():IntDimension
+		{
+			if(isDirectReturnSize(m_preferredSize))
+			{
+				return m_preferredSize.clone();
+			}
+			else if(m_cachePreferredSize && m_cachedPreferredSize != null)
+			{
+				return m_cachedPreferredSize.clone();
+			}
+			else
+			{
+				var tempSize:IntDimension = mixSetSize(countPreferredSize(), m_preferredSize);
+				
+				if(m_cachePreferredSize) m_cachedPreferredSize = tempSize;
+				
+				return tempSize.clone();
+			}
+		}
+		
+		private function mixSetSize(counted:IntDimension, setted:IntDimension):IntDimension
+		{
+			if(setted != null)
+			{
+				if(setted.width > 0)
+				{
+					counted.width = setted.width;
+				}
+				else if(setted.height > 0)
+				{
+					counted.height = setted.height;
+				}
+			}
+			return counted;
+		}
+		
+		protected function countPreferredSize():IntDimension
+		{
+			if(m_ui != null)
+			{
+				return m_ui.getPreferredSize(this);
+			}
+			else
+			{
+				return getSize();
+			}
+		}
+		
+		public function get minimumSize():IntDimension
+		{
+			return m_minimumSize;
+		}
+		
+		public function set minimumSize(value:IntDimension):void
+		{
+			if(value == null) return;
+			m_minimumSize = value.clone();
+		}
+		
+		public function get minimumWidth():int
+		{
+			if(m_minimumSize) return m_minimumSize.width;
+			
+			return 0;
+		}
+		
+		public function set minimumWidth(value:int):void
+		{
+			if(m_minimumSize == null) m_minimumSize = new IntDimension(-1, -1);
+			
+			m_minimumSize.width = value;
+		}
+		
+		public function get minimumHeight():int
+		{
+			if(m_minimumSize) return m_minimumSize.height;
+			
+			return 0;
+		}
+		
+		public function set minimumHeight(value:int):void
+		{
+			if(m_minimumSize == null) m_minimumSize = new IntDimension(-1, -1);
+			
+			m_minimumSize.height = value;
+		}
+		
+		public function get cacheMinimumSize():Boolean
+		{
+			return m_cacheMinimumSize;
+		}
+		
+		public function set cacheMinimumSize(value:Boolean):void
+		{
+			m_cacheMinimumSize = value;
+		}
+		
+		public function getMinimumSize():IntDimension
+		{
+			if(isDirectReturnSize(m_minimumSize))
+			{
+				return m_minimumSize.clone();
+			}
+			else if(m_cacheMinimumSize && m_cachedMinimumSize != null)
+			{
+				return m_cachedMinimumSize.clone();
+			}
+			else
+			{
+				var tempSize:IntDimension = mixSetSize(countMinimumSize(), m_minimumSize);
+				
+				if(m_cacheMinimumSize) m_cachedMinimumSize = tempSize;
+				
+				return tempSize.clone();
+			}
+		}
+		
+		public function getInsets():Insets
+		{
+			if(border == null)
+			{
+				return new Insets();
+			}
+			else
+			{
+				return border.getBorderInsets(this, getSize().getBounds());
+			}
+		}
+		
+		protected function countMinimumSize():IntDimension
+		{
+			if(m_ui != null)
+			{
+				return m_ui.getMinimumSize(this);
+			}
+			else
+			{
+				return getInsets().getOutsideSize(new IntDimension(0, 0));
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		public function get maximumSize():IntDimension
+		{
+			return m_maximumSize;
+		}
+		
+		public function set maximumSize(value:IntDimension):void
+		{
+			if(value == null) return;
+			m_maximumSize = value.clone();
+		}
+		
+		public function get maximumWidth():int
+		{
+			if(m_maximumSize) return m_maximumSize.width;
+			
+			return 0;
+		}
+		
+		public function set maximumWidth(value:int):void
+		{
+			if(m_maximumSize == null) m_maximumSize = new IntDimension(-1, -1);
+			
+			m_maximumSize.width = value;
+		}
+		
+		public function get maximumHeight():int
+		{
+			if(m_maximumSize) return m_maximumSize.height;
+			
+			return 0;
+		}
+		
+		public function set maximumHeight(value:int):void
+		{
+			if(m_maximumSize == null) m_maximumSize = new IntDimension(-1, -1);
+			
+			m_maximumSize.height = value;
+		}
+		
+		public function get cacheMaximumSize():Boolean
+		{
+			return m_cacheMaximumSize;
+		}
+		
+		public function set cacheMaximumSize(value:Boolean):void
+		{
+			m_cacheMaximumSize = value;
+		}
+		
+		
+		
+		public function getMaximumSize():IntDimension
+		{
+			if(isDirectReturnSize(m_maximumSize))
+			{
+				return m_maximumSize.clone();
+			}
+			else if(m_cacheMaximumSize && m_cachedMaximumSize != null)
+			{
+				return m_cachedMaximumSize.clone();
+			}
+			else
+			{
+				var tempSize:IntDimension = mixSetSize(countMaximumSize(), m_maximumSize);
+				
+				if(m_cacheMaximumSize) m_cachedMaximumSize = tempSize;
+				
+				return tempSize.clone();
+			}
+		}
+		
+		public function clearSizeCaches():void
+		{
+			m_cachedMaximumSize = null;
+			m_cachedMinimumSize = null;
+			m_cachedPreferredSize = null;
+			
+			var par:Container = getContainer();
+			if(par != null){
+				par.clearSizeCaches();
+			}
+		}
+		
+		public function getContainer():Container
+		{
+			return container;
+		}
+		
+		protected function countMaximumSize():IntDimension
+		{
+			if(m_ui != null)
+			{
+				return m_ui.getMaximumSize(this);
+			}
+			else
+			{
+				return IntDimension.createBigDimension();
+			}
+		}
+		
+		private function isDirectReturnSize(s:IntDimension):Boolean
+		{
+			if(s == null || s.width <= 0 || s.height <= 0) return false;
+			
+			return true;
 		}
 
 		protected function getUIDefaultClassID():String
