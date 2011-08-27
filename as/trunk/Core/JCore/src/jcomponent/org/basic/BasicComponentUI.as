@@ -31,12 +31,12 @@ package jcomponent.org.basic
 		
 		public function getMinimumSize(component:Component):IntDimension
 		{
-			return null;
+			return component.getSize();
 		}
 		
 		public function getMaximumSize(component:Component):IntDimension
 		{
-			return null;
+			return IntDimension.createBigDimension();
 		}
 		
 		public function paint(component:Component, bounds:IntRectangle):void
