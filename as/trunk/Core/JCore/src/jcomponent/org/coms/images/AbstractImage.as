@@ -1,0 +1,116 @@
+package jcomponent.org.coms.images
+{
+	import flash.display.BitmapData;
+	
+	import jcomponent.org.basic.Component;
+	
+	public class AbstractImage extends Component
+	{
+		public static const TOP_LEFT:int = 1;
+		
+		public static const TOP_CENTER:int = 2;
+		
+		public static const TOP_RIGHT:int = 3;
+		
+		public static const MIDDLE_LEFT:int = 4;
+		
+		public static const MIDDLE_CENTER:int = 5;
+		
+		public static const MIDDLE_RIGHT:int = 6;
+		
+		public static const BOTTOM_LEFT:int = 7;
+		
+		public static const BOTTOM_CENTER:int = 8;
+		
+		public static const BOTTOM_RIGHT:int = 9;
+		
+		/**
+		 * 拉伸方式
+		 */		
+		public static const DRAW_SCALE:int = 0;
+		
+		/**
+		 * 平铺方式
+		 */		
+		public static const TILE_SCALE:int = 1;
+		
+		private var m_scaleType:int;
+		
+		private var m_scaleInsets:Insets;
+		
+		private var m_sourceBitmapData:BitmapData;
+		
+		public function AbstractImage(bmd:BitmapData, scaleInset:Insets = null, id:String = null)
+		{
+			super(id);
+			
+			if(bmd == null) throw new ArgumentError("bmd 参数不能为空!!");
+			
+			if(scaleInset == null) scaleInset = new Insets();//throw new ArgumentError("scaleInset 参数不能为空!!");
+			
+			m_sourceBitmapData = bmd;
+			
+			m_scaleInsets = scaleInset;
+			
+			m_scaleType = DRAW_SCALE;
+			
+			updateUI();
+		}
+		
+		public function get scaleType():int
+		{
+			return m_scaleType;
+		}
+		
+		public function set scaleType(value:int):void
+		{
+			if(value != TILE_SCALE && value != DRAW_SCALE && value == m_scaleType) return;
+			
+			m_scaleType = value;
+			
+			invalidate();
+		}
+		
+		public function get scaleInsets():Insets
+		{
+			return m_scaleInsets;
+		}
+		
+		public function set scaleInsets(value:Insets):void
+		{
+			if(m_scaleInsets != value)
+			{
+				m_scaleInsets = value;
+				
+				if(m_scaleInsets == null) m_scaleInsets = new Insets();
+				
+				invalidate();
+			}
+		}
+		
+		public function get sourceBitmapData():BitmapData
+		{
+			return m_sourceBitmapData;
+		}
+		
+		public function set sourceBitmapData(value:BitmapData):void
+		{
+			if(m_sourceBitmapData != value)
+			{
+				m_sourceBitmapData = value;
+				
+				invalidate();
+			}
+		}
+		
+		override public function setSizeWH(w:int, h:int):void
+		{
+			var min:IntDimension = getMinimumSize();
+			
+			if(w < min.width) w = min.width;
+			if(h < min.height) h = min.height;
+			
+			super.setSizeWH(w, h);
+		}
+	}
+}

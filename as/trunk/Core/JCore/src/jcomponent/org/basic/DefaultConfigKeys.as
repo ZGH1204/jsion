@@ -2,6 +2,8 @@ package jcomponent.org.basic
 {
 	public class DefaultConfigKeys
 	{
-		public static const BaseUI:String = "BUI";
+		public static const SCALE_IMAGE_DRAW_UI:String = "ScaleImageDrawUI";
+		
+		public static const SCALE_IMAGE_TILE_UI:String = "ScaleImageTileUI";
 	}
 }

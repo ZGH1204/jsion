@@ -18,20 +18,23 @@ package jcomponent.org.basic
 		
 		public function install(component:Component):void
 		{
+			throw new Error("继承的子类中必需覆盖此方法!");
 		}
 		
 		public function uninstall(component:Component):void
 		{
+			throw new Error("继承的子类中必需覆盖此方法!");
 		}
 		
 		public function getPreferredSize(component:Component):IntDimension
 		{
-			return null;
+			//return component.getSize();
+			return new IntDimension(100, 50);
 		}
 		
 		public function getMinimumSize(component:Component):IntDimension
 		{
-			return component.getSize();
+			return new IntDimension();
 		}
 		
 		public function getMaximumSize(component:Component):IntDimension
