@@ -120,6 +120,8 @@ package jcomponent.org.coms.buttons
 		
 		private function __modelStateListener(e:ButtonEvent):void
 		{
+			invalidate();
+			
 			dispatchEvent(new ButtonEvent(ButtonEvent.STATE_CHANGED));
 		}
 		
