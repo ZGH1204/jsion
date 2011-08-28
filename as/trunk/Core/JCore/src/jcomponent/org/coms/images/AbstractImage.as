@@ -3,26 +3,27 @@ package jcomponent.org.coms.images
 	import flash.display.BitmapData;
 	
 	import jcomponent.org.basic.Component;
+	import jcomponent.org.basic.UIConstants;
 	
 	public class AbstractImage extends Component
 	{
-		public static const TOP_LEFT:int = 1;
+		public static const TOP_LEFT:int = UIConstants.TOP_LEFT;
 		
-		public static const TOP_CENTER:int = 2;
+		public static const TOP_CENTER:int = UIConstants.TOP_CENTER;
 		
-		public static const TOP_RIGHT:int = 3;
+		public static const TOP_RIGHT:int = UIConstants.TOP_RIGHT;
 		
-		public static const MIDDLE_LEFT:int = 4;
+		public static const MIDDLE_LEFT:int = UIConstants.MIDDLE_LEFT;
 		
-		public static const MIDDLE_CENTER:int = 5;
+		public static const MIDDLE_CENTER:int = UIConstants.MIDDLE_CENTER;
 		
-		public static const MIDDLE_RIGHT:int = 6;
+		public static const MIDDLE_RIGHT:int = UIConstants.MIDDLE_RIGHT;
 		
-		public static const BOTTOM_LEFT:int = 7;
+		public static const BOTTOM_LEFT:int = UIConstants.BOTTOM_LEFT;
 		
-		public static const BOTTOM_CENTER:int = 8;
+		public static const BOTTOM_CENTER:int = UIConstants.BOTTOM_CENTER;
 		
-		public static const BOTTOM_RIGHT:int = 9;
+		public static const BOTTOM_RIGHT:int = UIConstants.BOTTOM_RIGHT;
 		
 		/**
 		 * 拉伸方式
@@ -42,10 +43,6 @@ package jcomponent.org.coms.images
 		
 		public function AbstractImage(bmd:BitmapData, scaleInset:Insets = null, id:String = null)
 		{
-			super(id);
-			
-			if(bmd == null) throw new ArgumentError("bmd 参数不能为空!!");
-			
 			if(scaleInset == null) scaleInset = new Insets();//throw new ArgumentError("scaleInset 参数不能为空!!");
 			
 			m_sourceBitmapData = bmd;
@@ -54,7 +51,9 @@ package jcomponent.org.coms.images
 			
 			m_scaleType = DRAW_SCALE;
 			
-			updateUI();
+			super(id);
+			
+			if(bmd == null) throw new ArgumentError("bmd 参数不能为空!!");
 		}
 		
 		public function get scaleType():int
