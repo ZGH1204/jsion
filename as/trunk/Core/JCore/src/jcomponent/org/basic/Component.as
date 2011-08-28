@@ -130,7 +130,7 @@ package jcomponent.org.basic
 
 		public function get backcolor():ASColor
 		{
-			return backcolor;
+			return m_backcolor;
 		}
 
 		public function set backcolor(value:ASColor):void
@@ -197,11 +197,9 @@ package jcomponent.org.basic
 		{
 			if(m_bounds != value && value != null && !value.equals(m_bounds))
 			{
-				m_bounds = value;
+				setLocationXY(value.x, value.y);
 
-				setLocationXY(m_bounds.x, m_bounds.y);
-
-				setSizeWH(m_bounds.width, m_bounds.height);
+				setSizeWH(value.width, value.height);
 			}
 		}
 
@@ -893,7 +891,7 @@ package jcomponent.org.basic
 			addChild(m_mask);
 			mask = m_mask;
 			
-			//updateUI();
+			updateUI();
 
 			invalidate();
 		}

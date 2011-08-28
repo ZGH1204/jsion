@@ -67,7 +67,7 @@ package jcomponent.org.basic
 			{
 				var g:Graphics2D = new Graphics2D(dis.graphics);
 				
-				g.fillRectangle(new SolidBrush(component.backcolor), bounds.x, bounds.y, bounds.width, bounds.height);
+				g.fillRectangle(new SolidBrush(component.backcolor), 0, 0, bounds.width, bounds.height);
 				
 				DisposeUtil.free(g);
 				g = null;

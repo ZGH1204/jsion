@@ -108,36 +108,35 @@ package jcomponent.org.coms.images
 			var copySourceRect:IntRectangle = getGridRect(sourceSize, scaleInsets, part);
 			var destTargetRect:IntRectangle = getGridRect(drawedSize, scaleInsets, part);
 			
-			if(copySourceRect && destTargetRect)
+			if(destTargetRect.width <= 0 || destTargetRect.height <= 0) return;
+			
+			var b:BitmapData = new BitmapData(copySourceRect.width, copySourceRect.height, true, 0);
+			
+			b.copyPixels(sourceBitmapData, copySourceRect.toRectangle(), Constant.ZeroPoint);
+			
+			var point:Point = new Point();
+			
+			//使用新的BitmapData防止大小超出
+			var bd:BitmapData = new BitmapData(destTargetRect.width, destTargetRect.height, true, 0);
+			
+			for(point.x = 0; point.x < destTargetRect.width; point.x += b.width, point.y = 0)
 			{
-				var b:BitmapData = new BitmapData(copySourceRect.width, copySourceRect.height, true, 0);
-				
-				b.copyPixels(sourceBitmapData, copySourceRect.toRectangle(), Constant.ZeroPoint);
-				
-				var point:Point = new Point();
-				
-				//使用新的BitmapData防止大小超出
-				var bd:BitmapData = new BitmapData(destTargetRect.width, destTargetRect.height, true, 0);
-				
-				for(point.x = 0; point.x < destTargetRect.width; point.x += b.width, point.y = 0)
+				for(point.y = 0; point.y < destTargetRect.height; point.y += b.height)
 				{
-					for(point.y = 0; point.y < destTargetRect.height; point.y += b.height)
-					{
-						bd.copyPixels(b, b.rect, point);
-					}
+					bd.copyPixels(b, b.rect, point);
 				}
-				
-				point.x = destTargetRect.x;
-				point.y = destTargetRect.y;
-				
-				bmd.copyPixels(bd, bd.rect, point);
-				
-				DisposeUtil.free(b);
-				b = null;
-				
-				DisposeUtil.free(bd);
-				bd = null;
 			}
+			
+			point.x = destTargetRect.x;
+			point.y = destTargetRect.y;
+			
+			bmd.copyPixels(bd, bd.rect, point);
+			
+			DisposeUtil.free(b);
+			b = null;
+			
+			DisposeUtil.free(bd);
+			bd = null;
 		}
 		
 		private function drawOther(bmd:BitmapData, drawedSize:IntDimension, part:int):void
@@ -148,24 +147,23 @@ package jcomponent.org.coms.images
 			var copySourceRect:IntRectangle = getGridRect(sourceSize, scaleInsets, part);
 			var destTargetRect:IntRectangle = getGridRect(drawedSize, scaleInsets, part);
 			
-			if(copySourceRect && destTargetRect)
-			{
-				var b:BitmapData = new BitmapData(copySourceRect.width, copySourceRect.height, true, 0);
-				
-				b.copyPixels(sourceBitmapData, copySourceRect.toRectangle(), Constant.ZeroPoint);
-				
-				var matrix:Matrix = new Matrix();
-				var sx:Number = destTargetRect.width / copySourceRect.width;
-				var sy:Number = destTargetRect.height / copySourceRect.height;
-				
-				matrix.scale(sx, sy);
-				matrix.translate(destTargetRect.x, destTargetRect.y);
-				
-				bmd.draw(b, matrix);
-				
-				DisposeUtil.free(b);
-				b = null;
-			}
+			if(destTargetRect.width <= 0 || destTargetRect.height <= 0) return;
+			
+			var b:BitmapData = new BitmapData(copySourceRect.width, copySourceRect.height, true, 0);
+			
+			b.copyPixels(sourceBitmapData, copySourceRect.toRectangle(), Constant.ZeroPoint);
+			
+			var matrix:Matrix = new Matrix();
+			var sx:Number = destTargetRect.width / copySourceRect.width;
+			var sy:Number = destTargetRect.height / copySourceRect.height;
+			
+			matrix.scale(sx, sy);
+			matrix.translate(destTargetRect.x, destTargetRect.y);
+			
+			bmd.draw(b, matrix);
+			
+			DisposeUtil.free(b);
+			b = null;
 		}
 		
 		private function drawCorner(bmd:BitmapData, drawedSize:IntDimension, part:int):void
@@ -176,10 +174,9 @@ package jcomponent.org.coms.images
 			var copySourceRect:IntRectangle = getGridRect(sourceSize, scaleInsets, part);
 			var destTargetRect:IntRectangle = getGridRect(drawedSize, scaleInsets, part);
 			
-			if(copySourceRect && destTargetRect)
-			{
-				bmd.copyPixels(sourceBitmapData, copySourceRect.toRectangle(), destTargetRect.getLocation().toPoint());
-			}
+			if(destTargetRect.width <= 0 || destTargetRect.height <= 0) return;
+			
+			bmd.copyPixels(sourceBitmapData, copySourceRect.toRectangle(), destTargetRect.getLocation().toPoint());
 		}
 	}
 }

@@ -10,6 +10,9 @@ package
 	import flash.text.TextFormat;
 	
 	import jcomponent.org.basic.ASFont;
+	import jcomponent.org.basic.UIConstants;
+	
+	import jutils.org.util.StringUtil;
 
 	/**
 	 * 其他特殊工具方法集合
@@ -147,6 +150,8 @@ package
 				throw new Error("Font is not full featured : " + font);
 			}
 			
+			if(StringUtil.isNullOrEmpty(str)) return new IntDimension();
+			
 			TEXT_FIELD_EXT.text = str;
 			font.apply(TEXT_FIELD_EXT);
 			
@@ -158,6 +163,42 @@ package
 			{
 				return new IntDimension(Math.ceil(TEXT_FIELD_EXT.textWidth), Math.ceil(TEXT_FIELD_EXT.textHeight));
 			}
+		}
+		
+		public static function layoutText(text:String, font:ASFont, horizontalAlginment:int, verticalAlginment:int, viewRect:IntRectangle, textRect:IntRectangle):String
+		{
+			var textSize:IntDimension = JUtil.computeStringSizeWithFont(font, text);
+			textRect.setSize(textSize);
+			
+			if(horizontalAlginment == UIConstants.CENTER)
+			{
+				textRect.x = viewRect.width - textRect.width;
+				textRect.x /= 2;
+			}
+			else if(horizontalAlginment == UIConstants.RIGHT)
+			{
+				textRect.x = viewRect.width - textRect.width;
+			}
+			else
+			{
+				textRect.x = 0;
+			}
+			
+			if(verticalAlginment == UIConstants.TOP)
+			{
+				textRect.y = 0;
+			}
+			else if(verticalAlginment == UIConstants.BOTTOM)
+			{
+				textRect.y = viewRect.height - textRect.height;
+			}
+			else
+			{
+				textRect.y = viewRect.height - textRect.height;
+				textRect.y /= 2;
+			}
+			
+			return text;
 		}
 	}
 }
