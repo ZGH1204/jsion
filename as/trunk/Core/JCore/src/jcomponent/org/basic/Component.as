@@ -2,7 +2,6 @@ package jcomponent.org.basic
 {
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	
 	import jcomponent.org.basic.borders.IBorder;
@@ -16,13 +15,15 @@ package jcomponent.org.basic
 	import jutils.org.util.NameUtil;
 	import jutils.org.util.StringUtil;
 	
-	public class Component extends Sprite implements IDispose
+	public class Component extends JSprite
 	{
 
 		private static const bg_trigger_brush:SolidBrush = new SolidBrush(new ASColor(0, 0));
 
 		public function Component(id:String = null)
 		{
+			JUtil.checkAbstract(this);
+			
 			this.id = id;
 			
 			initialize();
@@ -205,7 +206,7 @@ package jcomponent.org.basic
 
 
 
-		public function dispose():void
+		override public function dispose():void
 		{
 			m_backcolor = null;
 			m_forecolor = null;
@@ -251,6 +252,8 @@ package jcomponent.org.basic
 			m_bounds = null;
 
 			ComponentMgr.Instance.unregiste(m_id);
+			
+			super.dispose();
 		}
 
 		public function get enabled():Boolean
