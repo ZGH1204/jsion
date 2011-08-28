@@ -12,6 +12,7 @@ package
 	import jcomponent.org.basic.ASFont;
 	import jcomponent.org.basic.UIConstants;
 	
+	import jutils.org.util.NameUtil;
 	import jutils.org.util.StringUtil;
 
 	/**
@@ -98,27 +99,6 @@ package
 			return ext;
 		}
 		
-		/**
-		 * 指示ancestor容器中是否包含child显示对象
-		 * @param ancestor 显示对象容器
-		 * @param child 显示对象
-		 * @return true表示包含,false反之.
-		 */		
-		public static function isAncestorDisplayObject(ancestor:DisplayObjectContainer, child:DisplayObject):Boolean
-		{
-			if(ancestor == null || child == null) 
-				return false;
-			
-			var pa:DisplayObjectContainer = child.parent;
-			while(pa != null){
-				if(pa == ancestor){
-					return true;
-				}
-				pa = pa.parent;
-			}
-			return false;
-		}
-		
 		public static function computeStringSize(tf:TextFormat, str:String, includeGutters:Boolean = true, textField:TextField = null):IntDimension
 		{
 			if(textField)
@@ -199,6 +179,39 @@ package
 			}
 			
 			return text;
+		}
+		
+		/**
+		 * 指示ancestor容器中是否包含child显示对象
+		 * @param ancestor 显示对象容器
+		 * @param child 显示对象
+		 * @return true表示包含,false反之.
+		 */		
+		public static function isAncestorDisplayObject(ancestor:DisplayObjectContainer, child:DisplayObject):Boolean
+		{
+			if(ancestor == null || child == null) return false;
+			
+			var pa:DisplayObjectContainer = child.parent;
+			
+			while(pa != null)
+			{
+				if(pa == ancestor)
+				{
+					return true;
+				}
+				
+				pa = pa.parent;
+			}
+			
+			return false;
+		}
+		
+		public static function checkAbstract(obj:Object):void
+		{
+			var str:String = NameUtil.getUnqualifiedClassName(obj);
+			
+			if(StringUtil.startWith(str, "Abstract"))
+				throw new Error(str + "类为抽象类,拒绝初始化.");
 		}
 	}
 }

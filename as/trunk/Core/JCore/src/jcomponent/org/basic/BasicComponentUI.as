@@ -26,6 +26,11 @@ package jcomponent.org.basic
 			throw new Error("继承的子类中必需覆盖此方法!");
 		}
 		
+		public function getResourcesPrefix():String
+		{
+			return "";
+		}
+		
 		public function getPreferredSize(component:Component):IntDimension
 		{
 			//return component.getSize();
@@ -49,29 +54,14 @@ package jcomponent.org.basic
 		
 		protected function paintBackgroundColor(component:Component, bounds:IntRectangle):void
 		{
-			var dis:Sprite;
+			var g:Graphics2D = new Graphics2D(component.graphics);
 			
-			if(component.m_background == null)
-			{
-				dis = new Sprite();
-				component.m_background = dis;
-				
-				component.addChildAt(dis, component.getLowestIndexAboveBackground());
-			}
-			else
-			{
-				dis = component.m_background as Sprite;
-			}
+			g.clear();
 			
-			if(dis)
-			{
-				var g:Graphics2D = new Graphics2D(dis.graphics);
-				
-				g.fillRectangle(new SolidBrush(component.backcolor), 0, 0, bounds.width, bounds.height);
-				
-				DisposeUtil.free(g);
-				g = null;
-			}
+			g.fillRectangle(new SolidBrush(component.backcolor), 0, 0, bounds.width, bounds.height);
+			
+			DisposeUtil.free(g);
+			g = null;
 		}
 		
 		
