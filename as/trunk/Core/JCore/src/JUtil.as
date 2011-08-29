@@ -147,6 +147,7 @@ package
 		
 		public static function layoutText(text:String, font:ASFont, horizontalAlginment:int, verticalAlginment:int, viewRect:IntRectangle, textRect:IntRectangle):String
 		{
+			if(text == null) text = "";
 			var textSize:IntDimension = JUtil.computeStringSizeWithFont(font, text);
 			textRect.setSize(textSize);
 			

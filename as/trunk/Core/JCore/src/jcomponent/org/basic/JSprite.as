@@ -16,6 +16,19 @@ package jcomponent.org.basic
 			addEventListener(MouseEvent.MOUSE_DOWN, __jSpriteMouseDownListener);
 		}
 		
+		public function isOnStage():Boolean
+		{
+			return stage != null;
+		}
+		
+		public function isShowing():Boolean
+		{
+			return isOnStage() && visible;
+		}
+		
+		
+		
+		
 		
 		private var pressedTarget:DisplayObject;
 		

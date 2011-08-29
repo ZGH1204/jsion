@@ -3,10 +3,12 @@ package jcomponent.org.coms.buttons
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
-	public class ButtonStateView extends Sprite
+	import jcomponent.org.basic.Component;
+	
+	import jutils.org.util.DisposeUtil;
+	
+	public class ButtonStateView extends Sprite implements IDispose
 	{
-		private var m_defaultImage:DisplayObject;
-		
 		private var m_upImage:DisplayObject;
 		
 		private var m_overImage:DisplayObject;
@@ -25,12 +27,13 @@ package jcomponent.org.coms.buttons
 		
 		private var m_disabledSelectedImage:DisplayObject;
 		
+		
+		
 		private var lastImage:DisplayObject;
 		
 		
 		
 		
-		public var defaulted:Boolean;
 		
 		public var enabled:Boolean;
 		
@@ -40,10 +43,11 @@ package jcomponent.org.coms.buttons
 		
 		public var selected:Boolean;
 		
+		private var m_freeBitmapData:Boolean;
 		
-		
-		public function ButtonStateView()
+		public function ButtonStateView(freeBitmapData:Boolean = false)
 		{
+			m_freeBitmapData = freeBitmapData;
 			super();
 		}
 		
@@ -90,10 +94,6 @@ package jcomponent.org.coms.buttons
 			{
 				tmpImage = m_selectedImage;
 			}
-			else if(defaulted)
-			{
-				tmpImage = m_defaultImage;
-			}
 			
 			if(tmpImage != null)
 			{
@@ -123,13 +123,6 @@ package jcomponent.org.coms.buttons
 			child.visible = false;
 			
 			return super.addChild(child);
-		}
-		
-		public function setDefaultImage(image:DisplayObject):void
-		{
-			checkAsset(m_defaultImage);
-			m_defaultImage = image;
-			addChild(image);
 		}
 		
 		public function setUpImage(image:DisplayObject):void
@@ -196,6 +189,88 @@ package jcomponent.org.coms.buttons
 			{
 				throw new Error("You are set a already exists asset!");
 			}
+		}
+		
+		public function getPreferredSize(component:Component):IntDimension
+		{
+			return getSize();
+		}
+		
+		public function getMinimumSize(component:Component):IntDimension
+		{
+			return getSize();
+		}
+
+		public function getMaximumSize(component:Component):IntDimension
+		{
+			return getSize();
+		}
+		
+		protected function getSize():IntDimension
+		{
+			if(m_upImage)
+			{
+				return new IntDimension(m_upImage.width, m_upImage.height);
+			}
+			else if(m_overImage)
+			{
+				return new IntDimension(m_overImage.width, m_overImage.height);
+			}
+			else if(m_downImage)
+			{
+				return new IntDimension(m_downImage.width, m_downImage.height);
+			}
+			else if(m_disabledImage)
+			{
+				return new IntDimension(m_disabledImage.width, m_disabledImage.height);
+			}
+			else if(m_selectedImage)
+			{
+				return new IntDimension(m_selectedImage.width, m_selectedImage.height);
+			}
+			else if(m_overSelectedImage)
+			{
+				return new IntDimension(m_overSelectedImage.width, m_overSelectedImage.height);
+			}
+			else if(m_downSelectedImage)
+			{
+				return new IntDimension(m_downSelectedImage.width, m_downSelectedImage.height);
+			}
+			else if(m_disabledSelectedImage)
+			{
+				return new IntDimension(m_disabledSelectedImage.width, m_disabledSelectedImage.height);
+			}
+			
+			return new IntDimension();
+		}
+		
+		public function dispose():void
+		{
+			DisposeUtil.free(m_upImage, m_freeBitmapData);
+			m_upImage = null;
+			
+			DisposeUtil.free(m_overImage, m_freeBitmapData);
+			m_overImage = null;
+			
+			DisposeUtil.free(m_downImage, m_freeBitmapData);
+			m_downImage = null;
+			
+			DisposeUtil.free(m_disabledImage, m_freeBitmapData);
+			m_disabledImage = null;
+			
+			DisposeUtil.free(m_selectedImage, m_freeBitmapData);
+			m_selectedImage = null;
+			
+			DisposeUtil.free(m_overSelectedImage, m_freeBitmapData);
+			m_overSelectedImage = null;
+			
+			DisposeUtil.free(m_downSelectedImage, m_freeBitmapData);
+			m_downSelectedImage = null;
+			
+			DisposeUtil.free(m_disabledSelectedImage, m_freeBitmapData);
+			m_disabledSelectedImage = null;
+			
+			lastImage = null;
 		}
 	}
 }

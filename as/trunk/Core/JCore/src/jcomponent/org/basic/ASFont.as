@@ -8,7 +8,7 @@ package jcomponent.org.basic
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
-
+	
 	import jutils.org.util.DisposeUtil;
 
 	/**
@@ -154,9 +154,10 @@ package jcomponent.org.basic
 		 */
 		public function apply(textField:TextField, beginIndex:int=-1, endIndex:int=-1):void
 		{
+			var tf:TextFormat = createTextFormat();
 			advancedProperties.apply(textField);
-			textField.setTextFormat(textFormat, beginIndex, endIndex);
-			textField.defaultTextFormat = textFormat;
+			textField.setTextFormat(tf, beginIndex, endIndex);
+			textField.defaultTextFormat = tf;
 		}
 
 		/**

@@ -2,6 +2,7 @@ package jcomponent.org.basic
 {
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	
 	import jcomponent.org.basic.borders.IBorder;
@@ -28,6 +29,8 @@ package jcomponent.org.basic
 			
 			initialize();
 		}
+		
+		protected var m_content:Sprite;
 
 		private var m_backcolor:ASColor;
 
@@ -48,6 +51,8 @@ package jcomponent.org.basic
 		private var m_foreground:DisplayObject;
 
 		private var m_foregroundDecorator:IGroundDecorator;
+		
+		private var m_styleTune:StyleTune;
 
 		private var m_id:String;
 
@@ -81,6 +86,11 @@ package jcomponent.org.basic
 		
 		internal var container:Container;
 		
+		
+		public function get content():Sprite
+		{
+			return m_content;
+		}
 
 		public function get UI():IComponentUI
 		{
@@ -122,11 +132,24 @@ package jcomponent.org.basic
 		{
 			if(child == null) return null;
 
-			var c:DisplayObject = super.addChild(child);
+			var c:DisplayObject = m_content.addChild(child);
 
 			DepthUtil.bringToTop(m_foreground);
 
 			return c;
+		}
+		
+		override public function hitTestPoint(x:Number, y:Number, shapeFlag:Boolean=false):Boolean
+		{
+			return m_mask.hitTestPoint(x, y, shapeFlag);
+		}
+		
+		public function hitTestMouse():Boolean
+		{
+			if(isOnStage())
+				return hitTestPoint(StageRef.mouseX, StageRef.mouseY);
+			
+			return false;
 		}
 
 		public function get backcolor():ASColor
@@ -236,6 +259,9 @@ package jcomponent.org.basic
 			DisposeUtil.free(m_ui);
 			m_ui = null;
 			
+			DisposeUtil.free(m_content);
+			m_content = null;
+			
 			
 			m_preferredSize = null;
 			m_cachedPreferredSize = null;
@@ -330,9 +356,30 @@ package jcomponent.org.basic
 			}
 		}
 		
+		public function get styleTune():StyleTune
+		{
+			return m_styleTune;
+		}
+		
+		public function set styleTune(value:StyleTune):void
+		{
+			if(m_styleTune != value)
+			{
+				m_styleTune = value;
+				
+				invalidate();
+			}
+		}
+		
 		public function pack():void
 		{
 			setSize(getPreferredSize());
+		}
+		
+		public function bringToTopBelowForeground(child:DisplayObject):void
+		{
+			DepthUtil.bringToTop(child);
+			DepthUtil.bringToTop(m_foreground);
 		}
 
 		public function getHighestIndexBelowForeground():int
@@ -399,16 +446,6 @@ package jcomponent.org.basic
 				StageRef.invalidate();
 				m_waiteRender = true;
 			}
-		}
-
-		public function isOnStage():Boolean
-		{
-			return stage != null;
-		}
-
-		public function isShowing():Boolean
-		{
-			return isOnStage() && visible;
 		}
 
 		public function get needDrawTransparentTrigger():Boolean
@@ -878,13 +915,18 @@ package jcomponent.org.basic
 
 		private function initialize():void
 		{
-			enabled = true;
+			m_content = new Sprite();
+			
+			super.addChild(m_content);
+			
+			m_enabled = true;
+			m_needDrawTransparentTrigger = true;
+			
 			m_bounds = new IntRectangle();
 			m_font = DefaultRes.DEFAULT_FONT;
 			m_backcolor = DefaultRes.DEFAULT_BACKGROUND_COLOR;
 			m_forecolor = DefaultRes.DEFAULT_FOREGROUND_COLOR;
 			m_border = DefaultRes.DEFAULT_BORDER;
-			m_needDrawTransparentTrigger = true;
 
 			m_mask = new Shape();
 			m_mask.graphics.beginFill(0);
@@ -908,6 +950,8 @@ package jcomponent.org.basic
 				m_background = child;
 
 				addChild(m_background);
+				
+				DepthUtil.bringToBottom(m_background);
 			}
 		}
 
@@ -942,6 +986,7 @@ package jcomponent.org.basic
 		{
 			super.y = value;
 		}
+
 	}
 }
 

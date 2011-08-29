@@ -3,6 +3,9 @@ package
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
+	import jcomponent.org.coms.buttons.ImageButton;
+	import jcomponent.org.mgrs.UIMgr;
+	
 	import jcore.org.loader.BinaryLoader;
 	import jcore.org.message.MessageMonitor;
 	
@@ -20,6 +23,8 @@ package
 			_launcher.launch();
 			
 			stage.addEventListener(MouseEvent.CLICK, onClickHandler);
+			
+			UIMgr.setLookAndFeel(new TestLookAndFeel());
 		}
 		
 		private function onClickHandler(e:MouseEvent):void
@@ -37,7 +42,15 @@ package
 		
 		private function loadCallback(loader:BinaryLoader):void
 		{
-			MessageMonitor.createAndPostMsg(1, "JLauncher", ["Promiscuous"], loader.content);
+			//MessageMonitor.createAndPostMsg(1, "JLauncher", ["Promiscuous"], loader.content);
+			
+//			var img:ImageButton  = new ImageButton("按钮");
+//			
+//			img.pack();
+//			img.x = 100;
+//			img.y = 100;
+//			
+//			addChild(img);
 		}
 	}
 }

@@ -99,7 +99,7 @@ package jutils.org.util
 			if(display)
 			{
 				display.filters = null;
-
+				
 				if(display.hasOwnProperty("graphics")) display["graphics"].clear();
 			}
 		}

@@ -1,5 +1,9 @@
 package jcomponent.org.basic
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
+	
 	import jcomponent.org.basic.borders.IBorder;
 	
 	import jutils.org.util.AppDomainUtil;
@@ -167,6 +171,47 @@ package jcomponent.org.basic
 			return cls;
 		}
 		
+		public function getBitmapData(key:String):BitmapData
+		{
+			if(StringUtil.isNullOrEmpty(key)) return null;
+			
+			var value:* = list.get(key);
+			
+			if(value is Class)
+			{
+				return getCreateBitmapData(value as Class);
+			}
+			
+			return value as BitmapData;
+		}
+		
+		public function getDisplayObject(key:String):DisplayObject
+		{
+			if(StringUtil.isNullOrEmpty(key)) return null;
+			
+			var obj:DisplayObject;
+			
+			var value:* = list.get(key);
+			
+			if(value is Class)
+			{
+				try
+				{
+					obj = getCreateInstance(value as Class) as DisplayObject;
+				}
+				catch(err:Error)
+				{
+					obj = new Bitmap(getBitmapData(key));
+				}
+			}
+			else
+			{
+				obj = value as DisplayObject;
+			}
+			
+			return obj;
+		}
+		
 		public function getInstance(key:String):*
 		{
 			if(StringUtil.isNullOrEmpty(key)) return null;
@@ -184,6 +229,11 @@ package jcomponent.org.basic
 		private function getCreateInstance(constructor:Class):Object
 		{
 			return new constructor();
+		}
+		
+		private function getCreateBitmapData(constructor:Class):BitmapData
+		{
+			return new constructor(0, 0);
 		}
 		
 		public function dispose():void
