@@ -1,5 +1,6 @@
 package jcomponent.org.basic
 {
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
@@ -168,6 +169,20 @@ package jcomponent.org.basic
 			if(containsResourceKey(key)) return super.getConstructor(key);
 			
 			return UIMgr.getConstructor(key);
+		}
+		
+		override public function getBitmapData(key:String):BitmapData
+		{
+			if(containsResourceKey(key)) return super.getBitmapData(key);
+			
+			return UIMgr.getBitmapData(key);
+		}
+		
+		override public function getDisplayObject(key:String):DisplayObject
+		{
+			if(containsResourceKey(key)) return super.getDisplayObject(key);
+			
+			return UIMgr.getDisplayObject(key);
 		}
 		
 		override public function getInstance(key:String):*

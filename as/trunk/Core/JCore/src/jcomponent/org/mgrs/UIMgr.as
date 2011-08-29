@@ -1,5 +1,8 @@
 package jcomponent.org.mgrs
 {
+	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
+	
 	import jcomponent.org.basic.ASColor;
 	import jcomponent.org.basic.ASFont;
 	import jcomponent.org.basic.BasicLookAndFeel;
@@ -126,6 +129,16 @@ package jcomponent.org.mgrs
 		public static function getConstructor(key:String):Class
 		{
 			return getResources().getConstructor(key);
+		}
+		
+		public static function getBitmapData(key:String):BitmapData
+		{
+			return getResources().getBitmapData(key);
+		}
+		
+		public static function getDisplayObject(key:String):DisplayObject
+		{
+			return getResources().getDisplayObject(key);
 		}
 		
 		public static function getInstance(key:String):*

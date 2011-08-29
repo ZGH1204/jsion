@@ -1,10 +1,15 @@
 package jcomponent.org.basic
 {
+	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
+	
 	import jcomponent.org.basic.borders.IBorder;
 
 	public interface IUIResources extends IDispose
 	{
 		function putResources(keyValueList:Array):void;
+		
+		function containsResourceKey(key:String):Boolean;
 		
 		function getUI(target:Component):IComponentUI;
 		
@@ -33,6 +38,10 @@ package jcomponent.org.basic
 		function getStyleTune(key:String):StyleTune;
 		
 		function getConstructor(key:String):Class;
+		
+		function getBitmapData(key:String):BitmapData;
+		
+		function getDisplayObject(key:String):DisplayObject;
 		
 		function getInstance(key:String):*;
 	}
