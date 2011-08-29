@@ -9,27 +9,27 @@ package jcomponent.org.coms.buttons
 	
 	public class ButtonStateView extends Sprite implements IDispose
 	{
-		private var m_upImage:DisplayObject;
+		protected var m_upImage:DisplayObject;
 		
-		private var m_overImage:DisplayObject;
+		protected var m_overImage:DisplayObject;
 		
-		private var m_downImage:DisplayObject;
+		protected var m_downImage:DisplayObject;
 		
-		private var m_disabledImage:DisplayObject;
-		
-		
-		
-		private var m_selectedImage:DisplayObject;
-		
-		private var m_overSelectedImage:DisplayObject;
-		
-		private var m_downSelectedImage:DisplayObject;
-		
-		private var m_disabledSelectedImage:DisplayObject;
+		protected var m_disabledImage:DisplayObject;
 		
 		
 		
-		private var lastImage:DisplayObject;
+		protected var m_selectedImage:DisplayObject;
+		
+		protected var m_overSelectedImage:DisplayObject;
+		
+		protected var m_downSelectedImage:DisplayObject;
+		
+		protected var m_disabledSelectedImage:DisplayObject;
+		
+		
+		
+		protected var lastImage:DisplayObject;
 		
 		
 		
@@ -193,51 +193,160 @@ package jcomponent.org.coms.buttons
 		
 		public function getPreferredSize(component:Component):IntDimension
 		{
-			return getSize();
-		}
-		
-		public function getMinimumSize(component:Component):IntDimension
-		{
-			return getSize();
-		}
-
-		public function getMaximumSize(component:Component):IntDimension
-		{
-			return getSize();
-		}
-		
-		protected function getSize():IntDimension
-		{
 			if(m_upImage)
 			{
+				if(m_upImage is Component)
+					return Component(m_upImage).getPreferredSize();
 				return new IntDimension(m_upImage.width, m_upImage.height);
 			}
 			else if(m_overImage)
 			{
+				if(m_upImage is Component)
+					return Component(m_overImage).getPreferredSize();
 				return new IntDimension(m_overImage.width, m_overImage.height);
 			}
 			else if(m_downImage)
 			{
+				if(m_upImage is Component)
+					return Component(m_downImage).getPreferredSize();
 				return new IntDimension(m_downImage.width, m_downImage.height);
 			}
 			else if(m_disabledImage)
 			{
+				if(m_upImage is Component)
+					return Component(m_disabledImage).getPreferredSize();
 				return new IntDimension(m_disabledImage.width, m_disabledImage.height);
 			}
 			else if(m_selectedImage)
 			{
+				if(m_upImage is Component)
+					return Component(m_selectedImage).getPreferredSize();
 				return new IntDimension(m_selectedImage.width, m_selectedImage.height);
 			}
 			else if(m_overSelectedImage)
 			{
+				if(m_upImage is Component)
+					return Component(m_overSelectedImage).getPreferredSize();
 				return new IntDimension(m_overSelectedImage.width, m_overSelectedImage.height);
 			}
 			else if(m_downSelectedImage)
 			{
+				if(m_upImage is Component)
+					return Component(m_downSelectedImage).getPreferredSize();
 				return new IntDimension(m_downSelectedImage.width, m_downSelectedImage.height);
 			}
 			else if(m_disabledSelectedImage)
 			{
+				if(m_upImage is Component)
+					return Component(m_disabledSelectedImage).getPreferredSize();
+				return new IntDimension(m_disabledSelectedImage.width, m_disabledSelectedImage.height);
+			}
+			
+			return new IntDimension();
+		}
+		
+		public function getMinimumSize(component:Component):IntDimension
+		{
+			if(m_upImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_upImage).getMinimumSize();
+				return new IntDimension(m_upImage.width, m_upImage.height);
+			}
+			else if(m_overImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_overImage).getMinimumSize();
+				return new IntDimension(m_overImage.width, m_overImage.height);
+			}
+			else if(m_downImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_downImage).getMinimumSize();
+				return new IntDimension(m_downImage.width, m_downImage.height);
+			}
+			else if(m_disabledImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_disabledImage).getMinimumSize();
+				return new IntDimension(m_disabledImage.width, m_disabledImage.height);
+			}
+			else if(m_selectedImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_selectedImage).getMinimumSize();
+				return new IntDimension(m_selectedImage.width, m_selectedImage.height);
+			}
+			else if(m_overSelectedImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_overSelectedImage).getMinimumSize();
+				return new IntDimension(m_overSelectedImage.width, m_overSelectedImage.height);
+			}
+			else if(m_downSelectedImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_downSelectedImage).getMinimumSize();
+				return new IntDimension(m_downSelectedImage.width, m_downSelectedImage.height);
+			}
+			else if(m_disabledSelectedImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_disabledSelectedImage).getMinimumSize();
+				return new IntDimension(m_disabledSelectedImage.width, m_disabledSelectedImage.height);
+			}
+			
+			return new IntDimension();
+		}
+
+		public function getMaximumSize(component:Component):IntDimension
+		{
+			if(m_upImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_upImage).getMaximumSize();
+				return new IntDimension(m_upImage.width, m_upImage.height);
+			}
+			else if(m_overImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_overImage).getMaximumSize();
+				return new IntDimension(m_overImage.width, m_overImage.height);
+			}
+			else if(m_downImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_downImage).getMaximumSize();
+				return new IntDimension(m_downImage.width, m_downImage.height);
+			}
+			else if(m_disabledImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_disabledImage).getMaximumSize();
+				return new IntDimension(m_disabledImage.width, m_disabledImage.height);
+			}
+			else if(m_selectedImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_selectedImage).getMaximumSize();
+				return new IntDimension(m_selectedImage.width, m_selectedImage.height);
+			}
+			else if(m_overSelectedImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_overSelectedImage).getMaximumSize();
+				return new IntDimension(m_overSelectedImage.width, m_overSelectedImage.height);
+			}
+			else if(m_downSelectedImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_downSelectedImage).getMaximumSize();
+				return new IntDimension(m_downSelectedImage.width, m_downSelectedImage.height);
+			}
+			else if(m_disabledSelectedImage)
+			{
+				if(m_upImage is Component)
+					return Component(m_disabledSelectedImage).getMaximumSize();
 				return new IntDimension(m_disabledSelectedImage.width, m_disabledSelectedImage.height);
 			}
 			

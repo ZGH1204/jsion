@@ -18,6 +18,12 @@ package jcomponent.org.coms.buttons
 		public function ButtonImageBackground(freeBitmapData:Boolean = false)
 		{
 			setuped = false;
+			
+			init(freeBitmapData);
+		}
+		
+		protected function init(freeBitmapData:Boolean):void
+		{
 			stateView = new ButtonStateView(freeBitmapData);
 			stateView.mouseEnabled = false;
 		}
