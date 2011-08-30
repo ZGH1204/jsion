@@ -7,6 +7,7 @@ package jcomponent.org.coms.buttons
 	import jcomponent.org.basic.Component;
 	import jcomponent.org.basic.DefaultConfigKeys;
 	import jcomponent.org.basic.IComponentUI;
+	import jcomponent.org.basic.IGroundDecorator;
 	import jcomponent.org.basic.LookAndFeel;
 	
 	import jutils.org.util.DisposeUtil;
@@ -114,7 +115,7 @@ package jcomponent.org.coms.buttons
 		private function paintFilters(component:Component, bounds:IntRectangle):void
 		{
 			var btn:AbstractButton = component as AbstractButton;
-			var model:DefaultButtonModel = btn.model;
+			var model:IButtonModel = btn.model;
 			
 			var filter:Array = btn.upFilters;
 			
@@ -168,14 +169,43 @@ package jcomponent.org.coms.buttons
 			btn.content.filters = filter;
 		}
 		
-		override public function getMinimumSize(component:Component):IntDimension
-		{
-			return getTextSize(component);
-		}
-		
 		override public function getPreferredSize(component:Component):IntDimension
 		{
-			return getTextSize(component);
+			var backgroundDecorator:IGroundDecorator = component.backgroundDecorator;
+			
+			var textSize:IntDimension = getTextSize(component);
+			var backSize:IntDimension;
+			
+			if(backgroundDecorator) backSize = backgroundDecorator.getPreferredSize(component);
+			else backSize = new IntDimension();
+			
+			return new IntDimension(Math.max(textSize.width, backSize.width), Math.max(textSize.height, backSize.height));
+		}
+		
+		override public function getMinimumSize(component:Component):IntDimension
+		{
+			var backgroundDecorator:IGroundDecorator = component.backgroundDecorator;
+			
+			var textSize:IntDimension = getTextSize(component);
+			var backSize:IntDimension;
+			
+			if(backgroundDecorator) backSize = backgroundDecorator.getMinimumSize(component);
+			else backSize = new IntDimension();
+			
+			return new IntDimension(Math.max(textSize.width, backSize.width), Math.max(textSize.height, backSize.height));
+		}
+		
+		override public function getMaximumSize(component:Component):IntDimension
+		{
+			var backgroundDecorator:IGroundDecorator = component.backgroundDecorator;
+			
+			var textSize:IntDimension = getTextSize(component);
+			var backMax:IntDimension;
+			
+			if(backgroundDecorator) backMax = backgroundDecorator.getMaximumSize(component);
+			else backMax = IntDimension.createBigDimension();
+			
+			return new IntDimension(Math.max(textSize.width, backMax.width), Math.max(textSize.height, backMax.height));
 		}
 		
 		protected function getTextSize(component:Component):IntDimension

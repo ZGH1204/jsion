@@ -28,18 +28,18 @@ package jcomponent.org.coms.buttons
 			stateView.mouseEnabled = false;
 		}
 		
-		public function getSize():IntDimension
+		override public function getSize():IntDimension
 		{
 			return stateView.getSize();
 		}
 		
-		public function setLocation(x:int, y:int):void
+		override public function setLocation(x:int, y:int):void
 		{
 			stateView.x = x;
 			stateView.y = y;
 		}
 		
-		public function setup(component:Component, ui:IComponentUI):void
+		override public function setup(component:Component, ui:IComponentUI):void
 		{
 			if(setuped) return;
 			
@@ -67,7 +67,7 @@ package jcomponent.org.coms.buttons
 		{
 			var btn:AbstractButton = component as AbstractButton;
 			
-			var model:DefaultButtonModel = btn.model;
+			var model:IButtonModel = btn.model;
 			
 			stateView.enabled = model.enabled;
 			stateView.downed = model.pressed;
@@ -89,17 +89,17 @@ package jcomponent.org.coms.buttons
 			return stateView;
 		}
 		
-		public function getPreferredSize(component:Component):IntDimension
+		override public function getPreferredSize(component:Component):IntDimension
 		{
 			return stateView.getPreferredSize(component);
 		}
 		
-		public function getMinimumSize(component:Component):IntDimension
+		override public function getMinimumSize(component:Component):IntDimension
 		{
 			return stateView.getMinimumSize(component);
 		}
 		
-		public function getMaximumSize(component:Component):IntDimension
+		override public function getMaximumSize(component:Component):IntDimension
 		{
 			return stateView.getMaximumSize(component);
 		}

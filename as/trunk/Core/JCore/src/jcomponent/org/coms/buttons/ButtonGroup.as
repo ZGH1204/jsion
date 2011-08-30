@@ -6,7 +6,7 @@ package jcomponent.org.coms.buttons
 	{
 		protected var buttons:Array = [];
 		
-		protected var selection:DefaultButtonModel = null;
+		protected var selection:IButtonModel = null;
 		
 		private var allowUncheck : Boolean;
 		
@@ -67,7 +67,7 @@ package jcomponent.org.coms.buttons
 			return ArrayUtil.clone(buttons);
 		}
 		
-		public function getSelection():DefaultButtonModel
+		public function getSelection():IButtonModel
 		{
 			return selection;
 		}
@@ -82,16 +82,16 @@ package jcomponent.org.coms.buttons
 			return null;
 		}
 		
-		public function isSelected(m:DefaultButtonModel):Boolean
+		public function isSelected(m:IButtonModel):Boolean
 		{
 			return (m == selection);
 		}
 		
-		public function setSelected(m:DefaultButtonModel, b:Boolean):void
+		public function setSelected(m:IButtonModel, b:Boolean):void
 		{
 			if (b && m != null && m != selection)
 			{
-				var oldSelection:DefaultButtonModel = selection;
+				var oldSelection:IButtonModel = selection;
 				
 				selection = m;
 				

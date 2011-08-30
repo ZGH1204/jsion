@@ -2,6 +2,7 @@ package jcomponent.org.coms.buttons
 {
 	import jcomponent.org.basic.Component;
 	import jcomponent.org.basic.DefaultConfigKeys;
+	import jcomponent.org.basic.IGroundDecorator;
 
 	public class CheckBoxUI extends ImageButtonUI
 	{
@@ -12,25 +13,21 @@ package jcomponent.org.coms.buttons
 			super();
 		}
 		
-		override protected function installBackgroundDecorator(component:Component):void
-		{
-			backgroundDecorator = new CheckBoxBackground();
-			
-			backgroundDecorator.setup(component, this);
-			
-			component.backgroundDecorator = backgroundDecorator;
-		}
-		
 		override protected function paintText(component:Component, bounds:IntRectangle):void
 		{
 			var btn:CheckBox = CheckBox(component);
+			
+			var backgroundDecorator:IGroundDecorator = component.backgroundDecorator;
 			
 			viewRect.setRect(bounds);
 			
 			boxRect.setRectXYWH(0,0,0,0);
 			textRect.setRectXYWH(0,0,0,0);
 			
-			var s:IntDimension = backgroundDecorator.getSize();
+			var s:IntDimension;
+			
+			if(backgroundDecorator) s = backgroundDecorator.getSize();
+			else s = new IntDimension();
 			
 			var text:String = JUtil.layoutTextAndBox(btn.text, btn.font, 
 													btn.horizontalTextAlginment, 
@@ -40,7 +37,7 @@ package jcomponent.org.coms.buttons
 													btn.boxVGap, btn.boxDir, boxRect, viewRect);
 			
 			
-			backgroundDecorator.setLocation(boxRect.x, boxRect.y);
+			if(backgroundDecorator) backgroundDecorator.setLocation(boxRect.x, boxRect.y);
 			
 			textField.x = textRect.x;
 			textField.y = textRect.y;
@@ -60,8 +57,13 @@ package jcomponent.org.coms.buttons
 		{
 			var cb:CheckBox = CheckBox(component);
 			
+			var backgroundDecorator:IGroundDecorator = component.backgroundDecorator;
+			
 			var textSize:IntDimension = getTextSize(component);
-			var backSize:IntDimension = backgroundDecorator.getPreferredSize(component);
+			var backSize:IntDimension;
+			
+			if(backgroundDecorator) backSize = backgroundDecorator.getPreferredSize(component);
+			else backSize = new IntDimension();
 			
 			return calcSize(cb, textSize, backSize);
 		}
@@ -69,8 +71,14 @@ package jcomponent.org.coms.buttons
 		override public function getMinimumSize(component:Component):IntDimension
 		{
 			var cb:CheckBox = CheckBox(component);
+			
+			var backgroundDecorator:IGroundDecorator = component.backgroundDecorator;
+			
 			var textSize:IntDimension = getTextSize(component);
-			var backSize:IntDimension = backgroundDecorator.getMinimumSize(component);
+			var backSize:IntDimension;
+			
+			if(backgroundDecorator) backSize = backgroundDecorator.getMinimumSize(component);
+			else backSize = new IntDimension();
 			
 			return calcSize(cb, textSize, backSize);
 		}

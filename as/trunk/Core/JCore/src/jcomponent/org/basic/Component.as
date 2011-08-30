@@ -179,6 +179,8 @@ package jcomponent.org.basic
 
 				if(m_backgroundDecorator)
 				{
+					m_backgroundDecorator.setup(this, UI);
+					
 					setBackground(m_backgroundDecorator.getDisplay(this));
 					return;
 				}

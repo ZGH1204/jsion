@@ -23,7 +23,7 @@ package jcomponent.org.coms.buttons
 		
 		public static const BOTTOM:int = UIConstants.BOTTOM;
 		
-		protected var m_model:DefaultButtonModel;
+		protected var m_model:IButtonModel;
 		
 		protected var m_text:String;
 		
@@ -106,16 +106,16 @@ package jcomponent.org.coms.buttons
 			}
 		}
 
-		public function get model():DefaultButtonModel
+		public function get model():IButtonModel
 		{
 			return m_model;
 		}
 
-		public function set model(value:DefaultButtonModel):void
+		public function set model(value:IButtonModel):void
 		{
 			if(value == model) return;
 			
-			var old:DefaultButtonModel = model;
+			var old:IButtonModel = model;
 			
 			if(old)
 			{
@@ -332,7 +332,7 @@ package jcomponent.org.coms.buttons
 		
 		private function __rollOverHandler(e:MouseEvent):void
 		{
-			var m:DefaultButtonModel = model;
+			var m:IButtonModel = model;
 			
 			if(rolloverEnabled)
 			{
@@ -347,7 +347,7 @@ package jcomponent.org.coms.buttons
 		
 		private function __rollOutHandler(e:MouseEvent):void
 		{
-			var m:DefaultButtonModel = model;
+			var m:IButtonModel = model;
 			
 			if(rolloverEnabled)
 			{

@@ -10,15 +10,6 @@ package jcomponent.org.coms.buttons
 			super();
 		}
 		
-		override protected function installBackgroundDecorator(component:Component):void
-		{
-			backgroundDecorator = new ButtonScaleImageBackground();
-			
-			backgroundDecorator.setup(component, this);
-			
-			component.backgroundDecorator = backgroundDecorator;
-		}
-		
 		override public function getResourcesPrefix(component:Component):String
 		{
 			return DefaultConfigKeys.SCALE_IMAGE_BUTTON_PRE;

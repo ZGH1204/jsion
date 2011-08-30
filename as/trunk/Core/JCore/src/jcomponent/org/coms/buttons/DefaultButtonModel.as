@@ -4,7 +4,7 @@ package jcomponent.org.coms.buttons
 	
 	import jcomponent.org.events.ButtonEvent;
 
-	public class DefaultButtonModel extends EventDispatcher implements IDispose
+	public class DefaultButtonModel extends EventDispatcher implements IButtonModel, IDispose
 	{
 		protected var m_enabled:Boolean;
 		protected var m_rollOver:Boolean;
@@ -111,27 +111,33 @@ package jcomponent.org.coms.buttons
 			m_group = value;
 		}
 
-		public function addActionListener(listener:Function, priority:int=0, useWeakReference:Boolean=false):void{
+		public function addActionListener(listener:Function, priority:int=0, useWeakReference:Boolean=false):void
+		{
 			addEventListener(ButtonEvent.ACTION, listener, false, priority);
 		}
 		
-		public function removeActionListener(listener:Function):void{
+		public function removeActionListener(listener:Function):void
+		{
 			removeEventListener(ButtonEvent.ACTION, listener);
 		}
 		
-		public function addSelectionListener(listener:Function, priority:int=0, useWeakReference:Boolean=false):void{
+		public function addSelectionListener(listener:Function, priority:int=0, useWeakReference:Boolean=false):void
+		{
 			addEventListener(ButtonEvent.SELECTION_CHANGED, listener, false, priority);
 		}
 		
-		public function removeSelectionListener(listener:Function):void{
+		public function removeSelectionListener(listener:Function):void
+		{
 			removeEventListener(ButtonEvent.SELECTION_CHANGED, listener);
 		}
 		
-		public function addStateListener(listener:Function, priority:int=0, useWeakReference:Boolean=false):void{
+		public function addStateListener(listener:Function, priority:int=0, useWeakReference:Boolean=false):void
+		{
 			addEventListener(ButtonEvent.STATE_CHANGED, listener, false, priority);
 		}
 		
-		public function removeStateListener(listener:Function):void{
+		public function removeStateListener(listener:Function):void
+		{
 			removeEventListener(ButtonEvent.STATE_CHANGED, listener);
 		}
 
