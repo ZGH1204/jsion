@@ -4,13 +4,15 @@ package jcomponent.org.coms.buttons
 	
 	import jcomponent.org.events.ButtonEvent;
 
-	public class DefaultButtonModel extends EventDispatcher
+	public class DefaultButtonModel extends EventDispatcher implements IDispose
 	{
 		protected var m_enabled:Boolean;
 		protected var m_rollOver:Boolean;
 		protected var m_armed:Boolean;
 		protected var m_pressed:Boolean;
 		protected var m_selected:Boolean;
+		
+		private var m_group:ButtonGroup;
 		
 		public function DefaultButtonModel()
 		{
@@ -78,9 +80,9 @@ package jcomponent.org.coms.buttons
 			
 			m_pressed = value;
 			
-			if(m_pressed == false && armed) fireActionEvent();
-			
 			fireStateChanged();
+			
+			if(m_pressed == false && armed) fireActionEvent();
 		}
 
 		public function get selected():Boolean
@@ -99,6 +101,16 @@ package jcomponent.org.coms.buttons
 			fireSelectionChanged();
 		}
 		
+		public function get group():ButtonGroup
+		{
+			return m_group;
+		}
+		
+		public function set group(value:ButtonGroup):void
+		{
+			m_group = value;
+		}
+
 		public function addActionListener(listener:Function, priority:int=0, useWeakReference:Boolean=false):void{
 			addEventListener(ButtonEvent.ACTION, listener, false, priority);
 		}
@@ -136,6 +148,11 @@ package jcomponent.org.coms.buttons
 		protected function fireSelectionChanged():void
 		{
 			dispatchEvent(new ButtonEvent(ButtonEvent.SELECTION_CHANGED));
+		}
+		
+		public function dispose():void
+		{
+			m_group = null;
 		}
 	}
 }

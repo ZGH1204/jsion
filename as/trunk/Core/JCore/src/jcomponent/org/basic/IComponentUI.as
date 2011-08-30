@@ -6,7 +6,7 @@ package jcomponent.org.basic
 
 		function uninstall(component:Component):void;
 		
-		function getResourcesPrefix():String;
+		function getResourcesPrefix(component:Component):String;
 		
 		function getPreferredSize(component:Component):IntDimension;
 		

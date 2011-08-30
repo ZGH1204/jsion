@@ -27,7 +27,7 @@ package jcomponent.org.basic
 			throw new Error("继承的子类中必需覆盖此方法!");
 		}
 		
-		public function getResourcesPrefix():String
+		public function getResourcesPrefix(component:Component):String
 		{
 			return "";
 		}

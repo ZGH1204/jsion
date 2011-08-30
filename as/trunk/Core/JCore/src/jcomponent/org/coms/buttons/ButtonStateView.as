@@ -3,8 +3,12 @@ package jcomponent.org.coms.buttons
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
+	import jcomponent.org.basic.ASColor;
 	import jcomponent.org.basic.Component;
+	import jcomponent.org.basic.graphics.Graphics2D;
+	import jcomponent.org.basic.graphics.SolidBrush;
 	
+	import jutils.org.util.DepthUtil;
 	import jutils.org.util.DisposeUtil;
 	
 	public class ButtonStateView extends Sprite implements IDispose
@@ -49,6 +53,31 @@ package jcomponent.org.coms.buttons
 		{
 			m_freeBitmapData = freeBitmapData;
 			super();
+		}
+		
+		public function getSize():IntDimension
+		{
+			if(lastImage) return new IntDimension(lastImage.width, lastImage.height);
+			
+			return new IntDimension();
+		}
+		
+		private var m_shape:Sprite;
+		
+		public function updateTrigger(size:IntDimension = null):void
+		{
+			if(size == null) return;
+			
+			if(m_shape == null)
+			{
+				m_shape = new Sprite();
+				addChild(m_shape);
+				DepthUtil.bringToBottom(m_shape);
+			}
+			
+			var g:Graphics2D = new Graphics2D(m_shape.graphics);
+			g.clear();
+			g.fillRectangle(new SolidBrush(new ASColor(0x336699, 1)), 0, 0, size.width, size.height);
 		}
 		
 		public function update(size:IntDimension = null):void
@@ -251,49 +280,49 @@ package jcomponent.org.coms.buttons
 			{
 				if(m_upImage is Component)
 					return Component(m_upImage).getMinimumSize();
-				return new IntDimension(m_upImage.width, m_upImage.height);
+				//return new IntDimension(m_upImage.width, m_upImage.height);
 			}
 			else if(m_overImage)
 			{
 				if(m_upImage is Component)
 					return Component(m_overImage).getMinimumSize();
-				return new IntDimension(m_overImage.width, m_overImage.height);
+				//return new IntDimension(m_overImage.width, m_overImage.height);
 			}
 			else if(m_downImage)
 			{
 				if(m_upImage is Component)
 					return Component(m_downImage).getMinimumSize();
-				return new IntDimension(m_downImage.width, m_downImage.height);
+				//return new IntDimension(m_downImage.width, m_downImage.height);
 			}
 			else if(m_disabledImage)
 			{
 				if(m_upImage is Component)
 					return Component(m_disabledImage).getMinimumSize();
-				return new IntDimension(m_disabledImage.width, m_disabledImage.height);
+				//return new IntDimension(m_disabledImage.width, m_disabledImage.height);
 			}
 			else if(m_selectedImage)
 			{
 				if(m_upImage is Component)
 					return Component(m_selectedImage).getMinimumSize();
-				return new IntDimension(m_selectedImage.width, m_selectedImage.height);
+				//return new IntDimension(m_selectedImage.width, m_selectedImage.height);
 			}
 			else if(m_overSelectedImage)
 			{
 				if(m_upImage is Component)
 					return Component(m_overSelectedImage).getMinimumSize();
-				return new IntDimension(m_overSelectedImage.width, m_overSelectedImage.height);
+				//return new IntDimension(m_overSelectedImage.width, m_overSelectedImage.height);
 			}
 			else if(m_downSelectedImage)
 			{
 				if(m_upImage is Component)
 					return Component(m_downSelectedImage).getMinimumSize();
-				return new IntDimension(m_downSelectedImage.width, m_downSelectedImage.height);
+				//return new IntDimension(m_downSelectedImage.width, m_downSelectedImage.height);
 			}
 			else if(m_disabledSelectedImage)
 			{
 				if(m_upImage is Component)
 					return Component(m_disabledSelectedImage).getMinimumSize();
-				return new IntDimension(m_disabledSelectedImage.width, m_disabledSelectedImage.height);
+				//return new IntDimension(m_disabledSelectedImage.width, m_disabledSelectedImage.height);
 			}
 			
 			return new IntDimension();
@@ -305,49 +334,49 @@ package jcomponent.org.coms.buttons
 			{
 				if(m_upImage is Component)
 					return Component(m_upImage).getMaximumSize();
-				return new IntDimension(m_upImage.width, m_upImage.height);
+				//return new IntDimension(m_upImage.width, m_upImage.height);
 			}
 			else if(m_overImage)
 			{
 				if(m_upImage is Component)
 					return Component(m_overImage).getMaximumSize();
-				return new IntDimension(m_overImage.width, m_overImage.height);
+				//return new IntDimension(m_overImage.width, m_overImage.height);
 			}
 			else if(m_downImage)
 			{
 				if(m_upImage is Component)
 					return Component(m_downImage).getMaximumSize();
-				return new IntDimension(m_downImage.width, m_downImage.height);
+				//return new IntDimension(m_downImage.width, m_downImage.height);
 			}
 			else if(m_disabledImage)
 			{
 				if(m_upImage is Component)
 					return Component(m_disabledImage).getMaximumSize();
-				return new IntDimension(m_disabledImage.width, m_disabledImage.height);
+				//return new IntDimension(m_disabledImage.width, m_disabledImage.height);
 			}
 			else if(m_selectedImage)
 			{
 				if(m_upImage is Component)
 					return Component(m_selectedImage).getMaximumSize();
-				return new IntDimension(m_selectedImage.width, m_selectedImage.height);
+				//return new IntDimension(m_selectedImage.width, m_selectedImage.height);
 			}
 			else if(m_overSelectedImage)
 			{
 				if(m_upImage is Component)
 					return Component(m_overSelectedImage).getMaximumSize();
-				return new IntDimension(m_overSelectedImage.width, m_overSelectedImage.height);
+				//return new IntDimension(m_overSelectedImage.width, m_overSelectedImage.height);
 			}
 			else if(m_downSelectedImage)
 			{
 				if(m_upImage is Component)
 					return Component(m_downSelectedImage).getMaximumSize();
-				return new IntDimension(m_downSelectedImage.width, m_downSelectedImage.height);
+				//return new IntDimension(m_downSelectedImage.width, m_downSelectedImage.height);
 			}
 			else if(m_disabledSelectedImage)
 			{
 				if(m_upImage is Component)
 					return Component(m_disabledSelectedImage).getMaximumSize();
-				return new IntDimension(m_disabledSelectedImage.width, m_disabledSelectedImage.height);
+				//return new IntDimension(m_disabledSelectedImage.width, m_disabledSelectedImage.height);
 			}
 			
 			return IntDimension.createBigDimension();
@@ -355,6 +384,9 @@ package jcomponent.org.coms.buttons
 		
 		public function dispose():void
 		{
+			DisposeUtil.free(m_shape);
+			m_shape = null;
+			
 			DisposeUtil.free(m_upImage, m_freeBitmapData);
 			m_upImage = null;
 			

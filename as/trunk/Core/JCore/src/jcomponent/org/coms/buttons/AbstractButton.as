@@ -7,6 +7,8 @@ package jcomponent.org.coms.buttons
 	import jcomponent.org.events.ButtonEvent;
 	import jcomponent.org.events.ReleaseEvent;
 	
+	import jutils.org.util.DisposeUtil;
+	
 	public class AbstractButton extends Component
 	{
 		public static const LEFT:int = UIConstants.LEFT;
@@ -21,14 +23,14 @@ package jcomponent.org.coms.buttons
 		
 		public static const BOTTOM:int = UIConstants.BOTTOM;
 		
-		private var m_model:DefaultButtonModel;
+		protected var m_model:DefaultButtonModel;
 		
-		private var m_text:String;
+		protected var m_text:String;
 		
-		private var m_verticalTextAlginment:int;
-		private var m_horizontalTextAlginment:int;
+		protected var m_verticalTextAlginment:int;
+		protected var m_horizontalTextAlginment:int;
 		
-		private var m_rolloverEnabled:Boolean
+		protected var m_rolloverEnabled:Boolean
 		
 		private var m_textFilters:Array;
 		
@@ -316,10 +318,16 @@ package jcomponent.org.coms.buttons
 		
 		public function initSelfEvent():void
 		{
+			addEventListener(MouseEvent.CLICK, __clickHandler);
 			addEventListener(MouseEvent.MOUSE_OVER, __rollOverHandler);
 			addEventListener(MouseEvent.ROLL_OUT, __rollOutHandler);
 			addEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
 			addEventListener(ReleaseEvent.RELEASE, __releaseHandler);
+		}
+		
+		private function __clickHandler(e:MouseEvent):void
+		{
+			e.stopPropagation();
 		}
 		
 		private function __rollOverHandler(e:MouseEvent):void
@@ -388,6 +396,7 @@ package jcomponent.org.coms.buttons
 		
 		override public function dispose():void
 		{
+			removeEventListener(MouseEvent.CLICK, __clickHandler);
 			removeEventListener(MouseEvent.MOUSE_OVER, __rollOverHandler);
 			removeEventListener(MouseEvent.ROLL_OUT, __rollOutHandler);
 			removeEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
@@ -399,6 +408,7 @@ package jcomponent.org.coms.buttons
 				m_model.removeSelectionListener(__modelSelectionHandler);
 				m_model.removeStateListener(__modelStateHandler);
 			}
+			DisposeUtil.free(m_model);
 			m_model = null;
 			
 			m_text = null;

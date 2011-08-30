@@ -11,7 +11,7 @@ package jcomponent.org.coms.buttons
 	
 	public class ButtonImageBackground extends BasicGroundDecorator
 	{
-		private var stateView:ButtonStateView;
+		protected var stateView:ButtonStateView;
 		
 		private var setuped:Boolean;
 		
@@ -28,26 +28,37 @@ package jcomponent.org.coms.buttons
 			stateView.mouseEnabled = false;
 		}
 		
-		public function setup(ui:IComponentUI):void
+		public function getSize():IntDimension
+		{
+			return stateView.getSize();
+		}
+		
+		public function setLocation(x:int, y:int):void
+		{
+			stateView.x = x;
+			stateView.y = y;
+		}
+		
+		public function setup(component:Component, ui:IComponentUI):void
 		{
 			if(setuped) return;
 			
 			setuped = true;
 			
 			//TODO: 取得UI图片资源
-			stateView.setUpImage(getAsset(ui, DefaultConfigKeys.BUTTON_UP_IMAGE, DefaultConfigKeys.BUTTON_UP_INSETS));
-			stateView.setOverImage(getAsset(ui, DefaultConfigKeys.BUTTON_OVER_IMAGE, DefaultConfigKeys.BUTTON_OVER_INSETS));
-			stateView.setDownImage(getAsset(ui, DefaultConfigKeys.BUTTON_DOWN_IMAGE, DefaultConfigKeys.BUTTON_DOWN_INSETS));
-			stateView.setDisabledImage(getAsset(ui, DefaultConfigKeys.BUTTON_DISABLED_IMAGE, DefaultConfigKeys.BUTTON_DISABLED_INSETS));
-			stateView.setSelectedImage(getAsset(ui, DefaultConfigKeys.BUTTON_SELECTED_IMAGE, DefaultConfigKeys.BUTTON_SELECTED_INSETS));
-			stateView.setOverSelectedImage(getAsset(ui, DefaultConfigKeys.BUTTON_OVER_SELECTED_IMAGE, DefaultConfigKeys.BUTTON_OVER_SELECTED_INSETS));
-			stateView.setDownSelectedImage(getAsset(ui, DefaultConfigKeys.BUTTON_DOWN_SELECTED_IMAGE, DefaultConfigKeys.BUTTON_DOWN_SELECTED_INSETS));
-			stateView.setDisabledSelectedImage(getAsset(ui, DefaultConfigKeys.BUTTON_DISABLED_SELECTED_IMAGE, DefaultConfigKeys.BUTTON_DISABLED_SELECTED_INSETS));
+			stateView.setUpImage(getAsset(component, ui, DefaultConfigKeys.BUTTON_UP_IMAGE, DefaultConfigKeys.BUTTON_UP_INSETS));
+			stateView.setOverImage(getAsset(component, ui, DefaultConfigKeys.BUTTON_OVER_IMAGE, DefaultConfigKeys.BUTTON_OVER_INSETS));
+			stateView.setDownImage(getAsset(component, ui, DefaultConfigKeys.BUTTON_DOWN_IMAGE, DefaultConfigKeys.BUTTON_DOWN_INSETS));
+			stateView.setDisabledImage(getAsset(component, ui, DefaultConfigKeys.BUTTON_DISABLED_IMAGE, DefaultConfigKeys.BUTTON_DISABLED_INSETS));
+			stateView.setSelectedImage(getAsset(component, ui, DefaultConfigKeys.BUTTON_SELECTED_IMAGE, DefaultConfigKeys.BUTTON_SELECTED_INSETS));
+			stateView.setOverSelectedImage(getAsset(component, ui, DefaultConfigKeys.BUTTON_OVER_SELECTED_IMAGE, DefaultConfigKeys.BUTTON_OVER_SELECTED_INSETS));
+			stateView.setDownSelectedImage(getAsset(component, ui, DefaultConfigKeys.BUTTON_DOWN_SELECTED_IMAGE, DefaultConfigKeys.BUTTON_DOWN_SELECTED_INSETS));
+			stateView.setDisabledSelectedImage(getAsset(component, ui, DefaultConfigKeys.BUTTON_DISABLED_SELECTED_IMAGE, DefaultConfigKeys.BUTTON_DISABLED_SELECTED_INSETS));
 		}
 		
-		protected function getAsset(ui:IComponentUI, extName:String, insetsName:String):DisplayObject
+		protected function getAsset(component:Component, ui:IComponentUI, extName:String, insetsName:String):DisplayObject
 		{
-			var pp:String = ui.getResourcesPrefix();
+			var pp:String = ui.getResourcesPrefix(component);
 			
 			return ui.getDisplayObject(pp + extName);
 		}
@@ -63,7 +74,14 @@ package jcomponent.org.coms.buttons
 			stateView.selected = model.selected;
 			stateView.overed = model.rollOver;
 			
-			stateView.update(bounds.getSize());
+			updateStateView(component, ui, bounds);
+		}
+		
+		protected function updateStateView(component:Component, ui:IComponentUI, bounds:IntRectangle):void
+		{
+			var s:IntDimension = bounds.getSize();
+			stateView.update(s);
+			stateView.updateTrigger(s);
 		}
 		
 		override public function getDisplay(component:Component):DisplayObject

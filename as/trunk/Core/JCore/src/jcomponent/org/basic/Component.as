@@ -560,6 +560,46 @@ package jcomponent.org.basic
 			yPos = value;
 		}
 		
+		override public function get numChildren():int
+		{
+			return m_content.numChildren;
+		}
+		
+		override public function swapChildren(child1:DisplayObject, child2:DisplayObject):void
+		{
+			return m_content.swapChildren(child1, child2);
+		}
+		
+		override public function swapChildrenAt(index1:int, index2:int):void
+		{
+			return m_content.swapChildrenAt(index1, index2);
+		}
+		
+		override public function getChildIndex(child:DisplayObject):int
+		{
+			return m_content.getChildIndex(child);
+		}
+		
+		override public function setChildIndex(child:DisplayObject, index:int):void
+		{
+			return m_content.setChildIndex(child, index);
+		}
+		
+		override public function addChildAt(child:DisplayObject, index:int):DisplayObject
+		{
+			return m_content.addChildAt(child, index);
+		}
+		
+		override public function removeChild(child:DisplayObject):DisplayObject
+		{
+			return m_content.removeChild(child);
+		}
+		
+		override public function removeChildAt(index:int):DisplayObject
+		{
+			return m_content.removeChildAt(index);
+		}
+		
 		public function get preferredSize():IntDimension
 		{
 			return m_preferredSize;
