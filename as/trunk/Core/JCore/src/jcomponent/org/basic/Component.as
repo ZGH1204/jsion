@@ -3,7 +3,6 @@ package jcomponent.org.basic
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
-	import flash.events.Event;
 	
 	import jcomponent.org.basic.borders.IBorder;
 	import jcomponent.org.basic.graphics.Graphics2D;
@@ -67,8 +66,6 @@ package jcomponent.org.basic
 		private var m_uiClassID:String;
 		
 		private var m_readyToInvalidate:Boolean;
-
-		private var m_waiteRender:Boolean;
 		
 		
 		private var m_preferredSize:IntDimension;
@@ -227,7 +224,12 @@ package jcomponent.org.basic
 			}
 		}
 
-
+		public function setBoundsXYWH(x:int, y:int, w:int, h:int):void
+		{
+			setLocationXY(x, y);
+			
+			setSizeWH(width, height);
+		}
 
 		override public function dispose():void
 		{
@@ -440,11 +442,9 @@ package jcomponent.org.basic
 
 		public function invalidate():void
 		{
-			if(!m_waiteRender && m_readyToInvalidate)
+			if(m_readyToInvalidate)
 			{
-				StageRef.addEventListener(Event.RENDER, __renderHandler);
-				StageRef.invalidate();
-				m_waiteRender = true;
+				ComponentMgr.Instance.addInvalidate(this);
 			}
 		}
 
@@ -482,8 +482,6 @@ package jcomponent.org.basic
 		{
 			this.x = x;
 			this.y = y;
-			bounds.x = x;
-			bounds.y = y;
 		}
 		
 		public function getSize(s:IntDimension = null):IntDimension
@@ -875,7 +873,7 @@ package jcomponent.org.basic
 			return null;
 		}
 
-		protected function paint():void
+		public function paint():void
 		{
 			setMaskSize(bounds.getSize());
 			
@@ -902,15 +900,6 @@ package jcomponent.org.basic
 		{
 			var g:Graphics2D = new Graphics2D(graphics);
 			g.fillRectangle(bg_trigger_brush, bounds.x, bounds.y, bounds.width, bounds.height);
-		}
-
-		private function __renderHandler(e:Event):void
-		{
-			stage.removeEventListener(Event.RENDER, __renderHandler);
-			
-			m_waiteRender = false;
-
-			paint();
 		}
 
 		private function initialize():void

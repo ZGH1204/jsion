@@ -350,7 +350,7 @@ package jcomponent.org.coms.buttons
 				return new IntDimension(m_disabledSelectedImage.width, m_disabledSelectedImage.height);
 			}
 			
-			return new IntDimension();
+			return IntDimension.createBigDimension();
 		}
 		
 		public function dispose():void
