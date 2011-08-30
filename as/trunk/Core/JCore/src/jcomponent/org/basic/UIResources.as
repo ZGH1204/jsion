@@ -201,7 +201,9 @@ package jcomponent.org.basic
 				}
 				catch(err:Error)
 				{
-					obj = new Bitmap(getBitmapData(key));
+					var bmp:Bitmap = new Bitmap(getBitmapData(key))
+					bmp.smoothing = true;
+					obj = bmp;
 				}
 			}
 			else

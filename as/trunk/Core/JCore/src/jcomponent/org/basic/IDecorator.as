@@ -10,7 +10,7 @@ package jcomponent.org.basic
 		 * @return 要添加到显示列表的显示对象
 		 *
 		 */		
-		function getDisplay(component:Component):DisplayObject
+		function getDisplay(component:Component):DisplayObject;
 	}
 }
 

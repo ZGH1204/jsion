@@ -26,7 +26,7 @@ package jcomponent.org.coms.buttons
 			
 			if(insets == null)
 			{
-				throw new Error("九宫格边距必需配置!!!");
+				throw new Error(pp + extName + "的九宫格边距" + pp + insetsName + "必需配置!!!");
 				return null;
 			}
 			
