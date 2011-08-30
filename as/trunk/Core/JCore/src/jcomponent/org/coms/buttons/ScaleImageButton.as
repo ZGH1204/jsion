@@ -2,11 +2,13 @@ package jcomponent.org.coms.buttons
 {
 	import jcomponent.org.basic.DefaultConfigKeys;
 
-	public class ScaleImageButton extends ImageButton
+	public class ScaleImageButton extends AbstractButton
 	{
 		public function ScaleImageButton(text:String=null, id:String=null)
 		{
 			super(text, id);
+			
+			model = new DefaultButtonModel();
 		}
 		
 		override public function getUIDefaultBasicClass():Class
