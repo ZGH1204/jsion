@@ -4,6 +4,7 @@ package
 	import flash.events.MouseEvent;
 	
 	import jcomponent.org.coms.buttons.ImageButton;
+	import jcomponent.org.coms.buttons.ScaleImageButton;
 	import jcomponent.org.mgrs.UIMgr;
 	
 	import jcore.org.loader.BinaryLoader;
@@ -43,6 +44,13 @@ package
 		private function loadCallback(loader:BinaryLoader):void
 		{
 			//MessageMonitor.createAndPostMsg(1, "JLauncher", ["Promiscuous"], loader.content);
+			
+//			var si:ScaleImageButton = new ScaleImageButton("缩放按钮");
+//			
+//			si.setSize(new IntDimension(150, 50));
+//			//si.pack();
+//			
+//			addChild(si);
 			
 //			var img:ImageButton  = new ImageButton("按钮");
 //			

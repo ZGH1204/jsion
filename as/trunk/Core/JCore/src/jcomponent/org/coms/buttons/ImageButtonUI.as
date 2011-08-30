@@ -6,7 +6,7 @@ package jcomponent.org.coms.buttons
 
 	public class ImageButtonUI extends BasicButtonUI
 	{
-		private var backgroundDecorator:ButtonImageBackground;
+		protected var backgroundDecorator:ButtonImageBackground;
 		
 		public function ImageButtonUI()
 		{
@@ -43,7 +43,10 @@ package jcomponent.org.coms.buttons
 		
 		override public function getPreferredSize(component:Component):IntDimension
 		{
-			return getMinimumSize(component);
+			var textSize:IntDimension = getTextSize(component);
+			var backSize:IntDimension = backgroundDecorator.getPreferredSize(component);
+			
+			return new IntDimension(Math.max(textSize.width, backSize.width), Math.max(textSize.height, backSize.height));
 		}
 		
 		override public function getMinimumSize(component:Component):IntDimension

@@ -10,6 +10,8 @@ package jcomponent.org.basic
 		
 		public static const IMAGE_BUTTON_UI:String = "ImageButtonUI";
 		
+		public static const SCALE_IMAGE_BUTTON_UI:String = "ScaleImageButtonUI";
+		
 		
 		
 		//===================================================================================
@@ -100,6 +102,7 @@ package jcomponent.org.basic
 		*/
 		//===================================================================================
 		
+		public static const SCALE_IMAGE_BUTTON_PRE:String = "ScaleImageButton.";
 		public static const BUTTON_UP_INSETS:String = "upInsets";
 		public static const BUTTON_OVER_INSETS:String = "overInsets";
 		public static const BUTTON_DOWN_INSETS:String = "downInsets";
