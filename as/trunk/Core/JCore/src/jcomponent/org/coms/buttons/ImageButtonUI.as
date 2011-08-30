@@ -2,7 +2,6 @@ package jcomponent.org.coms.buttons
 {
 	import jcomponent.org.basic.Component;
 	import jcomponent.org.basic.DefaultConfigKeys;
-	import jcomponent.org.basic.IGroundDecorator;
 
 	public class ImageButtonUI extends BasicButtonUI
 	{
@@ -24,7 +23,7 @@ package jcomponent.org.coms.buttons
 		{
 			backgroundDecorator = new ButtonImageBackground();
 			
-			backgroundDecorator.setup(this);
+			backgroundDecorator.setup(component, this);
 			
 			component.backgroundDecorator = backgroundDecorator;
 		}
@@ -36,7 +35,7 @@ package jcomponent.org.coms.buttons
 			backgroundDecorator = null;
 		}
 		
-		override public function getResourcesPrefix():String
+		override public function getResourcesPrefix(component:Component):String
 		{
 			return DefaultConfigKeys.IMAGE_BUTTON_PRE;
 		}

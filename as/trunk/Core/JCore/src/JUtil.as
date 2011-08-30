@@ -145,6 +145,279 @@ package
 			}
 		}
 		
+		public static function layoutTextAndBox(text:String, font:ASFont, horizontalAlginment:int, verticalAlginment:int, textRect:IntRectangle, 
+												   boxWidth:int, boxHeight:int, textHGap:int, textVGap:int, boxHGap:int, boxVGap:int, boxDir:int, boxRect:IntRectangle, viewRect:IntRectangle):String
+		{
+			if(text == null) text = "";
+			
+			var textSize:IntDimension = JUtil.computeStringSizeWithFont(font, text);
+			
+			textRect.setSize(textSize);
+			boxRect.setRectXYWH(0, 0, boxWidth, boxHeight);
+			
+			if(boxDir == UIConstants.CENTER)
+			{
+				calcCenterDir(viewRect, boxRect, textRect, horizontalAlginment, verticalAlginment, textHGap, textVGap, boxHGap, boxVGap);
+			}
+			else if(boxDir == UIConstants.RIGHT)
+			{
+				calcRightDir(viewRect, boxRect, textRect, horizontalAlginment, verticalAlginment, textHGap, textVGap, boxHGap, boxVGap);
+			}
+			else if(boxDir == UIConstants.TOP)
+			{
+				calcTopDir(viewRect, boxRect, textRect, horizontalAlginment, verticalAlginment, textHGap, textVGap, boxHGap, boxVGap);
+			}
+			else if(boxDir == UIConstants.BOTTOM)
+			{
+				calcBottomDir(viewRect, boxRect, textRect, horizontalAlginment, verticalAlginment, textHGap, textVGap, boxHGap, boxVGap);
+			}
+			else
+			{
+				calcLeftDir(viewRect, boxRect, textRect, horizontalAlginment, verticalAlginment, textHGap, textVGap, boxHGap, boxVGap);
+			}
+			
+			return text;
+		}
+		
+		private static function calcCenterDir(viewRect:IntRectangle, boxRect:IntRectangle, textRect:IntRectangle, horizontalAlginment:int, verticalAlginment:int, textHGap:int, textVGap:int, boxHGap:int, boxVGap:int):void
+		{
+			boxRect.x = viewRect.width - boxRect.width;
+			boxRect.x /= 2;
+			boxRect.x += boxHGap;
+			
+			boxRect.y = viewRect.height - boxRect.height;
+			boxRect.y /= 2;
+			boxRect.y += boxVGap;
+			
+			if(horizontalAlginment == UIConstants.CENTER)
+			{
+				textRect.x = viewRect.width - textRect.width;
+				textRect.x /= 2;
+				textRect.x += textHGap;
+			}
+			else if(horizontalAlginment == UIConstants.RIGHT)
+			{
+				textRect.x = boxRect.x + boxRect.width;
+				textRect.x -= textRect.width;
+				textRect.x -= textHGap;
+			}
+			else
+			{
+				textRect.x = boxRect.x + textHGap;
+			}
+			
+			if(verticalAlginment == UIConstants.TOP)
+			{
+				textRect.y = boxRect.y + textVGap;
+			}
+			else if(verticalAlginment == UIConstants.BOTTOM)
+			{
+				textRect.y = boxRect.y + boxRect.height;
+				textRect.y -= textRect.height;
+				textRect.y -= textVGap;
+			}
+			else
+			{
+				textRect.y = viewRect.height - textRect.height;
+				textRect.y /= 2;
+				textRect.y += textVGap;
+			}
+		}
+		
+		private static function calcRightDir(viewRect:IntRectangle, boxRect:IntRectangle, textRect:IntRectangle, horizontalAlginment:int, verticalAlginment:int, textHGap:int, textVGap:int, boxHGap:int, boxVGap:int):void
+		{
+			boxRect.x = viewRect.width - boxRect.width;
+			boxRect.x -= boxHGap;
+			
+			if(horizontalAlginment == UIConstants.CENTER)
+			{
+				textRect.x = boxRect.x;
+				textRect.x -= textRect.width;
+				textRect.x /= 2;
+				textRect.x += textHGap;
+			}
+			else if(horizontalAlginment == UIConstants.RIGHT)
+			{
+				textRect.x = boxRect.x;
+				textRect.x -= textRect.width;
+				textRect.x -= textHGap;
+			}
+			else
+			{
+				textRect.x = textHGap;
+			}
+			
+			if(verticalAlginment == UIConstants.TOP)
+			{
+				boxRect.y = boxVGap;
+				textRect.y = textVGap;
+			}
+			else if(verticalAlginment == UIConstants.BOTTOM)
+			{
+				boxRect.y = viewRect.height - boxRect.height;
+				boxRect.y -= boxVGap;
+				
+				textRect.y = viewRect.height - textRect.height;
+				textRect.y -= textVGap;
+			}
+			else
+			{
+				boxRect.y = viewRect.height - boxRect.height;
+				boxRect.y /= 2;
+				boxRect.y += boxVGap;
+				
+				textRect.y = viewRect.height - textRect.height;
+				textRect.y /= 2;
+				textRect.y += textVGap;
+			}
+		}
+		
+		private static function calcTopDir(viewRect:IntRectangle, boxRect:IntRectangle, textRect:IntRectangle, horizontalAlginment:int, verticalAlginment:int, textHGap:int, textVGap:int, boxHGap:int, boxVGap:int):void
+		{
+			boxRect.y = boxVGap;
+			
+			if(horizontalAlginment == UIConstants.CENTER)
+			{
+				boxRect.x = viewRect.width - boxRect.width;
+				boxRect.x /= 2;
+				boxRect.x += boxHGap;
+				
+				textRect.x = viewRect.width - textRect.width;
+				textRect.x /= 2;
+				textRect.x += textHGap;
+			}
+			else if(horizontalAlginment == UIConstants.RIGHT)
+			{
+				boxRect.x = viewRect.width - boxRect.width;
+				boxRect.x -= boxHGap;
+				
+				textRect.x = viewRect.width - textRect.width;
+				textRect.x -= textHGap;
+			}
+			else
+			{
+				boxRect.x = boxHGap;
+				textRect.x = textHGap;
+			}
+			
+			if(verticalAlginment == UIConstants.TOP)
+			{
+				textRect.y = boxRect.x + boxRect.height;
+				textRect.y += textVGap;
+			}
+			else if(verticalAlginment == UIConstants.BOTTOM)
+			{
+				textRect.y = viewRect.height - textRect.height;
+				textRect.y -= textVGap;
+			}
+			else
+			{
+				textRect.y = viewRect.height - boxRect.y;
+				textRect.y -= boxRect.height;
+				textRect.y -= textRect.height;
+				textRect.y /= 2;
+				textRect.y += boxRect.y;
+				textRect.y += boxRect.height;
+				textRect.y += textVGap;
+			}
+		}
+		
+		private static function calcBottomDir(viewRect:IntRectangle, boxRect:IntRectangle, textRect:IntRectangle, horizontalAlginment:int, verticalAlginment:int, textHGap:int, textVGap:int, boxHGap:int, boxVGap:int):void
+		{
+			boxRect.y = viewRect.height - boxRect.height;
+			boxRect.y -= boxVGap;
+			
+			if(horizontalAlginment == UIConstants.CENTER)
+			{
+				boxRect.x = viewRect.width - boxRect.width;
+				boxRect.x /= 2;
+				boxRect.x += boxHGap;
+				
+				textRect.x = viewRect.width - textRect.width;
+				textRect.x /= 2;
+				textRect.x += textHGap;
+			}
+			else if(horizontalAlginment == UIConstants.RIGHT)
+			{
+				boxRect.x = viewRect.width - boxRect.width;
+				boxRect.x -= boxHGap;
+				
+				textRect.x = viewRect.width - textRect.width;
+				textRect.x -= textHGap;
+			}
+			else
+			{
+				boxRect.x = boxHGap;
+				textRect.x = textHGap;
+			}
+			
+			if(verticalAlginment == UIConstants.TOP)
+			{
+				textRect.y = textVGap;
+			}
+			else if(verticalAlginment == UIConstants.BOTTOM)
+			{
+				textRect.y = boxRect.y - textRect.height;
+				textRect.y -= textVGap;
+			}
+			else
+			{
+				textRect.y = boxRect.y - textRect.height;
+				textRect.y /= 2;
+				textRect.y += textVGap;
+			}
+		}
+		
+		private static function calcLeftDir(viewRect:IntRectangle, boxRect:IntRectangle, textRect:IntRectangle, horizontalAlginment:int, verticalAlginment:int, textHGap:int, textVGap:int, boxHGap:int, boxVGap:int):void
+		{
+			boxRect.x = boxHGap;
+			
+			if(horizontalAlginment == UIConstants.CENTER)
+			{
+				textRect.x = viewRect.width - boxRect.width;
+				textRect.x -= boxRect.x;
+				textRect.x -= textRect.width;
+				textRect.x /= 2;
+				textRect.x += boxRect.x;
+				textRect.x += boxRect.width;
+				textRect.x += textHGap;
+			}
+			else if(horizontalAlginment == UIConstants.RIGHT)
+			{
+				textRect.x = viewRect.width - textRect.width;
+				textRect.x -= textHGap;
+			}
+			else
+			{
+				textRect.x = boxRect.x + boxRect.width;
+				textRect.x += textHGap;
+			}
+			
+			if(verticalAlginment == UIConstants.TOP)
+			{
+				boxRect.y = boxVGap;
+				textRect.y = textVGap;
+			}
+			else if(verticalAlginment == UIConstants.BOTTOM)
+			{
+				boxRect.y = viewRect.height - boxRect.height;
+				boxRect.y -= boxVGap;
+				
+				textRect.y = viewRect.height - textRect.height;
+				textRect.y -= textVGap;
+			}
+			else
+			{
+				textRect.y = viewRect.height - textRect.height;
+				textRect.y /= 2;
+				textRect.y += textVGap;
+				
+				boxRect.y = viewRect.height - boxRect.height;
+				boxRect.y /= 2;
+				boxRect.y += boxVGap;
+			}
+		}
+		
 		public static function layoutText(text:String, font:ASFont, horizontalAlginment:int, verticalAlginment:int, viewRect:IntRectangle, textRect:IntRectangle):String
 		{
 			if(text == null) text = "";

@@ -10,7 +10,15 @@ package jcomponent.org.basic
 		
 		public static const IMAGE_BUTTON_UI:String = "ImageButtonUI";
 		
+		public static const TOGGLE_BUTTON_UI:String = "ToggleButtonUI";
+		
 		public static const SCALE_IMAGE_BUTTON_UI:String = "ScaleImageButtonUI";
+		
+		public static const SCALE_TOGGLE_BUTTON_UI:String = "ScaleToggleButtonUI";
+		
+		public static const CHECK_BOX_UI:String = "CheckBoxUI";
+		
+		public static const RADIO_BUTTON_UI:String = "RadioButtonUI";
 		
 		
 		
@@ -96,6 +104,20 @@ package jcomponent.org.basic
 		
 		
 		
+		
+		//===================================================================================
+		/*
+		* ToggleButton组件配置属性(包含上面的ImageButton组件的配置属性)
+		*/
+		//===================================================================================
+		
+		public static const TOGGLE_BUTTON_PRE:String = "ToggleButton.";
+		
+		
+		
+		
+		
+		
 		//===================================================================================
 		/*
 		* ScaleImageButton组件配置属性(包含上面的ImageButton组件的配置属性)
@@ -111,5 +133,41 @@ package jcomponent.org.basic
 		public static const BUTTON_OVER_SELECTED_INSETS:String = "overSelectedInsets";
 		public static const BUTTON_DOWN_SELECTED_INSETS:String = "downSelectedInsets";
 		public static const BUTTON_DISABLED_SELECTED_INSETS:String = "disabledSelectedInsets";
+		
+		
+		
+		
+		
+		//===================================================================================
+		/*
+		* ToggleButton组件配置属性(包含上面的ScaleImageButton组件的配置属性)
+		*/
+		//===================================================================================
+		
+		public static const SCALE_TOGGLE_BUTTON_PRE:String = "ScaleToggleButton.";
+		
+		
+		
+		
+		
+		//===================================================================================
+		/*
+		* CheckBox组件配置属性(包含上面的ImageButton组件的配置属性)
+		*/
+		//===================================================================================
+		
+		public static const CHECK_BOX_PRE:String = "CheckBox.";
+		
+		
+		
+		
+		
+		//===================================================================================
+		/*
+		* CheckBox组件配置属性(包含上面的ImageButton组件的配置属性)
+		*/
+		//===================================================================================
+		
+		public static const RADIO_BUTTON_PRE:String = "RadioButton.";
 	}
 }

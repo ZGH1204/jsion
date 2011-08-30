@@ -47,6 +47,10 @@ package
 //			list.push("ImageButton.disabledSelectedImg", null);
 			
 			
+			
+			
+			
+			
 //			list.push("ScaleImageButton.textFilters", [new GlowFilter(0x996348,1,4,4,10)]);//发光滤镜
 //			list.push("ScaleImageButton.upFilters", null);
 //			list.push("ScaleImageButton.overFilters", [lightingFilter]);
@@ -65,6 +69,7 @@ package
 //			list.push("ScaleImageButton.overSelectedImg", null);
 //			list.push("ScaleImageButton.downSelectedImg", null);
 //			list.push("ScaleImageButton.disabledSelectedImg", null);
+			
 			var insets:Insets = new Insets(7, 7, 7, 7);
 			list.push("ScaleImageButton.upInsets", insets);
 			list.push("ScaleImageButton.overInsets", insets);
@@ -75,6 +80,105 @@ package
 //			list.push("ScaleImageButton.downSelectedInsets", null);
 //			list.push("ScaleImageButton.disabledSelectedInsets", null);
 			
+			
+			
+			
+			
+//			list.push("ToggleButton.textFilters", [new GlowFilter(0x996348,1,4,4,10)]);//发光滤镜
+//			list.push("ToggleButton.upFilters", null);
+//			list.push("ToggleButton.overFilters", [lightingFilter]);
+//			list.push("ToggleButton.downFilters", null);
+//			list.push("ToggleButton.disabledFilters", [gray_filter]);
+//			list.push("ToggleButton.selectedFilters", null);
+//			list.push("ToggleButton.overSelectedFilters", null);
+//			list.push("ToggleButton.downSelectedFilters", null);
+//			list.push("ToggleButton.disabledSelectedFilters", null);
+			
+			list.push("ToggleButton.upImg", ButtonUp_Asset);
+			list.push("ToggleButton.overImg", ButtonOver_Asset);
+			list.push("ToggleButton.downImg", ButtonDown_Asset);
+//			list.push("ToggleButton.disabledImg", null);
+			list.push("ToggleButton.selectedImg", ButtonDown_Asset);
+			list.push("ToggleButton.overSelectedImg", ButtonDown_Asset);
+//			list.push("ToggleButton.downSelectedImg", null);
+//			list.push("ToggleButton.disabledSelectedImg", null);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+//			list.push("ScaleToggleButton.textFilters", [new GlowFilter(0x996348,1,4,4,10)]);//发光滤镜
+//			list.push("ScaleToggleButton.upFilters", null);
+//			list.push("ScaleToggleButton.overFilters", [lightingFilter]);
+//			list.push("ScaleToggleButton.downFilters", null);
+//			list.push("ScaleToggleButton.disabledFilters", [gray_filter]);
+//			list.push("ScaleToggleButton.selectedFilters", null);
+//			list.push("ScaleToggleButton.overSelectedFilters", null);
+//			list.push("ScaleToggleButton.downSelectedFilters", null);
+//			list.push("ScaleToggleButton.disabledSelectedFilters", null);
+			
+			list.push("ScaleToggleButton.upImg", ButtonUp_Asset);
+			list.push("ScaleToggleButton.overImg", ButtonOver_Asset);
+			list.push("ScaleToggleButton.downImg", ButtonDown_Asset);
+//			list.push("ScaleToggleButton.disabledImg", null);
+			list.push("ScaleToggleButton.selectedImg", ButtonDown_Asset);
+			list.push("ScaleToggleButton.overSelectedImg", ButtonDown_Asset);
+//			list.push("ScaleToggleButton.downSelectedImg", null);
+//			list.push("ScaleToggleButton.disabledSelectedImg", null);
+			
+			list.push("ScaleToggleButton.upInsets", insets);
+			list.push("ScaleToggleButton.overInsets", insets);
+			list.push("ScaleToggleButton.downInsets", insets);
+//			list.push("ScaleToggleButton.disabledInsets", null);
+			list.push("ScaleToggleButton.selectedInsets", insets);
+			list.push("ScaleToggleButton.overSelectedInsets", insets);
+//			list.push("ScaleToggleButton.downSelectedInsets", null);
+//			list.push("ScaleToggleButton.disabledSelectedInsets", null);
+			
+			
+			
+			
+			
+			
+			
+			
+//			list.push("CheckBox.textFilters", [new GlowFilter(0x996348,1,4,4,10)]);//发光滤镜
+//			list.push("CheckBox.upFilters", null);
+//			list.push("CheckBox.overFilters", [lightingFilter]);
+//			list.push("CheckBox.downFilters", null);
+//			list.push("CheckBox.disabledFilters", [gray_filter]);
+//			list.push("CheckBox.selectedFilters", null);
+//			list.push("CheckBox.overSelectedFilters", null);
+//			list.push("CheckBox.downSelectedFilters", null);
+//			list.push("CheckBox.disabledSelectedFilters", null);
+			
+			list.push("CheckBox.upImg", ButtonUp_Asset);
+			list.push("CheckBox.overImg", ButtonOver_Asset);
+			list.push("CheckBox.downImg", ButtonDown_Asset);
+//			list.push("CheckBox.disabledImg", null);
+			list.push("CheckBox.selectedImg", ButtonDown_Asset);
+			list.push("CheckBox.overSelectedImg", ButtonDown_Asset);
+//			list.push("CheckBox.downSelectedImg", null);
+//			list.push("CheckBox.disabledSelectedImg", null);
+			
+			list.push("CheckBox.upInsets", insets);
+			list.push("CheckBox.overInsets", insets);
+			list.push("CheckBox.downInsets", insets);
+//			list.push("CheckBox.disabledInsets", null);
+			list.push("CheckBox.selectedInsets", insets);
+			list.push("CheckBox.overSelectedInsets", insets);
+//			list.push("CheckBox.downSelectedInsets", null);
+//			list.push("CheckBox.disabledSelectedInsets", null);
 		}
 	}
 }

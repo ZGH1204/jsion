@@ -3,6 +3,7 @@ package jcomponent.org.coms.buttons
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	
+	import jcomponent.org.basic.Component;
 	import jcomponent.org.basic.IComponentUI;
 	import jcomponent.org.coms.images.ScaleImageTile;
 
@@ -13,9 +14,9 @@ package jcomponent.org.coms.buttons
 			super(true);
 		}
 		
-		override protected function getAsset(ui:IComponentUI, extName:String, insetsName:String):DisplayObject
+		override protected function getAsset(component:Component, ui:IComponentUI, extName:String, insetsName:String):DisplayObject
 		{
-			var pp:String = ui.getResourcesPrefix();
+			var pp:String = ui.getResourcesPrefix(component);
 			
 			var bmd:BitmapData = ui.getBitmapData(pp + extName);
 			
@@ -31,7 +32,7 @@ package jcomponent.org.coms.buttons
 			
 			var img:ScaleImageTile = new ScaleImageTile(bmd, insets);
 			
-			img.pack();
+			//img.pack();
 			
 			return img;
 		}

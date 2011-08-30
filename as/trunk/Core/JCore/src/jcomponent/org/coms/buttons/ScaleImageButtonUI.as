@@ -14,12 +14,12 @@ package jcomponent.org.coms.buttons
 		{
 			backgroundDecorator = new ButtonScaleImageBackground();
 			
-			backgroundDecorator.setup(this);
+			backgroundDecorator.setup(component, this);
 			
 			component.backgroundDecorator = backgroundDecorator;
 		}
 		
-		override public function getResourcesPrefix():String
+		override public function getResourcesPrefix(component:Component):String
 		{
 			return DefaultConfigKeys.SCALE_IMAGE_BUTTON_PRE;
 		}

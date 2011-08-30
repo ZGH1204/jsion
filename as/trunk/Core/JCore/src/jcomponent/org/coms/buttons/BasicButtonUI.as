@@ -34,7 +34,7 @@ package jcomponent.org.coms.buttons
 		
 		private function installDefaults(component:Component):void
 		{
-			var pp:String = getResourcesPrefix();
+			var pp:String = getResourcesPrefix(component);
 			
 			LookAndFeel.installFonts(component, pp);
 			LookAndFeel.installColors(component, pp);
@@ -43,7 +43,7 @@ package jcomponent.org.coms.buttons
 		
 		private function installFilters(component:Component):void
 		{
-			var pp:String = getResourcesPrefix();
+			var pp:String = getResourcesPrefix(component);
 			var btn:AbstractButton = AbstractButton(component);
 			var ui:IComponentUI = btn.UI;
 			
@@ -89,7 +89,7 @@ package jcomponent.org.coms.buttons
 			paintFilters(component, bounds);
 		}
 		
-		private function paintText(component:Component, bounds:IntRectangle):void
+		protected function paintText(component:Component, bounds:IntRectangle):void
 		{
 			var btn:AbstractButton = AbstractButton(component);
 			
