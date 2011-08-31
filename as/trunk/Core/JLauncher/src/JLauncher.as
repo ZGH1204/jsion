@@ -8,6 +8,7 @@ package
 	import jcomponent.org.coms.buttons.ButtonGroup;
 	import jcomponent.org.coms.buttons.CheckBox;
 	import jcomponent.org.coms.buttons.ImageButton;
+	import jcomponent.org.coms.buttons.RadioButton;
 	import jcomponent.org.coms.buttons.ScaleImageButton;
 	import jcomponent.org.coms.buttons.ScaleToggleButton;
 	import jcomponent.org.coms.buttons.ToggleButton;
@@ -82,16 +83,22 @@ package
 			
 			if(btn) return;
 			
-			btn = new CheckBox("是否保存");
+			btn = new RadioButton("RadioBtn");
 			
-			CheckBox(btn).textHGap = 0;
-//			CheckBox(btn).boxHGap = 5;
-//			btn.horizontalTextAlginment = AbstractButton.CENTER;
-			//btn.verticalTextAlginment = AbstractButton.TOP;
-			//btn.setSizeWH(300, 100);
 			btn.pack();
 			
 			addChild(btn);
+			
+//			btn = new CheckBox("是否保存");
+//			
+//			CheckBox(btn).textHGap = 0;
+////			CheckBox(btn).boxHGap = 5;
+////			btn.horizontalTextAlginment = AbstractButton.CENTER;
+//			//btn.verticalTextAlginment = AbstractButton.TOP;
+//			//btn.setSizeWH(300, 100);
+//			btn.pack();
+//			
+//			addChild(btn);
 			
 //			btn = new ScaleToggleButton("缩放状态");
 //			
@@ -102,25 +109,25 @@ package
 			
 //			btn = new ToggleButton("状态按钮");
 //			
-//			btn.setSizeWH(150, 50);
+//			//btn.setSizeWH(150, 50);
+//			btn.pack();
+//			
+//			addChild(btn);
+			
+//			btn = new ScaleImageButton("缩放按钮");
+//			
+//			btn.setSize(new IntDimension(150, 50));
 //			//btn.pack();
 //			
 //			addChild(btn);
 			
-//			var si:ScaleImageButton = new ScaleImageButton("缩放按钮");
+//			btn  = new ImageButton("按钮");
 //			
-//			si.setSize(new IntDimension(150, 50));
-//			//si.pack();
+//			btn.pack();
+//			btn.x = 100;
+//			btn.y = 100;
 //			
-//			addChild(si);
-			
-//			var img:ImageButton  = new ImageButton("按钮");
-//			
-//			img.pack();
-//			img.x = 100;
-//			img.y = 100;
-//			
-//			addChild(img);
+//			addChild(btn);
 		}
 	}
 }

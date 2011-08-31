@@ -4,6 +4,9 @@ package
 	import flash.filters.GlowFilter;
 	
 	import jcomponent.org.basic.BasicLookAndFeel;
+	import jcomponent.org.coms.buttons.ButtonImageBackground;
+	import jcomponent.org.coms.buttons.ButtonScaleImageBackground;
+	import jcomponent.org.coms.buttons.CheckBoxBackground;
 	
 	public class TestLookAndFeel extends BasicLookAndFeel
 	{
@@ -37,9 +40,11 @@ package
 //			list.push("ImageButton.downSelectedFilters", null);
 //			list.push("ImageButton.disabledSelectedFilters", null);
 			
-//			list.push("ImageButton.upImg", ButtonUp_Asset);
-//			list.push("ImageButton.overImg", ButtonOver_Asset);
-//			list.push("ImageButton.downImg", ButtonDown_Asset);
+			list.push("ImageButton.bg", ButtonImageBackground);
+			
+			list.push("ImageButton.upImg", ButtonUp_Asset);
+			list.push("ImageButton.overImg", ButtonOver_Asset);
+			list.push("ImageButton.downImg", ButtonDown_Asset);
 //			list.push("ImageButton.disabledImg", null);
 //			list.push("ImageButton.selectedImg", null);
 //			list.push("ImageButton.overSelectedImg", null);
@@ -60,7 +65,9 @@ package
 //			list.push("ScaleImageButton.overSelectedFilters", null);
 //			list.push("ScaleImageButton.downSelectedFilters", null);
 //			list.push("ScaleImageButton.disabledSelectedFilters", null);
-
+			
+			list.push("ScaleImageButton.bg", ButtonScaleImageBackground);
+			
 			list.push("ScaleImageButton.upImg", ButtonUp_Asset);
 			list.push("ScaleImageButton.overImg", ButtonOver_Asset);
 			list.push("ScaleImageButton.downImg", ButtonDown_Asset);
@@ -94,6 +101,8 @@ package
 //			list.push("ToggleButton.downSelectedFilters", null);
 //			list.push("ToggleButton.disabledSelectedFilters", null);
 			
+			list.push("ToggleButton.bg", ButtonImageBackground);
+			
 			list.push("ToggleButton.upImg", ButtonUp_Asset);
 			list.push("ToggleButton.overImg", ButtonOver_Asset);
 			list.push("ToggleButton.downImg", ButtonDown_Asset);
@@ -126,6 +135,8 @@ package
 //			list.push("ScaleToggleButton.overSelectedFilters", null);
 //			list.push("ScaleToggleButton.downSelectedFilters", null);
 //			list.push("ScaleToggleButton.disabledSelectedFilters", null);
+			
+			list.push("ScaleToggleButton.bg", ButtonScaleImageBackground);
 			
 			list.push("ScaleToggleButton.upImg", ButtonUp_Asset);
 			list.push("ScaleToggleButton.overImg", ButtonOver_Asset);
@@ -162,6 +173,8 @@ package
 //			list.push("CheckBox.downSelectedFilters", null);
 //			list.push("CheckBox.disabledSelectedFilters", null);
 			
+			list.push("CheckBox.bg", CheckBoxBackground);
+			
 			list.push("CheckBox.upImg", ButtonUp_Asset);
 			list.push("CheckBox.overImg", ButtonOver_Asset);
 			list.push("CheckBox.downImg", ButtonDown_Asset);
@@ -177,6 +190,42 @@ package
 //			list.push("CheckBox.disabledInsets", null);
 			list.push("CheckBox.selectedInsets", insets);
 			list.push("CheckBox.overSelectedInsets", insets);
+//			list.push("CheckBox.downSelectedInsets", null);
+//			list.push("CheckBox.disabledSelectedInsets", null);
+			
+			
+			
+			
+			
+			
+			
+//			list.push("CheckBox.textFilters", [new GlowFilter(0x996348,1,4,4,10)]);//发光滤镜
+//			list.push("CheckBox.upFilters", null);
+//			list.push("CheckBox.overFilters", [lightingFilter]);
+//			list.push("CheckBox.downFilters", null);
+//			list.push("CheckBox.disabledFilters", [gray_filter]);
+//			list.push("CheckBox.selectedFilters", null);
+//			list.push("CheckBox.overSelectedFilters", null);
+//			list.push("CheckBox.downSelectedFilters", null);
+//			list.push("CheckBox.disabledSelectedFilters", null);
+			
+			list.push("RadioButton.bg", CheckBoxBackground);
+			
+			list.push("RadioButton.upImg", ButtonUp_Asset);
+			list.push("RadioButton.overImg", ButtonOver_Asset);
+			list.push("RadioButton.downImg", ButtonDown_Asset);
+//			list.push("CheckBox.disabledImg", null);
+			list.push("RadioButton.selectedImg", ButtonDown_Asset);
+			list.push("RadioButton.overSelectedImg", ButtonDown_Asset);
+//			list.push("CheckBox.downSelectedImg", null);
+//			list.push("CheckBox.disabledSelectedImg", null);
+			
+			list.push("RadioButton.upInsets", insets);
+			list.push("RadioButton.overInsets", insets);
+			list.push("RadioButton.downInsets", insets);
+//			list.push("CheckBox.disabledInsets", null);
+			list.push("RadioButton.selectedInsets", insets);
+			list.push("RadioButton.overSelectedInsets", insets);
 //			list.push("CheckBox.downSelectedInsets", null);
 //			list.push("CheckBox.disabledSelectedInsets", null);
 		}
