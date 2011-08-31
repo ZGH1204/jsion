@@ -51,7 +51,7 @@ package jcomponent.org.coms.images
 			
 			m_scaleType = DRAW_SCALE;
 			
-			super(id);
+			super(null, id);
 			
 			if(bmd == null) throw new ArgumentError("bmd 参数不能为空!!");
 		}

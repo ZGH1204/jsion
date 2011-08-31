@@ -20,7 +20,7 @@ package jcomponent.org.basic
 
 		private static const bg_trigger_brush:SolidBrush = new SolidBrush(new ASColor(0, 0));
 
-		public function Component(id:String = null)
+		public function Component(prefix:String = null, id:String = null)
 		{
 			JUtil.checkAbstract(this);
 			
@@ -28,6 +28,8 @@ package jcomponent.org.basic
 			
 			initialize();
 		}
+		
+		protected var m_prefix:String;
 		
 		protected var m_content:Sprite;
 
@@ -473,6 +475,11 @@ package jcomponent.org.basic
 
 				invalidate();
 			}
+		}
+		
+		public function get prefix():String
+		{
+			return m_prefix;
 		}
 
 		public function setLocation(pos:IntPoint):void

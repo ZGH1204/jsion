@@ -43,14 +43,15 @@ package jcomponent.org.coms.buttons
 		private var m_downSelectedFilters:Array;
 		private var m_disabledSelectedFilters:Array;
 		
-		public function AbstractButton(text:String = null, id:String = null)
+		public function AbstractButton(text:String = null, prefix:String = null, id:String = null)
 		{
-			super(id);
+			super(prefix, id);
+			
+			m_verticalTextAlginment = MIDDLE;
+			m_horizontalTextAlginment = CENTER;
 			
 			m_text = text;
 			if(m_text == null) m_text = "";
-			m_verticalTextAlginment = MIDDLE;
-			m_horizontalTextAlginment = CENTER;
 			
 			buttonMode = true;
 			

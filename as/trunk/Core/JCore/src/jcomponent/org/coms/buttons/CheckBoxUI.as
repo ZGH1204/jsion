@@ -48,7 +48,7 @@ package jcomponent.org.coms.buttons
 			textField.filters = btn.textFilters;
 		}
 		
-		override public function getResourcesPrefix(component:Component):String
+		override protected function getDefaultPrefix():String
 		{
 			return DefaultConfigKeys.CHECK_BOX_PRE;
 		}
