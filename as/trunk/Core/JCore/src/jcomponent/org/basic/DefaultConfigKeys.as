@@ -20,6 +20,10 @@ package jcomponent.org.basic
 		
 		public static const RADIO_BUTTON_UI:String = "RadioButtonUI";
 		
+		public static const ROOT_PANEL_UI:String = "RootPanelUI";
+		
+		public static const WINDOW_UI:String = "WindowUI";
+		
 		
 		
 		//===================================================================================
@@ -169,5 +173,33 @@ package jcomponent.org.basic
 		//===================================================================================
 		
 		public static const RADIO_BUTTON_PRE:String = "RadioButton.";
+		
+		
+		
+		
+		
+		
+		
+		//===================================================================================
+		/*
+		* RootPanel组件配置属性
+		*/
+		//===================================================================================
+		public static const ROOT_PANEL_PRE:String = "RootPanel.";
+		
+		
+		
+		
+		
+		
+		
+		
+		//===================================================================================
+		/*
+		* RootPanel组件配置属性
+		*/
+		//===================================================================================
+		public static const WINDOW_PRE:String = "Window.";
+		
 	}
 }

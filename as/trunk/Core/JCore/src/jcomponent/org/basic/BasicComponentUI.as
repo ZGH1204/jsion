@@ -10,6 +10,7 @@ package jcomponent.org.basic
 	import jcomponent.org.mgrs.UIMgr;
 	
 	import jutils.org.util.DisposeUtil;
+	import jutils.org.util.StringUtil;
 
 	public class BasicComponentUI extends UIResources implements IComponentUI
 	{
@@ -29,7 +30,7 @@ package jcomponent.org.basic
 		
 		public function getResourcesPrefix(component:Component):String
 		{
-			if(StringUtil.isNotNullOrEmpty(button.prefix)) return component.prefix;
+			if(StringUtil.isNotNullOrEmpty(component.prefix)) return component.prefix;
 			return getDefaultPrefix();
 		}
 		
