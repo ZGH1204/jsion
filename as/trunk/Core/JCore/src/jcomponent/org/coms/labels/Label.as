@@ -25,7 +25,7 @@ package jcomponent.org.coms.labels
 		
 		public function Label(text:String = null, id:String = null)
 		{
-			super(id);
+			super(null, id);
 			
 			m_text = text;
 			m_verticalTextAlginment = MIDDLE;

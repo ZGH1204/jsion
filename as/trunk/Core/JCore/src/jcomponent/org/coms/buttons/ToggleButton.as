@@ -4,9 +4,9 @@ package jcomponent.org.coms.buttons
 
 	public class ToggleButton extends AbstractButton
 	{
-		public function ToggleButton(text:String=null, id:String=null)
+		public function ToggleButton(text:String=null, prefix:String = null, id:String=null)
 		{
-			super(text, id);
+			super(text, prefix, id);
 			
 			model = new ToggleButtonModel();
 		}

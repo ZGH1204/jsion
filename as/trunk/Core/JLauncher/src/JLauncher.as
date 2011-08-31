@@ -1,5 +1,7 @@
 package
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
@@ -33,6 +35,15 @@ package
 			stage.addEventListener(MouseEvent.CLICK, onClickHandler);
 			
 			UIMgr.setLookAndFeel(new TestLookAndFeel());
+			
+			var sprite:Sprite = new Sprite();
+			
+			trace(sprite.width, sprite.height);
+			
+			sprite.addChild(new Bitmap(new TV_ViewAsset(0, 0)));
+			
+			
+			trace(sprite.width, sprite.height);
 		}
 		
 		private function onClickHandler(e:MouseEvent):void
@@ -64,12 +75,12 @@ package
 //			
 //			for(var i:int = 0; i < 7; i++)
 //			{
-//				btn = new CheckBox("是否保存", CheckBox.BOTTOM);
+//				btn = new CheckBox("是否保存", CheckBox.LEFT);
 //				
 ////				CheckBox(btn).textHGap = 10;
 ////				CheckBox(btn).boxHGap = 10;
-//				btn.horizontalTextAlginment = CheckBox.CENTER;
-//				btn.verticalTextAlginment = CheckBox.BOTTOM;
+////				btn.horizontalTextAlginment = CheckBox.CENTER;
+////				btn.verticalTextAlginment = CheckBox.BOTTOM;
 ////				btn.setSizeWH(300, 35);
 //				btn.pack();
 //				btn.y = yy;
@@ -83,11 +94,11 @@ package
 			
 			if(btn) return;
 			
-			btn = new RadioButton("RadioBtn");
-			
-			btn.pack();
-			
-			addChild(btn);
+//			btn = new RadioButton("RadioBtn");
+//			
+//			btn.pack();
+//			
+//			addChild(btn);
 			
 //			btn = new CheckBox("是否保存");
 //			
@@ -116,7 +127,7 @@ package
 			
 //			btn = new ScaleImageButton("缩放按钮");
 //			
-//			btn.setSize(new IntDimension(150, 50));
+//			btn.setSize(new IntDimension(150, 80));
 //			//btn.pack();
 //			
 //			addChild(btn);

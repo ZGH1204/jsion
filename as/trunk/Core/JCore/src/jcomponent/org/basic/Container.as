@@ -2,9 +2,9 @@ package jcomponent.org.basic
 {
 	public class Container extends Component
 	{
-		public function Container(id:String=null)
+		public function Container(prefix:String = null, id:String=null)
 		{
-			super(id);
+			super(prefix, id);
 		}
 	}
 }

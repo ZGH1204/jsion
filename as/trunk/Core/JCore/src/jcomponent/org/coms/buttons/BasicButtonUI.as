@@ -11,6 +11,7 @@ package jcomponent.org.coms.buttons
 	import jcomponent.org.basic.LookAndFeel;
 	
 	import jutils.org.util.DisposeUtil;
+	import jutils.org.util.StringUtil;
 	
 	public class BasicButtonUI extends BasicComponentUI
 	{

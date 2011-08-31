@@ -4,9 +4,9 @@ package jcomponent.org.coms.buttons
 
 	public class ImageButton extends AbstractButton
 	{
-		public function ImageButton(text:String=null, id:String=null)
+		public function ImageButton(text:String=null, prefix:String = null, id:String=null)
 		{
-			super(text, id);
+			super(text, prefix, id);
 			
 			model = new DefaultButtonModel();
 		}

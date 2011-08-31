@@ -1,6 +1,5 @@
 package jcomponent.org.coms.buttons
 {
-	import jcomponent.org.basic.Component;
 	import jcomponent.org.basic.DefaultConfigKeys;
 
 	public class ScaleImageButtonUI extends ImageButtonUI
@@ -10,7 +9,7 @@ package jcomponent.org.coms.buttons
 			super();
 		}
 		
-		override public function getResourcesPrefix(component:Component):String
+		override protected function getDefaultPrefix():String
 		{
 			return DefaultConfigKeys.SCALE_IMAGE_BUTTON_PRE;
 		}

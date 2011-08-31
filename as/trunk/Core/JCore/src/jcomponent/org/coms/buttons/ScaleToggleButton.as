@@ -4,9 +4,9 @@ package jcomponent.org.coms.buttons
 
 	public class ScaleToggleButton extends AbstractButton
 	{
-		public function ScaleToggleButton(text:String=null, id:String=null)
+		public function ScaleToggleButton(text:String=null, prefix:String = null, id:String=null)
 		{
-			super(text, id);
+			super(text, prefix, id);
 			
 			model = new ToggleButtonModel();
 		}

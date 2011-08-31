@@ -17,9 +17,9 @@ package jcomponent.org.coms.buttons
 		
 		public static const BOTTOM:int = UIConstants.BOTTOM;
 		
-		public function RadioButton(text:String = null, textDir:int = LEFT, id:String = null)
+		public function RadioButton(text:String = null, textDir:int = LEFT, prefix:String = null, id:String = null)
 		{
-			super(text, textDir, id);
+			super(text, textDir, prefix, id);
 		}
 		
 		override public function getUIDefaultBasicClass():Class

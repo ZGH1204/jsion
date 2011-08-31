@@ -29,6 +29,12 @@ package jcomponent.org.basic
 		
 		public function getResourcesPrefix(component:Component):String
 		{
+			if(StringUtil.isNotNullOrEmpty(button.prefix)) return component.prefix;
+			return getDefaultPrefix();
+		}
+		
+		protected function getDefaultPrefix():String
+		{
 			return "";
 		}
 		

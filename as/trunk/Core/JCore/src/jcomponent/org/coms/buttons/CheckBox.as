@@ -28,9 +28,9 @@ package jcomponent.org.coms.buttons
 		
 		private var m_boxDir:int;
 		
-		public function CheckBox(text:String = null, textDir:int = LEFT, id:String = null)
+		public function CheckBox(text:String = null, textDir:int = LEFT, prefix:String = null, id:String = null)
 		{
-			super(text, id);
+			super(text, prefix, id);
 			
 			m_boxDir = textDir;
 			
