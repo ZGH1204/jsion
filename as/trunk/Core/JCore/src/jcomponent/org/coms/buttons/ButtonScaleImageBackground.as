@@ -32,7 +32,7 @@ package jcomponent.org.coms.buttons
 			
 			var img:ScaleImageTile = new ScaleImageTile(bmd, insets);
 			
-			//img.pack();
+			img.pack();
 			
 			return img;
 		}

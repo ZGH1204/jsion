@@ -2,7 +2,7 @@ package jcomponent.org.coms.buttons
 {
 	import jcomponent.org.basic.DefaultConfigKeys;
 
-	public class RadioButtonUI extends CheckBoxUI
+	public class RadioButtonUI extends BasicButtonUI
 	{
 		public function RadioButtonUI()
 		{

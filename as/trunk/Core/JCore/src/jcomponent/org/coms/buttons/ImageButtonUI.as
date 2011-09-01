@@ -1,6 +1,10 @@
 package jcomponent.org.coms.buttons
 {
+	import flash.display.DisplayObject;
+	
+	import jcomponent.org.basic.Component;
 	import jcomponent.org.basic.DefaultConfigKeys;
+	import jcomponent.org.basic.IGroundDecorator;
 
 	public class ImageButtonUI extends BasicButtonUI
 	{
@@ -12,6 +16,57 @@ package jcomponent.org.coms.buttons
 		override protected function getDefaultPrefix():String
 		{
 			return DefaultConfigKeys.IMAGE_BUTTON_PRE;
+		}
+		
+		override public function getPreferredSize(component:Component):IntDimension
+		{
+			var bg:IGroundDecorator = component.backgroundDecorator;
+			
+			if(bg && bg.getDisplay(component))
+			{
+				var dis:DisplayObject = bg.getDisplay(component);
+				
+				if(dis && dis.width > 0 && dis.height > 0)
+				{
+					return new IntDimension(dis.width, dis.height);
+				}
+			}
+			
+			return super.getPreferredSize(component);
+		}
+		
+		override public function getMinimumSize(component:Component):IntDimension
+		{
+			var bg:IGroundDecorator = component.backgroundDecorator;
+			
+			if(bg && bg.getDisplay(component))
+			{
+				var dis:DisplayObject = bg.getDisplay(component);
+				
+				if(dis && dis.width > 0 && dis.height > 0)
+				{
+					return new IntDimension(dis.width, dis.height);
+				}
+			}
+			
+			return super.getMinimumSize(component);
+		}
+		
+		override public function getMaximumSize(component:Component):IntDimension
+		{
+			var bg:IGroundDecorator = component.backgroundDecorator;
+			
+			if(bg && bg.getDisplay(component))
+			{
+				var dis:DisplayObject = bg.getDisplay(component);
+				
+				if(dis && dis.width > 0 && dis.height > 0)
+				{
+					return new IntDimension(dis.width, dis.height);
+				}
+			}
+			
+			return super.getMaximumSize(component);
 		}
 	}
 }

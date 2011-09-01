@@ -181,7 +181,7 @@ package jcomponent.org.basic
 
 				if(m_backgroundDecorator)
 				{
-					m_backgroundDecorator.setup(this, UI);
+					//m_backgroundDecorator.setup(this, UI);
 					
 					setBackground(m_backgroundDecorator.getDisplay(this));
 					return;
@@ -929,11 +929,11 @@ package jcomponent.org.basic
 			graphics.clear();
 			if(m_needDrawTransparentTrigger && m_enabled) paintTrigger();
 
-			if(m_backgroundDecorator) m_backgroundDecorator.updateDecorator(this, m_ui, bounds);
+			if(m_backgroundDecorator) m_backgroundDecorator.updateDecorator(this, bounds);
 
 			if(m_ui) m_ui.paint(this, bounds);
 
-			if(m_foregroundDecorator) m_foregroundDecorator.updateDecorator(this, m_ui, bounds);
+			if(m_foregroundDecorator) m_foregroundDecorator.updateDecorator(this, bounds);
 		}
 		
 		private function setMaskSize(s:IntDimension):void

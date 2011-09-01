@@ -102,14 +102,14 @@ package jcomponent.org.coms.images
 			}
 		}
 		
-		override public function setSizeWH(w:int, h:int):void
-		{
-			var min:IntDimension = getMinimumSize();
-			
-			if(w < min.width) w = min.width;
-			if(h < min.height) h = min.height;
-			
-			super.setSizeWH(w, h);
-		}
+//		override public function setSizeWH(w:int, h:int):void
+//		{
+//			var min:IntDimension = getMinimumSize();
+//			
+//			if(w < min.width) w = min.width;
+//			if(h < min.height) h = min.height;
+//			
+//			super.setSizeWH(w, h);
+//		}
 	}
 }

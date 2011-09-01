@@ -37,6 +37,8 @@ package jcomponent.org.coms.buttons
 		
 		
 		
+		protected var m_size:IntDimension = new IntDimension();
+		
 		
 		
 		public var enabled:Boolean;
@@ -156,28 +158,28 @@ package jcomponent.org.coms.buttons
 		
 		public function setUpImage(image:DisplayObject):void
 		{
-			checkAsset(m_upImage);
+			checkAsset(m_upImage, image);
 			m_upImage = image;
 			addChild(image);
 		}
 		
 		public function setOverImage(image:DisplayObject):void
 		{
-			checkAsset(m_overImage);
+			checkAsset(m_overImage, image);
 			m_overImage = image;
 			addChild(image);
 		}
 		
 		public function setDownImage(image:DisplayObject):void
 		{
-			checkAsset(m_downImage);
+			checkAsset(m_downImage, image);
 			m_downImage = image;
 			addChild(image);
 		}
 		
 		public function setDisabledImage(image:DisplayObject):void
 		{
-			checkAsset(m_disabledImage);
+			checkAsset(m_disabledImage, image);
 			m_disabledImage = image;
 			addChild(image);
 		}
@@ -186,37 +188,57 @@ package jcomponent.org.coms.buttons
 		
 		public function setSelectedImage(image:DisplayObject):void
 		{
-			checkAsset(m_selectedImage);
+			checkAsset(m_selectedImage, image);
 			m_selectedImage = image;
 			addChild(image);
 		}
 		
 		public function setOverSelectedImage(image:DisplayObject):void
 		{
-			checkAsset(m_overSelectedImage);
+			checkAsset(m_overSelectedImage, image);
 			m_overSelectedImage = image;
 			addChild(image);
 		}
 		
 		public function setDownSelectedImage(image:DisplayObject):void
 		{
-			checkAsset(m_downSelectedImage);
+			checkAsset(m_downSelectedImage, image);
 			m_downSelectedImage = image;
 			addChild(image);
 		}
 		
 		public function setDisabledSelectedImage(image:DisplayObject):void
 		{
-			checkAsset(m_disabledSelectedImage);
+			checkAsset(m_disabledSelectedImage, image);
 			m_disabledSelectedImage = image;
 			addChild(image);
 		}
 		
-		protected function checkAsset(image:DisplayObject):void
+		override public function get width():Number
+		{
+			if(super.width > 1) return super.width;
+			
+			return m_size.width
+		}
+		
+		override public function get height():Number
+		{
+			if(super.height > 1) return super.height;
+			
+			return m_size.height;
+		}
+		
+		protected function checkAsset(image:DisplayObject, value:DisplayObject):void
 		{
 			if(image != null && contains(image))
 			{
 				throw new Error("You are set a already exists asset!");
+			}
+			
+			if(value)
+			{
+				m_size.width = Math.max(m_size.width, value.width);
+				m_size.height = Math.max(m_size.height, value.height);
 			}
 		}
 		

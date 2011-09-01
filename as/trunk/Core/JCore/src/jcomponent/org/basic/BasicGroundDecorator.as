@@ -8,22 +8,22 @@ package jcomponent.org.basic
 		{
 		}
 		
-		public function setup(component:Component, ui:IComponentUI):void
-		{
-			
-		}
-		
-		public function getSize():IntDimension
-		{
-			return new IntDimension();
-		}
-		
-		public function setLocation(x:int, y:int):void
-		{
-			
-		}
+//		public function setup(component:Component, ui:IComponentUI):void
+//		{
+//			
+//		}
+//		
+//		public function getSize():IntDimension
+//		{
+//			return new IntDimension();
+//		}
+//		
+//		public function setLocation(x:int, y:int):void
+//		{
+//			
+//		}
 
-		public function updateDecorator(component:Component, ui:IComponentUI, bounds:IntRectangle):void
+		public function updateDecorator(component:Component, bounds:IntRectangle):void
 		{
 		}
 
@@ -32,20 +32,20 @@ package jcomponent.org.basic
 			return null;
 		}
 		
-		public function getPreferredSize(component:Component):IntDimension
-		{
-			return component.getSize();
-		}
-		
-		public function getMinimumSize(component:Component):IntDimension
-		{
-			return new IntDimension();
-		}
-		
-		public function getMaximumSize(component:Component):IntDimension
-		{
-			return IntDimension.createBigDimension();
-		}
+//		public function getPreferredSize(component:Component):IntDimension
+//		{
+//			return component.getSize();
+//		}
+//		
+//		public function getMinimumSize(component:Component):IntDimension
+//		{
+//			return new IntDimension();
+//		}
+//		
+//		public function getMaximumSize(component:Component):IntDimension
+//		{
+//			return IntDimension.createBigDimension();
+//		}
 
 		public function dispose():void
 		{

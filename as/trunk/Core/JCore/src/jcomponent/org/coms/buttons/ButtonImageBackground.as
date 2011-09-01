@@ -28,22 +28,13 @@ package jcomponent.org.coms.buttons
 			stateView.mouseEnabled = false;
 		}
 		
-		override public function getSize():IntDimension
-		{
-			return stateView.getSize();
-		}
-		
-		override public function setLocation(x:int, y:int):void
-		{
-			stateView.x = x;
-			stateView.y = y;
-		}
-		
-		override public function setup(component:Component, ui:IComponentUI):void
+		protected function setup(component:Component):void
 		{
 			if(setuped) return;
 			
 			setuped = true;
+			
+			var ui:IComponentUI = component.UI;
 			
 			//TODO: 取得UI图片资源
 			stateView.setUpImage(getAsset(component, ui, DefaultConfigKeys.BUTTON_UP_IMAGE, DefaultConfigKeys.BUTTON_UP_INSETS));
@@ -63,8 +54,10 @@ package jcomponent.org.coms.buttons
 			return ui.getDisplayObject(pp + extName);
 		}
 		
-		override public function updateDecorator(component:Component, ui:IComponentUI, bounds:IntRectangle):void
+		override public function updateDecorator(component:Component, bounds:IntRectangle):void
 		{
+			setup(component);
+			
 			var btn:AbstractButton = component as AbstractButton;
 			
 			var model:IButtonModel = btn.model;
@@ -74,35 +67,37 @@ package jcomponent.org.coms.buttons
 			stateView.selected = model.selected;
 			stateView.overed = model.rollOver;
 			
-			updateStateView(component, ui, bounds);
+			updateStateView(component, bounds);
 		}
 		
-		protected function updateStateView(component:Component, ui:IComponentUI, bounds:IntRectangle):void
+		protected function updateStateView(component:Component, bounds:IntRectangle):void
 		{
 			var s:IntDimension = bounds.getSize();
 			stateView.update(s);
-			stateView.updateTrigger(s);
+			//stateView.updateTrigger(s);
 		}
 		
 		override public function getDisplay(component:Component):DisplayObject
 		{
+			setup(component);
+			
 			return stateView;
 		}
 		
-		override public function getPreferredSize(component:Component):IntDimension
-		{
-			return stateView.getPreferredSize(component);
-		}
-		
-		override public function getMinimumSize(component:Component):IntDimension
-		{
-			return stateView.getMinimumSize(component);
-		}
-		
-		override public function getMaximumSize(component:Component):IntDimension
-		{
-			return stateView.getMaximumSize(component);
-		}
+//		override public function getPreferredSize(component:Component):IntDimension
+//		{
+//			return stateView.getPreferredSize(component);
+//		}
+//		
+//		override public function getMinimumSize(component:Component):IntDimension
+//		{
+//			return stateView.getMinimumSize(component);
+//		}
+//		
+//		override public function getMaximumSize(component:Component):IntDimension
+//		{
+//			return stateView.getMaximumSize(component);
+//		}
 		
 		override public function dispose():void
 		{

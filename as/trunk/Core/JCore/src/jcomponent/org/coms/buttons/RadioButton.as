@@ -3,7 +3,7 @@ package jcomponent.org.coms.buttons
 	import jcomponent.org.basic.DefaultConfigKeys;
 	import jcomponent.org.basic.UIConstants;
 
-	public class RadioButton extends CheckBox
+	public class RadioButton extends ToggleButton
 	{
 		public static const LEFT:int = UIConstants.LEFT;
 		
@@ -19,7 +19,11 @@ package jcomponent.org.coms.buttons
 		
 		public function RadioButton(text:String = null, textDir:int = LEFT, prefix:String = null, id:String = null)
 		{
-			super(text, textDir, prefix, id);
+			m_iconDir = iconDir;
+			
+			super(text, prefix, id);
+			
+			m_horizontalTextAlginment = LEFT;
 		}
 		
 		override public function getUIDefaultBasicClass():Class

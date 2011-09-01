@@ -3,6 +3,7 @@ package jcomponent.org.coms.buttons
 	import flash.events.MouseEvent;
 	
 	import jcomponent.org.basic.Component;
+	import jcomponent.org.basic.IICON;
 	import jcomponent.org.basic.UIConstants;
 	import jcomponent.org.events.ButtonEvent;
 	import jcomponent.org.events.ReleaseEvent;
@@ -43,9 +44,22 @@ package jcomponent.org.coms.buttons
 		private var m_downSelectedFilters:Array;
 		private var m_disabledSelectedFilters:Array;
 		
+		
+		private var m_textHGap:int = 0;
+		private var m_textVGap:int = 0;
+		
+		private var m_iconHGap:int = 0;
+		private var m_iconVGap:int = 0;
+		
+		protected var m_iconDir:int;
+		
+		protected var m_icon:IICON;
+		
 		public function AbstractButton(text:String = null, prefix:String = null, id:String = null)
 		{
 			super(prefix, id);
+			
+			m_iconDir = LEFT;
 			
 			m_verticalTextAlginment = MIDDLE;
 			m_horizontalTextAlginment = CENTER;
@@ -303,19 +317,106 @@ package jcomponent.org.coms.buttons
 			}
 		}
 		
-		override public function setSizeWH(w:int, h:int):void
+		public function get textHGap():int
 		{
-			var min:IntDimension = getMinimumSize();
-			var max:IntDimension = getMaximumSize();
-			
-			if(w < min.width) w = min.width;
-			if(h < min.height) h = min.height;
-			
-			if(w > max.width) w = max.width;
-			if(h > max.height) h = max.height;
-			
-			super.setSizeWH(w, h);
+			return m_textHGap;
 		}
+		
+		public function set textHGap(value:int):void
+		{
+			if(m_textHGap != value)
+			{
+				m_textHGap = value;
+				
+				invalidate();
+			}
+		}
+		
+		public function get iconHGap():int
+		{
+			return m_iconHGap;
+		}
+		
+		public function set iconHGap(value:int):void
+		{
+			if(m_iconHGap != value)
+			{
+				m_iconHGap = value;
+				
+				invalidate();
+			}
+		}
+		
+		public function get iconDir():int
+		{
+			return m_iconDir;
+		}
+		
+		public function get textVGap():int
+		{
+			return m_textVGap;
+		}
+		
+		public function set textVGap(value:int):void
+		{
+			m_textVGap = value;
+		}
+		
+		public function get iconVGap():int
+		{
+			return m_iconVGap;
+		}
+		
+		public function set iconVGap(value:int):void
+		{
+			m_iconVGap = value;
+		}
+		
+		public function get icon():IICON
+		{
+			return m_icon;
+		}
+		
+		public function set icon(value:IICON):void
+		{
+			if(m_icon != value)
+			{
+				uninstallIcon(m_icon);
+				
+				m_icon = value;
+				
+				installIcon(m_icon);
+				
+				invalidate();
+			}
+		}
+		
+		protected function installIcon(ic:IICON):void
+		{
+			if(ic && ic.getDisplay(this))
+			{
+				addChild(ic.getDisplay(this));
+			}
+		}
+		
+		protected function uninstallIcon(ic:IICON):void
+		{
+			DisposeUtil.free(ic);
+		}
+		
+//		override public function setSizeWH(w:int, h:int):void
+//		{
+//			var min:IntDimension = getMinimumSize();
+//			var max:IntDimension = getMaximumSize();
+//			
+//			if(w < min.width) w = min.width;
+//			if(h < min.height) h = min.height;
+//			
+//			if(w > max.width) w = max.width;
+//			if(h > max.height) h = max.height;
+//			
+//			super.setSizeWH(w, h);
+//		}
 		
 		public function initSelfEvent():void
 		{
@@ -403,6 +504,9 @@ package jcomponent.org.coms.buttons
 			removeEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
 			removeEventListener(ReleaseEvent.RELEASE, __releaseHandler);
 			
+			DisposeUtil.free(m_icon);
+			m_icon = null;
+			
 			if(m_model)
 			{
 				m_model.removeActionListener(__modelActionHandler);
@@ -425,5 +529,6 @@ package jcomponent.org.coms.buttons
 			
 			super.dispose();
 		}
+
 	}
 }

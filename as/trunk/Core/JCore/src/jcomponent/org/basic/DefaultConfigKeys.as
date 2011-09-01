@@ -79,6 +79,7 @@ package jcomponent.org.basic
 		*/
 		//===================================================================================
 		
+		public static const BUTTON_ICON:String = "icon";
 		public static const BUTTON_TEXT_FILTERS:String = "textFilters";
 		public static const BUTTON_UP_FILTERS:String = "upFilters";
 		public static const BUTTON_OVER_FILTERS:String = "overFilters";
@@ -161,7 +162,14 @@ package jcomponent.org.basic
 		//===================================================================================
 		
 		public static const CHECK_BOX_PRE:String = "CheckBox.";
-		
+		public static const BUTTON_ICON_UP_IMAGE:String = "iconUpImg";
+		public static const BUTTON_ICON_OVER_IMAGE:String = "iconOverImg";
+		public static const BUTTON_ICON_DOWN_IMAGE:String = "iconDownImg";
+		public static const BUTTON_ICON_DISABLED_IMAGE:String = "iconDisabledImg";
+		public static const BUTTON_ICON_SELECTED_IMAGE:String = "iconSelectedImg";
+		public static const BUTTON_ICON_OVER_SELECTED_IMAGE:String = "iconOverSelectedImg";
+		public static const BUTTON_ICON_DOWN_SELECTED_IMAGE:String = "iconDownSelectedImg";
+		public static const BUTTON_ICON_DISABLED_SELECTED_IMAGE:String = "iconDisabledSelectedImg";
 		
 		
 		

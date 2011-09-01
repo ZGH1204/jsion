@@ -11,6 +11,20 @@ package jcomponent.org.coms.buttons
 			model = new DefaultButtonModel();
 		}
 		
+		override public function setSizeWH(w:int, h:int):void
+		{
+			var min:IntDimension = getMinimumSize();
+			var max:IntDimension = getMaximumSize();
+			
+			if(w < min.width) w = min.width;
+			if(h < min.height) h = min.height;
+			
+			if(w > max.width) w = max.width;
+			if(h > max.height) h = max.height;
+			
+			super.setSizeWH(w, h);
+		}
+		
 		override public function getUIDefaultBasicClass():Class
 		{
 			return ImageButtonUI;
