@@ -67,7 +67,7 @@ package jcomponent.org.basic
 
 		private var m_uiClassID:String;
 		
-		private var m_readyToInvalidate:Boolean;
+		protected var m_readyToInvalidate:Boolean;
 		
 		
 		private var m_preferredSize:IntDimension;
@@ -565,7 +565,7 @@ package jcomponent.org.basic
 
 		override public function set y(value:Number):void
 		{
-			bounds.y;
+			bounds.y = value;
 			yPos = value;
 		}
 		
@@ -582,6 +582,11 @@ package jcomponent.org.basic
 		override public function swapChildrenAt(index1:int, index2:int):void
 		{
 			return m_content.swapChildrenAt(index1, index2);
+		}
+		
+		override public function getChildAt(index:int):DisplayObject
+		{
+			return m_content.getChildAt(index);
 		}
 		
 		override public function getChildIndex(child:DisplayObject):int
@@ -971,8 +976,8 @@ package jcomponent.org.basic
 			m_mask.graphics.drawRect(0, 0, 1, 1);
 			m_mask.graphics.endFill();
 
-			addChild(m_mask);
 			mask = m_mask;
+			addChild(m_mask);
 			
 			updateUI();
 

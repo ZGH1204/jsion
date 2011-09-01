@@ -49,5 +49,10 @@ package jcomponent.org.basic.layouts
 		public function invalidateLayout(target:Container):void
 		{
 		}
+		
+		public function dispose():void
+		{
+			
+		}
 	}
 }
