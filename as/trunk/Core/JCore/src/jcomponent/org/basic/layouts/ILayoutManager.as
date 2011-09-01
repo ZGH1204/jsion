@@ -3,7 +3,7 @@ package jcomponent.org.basic.layouts
 	import jcomponent.org.basic.Component;
 	import jcomponent.org.basic.Container;
 
-	public interface ILayoutManager
+	public interface ILayoutManager extends IDispose
 	{
 		function addLayoutComponent(comp:Component, constraints:Object):void;
 		

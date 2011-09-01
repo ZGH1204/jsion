@@ -38,7 +38,8 @@ package jcomponent.org.basic
 			
 			if(ui == null)
 			{
-				ui = getCreateInstance(target.getUIDefaultBasicClass()) as IComponentUI;
+				var cls:Class = target.getUIDefaultBasicClass();
+				if(cls) ui = getCreateInstance(cls) as IComponentUI;
 			}
 			
 			return ui;
