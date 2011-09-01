@@ -1,12 +1,11 @@
 package
 {
 	import flash.filters.ColorMatrixFilter;
-	import flash.filters.GlowFilter;
 	
 	import jcomponent.org.basic.BasicLookAndFeel;
+	import jcomponent.org.coms.buttons.ButtonIcon;
 	import jcomponent.org.coms.buttons.ButtonImageBackground;
 	import jcomponent.org.coms.buttons.ButtonScaleImageBackground;
-	import jcomponent.org.coms.buttons.CheckBoxBackground;
 	
 	public class TestLookAndFeel extends BasicLookAndFeel
 	{
@@ -173,23 +172,23 @@ package
 //			list.push("CheckBox.downSelectedFilters", null);
 //			list.push("CheckBox.disabledSelectedFilters", null);
 			
-			list.push("CheckBox.bg", CheckBoxBackground);
+			list.push("CheckBox.icon", ButtonIcon);
 			
-			list.push("CheckBox.upImg", ButtonUp_Asset);
-			list.push("CheckBox.overImg", ButtonOver_Asset);
-			list.push("CheckBox.downImg", ButtonDown_Asset);
-//			list.push("CheckBox.disabledImg", null);
-			list.push("CheckBox.selectedImg", ButtonDown_Asset);
-			list.push("CheckBox.overSelectedImg", ButtonDown_Asset);
-//			list.push("CheckBox.downSelectedImg", null);
-//			list.push("CheckBox.disabledSelectedImg", null);
+			list.push("CheckBox.iconUpImg", ButtonUp_Asset);
+			list.push("CheckBox.iconOverImg", ButtonOver_Asset);
+			list.push("CheckBox.iconDownImg", ButtonDown_Asset);
+//			list.push("CheckBox.iconDisabledImg", null);
+			list.push("CheckBox.iconSelectedImg", ButtonDown_Asset);
+			list.push("CheckBox.iconOverSelectedImg", ButtonDown_Asset);
+//			list.push("CheckBox.iconDownSelectedImg", null);
+//			list.push("CheckBox.iconDisabledSelectedImg", null);
 			
-			list.push("CheckBox.upInsets", insets);
-			list.push("CheckBox.overInsets", insets);
-			list.push("CheckBox.downInsets", insets);
+//			list.push("CheckBox.upInsets", null);
+//			list.push("CheckBox.overInsets", null);
+//			list.push("CheckBox.downInsets", null);
 //			list.push("CheckBox.disabledInsets", null);
-			list.push("CheckBox.selectedInsets", insets);
-			list.push("CheckBox.overSelectedInsets", insets);
+//			list.push("CheckBox.selectedInsets", null);
+//			list.push("CheckBox.overSelectedInsets", null);
 //			list.push("CheckBox.downSelectedInsets", null);
 //			list.push("CheckBox.disabledSelectedInsets", null);
 			
@@ -209,23 +208,23 @@ package
 //			list.push("CheckBox.downSelectedFilters", null);
 //			list.push("CheckBox.disabledSelectedFilters", null);
 			
-			list.push("RadioButton.bg", CheckBoxBackground);
+			list.push("RadioButton.icon", ButtonIcon);
 			
-			list.push("RadioButton.upImg", ButtonUp_Asset);
-			list.push("RadioButton.overImg", ButtonOver_Asset);
-			list.push("RadioButton.downImg", ButtonDown_Asset);
-//			list.push("CheckBox.disabledImg", null);
-			list.push("RadioButton.selectedImg", ButtonDown_Asset);
-			list.push("RadioButton.overSelectedImg", ButtonDown_Asset);
-//			list.push("CheckBox.downSelectedImg", null);
-//			list.push("CheckBox.disabledSelectedImg", null);
+			list.push("RadioButton.iconUpImg", ButtonUp_Asset);
+			list.push("RadioButton.iconOverImg", ButtonOver_Asset);
+			list.push("RadioButton.iconDownImg", ButtonDown_Asset);
+//			list.push("CheckBox.iconDisabledImg", null);
+			list.push("RadioButton.iconSelectedImg", ButtonDown_Asset);
+			list.push("RadioButton.iconOverSelectedImg", ButtonDown_Asset);
+//			list.push("CheckBox.iconDownSelectedImg", null);
+//			list.push("CheckBox.iconDisabledSelectedImg", null);
 			
-			list.push("RadioButton.upInsets", insets);
-			list.push("RadioButton.overInsets", insets);
-			list.push("RadioButton.downInsets", insets);
+//			list.push("RadioButton.upInsets", null);
+//			list.push("RadioButton.overInsets", null);
+//			list.push("RadioButton.downInsets", null);
 //			list.push("CheckBox.disabledInsets", null);
-			list.push("RadioButton.selectedInsets", insets);
-			list.push("RadioButton.overSelectedInsets", insets);
+//			list.push("RadioButton.selectedInsets", null);
+//			list.push("RadioButton.overSelectedInsets", null);
 //			list.push("CheckBox.downSelectedInsets", null);
 //			list.push("CheckBox.disabledSelectedInsets", null);
 		}

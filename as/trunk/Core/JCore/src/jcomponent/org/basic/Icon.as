@@ -8,12 +8,12 @@ package jcomponent.org.basic
 		{
 		}
 		
-		public function get getIconWidth():int
+		public function get iconWidth():int
 		{
 			return 0;
 		}
 		
-		public function get getIconHeight():int
+		public function get iconHeight():int
 		{
 			return 0;
 		}

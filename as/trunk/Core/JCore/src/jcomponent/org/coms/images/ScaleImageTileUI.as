@@ -141,6 +141,7 @@ package jcomponent.org.coms.images
 			bmdList.push(bmd);
 			
 			r = getGridRect(tiledSize, scaleImage.scaleInsets, part);
+			if(r.width <= 0 || r.height <= 0) return;
 			p = r.getLocation();
 			op = r.getLocation();
 			

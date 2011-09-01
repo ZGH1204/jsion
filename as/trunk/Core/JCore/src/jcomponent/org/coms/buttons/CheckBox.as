@@ -20,23 +20,13 @@ package jcomponent.org.coms.buttons
 		public static const BOTTOM:int = UIConstants.BOTTOM;
 		
 		
-		private var m_textHGap:int = 0;
-		private var m_textVGap:int = 0;
-		
-		private var m_boxHGap:int = 0;
-		private var m_boxVGap:int = 0;
-		
-		private var m_boxDir:int;
-		
-		public function CheckBox(text:String = null, textDir:int = LEFT, prefix:String = null, id:String = null)
+		public function CheckBox(text:String = null, iconDir:int = LEFT, prefix:String = null, id:String = null)
 		{
+			m_iconDir = iconDir;
+			
 			super(text, prefix, id);
 			
-			m_boxDir = textDir;
-			
 			m_horizontalTextAlginment = LEFT;
-			
-			//model = new ToggleButtonModel();
 		}
 		
 		override public function getUIDefaultBasicClass():Class
@@ -48,65 +38,5 @@ package jcomponent.org.coms.buttons
 		{
 			return DefaultConfigKeys.CHECK_BOX_UI;
 		}
-
-		public function get textHGap():int
-		{
-			return m_textHGap;
-		}
-
-		public function set textHGap(value:int):void
-		{
-			if(m_textHGap != value)
-			{
-				m_textHGap = value;
-				
-				invalidate();
-			}
-		}
-
-		public function get boxHGap():int
-		{
-			return m_boxHGap;
-		}
-
-		public function set boxHGap(value:int):void
-		{
-			if(m_boxHGap != value)
-			{
-				m_boxHGap = value;
-				
-				invalidate();
-			}
-		}
-		
-		public function get boxDir():int
-		{
-			return m_boxDir;
-		}
-
-		public function get textVGap():int
-		{
-			return m_textVGap;
-		}
-
-		public function set textVGap(value:int):void
-		{
-			m_textVGap = value;
-		}
-
-		public function get boxVGap():int
-		{
-			return m_boxVGap;
-		}
-
-		public function set boxVGap(value:int):void
-		{
-			m_boxVGap = value;
-		}
-		
-//		override public function set mask(value:DisplayObject):void
-//		{
-//			value.visible = false;
-//		}
 	}
 }

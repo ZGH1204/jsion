@@ -1,5 +1,6 @@
 package jcomponent.org.coms.buttons
 {
+	import flash.display.DisplayObject;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	
@@ -7,11 +8,10 @@ package jcomponent.org.coms.buttons
 	import jcomponent.org.basic.Component;
 	import jcomponent.org.basic.DefaultConfigKeys;
 	import jcomponent.org.basic.IComponentUI;
-	import jcomponent.org.basic.IGroundDecorator;
+	import jcomponent.org.basic.IICON;
 	import jcomponent.org.basic.LookAndFeel;
 	
 	import jutils.org.util.DisposeUtil;
-	import jutils.org.util.StringUtil;
 	
 	public class BasicButtonUI extends BasicComponentUI
 	{
@@ -19,6 +19,9 @@ package jcomponent.org.coms.buttons
 		
 		protected var viewRect:IntRectangle = new IntRectangle();
 		protected var textRect:IntRectangle = new IntRectangle();
+		protected var iconRect:IntRectangle = new IntRectangle();
+		
+		
 		
 		public function BasicButtonUI()
 		{
@@ -30,6 +33,8 @@ package jcomponent.org.coms.buttons
 			installDefaults(component);
 			
 			installFilters(component);
+			
+			installIcon(component);
 			
 			installTextField(component);
 		}
@@ -61,6 +66,17 @@ package jcomponent.org.coms.buttons
 			btn.disabledSelectedFilters = ui.getInstance(pp + DefaultConfigKeys.BUTTON_DISABLED_SELECTED_FILTERS) as Array;
 		}
 		
+		private function installIcon(component:Component):void
+		{
+			var pp:String = getResourcesPrefix(component);
+			var ui:IComponentUI = component.UI;
+			var btn:AbstractButton = AbstractButton(component);
+			
+			var ic:IICON = ui.getIcon(pp + DefaultConfigKeys.BUTTON_ICON);
+			
+			btn.icon = ic;
+		}
+		
 		private function installTextField(component:Component):void
 		{
 			textField = new TextField();
@@ -86,23 +102,35 @@ package jcomponent.org.coms.buttons
 		{
 			super.paint(component, bounds);
 			
-			paintText(component, bounds);
+			paintTextAndIcon(component, bounds);
 			
 			paintFilters(component, bounds);
 		}
 		
-		protected function paintText(component:Component, bounds:IntRectangle):void
+		protected function paintTextAndIcon(component:Component, bounds:IntRectangle):void
 		{
 			var btn:AbstractButton = AbstractButton(component);
+			var icn:IICON = btn.icon;
 			
 			viewRect.setRect(bounds);
 			
-			textRect.x = textRect.y = textRect.width = textRect.height = 0;
+			textRect.setRectXYWH(0, 0, 0, 0);
+			iconRect.setRectXYWH(0, 0, 0, 0);
 			
-			var text:String = JUtil.layoutText(btn.text, btn.font, 
+			var iconSize:IntDimension;
+			
+			if(icn) iconSize = new IntDimension(icn.iconWidth, icn.iconHeight);
+			else iconSize = new IntDimension();
+			
+			
+			var text:String = JUtil.layoutTextAndBox(btn.text, btn.font, 
 				btn.horizontalTextAlginment, 
 				btn.verticalTextAlginment, 
-				viewRect, textRect);
+				textRect, iconSize.width, iconSize.height, 
+				btn.textHGap, btn.textVGap, btn.iconHGap, 
+				btn.iconVGap, btn.iconDir, iconRect, viewRect);
+			
+			if(icn) icn.updateIcon(component, iconRect.x, iconRect.y);
 			
 			textField.x = textRect.x;
 			textField.y = textRect.y;
@@ -170,44 +198,81 @@ package jcomponent.org.coms.buttons
 			btn.content.filters = filter;
 		}
 		
+		
+		
+		private function calcSize(btn:AbstractButton, textSize:IntDimension, backSize:IntDimension):IntDimension
+		{
+			var w:int;
+			var h:int;
+			
+			if(btn.iconDir == CheckBox.CENTER || btn.iconDir == CheckBox.MIDDLE)
+			{
+				w = Math.max(textSize.width, backSize.width);
+				h = Math.max(textSize.height, backSize.height);
+			}
+			else if(btn.iconDir == CheckBox.TOP || btn.iconDir == CheckBox.BOTTOM)
+			{
+				w = Math.max(textSize.width, backSize.width);
+				
+				h = textSize.height + backSize.height;
+				h += btn.textVGap;
+				h += btn.iconVGap;
+			}
+			else
+			{
+				w = textSize.width + backSize.width;
+				w += btn.textHGap;
+				w += btn.iconHGap;
+				
+				h = Math.max(textSize.height, backSize.height);
+			}
+			
+			
+			return new IntDimension(w, h);
+		}
+		
 		override public function getPreferredSize(component:Component):IntDimension
 		{
-			var backgroundDecorator:IGroundDecorator = component.backgroundDecorator;
+			var btn:AbstractButton = AbstractButton(component);
+			var icn:IICON = btn.icon;
 			
 			var textSize:IntDimension = getTextSize(component);
-			var backSize:IntDimension;
+			var iconSize:IntDimension;
 			
-			if(backgroundDecorator) backSize = backgroundDecorator.getPreferredSize(component);
-			else backSize = new IntDimension();
+			if(icn) iconSize = new IntDimension(icn.iconWidth, icn.iconHeight);
+			else iconSize = new IntDimension();
 			
-			return new IntDimension(Math.max(textSize.width, backSize.width), Math.max(textSize.height, backSize.height));
+			return calcSize(btn, textSize, iconSize);;
+			//return new IntDimension(Math.max(textSize.width, backSize.width), Math.max(textSize.height, backSize.height));
 		}
 		
 		override public function getMinimumSize(component:Component):IntDimension
 		{
-			var backgroundDecorator:IGroundDecorator = component.backgroundDecorator;
+			var btn:AbstractButton = AbstractButton(component);
+			var icn:IICON = btn.icon;
 			
 			var textSize:IntDimension = getTextSize(component);
-			var backSize:IntDimension;
+			var iconSize:IntDimension;
 			
-			if(backgroundDecorator) backSize = backgroundDecorator.getMinimumSize(component);
-			else backSize = new IntDimension();
+			if(icn) iconSize = new IntDimension(icn.iconWidth, icn.iconHeight);
+			else iconSize = new IntDimension();
 			
-			return new IntDimension(Math.max(textSize.width, backSize.width), Math.max(textSize.height, backSize.height));
+			return calcSize(btn, textSize, iconSize);;
+			//return new IntDimension(Math.max(textSize.width, backSize.width), Math.max(textSize.height, backSize.height));
 		}
 		
-		override public function getMaximumSize(component:Component):IntDimension
-		{
-			var backgroundDecorator:IGroundDecorator = component.backgroundDecorator;
-			
-			var textSize:IntDimension = getTextSize(component);
-			var backMax:IntDimension;
-			
-			if(backgroundDecorator) backMax = backgroundDecorator.getMaximumSize(component);
-			else backMax = IntDimension.createBigDimension();
-			
-			return new IntDimension(Math.max(textSize.width, backMax.width), Math.max(textSize.height, backMax.height));
-		}
+//		override public function getMaximumSize(component:Component):IntDimension
+//		{
+//			var backgroundDecorator:IGroundDecorator = component.backgroundDecorator;
+//			
+//			var textSize:IntDimension = getTextSize(component);
+//			var backMax:IntDimension;
+//			
+//			if(backgroundDecorator) backMax = backgroundDecorator.getMaximumSize(component);
+//			else backMax = IntDimension.createBigDimension();
+//			
+//			return new IntDimension(Math.max(textSize.width, backMax.width), Math.max(textSize.height, backMax.height));
+//		}
 		
 		protected function getTextSize(component:Component):IntDimension
 		{
@@ -228,6 +293,7 @@ package jcomponent.org.coms.buttons
 			
 			viewRect = null;
 			textRect = null;
+			iconRect = null;
 			
 			super.dispose();
 		}

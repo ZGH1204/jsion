@@ -125,15 +125,16 @@ package
 //			
 //			addChild(btn);
 			
-//			btn = new ScaleImageButton("缩放按钮");
-//			
-//			btn.setSize(new IntDimension(150, 80));
-//			//btn.pack();
-//			
-//			addChild(btn);
+			btn = new ScaleImageButton("缩放按钮");
+			
+			btn.setSize(new IntDimension(150, 80));
+			//btn.pack();
+			
+			addChild(btn);
 			
 //			btn  = new ImageButton("按钮");
 //			
+//			//btn.setSizeWH(100, 100);
 //			btn.pack();
 //			btn.x = 100;
 //			btn.y = 100;
