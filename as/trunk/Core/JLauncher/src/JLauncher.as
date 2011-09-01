@@ -8,11 +8,11 @@ package
 	import jcomponent.org.coms.buttons.ButtonGroup;
 	import jcomponent.org.coms.buttons.CheckBox;
 	import jcomponent.org.coms.buttons.ScaleImageButton;
-	import jcomponent.org.coms.containers.HBox;
 	import jcomponent.org.coms.containers.VBox;
 	import jcomponent.org.mgrs.UIMgr;
 	
 	import jcore.org.loader.BinaryLoader;
+	import jcore.org.tweens.TweenMax;
 	
 	[SWF(width="900", height="600", frameRate="30")]
 	public class JLauncher extends Sprite
@@ -81,6 +81,11 @@ package
 				
 				hBox.addChild(btn);
 			}
+			
+			hBox.x = 100;
+			hBox.y = 40;
+			hBox.alpha = 0;
+			TweenMax.to(hBox, 0.5, {y: 20, alpha: 1});
 			
 			if(btn) return;
 			
