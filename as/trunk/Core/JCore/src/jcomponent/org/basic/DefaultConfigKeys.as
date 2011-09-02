@@ -204,10 +204,18 @@ package jcomponent.org.basic
 		
 		//===================================================================================
 		/*
-		* RootPanel组件配置属性
+		* Window组件配置属性
 		*/
 		//===================================================================================
 		public static const WINDOW_PRE:String = "Window.";
-		
+		public static const WINDOW_CLOSE_BUTTON:String = WINDOW_PRE + "CloseButton.";//配置属性同ImageButton
+		public static const WINDOW_TITLE_HALIGN:String = "titleHAlign";
+		public static const WINDOW_TITLE_VALIGN:String = "titleVAlign";
+		public static const WINDOW_TITLE_HGAP:String = "titleHGap";
+		public static const WINDOW_TITLE_VGAP:String = "titleVGap";
+		public static const WINDOW_CLOSE_HALIGN:String = "closeHAlign";
+		public static const WINDOW_CLOSE_VALIGN:String = "closeVAlign";
+		public static const WINDOW_CLOSE_HGAP:String = "closeHGap";
+		public static const WINDOW_CLOSE_VGAP:String = "closeVGap";
 	}
 }
