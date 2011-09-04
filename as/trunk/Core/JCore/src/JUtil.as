@@ -145,6 +145,56 @@ package
 			}
 		}
 		
+		public static function layoutPosition(viewRect:IntRectangle, hAlign:int, vAlign:int, hGap:int, vGap:int, r:IntRectangle):IntRectangle
+		{
+			if(viewRect == null) throw new ArgumentError("参数 viewRect 不能为空!");
+			if(r == null) throw new ArgumentError("参数 r 不能为空!");
+			
+			switch(hAlign)
+			{
+				case UIConstants.LEFT:
+					r.x = viewRect.x + hGap;
+					break;
+				case UIConstants.RIGHT:
+					r.x = viewRect.x + viewRect.width;
+					r.x -= r.width;
+					r.x -= hGap;
+					break;
+				case UIConstants.CENTER:
+					r.x = viewRect.x + viewRect.width;
+					r.x -= r.width;
+					r.x /= 2;
+					r.x += hGap;
+					break;
+				default:
+					throw new Error("水平对齐方式错误!");
+					break;
+			}
+			
+			switch(vAlign)
+			{
+				case UIConstants.TOP:
+					r.y = viewRect.y + vGap;
+					break;
+				case UIConstants.BOTTOM:
+					r.y = viewRect.y + viewRect.height;
+					r.y -= r.height;
+					r.y -= vGap;
+					break;
+				case UIConstants.MIDDLE:
+					r.y = viewRect.y + viewRect.height;
+					r.y -= r.height;
+					r.y /= 2;
+					r.y += vGap;
+					break;
+				default:
+					throw new Error("垂直对齐方式错误!");
+					break;
+			}
+			
+			return r;
+		}
+		
 		public static function layoutTextAndBox(text:String, font:ASFont, horizontalAlginment:int, verticalAlginment:int, textRect:IntRectangle, 
 												   boxWidth:int, boxHeight:int, textHGap:int, textVGap:int, boxHGap:int, boxVGap:int, boxDir:int, boxRect:IntRectangle, viewRect:IntRectangle):String
 		{
@@ -231,15 +281,13 @@ package
 			
 			if(horizontalAlginment == UIConstants.CENTER)
 			{
-				textRect.x = boxRect.x;
-				textRect.x -= textRect.width;
+				textRect.x = boxRect.x - textRect.width;
 				textRect.x /= 2;
 				textRect.x += textHGap;
 			}
 			else if(horizontalAlginment == UIConstants.RIGHT)
 			{
-				textRect.x = boxRect.x;
-				textRect.x -= textRect.width;
+				textRect.x = boxRect.x - textRect.width;
 				textRect.x -= textHGap;
 			}
 			else

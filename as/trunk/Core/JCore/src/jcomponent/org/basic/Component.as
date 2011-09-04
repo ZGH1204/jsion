@@ -24,6 +24,8 @@ package jcomponent.org.basic
 		{
 			JUtil.checkAbstract(this);
 			
+			m_prefix = prefix;
+			
 			this.id = id;
 			
 			initialize();
@@ -901,6 +903,19 @@ package jcomponent.org.basic
 		public function getContainer():Container
 		{
 			return container;
+		}
+		
+		public function removeFromContainer():void
+		{
+			if(getContainer() != null)
+			{
+				getContainer().remove(this);
+			}
+			
+			if(parent != null)
+			{
+				parent.removeChild(this);
+			}
 		}
 		
 		protected function countMaximumSize():IntDimension

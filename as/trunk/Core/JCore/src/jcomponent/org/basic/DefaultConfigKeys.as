@@ -208,7 +208,6 @@ package jcomponent.org.basic
 		*/
 		//===================================================================================
 		public static const WINDOW_PRE:String = "Window.";
-		public static const WINDOW_CLOSE_BUTTON:String = WINDOW_PRE + "CloseButton.";//配置属性同ImageButton
 		public static const WINDOW_TITLE_HALIGN:String = "titleHAlign";
 		public static const WINDOW_TITLE_VALIGN:String = "titleVAlign";
 		public static const WINDOW_TITLE_HGAP:String = "titleHGap";
@@ -217,5 +216,17 @@ package jcomponent.org.basic
 		public static const WINDOW_CLOSE_VALIGN:String = "closeVAlign";
 		public static const WINDOW_CLOSE_HGAP:String = "closeHGap";
 		public static const WINDOW_CLOSE_VGAP:String = "closeVGap";
+		
+		public static const WINDOW_CLOSE_BUTTON_PRE:String = "CloseButton.";//配置属性同ImageButton
+		
+		public static const WINDOW_TITLE_BAR_PRE:String = "TitleBar.";
+		public static const WINDOW_TITLE_IMAGE:String = "titleImg";
+		public static const WINDOW_TITLE_IMAGE_INSETS:String = "titleImgInsets";
+		public static const WINDOW_TITLE_FONT:String = "titleFont";
+		public static const WINDOW_TITLE_COLOR:String = "titleColor";
+		public static const WINDOW_TEXT_HALIGN:String = "textHAlign";
+		public static const WINDOW_TEXT_VALIGN:String = "textVAlign";
+		public static const WINDOW_TEXT_HGAP:String = "textHGap";
+		public static const WINDOW_TEXT_VGAP:String = "textVGap";
 	}
 }
