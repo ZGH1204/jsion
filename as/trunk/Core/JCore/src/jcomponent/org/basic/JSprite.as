@@ -13,6 +13,7 @@ package jcomponent.org.basic
 		{
 			super();
 			
+			addEventListener(MouseEvent.CLICK, __clickHandler);
 			addEventListener(MouseEvent.MOUSE_DOWN, __jSpriteMouseDownListener);
 		}
 		
@@ -27,7 +28,17 @@ package jcomponent.org.basic
 		}
 		
 		
+		private var m_stopPropagation:Boolean = false;
 		
+		public function get stopPropagation():Boolean
+		{
+			return m_stopPropagation;
+		}
+		
+		public function set stopPropagation(value:Boolean):void
+		{
+			m_stopPropagation = value;
+		}
 		
 		
 		private var pressedTarget:DisplayObject;
@@ -65,6 +76,11 @@ package jcomponent.org.basic
 			pressedTarget = null;
 		}
 		
+		private function __clickHandler(e:MouseEvent):void
+		{
+			if(m_stopPropagation) e.stopPropagation();
+		}
+		
 		private function __jStageRemovedFrom(e:Event):void
 		{
 			pressedTarget = null;
@@ -73,7 +89,10 @@ package jcomponent.org.basic
 		
 		public function dispose():void
 		{
+			removeEventListener(MouseEvent.CLICK, __clickHandler);
+			removeEventListener(MouseEvent.MOUSE_DOWN, __jSpriteMouseDownListener);
 			removeEventListener(Event.REMOVED_FROM_STAGE, __jStageRemovedFrom);
+			StageRef.removeEventListener(MouseEvent.MOUSE_UP, __jStageMouseUpListener);
 			
 			pressedTarget = null;
 		}

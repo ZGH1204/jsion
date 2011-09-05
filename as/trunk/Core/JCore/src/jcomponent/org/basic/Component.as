@@ -142,7 +142,9 @@ package jcomponent.org.basic
 		
 		override public function hitTestPoint(x:Number, y:Number, shapeFlag:Boolean=false):Boolean
 		{
-			return m_mask.hitTestPoint(x, y, shapeFlag);
+			if(m_mask) return m_mask.hitTestPoint(x, y, shapeFlag);
+			
+			return super.hitTestPoint(x, y, shapeFlag);
 		}
 		
 		public function hitTestMouse():Boolean
@@ -608,11 +610,13 @@ package jcomponent.org.basic
 		
 		override public function removeChild(child:DisplayObject):DisplayObject
 		{
+			if(child == m_content) return super.removeChild(child);
 			return m_content.removeChild(child);
 		}
 		
 		override public function removeChildAt(index:int):DisplayObject
 		{
+			if(index >= m_content.numChildren) return null;
 			return m_content.removeChildAt(index);
 		}
 		

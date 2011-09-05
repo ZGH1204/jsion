@@ -14,9 +14,9 @@ package jcomponent.org.coms.containers
 		
 		protected var m_gap:int;
 		
-		public function VBox(gap:int = 0, id:String=null)
+		public function VBox(gap:int = 0, prefix:String = null, id:String=null)
 		{
-			super(null, id);
+			super(prefix, id);
 			
 			m_gap = gap;
 			

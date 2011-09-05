@@ -86,6 +86,7 @@ package jcomponent.org.coms.buttons
 			textField.selectable = false;
 			textField.mouseEnabled = false;
 			textField.mouseWheelEnabled = false;
+			
 			component.addChild(textField);
 		}
 		

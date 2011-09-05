@@ -177,7 +177,11 @@ package jcore.org.ddrop
 			if(_draging == false) return;
 			
 			_draging = false;
-			if(_dragIcon != _dragger)
+			
+//			if(_dragIcon != _dragger)
+//				DisposeUtil.free(_dragIcon);
+			
+			if(_dragger.freeDragingIcon)
 				DisposeUtil.free(_dragIcon);
 			
 			_dragger = null;
@@ -208,7 +212,7 @@ package jcore.org.ddrop
 		 */		
 		private static function checkDropHits():void
 		{
-			if(_draging == false || _dragger == null || _dragingGroup == null) return;
+			if(_draging == false || _dragger == null || _dragingGroup == null || _dragingGroup == getDDGroup(Default_Group)) return;
 			
 			var list:Array = _dragingGroup.toArray();
 			
@@ -302,7 +306,7 @@ package jcore.org.ddrop
 		
 		private static function __dragStartHandler(e:MouseEvent):void
 		{
-			if(_draging || e.currentTarget != e.target) return;
+			if(_draging) return;// || e.currentTarget != e.target) return;
 			
 			_draging = true;
 			

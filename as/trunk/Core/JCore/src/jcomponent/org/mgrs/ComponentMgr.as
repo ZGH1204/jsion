@@ -32,7 +32,8 @@ package jcomponent.org.mgrs
 
 		public function unregiste(id:String):void
 		{
-			components.remove(id);
+			var comp:Component = components.remove(id);
+			if(comp) invalidates.remove(comp);
 		}
 
 		public static function get Instance():ComponentMgr
