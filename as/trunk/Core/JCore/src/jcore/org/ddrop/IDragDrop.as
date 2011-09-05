@@ -6,7 +6,7 @@ package jcore.org.ddrop
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
-	public interface IDragDrop extends IEventDispatcher, IBitmapDrawable
+	public interface IDragDrop extends IEventDispatcher
 	{
 		function get x():Number;
 		function set x(value:Number):void;
