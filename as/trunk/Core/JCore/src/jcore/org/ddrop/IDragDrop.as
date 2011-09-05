@@ -40,7 +40,12 @@ package jcore.org.ddrop
 		function get transData():*;
 		
 		/**
-		 * 手动时的显示对象
+		 * 是否对拖动时的显示对象进行内存释放
+		 */		
+		function get freeDragingIcon():Boolean;
+		
+		/**
+		 * 拖动时的显示对象
 		 */		
 		function get dragingIcon():DisplayObject;
 		

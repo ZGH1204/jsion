@@ -2,10 +2,13 @@ package
 {
 	import flash.filters.ColorMatrixFilter;
 	
+	import jcomponent.org.basic.ASColor;
 	import jcomponent.org.basic.BasicLookAndFeel;
+	import jcomponent.org.basic.UIConstants;
 	import jcomponent.org.coms.buttons.ButtonIcon;
 	import jcomponent.org.coms.buttons.ButtonImageBackground;
 	import jcomponent.org.coms.buttons.ButtonScaleImageBackground;
+	import jcomponent.org.coms.containers.WindowImageBackground;
 	
 	public class TestLookAndFeel extends BasicLookAndFeel
 	{
@@ -174,12 +177,12 @@ package
 			
 			list.push("CheckBox.icon", ButtonIcon);
 			
-			list.push("CheckBox.iconUpImg", ButtonUp_Asset);
-			list.push("CheckBox.iconOverImg", ButtonOver_Asset);
-			list.push("CheckBox.iconDownImg", ButtonDown_Asset);
+			list.push("CheckBox.iconUpImg", CheckBoxUnSelected_Asset);
+//			list.push("CheckBox.iconOverImg", CheckBoxUnSelected_Asset);
+//			list.push("CheckBox.iconDownImg", CheckBoxUnSelected_Asset);
 //			list.push("CheckBox.iconDisabledImg", null);
-			list.push("CheckBox.iconSelectedImg", ButtonDown_Asset);
-			list.push("CheckBox.iconOverSelectedImg", ButtonDown_Asset);
+			list.push("CheckBox.iconSelectedImg", CheckBoxSelected_Asset);
+//			list.push("CheckBox.iconOverSelectedImg", CheckBoxSelected_Asset);
 //			list.push("CheckBox.iconDownSelectedImg", null);
 //			list.push("CheckBox.iconDisabledSelectedImg", null);
 			
@@ -227,6 +230,37 @@ package
 //			list.push("RadioButton.overSelectedInsets", null);
 //			list.push("CheckBox.downSelectedInsets", null);
 //			list.push("CheckBox.disabledSelectedInsets", null);
+			
+			list.push("Window.bg", WindowImageBackground);
+			list.push("Window.bgImg", WindowBackground_Asset);
+			list.push("Window.bgInsets", new Insets(53, 60, 95, 60));
+//			list.push("Window.titleHAlign", null);
+//			list.push("Window.titleVAlign", null);
+//			list.push("Window.titleHGap", null);
+			list.push("Window.titleVGap", -10);
+//			list.push("Window.closeHAlign", null);
+//			list.push("Window.closeVAlign", null);
+			list.push("Window.closeHGap", 18);
+			list.push("Window.closeVGap", 20);
+			
+			list.push("Window.TitleBar.titleImg", WindowTitleBackground_Asset);
+//			list.push("Window.TitleBar.titleImgInsets", null);
+//			list.push("Window.TitleBar.titleScaleType", null);
+//			list.push("Window.TitleBar.titleFont", null);
+			list.push("Window.TitleBar.titleColor", new ASColor(0xFFFFFF));
+//			list.push("Window.TitleBar.textHAlign", null);
+//			list.push("Window.TitleBar.textVAlign", null);
+//			list.push("Window.TitleBar.textHGap", null);
+//			list.push("Window.TitleBar.textVGap", null);
+			
+			list.push("Window.CloseButton.upImg", CloseUp_Asset);
+			list.push("Window.CloseButton.overImg", CloseOver_Asset);
+			list.push("Window.CloseButton.downImg", CloseDown_Asset);
+//			list.push("Window.CloseButton.disabledImg", null);
+//			list.push("Window.CloseButton.upFilters", null);
+//			list.push("Window.CloseButton.overFilters", null);
+//			list.push("Window.CloseButton.downFilters", null);
+//			list.push("Window.CloseButton.disabledFilters", null);
 		}
 	}
 }

@@ -1,6 +1,10 @@
 package jcomponent.org.coms.containers
 {
+	import flash.display.DisplayObjectContainer;
+	import flash.events.MouseEvent;
+	
 	import jcomponent.org.basic.DefaultConfigKeys;
+	import jcomponent.org.basic.UIConstants;
 	import jcomponent.org.coms.buttons.AbstractButton;
 	
 	import jutils.org.util.DisposeUtil;
@@ -8,6 +12,9 @@ package jcomponent.org.coms.containers
 	public class Window extends RootPanel
 	{
 		private var m_title:String;
+		
+		private var m_titleWidth:int;
+		private var m_titleHeight:int;
 		
 		protected var m_titleBar:ITitleBar;
 		
@@ -23,9 +30,22 @@ package jcomponent.org.coms.containers
 		protected var m_hCloseGap:int;
 		protected var m_vCloseGap:int;
 		
-		public function Window(id:String=null)
+		public function Window(title:String = null, prefix:String = null, id:String=null)
 		{
-			super(id);
+			m_title = title;
+			
+			if(m_title == null) m_title = "";
+			
+			m_hTitleAlign = UIConstants.CENTER;
+			m_vTitleAlign = UIConstants.TOP;
+			
+			m_hCloseAlign = UIConstants.RIGHT;
+			m_vCloseAlign = UIConstants.TOP;
+			
+			super(prefix, id);
+			
+			DisposeUtil.free(mask);
+			mask = null;
 		}
 		
 		override public function getUIDefaultBasicClass():Class
@@ -53,7 +73,42 @@ package jcomponent.org.coms.containers
 		
 		public function set title(value:String):void
 		{
-			m_title = value;
+			if(m_title != value)
+			{
+				m_title = value;
+				
+				invalidate();
+			}
+		}
+		
+		public function get titleWidth():int
+		{
+			return m_titleWidth;
+		}
+		
+		public function set titleWidth(value:int):void
+		{
+			if(m_titleWidth != value)
+			{
+				m_titleWidth = value;
+				
+				invalidate();
+			}
+		}
+		
+		public function get titleHeight():int
+		{
+			return m_titleHeight;
+		}
+		
+		public function set titleHeight(value:int):void
+		{
+			if(m_titleHeight != value)
+			{
+				m_titleHeight = value;
+				
+				invalidate();
+			}
 		}
 
 		public function get titleBar():ITitleBar
@@ -90,6 +145,10 @@ package jcomponent.org.coms.containers
 		{
 			if(m_hTitleAlign != value)
 			{
+				if(value != UIConstants.LEFT && 
+					value != UIConstants.CENTER && 
+					value != UIConstants.RIGHT) return;
+				
 				m_hTitleAlign = value;
 				
 				invalidate();
@@ -105,6 +164,10 @@ package jcomponent.org.coms.containers
 		{
 			if(m_vTitleAlign != value)
 			{
+				if(value != UIConstants.TOP && 
+					value != UIConstants.MIDDLE && 
+					value != UIConstants.BOTTOM) return;
+				
 				m_vTitleAlign = value;
 				
 				invalidate();
@@ -120,12 +183,26 @@ package jcomponent.org.coms.containers
 		{
 			if(m_closeBtn != value)
 			{
+				if(m_closeBtn) m_closeBtn.removeEventListener(MouseEvent.CLICK, __closeHandler);
+				
 				DisposeUtil.free(m_closeBtn);
 				
 				m_closeBtn = value;
 				
+				if(m_closeBtn)
+				{
+					addChild(m_closeBtn);
+					m_closeBtn.addEventListener(MouseEvent.CLICK, __closeHandler);
+				}
+				
 				invalidate();
 			}
+		}
+		
+		
+		private function __closeHandler(e:MouseEvent):void
+		{
+			close();
 		}
 
 		public function get hCloseAlign():int
@@ -137,6 +214,10 @@ package jcomponent.org.coms.containers
 		{
 			if(m_hCloseAlign != value)
 			{
+				if(value != UIConstants.TOP && 
+					value != UIConstants.MIDDLE && 
+					value != UIConstants.BOTTOM) return;
+				
 				m_hCloseAlign = value;
 				
 				invalidate();
@@ -152,6 +233,10 @@ package jcomponent.org.coms.containers
 		{
 			if(m_vCloseAlign != value)
 			{
+				if(value != UIConstants.TOP && 
+					value != UIConstants.MIDDLE && 
+					value != UIConstants.BOTTOM) return;
+				
 				m_vCloseAlign = value;
 				
 				invalidate();
@@ -217,9 +302,32 @@ package jcomponent.org.coms.containers
 				invalidate();
 			}
 		}
+		
+		public function show(disContainer:DisplayObjectContainer = null):void
+		{
+			if(disContainer == null) StageRef.addChild(this);
+			else disContainer.addChild(this);
+		}
+		
+		public function reShow():void
+		{
+			this.visible = true;
+		}
+		
+		public function hide():void
+		{
+			this.visible = false;
+		}
+		
+		public function close():void
+		{
+			DisposeUtil.free(this);
+		}
 
 		override public function dispose():void
 		{
+			if(m_closeBtn) m_closeBtn.removeEventListener(MouseEvent.CLICK, __closeHandler);
+			
 			DisposeUtil.free(m_closeBtn);
 			m_closeBtn = null;
 			

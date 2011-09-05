@@ -28,12 +28,12 @@ package jcomponent.org.coms.images
 		/**
 		 * 拉伸方式
 		 */		
-		public static const DRAW_SCALE:int = 0;
+		public static const DRAW_SCALE:int = UIConstants.DRAW_SCALE;
 		
 		/**
 		 * 平铺方式
 		 */		
-		public static const TILE_SCALE:int = 1;
+		public static const TILE_SCALE:int = UIConstants.TILE_SCALE;
 		
 		private var m_scaleType:int;
 		

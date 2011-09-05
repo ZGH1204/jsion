@@ -84,9 +84,12 @@ package jcomponent.org.coms.buttons
 		
 		public function update(size:IntDimension = null):void
 		{
-			var image:DisplayObject = m_upImage;
+			var image:DisplayObject;
 			
 			var tmpImage:DisplayObject;
+			
+			if(selected) image = m_selectedImage;
+			else image = m_upImage;
 			
 			if(!enabled)
 			{
@@ -131,7 +134,7 @@ package jcomponent.org.coms.buttons
 				image = tmpImage;
 			}
 			
-			if(image != lastImage)
+			if(image != lastImage && image != null)
 			{
 				if(lastImage) lastImage.visible = false;
 				

@@ -12,6 +12,7 @@ package jcomponent.org.coms.containers
 	import jcomponent.org.basic.Container;
 	import jcomponent.org.basic.DefaultConfigKeys;
 	import jcomponent.org.basic.IComponentUI;
+	import jcomponent.org.basic.UIConstants;
 	import jcomponent.org.coms.images.AbstractImage;
 	import jcomponent.org.coms.images.ScaleImageTile;
 	
@@ -21,7 +22,7 @@ package jcomponent.org.coms.containers
 	{
 		protected var window:Window;
 		
-		protected var container:Sprite;
+		protected var container:TitleContainer;
 		
 		protected var img:AbstractImage;
 		protected var textField:TextField;
@@ -29,10 +30,14 @@ package jcomponent.org.coms.containers
 		protected var font:ASFont;
 		protected var color:ASColor;
 		
+		protected var scaleType:int;
+		
 		protected var textHAlign:int;
 		protected var textVAlign:int;
 		protected var textHGap:int;
 		protected var textVGap:int;
+		
+		protected var text:String;
 		
 		protected var setuped:Boolean;
 		
@@ -46,25 +51,34 @@ package jcomponent.org.coms.containers
 			
 			setuped = true;
 			
-			container = new Sprite();
-			
 			window = Window(component);
 			var ui:IComponentUI = window.UI;
 			var pp:String = ui.getResourcesPrefix(component) + DefaultConfigKeys.WINDOW_TITLE_BAR_PRE;
 			
+			container = new TitleContainer(window);
+			
 			var bmd:BitmapData = ui.getBitmapData(pp + DefaultConfigKeys.WINDOW_TITLE_IMAGE);
 			var insets:Insets = ui.getInsets(pp + DefaultConfigKeys.WINDOW_TITLE_IMAGE_INSETS);
+			
 			font = ui.getFont(pp + DefaultConfigKeys.WINDOW_TITLE_FONT);
 			color = ui.getColor(pp + DefaultConfigKeys.WINDOW_TITLE_COLOR);
 			textHAlign = ui.getInt(pp + DefaultConfigKeys.WINDOW_TEXT_HALIGN);
 			textVAlign = ui.getInt(pp + DefaultConfigKeys.WINDOW_TEXT_VALIGN);
 			textHGap = ui.getInt(pp + DefaultConfigKeys.WINDOW_TEXT_HGAP);
 			textVGap = ui.getInt(pp + DefaultConfigKeys.WINDOW_TEXT_VGAP);
+			scaleType = ui.getInt(pp + DefaultConfigKeys.WINDOW_TITLE_SCALE_TYPE);
 			
-			if(insets == null) insets = new Insets();
+			checkDefaultValue();
 			
-			img = new ScaleImageTile(bmd, insets);
-			img.pack();
+			if(bmd)
+			{
+				if(insets == null) insets = new Insets();
+				
+				img = new ScaleImageTile(bmd, insets);
+				img.scaleType = scaleType;
+				img.pack();
+				container.addChild(img);
+			}
 			
 			textField = new TextField();
 			textField.autoSize = TextFieldAutoSize.LEFT;
@@ -74,17 +88,39 @@ package jcomponent.org.coms.containers
 			textField.wordWrap = false;
 			
 			
-			container.addChild(img);
 			container.addChild(textField);
+		}
+		
+		protected function checkDefaultValue():void
+		{
+			
+			if(textHAlign != UIConstants.LEFT && 
+				textHAlign != UIConstants.CENTER && 
+				textHAlign != UIConstants.RIGHT)
+				textHAlign = UIConstants.CENTER;
+			
+			if(textVAlign != UIConstants.TOP && 
+				textVAlign != UIConstants.MIDDLE && 
+				textVAlign != UIConstants.BOTTOM)
+				textVAlign = UIConstants.MIDDLE;
+			
 		}
 		
 		public function getSize():IntDimension
 		{
-			return img.getSize();
+			if(img) return img.getSize();
+			else return JUtil.computeStringSizeWithFont(font, text);
+		}
+		
+		public function setSize(w:int, h:int):void
+		{
+			if(img) img.setSizeWH(w, h);
 		}
 		
 		public function setTitle(title:String):void
 		{
+			text = title;
+			
 			var ui:IComponentUI = window.UI;
 			var pp:String = ui.getResourcesPrefix(window) + DefaultConfigKeys.WINDOW_TITLE_BAR_PRE;
 			
@@ -127,6 +163,10 @@ package jcomponent.org.coms.containers
 			
 			DisposeUtil.free(container);
 			container = null;
+			
+			font = null;
+			
+			color = null;
 			
 			window = null;
 		}

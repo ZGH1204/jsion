@@ -208,6 +208,8 @@ package jcomponent.org.basic
 		*/
 		//===================================================================================
 		public static const WINDOW_PRE:String = "Window.";
+		public static const WINDOW_BACKGROUND_IMAGE:String = "bgImg";
+		public static const WINDOW_BACKGROUND_INSETS:String = "bgInsets";
 		public static const WINDOW_TITLE_HALIGN:String = "titleHAlign";
 		public static const WINDOW_TITLE_VALIGN:String = "titleVAlign";
 		public static const WINDOW_TITLE_HGAP:String = "titleHGap";
@@ -222,6 +224,7 @@ package jcomponent.org.basic
 		public static const WINDOW_TITLE_BAR_PRE:String = "TitleBar.";
 		public static const WINDOW_TITLE_IMAGE:String = "titleImg";
 		public static const WINDOW_TITLE_IMAGE_INSETS:String = "titleImgInsets";
+		public static const WINDOW_TITLE_SCALE_TYPE:String = "titleScaleType";
 		public static const WINDOW_TITLE_FONT:String = "titleFont";
 		public static const WINDOW_TITLE_COLOR:String = "titleColor";
 		public static const WINDOW_TEXT_HALIGN:String = "textHAlign";

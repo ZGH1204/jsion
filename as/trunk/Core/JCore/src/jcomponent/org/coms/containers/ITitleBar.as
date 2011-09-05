@@ -10,6 +10,8 @@ package jcomponent.org.coms.containers
 		
 		function getSize():IntDimension;
 		
+		function setSize(w:int, h:int):void;
+		
 		function setTitle(title:String):void;
 		
 		function updateTitleBar(component:Component, x:int, y:int):void;

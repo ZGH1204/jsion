@@ -5,9 +5,9 @@ package jcomponent.org.coms.containers
 	
 	public class RootPanel extends Container
 	{
-		public function RootPanel(id:String=null)
+		public function RootPanel(prefix:String = null, id:String=null)
 		{
-			super(id);
+			super(prefix, id);
 		}
 		
 		override public function getUIDefaultBasicClass():Class

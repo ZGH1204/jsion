@@ -420,16 +420,10 @@ package jcomponent.org.coms.buttons
 		
 		public function initSelfEvent():void
 		{
-			addEventListener(MouseEvent.CLICK, __clickHandler);
 			addEventListener(MouseEvent.MOUSE_OVER, __rollOverHandler);
 			addEventListener(MouseEvent.ROLL_OUT, __rollOutHandler);
 			addEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
 			addEventListener(ReleaseEvent.RELEASE, __releaseHandler);
-		}
-		
-		private function __clickHandler(e:MouseEvent):void
-		{
-			e.stopPropagation();
 		}
 		
 		private function __rollOverHandler(e:MouseEvent):void
@@ -498,7 +492,6 @@ package jcomponent.org.coms.buttons
 		
 		override public function dispose():void
 		{
-			removeEventListener(MouseEvent.CLICK, __clickHandler);
 			removeEventListener(MouseEvent.MOUSE_OVER, __rollOverHandler);
 			removeEventListener(MouseEvent.ROLL_OUT, __rollOutHandler);
 			removeEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);

@@ -9,6 +9,7 @@ package
 	import jcomponent.org.coms.buttons.CheckBox;
 	import jcomponent.org.coms.buttons.ScaleImageButton;
 	import jcomponent.org.coms.containers.VBox;
+	import jcomponent.org.coms.containers.Window;
 	import jcomponent.org.mgrs.UIMgr;
 	
 	import jcore.org.loader.BinaryLoader;
@@ -51,43 +52,56 @@ package
 		
 		private var bg:ButtonGroup;
 		
+		private var win:Window;
+		
 		private function loadCallback(loader:BinaryLoader):void
 		{
 			//MessageMonitor.createAndPostMsg(1, "JLauncher", ["Promiscuous"], loader.content);
 			
-			if(hBox == null)
-			{
-				hBox = new VBox(5);
-				addChild(hBox);
-			}
+			if(win) return;
 			
-			if(bg) return;
+			win = new Window("窗口面板");
 			
-			bg = new ButtonGroup();
+			win.x = win.y = 100;
+			win.setSizeWH(500, 400);
+			//win.pack();
 			
-			for(var i:int = 0; i < 7; i++)
-			{
-				btn = new CheckBox("是否保存", CheckBox.LEFT);
-				
-//				CheckBox(btn).textHGap = 10;
-//				CheckBox(btn).boxHGap = 10;
-//				btn.horizontalTextAlginment = CheckBox.CENTER;
-//				btn.verticalTextAlginment = CheckBox.BOTTOM;
-//				btn.setSizeWH(300, 35);
-				
-				btn.pack();
-				
-				bg.append(btn);
-				
-				hBox.addChild(btn);
-			}
+			win.show();
+			//addChild(win);
 			
-			hBox.x = 100;
-			hBox.y = 40;
-			hBox.alpha = 0;
-			TweenMax.to(hBox, 0.5, {y: 20, alpha: 1});
+//			if(hBox == null)
+//			{
+//				hBox = new VBox(5);
+//				addChild(hBox);
+//			}
+//			
+//			if(bg) return;
+//			
+//			bg = new ButtonGroup();
+//			
+//			for(var i:int = 0; i < 7; i++)
+//			{
+//				btn = new CheckBox("是否保存", CheckBox.LEFT);
+//				
+////				CheckBox(btn).textHGap = 10;
+////				CheckBox(btn).boxHGap = 10;
+////				btn.horizontalTextAlginment = CheckBox.CENTER;
+////				btn.verticalTextAlginment = CheckBox.BOTTOM;
+////				btn.setSizeWH(300, 35);
+//				
+//				btn.pack();
+//				
+//				bg.append(btn);
+//				
+//				hBox.addChild(btn);
+//			}
+//			
+//			hBox.x = 100;
+//			hBox.y = 40;
+//			hBox.alpha = 0;
+//			TweenMax.to(hBox, 0.5, {y: 20, alpha: 1});
 			
-			if(btn) return;
+//			if(btn) return;
 			
 //			btn = new RadioButton("RadioBtn");
 //			
@@ -120,12 +134,12 @@ package
 //			
 //			hBox.addChild(btn);
 			
-			btn = new ScaleImageButton("缩放按钮");
-			
-			btn.setSize(new IntDimension(150, 80));
-			//btn.pack();
-			
-			hBox.addChild(btn);
+//			btn = new ScaleImageButton("缩放按钮");
+//			
+//			btn.setSize(new IntDimension(150, 80));
+//			//btn.pack();
+//			
+//			hBox.addChild(btn);
 			
 //			btn  = new ImageButton("按钮");
 //			

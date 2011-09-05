@@ -2,17 +2,17 @@ package jcomponent.org.basic
 {
 	public class UIConstants
 	{
-		public static const LEFT:int = 0;
+		public static const LEFT:int = 1;
 		
-		public static const CENTER:int = 1;
+		public static const CENTER:int = 2;
 		
-		public static const RIGHT:int = 2;
+		public static const RIGHT:int = 3;
 		
-		public static const TOP:int = 3;
+		public static const TOP:int = 4;
 		
-		public static const MIDDLE:int = 4;
+		public static const MIDDLE:int = 5;
 		
-		public static const BOTTOM:int = 5;
+		public static const BOTTOM:int = 6;
 		
 		
 		public static const TOP_LEFT:int = 11;
@@ -32,5 +32,17 @@ package jcomponent.org.basic
 		public static const BOTTOM_CENTER:int = 18;
 		
 		public static const BOTTOM_RIGHT:int = 19;
+		
+		
+		
+		/**
+		 * 拉伸方式
+		 */		
+		public static const DRAW_SCALE:int = 0;
+		
+		/**
+		 * 平铺方式
+		 */		
+		public static const TILE_SCALE:int = 1;
 	}
 }

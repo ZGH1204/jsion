@@ -18,6 +18,20 @@ package jcomponent.org.coms.buttons
 			return DefaultConfigKeys.IMAGE_BUTTON_PRE;
 		}
 		
+		override public function install(component:Component):void
+		{
+			super.install(component);
+			
+			if(component.backgroundDecorator == null)
+			{
+				var pp:String = getDefaultPrefix();
+				
+				var bg:IGroundDecorator = getGroundDecorator(pp + DefaultConfigKeys.BACKGROUND_DECORATOR_RES);
+				
+				component.backgroundDecorator = bg;
+			}
+		}
+		
 		override public function getPreferredSize(component:Component):IntDimension
 		{
 			var bg:IGroundDecorator = component.backgroundDecorator;
