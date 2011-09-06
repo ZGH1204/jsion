@@ -8,11 +8,11 @@ package jcomponent.org.basic
 		
 		public static const RIGHT:int = 3;
 		
-		public static const TOP:int = 4;
+		public static const TOP:int = 1;
 		
-		public static const MIDDLE:int = 5;
+		public static const MIDDLE:int = 2;
 		
-		public static const BOTTOM:int = 6;
+		public static const BOTTOM:int = 3;
 		
 		
 		public static const TOP_LEFT:int = 11;
@@ -21,17 +21,17 @@ package jcomponent.org.basic
 		
 		public static const TOP_RIGHT:int = 13;
 		
-		public static const MIDDLE_LEFT:int = 14;
+		public static const MIDDLE_LEFT:int = 21;
 		
-		public static const MIDDLE_CENTER:int = 15;
+		public static const MIDDLE_CENTER:int = 22;
 		
-		public static const MIDDLE_RIGHT:int = 16;
+		public static const MIDDLE_RIGHT:int = 23;
 		
-		public static const BOTTOM_LEFT:int = 17;
+		public static const BOTTOM_LEFT:int = 31;
 		
-		public static const BOTTOM_CENTER:int = 18;
+		public static const BOTTOM_CENTER:int = 32;
 		
-		public static const BOTTOM_RIGHT:int = 19;
+		public static const BOTTOM_RIGHT:int = 33;
 		
 		
 		
@@ -44,5 +44,15 @@ package jcomponent.org.basic
 		 * 平铺方式
 		 */		
 		public static const TILE_SCALE:int = 1;
+		
+		
+		/** 
+		 * Horizontal orientation. Used for scrollbars and sliders.
+		 */
+		public static const HORIZONTAL:int = 1;
+		/** 
+		 * Vertical orientation. Used for scrollbars and sliders.
+		 */
+		public static const VERTICAL:int   = 0;
 	}
 }

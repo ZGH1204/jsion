@@ -11,6 +11,7 @@ package
 	import jcomponent.org.coms.containers.Frame;
 	import jcomponent.org.coms.containers.VBox;
 	import jcomponent.org.coms.containers.Window;
+	import jcomponent.org.coms.scrollbars.ScrollBar;
 	import jcomponent.org.mgrs.UIMgr;
 	
 	import jcore.org.loader.BinaryLoader;
@@ -55,19 +56,27 @@ package
 		
 		private var win:Window;
 		
+		private var bar:ScrollBar;
+		
 		private function loadCallback(loader:BinaryLoader):void
 		{
 			//MessageMonitor.createAndPostMsg(1, "JLauncher", ["Promiscuous"], loader.content);
 			
-			if(win) return;
+			if(bar) return;
 			
-			win = new Frame("窗口面板");
+			bar = new ScrollBar();
+			bar.pack();
+			addChild(bar);
 			
-			win.x = win.y = 100;
-			win.setSizeWH(500, 400);
-			//win.pack();
-			
-			win.show();
+//			if(win) return;
+//			
+//			win = new Frame("Frame面板");
+//			
+//			win.x = win.y = 100;
+//			win.setSizeWH(500, 400);
+//			//win.pack();
+//			
+//			win.show();
 			
 //			win = new Window("窗口面板");
 //			

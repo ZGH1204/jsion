@@ -91,6 +91,11 @@ package jcore.org.ddrop
 			if(g) g.remove(dragger);
 			
 			removeDragEvent(dragger);
+			
+			if(_draging && _dragger == dragger)
+			{
+				stopDraging();
+			}
 		}
 		
 		/**

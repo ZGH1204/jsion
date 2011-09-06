@@ -1,24 +1,20 @@
-package jcomponent.org.coms.containers
+package jcomponent.org.basic
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	
-	import jcomponent.org.basic.BasicGroundDecorator;
-	import jcomponent.org.basic.Component;
-	import jcomponent.org.basic.DefaultConfigKeys;
-	import jcomponent.org.basic.IComponentUI;
 	import jcomponent.org.coms.images.AbstractImage;
 	import jcomponent.org.coms.images.ScaleImageTile;
 	
 	import jutils.org.util.DisposeUtil;
-	
-	public class WindowImageBackground extends BasicGroundDecorator
+
+	public class ImageBackGround extends BasicGroundDecorator
 	{
 		protected var image:AbstractImage;
 		
 		protected var setuped:Boolean;
 		
-		public function WindowImageBackground(freeBitmapData:Boolean = false)
+		public function ImageBackGround(freeBitmapData:Boolean = false)
 		{
 			super();
 		}
@@ -32,8 +28,8 @@ package jcomponent.org.coms.containers
 			var ui:IComponentUI = component.UI;
 			var pp:String = ui.getResourcesPrefix(component);
 			
-			var bmd:BitmapData = ui.getBitmapData(pp + DefaultConfigKeys.WINDOW_BACKGROUND_IMAGE);
-			var insets:Insets = ui.getInsets(pp + DefaultConfigKeys.WINDOW_BACKGROUND_INSETS);
+			var bmd:BitmapData = ui.getBitmapData(pp + DefaultConfigKeys.BACKGROUND_IMAGE);
+			var insets:Insets = ui.getInsets(pp + DefaultConfigKeys.BACKGROUND_INSETS);
 			
 			if(bmd == null) return;
 			if(insets == null) insets = new Insets();

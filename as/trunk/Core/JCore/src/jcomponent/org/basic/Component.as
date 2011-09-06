@@ -131,7 +131,7 @@ package jcomponent.org.basic
 		
 		override public function set filters(value:Array):void
 		{
-			m_content.filters = value;
+			if(m_content) m_content.filters = value;
 		}
 
 		override public function addChild(child:DisplayObject):DisplayObject

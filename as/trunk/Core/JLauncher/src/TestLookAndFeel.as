@@ -4,11 +4,10 @@ package
 	
 	import jcomponent.org.basic.ASColor;
 	import jcomponent.org.basic.BasicLookAndFeel;
-	import jcomponent.org.basic.UIConstants;
+	import jcomponent.org.basic.ImageBackGround;
 	import jcomponent.org.coms.buttons.ButtonIcon;
 	import jcomponent.org.coms.buttons.ButtonImageBackground;
 	import jcomponent.org.coms.buttons.ButtonScaleImageBackground;
-	import jcomponent.org.coms.containers.WindowImageBackground;
 	
 	public class TestLookAndFeel extends BasicLookAndFeel
 	{
@@ -236,7 +235,7 @@ package
 			
 			
 			
-			list.push("Window.bg", WindowImageBackground);
+			list.push("Window.bg", ImageBackGround);
 			list.push("Window.bgImg", WindowBackground_Asset);
 			list.push("Window.bgInsets", new Insets(53, 60, 95, 60));
 //			list.push("Window.titleHAlign", null);
@@ -273,7 +272,7 @@ package
 			
 			
 			
-			list.push("Frame.bg", WindowImageBackground);
+			list.push("Frame.bg", ImageBackGround);
 			list.push("Frame.bgImg", WindowBackground_Asset);
 			list.push("Frame.bgInsets", new Insets(53, 60, 95, 60));
 //			list.push("Frame.titleHAlign", null);
@@ -303,6 +302,30 @@ package
 //			list.push("Frame.CloseButton.overFilters", null);
 //			list.push("Frame.CloseButton.downFilters", null);
 //			list.push("Frame.CloseButton.disabledFilters", null);
+			
+			
+			
+			list.push("ScrollBar.bg", ImageBackGround);
+			list.push("ScrollBar.bgImg", ScrollBarBackground_Asset);
+			list.push("ScrollBar.bgInsets", new Insets(0, 1, 0, 1));
+			
+			list.push("ScrollBar.TopButton.upImg", ScrollBarUpBtnUpImg_Asset);
+			list.push("ScrollBar.TopButton.overImg", ScrollBarUpBtnOverImg_Asset);
+			list.push("ScrollBar.TopButton.downImg", ScrollBarUpBtnDownImg_Asset);
+			list.push("ScrollBar.TopButton.disabledImg", ScrollBarBtnDisabledImg_Asset);
+//			list.push("ScrollBar.TopButton.upFilters", null);
+//			list.push("ScrollBar.TopButton.overFilters", null);
+//			list.push("ScrollBar.TopButton.downFilters", null);
+//			list.push("ScrollBar.TopButton.disabledFilters", null);
+			
+			list.push("ScrollBar.BottomButton.upImg", ScrollBarBottomBtnUpImg_Asset);
+			list.push("ScrollBar.BottomButton.overImg", ScrollBarBottomBtnOverImg_Asset);
+			list.push("ScrollBar.BottomButton.downImg", ScrollBarBottomBtnDownImg_Asset);
+			list.push("ScrollBar.BottomButton.disabledImg", ScrollBarBtnDisabledImg_Asset);
+//			list.push("ScrollBar.BottomButton.upFilters", null);
+//			list.push("ScrollBar.BottomButton.overFilters", null);
+//			list.push("ScrollBar.BottomButton.downFilters", null);
+//			list.push("ScrollBar.BottomButton.disabledFilters", null);
 		}
 	}
 }

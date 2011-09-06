@@ -26,6 +26,8 @@ package jcomponent.org.basic
 		
 		public static const FRAME_UI:String = "WindowUI";
 		
+		public static const SCROLL_BAR_UI:String = "ScrollBarUI";
+		
 		
 		
 		//===================================================================================
@@ -202,6 +204,17 @@ package jcomponent.org.basic
 		
 		
 		
+		//===================================================================================
+		/*
+		* ImageGround组件配置属性
+		*/
+		//===================================================================================
+		public static const BACKGROUND_IMAGE:String = "bgImg";
+		public static const BACKGROUND_INSETS:String = "bgInsets";
+		
+		
+		
+		
 		
 		
 		//===================================================================================
@@ -210,8 +223,6 @@ package jcomponent.org.basic
 		*/
 		//===================================================================================
 		public static const WINDOW_PRE:String = "Window.";
-		public static const WINDOW_BACKGROUND_IMAGE:String = "bgImg";
-		public static const WINDOW_BACKGROUND_INSETS:String = "bgInsets";
 		public static const WINDOW_TITLE_HALIGN:String = "titleHAlign";
 		public static const WINDOW_TITLE_VALIGN:String = "titleVAlign";
 		public static const WINDOW_TITLE_HGAP:String = "titleHGap";
@@ -245,5 +256,16 @@ package jcomponent.org.basic
 		public static const FRAME_PRE:String = "Frame.";
 		public static const FRAME_CONTENT_X:String = "contentX";
 		public static const FRAME_CONTENT_Y:String = "contentY";
+		
+		
+		
+		
+		
+		//===================================================================================
+		/*
+		* Frame组件配置属性
+		*/
+		//===================================================================================
+		public static const SCROLL_BAR_PRE:String = "ScrollBar.";
 	}
 }
