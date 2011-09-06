@@ -65,7 +65,9 @@ package
 			if(bar) return;
 			
 			bar = new ScrollBar();
-			bar.pack();
+			bar.setLocationXY(100, 100);
+			//bar.width = 20;
+			bar.height = 350;
 			addChild(bar);
 			
 //			if(win) return;

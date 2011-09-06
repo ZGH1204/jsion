@@ -309,19 +309,43 @@ package
 			list.push("ScrollBar.bgImg", ScrollBarBackground_Asset);
 			list.push("ScrollBar.bgInsets", new Insets(0, 1, 0, 1));
 			
+			list.push("ScrollBar.TopButton.bg", ButtonScaleImageBackground);
 			list.push("ScrollBar.TopButton.upImg", ScrollBarUpBtnUpImg_Asset);
 			list.push("ScrollBar.TopButton.overImg", ScrollBarUpBtnOverImg_Asset);
 			list.push("ScrollBar.TopButton.downImg", ScrollBarUpBtnDownImg_Asset);
 			list.push("ScrollBar.TopButton.disabledImg", ScrollBarBtnDisabledImg_Asset);
+//			list.push("ScrollBar.TopButton.upInsets", null);
+//			list.push("ScrollBar.TopButton.overInsets", null);
+//			list.push("ScrollBar.TopButton.downInsets", null);
+//			list.push("ScrollBar.TopButton.disabledInsets", null);
 //			list.push("ScrollBar.TopButton.upFilters", null);
 //			list.push("ScrollBar.TopButton.overFilters", null);
 //			list.push("ScrollBar.TopButton.downFilters", null);
 //			list.push("ScrollBar.TopButton.disabledFilters", null);
 			
+			list.push("ScrollBar.BottomButton.bg", ButtonScaleImageBackground);
 			list.push("ScrollBar.BottomButton.upImg", ScrollBarBottomBtnUpImg_Asset);
 			list.push("ScrollBar.BottomButton.overImg", ScrollBarBottomBtnOverImg_Asset);
 			list.push("ScrollBar.BottomButton.downImg", ScrollBarBottomBtnDownImg_Asset);
 			list.push("ScrollBar.BottomButton.disabledImg", ScrollBarBtnDisabledImg_Asset);
+//			list.push("ScrollBar.BottomButton.upInsets", null);
+//			list.push("ScrollBar.BottomButton.overInsets", null);
+//			list.push("ScrollBar.BottomButton.downInsets", null);
+//			list.push("ScrollBar.BottomButton.disabledInsets", null);
+//			list.push("ScrollBar.BottomButton.upFilters", null);
+//			list.push("ScrollBar.BottomButton.overFilters", null);
+//			list.push("ScrollBar.BottomButton.downFilters", null);
+//			list.push("ScrollBar.BottomButton.disabledFilters", null);
+			
+			list.push("ScrollBar.Thumb.bg", ButtonScaleImageBackground);
+			list.push("ScrollBar.Thumb.upImg", ScrollBarThumbUpImg_Asset);
+			list.push("ScrollBar.Thumb.overImg", ScrollBarThumbOverImg_Asset);
+			list.push("ScrollBar.Thumb.downImg", ScrollBarThumbDownImg_Asset);
+//			list.push("ScrollBar.Thumb.disabledImg", null);
+//			list.push("ScrollBar.Thumb.upInsets", null);
+//			list.push("ScrollBar.Thumb.overInsets", null);
+//			list.push("ScrollBar.Thumb.downInsets", null);
+//			list.push("ScrollBar.Thumb.disabledInsets", null);
 //			list.push("ScrollBar.BottomButton.upFilters", null);
 //			list.push("ScrollBar.BottomButton.overFilters", null);
 //			list.push("ScrollBar.BottomButton.downFilters", null);

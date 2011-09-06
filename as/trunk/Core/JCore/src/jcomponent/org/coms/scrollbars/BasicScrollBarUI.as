@@ -5,7 +5,6 @@ package jcomponent.org.coms.scrollbars
 	import jcomponent.org.basic.BasicComponentUI;
 	import jcomponent.org.basic.Component;
 	import jcomponent.org.basic.DefaultConfigKeys;
-	import jcomponent.org.basic.IComponentUI;
 	import jcomponent.org.basic.IGroundDecorator;
 	import jcomponent.org.basic.LookAndFeel;
 	import jcomponent.org.basic.UIConstants;
@@ -22,12 +21,6 @@ package jcomponent.org.coms.scrollbars
 		
 		protected var topBtn:ScaleImageButton;
 		protected var bottomBtn:ScaleImageButton;
-		
-		protected var hDirHGap:int;
-		protected var hDirVGap:int;
-		
-		protected var vDirHGap:int;
-		protected var vDirVGap:int;
 		
 		protected var thumb:Thumb;
 		
@@ -56,13 +49,20 @@ package jcomponent.org.coms.scrollbars
 		
 		protected function installProperties(component:Component):void
 		{
+			var bar:ScrollBar = ScrollBar(component);
 			var pp:String = getResourcesPrefix(component);
 			
-			hDirHGap = getInt(pp + "hDirHGap");
-			hDirVGap = getInt(pp + "hDirVGap");
+			bar.hDirHGap = getInt(pp + "hDirHGap");
+			bar.hDirVGap = getInt(pp + "hDirVGap");
 			
-			vDirHGap = getInt(pp + "vDirHGap");
-			vDirVGap = getInt(pp + "vDirVGap");
+			bar.vDirHGap = getInt(pp + "vDirHGap");
+			bar.vDirVGap = getInt(pp + "vDirVGap");
+			
+			bar.hThumbHGap = getInt(pp + "hThumbHGap");
+			bar.hThumbVGap = getInt(pp + "hThumbVGap");
+			
+			bar.vThumbHGap = getInt(pp + "vThumbHGap");
+			bar.vThumbVGap = getInt(pp + "vThumbVGap");
 		}
 		
 		protected function installComponents(component:Component):void
@@ -93,10 +93,10 @@ package jcomponent.org.coms.scrollbars
 				bar.addChild(bottomBtn);
 			}
 			
-//			thumb = new Thumb(pp + "Thumb.");
-//			thumb.pack();
-//			
-//			bar.addChild(thumb);
+			thumb = new Thumb(pp + "Thumb.");
+			thumb.pack();
+			
+			bar.addChild(thumb);
 		}
 		
 		override public function getPreferredSize(component:Component):IntDimension
@@ -120,32 +120,82 @@ package jcomponent.org.coms.scrollbars
 		
 		override public function paint(component:Component, bounds:IntRectangle):void
 		{
+			var bar:ScrollBar = ScrollBar(component);
 			var viewRect:IntRectangle = new IntRectangle();
 			viewRect.setSize(component.getSize());
 			
 			var btnRect:IntRectangle = new IntRectangle();
+			var scale:Number;
 			
 			if(scrollBar.dir == ScrollBar.HORIZONTAL)
 			{
+				if(bar.margin != int.MIN_VALUE)
+				{
+					scale = viewRect.height - bar.margin * 2;
+					scale /= leftBtn.height;
+					
+					leftBtn.width *= scale;
+					leftBtn.height *= scale;
+					
+					rightBtn.width *= scale;
+					rightBtn.height *= scale;
+					
+					thumb.height *= scale;
+				}
+				
 				btnRect.setSize(leftBtn.getSize());
 				
-				JUtil.layoutPosition(viewRect, UIConstants.LEFT, UIConstants.MIDDLE, hDirHGap, hDirVGap, btnRect);
+				JUtil.layoutPosition(viewRect, UIConstants.LEFT, UIConstants.MIDDLE, bar.hDirHGap, bar.hDirVGap, btnRect);
 				leftBtn.setLocation(btnRect.getLocation());
 				
 				btnRect.x = btnRect.y = 0;
-				JUtil.layoutPosition(viewRect, UIConstants.RIGHT, UIConstants.MIDDLE, hDirHGap, hDirVGap, btnRect);
+				JUtil.layoutPosition(viewRect, UIConstants.RIGHT, UIConstants.MIDDLE, bar.hDirHGap, bar.hDirVGap, btnRect);
 				rightBtn.setLocation(btnRect.getLocation());
+				
+				var hgap:int = leftBtn.x + leftBtn.width;
+				hgap += bar.hThumbHGap;
+				btnRect.x = btnRect.y = 0;
+				btnRect.setSize(thumb.getSize());
+				JUtil.layoutPosition(viewRect, UIConstants.LEFT, UIConstants.MIDDLE, hgap, bar.hThumbVGap, btnRect);
+				
+				thumb.setLocation(btnRect.getLocation());
+				thumb.startPoint = btnRect.getLocation();
+				thumb.rect = new IntRectangle(0, 0, rightBtn.x - thumb.startPoint.x - thumb.width, 0);
 			}
 			else
 			{
+				if(bar.margin != int.MIN_VALUE)
+				{
+					scale = viewRect.width - bar.margin * 2;
+					scale /= topBtn.width;
+					
+					topBtn.width *= scale;
+					topBtn.height *= scale;
+					
+					bottomBtn.width *= scale;
+					bottomBtn.height *= scale;
+					
+					thumb.width *= scale;
+				}
+				
 				btnRect.setSize(topBtn.getSize());
 				
-				JUtil.layoutPosition(viewRect, UIConstants.CENTER, UIConstants.TOP, vDirHGap, vDirVGap, btnRect);
+				JUtil.layoutPosition(viewRect, UIConstants.CENTER, UIConstants.TOP, bar.vDirHGap, bar.vDirVGap, btnRect);
 				topBtn.setLocation(btnRect.getLocation());
 				
 				btnRect.x = btnRect.y = 0;
-				JUtil.layoutPosition(viewRect, UIConstants.CENTER, UIConstants.BOTTOM, vDirHGap, vDirVGap, btnRect);
+				JUtil.layoutPosition(viewRect, UIConstants.CENTER, UIConstants.BOTTOM, bar.vDirHGap, bar.vDirVGap, btnRect);
 				bottomBtn.setLocation(btnRect.getLocation());
+				
+				var vgap:int = topBtn.y + topBtn.height;
+				vgap += bar.vThumbVGap;
+				btnRect.x = btnRect.y = 0;
+				btnRect.setSize(thumb.getSize());
+				JUtil.layoutPosition(viewRect, UIConstants.CENTER, UIConstants.TOP, bar.vThumbHGap, vgap, btnRect);
+				
+				thumb.setLocation(btnRect.getLocation());
+				thumb.startPoint = btnRect.getLocation();
+				thumb.rect = new IntRectangle(0, 0, 0, bottomBtn.y - thumb.startPoint.y - thumb.height);
 			}
 		}
 		

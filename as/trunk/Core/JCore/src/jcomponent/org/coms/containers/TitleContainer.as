@@ -37,6 +37,11 @@ package jcomponent.org.coms.containers
 			return null;
 		}
 		
+		public function get reviseInStage():Boolean
+		{
+			return true;
+		}
+		
 		public function get freeDragingIcon():Boolean
 		{
 			return false;
