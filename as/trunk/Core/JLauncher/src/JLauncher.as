@@ -8,6 +8,7 @@ package
 	import jcomponent.org.coms.buttons.ButtonGroup;
 	import jcomponent.org.coms.buttons.CheckBox;
 	import jcomponent.org.coms.buttons.ScaleImageButton;
+	import jcomponent.org.coms.containers.Frame;
 	import jcomponent.org.coms.containers.VBox;
 	import jcomponent.org.coms.containers.Window;
 	import jcomponent.org.mgrs.UIMgr;
@@ -60,13 +61,21 @@ package
 			
 			if(win) return;
 			
-			win = new Window("窗口面板");
+			win = new Frame("窗口面板");
 			
 			win.x = win.y = 100;
 			win.setSizeWH(500, 400);
 			//win.pack();
 			
 			win.show();
+			
+//			win = new Window("窗口面板");
+//			
+//			win.x = win.y = 100;
+//			win.setSizeWH(500, 400);
+//			//win.pack();
+//			
+//			win.show();
 			//addChild(win);
 			
 //			if(hBox == null)

@@ -88,10 +88,10 @@ package jcomponent.org.basic
 		internal var container:Container;
 		
 		
-		public function get content():Sprite
-		{
-			return m_content;
-		}
+//		public function get content():Sprite
+//		{
+//			return m_content;
+//		}
 
 		public function get UI():IComponentUI
 		{
@@ -127,6 +127,11 @@ package jcomponent.org.basic
 				m_uiClassID = value;
 				updateUI();
 			}
+		}
+		
+		override public function set filters(value:Array):void
+		{
+			m_content.filters = value;
 		}
 
 		override public function addChild(child:DisplayObject):DisplayObject

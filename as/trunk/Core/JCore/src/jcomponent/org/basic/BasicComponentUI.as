@@ -25,7 +25,7 @@ package jcomponent.org.basic
 		
 		public function uninstall(component:Component):void
 		{
-			//throw new Error("继承的子类中必需覆盖此方法!");
+			throw new Error("继承的子类中必需覆盖此方法!");
 		}
 		
 		public function getResourcesPrefix(component:Component):String

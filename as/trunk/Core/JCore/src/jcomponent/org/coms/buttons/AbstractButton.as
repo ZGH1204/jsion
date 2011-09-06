@@ -391,6 +391,11 @@ package jcomponent.org.coms.buttons
 			}
 		}
 		
+		override public function get stopPropagation():Boolean
+		{
+			return true;
+		}
+		
 		protected function installIcon(ic:IICON):void
 		{
 			if(ic && ic.getDisplay(this))
