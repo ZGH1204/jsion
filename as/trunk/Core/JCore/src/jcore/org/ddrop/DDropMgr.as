@@ -382,22 +382,25 @@ package jcore.org.ddrop
 		
 		private static function __dropHandler(e:MouseEvent):void
 		{
-			if(StageRef.mouseX > StageRef.stageWidth)
+			if(_dragger.reviseInStage)
 			{
-				_dragIcon.x = (_dragIcon != _dragger ? _dragIconStartPoint.x : _dragStartPoint.x) + StageRef.stageWidth - _dragStartGlobarPoint.x - 5;
-			}
-			else if(StageRef.mouseX < 0)
-			{
-				_dragIcon.x = (_dragIcon != _dragger ? _dragIconStartPoint.x : _dragStartPoint.x) + 0 - _dragStartGlobarPoint.x + 5;
-			}
-			
-			if(StageRef.mouseY > StageRef.stageHeight)
-			{
-				_dragIcon.y = (_dragIcon != _dragger ? _dragIconStartPoint.y : _dragStartPoint.y) + StageRef.stageHeight - _dragStartGlobarPoint.y - 5;
-			}
-			else if(StageRef.mouseY < 0)
-			{
-				_dragIcon.y = (_dragIcon != _dragger ? _dragIconStartPoint.y : _dragStartPoint.y) + 0 - _dragStartGlobarPoint.y + 5;
+				if(StageRef.mouseX > StageRef.stageWidth)
+				{
+					_dragIcon.x = (_dragIcon != _dragger ? _dragIconStartPoint.x : _dragStartPoint.x) + StageRef.stageWidth - _dragStartGlobarPoint.x - 5;
+				}
+				else if(StageRef.mouseX < 0)
+				{
+					_dragIcon.x = (_dragIcon != _dragger ? _dragIconStartPoint.x : _dragStartPoint.x) + 0 - _dragStartGlobarPoint.x + 5;
+				}
+				
+				if(StageRef.mouseY > StageRef.stageHeight)
+				{
+					_dragIcon.y = (_dragIcon != _dragger ? _dragIconStartPoint.y : _dragStartPoint.y) + StageRef.stageHeight - _dragStartGlobarPoint.y - 5;
+				}
+				else if(StageRef.mouseY < 0)
+				{
+					_dragIcon.y = (_dragIcon != _dragger ? _dragIconStartPoint.y : _dragStartPoint.y) + 0 - _dragStartGlobarPoint.y + 5;
+				}
 			}
 			
 			_dragger.dropCallback();

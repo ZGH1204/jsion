@@ -953,6 +953,8 @@ package jcomponent.org.basic
 
 		public function paint():void
 		{
+			checkSize();
+			
 			setMaskSize(bounds.getSize());
 			
 			graphics.clear();
@@ -963,6 +965,18 @@ package jcomponent.org.basic
 			if(m_ui) m_ui.paint(this, bounds);
 
 			if(m_foregroundDecorator) m_foregroundDecorator.updateDecorator(this, bounds);
+		}
+		
+		private function checkSize():void
+		{
+			if(bounds.width <= 0 || bounds.height <= 0)
+			{
+				var s:IntDimension = bounds.getSize();
+				
+				s = mixSetSize(getPreferredSize(), s);
+				
+				bounds.setSize(s);
+			}
 		}
 		
 		private function setMaskSize(s:IntDimension):void

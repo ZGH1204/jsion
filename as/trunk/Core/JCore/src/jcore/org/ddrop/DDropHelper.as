@@ -80,6 +80,11 @@ package jcore.org.ddrop
 			return m_dragData;
 		}
 		
+		public function get reviseInStage():Boolean
+		{
+			return true;
+		}
+		
 		public function get freeDragingIcon():Boolean
 		{
 			return false;

@@ -40,6 +40,12 @@ package jcore.org.ddrop
 		function get transData():*;
 		
 		/**
+		 * 当鼠标移出屏幕释放时是否修正拖动时的显示对象鼠标下的坐标到舞台内
+		 * 以便下次可以拖动
+		 */		
+		function get reviseInStage():Boolean;
+		
+		/**
 		 * 是否对拖动时的显示对象进行内存释放
 		 */		
 		function get freeDragingIcon():Boolean;
