@@ -24,6 +24,8 @@ package jcomponent.org.basic
 		
 		public static const WINDOW_UI:String = "WindowUI";
 		
+		public static const FRAME_UI:String = "WindowUI";
+		
 		
 		
 		//===================================================================================
@@ -231,5 +233,17 @@ package jcomponent.org.basic
 		public static const WINDOW_TEXT_VALIGN:String = "textVAlign";
 		public static const WINDOW_TEXT_HGAP:String = "textHGap";
 		public static const WINDOW_TEXT_VGAP:String = "textVGap";
+		
+		
+		
+		
+		//===================================================================================
+		/*
+		* Frame组件配置属性
+		*/
+		//===================================================================================
+		public static const FRAME_PRE:String = "Frame.";
+		public static const FRAME_CONTENT_X:String = "contentX";
+		public static const FRAME_CONTENT_Y:String = "contentY";
 	}
 }

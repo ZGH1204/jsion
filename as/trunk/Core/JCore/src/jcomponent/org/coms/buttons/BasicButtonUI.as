@@ -196,7 +196,7 @@ package jcomponent.org.coms.buttons
 			
 			if(filter == null) filter = [];
 			
-			btn.content.filters = filter;
+			btn.filters = filter;
 		}
 		
 		

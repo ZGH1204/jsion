@@ -231,6 +231,11 @@ package
 //			list.push("CheckBox.downSelectedInsets", null);
 //			list.push("CheckBox.disabledSelectedInsets", null);
 			
+			
+			
+			
+			
+			
 			list.push("Window.bg", WindowImageBackground);
 			list.push("Window.bgImg", WindowBackground_Asset);
 			list.push("Window.bgInsets", new Insets(53, 60, 95, 60));
@@ -261,6 +266,43 @@ package
 //			list.push("Window.CloseButton.overFilters", null);
 //			list.push("Window.CloseButton.downFilters", null);
 //			list.push("Window.CloseButton.disabledFilters", null);
+			
+			
+			
+			
+			
+			
+			
+			list.push("Frame.bg", WindowImageBackground);
+			list.push("Frame.bgImg", WindowBackground_Asset);
+			list.push("Frame.bgInsets", new Insets(53, 60, 95, 60));
+//			list.push("Frame.titleHAlign", null);
+//			list.push("Frame.titleVAlign", null);
+//			list.push("Frame.titleHGap", null);
+			list.push("Frame.titleVGap", -10);
+//			list.push("Frame.closeHAlign", null);
+//			list.push("Frame.closeVAlign", null);
+			list.push("Frame.closeHGap", 18);
+			list.push("Frame.closeVGap", 20);
+			
+			list.push("Frame.TitleBar.titleImg", WindowTitleBackground_Asset);
+//			list.push("Frame.TitleBar.titleImgInsets", null);
+//			list.push("Frame.TitleBar.titleScaleType", null);
+//			list.push("Frame.TitleBar.titleFont", null);
+			list.push("Frame.TitleBar.titleColor", new ASColor(0xFFFFFF));
+//			list.push("Frame.TitleBar.textHAlign", null);
+//			list.push("Frame.TitleBar.textVAlign", null);
+//			list.push("Frame.TitleBar.textHGap", null);
+//			list.push("Frame.TitleBar.textVGap", null);
+			
+			list.push("Frame.CloseButton.upImg", CloseUp_Asset);
+			list.push("Frame.CloseButton.overImg", CloseOver_Asset);
+			list.push("Frame.CloseButton.downImg", CloseDown_Asset);
+//			list.push("Frame.CloseButton.disabledImg", null);
+//			list.push("Frame.CloseButton.upFilters", null);
+//			list.push("Frame.CloseButton.overFilters", null);
+//			list.push("Frame.CloseButton.downFilters", null);
+//			list.push("Frame.CloseButton.disabledFilters", null);
 		}
 	}
 }

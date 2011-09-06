@@ -47,6 +47,26 @@ package jcomponent.org.coms.containers
 			return m_win;
 		}
 		
+//		override public function get x():Number
+//		{
+//			return m_win.x;
+//		}
+//		
+//		override public function set x(value:Number):void
+//		{
+//			m_win.x = value;
+//		}
+//		
+//		override public function get y():Number
+//		{
+//			return m_win.y;
+//		}
+//		
+//		override public function set y(value:Number):void
+//		{
+//			m_win.y = value;
+//		}
+		
 		override public function localToGlobal(point:Point):Point
 		{
 			return m_win.localToGlobal(point);
