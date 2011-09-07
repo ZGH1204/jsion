@@ -337,14 +337,16 @@ package
 //			list.push("ScrollBar.BottomButton.downFilters", null);
 //			list.push("ScrollBar.BottomButton.disabledFilters", null);
 			
+			var thumbInsets:Insets = new Insets(5, 0, 5, 0);
+			
 			list.push("ScrollBar.Thumb.bg", ButtonScaleImageBackground);
 			list.push("ScrollBar.Thumb.upImg", ScrollBarThumbUpImg_Asset);
 			list.push("ScrollBar.Thumb.overImg", ScrollBarThumbOverImg_Asset);
 			list.push("ScrollBar.Thumb.downImg", ScrollBarThumbDownImg_Asset);
 //			list.push("ScrollBar.Thumb.disabledImg", null);
-//			list.push("ScrollBar.Thumb.upInsets", null);
-//			list.push("ScrollBar.Thumb.overInsets", null);
-//			list.push("ScrollBar.Thumb.downInsets", null);
+			list.push("ScrollBar.Thumb.upInsets", thumbInsets);
+			list.push("ScrollBar.Thumb.overInsets", thumbInsets);
+			list.push("ScrollBar.Thumb.downInsets", thumbInsets);
 //			list.push("ScrollBar.Thumb.disabledInsets", null);
 //			list.push("ScrollBar.BottomButton.upFilters", null);
 //			list.push("ScrollBar.BottomButton.overFilters", null);

@@ -2,6 +2,7 @@ package jcomponent.org.coms.scrollbars
 {
 	import flash.display.DisplayObject;
 	
+	import jcomponent.org.basic.UIConstants;
 	import jcomponent.org.coms.buttons.ScaleImageButton;
 	
 	import jcore.org.ddrop.DDropMgr;
@@ -11,13 +12,17 @@ package jcomponent.org.coms.scrollbars
 	{
 		protected var m_startPoint:IntPoint = new IntPoint();
 		
-		protected var m_rect:IntRectangle = new IntRectangle();
+		protected var m_dir:int;
+		protected var m_rang:int;
 		
 		protected var m_minX:int = int.MIN_VALUE;
 		protected var m_maxX:int = int.MAX_VALUE;
 		
 		protected var m_minY:int = int.MIN_VALUE;
 		protected var m_maxY:int = int.MAX_VALUE;
+		
+		protected var m_dragingFn:Function;
+		protected var m_canCallback:Boolean = true;
 		
 		public function Thumb(prefix:String=null, id:String=null)
 		{
@@ -71,6 +76,23 @@ package jcomponent.org.coms.scrollbars
 			
 			if(y < m_minY) y = m_minY;
 			else if(y > m_maxY) y = m_maxY;
+			
+			if(m_dir == UIConstants.HORIZONTAL)
+			{
+				if(m_dragingFn != null && m_canCallback) m_dragingFn(x - m_startPoint.x, m_rang);
+				
+				if(x == m_maxX) m_canCallback = false;
+				else if(x == m_minX) m_canCallback = false;
+				else m_canCallback = true;
+			}
+			else
+			{
+				if(m_dragingFn != null && m_canCallback) m_dragingFn(y - m_startPoint.y, m_rang);
+				
+				if(y == m_maxY) m_canCallback = false;
+				else if(y == m_minY) m_canCallback = false;
+				else m_canCallback = true;
+			}
 		}
 		
 		public function dropCallback():void
@@ -84,6 +106,8 @@ package jcomponent.org.coms.scrollbars
 		override public function dispose():void
 		{
 			DDropMgr.unregisteDrag(this);
+			
+			m_dragingFn = null;
 			
 			super.dispose();
 		}
@@ -103,33 +127,64 @@ package jcomponent.org.coms.scrollbars
 			}
 		}
 
-		public function get rect():IntRectangle
+		protected function calcRect():void
 		{
-			return m_rect;
+			if(m_dir == UIConstants.HORIZONTAL)
+			{
+				m_minX = m_startPoint.x;
+				m_maxX = m_startPoint.x + m_rang;
+				
+				m_minY = m_maxY = m_startPoint.y;
+			}
+			else
+			{
+				m_minX = m_maxX = m_startPoint.x;
+				
+				m_minY = m_startPoint.y;
+				m_maxY = m_startPoint.y + m_rang;
+			}
 		}
 
-		public function set rect(value:IntRectangle):void
+		public function get dir():int
 		{
-			if(value && !value.equals(m_rect))
+			return m_dir;
+		}
+
+		public function set dir(value:int):void
+		{
+			if(m_dir != value)
 			{
-				m_rect = value;
+				m_dir = value;
 				
 				calcRect();
 			}
 		}
 
-		protected function calcRect():void
+		public function get rang():int
 		{
-			if(m_rect && (m_rect.width != 0 || m_rect.height != 0))
+			return m_rang;
+		}
+
+		public function set rang(value:int):void
+		{
+			if(m_rang != value)
 			{
-				m_minX = m_startPoint.x + m_rect.x;
-				m_maxX = m_startPoint.x + m_rect.x;
-				m_maxX += m_rect.width;
+				m_rang = value;
 				
-				m_minY = m_startPoint.y + m_rect.y;
-				m_maxY = m_startPoint.y + m_rect.y;
-				m_maxY += m_rect.height;
+				calcRect();
 			}
 		}
+
+		public function get dragingFn():Function
+		{
+			return m_dragingFn;
+		}
+
+		public function set dragingFn(value:Function):void
+		{
+			m_dragingFn = value;
+		}
+		
+		
 	}
 }
