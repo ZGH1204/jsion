@@ -11,7 +11,9 @@ package
 	import jcomponent.org.coms.containers.Frame;
 	import jcomponent.org.coms.containers.VBox;
 	import jcomponent.org.coms.containers.Window;
-	import jcomponent.org.coms.scrollbars.ScrollBar;
+	import jcomponent.org.coms.scrollbars.AbstractScrollBar;
+	import jcomponent.org.coms.scrollbars.HScrollBar;
+	import jcomponent.org.coms.scrollbars.VScrollBar;
 	import jcomponent.org.mgrs.UIMgr;
 	
 	import jcore.org.loader.BinaryLoader;
@@ -56,7 +58,7 @@ package
 		
 		private var win:Window;
 		
-		private var bar:ScrollBar;
+		private var bar:AbstractScrollBar;
 		
 		private function loadCallback(loader:BinaryLoader):void
 		{
@@ -64,12 +66,13 @@ package
 			
 			if(bar) return;
 			
-			bar = new ScrollBar();
+			bar = new HScrollBar();
 			bar.setLocationXY(100, 50);
-			//bar.width = 20;
-			bar.height = 350;
+			bar.width = 350;
+			//bar.height = 350;
+			//bar.pack();
 			bar.scrollLength = 1000;
-			bar.maximum = 100;
+			//bar.maximum = 100;
 			//bar.value = 100;
 			//bar.enabled = false;
 			addChild(bar);

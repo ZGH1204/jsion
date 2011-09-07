@@ -164,6 +164,9 @@ package
 			
 			
 			
+			
+			
+			
 //			list.push("CheckBox.textFilters", [new GlowFilter(0x996348,1,4,4,10)]);//发光滤镜
 //			list.push("CheckBox.upFilters", null);
 //			list.push("CheckBox.overFilters", [lightingFilter]);
@@ -194,12 +197,6 @@ package
 //			list.push("CheckBox.downSelectedInsets", null);
 //			list.push("CheckBox.disabledSelectedInsets", null);
 			
-			
-			
-			
-			
-			
-			
 //			list.push("CheckBox.textFilters", [new GlowFilter(0x996348,1,4,4,10)]);//发光滤镜
 //			list.push("CheckBox.upFilters", null);
 //			list.push("CheckBox.overFilters", [lightingFilter]);
@@ -209,6 +206,16 @@ package
 //			list.push("CheckBox.overSelectedFilters", null);
 //			list.push("CheckBox.downSelectedFilters", null);
 //			list.push("CheckBox.disabledSelectedFilters", null);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
 			list.push("RadioButton.icon", ButtonIcon);
 			
@@ -229,6 +236,9 @@ package
 //			list.push("RadioButton.overSelectedInsets", null);
 //			list.push("CheckBox.downSelectedInsets", null);
 //			list.push("CheckBox.disabledSelectedInsets", null);
+			
+			
+			
 			
 			
 			
@@ -272,6 +282,10 @@ package
 			
 			
 			
+			
+			
+			
+			
 			list.push("Frame.bg", ImageBackGround);
 			list.push("Frame.bgImg", WindowBackground_Asset);
 			list.push("Frame.bgInsets", new Insets(53, 60, 95, 60));
@@ -305,53 +319,143 @@ package
 			
 			
 			
-			list.push("ScrollBar.bg", ImageBackGround);
-			list.push("ScrollBar.bgImg", ScrollBarBackground_Asset);
-			list.push("ScrollBar.bgInsets", new Insets(0, 1, 0, 1));
 			
-			list.push("ScrollBar.TopButton.bg", ButtonScaleImageBackground);
-			list.push("ScrollBar.TopButton.upImg", ScrollBarUpBtnUpImg_Asset);
-			list.push("ScrollBar.TopButton.overImg", ScrollBarUpBtnOverImg_Asset);
-			list.push("ScrollBar.TopButton.downImg", ScrollBarUpBtnDownImg_Asset);
-			list.push("ScrollBar.TopButton.disabledImg", ScrollBarBtnDisabledImg_Asset);
-//			list.push("ScrollBar.TopButton.upInsets", null);
-//			list.push("ScrollBar.TopButton.overInsets", null);
-//			list.push("ScrollBar.TopButton.downInsets", null);
-//			list.push("ScrollBar.TopButton.disabledInsets", null);
-//			list.push("ScrollBar.TopButton.upFilters", null);
-//			list.push("ScrollBar.TopButton.overFilters", null);
-//			list.push("ScrollBar.TopButton.downFilters", null);
-//			list.push("ScrollBar.TopButton.disabledFilters", null);
 			
-			list.push("ScrollBar.BottomButton.bg", ButtonScaleImageBackground);
-			list.push("ScrollBar.BottomButton.upImg", ScrollBarBottomBtnUpImg_Asset);
-			list.push("ScrollBar.BottomButton.overImg", ScrollBarBottomBtnOverImg_Asset);
-			list.push("ScrollBar.BottomButton.downImg", ScrollBarBottomBtnDownImg_Asset);
-			list.push("ScrollBar.BottomButton.disabledImg", ScrollBarBtnDisabledImg_Asset);
-//			list.push("ScrollBar.BottomButton.upInsets", null);
-//			list.push("ScrollBar.BottomButton.overInsets", null);
-//			list.push("ScrollBar.BottomButton.downInsets", null);
-//			list.push("ScrollBar.BottomButton.disabledInsets", null);
-//			list.push("ScrollBar.BottomButton.upFilters", null);
-//			list.push("ScrollBar.BottomButton.overFilters", null);
-//			list.push("ScrollBar.BottomButton.downFilters", null);
-//			list.push("ScrollBar.BottomButton.disabledFilters", null);
+			
+			
+			
+			
+			
+//			list.push("VScrollBar.hDirHGap", null);
+//			list.push("VScrollBar.hDirVGap", null);
+//			
+//			list.push("VScrollBar.vDirHGap", null);
+//			list.push("VScrollBar.vDirVGap", null);
+//			
+//			list.push("VScrollBar.vThumbHGap", null);
+//			list.push("VScrollBar.vThumbVGap", null);
+//			
+//			list.push("VScrollBar.delay", null);
+//			list.push("VScrollBar.step", null);
+			
+			list.push("VScrollBar.bg", ImageBackGround);
+			list.push("VScrollBar.bgImg", VScrollBarBackground_Asset);
+			list.push("VScrollBar.bgInsets", new Insets(0, 1, 0, 1));
+			
+			list.push("VScrollBar.TopButton.bg", ButtonScaleImageBackground);
+			list.push("VScrollBar.TopButton.upImg", VScrollBarUpBtnUpImg_Asset);
+			list.push("VScrollBar.TopButton.overImg", VScrollBarUpBtnOverImg_Asset);
+			list.push("VScrollBar.TopButton.downImg", VScrollBarUpBtnDownImg_Asset);
+			list.push("VScrollBar.TopButton.disabledImg", ScrollBarBtnDisabledImg_Asset);
+//			list.push("VScrollBar.TopButton.upInsets", null);
+//			list.push("VScrollBar.TopButton.overInsets", null);
+//			list.push("VScrollBar.TopButton.downInsets", null);
+//			list.push("VScrollBar.TopButton.disabledInsets", null);
+//			list.push("VScrollBar.TopButton.upFilters", null);
+//			list.push("VScrollBar.TopButton.overFilters", null);
+//			list.push("VScrollBar.TopButton.downFilters", null);
+//			list.push("VScrollBar.TopButton.disabledFilters", null);
+			
+			list.push("VScrollBar.BottomButton.bg", ButtonScaleImageBackground);
+			list.push("VScrollBar.BottomButton.upImg", VScrollBarBottomBtnUpImg_Asset);
+			list.push("VScrollBar.BottomButton.overImg", VScrollBarBottomBtnOverImg_Asset);
+			list.push("VScrollBar.BottomButton.downImg", VScrollBarBottomBtnDownImg_Asset);
+			list.push("VScrollBar.BottomButton.disabledImg", ScrollBarBtnDisabledImg_Asset);
+//			list.push("VScrollBar.BottomButton.upInsets", null);
+//			list.push("VScrollBar.BottomButton.overInsets", null);
+//			list.push("VScrollBar.BottomButton.downInsets", null);
+//			list.push("VScrollBar.BottomButton.disabledInsets", null);
+//			list.push("VScrollBar.BottomButton.upFilters", null);
+//			list.push("VScrollBar.BottomButton.overFilters", null);
+//			list.push("VScrollBar.BottomButton.downFilters", null);
+//			list.push("VScrollBar.BottomButton.disabledFilters", null);
 			
 			var thumbInsets:Insets = new Insets(5, 0, 5, 0);
 			
-			list.push("ScrollBar.Thumb.bg", ButtonScaleImageBackground);
-			list.push("ScrollBar.Thumb.upImg", ScrollBarThumbUpImg_Asset);
-			list.push("ScrollBar.Thumb.overImg", ScrollBarThumbOverImg_Asset);
-			list.push("ScrollBar.Thumb.downImg", ScrollBarThumbDownImg_Asset);
-//			list.push("ScrollBar.Thumb.disabledImg", null);
-			list.push("ScrollBar.Thumb.upInsets", thumbInsets);
-			list.push("ScrollBar.Thumb.overInsets", thumbInsets);
-			list.push("ScrollBar.Thumb.downInsets", thumbInsets);
-//			list.push("ScrollBar.Thumb.disabledInsets", null);
-//			list.push("ScrollBar.BottomButton.upFilters", null);
-//			list.push("ScrollBar.BottomButton.overFilters", null);
-//			list.push("ScrollBar.BottomButton.downFilters", null);
-//			list.push("ScrollBar.BottomButton.disabledFilters", null);
+			list.push("VScrollBar.Thumb.bg", ButtonScaleImageBackground);
+			list.push("VScrollBar.Thumb.upImg", VScrollBarThumbUpImg_Asset);
+			list.push("VScrollBar.Thumb.overImg", VScrollBarThumbOverImg_Asset);
+			list.push("VScrollBar.Thumb.downImg", VScrollBarThumbDownImg_Asset);
+//			list.push("VScrollBar.Thumb.disabledImg", null);
+			list.push("VScrollBar.Thumb.upInsets", thumbInsets);
+			list.push("VScrollBar.Thumb.overInsets", thumbInsets);
+			list.push("VScrollBar.Thumb.downInsets", thumbInsets);
+//			list.push("VScrollBar.Thumb.disabledInsets", null);
+//			list.push("VScrollBar.BottomButton.upFilters", null);
+//			list.push("VScrollBar.BottomButton.overFilters", null);
+//			list.push("VScrollBar.BottomButton.downFilters", null);
+//			list.push("VScrollBar.BottomButton.disabledFilters", null);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+//			list.push("HScrollBar.hDirHGap", null);
+//			list.push("HScrollBar.hDirVGap", null);
+//			
+//			list.push("HScrollBar.vDirHGap", null);
+//			list.push("HScrollBar.vDirVGap", null);
+//			
+//			list.push("HScrollBar.hThumbHGap", null);
+//			list.push("HScrollBar.hThumbVGap", null);
+//			
+//			list.push("HScrollBar.delay", null);
+//			list.push("HScrollBar.step", null);
+			
+			list.push("HScrollBar.bg", ImageBackGround);
+			list.push("HScrollBar.bgImg", HScrollBarBackground_Asset);
+			list.push("HScrollBar.bgInsets", new Insets(1, 0, 1, 0));
+			
+			list.push("HScrollBar.LeftButton.bg", ButtonScaleImageBackground);
+			list.push("HScrollBar.LeftButton.upImg", HScrollBarLeftBtnUpImg_Asset);
+			list.push("HScrollBar.LeftButton.overImg", HScrollBarLeftBtnOverImg_Asset);
+			list.push("HScrollBar.LeftButton.downImg", HScrollBarLeftBtnDownImg_Asset);
+			list.push("HScrollBar.LeftButton.disabledImg", ScrollBarBtnDisabledImg_Asset);
+//			list.push("HScrollBar.LeftButton.upInsets", null);
+//			list.push("HScrollBar.LeftButton.overInsets", null);
+//			list.push("HScrollBar.LeftButton.downInsets", null);
+//			list.push("HScrollBar.LeftButton.disabledInsets", null);
+//			list.push("HScrollBar.LeftButton.upFilters", null);
+//			list.push("HScrollBar.LeftButton.overFilters", null);
+//			list.push("HScrollBar.LeftButton.downFilters", null);
+//			list.push("HScrollBar.LeftButton.disabledFilters", null);
+			
+			list.push("HScrollBar.RightButton.bg", ButtonScaleImageBackground);
+			list.push("HScrollBar.RightButton.upImg", HScrollBarRightBtnUpImg_Asset);
+			list.push("HScrollBar.RightButton.overImg", HScrollBarRightBtnOverImg_Asset);
+			list.push("HScrollBar.RightButton.downImg", HScrollBarRightBtnDownImg_Asset);
+			list.push("HScrollBar.RightButton.disabledImg", ScrollBarBtnDisabledImg_Asset);
+//			list.push("HScrollBar.RightButton.upInsets", null);
+//			list.push("HScrollBar.RightButton.overInsets", null);
+//			list.push("HScrollBar.RightButton.downInsets", null);
+//			list.push("HScrollBar.RightButton.disabledInsets", null);
+//			list.push("HScrollBar.RightButton.upFilters", null);
+//			list.push("HScrollBar.RightButton.overFilters", null);
+//			list.push("HScrollBar.RightButton.downFilters", null);
+//			list.push("HScrollBar.RightButton.disabledFilters", null);
+			
+			thumbInsets = new Insets(0, 5, 0, 5);
+			
+			list.push("HScrollBar.Thumb.bg", ButtonScaleImageBackground);
+			list.push("HScrollBar.Thumb.upImg", HScrollBarThumbUpImg_Asset);
+			list.push("HScrollBar.Thumb.overImg", HScrollBarThumbOverImg_Asset);
+			list.push("HScrollBar.Thumb.downImg", HScrollBarThumbDownImg_Asset);
+//			list.push("HScrollBar.Thumb.disabledImg", null);
+			list.push("HScrollBar.Thumb.upInsets", thumbInsets);
+			list.push("HScrollBar.Thumb.overInsets", thumbInsets);
+			list.push("HScrollBar.Thumb.downInsets", thumbInsets);
+//			list.push("HScrollBar.Thumb.disabledInsets", null);
+//			list.push("HScrollBar.BottomButton.upFilters", null);
+//			list.push("HScrollBar.BottomButton.overFilters", null);
+//			list.push("HScrollBar.BottomButton.downFilters", null);
+//			list.push("HScrollBar.BottomButton.disabledFilters", null);
 		}
 	}
 }
