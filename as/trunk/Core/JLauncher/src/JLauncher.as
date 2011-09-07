@@ -66,16 +66,27 @@ package
 			
 			if(bar) return;
 			
-			bar = new HScrollBar();
+			bar = new VScrollBar();
 			bar.setLocationXY(100, 50);
-			bar.width = 350;
-			//bar.height = 350;
+			//bar.width = 350;
+			bar.height = 350;
 			//bar.pack();
 			bar.scrollLength = 1000;
 			//bar.maximum = 100;
 			//bar.value = 100;
 			//bar.enabled = false;
 			addChild(bar);
+			
+//			bar = new HScrollBar();
+//			bar.setLocationXY(100, 50);
+//			bar.width = 350;
+//			//bar.height = 350;
+//			//bar.pack();
+//			bar.scrollLength = 1000;
+//			//bar.maximum = 100;
+//			//bar.value = 100;
+//			//bar.enabled = false;
+//			addChild(bar);
 			
 //			if(win) return;
 //			
