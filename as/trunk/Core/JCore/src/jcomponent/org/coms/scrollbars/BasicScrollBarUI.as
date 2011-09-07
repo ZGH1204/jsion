@@ -4,8 +4,6 @@ package jcomponent.org.coms.scrollbars
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
-	import flashx.textLayout.events.ModelChange;
-	
 	import jcomponent.org.basic.BasicComponentUI;
 	import jcomponent.org.basic.Component;
 	import jcomponent.org.basic.DefaultConfigKeys;
@@ -21,7 +19,7 @@ package jcomponent.org.coms.scrollbars
 	
 	public class BasicScrollBarUI extends BasicComponentUI
 	{
-		protected var scrollBar:ScrollBar;
+		protected var scrollBar:AbstractScrollBar;
 		
 		protected var leftBtn:ScaleImageButton;
 		protected var rightBtn:ScaleImageButton;
@@ -38,7 +36,7 @@ package jcomponent.org.coms.scrollbars
 		
 		override public function install(component:Component):void
 		{
-			scrollBar = ScrollBar(component);
+			scrollBar = AbstractScrollBar(component);
 			
 			installDefaults(component);
 			installProperties(component);
@@ -57,38 +55,36 @@ package jcomponent.org.coms.scrollbars
 		
 		protected function installProperties(component:Component):void
 		{
-			var bar:ScrollBar = ScrollBar(component);
+			var bar:AbstractScrollBar = AbstractScrollBar(component);
 			var pp:String = getResourcesPrefix(component);
 			
-			bar.hDirHGap = getInt(pp + "hDirHGap");
-			bar.hDirVGap = getInt(pp + "hDirVGap");
+			bar.hDirHGap = getInt(pp + DefaultConfigKeys.SCROLL_BAR_HDIR_HGAP);
+			bar.hDirVGap = getInt(pp + DefaultConfigKeys.SCROLL_BAR_HDIR_VGAP);
 			
-			bar.vDirHGap = getInt(pp + "vDirHGap");
-			bar.vDirVGap = getInt(pp + "vDirVGap");
+			bar.vDirHGap = getInt(pp + DefaultConfigKeys.SCROLL_BAR_VDIR_HGAP);
+			bar.vDirVGap = getInt(pp + DefaultConfigKeys.SCROLL_BAR_VDIR_VGAP);
 			
-			bar.hThumbHGap = getInt(pp + "hThumbHGap");
-			bar.hThumbVGap = getInt(pp + "hThumbVGap");
+			bar.hThumbHGap = getInt(pp + DefaultConfigKeys.HSCROLL_BAR_HTHUMB_HGAP);
+			bar.hThumbVGap = getInt(pp + DefaultConfigKeys.HSCROLL_BAR_HTHUMB_VGAP);
 			
-			bar.vThumbHGap = getInt(pp + "vThumbHGap");
-			bar.vThumbVGap = getInt(pp + "vThumbVGap");
+			bar.vThumbHGap = getInt(pp + DefaultConfigKeys.VSCROLL_BAR_VTHUMB_HGAP);
+			bar.vThumbVGap = getInt(pp + DefaultConfigKeys.VSCROLL_BAR_VTHUMB_VGAP);
 			
-			//bar.scrollLength = getInt(pp + "scrollLen");
-			
-			bar.autoScrollDelay = getInt(pp + "delay");//单位:毫秒
-			bar.autoScrollStep = getInt(pp + "step");
+			bar.autoScrollDelay = getInt(pp + DefaultConfigKeys.SCROLL_BAR_SCROLL_DELAY);//单位:毫秒
+			bar.autoScrollStep = getInt(pp + DefaultConfigKeys.SCROLL_BAR_SCROLL_STEP);
 		}
 		
 		protected function installComponents(component:Component):void
 		{
-			var bar:ScrollBar = ScrollBar(component);
+			var bar:AbstractScrollBar = AbstractScrollBar(component);
 			var pp:String = getResourcesPrefix(component);
 			
-			if(bar.dir == ScrollBar.HORIZONTAL)
+			if(bar.dir == AbstractScrollBar.HORIZONTAL)
 			{
-				leftBtn = new ScaleImageButton(null, pp + "LeftButton.");
+				leftBtn = new ScaleImageButton(null, pp + DefaultConfigKeys.HScroll_BAR_LEFT_BUTTON_PRE);
 				leftBtn.pack();
 				
-				rightBtn = new ScaleImageButton(null, pp + "RightButton.");
+				rightBtn = new ScaleImageButton(null, pp + DefaultConfigKeys.HScroll_BAR_RIGHT_BUTTON_PRE);
 				rightBtn.pack();
 				
 				bar.addChild(leftBtn);
@@ -96,17 +92,17 @@ package jcomponent.org.coms.scrollbars
 			}
 			else
 			{
-				topBtn = new ScaleImageButton(null, pp + "TopButton.");
+				topBtn = new ScaleImageButton(null, pp + DefaultConfigKeys.VScroll_BAR_TOP_BUTTON_PRE);
 				topBtn.pack();
 				
-				bottomBtn = new ScaleImageButton(null, pp + "BottomButton.");
+				bottomBtn = new ScaleImageButton(null, pp + DefaultConfigKeys.VScroll_BAR_BOTTOM_BUTTON_PRE);
 				bottomBtn.pack();
 				
 				bar.addChild(topBtn);
 				bar.addChild(bottomBtn);
 			}
 			
-			thumb = new Thumb(pp + "Thumb.");
+			thumb = new Thumb(pp + DefaultConfigKeys.SCROLL_BAR_THUMB_PRE);
 			thumb.dir = bar.dir;
 			thumb.dragingFn = dragingCallback;
 			thumb.pack();
@@ -116,7 +112,7 @@ package jcomponent.org.coms.scrollbars
 		
 		protected function installListener(component:Component):void
 		{
-			var bar:ScrollBar = ScrollBar(component);
+			var bar:AbstractScrollBar = AbstractScrollBar(component);
 			
 			bar.addStateListener(__stateChangeHandler);
 			
@@ -150,13 +146,15 @@ package jcomponent.org.coms.scrollbars
 		{
 			var block:Number;
 			
-			if(scrollBar.dir == ScrollBar.HORIZONTAL)
+			if(scrollBar.dir == AbstractScrollBar.HORIZONTAL)
 			{
 				if(scrollBar.scrollLength <= 0 || scrollBar.scrollLength <= scrollBar.width) return;
 				
 				block = getModelUnit();
 				
 				block = scrollBar.width / block;
+				
+				if(e.localX < thumb.x) block *= -1;
 			}
 			else
 			{
@@ -165,6 +163,8 @@ package jcomponent.org.coms.scrollbars
 				block = getModelUnit();
 				
 				block = scrollBar.height / block;
+				
+				if(e.localY < thumb.y) block *= -1;
 			}
 			
 			scrollBar.value += block;
@@ -172,7 +172,7 @@ package jcomponent.org.coms.scrollbars
 		
 		private function getModelUnit():Number
 		{
-			if(scrollBar.dir == ScrollBar.HORIZONTAL)
+			if(scrollBar.dir == AbstractScrollBar.HORIZONTAL)
 			{
 				return (scrollBar.scrollLength - scrollBar.width) / (scrollBar.maximum - scrollBar.minimum);
 			}
@@ -184,7 +184,7 @@ package jcomponent.org.coms.scrollbars
 		
 		private function getThumbUnit():Number
 		{
-			if(scrollBar.dir == ScrollBar.HORIZONTAL)
+			if(scrollBar.dir == AbstractScrollBar.HORIZONTAL)
 			{
 				return (scrollBar.scrollLength - scrollBar.width) / thumb.rang;
 			}
@@ -254,7 +254,7 @@ package jcomponent.org.coms.scrollbars
 		
 		protected function uninstallListener(component:Component):void
 		{
-			var bar:ScrollBar = ScrollBar(component);
+			var bar:AbstractScrollBar = AbstractScrollBar(component);
 			
 			StageRef.removeEventListener(Event.ENTER_FRAME, __enterFrameHandler);
 			if(bar)
@@ -308,9 +308,9 @@ package jcomponent.org.coms.scrollbars
 		
 		override public function paint(component:Component, bounds:IntRectangle):void
 		{
-			var bar:ScrollBar = ScrollBar(component);
+			var bar:AbstractScrollBar = AbstractScrollBar(component);
 			
-			if(scrollBar.dir == ScrollBar.HORIZONTAL) paintHorizontalScrollBar(bar);
+			if(scrollBar.dir == AbstractScrollBar.HORIZONTAL) paintHorizontalScrollBar(bar);
 			else paintVerticalScrollBar(bar);
 			
 			locateThumb(bar);
@@ -321,7 +321,7 @@ package jcomponent.org.coms.scrollbars
 			locateThumb(scrollBar);
 		}
 		
-		protected function locateThumb(bar:ScrollBar):void
+		protected function locateThumb(bar:AbstractScrollBar):void
 		{
 			if(scrollBar.needChangeThumb == false) return;
 			
@@ -339,7 +339,7 @@ package jcomponent.org.coms.scrollbars
 			
 			tExtent /= thumbUnit;
 			
-			if(bar.dir == ScrollBar.HORIZONTAL)
+			if(bar.dir == AbstractScrollBar.HORIZONTAL)
 			{
 				tExtent += thumb.startPoint.x;
 				thumb.x = tExtent;
@@ -353,7 +353,7 @@ package jcomponent.org.coms.scrollbars
 			scrollBar.needChangeThumb = false;
 		}
 		
-		protected function paintHorizontalScrollBar(bar:ScrollBar):void
+		protected function paintHorizontalScrollBar(bar:AbstractScrollBar):void
 		{
 			var viewRect:IntRectangle = new IntRectangle();
 			viewRect.setSize(bar.getSize());
@@ -414,7 +414,7 @@ package jcomponent.org.coms.scrollbars
 			if(rightBtn) rightBtn.enabled = bar.enabled;
 		}
 		
-		protected function paintVerticalScrollBar(bar:ScrollBar):void
+		protected function paintVerticalScrollBar(bar:AbstractScrollBar):void
 		{
 			var viewRect:IntRectangle = new IntRectangle();
 			viewRect.setSize(bar.getSize());
@@ -453,6 +453,7 @@ package jcomponent.org.coms.scrollbars
 				var tmp:int = bottomBtn.y - vgap;
 				
 				thumb.height = tmp * j;
+				//thumb.height = 100;
 				
 				if(bar.enabled)
 					thumb.visible = true;

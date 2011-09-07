@@ -28,6 +28,10 @@ package jcomponent.org.basic
 		
 		public static const SCROLL_BAR_UI:String = "ScrollBarUI";
 		
+		public static const VSCROLL_BAR_UI:String = "VScrollBarUI";
+		
+		public static const HSCROLL_BAR_UI:String = "HScrollBarUI";
+		
 		
 		
 		//===================================================================================
@@ -263,9 +267,33 @@ package jcomponent.org.basic
 		
 		//===================================================================================
 		/*
-		* Frame组件配置属性
+		* Frame组件配置属性,标识HScrollBar或VScrollBar为对应的专用配置,无标识则为SCROLL_BAR通用配置
 		*/
 		//===================================================================================
 		public static const SCROLL_BAR_PRE:String = "ScrollBar.";
+		public static const SCROLL_BAR_THUMB_PRE:String = "Thumb.";
+		
+		public static const VSCROLL_BAR_PRE:String = "VScrollBar.";
+		public static const VScroll_BAR_TOP_BUTTON_PRE:String = "TopButton.";//类型：ScaleImageButton
+		public static const VScroll_BAR_BOTTOM_BUTTON_PRE:String = "BottomButton.";//类型：ScaleImageButton
+		
+		public static const HSCROLL_BAR_PRE:String = "HScrollBar.";
+		public static const HScroll_BAR_LEFT_BUTTON_PRE:String = "LeftButton.";//类型：ScaleImageButton
+		public static const HScroll_BAR_RIGHT_BUTTON_PRE:String = "RightButton.";//类型：ScaleImageButton
+		
+		public static const SCROLL_BAR_HDIR_HGAP:String = "hDirHGap";
+		public static const SCROLL_BAR_HDIR_VGAP:String = "hDirVGap";
+		
+		public static const SCROLL_BAR_VDIR_HGAP:String = "vDirHGap";
+		public static const SCROLL_BAR_VDIR_VGAP:String = "vDirVGap";
+		
+		public static const SCROLL_BAR_SCROLL_DELAY:String = "delay";//单位:毫秒
+		public static const SCROLL_BAR_SCROLL_STEP:String = "step";
+		
+		public static const VSCROLL_BAR_VTHUMB_HGAP:String = "vThumbHGap";
+		public static const VSCROLL_BAR_VTHUMB_VGAP:String = "vThumbVGap";
+		
+		public static const HSCROLL_BAR_HTHUMB_HGAP:String = "hThumbHGap";
+		public static const HSCROLL_BAR_HTHUMB_VGAP:String = "hThumbVGap";
 	}
 }

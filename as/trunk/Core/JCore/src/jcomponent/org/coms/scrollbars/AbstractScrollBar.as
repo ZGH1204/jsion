@@ -7,7 +7,7 @@ package jcomponent.org.coms.scrollbars
 	import jcomponent.org.basic.UIConstants;
 	import jcomponent.org.events.ScrollBarEvent;
 	
-	public class ScrollBar extends Component
+	public class AbstractScrollBar extends Component
 	{
 		/** 
 		 * Horizontal orientation. Used for scrollbars and sliders.
@@ -47,7 +47,7 @@ package jcomponent.org.coms.scrollbars
 		
 		internal var autoScrollDelayFrameCount:int;
 		
-		public function ScrollBar(dir:int = VERTICAL, value:int = 0, min:int = 0, max:int = 100, prefix:String=null, id:String=null)
+		public function AbstractScrollBar(dir:int = VERTICAL, value:int = 0, min:int = 0, max:int = 100, prefix:String=null, id:String=null)
 		{
 			if(dir == HORIZONTAL)
 			{
