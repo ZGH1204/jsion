@@ -1,8 +1,11 @@
 package jcomponent.org.coms.scrollbars
 {
 	import jcomponent.org.basic.Component;
+	import jcomponent.org.basic.DefaultBoundedRangeModel;
 	import jcomponent.org.basic.DefaultConfigKeys;
+	import jcomponent.org.basic.IBoundedRangeModel;
 	import jcomponent.org.basic.UIConstants;
+	import jcomponent.org.events.ScrollBarEvent;
 	
 	public class ScrollBar extends Component
 	{
@@ -32,7 +35,19 @@ package jcomponent.org.coms.scrollbars
 		
 		protected var m_margin:int = int.MIN_VALUE;
 		
-		public function ScrollBar(dir:int = VERTICAL, prefix:String=null, id:String=null)
+		protected var m_scrollLength:int;
+		
+		protected var m_model:IBoundedRangeModel;
+		
+		protected var m_needChangeThumb:Boolean;
+		
+		protected var m_autoScrollDelay:int;
+		
+		protected var m_autoScrollStep:int = 5;
+		
+		internal var autoScrollDelayFrameCount:int;
+		
+		public function ScrollBar(dir:int = VERTICAL, value:int = 0, min:int = 0, max:int = 100, prefix:String=null, id:String=null)
 		{
 			if(dir == HORIZONTAL)
 			{
@@ -42,6 +57,10 @@ package jcomponent.org.coms.scrollbars
 			{
 				m_dir = VERTICAL;
 			}
+			
+			model = new DefaultBoundedRangeModel(value, min, max);
+			
+			autoScrollDelay = 800;
 			
 			super(prefix, id);
 		}
@@ -194,6 +213,157 @@ package jcomponent.org.coms.scrollbars
 				
 				invalidate();
 			}
+		}
+
+		public function get scrollLength():int
+		{
+			return m_scrollLength;
+		}
+
+		public function set scrollLength(value:int):void
+		{
+			if(m_scrollLength != value)
+			{
+				m_scrollLength = value;
+				
+				if(m_dir == HORIZONTAL)
+				{
+					if((m_scrollLength - width) >= 0)
+					{
+						model.setMaximum(m_scrollLength - width);
+					}
+					else
+					{
+						model.setMaximum(0);
+					}
+				}
+				else
+				{
+					if((m_scrollLength - height) >= 0)
+					{
+						model.setMaximum(m_scrollLength - height);
+					}
+					else
+					{
+						model.setMaximum(0);
+					}
+				}
+				
+				invalidate();
+			}
+		}
+
+		public function get model():IBoundedRangeModel
+		{
+			return m_model;
+		}
+
+		public function set model(value:IBoundedRangeModel):void
+		{
+			if(m_model != value)
+			{
+				if(m_model) m_model.removeStateListener(__modelStateListener);
+				
+				m_model = value;
+				
+				if(m_model) m_model.addStateListener(__modelStateListener);
+				
+				invalidate();
+			}
+		}
+
+		public function get minimum():int
+		{
+			return model.getMinimum();
+		}
+		
+		public function set minimum(value:int):void
+		{
+			model.setMinimum(value);
+		}
+		
+		public function get maximum():int
+		{
+			return model.getMaximum();
+		}
+		
+		public function set maximum(value:int):void
+		{
+			model.setMaximum(value);
+		}
+		
+		public function get value():Number
+		{
+			return model.getValue();
+		}
+		
+		public function set value(val:Number):void
+		{
+			m_needChangeThumb = true;
+			
+			model.setValue(val);
+		}
+		
+		internal function setValueUnChangeThumb(val:int):void
+		{
+			model.setValue(val);
+			
+			//m_needChangeThumb = false;
+		}
+		
+		public function get needChangeThumb():Boolean
+		{
+			return m_needChangeThumb;
+		}
+		
+		public function set needChangeThumb(value:Boolean):void
+		{
+			m_needChangeThumb = value;
+		}
+		
+		public function addStateListener(listener:Function, priority:int = 0, useWeakReference:Boolean = false):void
+		{
+			addEventListener(ScrollBarEvent.STATE_CHANGED, listener, false, priority, useWeakReference);
+		}
+		
+		public function removeStateListener(listener:Function):void
+		{
+			removeEventListener(ScrollBarEvent.STATE_CHANGED, listener);
+		}
+		
+		protected function __modelStateListener(event:ScrollBarEvent):void
+		{
+			dispatchEvent(new ScrollBarEvent(ScrollBarEvent.STATE_CHANGED));
+		}
+
+		public function get autoScrollDelay():int
+		{
+			return m_autoScrollDelay;
+		}
+
+		public function set autoScrollDelay(value:int):void
+		{
+			if(value <= 0) return;
+			
+			m_autoScrollDelay = value;
+			
+			autoScrollDelayFrameCount = 1000 / StageRef.fps;
+			
+			autoScrollDelayFrameCount = Math.ceil(m_autoScrollDelay / autoScrollDelayFrameCount);
+			
+			if(autoScrollDelayFrameCount <= 0) autoScrollDelayFrameCount = 2;
+		}
+
+		public function get autoScrollStep():int
+		{
+			return m_autoScrollStep;
+		}
+
+		public function set autoScrollStep(value:int):void
+		{
+			if(value <= 0) return;
+			
+			m_autoScrollStep = value;
 		}
 	}
 }
