@@ -29,6 +29,9 @@ package jcomponent.org.coms.scrollbars
 		
 		protected var thumb:Thumb;
 		
+		private var m_cur:int;
+		private var m_val:int;
+		
 		public function BasicScrollBarUI()
 		{
 			super();
@@ -206,9 +209,6 @@ package jcomponent.org.coms.scrollbars
 			StageRef.removeEventListener(Event.ENTER_FRAME, __enterFrameHandler);
 		}
 		
-		private var m_cur:int;
-		private var m_val:int;
-		
 		private function __enterFrameHandler(e:Event):void
 		{
 			m_cur++;
@@ -257,6 +257,7 @@ package jcomponent.org.coms.scrollbars
 			var bar:AbstractScrollBar = AbstractScrollBar(component);
 			
 			StageRef.removeEventListener(Event.ENTER_FRAME, __enterFrameHandler);
+			
 			if(bar)
 			{
 				bar.removeStateListener(__stateChangeHandler);
@@ -331,11 +332,7 @@ package jcomponent.org.coms.scrollbars
 			
 			var thumbUnit:Number = getThumbUnit();
 			
-			var range:int = model.getMaximum() - model.getMinimum();
-			
-			var tmp:Number = model.getValue() / range;
-			
-			var tExtent:int = model.getValue() * modelUnit;//tmp * thumb.rang;
+			var tExtent:int = model.getValue() * modelUnit;
 			
 			tExtent /= thumbUnit;
 			
