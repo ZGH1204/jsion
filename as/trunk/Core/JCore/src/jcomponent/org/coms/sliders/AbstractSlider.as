@@ -7,7 +7,9 @@ package jcomponent.org.coms.sliders
 	import jcomponent.org.basic.UIConstants;
 	import jcomponent.org.events.ComponentEvent;
 	
-	public class Slider extends Component
+	import jutils.org.util.DisposeUtil;
+	
+	public class AbstractSlider extends Component
 	{
 		/** 
 		 * Horizontal orientation. Used for scrollbars and sliders.
@@ -20,12 +22,7 @@ package jcomponent.org.coms.sliders
 		
 		protected var m_dir:int;
 		
-		
-		protected var m_hDirHGap:int;
-		protected var m_hDirVGap:int;
-		
-		protected var m_vDirHGap:int;
-		protected var m_vDirVGap:int;
+		protected var m_model:IBoundedRangeModel;
 		
 		protected var m_hThumbHGap:int;
 		protected var m_hThumbVGap:int;
@@ -33,20 +30,21 @@ package jcomponent.org.coms.sliders
 		protected var m_vThumbHGap:int;
 		protected var m_vThumbVGap:int;
 		
-		protected var m_model:IBoundedRangeModel;
-		
-		protected var m_margin:int = int.MIN_VALUE;
-		
 		protected var m_needChangeThumb:Boolean;
 		
+		protected var m_autoScrollStep:Number = 1;
 		
-		public function Slider(dir:int = HORIZONTAL, prefix:String=null, id:String=null)
+		
+		public function AbstractSlider(dir:int = HORIZONTAL, prefix:String=null, id:String=null)
 		{
 			m_dir = dir;
 			
 			model = new DefaultBoundedRangeModel();
 			
 			super(prefix, id);
+			
+			DisposeUtil.free(mask);
+			mask = null;
 		}
 		
 		override public function getUIDefaultBasicClass():Class
@@ -62,66 +60,6 @@ package jcomponent.org.coms.sliders
 		public function get dir():int
 		{
 			return m_dir;
-		}
-		
-		public function get hDirHGap():int
-		{
-			return m_hDirHGap;
-		}
-		
-		public function set hDirHGap(value:int):void
-		{
-			if(m_hDirHGap != value)
-			{
-				m_hDirHGap = value;
-				
-				invalidate();
-			}
-		}
-		
-		public function get hDirVGap():int
-		{
-			return m_hDirVGap;
-		}
-		
-		public function set hDirVGap(value:int):void
-		{
-			if(m_hDirVGap != value)
-			{
-				m_hDirVGap = value;
-				
-				invalidate();
-			}
-		}
-		
-		public function get vDirHGap():int
-		{
-			return m_vDirHGap;
-		}
-		
-		public function set vDirHGap(value:int):void
-		{
-			if(m_vDirHGap != value)
-			{
-				m_vDirHGap = value;
-				
-				invalidate();
-			}
-		}
-		
-		public function get vDirVGap():int
-		{
-			return m_vDirVGap;
-		}
-		
-		public function set vDirVGap(value:int):void
-		{
-			if(m_vDirVGap != value)
-			{
-				m_vDirVGap = value;
-				
-				invalidate();
-			}
 		}
 		
 		public function get hThumbHGap():int
@@ -184,21 +122,6 @@ package jcomponent.org.coms.sliders
 			}
 		}
 		
-		public function get margin():int
-		{
-			return m_margin;
-		}
-		
-		public function set margin(value:int):void
-		{
-			if(m_margin != value)
-			{
-				m_margin = value;
-				
-				invalidate();
-			}
-		}
-		
 		public function get model():IBoundedRangeModel
 		{
 			return m_model;
@@ -248,13 +171,33 @@ package jcomponent.org.coms.sliders
 			m_needChangeThumb = true;
 			
 			model.setValue(val);
+			
+			m_needChangeThumb = false;
+		}
+		
+		public function get autoScrollStep():Number
+		{
+			return m_autoScrollStep;
+		}
+		
+		public function set autoScrollStep(value:Number):void
+		{
+			if(value <= 0) return;
+			
+			m_autoScrollStep = value;
+		}
+		
+		public function scroll(addedValue:Number):void
+		{
+			if(value >= maximum && addedValue >= 0) return;
+			if(value <= minimum && addedValue <= 0) return;
+			
+			value += addedValue;
 		}
 		
 		internal function setValueUnChangeThumb(val:Number):void
 		{
 			model.setValue(val);
-			
-			//m_needChangeThumb = false;
 		}
 		
 		public function get needChangeThumb():Boolean
@@ -262,9 +205,18 @@ package jcomponent.org.coms.sliders
 			return m_needChangeThumb;
 		}
 		
-		public function set needChangeThumb(value:Boolean):void
+		override public function set width(value:Number):void
 		{
-			m_needChangeThumb = value;
+			if(dir == VERTICAL) return;
+			
+			super.width = value;
+		}
+		
+		override public function set height(value:Number):void
+		{
+			if(dir == HORIZONTAL) return;
+			
+			super.height = value;
 		}
 		
 		public function addStateListener(listener:Function, priority:int = 0, useWeakReference:Boolean = false):void
@@ -280,6 +232,15 @@ package jcomponent.org.coms.sliders
 		protected function __modelStateListener(event:ComponentEvent):void
 		{
 			dispatchEvent(new ComponentEvent(ComponentEvent.STATE_CHANGED));
+		}
+		
+		override public function dispose():void
+		{
+			if(m_model) m_model.removeStateListener(__modelStateListener);
+			
+			m_model = null;
+			
+			super.dispose();
 		}
 	}
 }

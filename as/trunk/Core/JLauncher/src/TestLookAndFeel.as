@@ -464,6 +464,10 @@ package
 			
 			
 			
+//			list.push("HSlider.step", null);
+//			
+//			list.push("HSlider.hThumbHGap", null);
+//			list.push("HSlider.hThumbVGap", null);
 			
 			list.push("HSlider.bg", ImageBackGround);
 			list.push("HSlider.bgImg", HSliderBackgroundUpImg_Asset);
@@ -482,6 +486,34 @@ package
 //			list.push("HSlider.Thumb.overFilters", null);
 //			list.push("HSlider.Thumb.downFilters", null);
 //			list.push("HSlider.Thumb.disabledFilters", null);
+			
+			
+			
+			
+			
+			
+//			list.push("VSlider.step", null);
+//			
+//			list.push("VSlider.vThumbHGap", null);
+//			list.push("VSlider.vThumbVGap", null);
+			
+			list.push("VSlider.bg", ImageBackGround);
+			list.push("VSlider.bgImg", VSliderThumbBackgroundUpImg_Asset);
+			list.push("VSlider.bgInsets", new Insets(2, 3, 2, 3));
+			
+			list.push("VSlider.Thumb.bg", ButtonScaleImageBackground);
+			list.push("VSlider.Thumb.upImg", VSliderThumbUpImg_Asset);
+			list.push("VSlider.Thumb.overImg", VSliderThumbOverImg_Asset);
+			list.push("VSlider.Thumb.downImg", VSliderThumbDownImg_Asset);
+			list.push("VSlider.Thumb.disabledImg", VSliderThumbDisabledImg_Asset);
+//			list.push("VSlider.Thumb.upInsets", null);
+//			list.push("VSlider.Thumb.overInsets", null);
+//			list.push("VSlider.Thumb.downInsets", null);
+//			list.push("VSlider.Thumb.disabledInsets", null);
+//			list.push("VSlider.Thumb.upFilters", null);
+//			list.push("VSlider.Thumb.overFilters", null);
+//			list.push("VSlider.Thumb.downFilters", null);
+//			list.push("VSlider.Thumb.disabledFilters", null);
 		}
 	}
 }
