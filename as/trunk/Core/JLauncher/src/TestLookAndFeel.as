@@ -452,10 +452,36 @@ package
 			list.push("HScrollBar.Thumb.overInsets", thumbInsets);
 			list.push("HScrollBar.Thumb.downInsets", thumbInsets);
 //			list.push("HScrollBar.Thumb.disabledInsets", null);
-//			list.push("HScrollBar.BottomButton.upFilters", null);
-//			list.push("HScrollBar.BottomButton.overFilters", null);
-//			list.push("HScrollBar.BottomButton.downFilters", null);
-//			list.push("HScrollBar.BottomButton.disabledFilters", null);
+//			list.push("HScrollBar.Thumb.upFilters", null);
+//			list.push("HScrollBar.Thumb.overFilters", null);
+//			list.push("HScrollBar.Thumb.downFilters", null);
+//			list.push("HScrollBar.Thumb.disabledFilters", null);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			list.push("HSlider.bg", ImageBackGround);
+			list.push("HSlider.bgImg", HSliderBackgroundUpImg_Asset);
+			list.push("HSlider.bgInsets", new Insets(2, 3, 2, 3));
+			
+			list.push("HSlider.Thumb.bg", ButtonScaleImageBackground);
+			list.push("HSlider.Thumb.upImg", HSliderThumbUpImg_Asset);
+			list.push("HSlider.Thumb.overImg", HSliderThumbOverImg_Asset);
+			list.push("HSlider.Thumb.downImg", HSliderThumbDownImg_Asset);
+			list.push("HSlider.Thumb.disabledImg", HSliderThumbDisabledImg_Asset);
+//			list.push("HScrollBar.Thumb.upInsets", null);
+//			list.push("HScrollBar.Thumb.overInsets", null);
+//			list.push("HScrollBar.Thumb.downInsets", null);
+//			list.push("HScrollBar.Thumb.disabledInsets", null);
+//			list.push("HSlider.Thumb.upFilters", null);
+//			list.push("HSlider.Thumb.overFilters", null);
+//			list.push("HSlider.Thumb.downFilters", null);
+//			list.push("HSlider.Thumb.disabledFilters", null);
 		}
 	}
 }

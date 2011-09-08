@@ -23,6 +23,15 @@ package jcomponent.org.basic
 			throw new Error("继承的子类中必需覆盖此方法!");
 		}
 		
+		protected function installDefaults(component:Component):void
+		{
+			var pp:String = getResourcesPrefix(component);
+			
+			LookAndFeel.installColors(component, pp);
+			LookAndFeel.installFonts(component, pp);
+			LookAndFeel.installBorderAndDecorators(component, pp);
+		}
+		
 		public function uninstall(component:Component):void
 		{
 			throw new Error("继承的子类中必需覆盖此方法!");

@@ -1,4 +1,4 @@
-package jcomponent.org.coms.scrollbars
+package jcomponent.org.coms.sliders
 {
 	import jcomponent.org.basic.Component;
 	import jcomponent.org.basic.DefaultBoundedRangeModel;
@@ -7,7 +7,7 @@ package jcomponent.org.coms.scrollbars
 	import jcomponent.org.basic.UIConstants;
 	import jcomponent.org.events.ComponentEvent;
 	
-	public class AbstractScrollBar extends Component
+	public class Slider extends Component
 	{
 		/** 
 		 * Horizontal orientation. Used for scrollbars and sliders.
@@ -33,60 +33,42 @@ package jcomponent.org.coms.scrollbars
 		protected var m_vThumbHGap:int;
 		protected var m_vThumbVGap:int;
 		
-		protected var m_margin:int = int.MIN_VALUE;
-		
-		protected var m_scrollLength:int;
-		
 		protected var m_model:IBoundedRangeModel;
+		
+		protected var m_margin:int = int.MIN_VALUE;
 		
 		protected var m_needChangeThumb:Boolean;
 		
-		protected var m_autoScrollDelay:int;
 		
-		protected var m_autoScrollStep:int = 5;
-		
-		internal var autoScrollDelayFrameCount:int;
-		
-		protected var m_thumbMinSize:int;
-		
-		public function AbstractScrollBar(dir:int = VERTICAL, value:int = 0, min:int = 0, max:int = 100, prefix:String=null, id:String=null)
+		public function Slider(dir:int = HORIZONTAL, prefix:String=null, id:String=null)
 		{
-			if(dir == HORIZONTAL)
-			{
-				m_dir = HORIZONTAL;
-			}
-			else
-			{
-				m_dir = VERTICAL;
-			}
+			m_dir = dir;
 			
-			model = new DefaultBoundedRangeModel(value, min, max);
-			
-			autoScrollDelay = 800;
+			model = new DefaultBoundedRangeModel();
 			
 			super(prefix, id);
 		}
 		
 		override public function getUIDefaultBasicClass():Class
 		{
-			return BasicScrollBarUI;
+			return BasicSliderUI;
 		}
 		
 		override protected function getUIDefaultClassID():String
 		{
-			return DefaultConfigKeys.SCROLL_BAR_UI;
+			return DefaultConfigKeys.SLIDER_UI;
 		}
 
 		public function get dir():int
 		{
 			return m_dir;
 		}
-
+		
 		public function get hDirHGap():int
 		{
 			return m_hDirHGap;
 		}
-
+		
 		public function set hDirHGap(value:int):void
 		{
 			if(m_hDirHGap != value)
@@ -96,12 +78,12 @@ package jcomponent.org.coms.scrollbars
 				invalidate();
 			}
 		}
-
+		
 		public function get hDirVGap():int
 		{
 			return m_hDirVGap;
 		}
-
+		
 		public function set hDirVGap(value:int):void
 		{
 			if(m_hDirVGap != value)
@@ -111,12 +93,12 @@ package jcomponent.org.coms.scrollbars
 				invalidate();
 			}
 		}
-
+		
 		public function get vDirHGap():int
 		{
 			return m_vDirHGap;
 		}
-
+		
 		public function set vDirHGap(value:int):void
 		{
 			if(m_vDirHGap != value)
@@ -126,12 +108,12 @@ package jcomponent.org.coms.scrollbars
 				invalidate();
 			}
 		}
-
+		
 		public function get vDirVGap():int
 		{
 			return m_vDirVGap;
 		}
-
+		
 		public function set vDirVGap(value:int):void
 		{
 			if(m_vDirVGap != value)
@@ -141,12 +123,12 @@ package jcomponent.org.coms.scrollbars
 				invalidate();
 			}
 		}
-
+		
 		public function get hThumbHGap():int
 		{
 			return m_hThumbHGap;
 		}
-
+		
 		public function set hThumbHGap(value:int):void
 		{
 			if(m_hThumbHGap != value)
@@ -156,12 +138,12 @@ package jcomponent.org.coms.scrollbars
 				invalidate();
 			}
 		}
-
+		
 		public function get hThumbVGap():int
 		{
 			return m_hThumbVGap;
 		}
-
+		
 		public function set hThumbVGap(value:int):void
 		{
 			if(m_hThumbVGap != value)
@@ -171,12 +153,12 @@ package jcomponent.org.coms.scrollbars
 				invalidate();
 			}
 		}
-
+		
 		public function get vThumbHGap():int
 		{
 			return m_vThumbHGap;
 		}
-
+		
 		public function set vThumbHGap(value:int):void
 		{
 			if(m_vThumbHGap != value)
@@ -186,12 +168,12 @@ package jcomponent.org.coms.scrollbars
 				invalidate();
 			}
 		}
-
+		
 		public function get vThumbVGap():int
 		{
 			return m_vThumbVGap;
 		}
-
+		
 		public function set vThumbVGap(value:int):void
 		{
 			if(m_vThumbVGap != value)
@@ -201,12 +183,12 @@ package jcomponent.org.coms.scrollbars
 				invalidate();
 			}
 		}
-
+		
 		public function get margin():int
 		{
 			return m_margin;
 		}
-
+		
 		public function set margin(value:int):void
 		{
 			if(m_margin != value)
@@ -216,50 +198,12 @@ package jcomponent.org.coms.scrollbars
 				invalidate();
 			}
 		}
-
-		public function get scrollLength():int
-		{
-			return m_scrollLength;
-		}
-
-		public function set scrollLength(value:int):void
-		{
-			if(m_scrollLength != value)
-			{
-				m_scrollLength = value;
-				
-				if(m_dir == HORIZONTAL)
-				{
-					if((m_scrollLength - width) >= 0)
-					{
-						model.setMaximum(m_scrollLength - width);
-					}
-					else
-					{
-						model.setMaximum(0);
-					}
-				}
-				else
-				{
-					if((m_scrollLength - height) >= 0)
-					{
-						model.setMaximum(m_scrollLength - height);
-					}
-					else
-					{
-						model.setMaximum(0);
-					}
-				}
-				
-				invalidate();
-			}
-		}
-
+		
 		public function get model():IBoundedRangeModel
 		{
 			return m_model;
 		}
-
+		
 		public function set model(value:IBoundedRangeModel):void
 		{
 			if(m_model != value)
@@ -273,7 +217,7 @@ package jcomponent.org.coms.scrollbars
 				invalidate();
 			}
 		}
-
+		
 		public function get minimum():int
 		{
 			return model.getMinimum();
@@ -306,12 +250,6 @@ package jcomponent.org.coms.scrollbars
 			model.setValue(val);
 		}
 		
-		public function scroll(delta:Number):void
-		{
-			var added:int = -delta * m_autoScrollStep;
-			value += added;
-		}
-		
 		internal function setValueUnChangeThumb(val:Number):void
 		{
 			model.setValue(val);
@@ -342,58 +280,6 @@ package jcomponent.org.coms.scrollbars
 		protected function __modelStateListener(event:ComponentEvent):void
 		{
 			dispatchEvent(new ComponentEvent(ComponentEvent.STATE_CHANGED));
-		}
-
-		public function get autoScrollDelay():int
-		{
-			return m_autoScrollDelay;
-		}
-
-		public function set autoScrollDelay(value:int):void
-		{
-			if(value <= 0) return;
-			
-			m_autoScrollDelay = value;
-			
-			autoScrollDelayFrameCount = 1000 / StageRef.fps;
-			
-			autoScrollDelayFrameCount = Math.ceil(m_autoScrollDelay / autoScrollDelayFrameCount);
-			
-			if(autoScrollDelayFrameCount <= 0) autoScrollDelayFrameCount = 2;
-		}
-
-		public function get autoScrollStep():int
-		{
-			return m_autoScrollStep;
-		}
-
-		public function set autoScrollStep(value:int):void
-		{
-			if(value <= 0) return;
-			
-			m_autoScrollStep = value;
-		}
-
-		public function get thumbMinSize():int
-		{
-			return m_thumbMinSize;
-		}
-
-		public function set thumbMinSize(value:int):void
-		{
-			if(m_thumbMinSize != value)
-			{
-				m_thumbMinSize = value;
-				
-				invalidate();
-			}
-		}
-		
-		override public function dispose():void
-		{
-			m_model = null;
-			
-			super.dispose();
 		}
 	}
 }

@@ -3,7 +3,7 @@ package jcomponent.org.basic
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	
-	import jcomponent.org.events.ScrollBarEvent;
+	import jcomponent.org.events.ComponentEvent;
 	
 	public class DefaultBoundedRangeModel extends EventDispatcher implements IBoundedRangeModel
 	{
@@ -90,17 +90,17 @@ package jcomponent.org.basic
 		
 		public function addStateListener(listener:Function, priority:int=0, useWeakReference:Boolean=false):void
 		{
-			addEventListener(ScrollBarEvent.STATE_CHANGED, listener, false, priority, useWeakReference);
+			addEventListener(ComponentEvent.STATE_CHANGED, listener, false, priority, useWeakReference);
 		}
 		
 		public function removeStateListener(listener:Function):void
 		{
-			removeEventListener(ScrollBarEvent.STATE_CHANGED, listener);
+			removeEventListener(ComponentEvent.STATE_CHANGED, listener);
 		}
 		
 		protected function fireStateChange():void
 		{
-			dispatchEvent(new ScrollBarEvent(ScrollBarEvent.STATE_CHANGED));
+			dispatchEvent(new ComponentEvent(ComponentEvent.STATE_CHANGED));
 		}
 		
 		override public function toString():String

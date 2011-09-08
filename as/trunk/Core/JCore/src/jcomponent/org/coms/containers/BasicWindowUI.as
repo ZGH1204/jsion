@@ -28,14 +28,14 @@ package jcomponent.org.coms.containers
 			installAlignAndGap(component);
 		}
 		
-		protected function installDefaults(component:Component):void
-		{
-			var pp:String = getResourcesPrefix(component);
-			
-			LookAndFeel.installFonts(component, pp);
-			LookAndFeel.installColors(component, pp);
-			LookAndFeel.installBorderAndDecorators(component, pp);
-		}
+//		protected function installDefaults(component:Component):void
+//		{
+//			var pp:String = getResourcesPrefix(component);
+//			
+//			LookAndFeel.installFonts(component, pp);
+//			LookAndFeel.installColors(component, pp);
+//			LookAndFeel.installBorderAndDecorators(component, pp);
+//		}
 		
 		protected function installTitleBar(component:Component):void
 		{

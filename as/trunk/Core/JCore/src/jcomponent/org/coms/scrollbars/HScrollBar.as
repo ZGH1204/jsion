@@ -9,6 +9,8 @@ package jcomponent.org.coms.scrollbars
 			super(HORIZONTAL, value, min, max, prefix, id);
 		}
 		
+		
+		
 		override public function getUIDefaultBasicClass():Class
 		{
 			return HScrollBarUI;

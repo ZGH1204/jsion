@@ -39,14 +39,14 @@ package jcomponent.org.coms.buttons
 			installTextField(component);
 		}
 		
-		private function installDefaults(component:Component):void
-		{
-			var pp:String = getResourcesPrefix(component);
-			
-			LookAndFeel.installFonts(component, pp);
-			LookAndFeel.installColors(component, pp);
-			LookAndFeel.installBorderAndDecorators(component, pp);
-		}
+//		private function installDefaults(component:Component):void
+//		{
+//			var pp:String = getResourcesPrefix(component);
+//			
+//			LookAndFeel.installFonts(component, pp);
+//			LookAndFeel.installColors(component, pp);
+//			LookAndFeel.installBorderAndDecorators(component, pp);
+//		}
 		
 		private function installFilters(component:Component):void
 		{
