@@ -43,7 +43,7 @@ package jcomponent.org.coms.scrollbars
 		
 		protected var m_autoScrollDelay:int;
 		
-		protected var m_autoScrollStep:int = 5;
+		protected var m_autoScrollStep:Number = 1;
 		
 		internal var autoScrollDelayFrameCount:int;
 		
@@ -304,12 +304,16 @@ package jcomponent.org.coms.scrollbars
 			m_needChangeThumb = true;
 			
 			model.setValue(val);
+			
+			m_needChangeThumb = false;
 		}
 		
-		public function scroll(delta:Number):void
+		public function scroll(addedValue:Number):void
 		{
-			var added:int = -delta * m_autoScrollStep;
-			value += added;
+			if(value >= maximum && addedValue >= 0) return;
+			if(value <= minimum && addedValue <= 0) return;
+			
+			value += addedValue;
 		}
 		
 		internal function setValueUnChangeThumb(val:Number):void
@@ -362,12 +366,12 @@ package jcomponent.org.coms.scrollbars
 			if(autoScrollDelayFrameCount <= 0) autoScrollDelayFrameCount = 2;
 		}
 
-		public function get autoScrollStep():int
+		public function get autoScrollStep():Number
 		{
 			return m_autoScrollStep;
 		}
 
-		public function set autoScrollStep(value:int):void
+		public function set autoScrollStep(value:Number):void
 		{
 			if(value <= 0) return;
 			
@@ -391,6 +395,8 @@ package jcomponent.org.coms.scrollbars
 		
 		override public function dispose():void
 		{
+			if(m_model) m_model.removeStateListener(__modelStateListener);
+			
 			m_model = null;
 			
 			super.dispose();

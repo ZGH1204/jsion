@@ -279,7 +279,7 @@ package jcomponent.org.basic
 		*/
 		//===================================================================================
 		public static const SCROLL_BAR_PRE:String = "ScrollBar.";
-		public static const SCROLL_BAR_THUMB_PRE:String = "Thumb.";
+		public static const SCROLL_BAR_THUMB_PRE:String = "Thumb.";//ScaleImageButton配置项
 		
 		public static const VSCROLL_BAR_PRE:String = "VScrollBar.";
 		public static const VScroll_BAR_TOP_BUTTON_PRE:String = "TopButton.";//类型：ScaleImageButton
@@ -328,12 +328,17 @@ package jcomponent.org.basic
 		
 		
 		public static const SLIDER_PRE:String = "Slider.";
-		public static const HSLIDER_PRE:String = "HSlider.";
+		public static const SLIDER_THUMB_PRE:String = "Thumb.";//ScaleImageButton配置项
+		
+		public static const SLIDER_STEP:String = "step";
+		
 		public static const VSLIDER_PRE:String = "VSlider.";
+		public static const VSLIDER_VTHUMB_HGAP:String = "vThumbHGap";
+		public static const VSLIDER_VTHUMB_VGAP:String = "vThumbVGap";
 		
-		
-		
-		
+		public static const HSLIDER_PRE:String = "HSlider.";
+		public static const HSLIDER_HTHUMB_HGAP:String = "hThumbHGap";
+		public static const HSLIDER_HTHUMB_VGAP:String = "hThumbVGap";
 		
 		
 	}

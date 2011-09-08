@@ -9,7 +9,6 @@ package jcomponent.org.coms.scrollbars
 	import jcomponent.org.basic.DefaultConfigKeys;
 	import jcomponent.org.basic.IBoundedRangeModel;
 	import jcomponent.org.basic.IGroundDecorator;
-	import jcomponent.org.basic.LookAndFeel;
 	import jcomponent.org.basic.UIConstants;
 	import jcomponent.org.coms.buttons.ScaleImageButton;
 	import jcomponent.org.events.ComponentEvent;
@@ -69,7 +68,7 @@ package jcomponent.org.coms.scrollbars
 			
 			
 			bar.autoScrollDelay = getInt(pp + DefaultConfigKeys.SCROLL_BAR_SCROLL_DELAY);//单位:毫秒
-			bar.autoScrollStep = getInt(pp + DefaultConfigKeys.SCROLL_BAR_SCROLL_STEP);
+			bar.autoScrollStep = getNumber(pp + DefaultConfigKeys.SCROLL_BAR_SCROLL_STEP);
 			
 			bar.thumbMinSize = getInt(pp + DefaultConfigKeys.SCROLL_BAR_THUMB_MIN_SIZE);
 		}
@@ -167,7 +166,7 @@ package jcomponent.org.coms.scrollbars
 				if(e.localY < thumb.y) block *= -1;
 			}
 			
-			scrollBar.value += block;
+			scrollBar.scroll(block);
 			
 			e.stopPropagation();
 		}
@@ -198,7 +197,9 @@ package jcomponent.org.coms.scrollbars
 		
 		private function __mouseWheelHandler(e:MouseEvent):void
 		{
-			scrollBar.scroll(e.delta);
+			if(e.buttonDown) return;
+			
+			scrollBar.scroll(-e.delta * scrollBar.autoScrollStep);
 		}
 		
 		private function __releaseHandler(e:ReleaseEvent):void
@@ -213,7 +214,7 @@ package jcomponent.org.coms.scrollbars
 			
 			if(m_cur <= scrollBar.autoScrollDelayFrameCount) return;
 			
-			scrollBar.value += m_val;
+			scrollBar.scroll(m_val);
 			
 			if(scrollBar.value >= scrollBar.maximum) StageRef.removeEventListener(Event.ENTER_FRAME, __enterFrameHandler);
 		}
@@ -222,7 +223,7 @@ package jcomponent.org.coms.scrollbars
 		{
 			m_cur = 0;
 			m_val = -scrollBar.autoScrollStep;
-			scrollBar.value += m_val;
+			scrollBar.scroll(m_val);
 			StageRef.addEventListener(Event.ENTER_FRAME, __enterFrameHandler);
 		}
 		
@@ -230,7 +231,7 @@ package jcomponent.org.coms.scrollbars
 		{
 			m_cur = 0;
 			m_val = scrollBar.autoScrollStep;
-			scrollBar.value += m_val;
+			scrollBar.scroll(m_val);
 			StageRef.addEventListener(Event.ENTER_FRAME, __enterFrameHandler);
 		}
 		
@@ -238,7 +239,7 @@ package jcomponent.org.coms.scrollbars
 		{
 			m_cur = 0;
 			m_val = -scrollBar.autoScrollStep;
-			scrollBar.value += m_val;
+			scrollBar.scroll(m_val);
 			StageRef.addEventListener(Event.ENTER_FRAME, __enterFrameHandler);
 		}
 		
@@ -246,7 +247,7 @@ package jcomponent.org.coms.scrollbars
 		{
 			m_cur = 0;
 			m_val = scrollBar.autoScrollStep;
-			scrollBar.value += m_val;
+			scrollBar.scroll(m_val);
 			StageRef.addEventListener(Event.ENTER_FRAME, __enterFrameHandler);
 		}
 		
@@ -307,6 +308,8 @@ package jcomponent.org.coms.scrollbars
 		
 		override public function paint(component:Component, bounds:IntRectangle):void
 		{
+			super.paint(component, bounds);
+			
 			var bar:AbstractScrollBar = AbstractScrollBar(component);
 			
 			if(scrollBar.dir == AbstractScrollBar.HORIZONTAL) paintHorizontalScrollBar(bar);
@@ -344,8 +347,6 @@ package jcomponent.org.coms.scrollbars
 				tExtent += thumb.startPoint.y;
 				thumb.y = tExtent;
 			}
-			
-			scrollBar.needChangeThumb = false;
 		}
 		
 		protected function paintHorizontalScrollBar(bar:AbstractScrollBar):void

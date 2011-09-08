@@ -18,8 +18,9 @@ package
 	import jcomponent.org.coms.scrollbars.AbstractScrollBar;
 	import jcomponent.org.coms.scrollbars.HScrollBar;
 	import jcomponent.org.coms.scrollbars.VScrollBar;
+	import jcomponent.org.coms.sliders.AbstractSlider;
 	import jcomponent.org.coms.sliders.HSlider;
-	import jcomponent.org.coms.sliders.Slider;
+	import jcomponent.org.coms.sliders.VSlider;
 	import jcomponent.org.mgrs.UIMgr;
 	
 	import jcore.org.loader.BinaryLoader;
@@ -70,23 +71,44 @@ package
 		
 		private var bar:AbstractScrollBar;
 		
-		private var slider:Slider;
+		private var slider:AbstractSlider;
 		
 		private function loadCallback(loader:BinaryLoader):void
 		{
 			//MessageMonitor.createAndPostMsg(1, "JLauncher", ["Promiscuous"], loader.content);
 			
-			if(slider) return;
+			if(slider)
+			{
+				DisposeUtil.free(slider);
+				slider = null;
+				
+				return;
+			}
 			
-			slider = new HSlider();
 			
-			//slider.pack();
-			slider.width = 507;
-			//slider.height = 50;
+			slider = new VSlider();
+			
+			slider.pack();
+			//slider.width = 507;
+			//slider.height = 207;
 			
 			slider.setLocationXY(100, 100);
 			
 			addChild(slider);
+			
+			
+//			slider = new VSlider();
+//			
+//			//slider.pack();
+//			slider.width = 507;
+//			slider.height = 207;
+//			
+//			slider.setLocationXY(100, 100);
+//			
+//			addChild(slider);
+			
+			
+			
 			
 //			if(container)
 //			{
@@ -119,6 +141,10 @@ package
 //			
 //			addChild(container);
 			
+			
+			
+			
+			
 //			if(bar) return;
 //			
 //			bar = new VScrollBar();
@@ -132,6 +158,7 @@ package
 //			//bar.enabled = false;
 //			addChild(bar);
 			
+			
 //			bar = new HScrollBar();
 //			bar.setLocationXY(100, 50);
 //			bar.width = 350;
@@ -143,6 +170,9 @@ package
 //			//bar.enabled = false;
 //			addChild(bar);
 			
+			
+			
+			
 //			if(win) return;
 //			
 //			win = new Frame("Frame面板");
@@ -153,6 +183,8 @@ package
 //			
 //			win.show();
 			
+			
+			
 //			win = new Window("窗口面板");
 //			
 //			win.x = win.y = 100;
@@ -161,6 +193,8 @@ package
 //			
 //			win.show();
 			//addChild(win);
+			
+			
 			
 //			if(container == null)
 //			{
@@ -193,6 +227,8 @@ package
 //			container.y = 40;
 //			container.alpha = 0;
 //			TweenMax.to(container, 0.5, {y: 20, alpha: 1});
+			
+			
 			
 //			if(btn) return;
 			

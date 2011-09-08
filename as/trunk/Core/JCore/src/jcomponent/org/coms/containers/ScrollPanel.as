@@ -135,7 +135,7 @@ package jcomponent.org.coms.containers
 		
 		protected function __mouseWheelHandler(e:MouseEvent):void
 		{
-			if(m_vScrollBar) m_vScrollBar.scroll(e.delta);
+			if(m_vScrollBar) m_vScrollBar.scroll(-e.delta * m_vScrollBar.autoScrollStep);
 		}
 		
 		protected function __vScrollBarStateChangeHandler(e:ComponentEvent):void

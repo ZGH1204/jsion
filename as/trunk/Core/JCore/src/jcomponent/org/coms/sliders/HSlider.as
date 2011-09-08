@@ -2,7 +2,7 @@ package jcomponent.org.coms.sliders
 {
 	import jcomponent.org.basic.DefaultConfigKeys;
 
-	public class HSlider extends Slider
+	public class HSlider extends AbstractSlider
 	{
 		public function HSlider(prefix:String=null, id:String=null)
 		{

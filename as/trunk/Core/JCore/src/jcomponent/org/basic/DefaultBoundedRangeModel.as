@@ -63,12 +63,13 @@ package jcomponent.org.basic
 			if(m_value != value)
 			{
 				value = Math.min(value, m_maximum);
-				var newValue:int = Math.max(value, m_minimum);
+				var newValue:Number = Math.max(value, m_minimum);
 				setRangeProperties(newValue, m_minimum, m_maximum);
+				//trace("当前Value为：" + newValue);
 			}
 		}
 		
-		public function setRangeProperties(newValue:int, newMin:int, newMax:int):void
+		public function setRangeProperties(newValue:Number, newMin:int, newMax:int):void
 		{
 			if(newMin > newMax) newMin = newMax;
 			

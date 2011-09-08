@@ -71,11 +71,7 @@ package jcomponent.org.coms.scrollbars
 		
 		public function dragingCallback():void
 		{
-			if(x < m_minX) x = m_minX;
-			else if(x > m_maxX) x = m_maxX;
-			
-			if(y < m_minY) y = m_minY;
-			else if(y > m_maxY) y = m_maxY;
+			check();
 			
 			if(m_dir == UIConstants.HORIZONTAL)
 			{
@@ -110,6 +106,15 @@ package jcomponent.org.coms.scrollbars
 			m_dragingFn = null;
 			
 			super.dispose();
+		}
+		
+		public function check():void
+		{
+			if(x < m_minX) x = m_minX;
+			else if(x > m_maxX) x = m_maxX;
+			
+			if(y < m_minY) y = m_minY;
+			else if(y > m_maxY) y = m_maxY;
 		}
 
 		public function get startPoint():IntPoint
