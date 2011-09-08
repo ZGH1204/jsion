@@ -12,8 +12,8 @@ package jcomponent.org.coms.scrollbars
 	import jcomponent.org.basic.LookAndFeel;
 	import jcomponent.org.basic.UIConstants;
 	import jcomponent.org.coms.buttons.ScaleImageButton;
+	import jcomponent.org.events.ComponentEvent;
 	import jcomponent.org.events.ReleaseEvent;
-	import jcomponent.org.events.ScrollBarEvent;
 	
 	import jutils.org.util.DisposeUtil;
 	
@@ -47,15 +47,6 @@ package jcomponent.org.coms.scrollbars
 			installListener(component);
 		}
 		
-		protected function installDefaults(component:Component):void
-		{
-			var pp:String = getResourcesPrefix(component);
-			
-			LookAndFeel.installColors(component, pp);
-			LookAndFeel.installFonts(component, pp);
-			LookAndFeel.installBorderAndDecorators(component, pp);
-		}
-		
 		protected function installProperties(component:Component):void
 		{
 			var bar:AbstractScrollBar = AbstractScrollBar(component);
@@ -64,17 +55,23 @@ package jcomponent.org.coms.scrollbars
 			bar.hDirHGap = getInt(pp + DefaultConfigKeys.SCROLL_BAR_HDIR_HGAP);
 			bar.hDirVGap = getInt(pp + DefaultConfigKeys.SCROLL_BAR_HDIR_VGAP);
 			
-			bar.vDirHGap = getInt(pp + DefaultConfigKeys.SCROLL_BAR_VDIR_HGAP);
-			bar.vDirVGap = getInt(pp + DefaultConfigKeys.SCROLL_BAR_VDIR_VGAP);
-			
 			bar.hThumbHGap = getInt(pp + DefaultConfigKeys.HSCROLL_BAR_HTHUMB_HGAP);
 			bar.hThumbVGap = getInt(pp + DefaultConfigKeys.HSCROLL_BAR_HTHUMB_VGAP);
+			
+			
+			
+			bar.vDirHGap = getInt(pp + DefaultConfigKeys.SCROLL_BAR_VDIR_HGAP);
+			bar.vDirVGap = getInt(pp + DefaultConfigKeys.SCROLL_BAR_VDIR_VGAP);
 			
 			bar.vThumbHGap = getInt(pp + DefaultConfigKeys.VSCROLL_BAR_VTHUMB_HGAP);
 			bar.vThumbVGap = getInt(pp + DefaultConfigKeys.VSCROLL_BAR_VTHUMB_VGAP);
 			
+			
+			
 			bar.autoScrollDelay = getInt(pp + DefaultConfigKeys.SCROLL_BAR_SCROLL_DELAY);//单位:毫秒
 			bar.autoScrollStep = getInt(pp + DefaultConfigKeys.SCROLL_BAR_SCROLL_STEP);
+			
+			bar.thumbMinSize = getInt(pp + DefaultConfigKeys.SCROLL_BAR_THUMB_MIN_SIZE);
 		}
 		
 		protected function installComponents(component:Component):void
@@ -171,6 +168,8 @@ package jcomponent.org.coms.scrollbars
 			}
 			
 			scrollBar.value += block;
+			
+			e.stopPropagation();
 		}
 		
 		private function getModelUnit():Number
@@ -199,8 +198,7 @@ package jcomponent.org.coms.scrollbars
 		
 		private function __mouseWheelHandler(e:MouseEvent):void
 		{
-			var added:int = -e.delta * scrollBar.autoScrollStep;
-			scrollBar.value += added;
+			scrollBar.scroll(e.delta);
 		}
 		
 		private function __releaseHandler(e:ReleaseEvent):void
@@ -317,7 +315,7 @@ package jcomponent.org.coms.scrollbars
 			locateThumb(bar);
 		}
 		
-		private function __stateChangeHandler(e:ScrollBarEvent):void
+		private function __stateChangeHandler(e:ComponentEvent):void
 		{
 			locateThumb(scrollBar);
 		}
@@ -387,7 +385,7 @@ package jcomponent.org.coms.scrollbars
 				
 				var tmp:int = rightBtn.x - hgap;
 				
-				thumb.width = tmp * i;
+				thumb.width = Math.max(tmp * i, bar.thumbMinSize);
 				
 				if(bar.enabled)
 					thumb.visible = true;
@@ -449,7 +447,7 @@ package jcomponent.org.coms.scrollbars
 				
 				var tmp:int = bottomBtn.y - vgap;
 				
-				thumb.height = tmp * j;
+				thumb.height = Math.max(tmp * j, bar.thumbMinSize);
 				//thumb.height = 100;
 				
 				if(bar.enabled)
@@ -480,7 +478,7 @@ package jcomponent.org.coms.scrollbars
 			var val:Number = scrollBar.maximum - scrollBar.minimum;
 			val *= percent;
 			scrollBar.setValueUnChangeThumb(val);
-			trace("Percent pos: " + scrollBar.value);
+			//trace("Percent pos: " + scrollBar.value);
 		}
 		
 		override protected function getDefaultPrefix():String

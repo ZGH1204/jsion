@@ -33,6 +33,14 @@ package jcomponent.org.basic
 		public static const HSCROLL_BAR_UI:String = "HScrollBarUI";
 		
 		
+		public static const SCROLL_PANEL_UI:String = "ScrollPanelUI";
+		
+		public static const SLIDER_UI:String = "SliderUI";
+		
+		public static const HSLIDER_UI:String = "HSliderUI";
+		
+		public static const VSLIDER_UI:String = "VSliderUI";
+		
 		
 		//===================================================================================
 		/*
@@ -267,7 +275,7 @@ package jcomponent.org.basic
 		
 		//===================================================================================
 		/*
-		* Frame组件配置属性,标识HScrollBar或VScrollBar为对应的专用配置,无标识则为SCROLL_BAR通用配置
+		* ScrollBar组件配置属性,标识HScrollBar或VScrollBar为对应的专用配置,无标识则为SCROLL_BAR通用配置
 		*/
 		//===================================================================================
 		public static const SCROLL_BAR_PRE:String = "ScrollBar.";
@@ -295,5 +303,38 @@ package jcomponent.org.basic
 		
 		public static const HSCROLL_BAR_HTHUMB_HGAP:String = "hThumbHGap";
 		public static const HSCROLL_BAR_HTHUMB_VGAP:String = "hThumbVGap";
+		
+		public static const SCROLL_BAR_THUMB_MIN_SIZE:String = "thumbMinSize";
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		public static const SCROLL_PANEL_PRE:String = "ScrollPanel.";
+		public static const SCROLL_PANEL_HSCROLL_BAR:String = "hScrollBarPre";//与HScrollBar配置相同,不设置此配置的值时使用默认的HScrollBar配置
+		public static const SCROLL_PANEL_VSCROLL_BAR:String = "vScrollBarPre";//与VScrollBar配置相同,不设置此配置的值时使用默认的VScrollBar配置
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		public static const SLIDER_PRE:String = "Slider.";
+		public static const HSLIDER_PRE:String = "HSlider.";
+		public static const VSLIDER_PRE:String = "VSlider.";
+		
+		
+		
+		
+		
+		
 	}
 }
