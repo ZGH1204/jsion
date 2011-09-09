@@ -4,25 +4,22 @@ package jcomponent.org.basic.layouts
 	
 	import jcomponent.org.basic.Container;
 	import jcomponent.org.basic.IGroundDecorator;
+	import jcomponent.org.coms.containers.AbstractBox;
 
 	public class VBoxLayout extends EmptyLayout
 	{
-		private var m_gap:int;
-		
-		public function VBoxLayout(gap:int = 0)
+		public function VBoxLayout()
 		{
 			super();
-			
-			m_gap = gap;
-		}
-		
-		public function get gap():int
-		{
-			return m_gap;
 		}
 		
 		override public function layoutContainer(target:Container):void
 		{
+			var viewRect:IntRectangle = new IntRectangle();
+			viewRect.setSize(target.getSize());
+			
+			var box:AbstractBox = AbstractBox(target);
+			
 			var count:int = target.numChildren;
 			
 			if(count <= 0) return;
@@ -40,6 +37,8 @@ package jcomponent.org.basic.layouts
 			var preDis:DisplayObject;
 			var maxW:int;
 			
+			var tmpRect:IntRectangle = new IntRectangle();
+			
 			for(; i < count; i++)
 			{
 				var dis:DisplayObject = target.getChildAt(i);
@@ -49,12 +48,18 @@ package jcomponent.org.basic.layouts
 				if(preDis)
 				{
 					dis.y = preDis.y + preDis.height;
-					dis.y += m_gap;
+					dis.y += box.gap;
 				}
 				else
 				{
 					dis.y = 0;
 				}
+				
+				tmpRect.setRectXYWH(0, 0, dis.width, dis.height);
+				
+				JUtil.layoutPosition(viewRect, box.hAlign, box.vAlign, 0, 0, tmpRect);
+				
+				dis.x = tmpRect.x;
 				
 				maxW = Math.max(dis.width, maxW);
 				

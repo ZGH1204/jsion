@@ -41,6 +41,8 @@ package jcomponent.org.basic
 		
 		public static const VSLIDER_UI:String = "VSliderUI";
 		
+		public static const TabPanel_UI:String = "TabPanelUI";
+		
 		
 		//===================================================================================
 		/*
@@ -339,6 +341,16 @@ package jcomponent.org.basic
 		public static const HSLIDER_PRE:String = "HSlider.";
 		public static const HSLIDER_HTHUMB_HGAP:String = "hThumbHGap";
 		public static const HSLIDER_HTHUMB_VGAP:String = "hThumbVGap";
+		
+		
+		
+		
+		
+		
+		
+		
+		public static const TABPANEL_PRE:String = "TabPanel.";
+		
 		
 		
 	}

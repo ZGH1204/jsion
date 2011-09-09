@@ -2,10 +2,15 @@ package jcomponent.org.basic
 {
 	import flash.display.DisplayObject;
 	
+	import jcomponent.org.basic.layouts.ILayoutManager;
+	
 	import jutils.org.util.ArrayUtil;
+	import jutils.org.util.DisposeUtil;
 
 	public class Container extends Component
 	{
+		protected var layout:ILayoutManager;
+		
 		protected var children:Array = [];
 		
 		public function Container(prefix:String = null, id:String=null)
@@ -13,7 +18,30 @@ package jcomponent.org.basic
 			super(prefix, id);
 		}
 		
-		public function inset(component:Component, constraints:Object=null, index:int = -1):void
+		override public function paint():void
+		{
+			if(layout) layout.layoutContainer(this);
+			
+			super.paint();
+		}
+		
+		override public function addChild(child:DisplayObject):DisplayObject
+		{
+			if(child is Component) insert(child as Component);
+			else super.addChild(child);
+			
+			return child;
+		}
+		
+		override public function addChildAt(child:DisplayObject, index:int):DisplayObject
+		{
+			if(child is Component) insert(child as Component, null, index);
+			else super.addChildAt(child, index);
+			
+			return child;
+		}
+		
+		public function insert(component:Component, constraints:Object=null, index:int = -1):void
 		{
 			if(index > getComponentCount())
 			{
@@ -43,12 +71,12 @@ package jcomponent.org.basic
 			if(index < 0)
 			{
 				children.push(component);
-				addChild(component);
+				super.addChild(component);
 			}
 			else
 			{
 				ArrayUtil.insert(children, component, index);
-				addChildAt(component, index);
+				super.addChildAt(component, index);
 			}
 			
 			invalidate();
@@ -130,6 +158,10 @@ package jcomponent.org.basic
 		
 		override public function dispose():void
 		{
+			DisposeUtil.free(layout);
+			layout = null;
+			
+			
 			removeAll();
 			
 			super.dispose();

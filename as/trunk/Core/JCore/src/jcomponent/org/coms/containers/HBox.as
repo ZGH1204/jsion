@@ -2,25 +2,17 @@ package jcomponent.org.coms.containers
 {
 	import flash.display.DisplayObject;
 	
-	import jcomponent.org.basic.Container;
 	import jcomponent.org.basic.layouts.HBoxLayout;
-	import jcomponent.org.basic.layouts.ILayoutManager;
 	
-	import jutils.org.util.DisposeUtil;
-	
-	public class HBox extends Container
+	public class HBox extends AbstractBox
 	{
-		protected var layout:ILayoutManager;
-		
-		protected var m_gap:int;
-		
 		public function HBox(gap:int = 0, prefix:String = null, id:String=null)
 		{
 			super(prefix, id);
 			
 			m_gap = gap;
 			
-			this.layout = new HBoxLayout(gap);
+			this.layout = new HBoxLayout();
 		}
 		
 		override public function addChild(child:DisplayObject):DisplayObject
@@ -40,21 +32,6 @@ package jcomponent.org.coms.containers
 			}
 			
 			return super.addChild(child);
-		}
-		
-		override public function paint():void
-		{
-			if(layout) layout.layoutContainer(this);
-			
-			super.paint();
-		}
-		
-		override public function dispose():void
-		{
-			DisposeUtil.free(layout);
-			layout = null;
-			
-			super.dispose();
 		}
 	}
 }
