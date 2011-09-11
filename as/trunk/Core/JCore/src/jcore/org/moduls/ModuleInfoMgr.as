@@ -127,7 +127,7 @@ package jcore.org.moduls
 		{
 			if(moduleInfo == null)
 			{
-				throw new ArgumentError("参数 moduleInfo 不能为空!");
+				//throw new ArgumentError("参数 moduleInfo 不能为空!");
 				return;
 			}
 			

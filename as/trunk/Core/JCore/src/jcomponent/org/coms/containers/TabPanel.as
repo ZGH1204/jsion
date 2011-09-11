@@ -1,12 +1,15 @@
 package jcomponent.org.coms.containers
 {
+	import flash.display.DisplayObject;
+	
 	import jcomponent.org.basic.Component;
 	import jcomponent.org.basic.Container;
 	import jcomponent.org.basic.DefaultConfigKeys;
 	import jcomponent.org.basic.UIConstants;
+	import jcomponent.org.coms.buttons.AbstractButton;
 	import jcomponent.org.coms.buttons.ButtonGroup;
 	
-	public class TabPanel extends Component
+	public class TabPanel extends Container
 	{
 		public static const TOP:int = UIConstants.TOP;
 		public static const MIDDLE:int = UIConstants.MIDDLE;//tabsDir属性不适用
@@ -72,6 +75,8 @@ package jcomponent.org.coms.containers
 		
 		protected function init():void
 		{
+			layout = new TabPanelLayout();
+			
 			btnGround = new ButtonGroup();
 			
 			if(m_tabsDir == LEFT || m_tabsDir == RIGHT)
@@ -129,6 +134,25 @@ package jcomponent.org.coms.containers
 				panelContainer.x = xPos;
 				panelContainer.y = yPos;
 			}
+		}
+		
+		internal var pSize:IntDimension = new IntDimension();
+		
+		public function addTab(tab:ITab):void
+		{
+			tabsList.push(tab);
+			
+			var tabBtn:AbstractButton = tab.getTabButton();
+			tabBtnsList.push(tab.getTabButton());
+			btnGround.append(tabBtn);
+			tabContainer.addChild(tabBtn);
+			
+			var dis:DisplayObject = tab.getTabContent();
+			panelsList.push(dis);
+			panelContainer.addChild(dis);
+			
+			pSize.width = Math.max(pSize.width, dis.width);
+			pSize.height = Math.max(pSize.height, dis.height);
 		}
 		
 		public function get tabsDir():int
