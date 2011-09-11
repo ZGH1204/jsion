@@ -60,6 +60,8 @@ package jcore.org.moduls
 		
 		override public function dispose():void
 		{
+			ModuleMonitor.removeModule(_moduleInfo);
+			
 			_moduleInfo = null;
 			
 			super.dispose();

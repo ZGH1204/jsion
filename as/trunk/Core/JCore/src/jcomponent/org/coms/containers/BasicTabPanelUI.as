@@ -46,41 +46,30 @@ package jcomponent.org.coms.containers
 		
 		protected function paintTabAndPanel(tp:TabPanel):void
 		{
-			var viewRect:IntRectangle = new IntRectangle();
-			viewRect.setSize(tp.getSize());
 			
-			var tabsRect:IntRectangle = new IntRectangle();
-			tabsRect.setSize(tp.getTabContainerSize());
+		}
+		
+		override public function getPreferredSize(component:Component):IntDimension
+		{
+			var tp:TabPanel = component as TabPanel;
+			
+			var rlt:IntDimension = new IntDimension();
+			var tabSize:IntDimension = tp.getTabContainerSize();
+			
+			rlt.setSize(tp.pSize);
 			
 			if(tp.tabsDir == TabPanel.LEFT || tp.tabsDir == TabPanel.RIGHT)
 			{
-				JUtil.layoutPosition(viewRect, tp.tabsDir, tp.tabsVAlign, 0, tp.tabsVGap, tabsRect);
+				rlt.width += tabSize.width;
+				rlt.width += tp.tabAndPanelGap;
 			}
 			else //if(tp.tabsDir == TabPanel.TOP || tp.tabsDir == TabPanel.BOTTOM)
 			{
-				JUtil.layoutPosition(viewRect, tp.tabsHAlign, tp.tabsDir, tp.tabsHGap, 0, tabsRect);
+				rlt.height += tabSize.height;
+				rlt.height += tp.tabAndPanelGap;
 			}
 			
-			tp.setTabContainerLocation(tabsRect.x, tabsRect.y);
-			
-			var panleSize:IntDimension = tp.getPanelContainerSize();
-			
-			if(tp.tabsDir == TabPanel.BOTTOM)
-			{
-				tp.setPanelContainerLocation(0, tabsRect.y - panleSize.height - tp.tabAndPanelGap);
-			}
-			else if(tp.tabsDir == TabPanel.LEFT)
-			{
-				tp.setPanelContainerLocation(tabsRect.x + tabsRect.width + tp.tabAndPanelGap, 0);
-			}
-			else if(tp.tabsDir == TabPanel.RIGHT)
-			{
-				tp.setPanelContainerLocation(tabsRect.x - panleSize.width - tp.tabAndPanelGap);
-			}
-			else //if(tp.tabsDir == TabPanel.TOP)
-			{
-				tp.setPanelContainerLocation(0, tabsRect.y + tabsRect.height + tp.tabAndPanelGap);
-			}
+			return rlt;
 		}
 		
 		override public function dispose():void
