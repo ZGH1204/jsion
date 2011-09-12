@@ -15,6 +15,7 @@ package jutils.org.reflection
 		public var constructor:ConstructorInfo;
 		public var staticMethods:Dictionary;
 		public var memberMethods:Dictionary;
+		public var extendsClass:Vector.<String>;
 		public var propertys:Dictionary;
 		public var metadatas:Dictionary;
 		public var interfaces:Vector.<String>;
@@ -25,9 +26,23 @@ package jutils.org.reflection
 			return getIsImplInterface(clsPath);
 		}
 		
-		public function getIsImplInterface(interfaceString:String):Boolean
+		internal function getIsImplInterface(interfaceString:String):Boolean
 		{
 			return interfaces.indexOf(interfaceString) != -1;
+		}
+		
+		public function getIsFirstExtendsClass(cls:Class):Boolean
+		{
+			var clsPath:String = ReflectionUtil.getClassPath(cls);
+			
+			return extendsClass.indexOf(clsPath) == 0;
+		}
+		
+		public function getIsExtendsClass(cls:Class):Boolean
+		{
+			var clsPath:String = ReflectionUtil.getClassPath(cls);
+			
+			return extendsClass.indexOf(clsPath) != -1;
 		}
 		
 		public function getCustomMetadatas(meta:String):Dictionary

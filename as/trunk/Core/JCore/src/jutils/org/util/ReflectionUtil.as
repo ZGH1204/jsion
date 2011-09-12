@@ -73,6 +73,7 @@ package jutils.org.util
 			type.constructor = parseConstructor(constructorXml);
 			type.staticMethods = parseStaticMethods(describeTypeXml);
 			type.memberMethods = parseMemberMethods(factoryXml, declaredBy);
+			type.extendsClass = parseExtendsClass(factoryXml, declaredBy);
 			type.propertys = parsePropertys(factoryXml);
 			type.metadatas = parseMetaDatas(factoryXml);
 			type.interfaces = parseInterfaces(factoryXml);
@@ -216,6 +217,24 @@ package jutils.org.util
 			method.analyze();
 			
 			return method;
+		}
+		
+		public static function parseExtendsClass(factoryXml:XML, declaredBy:String):Vector.<String>
+		{
+			var list:Vector.<String> = new Vector.<String>();
+			
+			var exts:XMLList = factoryXml.extendsClass;
+			
+			for each(var ext:XML in exts)
+			{
+				var t:String = String(ext.@type);
+				if(t == "Object") continue;
+				if(t.indexOf("DefaultModule") != -1)
+					trace("sadfsdf");
+				list.push(StringUtil.replace(t, "::", "."));
+			}
+			
+			return list;
 		}
 		
 		public static function parseMetaDatas(methodXml:XML):Dictionary
