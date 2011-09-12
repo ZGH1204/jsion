@@ -225,6 +225,9 @@ package jutils.org.util
 			
 			var exts:XMLList = factoryXml.extendsClass;
 			
+			if(declaredBy.indexOf("PromiscuousModule") != -1)
+				trace("asdfsf");
+			
 			for each(var ext:XML in exts)
 			{
 				var t:String = String(ext.@type);

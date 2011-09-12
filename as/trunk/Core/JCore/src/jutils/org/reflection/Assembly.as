@@ -40,7 +40,9 @@ package jutils.org.reflection
 		
 		public function getIsImplInterfaceByInterface(interfaceCls:Class):Type
 		{
-			for each(var type:Type in typeList)
+			var list:Vector.<Type> = getTypes();
+			
+			for each(var type:Type in list)
 			{
 				if(type.getIsImplInterfaceByInterface(interfaceCls))
 				{
@@ -53,9 +55,13 @@ package jutils.org.reflection
 		
 		public function getIsFirstExtendsClass(cls:Class):Type
 		{
-			for each(var type:Type in typeList)
+			var list:Vector.<Type> = getTypes();
+			
+			var clsPath:String = ReflectionUtil.getClassPath(cls);
+			
+			for each(var type:Type in list)
 			{
-				if(type.getIsFirstExtendsClass(cls))
+				if(type.getIsFirstExtendsClassByString(clsPath))
 				{
 					return type;
 				}
@@ -66,9 +72,13 @@ package jutils.org.reflection
 		
 		public function getIsExtendsClass(cls:Class):Type
 		{
-			for each(var type:Type in typeList)
+			var list:Vector.<Type> = getTypes();
+			
+			var clsPath:String = ReflectionUtil.getClassPath(cls);
+			
+			for each(var type:Type in list)
 			{
-				if(type.getIsExtendsClass(cls))
+				if(type.getIsExtendsClassByString(clsPath))
 				{
 					return type;
 				}
@@ -79,7 +89,7 @@ package jutils.org.reflection
 		
 		public function getTypes():Vector.<Type>
 		{
-			if(typeList) return typeList.concat();
+			if(typeList) return typeList;
 			
 			var tList:Vector.<Type> = new Vector.<Type>();
 			for each(var item:String in clsList)
@@ -87,7 +97,7 @@ package jutils.org.reflection
 				var type:Type = getType(item);
 				if(type) tList.push(type);
 			}
-			typeList = tList.concat();
+			typeList = tList;
 			return tList;
 		}
 		

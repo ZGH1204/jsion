@@ -31,18 +31,28 @@ package jutils.org.reflection
 			return interfaces.indexOf(interfaceString) != -1;
 		}
 		
+		internal function getIsFirstExtendsClassByString(clsPath:String):Boolean
+		{
+			return extendsClass.indexOf(clsPath) == 0;
+		}
+		
 		public function getIsFirstExtendsClass(cls:Class):Boolean
 		{
 			var clsPath:String = ReflectionUtil.getClassPath(cls);
 			
-			return extendsClass.indexOf(clsPath) == 0;
+			return getIsFirstExtendsClassByString(clsPath);
+		}
+		
+		public function getIsExtendsClassByString(clsPath:String):Boolean
+		{
+			return extendsClass.indexOf(clsPath) != -1;
 		}
 		
 		public function getIsExtendsClass(cls:Class):Boolean
 		{
 			var clsPath:String = ReflectionUtil.getClassPath(cls);
 			
-			return extendsClass.indexOf(clsPath) != -1;
+			return getIsExtendsClassByString(clsPath);
 		}
 		
 		public function getCustomMetadatas(meta:String):Dictionary

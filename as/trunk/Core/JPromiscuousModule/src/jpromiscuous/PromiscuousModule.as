@@ -1,6 +1,7 @@
 package jpromiscuous
 {
 	import flash.utils.ByteArray;
+	import flash.utils.getTimer;
 	
 	import jcore.org.message.Message;
 	import jcore.org.moduls.DefaultModule;
@@ -67,9 +68,9 @@ package jpromiscuous
 			var reader:SwfReader = new SwfReader(bytes);
 			
 			reader.readHeader();
-			
+			var start:int = getTimer();
 			var list:Array = reader.readTags();
-			
+			trace(getTimer() - start + " 毫秒");
 			var abcList:Array = [];
 			
 			for each(var tag:Tag in list)

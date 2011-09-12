@@ -24,6 +24,7 @@ package
 	import jcomponent.org.mgrs.UIMgr;
 	
 	import jcore.org.loader.BinaryLoader;
+	import jcore.org.message.MessageMonitor;
 	import jcore.org.tweens.TweenMax;
 	
 	import jutils.org.util.DisposeUtil;
@@ -75,26 +76,26 @@ package
 		
 		private function loadCallback(loader:BinaryLoader):void
 		{
-			//MessageMonitor.createAndPostMsg(1, "JLauncher", ["Promiscuous"], loader.content);
+			MessageMonitor.createAndPostMsg(1, "JLauncher", ["Promiscuous"], loader.content);
 			
-			if(slider)
-			{
-				DisposeUtil.free(slider);
-				slider = null;
-				
-				return;
-			}
-			
-			
-			slider = new VSlider();
-			
-			slider.pack();
-			//slider.width = 507;
-			//slider.height = 207;
-			
-			slider.setLocationXY(100, 100);
-			
-			addChild(slider);
+//			if(slider)
+//			{
+//				DisposeUtil.free(slider);
+//				slider = null;
+//				
+//				return;
+//			}
+//			
+//			
+//			slider = new VSlider();
+//			
+//			slider.pack();
+//			//slider.width = 507;
+//			//slider.height = 207;
+//			
+//			slider.setLocationXY(100, 100);
+//			
+//			addChild(slider);
 			
 			
 //			slider = new VSlider();

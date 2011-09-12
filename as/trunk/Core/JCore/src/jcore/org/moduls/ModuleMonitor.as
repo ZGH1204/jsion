@@ -1,6 +1,7 @@
 package jcore.org.moduls
 {
 	import flash.utils.Dictionary;
+	import flash.utils.getTimer;
 	
 	import jutils.org.reflection.Type;
 	import jutils.org.util.AppDomainUtil;
@@ -33,7 +34,7 @@ package jcore.org.moduls
 			
 			//var type:Type = moduleInfo.assembly.getIsExtendsClass(DefaultModule);
 			
-			var clsStr:String = moduleInfo.cls;
+			var clsStr:String = moduleInfo.cls;//type.name;
 			
 			if(StringUtil.isNullOrEmpty(clsStr)) return null;
 			
