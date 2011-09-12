@@ -229,8 +229,8 @@ package jutils.org.util
 			{
 				var t:String = String(ext.@type);
 				if(t == "Object") continue;
-				if(t.indexOf("DefaultModule") != -1)
-					trace("sadfsdf");
+//				if(t.indexOf("DefaultModule") != -1)
+//					trace("sadfsdf");
 				list.push(StringUtil.replace(t, "::", "."));
 			}
 			
