@@ -2,6 +2,7 @@ package jcore.org.moduls
 {
 	import flash.utils.Dictionary;
 	
+	import jutils.org.reflection.Type;
 	import jutils.org.util.AppDomainUtil;
 	import jutils.org.util.DictionaryUtil;
 	import jutils.org.util.DisposeUtil;
@@ -29,6 +30,8 @@ package jcore.org.moduls
 				throw new Error("模块库文件未加载或加载失败，无法创建模块。 File: " + moduleInfo.file);
 				return null;
 			}
+			
+			//var type:Type = moduleInfo.assembly.getIsExtendsClass(DefaultModule);
 			
 			var clsStr:String = moduleInfo.cls;
 			

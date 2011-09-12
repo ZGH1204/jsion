@@ -12,12 +12,16 @@ package jutils.org.reflection
 		public var clsList:Vector.<String>;
 		protected var callback:Function;
 		
+		protected var typeList:Vector.<Type>;
+		
 		public function Assembly(clsList:Vector.<String> = null)
 		{
 			this.clsList = clsList;
+			
+			//typeList = getTypes();
 		}
 		
-		public function getIsImplInterface(interfaceStr:String):Type
+		internal function getIsImplInterface(interfaceStr:String):Type
 		{
 			var list:Vector.<Type> = getTypes();
 			
@@ -36,30 +40,54 @@ package jutils.org.reflection
 		
 		public function getIsImplInterfaceByInterface(interfaceCls:Class):Type
 		{
-			var clsPath:String = ReflectionUtil.getClassPath(interfaceCls);
-			var list:Vector.<Type> = getTypes();
-			
-			for each(var type:Type in list)
+			for each(var type:Type in typeList)
 			{
-				if(type.getIsImplInterface(clsPath))
+				if(type.getIsImplInterfaceByInterface(interfaceCls))
 				{
 					return type;
 				}
 			}
 			
-			list = null;
+			return null;
+		}
+		
+		public function getIsFirstExtendsClass(cls:Class):Type
+		{
+			for each(var type:Type in typeList)
+			{
+				if(type.getIsFirstExtendsClass(cls))
+				{
+					return type;
+				}
+			}
+			
+			return null;
+		}
+		
+		public function getIsExtendsClass(cls:Class):Type
+		{
+			for each(var type:Type in typeList)
+			{
+				if(type.getIsExtendsClass(cls))
+				{
+					return type;
+				}
+			}
 			
 			return null;
 		}
 		
 		public function getTypes():Vector.<Type>
 		{
+			if(typeList) return typeList.concat();
+			
 			var tList:Vector.<Type> = new Vector.<Type>();
 			for each(var item:String in clsList)
 			{
 				var type:Type = getType(item);
 				if(type) tList.push(type);
 			}
+			typeList = tList.concat();
 			return tList;
 		}
 		
