@@ -116,6 +116,7 @@ package jpromiscuous.vo
 				}
 				tag = new cl();
 				tag.tagType = tagType;
+				tag.tagLength = tagLength;
 				if( tagLength > 0)
 					readBytes(tag.data, 0, tagLength);
 				

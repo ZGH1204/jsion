@@ -5,6 +5,7 @@ package jpromiscuous.vo
 	public class Tag extends Reader
 	{
 		public var tagType:uint;
+		public var tagLength:uint;
 		
 		public function Tag()
 		{
