@@ -732,7 +732,7 @@ package jcore.org.loader
 				
 				loader.loadAsync();
 				
-				_numLoadings++;
+				//_numLoadings++;
 			}
 			
 			if(_numLoadings <= 0) tryComplete();
@@ -747,9 +747,9 @@ package jcore.org.loader
 		{
 			var bLoaded:int = _completeBytesTotal;
 			
-			for each(var loader:ILoader in _waitList)
+			for each(var loader:ILoader in _loadingList)
 			{
-				bLoaded += loader;
+				bLoaded += loader.bytesLoaded;
 			}
 			
 			if(bLoaded > _bytesLoaded)
@@ -766,7 +766,7 @@ package jcore.org.loader
 		 */		
 		protected function __completeHandler(e:JLoaderEvent):void
 		{
-			_numLoadings--;
+			//_numLoadings--;
 			
 			var loader:ILoader = e.currentTarget as ILoader;
 			
@@ -779,7 +779,7 @@ package jcore.org.loader
 			removeOutLoadingList(loader);
 			putInCompleteList(loader);
 			
-			tryLoadNext();
+			if(_waitList && _waitList.length > 0) tryLoadNext();
 			tryComplete();
 		}
 		
@@ -790,7 +790,7 @@ package jcore.org.loader
 		 */		
 		protected function __errorHandler(e:JLoaderEvent):void
 		{
-			_numLoadings--;
+			//_numLoadings--;
 			
 			var loader:ILoader = e.currentTarget as ILoader;
 			
@@ -803,7 +803,7 @@ package jcore.org.loader
 			removeOutLoadingList(loader);
 			putInErrorList(loader);
 			
-			tryLoadNext();
+			if(_waitList && _waitList.length > 0) tryLoadNext();
 			tryComplete();
 		}
 		
