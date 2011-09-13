@@ -8,7 +8,6 @@ package
 	import jcore.org.events.JLoaderEvent;
 	import jcore.org.loader.ILoaders;
 	import jcore.org.loader.XmlLoader;
-	import jcore.org.message.DefaultMsg;
 	import jcore.org.message.MessageMonitor;
 	import jcore.org.moduls.ModuleDefaultMsg;
 	import jcore.org.moduls.ModuleInfo;
