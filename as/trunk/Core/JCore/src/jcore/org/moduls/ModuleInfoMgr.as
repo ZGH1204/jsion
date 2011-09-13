@@ -23,7 +23,7 @@ package jcore.org.moduls
 
 	public class ModuleInfoMgr
 	{
-		public static var Current_Domain_Context:LoaderContext = new LoaderContext(false, ApplicationDomain.currentDomain);
+		public static var Current_Domain_Context:LoaderContext = Global.Current_Domain_Context;
 		
 		private static var Module_Loader_Cfg:Object = {type: LoaderGlobal.TYPE_SWC, context: null};
 		private static var Module_Cryptor:ICryption = new ModuleCrytor();
@@ -237,6 +237,7 @@ package jcore.org.moduls
 					moduleInfo.isLoaded = true;
 					moduleInfo.isError = false;
 					moduleInfo.assembly = loader.content as Assembly;
+					AppDomainUtil.registeAppDomain(moduleInfo.domain);
 					
 					ModuleMonitor.createModule(moduleInfo);
 					//var module:DefaultModule = ModuleMonitor.createModule(moduleInfo);

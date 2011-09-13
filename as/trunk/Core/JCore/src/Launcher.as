@@ -18,7 +18,7 @@ package
 	import jutils.org.util.DisposeUtil;
 	import jutils.org.util.StringUtil;
 
-	public class Launcher
+	public class Launcher implements IDispose
 	{
 		private var _configFilePath:String;
 		private var _configLoader:XmlLoader;
@@ -67,6 +67,7 @@ package
 		
 		private function loadConfig():void
 		{
+			_sprite.removeEventListener(Event.ADDED_TO_STAGE, __addToStageHandler);
 			_configLoader = new XmlLoader(_configFilePath, {rnd: true});
 			_configLoader.loadAsync(configLoadCallback);
 		}
@@ -121,8 +122,8 @@ package
 				return;
 			}
 			
-			DisposeUtil.free(_configLoader);
-			_configLoader = null;
+//			DisposeUtil.free(_configLoader);
+//			_configLoader = null;
 			
 			var geters:Array = [];
 			
@@ -153,6 +154,22 @@ package
 				var file:String = String(xml.@file);
 				Security.loadPolicyFile(file);
 			}
+		}
+		
+		public function dispose():void
+		{
+			DisposeUtil.free(_configLoader);
+			_configLoader = null;
+			
+			_sprite = null;
+			
+			_otherInitFn = null;
+			
+			_callback = null;
+			
+			stage = null;
+			
+			config = null;
 		}
 	}
 }
