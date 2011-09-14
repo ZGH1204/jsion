@@ -53,8 +53,6 @@ namespace JUtils.Net
             }
         }
 
-        private SocketAsyncEventArgs m_acceptAsyncEvent;
-
         private SocketConnecter m_connecter;
         private SocketAccepter m_accepter;
 

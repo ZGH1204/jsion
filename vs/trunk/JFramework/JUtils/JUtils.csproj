@@ -54,7 +54,13 @@
     <Compile Include="ArrayExts.cs" />
     <Compile Include="AssemblyLocator.cs" />
     <Compile Include="Attributes\AppConfigAttribute.cs" />
+    <Compile Include="Attributes\CmdAttribute.cs" />
+    <Compile Include="Attributes\CmdParamAttribute.cs" />
     <Compile Include="Attributes\MsgHandlerAttribute.cs" />
+    <Compile Include="Command\Cmds\HelpCmd.cs" />
+    <Compile Include="Command\Cmds\HelpSignCmd.cs" />
+    <Compile Include="Command\CommandMgr.cs" />
+    <Compile Include="Command\ICommand.cs" />
     <Compile Include="CompileUtil.cs" />
     <Compile Include="CryptUtil.cs" />
     <Compile Include="ManagedThreadPool.cs" />
@@ -90,6 +96,7 @@
   <ItemGroup>
     <EmbeddedResource Include="LogConfig.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
