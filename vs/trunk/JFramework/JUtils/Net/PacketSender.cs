@@ -34,6 +34,7 @@ namespace JUtils.Net
         {
             m_socket = socket;
             m_buffer = buffer;
+            m_pkgQueue = new Queue();
 
             m_cryptor = m_socket.SendCryptor;
             if (m_cryptor == null) m_cryptor = new NoneCryptor();
