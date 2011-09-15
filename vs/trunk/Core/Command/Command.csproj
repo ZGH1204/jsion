@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="CmdAttribute.cs" />
     <Compile Include="CmdParamAttribute.cs" />
+    <Compile Include="Cmds\ClearCmd.cs" />
     <Compile Include="Cmds\ExitCmd.cs" />
     <Compile Include="Cmds\HelpCmd.cs" />
     <Compile Include="Cmds\HelpSignCmd.cs" />
