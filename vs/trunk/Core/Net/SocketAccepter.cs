@@ -42,6 +42,7 @@ namespace Net
             catch (Exception ex)
             {
                 log.Error("本地监听建立失败.", ex);
+                throw ex;
             }
 
             acceptAsync(m_socket.Socket, m_acceptAsyncEvent);
