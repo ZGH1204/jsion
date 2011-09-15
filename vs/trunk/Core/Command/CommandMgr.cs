@@ -49,7 +49,7 @@ namespace Command
                 paramsList = new string[0];
             }
 
-            if (paramsList.Length > 0 && paramsList[0] == "/?")
+            if (paramsList.Length > 0 && paramsList[0] == " /?")
             {
                 DisplayDescription(cmdStr);
                 return true;
