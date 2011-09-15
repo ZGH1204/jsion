@@ -41,15 +41,15 @@ namespace Command
             if (paramStartIndex != -1)
             {
                 string tmp = cmd.Substring(paramStartIndex).Trim();
-                if (!string.IsNullOrEmpty(tmp)) tmp = " " + tmp;
-                paramsList = tmp.Split(new string[] { " -" }, StringSplitOptions.RemoveEmptyEntries);
+                //if (!string.IsNullOrEmpty(tmp)) tmp = " " + tmp;
+                paramsList = tmp.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries);
             }
             else
             {
                 paramsList = new string[0];
             }
 
-            if (paramsList.Length > 0 && paramsList[0] == " /?")
+            if (paramsList.Length > 0 && paramsList[0] == "/?")
             {
                 DisplayDescription(cmdStr);
                 return true;

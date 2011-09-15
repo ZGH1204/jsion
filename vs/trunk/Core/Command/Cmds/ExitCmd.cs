@@ -33,10 +33,6 @@ namespace Command.Cmds
                 {
                     Environment.Exit(0);
                 }
-                else
-                {
-                    Console.WriteLine();
-                }
             }
 
             return true;
