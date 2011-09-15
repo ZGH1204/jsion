@@ -109,7 +109,7 @@ namespace JUtils
                     if (ReceiveCmdEvent != null)
                         ReceiveCmdEvent(cmd);
 
-                    if (cmd == "shutdown") Environment.Exit(0);
+                    //if (cmd == "shutdown") Environment.Exit(0);
                 //}
             }
         }
