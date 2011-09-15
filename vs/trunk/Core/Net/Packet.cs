@@ -28,6 +28,10 @@ namespace Net
             : base(bufferSize, endian)
         { }
 
+        public Packet(byte[] buff, EndianEnum endian)
+            : base(buff, endian)
+        { }
+
         #endregion
 
         #region 数据包函数
