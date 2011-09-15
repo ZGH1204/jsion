@@ -189,8 +189,10 @@ package jcore.org.moduls
 			
 			ArrayUtil.push(_loadingModuleInfoList, moduleInfo);
 			
-			loader.addEventListener(JLoaderEvent.Complete, __moduleLoadCompleteHandler);
-			loader.addEventListener(JLoaderEvent.Error, __moduleLoadErrorHandler);
+			loader.addEventListener(JLoaderEvent.Complete, __moduleLoadCompleteHandler, false, int.MAX_VALUE);
+			loader.addEventListener(JLoaderEvent.Error, __moduleLoadErrorHandler, false, int.MAX_VALUE);
+			loader.addEventListener(JLoaderEvent.Complete, __disposeHandler, false, int.MIN_VALUE);
+			loader.addEventListener(JLoaderEvent.Error, __disposeHandler, false, int.MIN_VALUE);
 			
 			moduleInfo.domain = domains;
 			domains = null;
@@ -204,10 +206,17 @@ package jcore.org.moduls
 			var loader:ILoader = e.currentTarget as ILoader;
 			
 			moduleInfoLoadComplete(loader);
+		}
+		
+		private static function __disposeHandler(e:JLoaderEvent):void
+		{
+			var loader:ILoader = e.currentTarget as ILoader;
 			
 			ArrayUtil.remove(_loadersList, loader);
 			loader.removeEventListener(JLoaderEvent.Complete, __moduleLoadCompleteHandler);
 			loader.removeEventListener(JLoaderEvent.Error, __moduleLoadErrorHandler);
+			loader.removeEventListener(JLoaderEvent.Complete, __disposeHandler);
+			loader.removeEventListener(JLoaderEvent.Error, __disposeHandler);
 			
 			DisposeUtil.free(loader);
 			loader = null;
@@ -218,13 +227,6 @@ package jcore.org.moduls
 			var loader:ILoader = e.currentTarget as ILoader;
 			
 			moduleInfoLoadError(loader);
-			
-			ArrayUtil.remove(_loadersList, loader);
-			loader.removeEventListener(JLoaderEvent.Complete, __moduleLoadCompleteHandler);
-			loader.removeEventListener(JLoaderEvent.Error, __moduleLoadErrorHandler);
-			
-			DisposeUtil.free(loader);
-			loader = null;
 		}
 		
 		private static function moduleInfoLoadComplete(loader:ILoader):void
@@ -319,7 +321,8 @@ package jcore.org.moduls
 			Module_Loader_Cfg["context"] = null;
 			Module_Loader_Cfg["cryptor"] = null;
 			
-			loaders.addEventListener(JLoaderEvent.Complete, __modulesLoadCompleteHandler);
+			loaders.addEventListener(JLoaderEvent.Complete, __modulesLoadCompleteHandler, false, int.MAX_VALUE);
+			loaders.addEventListener(JLoaderEvent.Complete, __modulesDisposeHandler, false, int.MIN_VALUE);
 			
 			return loaders;
 		}
@@ -339,9 +342,15 @@ package jcore.org.moduls
 			{
 				moduleInfoLoadError(loader);
 			}
+		}
+		
+		private static function __modulesDisposeHandler(e:JLoaderEvent):void
+		{
+			var loaders:ILoaders = e.currentTarget as ILoaders;
 			
 			ArrayUtil.remove(_loadersList, loaders);
-			loaders.removeEventListener(JLoaderEvent.Complete, __moduleLoadCompleteHandler);
+			loaders.removeEventListener(JLoaderEvent.Complete, __modulesLoadCompleteHandler);
+			loaders.removeEventListener(JLoaderEvent.Complete, __modulesDisposeHandler);
 			
 			DisposeUtil.free(loaders);
 			loaders = null;
