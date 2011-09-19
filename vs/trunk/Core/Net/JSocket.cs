@@ -42,6 +42,16 @@ namespace Net
 
         public Socket Socket { get; internal set; }
 
+        public bool Connected
+        {
+            get
+            {
+                if (Socket == null) return false;
+
+                return Socket.Connected;
+            }
+        }
+
         public string RemoteEndPoint
         {
             get
