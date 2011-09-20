@@ -84,6 +84,8 @@ namespace Net
             }
 
             m_socket.ListenAcceptSocket(socket);
+
+            acceptAsync(m_socket.Socket, m_acceptAsyncEvent);
         }
     }
 }
