@@ -198,5 +198,10 @@ namespace Net
                 }
             }
         }
+
+        public void AsyncReceive()
+        {
+            AsyncReceiveImp();
+        }
     }
 }

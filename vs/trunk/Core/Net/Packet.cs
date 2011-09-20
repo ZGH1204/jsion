@@ -36,11 +36,13 @@ namespace Net
 
         #region 数据包函数
 
+        internal bool Writed { get; set; }
+
         public virtual void ReadHeader()
         { }
 
         public virtual void WriteHeader()
-        { }
+        { Writed = true; }
 
         public virtual void WriteData()
         { }
