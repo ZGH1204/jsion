@@ -49,10 +49,12 @@ namespace Net
         {
             if (pkg == null || pkg.Length <= 0) return;
 
-            pkg.WriteHeader();
-            pkg.WriteData();
-            pkg.Pack();
-            pkg.Position = 0;
+            if (!pkg.Writed)
+            {
+                pkg.WriteHeader();
+                pkg.WriteData();
+                pkg.Pack();
+            }
 
             if (m_socket.Socket.Connected == false)
             {

@@ -155,6 +155,8 @@ namespace Net
             if (socket == null) return;
 
             Socket = socket;
+
+            m_reader.AsyncReceive();
         }
 
         #endregion
