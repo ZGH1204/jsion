@@ -47,7 +47,7 @@ namespace Net
 
         public void SendTcp(Packet pkg)
         {
-            if (pkg == null || pkg.Length <= 0) return;
+            if (pkg == null) return;
 
             if (!pkg.Writed)
             {
@@ -55,6 +55,8 @@ namespace Net
                 pkg.WriteData();
                 pkg.Pack();
             }
+
+            if (pkg.Length <= 0) return;
 
             if (m_socket.Socket.Connected == false)
             {
