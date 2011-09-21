@@ -33,7 +33,7 @@ package
 			
 //			list.push("ImageButton.textFilters", [new GlowFilter(0x996348,1,4,4,10)]);//发光滤镜
 //			list.push("ImageButton.upFilters", null);
-//			list.push("ImageButton.overFilters", [lightingFilter]);
+			list.push("ImageButton.overFilters", [lightingFilter]);
 //			list.push("ImageButton.downFilters", null);
 //			list.push("ImageButton.disabledFilters", [gray_filter]);
 //			list.push("ImageButton.selectedFilters", null);
@@ -43,9 +43,14 @@ package
 			
 			list.push("ImageButton.bg", ButtonImageBackground);
 			
-			list.push("ImageButton.upImg", ButtonUp_Asset);
-			list.push("ImageButton.overImg", ButtonOver_Asset);
-			list.push("ImageButton.downImg", ButtonDown_Asset);
+//			list.push("ImageButton.upImg", ButtonUp_Asset);
+//			list.push("ImageButton.overImg", ButtonOver_Asset);
+//			list.push("ImageButton.downImg", ButtonDown_Asset);
+			
+			list.push("ImageButton.upImg", JZ0005_Asset);
+//			list.push("ImageButton.overImg", JZ0005_Asset);
+//			list.push("ImageButton.downImg", JZ0005_Asset);
+			
 //			list.push("ImageButton.disabledImg", null);
 //			list.push("ImageButton.selectedImg", null);
 //			list.push("ImageButton.overSelectedImg", null);

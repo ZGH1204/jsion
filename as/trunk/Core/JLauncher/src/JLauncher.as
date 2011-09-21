@@ -5,11 +5,13 @@ package
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.geom.Matrix;
+	import flash.utils.setTimeout;
 	
 	import jcomponent.org.basic.Container;
 	import jcomponent.org.coms.buttons.AbstractButton;
 	import jcomponent.org.coms.buttons.ButtonGroup;
 	import jcomponent.org.coms.buttons.CheckBox;
+	import jcomponent.org.coms.buttons.ImageButton;
 	import jcomponent.org.coms.buttons.ScaleImageButton;
 	import jcomponent.org.coms.containers.Frame;
 	import jcomponent.org.coms.containers.ScrollPanel;
@@ -76,7 +78,7 @@ package
 		
 		private function loadCallback(loader:BinaryLoader):void
 		{
-			MessageMonitor.createAndPostMsg(1, "JLauncher", ["Promiscuous"], loader.content);
+			//MessageMonitor.createAndPostMsg(1, "JLauncher", ["Promiscuous"], loader.content);
 			
 //			if(slider)
 //			{
@@ -271,14 +273,27 @@ package
 //			
 //			container.addChild(btn);
 			
-//			btn  = new ImageButton("按钮");
-//			
-//			//btn.setSizeWH(100, 100);
-//			btn.pack();
-//			btn.x = 100;
-//			btn.y = 100;
-//			
-//			container.addChild(btn);
+			if(btn) return;
+			
+			btn  = new ImageButton("按钮");
+			
+			//btn.setSizeWH(100, 100);
+			btn.pack();
+			btn.x = 100;
+			btn.y = 100;
+			btn.ignoreTransparents = true;
+			//btn.mouseEnabled = false;
+			btn.addEventListener(MouseEvent.CLICK, __btnClickHandler);
+			//container.addChild(btn);
+			
+			addChild(btn);
+			
+			//setTimeout(function():void{btn.mouseEnabled = true;}, 5000);
+		}
+		
+		private function __btnClickHandler(e:MouseEvent):void
+		{
+			trace("Click!");
 		}
 	}
 }
