@@ -112,7 +112,7 @@ namespace Net
 
             if (len > 0)
             {
-                System.Buffer.BlockCopy(dst, dstOffset, Buffer, offset, len);
+                System.Buffer.BlockCopy(Buffer, offset, dst, dstOffset, len);
             }
             else
             {
@@ -293,7 +293,7 @@ namespace Net
         {
             if (len <= 0 || len > (bytes.Length - offset)) len = bytes.Length - offset;
 
-            if (len > (Length - Position)) throw new Exception("写入长度超过字节数组总长度!");
+            if (len > (BufferSize - Position)) throw new Exception("写入长度超过字节数组总长度!");
 
             Array.Copy(bytes, offset, Buffer, Position, len);
             Position += len;
