@@ -439,6 +439,85 @@ package jcomponent.org.coms.buttons
 			addEventListener(MouseEvent.CLICK, __clickHandler);
 		}
 		
+		private function __rollOverHandler(e:MouseEvent):void
+		{
+			var m:IButtonModel = model;
+			
+			if(rolloverEnabled)
+			{
+				if(m.pressed || !e.buttonDown)
+				{
+					m.rollOver = true;
+				}
+			}
+			
+			if(m.pressed) m.armed = true;
+		}
+		
+		private function __rollOutHandler(e:MouseEvent):void
+		{
+			var m:IButtonModel = model;
+			
+			if(rolloverEnabled)
+			{
+				if(m.pressed == false)
+				{
+					m.rollOver = false;
+				}
+			}
+			
+			m.armed = false;
+		}
+		
+		private function __mouseDownHandler(e:MouseEvent):void
+		{
+			model.armed = true;
+			model.pressed = true;
+		}
+		
+		private function __releaseHandler(e:ReleaseEvent):void
+		{
+			model.pressed = false;
+			model.armed = false;
+			
+			if(rolloverEnabled && !hitTestMouse())
+			{
+				model.rollOver = false;
+			}
+		}
+		private function __clickHandler(e:MouseEvent):void
+		{
+			if(stopPropagation)
+			{
+				e.stopPropagation();
+			}
+		}
+		private function __modelActionHandler(e:ButtonEvent):void
+		{
+			dispatchEvent(new ButtonEvent(ButtonEvent.ACTION));
+		}
+		
+		private function __modelStateHandler(e:ButtonEvent):void
+		{
+			invalidate();
+			
+			dispatchEvent(new ButtonEvent(ButtonEvent.STATE_CHANGED));
+		}
+		
+		private function __modelSelectionHandler(e:ButtonEvent):void
+		{
+			dispatchEvent(new ButtonEvent(ButtonEvent.SELECTION_CHANGED));
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		protected function activateMouseTrap():void
 		{
 			addEventListener(MouseEvent.ROLL_OVER, __captureMouseEvent, false, int.MAX_VALUE);
@@ -455,19 +534,6 @@ package jcomponent.org.coms.buttons
 			removeEventListener(MouseEvent.ROLL_OUT, __captureMouseEvent);
 			removeEventListener(MouseEvent.MOUSE_OUT, __captureMouseEvent);
 			removeEventListener(MouseEvent.MOUSE_MOVE, __captureMouseEvent);
-		}
-		
-		private function __upHandler(e:MouseEvent):void
-		{
-			if(model && model.rollOver == false && bitmapHitTest())
-			{
-				m_hited = true;
-				buttonMode = true;
-				mouseEnabled = true;
-				deactivateMouseTrap();
-				dispatchEvent(new MouseEvent(MouseEvent.ROLL_OVER, true, false, m_bitmapForHit.mouseX, m_bitmapForHit.mouseY));
-				dispatchEvent(new MouseEvent(MouseEvent.MOUSE_OVER, true, false, m_bitmapForHit.mouseX, m_bitmapForHit.mouseY));
-			}
 		}
 		
 		private var m_mousePoint:Point = new Point();
@@ -543,6 +609,19 @@ package jcomponent.org.coms.buttons
 			}
 		}
 		
+		private function __upHandler(e:MouseEvent):void
+		{
+			if(model && model.rollOver == false && bitmapHitTest())
+			{
+				m_hited = true;
+				buttonMode = true;
+				mouseEnabled = true;
+				deactivateMouseTrap();
+				dispatchEvent(new MouseEvent(MouseEvent.ROLL_OVER, true, false, m_bitmapForHit.mouseX, m_bitmapForHit.mouseY));
+				dispatchEvent(new MouseEvent(MouseEvent.MOUSE_OVER, true, false, m_bitmapForHit.mouseX, m_bitmapForHit.mouseY));
+			}
+		}
+		
 		private function __trackMouseWhileInBounds(e:Event = null):void
 		{
 			if(bitmapHitTest() != m_hited)
@@ -605,75 +684,17 @@ package jcomponent.org.coms.buttons
 			m_bitmapForHit.y = b.top;
 		}
 		
-		private function __rollOverHandler(e:MouseEvent):void
-		{
-			var m:IButtonModel = model;
-			
-			if(rolloverEnabled)
-			{
-				if(m.pressed || !e.buttonDown)
-				{
-					m.rollOver = true;
-				}
-			}
-			
-			if(m.pressed) m.armed = true;
-		}
 		
-		private function __rollOutHandler(e:MouseEvent):void
-		{
-			var m:IButtonModel = model;
-			
-			if(rolloverEnabled)
-			{
-				if(m.pressed == false)
-				{
-					m.rollOver = false;
-				}
-			}
-			
-			m.armed = false;
-		}
 		
-		private function __mouseDownHandler(e:MouseEvent):void
-		{
-			model.armed = true;
-			model.pressed = true;
-		}
 		
-		private function __releaseHandler(e:ReleaseEvent):void
-		{
-			model.pressed = false;
-			model.armed = false;
-			
-			if(rolloverEnabled && !hitTestMouse())
-			{
-				model.rollOver = false;
-			}
-		}
-		private function __clickHandler(e:MouseEvent):void
-		{
-			if(stopPropagation)
-			{
-				e.stopPropagation();
-			}
-		}
-		private function __modelActionHandler(e:ButtonEvent):void
-		{
-			dispatchEvent(new ButtonEvent(ButtonEvent.ACTION));
-		}
 		
-		private function __modelStateHandler(e:ButtonEvent):void
-		{
-			invalidate();
-			
-			dispatchEvent(new ButtonEvent(ButtonEvent.STATE_CHANGED));
-		}
 		
-		private function __modelSelectionHandler(e:ButtonEvent):void
-		{
-			dispatchEvent(new ButtonEvent(ButtonEvent.SELECTION_CHANGED));
-		}
+		
+		
+		
+		
+		
+		
 		
 		override public function dispose():void
 		{
