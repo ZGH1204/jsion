@@ -65,11 +65,11 @@ package
 		{
 			if(display && gameviewLayer.contains(display))
 			{
+				display.removeEventListener(Event.REMOVED_FROM_STAGE, __removeStageHandler);
+				
 				ArrayUtil.remove(viewStack, display);
 				
 				gameviewLayer.removeChild(display);
-				
-				display.removeEventListener(Event.REMOVED_FROM_STAGE, __removeStageHandler);
 			}
 		}
 		

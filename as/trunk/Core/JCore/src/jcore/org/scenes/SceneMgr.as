@@ -1,6 +1,8 @@
 package jcore.org.scenes
 {
 	import flash.utils.Dictionary;
+	
+	import jutils.org.util.StringUtil;
 
 	public class SceneMgr
 	{
@@ -46,6 +48,19 @@ package jcore.org.scenes
 			}
 		}
 		
+		public static function back():void
+		{
+			if(m_current)
+			{
+				var t:String = m_current.getBackType();
+				
+				if(StringUtil.isNotNullOrEmpty(t))
+				{
+					setScene(t);
+				}
+			}
+		}
+		
 		private static function createSceneAsync(type:String):void
 		{
 			var scene:BaseScene = m_creator.create(type);
@@ -86,6 +101,33 @@ package jcore.org.scenes
 			if(m_current)
 			{
 				m_current.living(m_nextScene);
+				
+				if(m_current.parent)
+				{
+					LayerMgr.removeView(m_current);
+					
+					m_current.onRemovedFromStage();
+				}
+			}
+			
+			m_nextScene.enter(m_current, m_data);
+			
+			LayerMgr.addView(m_nextScene.getView());
+			
+			m_nextScene.onAddedToStage();
+			
+			m_current = m_nextScene;
+			m_currentType = m_nextScene.getSceneType();
+			
+			m_nextScene = null;
+			
+			if(m_current.goBack())
+			{
+				back();
+			}
+			else
+			{
+				GC.collect();
 			}
 		}
 		
