@@ -26,7 +26,7 @@ package
 	 */	
 	public final class Cache
 	{
-		public static const CacheSize:int = 20 * 1024 * 1024;
+		public static const CacheSize:int = 50 * 1024 * 1024;
 		
 		private static var indexs:IndexCache = new IndexCache();
 		
@@ -257,7 +257,8 @@ package
 			for each(var x:XML in xl)
 			{
 				var str:String = String(x.@value);
-				str = StringUtil.replace(str, ".", "_");
+				//str = StringUtil.replace(str, ".", "_");
+				str = JUtil.path2Key(str);
 				str = StringUtil.replace(str, "*","\\w*");
 				regList.push(new RegExp(str + "$"));
 			}
