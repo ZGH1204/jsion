@@ -44,6 +44,11 @@ package jcore.org.scenes
 			return SceneType.DEFAULT;
 		}
 		
+		public function goBack():Boolean
+		{
+			return false;
+		}
+		
 		public function getBackType():String
 		{
 			return null;

@@ -36,21 +36,28 @@ package jcore.org.loader
 		
 		override protected function load():void
 		{
-			super.load();
-			
-			if(_isLoading == false || _isComplete) return;
-			
-			addLoadEvent(_loader);
-			
-			try
+			if(_managed == false || LoaderMonitor.getCanLoad(this))
 			{
-				_loader.load(_request);
+				super.load();
+				
+				if(_isLoading == false || _isComplete) return;
+				
+				addLoadEvent(_loader);
+				
+				try
+				{
+					_loader.load(_request);
+				}
+				catch(err:Error)
+				{
+					removeLoadEvent(_loader);
+					removeBytesTotalEvent(_loader);
+					throw err;
+				}
 			}
-			catch(err:Error)
+			else
 			{
-				removeLoadEvent(_loader);
-				removeBytesTotalEvent(_loader);
-				throw err;
+				LoaderMonitor.joinManaged(this);
 			}
 		}
 		
