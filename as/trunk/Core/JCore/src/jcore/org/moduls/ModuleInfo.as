@@ -22,9 +22,14 @@ package jcore.org.moduls
 		public var id:String;
 		
 		/**
-		 * 是否初始化启动
+		 * 是否初始化启动模块
 		 */		
 		public var startup:Boolean;
+		
+		/**
+		 * 是否在加载完成后发送安装消息
+		 */		
+		public var installAfterLoaded:Boolean;
 		
 		/**
 		 * 模块是否已加载到内存

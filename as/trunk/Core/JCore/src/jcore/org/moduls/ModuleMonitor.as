@@ -3,6 +3,8 @@ package jcore.org.moduls
 	import flash.utils.Dictionary;
 	import flash.utils.getTimer;
 	
+	import jcore.org.message.MessageMonitor;
+	
 	import jutils.org.reflection.Type;
 	import jutils.org.util.AppDomainUtil;
 	import jutils.org.util.DictionaryUtil;
@@ -61,6 +63,11 @@ package jcore.org.moduls
 				module.reflection(moduleInfo.assembly);
 				
 				loadedModuleDic[moduleInfo.id] = module;
+				
+				if(moduleInfo.installAfterLoaded)
+				{
+					MessageMonitor.createAndSendMsg(ModuleDefaultMsg.Install, "ModuleMonitor", [moduleInfo.id]);
+				}
 				
 				return module;
 			}

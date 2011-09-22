@@ -124,14 +124,14 @@ package
 //			DisposeUtil.free(_configLoader);
 //			_configLoader = null;
 			
-			var geters:Array = [];
-			
-			for each(var moduleInfo:ModuleInfo in ModuleInfoMgr.startupModuleInfoList)
-			{
-				geters.push(moduleInfo.id);
-			}
-			
-			MessageMonitor.createAndSendMsg(ModuleDefaultMsg.Install, "Launcher", geters);
+//			var geters:Array = [];
+//			
+//			for each(var moduleInfo:ModuleInfo in ModuleInfoMgr.startupModuleInfoList)
+//			{
+//				geters.push(moduleInfo.id);
+//			}
+//			
+//			MessageMonitor.createAndSendMsg(ModuleDefaultMsg.Install, "Launcher", geters);
 			
 			MessageMonitor.createAndSendMsg(TimeLineDefaultMsg.TimerStart, "Launcher");
 			
