@@ -153,7 +153,7 @@ package jcore.org.moduls
 		 */		
 		public static function loadModuleFile(moduleInfo:ModuleInfo):ILoader
 		{
-			if(moduleInfo == null || StringUtil.isNullOrEmpty(moduleInfo.file)) return null;
+			if(moduleInfo == null || StringUtil.isNullOrEmpty(moduleInfo.file) || moduleInfo.isLoaded || moduleInfo.isError) return null;
 			
 			var domains:ApplicationDomain;
 			
@@ -284,6 +284,8 @@ package jcore.org.moduls
 			
 			for each(var info:ModuleInfo in list)
 			{
+				if(info.isLoaded || info.isError) continue;
+				
 				if(info.target == ModuleTarget.Blank)
 				{
 					domains = new ApplicationDomain();
