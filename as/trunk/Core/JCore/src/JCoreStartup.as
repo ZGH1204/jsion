@@ -34,5 +34,7 @@ package
 		TimeLineMgr.setup();
 		
 		InternetExplorerUtil.setup(stage.root);
+		
+		LayerMgr.setup();
 	}
 }
