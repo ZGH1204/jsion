@@ -39,9 +39,9 @@ package
 		 */		
 		private static const _reg1:RegExp = /http:\/\/[\w|.|:]+\//i;
 		/**
-		 * 替换: :|.|\/
+		 * 替换: :|.|\/|\\
 		 */		
-		private static const _reg2:RegExp = /[:|.|\/]/g;
+		private static const _reg2:RegExp = /[:|.|\/|\\]/g;
 		
 		/**
 		 * 全局帧频刷新事件, 保证所有处理都在同一帧, 避免异步问题。
