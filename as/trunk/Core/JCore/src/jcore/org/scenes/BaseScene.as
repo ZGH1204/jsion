@@ -30,7 +30,7 @@ package jcore.org.scenes
 		{
 		}
 		
-		public function living(nextScene:BaseScene):void
+		public function leaving(nextScene:BaseScene):void
 		{
 		}
 		
