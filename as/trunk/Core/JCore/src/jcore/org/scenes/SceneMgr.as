@@ -28,6 +28,8 @@ package jcore.org.scenes
 		
 		public static function setup(creator:ISceneCreator, fading:IFading = null):void
 		{
+			if(m_sceneList) return;
+			m_sceneList = new Dictionary();
 			m_creator = creator;
 			m_fading = fading == null ? new DefaultFading() : fading;
 		}
@@ -100,7 +102,7 @@ package jcore.org.scenes
 		{
 			if(m_current)
 			{
-				m_current.living(m_nextScene);
+				m_current.leaving(m_nextScene);
 				
 				if(m_current.parent)
 				{
