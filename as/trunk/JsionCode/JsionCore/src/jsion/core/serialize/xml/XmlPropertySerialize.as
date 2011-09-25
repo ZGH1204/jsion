@@ -2,7 +2,7 @@ package jsion.core.serialize.xml
 {
 	import flash.utils.*;
 	
-	import jutils.org.util.*;
+	import jsion.utils.*;
 	
 	public class XmlPropertySerialize implements IXmlSerialize
 	{
