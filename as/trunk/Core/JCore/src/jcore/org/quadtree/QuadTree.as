@@ -6,8 +6,6 @@ package jcore.org.quadtree
 	import jutils.org.util.ArrayUtil;
 	import jutils.org.util.DisposeUtil;
 	
-	import spark.primitives.Rect;
-
 	public class QuadTree implements IDispose
 	{
 		private var _splitNum:int;
