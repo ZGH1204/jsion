@@ -2,11 +2,11 @@ package jsion.utils
 {
 	import flash.display.DisplayObject;
 
-	public class InternetExplorerUtil
+	public class BrowserUtil
 	{
 		private static var _parameters:Object;
 		
-		public function InternetExplorerUtil()
+		public function BrowserUtil()
 		{
 		}
 		
