@@ -33,7 +33,9 @@ package jsion.core.modules
 		
 		private static var m_autoLoadList:Array = [];
 		
-		public static function setup(config:XML):void
+		private static var m_loadViewController:IModuleLoading;
+		
+		public static function setup(config:XML, loadViewController:IModuleLoading = null):void
 		{
 			var moduleXL:XMLList = config.Modules.Module;
 			
@@ -61,6 +63,8 @@ package jsion.core.modules
 					if(moduleInfo.autoLoad) m_autoLoadList.push(loadInfo);
 				}
 			}
+			
+			m_loadViewController = loadViewController;
 		}
 		
 		private static function checkModuleInfo(moduleInfo:ModuleInfo):Boolean
@@ -172,6 +176,10 @@ package jsion.core.modules
 			
 			m_loadingModule[loadInfo.loader] = loadInfo;
 			
+			loadInfo.loader.loadAsync();
+			
+			if(m_loadViewController) m_loadViewController.showLoadingView();
+			
 			return null;
 		}
 		
@@ -180,6 +188,8 @@ package jsion.core.modules
 			var loader:ILoader = e.currentTarget as ILoader;
 			
 			moduleLoadComplete(loader);
+			
+			if(m_loadViewController) m_loadViewController.complete();
 		}
 		
 		private static function __moduleLoadErrorHandler(e:JLoaderEvent):void
@@ -191,7 +201,7 @@ package jsion.core.modules
 		
 		private static function __progressHandler(e:JLoaderProgressEvent):void
 		{
-			
+			if(m_loadViewController) m_loadViewController.progress(e.bytesLoaded, e.bytesTotal);
 		}
 		
 		private static function __disposeHandler(e:JLoaderEvent):void
@@ -315,16 +325,6 @@ package jsion.core.modules
 			{
 				moduleLoadComplete(loadInfo.loader);
 			}
-			
-//			for each(loader in loaders.completeListDic)
-//			{
-//				moduleLoadComplete(loader);
-//			}
-//			
-//			for each(loader in loaders.errorListDic)
-//			{
-//				moduleLoadError(loader);
-//			}
 		}
 		
 		private static function __modulesDisposeHandler(e:JLoaderEvent):void

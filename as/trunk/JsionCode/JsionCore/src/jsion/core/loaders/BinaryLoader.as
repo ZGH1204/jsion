@@ -36,6 +36,8 @@ package jsion.core.loaders
 		
 		override protected function load():void
 		{
+			if(_isComplete || _isLoading) return;
+			
 			if(_managed == false || LoaderMonitor.getCanLoad(this))
 			{
 				super.load();

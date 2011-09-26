@@ -1,0 +1,15 @@
+<root>
+	<Policys>
+		<policy file="crossdomain.xml" />
+	</Policys>
+	
+	
+	<version from="0" to="1">
+		<file value="*.png" />
+	</version>
+	
+	
+	<Modules>
+		<Module id="JsionCore" cls="" url="../../JsionCore/bin/JsionCore.swc" autoLoad="" crypted="false" target="" />
+	</Modules>
+</root>
