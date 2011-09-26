@@ -316,7 +316,7 @@ package jcore.org.message
 			
 			JUtil.removeEnterFrame(__enterFrameHandler);
 			
-			DictionaryUtil.delAll(_subs);
+			DisposeUtil.free(_subs);
 			_subs = null;
 			
 			DictionaryUtil.delAll(_msgHandleFnList);
