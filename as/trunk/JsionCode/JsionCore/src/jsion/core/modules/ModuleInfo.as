@@ -4,9 +4,9 @@ package jsion.core.modules
 	{
 		public var id:String;
 		
-		public var url:String;
-		
 		public var cls:String;
+		
+		public var url:String;
 		
 		public var crypted:Boolean;
 		
