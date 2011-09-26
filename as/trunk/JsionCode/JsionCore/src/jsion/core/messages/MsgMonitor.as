@@ -29,6 +29,17 @@ package jsion.core.messages
 		}
 		
 		/**
+		 * 指示是否存在指定ID的接收者
+		 * @param id 接收者ID
+		 * @return true表示存在
+		 * 
+		 */		
+		public static function hasReceiver(id:String):Boolean
+		{
+			return monitor.hasReceiver(id);
+		}
+		
+		/**
 		 * 注册消息接收者
 		 * @param id 接收者标识
 		 * @param receiver 接收者对象

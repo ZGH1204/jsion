@@ -36,12 +36,30 @@ package jsion.core.messages
 			JUtil.addEnterFrame(__enterFrameHandler);
 			
 			m_msgMonitor = new MsgMonitorImp();
+			
+			MsgMonitor.registeReceiver(this);
 		}
 		
 		public function get parent():MsgReceiver
 		{
 			return m_parentReceiver;
 		}
+		
+		
+		
+		
+		
+		
+		
+		public function hasReceiver(receiverID:String):Boolean
+		{
+			return MsgMonitor.hasReceiver(receiverID);
+		}
+		
+		
+		
+		
+		
 		
 		public function get id():String
 		{
@@ -135,6 +153,19 @@ package jsion.core.messages
 			m_childReceivers[child.id] = child;
 		}
 		
+		public function removeChildReceiver(id:String):MsgReceiver
+		{
+			var receiver:MsgReceiver = m_childReceivers[id] as MsgReceiver;
+			
+			if(receiver != null)
+			{
+				receiver.m_parentReceiver = null;
+				return DictionaryUtil.delKey(m_childReceivers, id) as MsgReceiver;
+			}
+			
+			return null;
+		}
+		
 		public function sendToSub(msg:uint, receivers:Array = null, wParam:Object = null, lParam:Object = null):Dictionary
 		{
 			return m_msgMonitor.createAndSendMsg(msg, id, receivers, wParam, lParam);
@@ -170,7 +201,7 @@ package jsion.core.messages
 			DictionaryUtil.delAll(m_handlers);
 			m_handlers = null;
 			
-			DictionaryUtil.delAll(m_childReceivers);
+			DisposeUtil.free(m_childReceivers);
 			m_childReceivers = null;
 			
 			DisposeUtil.free(m_msgMonitor);
