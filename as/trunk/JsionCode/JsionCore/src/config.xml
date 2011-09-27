@@ -10,6 +10,6 @@
 	
 	
 	<Modules>
-		<Module id="JsionCore" cls="" url="../../JsionCore/bin/JsionCore.swc" autoLoad="" crypted="false" target="" />
+		<Module id="JsionCore" cls="jsion.core.JsionCoreModule" url="../../JsionCore/bin/JsionCore.swc" autoLoad="true" crypted="false" target="_self" />
 	</Modules>
 </root>
