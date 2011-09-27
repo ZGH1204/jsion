@@ -9,7 +9,11 @@
 	</version>
 	
 	
+	<Startup id="JsionCore" cls="jsion.core.JsionCoreModule" url="../../JsionCore/bin/JsionCore.swc" crypted="false" />
+	
+	
 	<Modules>
-		<Module id="JsionCore" cls="jsion.core.JsionCoreModule" url="../../JsionCore/bin/JsionCore.swc" autoLoad="true" crypted="false" target="_self" />
+		<Module id="JsionUI" cls="jsion.core.JsionCoreModule" url="../../JsionUI/bin/JsionUI.swc" autoLoad="true" crypted="false" target="_self" />
+		<Module id="JsionSocket" cls="jsion.core.JsionCoreModule" url="../../JsionSocket/bin/JsionSocket.swc" autoLoad="true" crypted="false" target="_self" />
 	</Modules>
 </root>
