@@ -160,13 +160,15 @@ package jsion.core.modules
 					return null;
 				}
 				
-				loadModule(loadInfo, callback);
+				var loader:ILoader = loadModule(loadInfo, callback);
+				
+				if(loader) loader.loadAsync();
 			}
 			
 			return null;
 		}
 		
-		private static function loadModule(loadInfo:ModuleLoadInfo, callback:Function):ILoader
+		public static function loadModule(loadInfo:ModuleLoadInfo, callback:Function):ILoader
 		{
 			if(loadInfo.loading) return loadInfo.loader;
 			
@@ -185,11 +187,9 @@ package jsion.core.modules
 			
 			m_loadingModule[loadInfo.loader] = loadInfo;
 			
-			loadInfo.loader.loadAsync();
-			
 			if(m_loadViewController) m_loadViewController.showLoadingView();
 			
-			return null;
+			return loadInfo.loader;
 		}
 		
 		private static function __moduleLoadCompleteHandler(e:JLoaderEvent):void
@@ -230,6 +230,8 @@ package jsion.core.modules
 				loadInfo.loader = null;
 				
 				ArrayUtil.removeAll(loadInfo.callback);
+				
+				DictionaryUtil.delKey(m_loadingModule, loader);
 			}
 			
 			DisposeUtil.free(loader);
@@ -261,8 +263,6 @@ package jsion.core.modules
 				{
 					fn();
 				}
-				
-				DictionaryUtil.delKey(m_loadingModule, loader);
 			}
 		}
 		
