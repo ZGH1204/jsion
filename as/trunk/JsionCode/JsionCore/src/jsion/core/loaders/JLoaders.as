@@ -3,6 +3,7 @@ package jsion.core.loaders
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.media.Sound;
 	import flash.net.NetStream;
@@ -694,7 +695,7 @@ package jsion.core.loaders
 			
 			if(_loadingList.length == 0 && _waitList.length == 0)
 			{
-				tryComplete();
+				JUtil.addEnterFrame(__tryCompleteHandler);
 				return this;
 			}
 			
@@ -705,6 +706,12 @@ package jsion.core.loaders
 			_readyHandler.ready(readyCallback);
 			
 			return this;
+		}
+		
+		private function __tryCompleteHandler(e:Event):void
+		{
+			JUtil.removeEnterFrame(__tryCompleteHandler);
+			tryComplete();
 		}
 		
 		/**

@@ -155,6 +155,14 @@ package
 			
 			if(fn != null) fn(m_stage, configXML);
 			
+			var mgr:Object = ApplicationDomain.currentDomain.getDefinition("jsion.core.modules.ModuleMgr");
+			
+			if(mgr) mgr.loadAutoLoadModule(loadAutoModuleCallback);
+			else if(m_callback != null) m_callback(configXML);
+		}
+		
+		private function loadAutoModuleCallback():void
+		{
 			if(m_callback != null) m_callback(configXML);
 		}
 	}

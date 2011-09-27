@@ -8,6 +8,7 @@ package jsion.core.loaders
 	import flash.utils.ByteArray;
 	
 	import jsion.core.events.JLoaderProgressEvent;
+	import jsion.utils.JUtil;
 	
 	/**
 	 * <p>未加密类库的加载类(swf格式的类库)</p>
@@ -28,22 +29,32 @@ package jsion.core.loaders
 			super(url, cfg);
 		}
 		
+		private var cacheBytes:ByteArray;
+		
 		override protected function load():void
 		{
 			if(_isComplete || _isLoading) return;
 			
-			var bytes:ByteArray = Cache.loadData(url, _cacheInMemory);
+			cacheBytes = Cache.loadData(url, _cacheInMemory);
 			
-			if(bytes)
+			if(cacheBytes)
 			{
-				onOpenHandler(null);
-				onProgressHandler(new JLoaderProgressEvent(JLoaderProgressEvent.Progress, bytes.length / 2, bytes.length));
-				loadInDomain(bytes);
+				JUtil.addEnterFrame(__loadCompletedAsyncHandler);
 			}
 			else
 			{
 				super.load();
 			}
+		}
+		
+		private function __loadCompletedAsyncHandler(e:Event):void
+		{
+			JUtil.removeEnterFrame(__loadCompletedAsyncHandler);
+			
+			onOpenHandler(null);
+			onProgressHandler(new JLoaderProgressEvent(JLoaderProgressEvent.Progress, cacheBytes.length * 0.999, cacheBytes.length));
+			loadInDomain(cacheBytes);
+			cacheBytes = null;
 		}
 		
 		override protected function onCompleteHandler(e:Event):void
@@ -60,6 +71,8 @@ package jsion.core.loaders
 		
 		protected function loadInDomain(bytes:ByteArray):void
 		{
+			_content = bytes;
+			
 			_libLoader = new Loader();
 			
 			_libLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, __completeHandler, false, int.MAX_VALUE);
