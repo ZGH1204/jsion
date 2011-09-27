@@ -3,6 +3,7 @@ package jsion.core.modules
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.utils.Dictionary;
+	import flash.utils.getQualifiedClassName;
 	
 	import jsion.core.cryptor.ICryption;
 	import jsion.core.cryptor.ModuleCrytor;
@@ -19,6 +20,7 @@ package jsion.core.modules
 	import jsion.utils.DictionaryUtil;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.JUtil;
+	import jsion.utils.NameUtil;
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
 
@@ -142,38 +144,85 @@ package jsion.core.modules
 		
 		
 		
-		
-		public static function createModule(id:String, callback:Function = null):BaseModule
+		public static function createModule(id:String):BaseModule
 		{
 			var loadInfo:ModuleLoadInfo = getModuleLoadInfo(id);
 			
-			if(loadInfo)
-			{
-				if(loadInfo.loaded)
-				{
-					callback();
-					return loadInfo.module;
-				}
-				else if(loadInfo.errored)
-				{
-					throw new Error("模块无法加载! ID：" + id);
-					return null;
-				}
-				
-				var loader:ILoader = loadModule(loadInfo, callback);
-				
-				if(loader) loader.loadAsync();
-			}
+			if(loadInfo == null || loadInfo.loaded == false || 
+				loadInfo.loading || loadInfo.errored) return null;
 			
-			return null;
+			if(loadInfo.module) return loadInfo.module;
+			
+			var module:BaseModule = AppDomainUtil.create(loadInfo.cls) as BaseModule;
+			
+			loadInfo.module = module;
+			
+			return module;
 		}
 		
-		public static function loadModule(loadInfo:ModuleLoadInfo, callback:Function):ILoader
+		public static function createAndStartupModule(id:String):void
 		{
-			if(loadInfo.loading) return loadInfo.loader;
+			var loadInfo:ModuleLoadInfo = getModuleLoadInfo(id);
+			
+			if(loadInfo == null || loadInfo.loaded == false || 
+				loadInfo.loading || loadInfo.errored) return;
+			
+			if(loadInfo.module) return;
+			
+			var module:BaseModule = AppDomainUtil.create(loadInfo.cls) as BaseModule;
+			
+			loadInfo.module = module;
+			
+			if(module) module.startup();
+		}
+		
+		public static function removeModule(id:String):BaseModule
+		{
+			var loadInfo:ModuleLoadInfo = getModuleLoadInfo(id);
+			
+			if(loadInfo == null || loadInfo.loaded == false || 
+				loadInfo.loading || loadInfo.errored) return null;
+			
+			var module:BaseModule = loadInfo.module;
+			
+			loadInfo.module = null;
+			
+			return module;
+		}
+		
+		public static function removeAndFreeModule(id:String):void
+		{
+			DisposeUtil.free(removeModule(id));
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		public static function loadModule(id:String, callback:Function = null):ILoader
+		{
+			var loadInfo:ModuleLoadInfo = getModuleLoadInfo(id);
+			
+			if(loadInfo == null)
+			{
+				throw new Error("指定模块不存在!");
+				return null;
+			}
+			
+			if(loadInfo.loaded)
+			{
+				callback();
+				return null;
+			}
 			
 			if(loadInfo.callback.indexOf(callback) == -1)
 				loadInfo.callback.push(callback);
+			
+			if(loadInfo.loading) return loadInfo.loader;
 			
 			loadInfo.loading = true;
 			
@@ -188,6 +237,8 @@ package jsion.core.modules
 			m_loadingModule[loadInfo.loader] = loadInfo;
 			
 			if(m_loadViewController) m_loadViewController.showLoadingView();
+			
+			loadInfo.loader.loadAsync();
 			
 			return loadInfo.loader;
 		}
@@ -249,15 +300,19 @@ package jsion.core.modules
 				loadInfo.loading = false;
 				loadInfo.assembly = loader.content as Assembly;
 				AppDomainUtil.registeAppDomain(loadInfo.domain);
-				//TODO: Create module
-				var cls:Class = AppDomainUtil.getClass(loadInfo.moduleInfo.cls);
 				
-				if(cls)
-				{
-					loadInfo.module = new cls(loadInfo.moduleInfo);
-					
-					loadInfo.module.startup();
-				}
+				
+				createAndStartupModule(loadInfo.id);
+				
+				
+//				var cls:Class = AppDomainUtil.getClass(loadInfo.moduleInfo.cls);
+//				
+//				if(cls)
+//				{
+//					loadInfo.module = new cls(loadInfo.moduleInfo);
+//					
+//					loadInfo.module.startup();
+//				}
 				
 				for each(var fn:Function in loadInfo.callback)
 				{
