@@ -53,6 +53,21 @@ package jsion.utils
 		}
 		
 		/**
+		 * 创建类对象
+		 * @param clsStr 类路径
+		 * @return 类对象
+		 * 
+		 */		
+		public static function create(clsStr:String):Object
+		{
+			var cls:Class = getClass(clsStr);
+			
+			if(cls) return new cls();
+			
+			return null;
+		}
+		
+		/**
 		 * 获取应用程序域内的类引用
 		 * @param clsStr 类路径
 		 * @param domain 应用程序域
@@ -61,6 +76,8 @@ package jsion.utils
 		 */		
 		public static function getClass(clsStr:String):Class
 		{
+			if(StringUtil.isNullOrEmpty(clsStr)) return null;
+			
 			var cls:Class;
 			
 			for each(var domain:ApplicationDomain in domains)
