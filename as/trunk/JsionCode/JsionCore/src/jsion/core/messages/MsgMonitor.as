@@ -51,13 +51,23 @@ package jsion.core.messages
 		}
 		
 		/**
-		 * 注册消息接收者
+		 * 移除消息接收者
 		 * @param id 接收者标识
 		 * 
 		 */		
 		public static function removeReceiver(id:String):IMsgReceiver
 		{
 			return monitor.removeReceiver(id);
+		}
+		
+		/**
+		 * 移除并析构消息接收者
+		 * @param id 接收者标识
+		 * 
+		 */		
+		public function removeAndFreeReceiver(id:String):void
+		{
+			return monitor.removeAndFreeReceiver(id);
 		}
 		
 		/**
