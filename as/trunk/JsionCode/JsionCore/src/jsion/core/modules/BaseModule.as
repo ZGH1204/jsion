@@ -17,5 +17,18 @@ package jsion.core.modules
 		{
 			
 		}
+		
+		public function stop():void
+		{
+			
+		}
+		
+		
+		override public function dispose():void
+		{
+			stop();
+			m_moduleInfo = null;
+			super.dispose();
+		}
 	}
 }

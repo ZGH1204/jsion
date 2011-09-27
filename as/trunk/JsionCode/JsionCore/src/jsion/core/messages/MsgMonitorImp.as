@@ -5,6 +5,7 @@ package jsion.core.messages
 	
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DictionaryUtil;
+	import jsion.utils.DisposeUtil;
 
 	public class MsgMonitorImp implements IDispose
 	{
@@ -81,13 +82,28 @@ package jsion.core.messages
 		}
 		
 		/**
-		 * 注册消息接收者
+		 * 移除消息接收者
 		 * @param id 接收者标识
 		 * 
 		 */		
 		public function removeReceiver(id:String):IMsgReceiver
 		{
 			return DictionaryUtil.delKey(receiverList, id);
+		}
+		
+		/**
+		 * 移除并析构消息接收者
+		 * @param id 接收者标识
+		 * 
+		 */		
+		public function removeAndFreeReceiver(id:String):void
+		{
+			if(receiverList[id])
+			{
+				var obj:Object = DictionaryUtil.delKey(receiverList, id);
+				
+				DisposeUtil.free(obj);
+			}
 		}
 		
 		/**

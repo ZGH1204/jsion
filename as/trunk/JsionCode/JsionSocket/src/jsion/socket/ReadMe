@@ -1,0 +1,32 @@
+Socket模块预留消息标识（30亿——30亿 + 50）参见 jsocket.SocketMessage 类
+
+
+初始化模块消息标识：
+
+jsocket.SocketMessage.SetPacketClass			1
+
+jsocket.SocketMessage.SetSendCryptor			2
+
+jsocket.SocketMessage.SetReceiveCryptor			3
+
+
+模块允许接收并处理的消息标识：
+
+jsocket.SocketMessage.Connect					11
+
+jsocket.SocketMessage.ForceConnect				12
+
+jsocket.SocketMessage.Send						13
+
+jsocket.SocketMessage.Close						14
+
+
+模块对外发送的消息标识：
+
+jsocket.SocketMessage.Connected					1 + 3000000000
+
+jsocket.SocketMessage.Errored					2 + 3000000000
+
+jsocket.SocketMessage.Closed					3 + 3000000000
+
+jsocket.SocketMessage.Received					4 + 3000000000

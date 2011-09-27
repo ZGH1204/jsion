@@ -194,6 +194,8 @@ package jsion.core.messages
 		
 		public function dispose():void
 		{
+			MsgMonitor.removeReceiver(id);
+			
 			__enterFrameHandler(null);
 			
 			JUtil.removeEnterFrame(__enterFrameHandler);
