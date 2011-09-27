@@ -35,7 +35,7 @@ package jsion.core.modules
 		
 		private static var m_loadViewController:IModuleLoading;
 		
-		public static function setup(config:XML, loadViewController:IModuleLoading = null):void
+		public static function setup(config:XML):void
 		{
 			var moduleXL:XMLList = config.Modules.Module;
 			
@@ -63,7 +63,10 @@ package jsion.core.modules
 					if(moduleInfo.autoLoad) m_autoLoadList.push(loadInfo);
 				}
 			}
-			
+		}
+		
+		public static function setLoadingViewController(loadViewController:IModuleLoading):void
+		{
 			m_loadViewController = loadViewController;
 		}
 		
@@ -75,6 +78,12 @@ package jsion.core.modules
 		
 		
 		
+		
+		
+		internal static function upModuleLoadInfo(module:BaseModule):void
+		{
+			
+		}
 		
 		
 		
@@ -305,6 +314,8 @@ package jsion.core.modules
 			
 			loaders.addEventListener(JLoaderEvent.Complete, __modulesLoadCompleteHandler, false, int.MAX_VALUE);
 			loaders.addEventListener(JLoaderEvent.Complete, __modulesDisposeHandler, false, int.MIN_VALUE);
+			
+			loaders.start();
 			
 			return loaders;
 		}
