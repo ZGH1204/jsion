@@ -13,6 +13,11 @@ package jsion.core.modules
 			m_moduleInfo = info;
 		}
 		
+		public function get moduleInfo():ModuleInfo
+		{
+			return m_moduleInfo;
+		}
+		
 		public function startup():void
 		{
 			
