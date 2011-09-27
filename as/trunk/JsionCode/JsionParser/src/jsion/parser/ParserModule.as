@@ -12,23 +12,23 @@ package jsion.parser
 	import jsion.parser.swf.Tag;
 	import jsion.parser.swf.TagTypes;
 	
-	public class PromiscuousModule extends BaseModule
+	public class ParserModule extends BaseModule
 	{
-		public function PromiscuousModule(moduleInfo:ModuleInfo)
+		public function ParserModule(moduleInfo:ModuleInfo)
 		{
 			super(moduleInfo);
 		}
 		
 		override public function startup():void
 		{
-			registeHandler(PromiscuousMessage.PROMISC_SWF, promiscSwfCodeHandler);
-			registeHandler(PromiscuousMessage.PROMISC_SWC, promiscSwcCodeHandler);
+			registeHandler(ParserMessage.PARSER_SWF, promiscSwfCodeHandler);
+			registeHandler(ParserMessage.PARSER_SWC, promiscSwcCodeHandler);
 		}
 		
 		override public function stop():void
 		{
-			removeHandler(PromiscuousMessage.PROMISC_SWF);
-			removeHandler(PromiscuousMessage.PROMISC_SWC);
+			removeHandler(ParserMessage.PARSER_SWF);
+			removeHandler(ParserMessage.PARSER_SWC);
 		}
 		
 		protected function promiscSwfCodeHandler(msg:Msg):Object
