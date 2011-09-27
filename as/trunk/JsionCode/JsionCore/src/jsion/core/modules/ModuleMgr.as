@@ -416,6 +416,8 @@ package jsion.core.modules
 			loaders.removeEventListener(JLoaderEvent.Complete, __modulesLoadCompleteHandler);
 			loaders.removeEventListener(JLoaderEvent.Complete, __modulesDisposeHandler);
 			
+			ArrayUtil.removeAll(m_autoLoadList);
+			
 			DisposeUtil.free(moduleLoaders);
 			moduleLoaders = null;
 			loaders = null;
