@@ -294,28 +294,38 @@ package jsion.core.modules
 		
 		
 		private static var moduleLoaders:ILoaders;
+		private static var loadAutoModuleCallback:Function;
 		
-		public static function loadAutoLoadModule():ILoaders
+		public static function loadAutoLoadModule(callback:Function = null):ILoaders
 		{
-			var loaders:ILoaders = new JLoaders("AutoLoad");
-			
-			moduleLoaders = loaders;
-			
-			for each(var loadInfo:ModuleLoadInfo in m_autoLoadList)
+			if(m_autoLoadList.length > 0)
 			{
-				updateConfig(Module_Loader_Cfg, loadInfo);
+				var loaders:ILoaders = new JLoaders("AutoLoad");
 				
-				var loader:ILoader = loaders.add(loadInfo.moduleInfo.url, Module_Loader_Cfg);
+				moduleLoaders = loaders;
 				
-				loadInfo.loading = true;
-				loadInfo.loader = loader;
-				m_loadingModule[loader] = loadInfo;
+				for each(var loadInfo:ModuleLoadInfo in m_autoLoadList)
+				{
+					updateConfig(Module_Loader_Cfg, loadInfo);
+					
+					var loader:ILoader = loaders.add(loadInfo.moduleInfo.url, Module_Loader_Cfg);
+					
+					loadInfo.loading = true;
+					loadInfo.loader = loader;
+					m_loadingModule[loader] = loadInfo;
+				}
+				
+				loadAutoModuleCallback = callback;
+				
+				loaders.addEventListener(JLoaderEvent.Complete, __modulesLoadCompleteHandler, false, int.MAX_VALUE);
+				loaders.addEventListener(JLoaderEvent.Complete, __modulesDisposeHandler, false, int.MIN_VALUE);
+				
+				loaders.start();
 			}
-			
-			loaders.addEventListener(JLoaderEvent.Complete, __modulesLoadCompleteHandler, false, int.MAX_VALUE);
-			loaders.addEventListener(JLoaderEvent.Complete, __modulesDisposeHandler, false, int.MIN_VALUE);
-			
-			loaders.start();
+			else
+			{
+				callback();
+			}
 			
 			return loaders;
 		}
@@ -336,6 +346,9 @@ package jsion.core.modules
 			{
 				moduleLoadComplete(loadInfo.loader);
 			}
+			
+			if(loadAutoModuleCallback != null) loadAutoModuleCallback();
+			loadAutoModuleCallback = null;
 		}
 		
 		private static function __modulesDisposeHandler(e:JLoaderEvent):void
