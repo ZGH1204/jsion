@@ -45,18 +45,18 @@ package jsion.core.modules
 				XmlUtil.decodeWithProperty(moduleInfo, moduleXml);
 				if(checkModuleInfo(moduleInfo))
 				{
+					var loadInfo:ModuleLoadInfo = new ModuleLoadInfo();
+					
+					loadInfo.id = moduleInfo.id;
+					loadInfo.cls = moduleInfo.cls;
+					loadInfo.moduleInfo = moduleInfo;
+					
 					if(m_modules[loadInfo.id])
 					{
 						throw new Error("模块ID不能重复! ID：" + loadInfo.id);
 						
 						continue;
 					}
-					
-					var loadInfo:ModuleLoadInfo = new ModuleLoadInfo();
-					
-					loadInfo.id = moduleInfo.id;
-					loadInfo.cls = moduleInfo.cls;
-					loadInfo.moduleInfo = moduleInfo;
 					
 					m_modules[loadInfo.id] = loadInfo;
 					
@@ -315,6 +315,9 @@ package jsion.core.modules
 					m_loadingModule[loader] = loadInfo;
 				}
 				
+				Module_Loader_Cfg["cryptor"] = null;
+				Module_Loader_Cfg["context"] = null;
+				
 				loadAutoModuleCallback = callback;
 				
 				loaders.addEventListener(JLoaderEvent.Complete, __modulesLoadCompleteHandler, false, int.MAX_VALUE);
@@ -374,27 +377,30 @@ package jsion.core.modules
 				cfg["cryptor"] = null;
 			}
 			
-			var context:LoaderContext;
+			var context:LoaderContext = null;
+			var domain:ApplicationDomain = null;
 			
 			if(loadInfo.moduleInfo.target == ModuleTarget.Blank)
 			{
-				context = JUtil.createNewContext();
+				domain = JUtil.createNewDomain();
+				context = JUtil.createContext(domain);
 				AppDomainUtil.registeAppDomain(context.applicationDomain);
 			}
 			else if(loadInfo.moduleInfo.target == ModuleTarget.Child)
 			{
-				context = JUtil.createChildContext();
+				domain = JUtil.createChildDomain();
+				context = JUtil.createContext(domain);
 				AppDomainUtil.registeAppDomain(context.applicationDomain);
 			}
-//			else
-//			{
-//				context = JUtil.createCurrentContext();
-//			}
+			else
+			{
+				domain = JUtil.createCurrentDomain();
+				context = JUtil.createContext(domain);
+			}
+			
+			loadInfo.domain = domain;
 			
 			cfg["context"] = context;
-			
-			if(context) loadInfo.domain = context.applicationDomain;
-			else loadInfo.domain = ApplicationDomain.currentDomain;
 		}
 	}
 }

@@ -190,25 +190,15 @@ package jsion.utils
 		}
 		
 		/**
-		 * 创建当前应用程序域子域的加载上下文
+		 * 创建加载上下文
+		 * @param domain 加载到的应用程序域
 		 * @param checkPolicyFile 指定在开始加载对象本身之前，应用程序是否应该尝试从所加载对象的服务器下载 URL 策略文件。此标志适用于 Loader.load() 方法，但不适用于 Loader.loadBytes() 方法。
 		 * @return 
 		 * 
 		 */		
-		public static function createChildContext(checkPolicyFile:Boolean = false):LoaderContext
+		public static function createContext(domain:ApplicationDomain, checkPolicyFile:Boolean = false):LoaderContext
 		{
-			return new LoaderContext(checkPolicyFile, createChildDomain());
-		}
-		
-		/**
-		 * 创建与当前应用程序域同级的加载上下文
-		 * @param checkPolicyFile 指定在开始加载对象本身之前，应用程序是否应该尝试从所加载对象的服务器下载 URL 策略文件。此标志适用于 Loader.load() 方法，但不适用于 Loader.loadBytes() 方法。
-		 * @return 
-		 * 
-		 */		
-		public static function createNewContext(checkPolicyFile:Boolean = false):LoaderContext
-		{
-			return new LoaderContext(checkPolicyFile, createNewDomain());
+			return new LoaderContext(checkPolicyFile, domain);
 		}
 	}
 }
