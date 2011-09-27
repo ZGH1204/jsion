@@ -153,7 +153,7 @@ package jsion.core.modules
 			
 			if(loadInfo.module) return loadInfo.module;
 			
-			var module:BaseModule = AppDomainUtil.create(loadInfo.cls) as BaseModule;
+			var module:BaseModule = AppDomainUtil.create(loadInfo.cls, loadInfo.moduleInfo) as BaseModule;
 			
 			loadInfo.module = module;
 			
@@ -169,7 +169,7 @@ package jsion.core.modules
 			
 			if(loadInfo.module) return;
 			
-			var module:BaseModule = AppDomainUtil.create(loadInfo.cls) as BaseModule;
+			var module:BaseModule = AppDomainUtil.create(loadInfo.cls, loadInfo.moduleInfo) as BaseModule;
 			
 			loadInfo.module = module;
 			
