@@ -19,30 +19,30 @@ package jsion.core.loaders
 	
 	/**
 	 * 建立加载时分派
-	 * @eventType org.events.JLoaderEvent
+	 * @eventType jsion.core.events.JLoaderEvent
 	 * @langversion 3.0
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="open", type="jcore.org.events.JLoaderEvent")]
+	[Event(name="open", type="jsion.core.events.JLoaderEvent")]
 	
 	/**
 	 * 加载完成时分派
-	 * @eventType org.events.JLoaderEvent
+	 * @eventType jsion.core.events.JLoaderEvent
 	 * @langversion 3.0
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="complete", type="jcore.org.events.JLoaderEvent")]
+	[Event(name="complete", type="jsion.core.events.JLoaderEvent")]
 	
 	/**
 	 * 如果发生错误并导致发送或加载操作失败，将分派 Error 事件，其中事件数据data为要显示错误消息的文本。
-	 * @eventType org.events.JLoaderEvent
+	 * @eventType jsion.core.events.JLoaderEvent
 	 * @langversion 3.0
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="error", type="jcore.org.events.JLoaderEvent")]
+	[Event(name="error", type="jsion.core.events.JLoaderEvent")]
 	
 	/**
 	 * 在网络请求返回 HTTP 状态代码时，应用程序将分派 HttpStatus 事件，其中事件数据data为Http状态代码。<br/><br/>
@@ -50,30 +50,30 @@ package jsion.core.loaders
 	 * 在错误或完成事件之前，将始终发送 HttpStatus 事件。HttpStatus 事件不一定指示错误条件；
 	 * 它仅反映网络堆栈提供的 HTTP 状态代码（如果有的话）。一些 Flash Player 环境可能无法检测到 HTTP 状态代码；
 	 * 在这些情况下，将总是报告状态代码 0。 
-	 * @eventType org.events.JLoaderEvent
+	 * @eventType jsion.core.events.JLoaderEvent
 	 * @langversion 3.0
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="httpStatus", type="jcore.org.events.JLoaderEvent")]
+	[Event(name="httpStatus", type="jsion.core.events.JLoaderEvent")]
 	
 	/**
 	 * 资源加载总字节数获取后分派，其中事件数据data为资源总字节数。
-	 * @eventType org.events.JLoaderEvent
+	 * @eventType jsion.core.events.JLoaderEvent
 	 * @langversion 3.0
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="bytesTotal", type="jcore.org.events.JLoaderEvent")]
+	[Event(name="bytesTotal", type="jsion.core.events.JLoaderEvent")]
 	
 	/**
 	 * 用于通知视频或音频可以开始播放
-	 * @eventType org.events.JLoaderEvent
+	 * @eventType jsion.core.events.JLoaderEvent
 	 * @langversion 3.0
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="canBeginPlaying", type="jcore.org.events.JLoaderEvent")]
+	[Event(name="canBeginPlaying", type="jsion.core.events.JLoaderEvent")]
 	
 	/**
 	 * 当加载操作已开始或套接字已接收到数据时，将分派 JLoaderProgressEvent 对象。这些事件通常在将 SWF 文件、图像或数据加载到应用程序中时生成。
@@ -82,7 +82,7 @@ package jsion.core.loaders
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="progress", type="jcore.org.events.JLoaderProgressEvent")]
+	[Event(name="progress", type="jsion.core.events.JLoaderProgressEvent")]
 	
 	/**
 	 * <p>JLoader 类是JCore库所有加载器的抽象基类。</p>
@@ -97,91 +97,97 @@ package jsion.core.loaders
      *		<th>Description</th>
 	 * 		<tr>
 	 * 			<td>type</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderGloba</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderGloba</a></td>
 	 * 			<td><code>String</code></td>
 	 * 			<td>对应的资源类型，未配置时其值为空字符串，通过批量加载器生成并且未配置时其值为扩展名对应的资源类型。</td>
 	 * 		</tr>
 	 * 		<tr>
 	 * 			<td>rnd</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 	 * 			<td><code>Boolean</code></td>
 	 * 			<td>是否忽略Http本身的缓存</td>
 	 * 		</tr>
 	 * 		<tr>
 	 * 			<td>root</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 	 * 			<td><code>String</code></td>
 	 * 			<td>资源根路径</td>
 	 * 		</tr>
 	 * 		<tr>
 	 * 			<td>priority</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 	 * 			<td><code>int</code></td>
 	 * 			<td>指示加载时的优先级，数值越大越优先。</td>
 	 * 		</tr>
 	 * 		<tr>
 	 * 			<td>managed</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 	 * 			<td><code>Boolean</code></td>
 	 * 			<td>指示当前加载器是否使用LoaderMonitor进行管理，默认值 为true。</td>
 	 * 		</tr>
 	 * 		<tr>
 	 * 			<td>cryptor</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 	 * 			<td><code>ICryption接口实现类</code></td>
 	 * 			<td>解密器，如果资源事先经过加密则需传递此配置参数。</td>
 	 * 		</tr>
 	 * 		<tr>
 	 * 			<td>headers</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 	 * 			<td><code>URLRequestHeader对象列表</code></td>
 	 * 			<td>请求时用于Http标头的列表，URLRequestHeader对象列表。</td>
 	 * 		</tr>
 	 * 		<tr>
 	 * 			<td>context</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 	 * 			<td><code>LoaderContext or SoundLoaderContext</code></td>
 	 * 			<td>仅允许LoaderContext 或 SoundLoaderContext 类的对象，用于 swf 或 sound 的加载。</td>
 	 * 		</tr>
 	 * 		<tr>
 	 * 			<td>bindData</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 	 * 			<td><code>Object(dynamic)</code></td>
 	 * 			<td>对uri进行格式化绑定的数据源</td>
 	 * 		</tr>
 	 * 		<tr>
 	 * 			<td>tryTimes</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 	 * 			<td><code>int</code></td>
 	 * 			<td>加载失败时的可重试次数，默认为3。</td>
 	 * 		</tr>
 	 * 		<tr>
+	 * 			<td>autoEmbed</td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
+	 * 			<td><code>Boolean</code></td>
+	 * 			<td>指示SwcLoader和LibLoader是否自动加载到程序域</td>
+	 * 		</tr>
+	 * 		<tr>
 	 * 			<td>requestMethod</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 	 * 			<td><code>String</code></td>
 	 * 			<td>用于URLRequest.method属性，其可能的值为 URLRequestMethod 类的常量值。</td>
 	 * 		</tr>
 	 * 		<tr>
 	 * 			<td>urlVariables</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 	 * 			<td><code>Object(dynamic)</code></td>
 	 * 			<td>用于URLRequest.data属性，Http的请求参数。</td>
 	 * 		</tr>
 	 * 		<tr>
 	 * 			<td>cacheInMemory</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 	 * 			<td><code>Boolean</code></td>
 	 * 			<td>指示是否缓存在内存，仅用于ImageLoader，LibLoader和SwcLoader。</td>
 	 * 		</tr>
 	 * 		<tr>
 	 * 			<td>checkPolicyFile</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 	 * 			<td><code>Boolean</code></td>
 	 * 			<td>仅用于NetStream.play的播放参数。</td>
 	 * 		</tr>
 	 * 		<tr>
 	 * 			<td>pausedAtStart</td>
-	 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+	 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 	 * 			<td><code>Boolean</code></td>
 	 * 			<td>仅用于指示NetStream打开时是否暂停在开始播放前。</td>
 	 * 		</tr>
@@ -247,7 +253,7 @@ package jsion.core.loaders
 		////////////////////////////////////////	JSON配置		////////////////////////////////////////
 		
 		/**
-		 * 对应的资源类型，参见jcore.org.loader.LoaderGloba中的资源类型常量。
+		 * 对应的资源类型，参见jsion.core.loaders.LoaderGloba中的资源类型常量。
 		 */		
 		protected var _type:String;
 		
@@ -295,6 +301,11 @@ package jsion.core.loaders
 		 * 加载失败时的可重试次数，默认为3。
 		 */		
 		protected var _hadTryTimes:int;
+		
+		/**
+		 * 指示SwcLoader和LibLoader是否自动加载到程序域
+		 */		
+		protected var _autoEmbed:Boolean = true;
 		
 		/**
 		 * 用于URLRequest.method属性，其可能的值为 URLRequestMethod 类的常量值。
@@ -356,12 +367,13 @@ package jsion.core.loaders
 			if(cfg[LoaderJSON.managed] == null) cfg[LoaderJSON.managed] = true;
 			
 			_rnd = cfg[LoaderJSON.rnd] || false;
-			_managed = cfg[LoaderJSON.managed] || false;
+			_managed = cfg[LoaderJSON.managed] || true;
 			_cacheInMemory = cfg[LoaderJSON.cacheInMemory] || false;
 			_checkPolicyFile = cfg[LoaderJSON.checkPolicyFile] || false;
 			_pausedAtStart = cfg[LoaderJSON.pausedAtStart] || false;
 			_priority = cfg[LoaderJSON.priority] || Constant.Zero;
 			_hadTryTimes = cfg[LoaderJSON.tryTimes] || 3;
+			_autoEmbed = cfg[LoaderJSON.autoEmbed] || true;
 			_type = cfg[LoaderJSON.type] || Constant.Empty;
 			_root = cfg[LoaderJSON.root] || Constant.Empty;
 			_cryptor = cfg[LoaderJSON.cryptor];
@@ -399,7 +411,7 @@ package jsion.core.loaders
 		}
 		
 		/**
-		 * 对应的资源类型，参见jcore.org.loader.LoaderGloba中的资源类型常量。
+		 * 对应的资源类型，参见jsion.core.loaders.LoaderGloba中的资源类型常量。
 		 * @return 资源类型值
 		 * 
 		 */		
@@ -749,6 +761,25 @@ package jsion.core.loaders
 		}
 		
 		/**
+		 * 指示SwcLoader和LibLoader是否自动加载到程序域
+		 */		
+		public function get autoEmbed():Boolean
+		{
+			return _autoEmbed;
+		}
+		
+		/** @private */
+		public function set autoEmbed(value:Boolean):void
+		{
+			_autoEmbed = value;
+		}
+		
+		public function embedInDomain(embedCallback:Function = null):void
+		{
+			if(embedCallback != null) embedCallback(this);
+		}
+		
+		/**
 		 * 执行加载(必需重写)，与加载管理类无关。
 		 * 
 		 */		
@@ -835,7 +866,16 @@ package jsion.core.loaders
 		{
 			if(callback != null) _callback = callback;
 			
-			if(_isComplete || _isLoading) return this;
+			if(_status == LoaderGlobal.StatusFinished || _isComplete)
+			{
+				if(_callback != null) _callback(this);
+				
+				dispatchEvent(new JLoaderEvent(JLoaderEvent.Complete));
+				
+				return this;
+			}
+			
+			if(_isLoading) return this;
 			
 			if(_managed == false || LoaderMonitor.getCanLoad(this))
 			{

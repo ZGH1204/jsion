@@ -22,6 +22,10 @@ package jsion.core.events
 		 */		
 		public static const Complete:String = "complete";
 		/**
+		 * 嵌入程序域完成时分派,仅SwcLoader和LibLoader发生.
+		 */		
+		public static const EmbedComplete:String = "embedComplete";
+		/**
 		 * 如果发生错误并导致发送或加载操作失败，将分派 Error 事件，其中事件数据data为要显示错误消息的文本。
 		 * 
 		 */		

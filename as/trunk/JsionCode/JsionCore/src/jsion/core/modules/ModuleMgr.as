@@ -203,7 +203,7 @@ package jsion.core.modules
 		
 		
 		
-		public static function loadModule(id:String, callback:Function = null):ILoader
+		public static function createModuleLoader(id:String, callback:Function = null):ILoader
 		{
 			var loadInfo:ModuleLoadInfo = getModuleLoadInfo(id);
 			
@@ -219,28 +219,40 @@ package jsion.core.modules
 				return null;
 			}
 			
-			if(loadInfo.callback.indexOf(callback) == -1)
+			if(callback != null && loadInfo.callback.indexOf(callback) == -1)
 				loadInfo.callback.push(callback);
 			
 			if(loadInfo.loading) return loadInfo.loader;
 			
 			loadInfo.loading = true;
 			
+			updateConfig(Module_Loader_Cfg, loadInfo);
+			
 			loadInfo.loader = new SwcLoader(loadInfo.moduleInfo.url, Module_Loader_Cfg);
 			
-			loadInfo.loader.addEventListener(JLoaderEvent.Complete, __moduleLoadCompleteHandler, false, int.MAX_VALUE);
+			Module_Loader_Cfg["cryptor"] = null;
+			Module_Loader_Cfg["context"] = null;
+			
+			loadInfo.loader.addEventListener(JLoaderEvent.EmbedComplete, __moduleLoadCompleteHandler, false, int.MAX_VALUE);
 			loadInfo.loader.addEventListener(JLoaderEvent.Error, __moduleLoadErrorHandler, false, int.MAX_VALUE);
 			loadInfo.loader.addEventListener(JLoaderProgressEvent.Progress, __progressHandler, false, int.MAX_VALUE);
-			loadInfo.loader.addEventListener(JLoaderEvent.Complete, __disposeHandler, false, int.MIN_VALUE);
+			loadInfo.loader.addEventListener(JLoaderEvent.EmbedComplete, __disposeHandler, false, int.MIN_VALUE);
 			loadInfo.loader.addEventListener(JLoaderEvent.Error, __disposeHandler, false, int.MIN_VALUE);
 			
 			m_loadingModule[loadInfo.loader] = loadInfo;
 			
+			return loadInfo.loader;
+		}
+		
+		public static function loadModule(id:String, callback:Function = null):ILoader
+		{
+			var loader:ILoader = createModuleLoader(id, callback);
+			
 			if(m_loadViewController) m_loadViewController.showLoadingView();
 			
-			loadInfo.loader.loadAsync();
+			if(loader) loader.loadAsync();
 			
-			return loadInfo.loader;
+			return loader;
 		}
 		
 		private static function __moduleLoadCompleteHandler(e:JLoaderEvent):void
@@ -268,10 +280,10 @@ package jsion.core.modules
 		{
 			var loader:ILoader = e.currentTarget as ILoader;
 			
-			loader.removeEventListener(JLoaderEvent.Complete, __moduleLoadCompleteHandler);
+			loader.removeEventListener(JLoaderEvent.EmbedComplete, __moduleLoadCompleteHandler);
 			loader.removeEventListener(JLoaderEvent.Error, __moduleLoadErrorHandler);
 			loader.removeEventListener(JLoaderProgressEvent.Progress, __progressHandler);
-			loader.removeEventListener(JLoaderEvent.Complete, __disposeHandler);
+			loader.removeEventListener(JLoaderEvent.EmbedComplete, __disposeHandler);
 			loader.removeEventListener(JLoaderEvent.Error, __disposeHandler);
 			
 			if(m_loadingModule[loader])
@@ -347,13 +359,17 @@ package jsion.core.modules
 		
 		
 		
-		
+		private static var autoLoading:Boolean;
 		private static var moduleLoaders:ILoaders;
 		private static var loadAutoModuleCallback:Function;
 		
+		private static var tmpQueue:Array = [];
+		private static var embedQueue:Array = [];
+		private static var embeding:Boolean = false;
+		
 		public static function loadAutoLoadModule(callback:Function = null):ILoaders
 		{
-			if(m_autoLoadList.length > 0)
+			if(m_autoLoadList.length > 0 && autoLoading == false)
 			{
 				var loaders:ILoaders = new JLoaders("AutoLoad");
 				
@@ -364,7 +380,7 @@ package jsion.core.modules
 					updateConfig(Module_Loader_Cfg, loadInfo);
 					
 					var loader:ILoader = loaders.add(loadInfo.moduleInfo.url, Module_Loader_Cfg);
-					
+					loader.autoEmbed = false;
 					loadInfo.loading = true;
 					loadInfo.loader = loader;
 					m_loadingModule[loader] = loadInfo;
@@ -375,12 +391,13 @@ package jsion.core.modules
 				
 				loadAutoModuleCallback = callback;
 				
-				loaders.addEventListener(JLoaderEvent.Complete, __modulesLoadCompleteHandler, false, int.MAX_VALUE);
-				loaders.addEventListener(JLoaderEvent.Complete, __modulesDisposeHandler, false, int.MIN_VALUE);
+				loaders.addEventListener(JLoaderEvent.EmbedComplete, __modulesLoadCompleteHandler, false, int.MAX_VALUE);
+				loaders.addEventListener(JLoaderEvent.EmbedComplete, __modulesDisposeHandler, false, int.MIN_VALUE);
 				
 				loaders.start();
+				autoLoading = true;
 			}
-			else
+			else if(autoLoading == false)
 			{
 				callback();
 			}
@@ -398,30 +415,100 @@ package jsion.core.modules
 				return;
 			}
 			
-			var loader:ILoader;
-			
 			for each(var loadInfo:ModuleLoadInfo in m_autoLoadList)
 			{
 				moduleLoadComplete(loadInfo.loader);
 			}
 			
-			if(loadAutoModuleCallback != null) loadAutoModuleCallback();
-			loadAutoModuleCallback = null;
+//			for each(var loadInfo:ModuleLoadInfo in m_autoLoadList)
+//			{
+//				if(loadInfo.loader.type == LoaderGlobal.TYPE_SWC || 
+//					loadInfo.loader.type == LoaderGlobal.TYPE_LIB)
+//				{
+//					embedQueue.push(loadInfo);
+//				}
+//				else
+//				{
+//					moduleLoadComplete(loadInfo.loader);
+//				}
+//			}
+			
+//			startEmbedQueue();
 		}
 		
 		private static function __modulesDisposeHandler(e:JLoaderEvent):void
 		{
 			var loaders:ILoaders = e.currentTarget as ILoaders;
 			
-			loaders.removeEventListener(JLoaderEvent.Complete, __modulesLoadCompleteHandler);
-			loaders.removeEventListener(JLoaderEvent.Complete, __modulesDisposeHandler);
+			loaders.removeEventListener(JLoaderEvent.EmbedComplete, __modulesLoadCompleteHandler);
+			loaders.removeEventListener(JLoaderEvent.EmbedComplete, __modulesDisposeHandler);
+			
+//			if(embeding) return;
 			
 			ArrayUtil.removeAll(m_autoLoadList);
 			
 			DisposeUtil.free(moduleLoaders);
 			moduleLoaders = null;
-			loaders = null;
 		}
+		
+//		private static function startEmbedQueue(l:ILoader = null):void
+//		{
+//			if(l) tmpQueue.push(l);
+//			
+//			if(embedQueue.length == 0)
+//			{
+//				embedComplete();
+//				
+//				return;
+//			}
+//			
+//			while(embedQueue.length > 0)
+//			{
+//				var loadInfo:ModuleLoadInfo = embedQueue.shift() as ModuleLoadInfo;
+//				
+//				if(loadInfo == null || loadInfo.loader == null)
+//				{
+//					if(embedQueue.length == 0) embedComplete();
+//					
+//					continue;
+//				}
+//				
+//				embeding = true;
+//				
+//				loadInfo.loader.embedInDomain(startEmbedQueue);
+//				
+//				break;
+//			}
+//		}
+//		
+//		private static function embedComplete():void
+//		{
+//			if(embedQueue.length == 0)
+//			{
+//				autoLoading = false;
+//				
+//				if(loadAutoModuleCallback != null) loadAutoModuleCallback();
+//				
+//				loadAutoModuleCallback = null;
+//				
+//				if(embeding)
+//				{
+//					embeding = false;
+//					
+//					ArrayUtil.removeAll(m_autoLoadList);
+//					
+//					DisposeUtil.free(moduleLoaders);
+//					moduleLoaders = null;
+//				}
+//				
+//				while(tmpQueue.length > 0)
+//				{
+//					var loader:ILoader = tmpQueue.shift() as ILoader;
+//					
+//					moduleLoadComplete(loader);
+//				}
+//			}
+//		}
 		
 		private static function updateConfig(cfg:Object, loadInfo:ModuleLoadInfo):void
 		{

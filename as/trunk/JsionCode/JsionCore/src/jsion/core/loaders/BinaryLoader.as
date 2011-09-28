@@ -4,6 +4,8 @@ package jsion.core.loaders
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.utils.ByteArray;
+	
+	import jsion.core.events.JLoaderEvent;
 
 	/**
 	 * <p>二进制数据流加载类</p>
@@ -80,6 +82,12 @@ package jsion.core.loaders
 		
 		override public function getBytesTotal():void
 		{
+			if(_status == LoaderGlobal.StatusFinished)
+			{
+				dispatchEvent(new JLoaderEvent(JLoaderEvent.BytesTotal, _bytesTotal));
+				return;
+			}
+			
 			super.getBytesTotal();
 			addBytesTotalEvent(_loader);
 			

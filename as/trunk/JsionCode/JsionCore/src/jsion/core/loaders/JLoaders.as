@@ -44,6 +44,15 @@ package jsion.core.loaders
 	[Event(name="complete", type="jsion.core.events.JLoaderEvent")]
 	
 	/**
+	 * 嵌入程序域完成时分派,仅SwcLoader和LibLoader发生.
+	 * @eventType jsion.core.events.JLoaderEvent
+	 * @langversion 3.0
+	 * @playerversion Flash 9
+	 * @playerversion AIR 1.1
+	 */	
+	[Event(name="embedComplete", type="jsion.core.events.JLoaderEvent")]
+	
+	/**
 	 * 所有加载完成并且存在加载失败时派发
 	 * @eventType jsion.core.events.JLoaderEvent
 	 * @langversion 3.0
@@ -88,11 +97,17 @@ package jsion.core.loaders
 		
 		protected var _isStarted:Boolean;
 		
+		protected var _allLoadersList:Array;
+		
 		protected var _allLoadersDic:Dictionary;
 		
 		protected var _waitList:Array;
 		
 		protected var _loadingList:Array;
+		
+		protected var _embedList:Array;
+		
+		protected var _embedCompleteList:Array;
 		
 		protected var _completeListDic:Dictionary;
 		
@@ -104,11 +119,15 @@ package jsion.core.loaders
 		
 		protected var _completeBytesTotal:int = 0;
 		
+		protected var _embed:Boolean;
+		
 		
 		/**
 		 * 指加载完成时的回调函数，以 this 参数进行调用。
 		 */		
-		protected var _callback:Function;
+		protected var _completeCallback:Function;
+		
+		protected var _embedCallback:Function;
 		
 		/**
 		 * 批量获取待加载资源总字节数的封装类
@@ -129,7 +148,7 @@ package jsion.core.loaders
 		 * @param name 指加载器名称
 		 * @param maxLoadings 最大同时加载数LoaderGlobal.DefaultMaxLoadings
 		 * @param defaultCfg 单个资源加载器的默认配置，配置项参见 add 方法。
-		 * @see jcore.org.loader.JLoaders.add()
+		 * @see jsion.core.loaders.JLoaders.add()
 		 * 
 		 */		
 		public function JLoaders(name:String, maxLoadings:int = 8, defaultCfg:Object = null)
@@ -142,9 +161,12 @@ package jsion.core.loaders
 			ObjectUtil.copyDynamicToTarget2(DEFAULT_CFG, _defaultCfg);
 			ObjectUtil.copyDynamicToTarget2(defaultCfg, _defaultCfg);
 			
+			_allLoadersList = [];
 			_allLoadersDic = new Dictionary();
 			_waitList = [];
 			_loadingList = [];
+			_embedList = [];
+			_embedCompleteList = [];
 			_completeListDic = new Dictionary();
 			_errorListDic = new Dictionary();
 		}
@@ -204,6 +226,14 @@ package jsion.core.loaders
 		{
 			return _allLoadersDic;
 		}
+		
+		/**
+		 * 所有资源的加载器列表
+		 */
+		public function get allLoadersList():Array
+		{
+			return _allLoadersList;
+		}
 
 		/**
 		 * 指示等待加载列表
@@ -247,7 +277,6 @@ package jsion.core.loaders
 		
 		/**
 		 * 已完成加载的总字节数
-		 * @private
 		 */
 		public function get completeBytesTotal():int
 		{
@@ -263,7 +292,15 @@ package jsion.core.loaders
 		}
 		
 		/**
-		 * <p>加入等待加载列表</p>
+		 * 嵌入程序域完成的ILoader列表,存在需要嵌入的Loader时有效.
+		 */		
+		public function get embedCompleteList():Array
+		{
+			return _embedCompleteList;
+		}
+		
+		/**
+		 * <p>加入等待加载列表,如果是SwcLoader或LibLoader时则autoEmbed自动嵌入属性将被重置为false.</p>
 		 * @param url 资源地址
 		 * @param cfg JSON配置，配置项如下：<br /><br />
 		 * 
@@ -274,91 +311,97 @@ package jsion.core.loaders
 	     *		<th>Description</th>
 		 * 		<tr>
 		 * 			<td>type</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderGloba</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderGloba</a></td>
 		 * 			<td><code>String</code></td>
 		 * 			<td>强制资源类型</td>
 		 * 		</tr>
 		 * 		<tr>
 		 * 			<td>rnd</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 		 * 			<td><code>Boolean</code></td>
 		 * 			<td>是否忽略Http本身的缓存</td>
 		 * 		</tr>
 		 * 		<tr>
 		 * 			<td>root</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 		 * 			<td><code>String</code></td>
 		 * 			<td>资源根路径</td>
 		 * 		</tr>
 		 * 		<tr>
 		 * 			<td>priority</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 		 * 			<td><code>int</code></td>
 		 * 			<td>指示加载时的优先级，数值越大越优先。</td>
 		 * 		</tr>
 		 * 		<tr>
 		 * 			<td>managed</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 		 * 			<td><code>Boolean</code></td>
 		 * 			<td>指示当前加载器是否使用LoaderMonitor进行管理，默认值 为true。</td>
 		 * 		</tr>
 		 * 		<tr>
 		 * 			<td>cryptor</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 		 * 			<td><code>ICryption接口实现类</code></td>
 		 * 			<td>解密器，如果资源事先经过加密则需传递此配置参数。</td>
 		 * 		</tr>
 		 * 		<tr>
 		 * 			<td>headers</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 		 * 			<td><code>URLRequestHeader对象列表</code></td>
 		 * 			<td>请求时用于Http标头的列表，URLRequestHeader对象列表。</td>
 		 * 		</tr>
 		 * 		<tr>
 		 * 			<td>context</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 		 * 			<td><code>LoaderContext or SoundLoaderContext</code></td>
 		 * 			<td>仅允许LoaderContext 或 SoundLoaderContext 类的对象，用于 swf 或 sound 的加载。</td>
 		 * 		</tr>
 		 * 		<tr>
 		 * 			<td>bindData</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 		 * 			<td><code>Object(dynamic)</code></td>
 		 * 			<td>对uri进行格式化绑定的数据源</td>
 		 * 		</tr>
 		 * 		<tr>
 		 * 			<td>tryTimes</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 		 * 			<td><code>int</code></td>
 		 * 			<td>加载失败时的可重试次数，默认为3。</td>
 		 * 		</tr>
 		 * 		<tr>
+		 * 			<td>autoEmbed</td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
+		 * 			<td><code>Boolean</code></td>
+		 * 			<td>指示SwcLoader和LibLoader是否自动加载到程序域</td>
+		 * 		</tr>
+		 * 		<tr>
 		 * 			<td>requestMethod</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 		 * 			<td><code>String</code></td>
 		 * 			<td>用于URLRequest.method属性，其可能的值为 URLRequestMethod 类的常量值。</td>
 		 * 		</tr>
 		 * 		<tr>
 		 * 			<td>urlVariables</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 		 * 			<td><code>Object(dynamic)</code></td>
 		 * 			<td>用于URLRequest.data属性，Http的请求参数。</td>
 		 * 		</tr>
 		 * 		<tr>
 		 * 			<td>cacheInMemory</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 		 * 			<td><code>Boolean</code></td>
 		 * 			<td>指示是否缓存在内存，仅用于ImageLoader，LibLoader和SwcLoader。</td>
 		 * 		</tr>
 		 * 		<tr>
 		 * 			<td>checkPolicyFile</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 		 * 			<td><code>Boolean</code></td>
 		 * 			<td>仅用于NetStream.play的播放参数。</td>
 		 * 		</tr>
 		 * 		<tr>
 		 * 			<td>pausedAtStart</td>
-		 * 			<td><a href="#">jcore.org.loader.LoaderJSON</a></td>
+		 * 			<td><a href="#">jsion.core.loaders.LoaderJSON</a></td>
 		 * 			<td><code>Boolean</code></td>
 		 * 			<td>仅用于指示NetStream打开时是否暂停在开始播放前。</td>
 		 * 		</tr>
@@ -447,8 +490,8 @@ package jsion.core.loaders
 		}
 		
 		/**
-		 * 加入等待加载列表
-		 * @param loader
+		 * 加入等待加载列表,如果是SwcLoader或LibLoader时则autoEmbed自动嵌入属性将被重置为false.
+		 * @param loader 加载器
 		 * 
 		 */		
 		public function addLoader(loader:ILoader):void
@@ -474,6 +517,22 @@ package jsion.core.loaders
 		 */		
 		private function putInLoaderList(loader:ILoader):void
 		{
+			if(_allLoadersDic[loader.urlKey])
+			{
+				for(var i:int = 0; i < _allLoadersList.length; i++)
+				{
+					if(_allLoadersList[i].urlKey == loader.urlKey)
+					{
+						_allLoadersList[i] = loader;
+						break;
+					}
+				}
+			}
+			else
+			{
+				_allLoadersList.push(loader);
+			}
+			
 			_allLoadersDic[loader.urlKey] = loader;
 		}
 		
@@ -484,6 +543,13 @@ package jsion.core.loaders
 		 */		
 		private function putInWaitList(loader:ILoader):void
 		{
+			if(loader.type == LoaderGlobal.TYPE_SWC || 
+				loader.type == LoaderGlobal.TYPE_LIB)
+			{
+				loader.autoEmbed = false;
+				_embedList.push(loader);
+			}
+			
 			_waitList.push(loader);
 		}
 		
@@ -685,9 +751,10 @@ package jsion.core.loaders
 		 * 开始批量加载
 		 * 
 		 */		
-		public function start(callback:Function = null):ILoaders
+		public function start(completeCallback:Function = null, embedCallback:Function = null):ILoaders
 		{
-			if(callback != null) _callback = callback;
+			if(completeCallback != null) _completeCallback = completeCallback;
+			if(embedCallback != null) _embedCallback = embedCallback;
 			
 			if(_isStarted) return this;
 			
@@ -699,7 +766,7 @@ package jsion.core.loaders
 				return this;
 			}
 			
-			ArrayUtil.sortDescByNum(_waitList, "priority");
+			//ArrayUtil.sortDescByNum(_waitList, "priority");
 			
 			if(_readyHandler == null) _readyHandler = new ReadyJLoader(ArrayUtil.clone(_waitList), putInErrorList, _maxLoadings);
 			
@@ -818,7 +885,6 @@ package jsion.core.loaders
 		/**
 		 * 加载失败事件处理函数
 		 * @param e 事件对象
-		 * 
 		 */		
 		protected function __errorHandler(e:JLoaderEvent):void
 		{
@@ -841,7 +907,6 @@ package jsion.core.loaders
 		
 		/**
 		 * 检测所有资源是否已加载完成
-		 * 
 		 */		
 		protected function tryComplete():void
 		{
@@ -852,14 +917,50 @@ package jsion.core.loaders
 					_hasError = true;
 					dispatchEvent(new JLoaderEvent(JLoaderEvent.Error, "批量加载中存在部分加载错误"));
 				}
-				if(_callback != null) _callback(this);
+				if(_completeCallback != null) _completeCallback(this);
+				_completeCallback = null;
+				
 				dispatchEvent(new JLoaderEvent(JLoaderEvent.Complete));
+				
+				embedInDomain();
+			}
+		}
+		
+		public function embedInDomain(embedCallback:Function = null):void
+		{
+			if(embedCallback != null)
+				_embedCallback = embedCallback;
+			
+			loadInDomain();
+		}
+		
+		private function loadInDomain(loader:ILoader = null):void
+		{
+			if(loader) _embedCompleteList.push(loader);
+			
+			if(_embedList)
+			{
+				if(_embedList.length == 0)
+				{
+					if(_embedCallback != null) _embedCallback(this);
+					_embedCallback = null;
+					dispatchEvent(new JLoaderEvent(JLoaderEvent.EmbedComplete));
+					return;
+				}
+				
+				while(_embedList.length > 0)
+				{
+					var l:ILoader = _embedList.shift() as ILoader;
+					
+					l.embedInDomain(loadInDomain);
+					
+					break;
+				}
 			}
 		}
 		
 		/**
 		 * 释放内存
-		 * 
 		 */		
 		public function dispose():void
 		{
@@ -886,8 +987,21 @@ package jsion.core.loaders
 			ArrayUtil.removeAll(_loadingList);
 			_loadingList = null;
 			
+			ArrayUtil.removeAll(_embedList);
+			_embedList = null;
+			
+			ArrayUtil.removeAll(_embedCompleteList);
+			_embedCompleteList = null;
+			
 			DisposeUtil.free(_readyHandler);
 			_readyHandler = null;
+			
+			DisposeUtil.free(_allLoadersList);
+			_allLoadersList = null;
+			
+			_embedCallback = null;
+			
+			_completeCallback = null;
 			
 			_defaultCfg = null;
 			

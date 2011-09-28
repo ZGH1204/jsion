@@ -22,6 +22,8 @@ package jsion.core.loaders
 		
 		public static const tryTimes:String = "tryTimes";
 		
+		public static const autoEmbed:String = "autoEmbed";
+		
 		public static const requestMethod:String = "requestMethod";
 		
 		public static const urlVariables:String = "urlVariables";
