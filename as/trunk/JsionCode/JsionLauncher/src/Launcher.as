@@ -91,7 +91,7 @@ package
 			
 			if(startupInfo.url == null || startupInfo.url == "")
 			{
-				throw new Error("未设置启动库,启动失败!");
+				throw new Error("未设置启动需要加载的基础库,启动失败!");
 				
 				return;
 			}
@@ -155,15 +155,54 @@ package
 			
 			if(fn != null) fn(m_stage, configXML);
 			
+			var global:Object = ApplicationDomain.currentDomain.getDefinition("jsion.core.Global");
+			
+			if(global) global.ConfigXml = configXML;
+			
 			var mgr:Object = ApplicationDomain.currentDomain.getDefinition("jsion.core.modules.ModuleMgr");
 			
 			if(mgr) mgr.loadAutoLoadModule(loadAutoModuleCallback);
 			else if(m_callback != null) m_callback(configXML);
+			
+			configXML = null;
 		}
 		
 		private function loadAutoModuleCallback():void
 		{
 			if(m_callback != null) m_callback(configXML);
+		}
+		
+		public function dispose():void
+		{
+			if(configLoader)
+			{
+				configLoader.removeEventListener(Event.COMPLETE, __configCompleteHandler);
+				configLoader.removeEventListener(IOErrorEvent.IO_ERROR, __errorHandler);
+				configLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, __errorHandler);
+				configLoader = null;
+			}
+			
+			if(startupLoader)
+			{
+				startupLoader.removeEventListener(Event.COMPLETE, __startupCompleteHandler);
+				startupLoader.removeEventListener(IOErrorEvent.IO_ERROR, __errorHandler);
+				startupLoader.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, __errorHandler);
+				startupLoader = null;
+			}
+			
+			if(embedLoader)
+			{
+				embedLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __embedCompleteHandler);
+				embedLoader = null;
+			}
+			
+			m_stage = null;
+			
+			configXML = null;
+			
+			startupInfo = null;
+			
+			m_callback = null;
 		}
 	}
 }

@@ -420,6 +420,19 @@ package jsion.core.loaders
 		function get isStreamable():Boolean;
 		
 		/**
+		 * 指示SwcLoader和LibLoader是否自动加载到程序域
+		 */		
+		function get autoEmbed():Boolean;
+		
+		/** @private */
+		function set autoEmbed(value:Boolean):void;
+		
+		/**
+		 * 手动调用加载到程序域
+		 */		
+		function embedInDomain(embedCallback:Function = null):void;
+		
+		/**
 		 * 执行加载并设置回调函数和重试次数，其中回调函数以 this 做为参数进行回调。
 		 * @param callback 回调函数
 		 * 

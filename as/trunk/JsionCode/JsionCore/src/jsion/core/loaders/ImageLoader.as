@@ -21,12 +21,12 @@ package jsion.core.loaders
 	{
 		protected var _imgLoader:Loader;
 		
+		private var cacheBytes:ByteArray;
+		
 		public function ImageLoader(url:String, cfg:Object = null)
 		{
 			super(url, cfg);
 		}
-		
-		private var cacheBytes:ByteArray;
 		
 		override protected function load():void
 		{
@@ -90,6 +90,8 @@ package jsion.core.loaders
 		
 		override public function dispose():void
 		{
+			cacheBytes = null;
+			
 			if(_imgLoader)
 			{
 				if(_imgLoader.contentLoaderInfo)

@@ -328,6 +328,12 @@ package jsion.core.loaders
 		function add(url:String, cfg:Object = null):ILoader;
 		
 		/**
+		 * <p>加入等待加载列表</p>
+		 * @param loader 加载器
+		 */		
+		function addLoader(loader:ILoader):void;
+		
+		/**
 		 * 获取指定资源的Loader对象
 		 * @param url  与传递给add方法的资源地址相同
 		 * @return ILoader的实现对象
@@ -419,6 +425,6 @@ package jsion.core.loaders
 		 * 开始批量加载
 		 * 
 		 */		
-		function start(callback:Function = null):ILoaders;
+		function start(completeCallback:Function = null, embedCallback:Function = null):ILoaders;
 	}
 }
