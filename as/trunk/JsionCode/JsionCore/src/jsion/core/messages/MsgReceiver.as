@@ -109,7 +109,7 @@ package jsion.core.messages
 		{
 			if(m_msgQueue)
 			{
-				while(m_msgQueue.count > 0)
+				while(m_msgQueue.length > 0)
 				{
 					var msg:Msg = m_msgQueue.shift() as Msg;
 					

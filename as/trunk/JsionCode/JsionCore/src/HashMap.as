@@ -109,9 +109,16 @@ package
 			}
 			else
 			{
+				var oldVal:* = null
 				var exists:Boolean = containsKey(key);
-				if(exists == false) length++;
-				var oldVal:* = get(key);
+				if(exists == false)
+				{
+					length++;
+				}
+				else
+				{
+					oldVal = get(key);
+				}
 				content[key] = value;
 				return oldVal;
 			}
