@@ -5,7 +5,6 @@ package jsion.ui
 	import flash.display.DisplayObject;
 	
 	import jsion.ui.borders.IBorder;
-	
 	import jsion.utils.AppDomainUtil;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.StringUtil;
@@ -206,6 +205,10 @@ package jsion.ui
 					bmp.smoothing = true;
 					obj = bmp;
 				}
+			}
+			else if(value is BitmapData)
+			{
+				return new Bitmap(value);
 			}
 			else
 			{

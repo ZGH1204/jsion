@@ -2,6 +2,7 @@ package
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.InteractiveObject;
 	import flash.display.Stage;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -97,6 +98,11 @@ package
 		public static function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void
 		{
 			_stage.removeEventListener(type, listener, useCapture);
+		}
+		
+		public static function setFocus(display:InteractiveObject):void
+		{
+			_stage.focus = display;
 		}
 		
 		public static function addChild(child:DisplayObject):DisplayObject
