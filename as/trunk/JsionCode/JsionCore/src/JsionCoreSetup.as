@@ -5,6 +5,9 @@ package
 	import jsion.core.modules.ModuleMgr;
 	import jsion.utils.BrowserUtil;
 
+	/**
+	 * JsionCore类库的初始化函数
+	 */	
 	public function JsionCoreSetup(stage:Stage, config:XML):void
 	{
 		Policy.loadPolicyFile(config.Policys..policy);

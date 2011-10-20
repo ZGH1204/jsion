@@ -6,6 +6,10 @@ package jsion.core.scenes
 	
 	import jsion.utils.*;
 
+	/**
+	 * 场景管理器
+	 * @author Jsion
+	 */	
 	public class SceneMgr
 	{
 		private static var m_scenesLayer:Sprite;
@@ -30,6 +34,13 @@ package jsion.core.scenes
 		{
 		}
 		
+		/**
+		 * 初始化安装
+		 * @param root
+		 * @param creator
+		 * @param fading
+		 * 
+		 */		
 		public static function setup(root:DisplayObjectContainer, creator:ISceneCreator, fading:IFading = null):void
 		{
 			if(m_sceneList) return;
@@ -42,6 +53,11 @@ package jsion.core.scenes
 			m_fading = fading == null ? new DefaultFading() : fading;
 		}
 		
+		/**
+		 * 切换场景
+		 * @param type 场景类型
+		 * @param data 场景切换数据
+		 */		
 		public static function setScene(type:String, data:Object = null):void
 		{
 			var next:BaseScene = getScene(type);
@@ -58,6 +74,9 @@ package jsion.core.scenes
 			}
 		}
 		
+		/**
+		 * 回退场景
+		 */		
 		public static function back():void
 		{
 			if(m_current)
@@ -71,6 +90,9 @@ package jsion.core.scenes
 			}
 		}
 		
+		/**
+		 * 异步创建场景
+		 */		
 		private static function createSceneAsync(type:String):void
 		{
 			var scene:BaseScene = m_creator.create(type);
@@ -143,6 +165,10 @@ package jsion.core.scenes
 			}
 		}
 		
+		/**
+		 * 获取指定场景类型的场景
+		 * @param type 场景类型
+		 */		
 		private static function getScene(type:String):BaseScene
 		{
 			return m_sceneList[type] as BaseScene;

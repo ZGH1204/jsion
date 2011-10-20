@@ -25,6 +25,9 @@ package
 	 */	
 	public final class Cache
 	{
+		/**
+		 * 初始缓存大小
+		 */		
 		public static const CacheSize:int = 50 * 1024 * 1024;
 		
 		private static var indexs:IndexCache = new IndexCache();
@@ -122,7 +125,6 @@ package
 		
 		/**
 		 * 保存到本地缓存。
-		 * 
 		 */		
 		public static function save():void
 		{
@@ -156,7 +158,6 @@ package
 		/**
 		 * 删除缓存的数据，未写入本地缓存文件，可执行 save() 方法写入。
 		 * @param key 缓存键
-		 * 
 		 */		
 		public static function delCacheData(key:String):void
 		{
@@ -170,7 +171,6 @@ package
 		 * 加载内存中的缓存项
 		 * @param key 缓存键
 		 * @return 缓存项
-		 * 
 		 */		
 		public static function loadInMemory(key:String):*
 		{

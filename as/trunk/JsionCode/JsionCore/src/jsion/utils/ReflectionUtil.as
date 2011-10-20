@@ -5,9 +5,16 @@ package jsion.utils
 	
 	import jsion.core.reflection.*;
 	
-
+	/**
+	 * 反射工具
+	 * @author Jsion
+	 */	
 	public class ReflectionUtil
 	{
+		/**
+		 * 获取指定类的完整类路径
+		 * @param cls 类对象
+		 */		
 		public static function getClassPath(cls:Class):String
 		{
 			var xml:XML = describeType(cls);
@@ -15,6 +22,10 @@ package jsion.utils
 			return StringUtil.replace(n, "::", ".");
 		}
 		
+		/**
+		 * 获取指定类的类名
+		 * @param cls 类对象
+		 */		
 		public static function getClassName(cls:Class):String
 		{
 			var xml:XML = describeType(cls);
@@ -23,11 +34,19 @@ package jsion.utils
 			return n;
 		}
 		
+		/**
+		 * 解析类库程序集Xml信息
+		 * @param catalogXml
+		 */		
 		public static function parseAssembly(catalogXml:XML):Assembly
 		{
 			return new Assembly(parseCatalogXml(catalogXml));
 		}
 		
+		/**
+		 * 解析类库内的所有类的完整类路径列表
+		 * @param catalogXml
+		 */		
 		public static function parseCatalogXml(catalogXml:XML):Vector.<String>
 		{
 			if(catalogXml == null) return new Vector.<String>();
@@ -60,6 +79,10 @@ package jsion.utils
 			return cList;
 		}
 		
+		/**
+		 * 解析为Type对象
+		 * @param describeTypeXml
+		 */		
 		public static function parseType(describeTypeXml:XML):Type
 		{
 			var type:Type = new Type();
@@ -83,6 +106,10 @@ package jsion.utils
 			return type;
 		}
 		
+		/**
+		 * 解析静态常量列表
+		 * @param describeTypeXml
+		 */		
 		public static function parseStaticConstants(describeTypeXml:XML):Dictionary
 		{
 			var dic:Dictionary = new Dictionary();
@@ -96,6 +123,10 @@ package jsion.utils
 			return dic;
 		}
 		
+		/**
+		 * 解析静态常量信息
+		 * @param constantXml
+		 */		
 		public static function parseStaticConstant(constantXml:XML):ConstantInfo
 		{
 			var constant:ConstantInfo = new ConstantInfo();
@@ -106,6 +137,10 @@ package jsion.utils
 			return constant;
 		}
 		
+		/**
+		 * 解析构造函数信息
+		 * @param constructorXml
+		 */		
 		public static function parseConstructor(constructorXml:XML):ConstructorInfo
 		{
 			var ctor:ConstructorInfo = new ConstructorInfo();
@@ -114,6 +149,10 @@ package jsion.utils
 			return ctor;
 		}
 		
+		/**
+		 * 解析实现的接口列表
+		 * @param factoryXml
+		 */		
 		public static function parseInterfaces(factoryXml:XML):Vector.<String>
 		{
 			var list:Vector.<String> = new Vector.<String>();
@@ -125,11 +164,19 @@ package jsion.utils
 			return list;
 		}
 		
+		/**
+		 * 解析实现的接口的完整类路径
+		 * @param interfaceXml
+		 */		
 		public static function parseInterface(interfaceXml:XML):String
 		{
 			return interfaceXml.@type;
 		}
 		
+		/**
+		 * 解析属性列表
+		 * @param factoryXml
+		 */		
 		public static function parsePropertys(factoryXml:XML):Dictionary
 		{
 			var dic:Dictionary = new Dictionary();
@@ -155,6 +202,11 @@ package jsion.utils
 			return dic;
 		}
 		
+		/**
+		 * 解析属性信息
+		 * @param propertyXml
+		 * @param declaredBy
+		 */		
 		public static function parseProperty(propertyXml:XML, declaredBy:String):PropertyInfo
 		{
 			var prop:PropertyInfo = new PropertyInfo();
@@ -178,6 +230,10 @@ package jsion.utils
 			return prop;
 		}
 		
+		/**
+		 * 解析静态方法列表
+		 * @param describeTypeXml
+		 */		
 		public static function parseStaticMethods(describeTypeXml:XML):Dictionary
 		{
 			var dic:Dictionary = new Dictionary();
@@ -193,6 +249,11 @@ package jsion.utils
 			return dic;
 		}
 		
+		/**
+		 * 解析成员方法列表
+		 * @param factoryXml
+		 * @param declaredBy
+		 */		
 		public static function parseMemberMethods(factoryXml:XML, declaredBy:String):Dictionary
 		{
 			var dic:Dictionary = new Dictionary();
@@ -208,6 +269,10 @@ package jsion.utils
 			return dic;
 		}
 		
+		/**
+		 * 解析方法信息
+		 * @param methodXml
+		 */		
 		public static function parseMethod(methodXml:XML):MethodInfo
 		{
 			var method:MethodInfo = new MethodInfo();
@@ -220,6 +285,11 @@ package jsion.utils
 			return method;
 		}
 		
+		/**
+		 * 解析继承树
+		 * @param factoryXml
+		 * @param declaredBy
+		 */		
 		public static function parseExtendsClass(factoryXml:XML, declaredBy:String):Vector.<String>
 		{
 			var list:Vector.<String> = new Vector.<String>();
@@ -241,6 +311,10 @@ package jsion.utils
 			return list;
 		}
 		
+		/**
+		 * 解析元数据列表
+		 * @param methodXml
+		 */		
 		public static function parseMetaDatas(methodXml:XML):Dictionary
 		{
 			var xl:XMLList = methodXml.metadata;
@@ -253,6 +327,12 @@ package jsion.utils
 			return dic;
 		}
 		
+		/**
+		 * 解析元数据信息
+		 * @param metadataXml
+		 * @return 
+		 * 
+		 */		
 		public static function parseMetaData(metadataXml:XML):MetaDataInfo
 		{
 			var md:MetaDataInfo = new MetaDataInfo();
@@ -275,6 +355,10 @@ package jsion.utils
 			return md;
 		}
 		
+		/**
+		 * 解析参数列表
+		 * @param methodXml
+		 */		
 		public static function parseParameters(methodXml:XML):Vector.<ParameterInfo>
 		{
 			if(methodXml == null) return new Vector.<ParameterInfo>(); 
@@ -294,6 +378,10 @@ package jsion.utils
 			return rlt;
 		}
 		
+		/**
+		 * 解析参数信息
+		 * @param parameterXml
+		 */		
 		public static function parseParameter(parameterXml:XML):ParameterInfo
 		{
 			var p:ParameterInfo = new ParameterInfo();

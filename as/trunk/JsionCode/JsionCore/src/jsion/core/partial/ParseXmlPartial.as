@@ -5,6 +5,11 @@ package jsion.core.partial
 	
 	import jsion.utils.JUtil;
 
+	/**
+	 * 分步解析Xml
+	 * @author Jsion
+	 * 
+	 */	
 	public class ParseXmlPartial implements IDispose
 	{
 		protected var _step:int;
@@ -16,7 +21,13 @@ package jsion.core.partial
 		
 		private var parsed:int = 0;
 		
-		
+		/**
+		 * 开始分步解析Xml信息
+		 * @param xl XMLList对象
+		 * @param parseFn 以一个XML对象为参数的解析函数
+		 * @param callback 解析完成后的回调函数
+		 * @param step 每次解析的个数
+		 */		
 		public function start(xl:XMLList, parseFn:Function, callback:Function = null, step:int = 100):void
 		{
 			_xl = xl;
@@ -53,6 +64,9 @@ package jsion.core.partial
 			}
 		}
 		
+		/**
+		 * 指示是否正在解析
+		 */		
 		public function get isParsing():Boolean
 		{
 			return _parsing;

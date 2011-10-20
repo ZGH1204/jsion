@@ -63,6 +63,11 @@ package jsion.socket
 	 * @playerversion AIR 1.1
 	 */	
 	[Event(name="connected", type="jsocket.events.SocketEvent")]
+	
+	/**
+	 * 数据包通信器
+	 * @author Jsion
+	 */	
 	public class PacketSocket extends EventDispatcher implements IDispose
 	{
 		public static const UNCONNECTED:String = "unconnected";
@@ -88,26 +93,43 @@ package jsion.socket
 			_reader = new PacketReader();
 		}
 		
+		/**
+		 * 远程IP地址
+		 */		
 		public function get ip():String
 		{
 			return _ip;
 		}
 		
+		/**
+		 * 远程端口
+		 */		
 		public function get port():int
 		{
 			return _port;
 		}
 		
+		/**
+		 * 指示是否已连接
+		 */		
 		public function get isConnected():Boolean
 		{
 			return _isConnected;
 		}
 		
+		/**
+		 * 指示当前状态
+		 */		
 		public function get statu():String
 		{
 			return _statu;
 		}
 		
+		/**
+		 * 发起通信连接
+		 * @param force 是否强制重新连接
+		 * 
+		 */		
 		public function connect(force:Boolean = false):void
 		{
 			if(_statu == CONNECTING) return;
@@ -139,6 +161,9 @@ package jsion.socket
 			}
 		}
 		
+		/**
+		 * 关闭连接
+		 */		
 		public function close():void
 		{
 			if(_isConnected || _statu == CONNECTING)
@@ -150,6 +175,10 @@ package jsion.socket
 			}
 		}
 		
+		/**
+		 * 发送数据包
+		 * @param pkg 数据包对象
+		 */		
 		public function send(pkg:Packet):void
 		{
 			if(_isConnected == false || pkg == null) return;

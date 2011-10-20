@@ -3,6 +3,11 @@ package jsion.socket
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
 
+	/**
+	 * 数据包读取器
+	 * @author Jsion
+	 * 
+	 */	
 	public class PacketReader
 	{
 		private var offset:int;
@@ -18,6 +23,11 @@ package jsion.socket
 			headerTmp = new ByteArray();
 		}
 		
+		/**
+		 * 读取 Socket 对象接收到的字节流
+		 * @param socket
+		 * 
+		 */		
 		public function readBytes(socket:Socket):void
 		{
 			if(socket.bytesAvailable > 0)
@@ -30,6 +40,9 @@ package jsion.socket
 			}
 		}
 		
+		/**
+		 * 读取数据包列表
+		 */		
 		public function readPacket():Array
 		{
 			offset = 0;

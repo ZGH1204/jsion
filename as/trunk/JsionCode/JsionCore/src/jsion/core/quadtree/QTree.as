@@ -5,9 +5,7 @@ package jsion.core.quadtree
 	import jsion.utils.DisposeUtil;
 	
 	/**
-	 * 图形筛选4叉树 
-	 * @author flashyiyi
-	 * 
+	 * 筛选4叉树
 	 */
 	public class QTree implements IDispose
 	{

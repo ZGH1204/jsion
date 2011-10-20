@@ -5,6 +5,11 @@ package jsion.core.quadtree
 	
 	import jsion.utils.*;
 	
+	/**
+	 * 四叉树
+	 * @author Jsion
+	 * 
+	 */	
 	public class QuadTree implements IDispose
 	{
 		private var _splitNum:int;

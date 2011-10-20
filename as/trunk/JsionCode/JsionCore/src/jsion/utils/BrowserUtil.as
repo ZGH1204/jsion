@@ -2,6 +2,10 @@ package jsion.utils
 {
 	import flash.display.DisplayObject;
 
+	/**
+	 * 浏览器工具，只负责浏览器传递给Flash的参数读取。
+	 * @author Jsion
+	 */	
 	public class BrowserUtil
 	{
 		private static var _parameters:Object;

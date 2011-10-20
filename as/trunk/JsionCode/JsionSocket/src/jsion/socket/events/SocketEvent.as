@@ -4,16 +4,41 @@ package jsion.socket.events
 	
 	public class SocketEvent extends Event
 	{
+		/**
+		 * Socket通信出错时派发
+		 */		
 		public static const ERROR:String = "error";
+		
+		/**
+		 * Socket连接成功时派发
+		 */		
 		public static const CONNECTED:String = "connected";
+		
+		/**
+		 * Socket连接关闭时派发
+		 */		
 		public static const CLOSED:String = "closed";
+		
+		/**
+		 * Socket接收到数据时派发
+		 */		
 		public static const RECEIVED:String = "received";
 		
+		/**
+		 * Socket发送数据错误时派发
+		 */		
 		public static const SEND_ERROR:String = "sendError";
+		
+		/**
+		 * 数据处理出错时派发
+		 */		
 		public static const HANDLE_ERROR:String = "handleError";
 		
 		protected var _eData:*;
 		
+		/**
+		 * 事件数据
+		 */		
 		public function get eData():*
 		{
 			return _eData;

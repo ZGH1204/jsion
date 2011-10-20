@@ -1,5 +1,9 @@
 package jsion.socket
 {
+	/**
+	 * 数据包加密器
+	 * @author Jsion
+	 */	
 	public class PacketCryptor implements IPacketCryptor
 	{
 		private static const FSM_ADDER:int = 0xabcdef;

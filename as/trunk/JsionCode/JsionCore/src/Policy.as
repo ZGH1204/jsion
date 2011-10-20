@@ -2,6 +2,11 @@ package
 {
 	import flash.system.Security;
 
+	/**
+	 * 跨域策略文件操作类
+	 * @author Jsion
+	 * 
+	 */	
 	public class Policy
 	{
 		public static function loadPolicyFile(policys:XMLList):void

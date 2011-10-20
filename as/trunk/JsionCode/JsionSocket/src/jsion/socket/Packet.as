@@ -2,18 +2,34 @@ package jsion.socket
 {
 	import flash.utils.ByteArray;
 	
+	/**
+	 * 数据包
+	 * @author Jsion
+	 */	
 	public class Packet extends ByteArray
 	{
+		/**
+		 * 包头大小
+		 */		
 		public function get headerSize():int
 		{
 			return 4;
 		}
 		
+		/**
+		 * 包长数据在当前流中相对起始位置的偏移量
+		 */		
 		public function get pkgLenOffset():int
 		{
 			return 0;
 		}
 		
+		/**
+		 * 从当前流中加载指定长度的数据到 bytes 中。
+		 * @param bytes
+		 * @param len
+		 * 
+		 */		
 		public function load(bytes:ByteArray, len:int):void
 		{
 			if(bytes.bytesAvailable >= len)
@@ -26,31 +42,49 @@ package jsion.socket
 			}
 		}
 		
+		/**
+		 * 读取包头数据
+		 */		
 		public function readHeader():void
 		{
 			
 		}
 		
+		/**
+		 * 写入包头数据
+		 */		
 		public function writeHeader():void
 		{
 			
 		}
 		
+		/**
+		 * 写入包体数据
+		 */		
 		public function writeData():void
 		{
 			
 		}
 		
+		/**
+		 * 打包数据
+		 */		
 		public function pack():void
 		{
 			
 		}
 		
+		/**
+		 * 重置数据指针位置
+		 */		
 		public function reset():void
 		{
 			this.position = headerSize;
 		}
 		
+		/**
+		 * 读取日期数据类型
+		 */		
 		public function readDate():Date
 		{
 			var year:uint = readUnsignedShort();
@@ -63,6 +97,10 @@ package jsion.socket
 			return new Date(year, month, date, hours, minutes, seconds);
 		}
 		
+		/**
+		 * 写入日期数据类型
+		 * @param date 日期对象
+		 */		
 		public function writeDate(date:Date):void
 		{
 			writeShort(date.fullYear);
