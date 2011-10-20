@@ -13,10 +13,10 @@ package jsion.core.reflection
 		public var constructor:ConstructorInfo;
 		public var staticMethods:Dictionary;
 		public var memberMethods:Dictionary;
-		public var extendsClass:Vector.<String>;
+		public var extendsClass:Array;
 		public var propertys:Dictionary;
 		public var metadatas:Dictionary;
-		public var interfaces:Vector.<String>;
+		public var interfaces:Array;
 		
 		public function getIsImplInterfaceByInterface(cls:Class):Boolean
 		{
