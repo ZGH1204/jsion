@@ -6,7 +6,7 @@ package
 		 * 返回当前列表中指定位置的对象
 		 * @param index 列表中的位置
 		 * @return 列表中指定位置的对象<br>
-		 * 如果指定位置超出列表索引范围(index < 0 || index >= count)则返回undefined
+		 * 如果指定位置超出列表索引范围(index &lt; 0 || index &gt;= count)则返回undefined
 		 * 
 		 */		
 		function get(index:int):*;

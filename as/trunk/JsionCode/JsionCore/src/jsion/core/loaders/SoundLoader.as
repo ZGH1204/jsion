@@ -9,6 +9,7 @@ package jsion.core.loaders
 	
 	public class SoundLoader extends JLoader
 	{
+		/** @private */
 		protected var _sound:Sound;
 		
 		public function SoundLoader(url:String, cfg:Object=null)
@@ -16,6 +17,7 @@ package jsion.core.loaders
 			super(url, cfg);
 		}
 		
+		/** @private */
 		override protected function configLoader():void
 		{
 			super.configLoader();
@@ -33,6 +35,7 @@ package jsion.core.loaders
 			return true;
 		}
 		
+		/** @private */
 		override protected function load():void
 		{
 			if(_isComplete || _isLoading) return;
@@ -107,12 +110,14 @@ package jsion.core.loaders
 //			ed.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, super.onSecurityErrorHandler);
 //		}
 		
+		/** @private */
 		override protected function onOpenHandler(e:Event):void
 		{
 			_content = _sound;
 			super.onOpenHandler(e);
 		}
 		
+		/** @private */
 		override protected function onCompleteHandler(e:Event):void
 		{
 			_content = _sound;

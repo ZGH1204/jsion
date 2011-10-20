@@ -21,6 +21,7 @@ package jsion.core.loaders
 	 */	
 	public class BinaryLoader extends JLoader
 	{
+		/** @private */
 		protected var _loader:URLLoader;
 		
 		public function BinaryLoader(url:String, cfg:Object = null)
@@ -28,6 +29,7 @@ package jsion.core.loaders
 			super(url, cfg);
 		}
 		
+		/** @private */
 		override protected function configLoader():void
 		{
 			super.configLoader();
@@ -36,6 +38,7 @@ package jsion.core.loaders
 			_loader.dataFormat = URLLoaderDataFormat.BINARY;
 		}
 		
+		/** @private */
 		override protected function load():void
 		{
 			if(_isComplete || _isLoading) return;
@@ -103,12 +106,14 @@ package jsion.core.loaders
 			}
 		}
 		
+		/** @private */
 		override protected function onCompleteHandler(e:Event):void
 		{
 			setContent(_loader.data);
 			super.onCompleteHandler(e);
 		}
 		
+		/** @private */
 		protected function setContent(data:*):void
 		{
 			_content = decrypt(data as ByteArray)

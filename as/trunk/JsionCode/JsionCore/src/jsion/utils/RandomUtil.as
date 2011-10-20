@@ -14,7 +14,7 @@ package jsion.utils
 	public final class RandomUtil
 	{
 		/**
-		 * 返回指定数值范围内的随机数 n,其中 min <= n < max。
+		 * 返回指定数值范围内的随机数 n,其中 min &lt;= n &lt; max。
 		 * @param min 最小数值
 		 * @param max 最大数值
 		 * @return 指定范围内的数值

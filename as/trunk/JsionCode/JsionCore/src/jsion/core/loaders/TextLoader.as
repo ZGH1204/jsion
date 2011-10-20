@@ -19,6 +19,7 @@ package jsion.core.loaders
 			super(url, cfg);
 		}
 		
+		/** @private */
 		override protected function setContent(data:*):void
 		{
 			var bytes:ByteArray = decrypt(data as ByteArray);

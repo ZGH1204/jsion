@@ -12,9 +12,13 @@ package jsion.core.partial
 	 */	
 	public class ParseXmlPartial implements IDispose
 	{
+		/** @private */
 		protected var _step:int;
+		/** @private */
 		protected var _count:int;
+		/** @private */
 		protected var _xl:XMLList;
+		/** @private */
 		protected var _parseFn:Function, _callback:Function;
 		
 		private var _parsing:Boolean = false;

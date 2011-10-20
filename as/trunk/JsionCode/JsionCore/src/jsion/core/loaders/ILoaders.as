@@ -54,7 +54,7 @@ package jsion.core.loaders
 	/**
 	 * <p>批量加载接口，实现类的构造函数应有三个参数：ILoaders(name:String, maxLoadings:int = 8, defaultCfg:Object = null)。</p>
 	 * <p>构造函数中 cfg 参数配置项如下：</p>
-	 * 
+	 * <p>
 	 * 	<table>
      *		<th>Property name</th>
      *		<th>Class constant</th>
@@ -145,7 +145,7 @@ package jsion.core.loaders
 	 * 			<td>仅用于指示NetStream打开时是否暂停在开始播放前。</td>
 	 * 		</tr>
 	 * 	</table>
-	 * 
+	 * </p>
 	 * <br/><br/>
 	 * 
 	 * @author Jsion

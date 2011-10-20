@@ -84,49 +84,69 @@ package jsion.core.loaders
 	{
 		/**
 		 * 所有资源加载器JSON配置的公共默认配置
+		 * @private
 		 */		
 		protected static var DEFAULT_CFG:Object = {managed: false};
 		
+		/** @private */
 		protected var _name:String;
 		
+		/** @private */
 		protected var _maxLoadings:int;
 		
+		/** @private */
 		protected var _numLoadings:int;	
 		
+		/** @private */
 		protected var _defaultCfg:Object;
 		
+		/** @private */
 		protected var _isStarted:Boolean;
 		
+		/** @private */
 		protected var _allLoadersList:Array;
 		
+		/** @private */
 		protected var _allLoadersDic:Dictionary;
 		
+		/** @private */
 		protected var _waitList:Array;
 		
+		/** @private */
 		protected var _loadingList:Array;
 		
+		/** @private */
 		protected var _embedList:Array;
 		
+		/** @private */
 		protected var _embedCompleteList:Array;
 		
+		/** @private */
 		protected var _completeListDic:Dictionary;
 		
+		/** @private */
 		protected var _errorListDic:Dictionary;
 		
+		/** @private */
 		protected var _bytesLoaded:int;
 		
+		/** @private */
 		protected var _bytesTotal:int;
 		
+		/** @private */
 		protected var _completeBytesTotal:int = 0;
 		
+		/** @private */
 		protected var _embed:Boolean;
 		
 		
 		/**
 		 * 指加载完成时的回调函数，以 this 参数进行调用。
+		 * @private
 		 */		
 		protected var _completeCallback:Function;
 		
+		/** @private */
 		protected var _embedCallback:Function;
 		
 		/**
@@ -136,9 +156,11 @@ package jsion.core.loaders
 		protected var _readyHandler:ReadyJLoader;
 		
 		
+		/** @private */
 		protected var _listTemp:Array = [];
 		
 		
+		/** @private */
 		protected var _hasError:Boolean = false;
 		
 		
@@ -303,7 +325,7 @@ package jsion.core.loaders
 		 * <p>加入等待加载列表,如果是SwcLoader或LibLoader时则autoEmbed自动嵌入属性将被重置为false.</p>
 		 * @param url 资源地址
 		 * @param cfg JSON配置，配置项如下：<br /><br />
-		 * 
+		 * <p>
 		 * 	<table>
 	     *		<th>Property name</th>
 	     *		<th>Class constant</th>
@@ -406,7 +428,7 @@ package jsion.core.loaders
 		 * 			<td>仅用于指示NetStream打开时是否暂停在开始播放前。</td>
 		 * 		</tr>
 		 * 	</table>
-		 * 
+		 * </p>
 		 * @throws Error 已经开始加载，无法继续添加。
 		 * @throws Error 资源地址参数不能为空，无法添加。
 		 * @throws Error url 扩展名无效，无法添加。
@@ -736,7 +758,7 @@ package jsion.core.loaders
 		 * @param url 与传递给add方法的资源地址相同
 		 * @param t 资源类型
 		 * @return 加载后所得到的内容
-		 * 
+		 * @private
 		 */		
 		protected function getContent(url:String, t:String):*
 		{
@@ -783,7 +805,7 @@ package jsion.core.loaders
 		
 		/**
 		 * 获取所有待加载资源总字节数完成的回调
-		 * 
+		 * @private
 		 */		
 		protected function readyCallback():void
 		{
@@ -817,7 +839,7 @@ package jsion.core.loaders
 		
 		/**
 		 * 尝试对下一个加载器进行加载
-		 * 
+		 * @private
 		 */		
 		protected function tryLoadNext():void
 		{
@@ -840,7 +862,7 @@ package jsion.core.loaders
 		/**
 		 * 加载进度事件处理函数
 		 * @param e 事件对象
-		 * 
+		 * @private
 		 */		
 		protected function __progressHandler(e:JLoaderProgressEvent):void
 		{
@@ -861,7 +883,7 @@ package jsion.core.loaders
 		/**
 		 * 加载完成事件处理函数
 		 * @param e 事件对象
-		 * 
+		 * @private
 		 */		
 		protected function __completeHandler(e:JLoaderEvent):void
 		{
@@ -885,6 +907,7 @@ package jsion.core.loaders
 		/**
 		 * 加载失败事件处理函数
 		 * @param e 事件对象
+		 * @private
 		 */		
 		protected function __errorHandler(e:JLoaderEvent):void
 		{
@@ -907,6 +930,7 @@ package jsion.core.loaders
 		
 		/**
 		 * 检测所有资源是否已加载完成
+		 * @private
 		 */		
 		protected function tryComplete():void
 		{
@@ -1044,6 +1068,7 @@ class ReadyJLoader implements IDispose
 		tryGetBytesTotal();
 	}
 	
+	/** @private */
 	protected function tryGetBytesTotal():void
 	{
 		while(_curReadying < _maxReadying && _list.length > 0)
@@ -1057,6 +1082,7 @@ class ReadyJLoader implements IDispose
 		}
 	}
 	
+	/** @private */
 	protected function __bytesTotalHandler(e:JLoaderEvent):void
 	{
 		_curReadying--;
@@ -1069,6 +1095,7 @@ class ReadyJLoader implements IDispose
 		tryComplete();
 	}
 	
+	/** @private */
 	protected function __errorHandler(e:JLoaderEvent):void
 	{
 		_curReadying--;
@@ -1081,6 +1108,7 @@ class ReadyJLoader implements IDispose
 		tryComplete();
 	}
 	
+	/** @private */
 	protected function tryComplete():void
 	{
 		if(_list.length == 0 && _readyingList.length == 0 && _callback != null)

@@ -1,9 +1,5 @@
 ﻿package jsion.core.astar
 {
-		/**
-		 * ...
-		 * @author sliz
-		 */
 		import flash.display.Bitmap;
 		import flash.display.BitmapData;
 		import flash.display.DisplayObjectContainer;
@@ -17,6 +13,10 @@
 		import flash.text.TextField;
 		import flash.utils.getTimer;
 		
+		/**
+		 * A*寻路
+		 * @author sliz
+		 */
 		public class SilzAstar{
 			
 			public static var TILE_WIDTH:int = 50;

@@ -63,7 +63,7 @@ package jsion.core.quadtree
 		/**
 		 * 创建树结构 
 		 * @param deep
-		 * 
+		 * @private
 		 */
 		protected function createChildren(deep:int):void
 		{
