@@ -9,8 +9,11 @@ package jsion.core.reflection
 	public class Assembly extends EventDispatcher
 	{
 		public var clsList:Vector.<String>;
+		
+		/** @private */
 		protected var callback:Function;
 		
+		/** @private */
 		protected var typeList:Vector.<Type>;
 		
 		public function Assembly(clsList:Vector.<String> = null)

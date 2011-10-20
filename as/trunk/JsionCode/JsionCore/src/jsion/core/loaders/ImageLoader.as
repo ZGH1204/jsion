@@ -19,6 +19,7 @@ package jsion.core.loaders
 	 */	
 	public class ImageLoader extends BinaryLoader
 	{
+		/** @private */
 		protected var _imgLoader:Loader;
 		
 		private var cacheBytes:ByteArray;
@@ -28,6 +29,7 @@ package jsion.core.loaders
 			super(url, cfg);
 		}
 		
+		/** @private */
 		override protected function load():void
 		{
 			if(_isComplete || _isLoading) return;
@@ -54,6 +56,7 @@ package jsion.core.loaders
 			cacheBytes = null;
 		}
 		
+		/** @private */
 		override protected function onCompleteHandler(e:Event):void
 		{
 			removeLoadEvent(_loader);
@@ -66,6 +69,7 @@ package jsion.core.loaders
 			loadInDomain(bytes);
 		}
 		
+		/** @private */
 		protected function loadInDomain(bytes:ByteArray):void
 		{
 			_imgLoader = new Loader();
@@ -82,6 +86,7 @@ package jsion.core.loaders
 			super.onCompleteHandler(e);
 		}
 		
+		/** @private */
 		override protected function setContent(data:*):void
 		{
 			_content = _imgLoader.content;

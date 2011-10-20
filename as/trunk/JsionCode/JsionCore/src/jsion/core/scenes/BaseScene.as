@@ -13,6 +13,7 @@ package jsion.core.scenes
 		{
 		}
 		
+		/** @private */
 		protected var m_prepared:Boolean;
 		
 		/**

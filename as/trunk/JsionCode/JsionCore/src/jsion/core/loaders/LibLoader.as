@@ -31,9 +31,13 @@ package jsion.core.loaders
 	 */	
 	public class LibLoader extends BinaryLoader
 	{
+		/** @private */
 		protected var _libLoader:Loader;
+		/** @private */
 		protected var _embed:Boolean;
+		/** @private */
 		protected var _embedCallback:Function;
+		/** @private */
 		protected var _waitEmbedBytes:ByteArray;
 		
 		private var cacheBytes:ByteArray;
@@ -44,6 +48,7 @@ package jsion.core.loaders
 			super(url, cfg);
 		}
 		
+		/** @private */
 		override protected function load():void
 		{
 			if(_isComplete || _isLoading) return;
@@ -70,6 +75,7 @@ package jsion.core.loaders
 			cacheBytes = null;
 		}
 		
+		/** @private */
 		override protected function onCompleteHandler(e:Event):void
 		{
 			removeLoadEvent(_loader);
@@ -90,6 +96,7 @@ package jsion.core.loaders
 			if(autoEmbed) loadInDomain(_content as ByteArray);
 		}
 		
+		/** @private */
 		protected function loadInDomain(bytes:ByteArray):void
 		{
 			var oldPos:uint = bytes.position;
@@ -134,6 +141,7 @@ package jsion.core.loaders
 			dispatchEvent(new JLoaderEvent(JLoaderEvent.EmbedComplete));
 		}
 		
+		/** @private */
 		override protected function setContent(data:*):void
 		{
 			

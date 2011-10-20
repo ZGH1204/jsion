@@ -18,6 +18,7 @@ package jsion.core.messages
 		
 		private var m_childReceivers:Dictionary;
 		
+		/** @private */
 		protected var m_parentReceiver:MsgReceiver;
 		
 		

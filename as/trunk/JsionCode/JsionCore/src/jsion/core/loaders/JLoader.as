@@ -89,7 +89,7 @@ package jsion.core.loaders
 	 * <p>JLoader 类未实现具体的加载操作，因此直接调用将不会进行任何的加载操作。</p>
 	 * 
 	 * <p>构造函数中 cfg 参数配置项如下：</p>
-	 * 
+	 * <p>
 	 * 	<table>
      *		<th>Property name</th>
      *		<th>Class constant</th>
@@ -192,7 +192,7 @@ package jsion.core.loaders
 	 * 			<td>仅用于指示NetStream打开时是否暂停在开始播放前。</td>
 	 * 		</tr>
 	 * 	</table>
-	 * 
+	 * </p>
 	 * <br/><br/>
 	 * 
 	 * @see BinaryLoader
@@ -211,41 +211,65 @@ package jsion.core.loaders
 	 */	
 	public class JLoader extends EventDispatcher implements ILoader, IDispose
 	{
+		/** @private */
 		protected static const Default_Cfg:Object = {root: ""};
 		
+		/** @private */
 		protected var _url:String;
+		/** @private */
 		protected var _urlKey:String;
+		/** @private */
 		protected var _uri:String;
 		
+		/** @private */
 		protected var _request:URLRequest;
 		
+		/** @private */
 		protected var _isBytesTotal:Boolean;
+		/** @private */
 		protected var _isComplete:Boolean;
+		/** @private */
 		protected var _isLoading:Boolean;
 		
+		/** @private */
 		protected var _httpStatus:int = -1;
+		/** @private */
 		protected var _bytesLoaded:int = 0;
+		/** @private */
 		protected var _bytesTotal:int = 0;
+		/** @private */
 		protected var _bytesRemaining:int = int.MAX_VALUE;
+		/** @private */
 		protected var _content:* = null;
 		
 		
+		/** @private */
 		protected var _bytesTotalStartTime:int;
+		/** @private */
 		protected var _startTime:int;
+		/** @private */
 		protected var _openTime:int;
+		/** @private */
 		protected var _completeTime:int;
 		
+		/** @private */
 		protected var _downloadTimeSpan:Number;
+		/** @private */
 		protected var _responseTimeSpan:Number;
+		/** @private */
 		protected var _bytesTotalTimeSpan:Number;
 		
+		/** @private */
 		protected var _downloadSpeed:Number = 0;
 		
+		/** @private */
 		protected var _callback:Function;
 		
+		/** @private */
 		protected var _curTryTimes:int = 0;
 		
 		
+		/** @private */
 		protected var _status:String = LoaderGlobal.StatusInitialized;
 		
 		
@@ -254,81 +278,97 @@ package jsion.core.loaders
 		
 		/**
 		 * 对应的资源类型，参见jsion.core.loaders.LoaderGloba中的资源类型常量。
+		 * @private
 		 */		
 		protected var _type:String;
 		
 		/**
 		 * 是否忽略Http本身的缓存
+		 * @private
 		 */		
 		protected var _rnd:Boolean;
 		
 		/**
 		 * 资源根路径
+		 * @private
 		 */		
 		protected var _root:String;
 		
 		/**
 		 * 指示加载时的优先级，数值越大越优先。
+		 * @private
 		 */		
 		protected var _priority:int;
 		
 		/**
 		 * 指示当前加载器是否使用LoaderMonitor进行管理
+		 * @private
 		 */		
 		protected var _managed:Boolean;
 		
 		/**
 		 * 解密器
+		 * @private
 		 */		
 		protected var _cryptor:ICryption;
 		
 		/**
 		 * 请求时用于Http标头的列表，URLRequestHeader对象列表。
+		 * @private
 		 */		
 		protected var _headers:Array;
 		
 		/**
 		 * 仅允许LoaderContext 或 SoundLoaderContext 类的对象，用于 swf 或 sound 的加载。
+		 * @private
 		 */		
 		protected var _context:Object;
 		
 		/**
 		 * 对uri进行格式化绑定的数据源
+		 * @private
 		 */		
 		protected var _bindData:Object;
 		
 		/**
 		 * 加载失败时的可重试次数，默认为3。
+		 * @private
 		 */		
 		protected var _hadTryTimes:int;
 		
 		/**
 		 * 指示SwcLoader和LibLoader是否自动加载到程序域
+		 * @private
 		 */		
 		protected var _autoEmbed:Boolean = true;
 		
 		/**
 		 * 用于URLRequest.method属性，其可能的值为 URLRequestMethod 类的常量值。
+		 * @private
 		 */		
 		protected var _requestMethod:String;
 		
 		/**
 		 * 用于URLRequest.data属性，Http的请求参数。
+		 * @private
 		 */		
 		protected var _urlVariables:Object;
 		
 		/**
 		 * 用于指示是否缓存在内存中
+		 * @private
 		 */		
 		protected var _cacheInMemory:Boolean;
 		
 		/**
 		 * 用于NetStream.play的播放参数。
+		 * @private
 		 */		
 		protected var _checkPolicyFile:Boolean;
 		
 		/**
 		 * 用于指示NetStream打开时是否暂停在开始播放前。
+		 * @private
 		 */		
 		protected var _pausedAtStart:Boolean;
 		
@@ -358,7 +398,7 @@ package jsion.core.loaders
 		
 		/**
 		 * 解析JSON配置并更新对应值
-		 * 
+		 * @private
 		 */		
 		protected function parseCfgJSON(cfg:Object):void
 		{
@@ -387,7 +427,7 @@ package jsion.core.loaders
 		
 		/**
 		 * 初始化 URLRequest 对象
-		 * 
+		 * @private
 		 */		
 		protected function initialize():void
 		{
@@ -403,7 +443,7 @@ package jsion.core.loaders
 		
 		/**
 		 * 配置加载器(必需重写)
-		 * 
+		 * @private
 		 */		
 		protected function configLoader():void
 		{
@@ -781,7 +821,7 @@ package jsion.core.loaders
 		
 		/**
 		 * 执行加载(必需重写)，与加载管理类无关。
-		 * 
+		 * @private
 		 */		
 		protected function load():void
 		{
@@ -828,7 +868,7 @@ package jsion.core.loaders
 		 *　　Event.COMPLETE　　　　　　　　　　　　　　　onCompleteHandler<br/><br/>
 		 * 
 		 * @param ed 事件分发器
-		 * 
+		 * @private
 		 */		
 		protected function addLoadEvent(ed:EventDispatcher):void
 		{
@@ -844,7 +884,7 @@ package jsion.core.loaders
 		/**
 		 * 移除由 addLoadEvent 方法监听的事件
 		 * @param ed 事件分发器
-		 * 
+		 * @private
 		 */		
 		protected function removeLoadEvent(ed:EventDispatcher):void
 		{
@@ -860,7 +900,6 @@ package jsion.core.loaders
 		/**
 		 * 执行加载并设置回调函数和重试次数，加载前会先判断是否受加载管理类的队列管理。
 		 * @param callback 回调函数，无论加载成功或失败都会以 this 做为参数调用此函数。
-		 * 
 		 */		
 		public function loadAsync(callback:Function = null):ILoader
 		{
@@ -906,7 +945,7 @@ package jsion.core.loaders
 		/**
 		 * 添加获取资源总字节数监听事件
 		 * @param ed 事件分发器
-		 * 
+		 * @private
 		 */		
 		protected function addBytesTotalEvent(ed:EventDispatcher):void
 		{
@@ -919,7 +958,7 @@ package jsion.core.loaders
 		/**
 		 * 移除addBytesTotalEvent访求监听的事件
 		 * @param ed 事件分发器
-		 * 
+		 * @private
 		 */		
 		protected function removeBytesTotalEvent(ed:EventDispatcher):void
 		{
@@ -942,7 +981,7 @@ package jsion.core.loaders
 		/**
 		 * 获取到资源总字节数的处理函数
 		 * @param e 事件对象
-		 * 
+		 * @private
 		 */		
 		protected function onBytesTotalProgressHandler(e:ProgressEvent):void
 		{
@@ -959,7 +998,7 @@ package jsion.core.loaders
 		/**
 		 * 打开资源下载链接时的处理函数
 		 * @param e 事件对象
-		 * 
+		 * @private
 		 */		
 		protected function onOpenHandler(e:Event):void
 		{
@@ -972,7 +1011,7 @@ package jsion.core.loaders
 		/**
 		 * HttpStatus改变的处理函数
 		 * @param e 事件对象
-		 * 
+		 * @private
 		 */		
 		protected function onHttpStatusHandler(e:HTTPStatusEvent):void
 		{
@@ -983,7 +1022,7 @@ package jsion.core.loaders
 		/**
 		 * 加载错误的处理函数
 		 * @param e 事件对象
-		 * 
+		 * @private
 		 */		
 		protected function onErrorHandler(e:IOErrorEvent):void
 		{
@@ -1014,7 +1053,7 @@ package jsion.core.loaders
 		/**
 		 * 安全沙箱错误的处理函数
 		 * @param e 事件对象
-		 * 
+		 * @private
 		 */		
 		protected function onSecurityErrorHandler(e:SecurityErrorEvent):void
 		{
@@ -1035,7 +1074,7 @@ package jsion.core.loaders
 		/**
 		 * 加载进度的处理函数
 		 * @param e 事件对象
-		 * 
+		 * @private
 		 */		
 		protected function onProgressHandler(e:ProgressEvent):void
 		{
@@ -1053,7 +1092,7 @@ package jsion.core.loaders
 		/**
 		 * 加载完成的处理函数(必需重写)
 		 * @param e 事件对象
-		 * 
+		 * @private
 		 */		
 		protected function onCompleteHandler(e:Event):void
 		{
@@ -1080,7 +1119,7 @@ package jsion.core.loaders
 		 * 如果 cryptor 解密器存在则对 bytes 进行解密操作，否则返回 bytes。
 		 * @param bytes 要解密的字节流
 		 * @return 如果进行解密操作则返回解密后的字节流，否则返回 bytes。
-		 * 
+		 * @private
 		 */		
 		protected function decrypt(bytes:ByteArray):ByteArray
 		{

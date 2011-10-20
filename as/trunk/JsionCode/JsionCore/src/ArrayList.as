@@ -35,7 +35,8 @@ public class ArrayList
 	 *     function(c:Component){
 	 *         c.setVisible(false);
 	 *     });
-	 * <pre>
+	 * </pre>
+	 * </p>
 	 * @param operation the operation function for each element
 	 */
 	public function each(operation:Function):void{
@@ -56,7 +57,8 @@ public class ArrayList
 	 *     function(c:Component){
 	 *         c.setVisible(false);
 	 *     });
-	 * <pre>
+	 * </pre>
+	 * </p>
 	 * @param obj the which will not be operated.
 	 * @param operation the operation function for each element
 	 */

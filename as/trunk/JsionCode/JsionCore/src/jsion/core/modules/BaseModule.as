@@ -9,6 +9,7 @@ package jsion.core.modules
 	 */	
 	public class BaseModule extends MsgReceiver
 	{
+		/** @private */
 		protected var m_moduleInfo:ModuleInfo;
 		
 		public function BaseModule(info:ModuleInfo)

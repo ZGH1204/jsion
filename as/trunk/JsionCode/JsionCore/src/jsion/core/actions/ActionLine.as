@@ -62,12 +62,14 @@ package jsion.core.actions
 			_queue.push(a);
 		}
 		
+		/** @private */
 		protected function __enterFrameHandler(e:Event):void
 		{
 			if(_multiple) executeLine();
 			else executeMulti();
 		}
 		
+		/** @private */
 		protected function executeLine():void
 		{
 			if(_queue.length == 0) return;
@@ -89,8 +91,10 @@ package jsion.core.actions
 			}
 		}
 		
+		/** @private */
 		protected var i:int = 0;
 		
+		/** @private */
 		protected function executeMulti():void
 		{
 			for(i = 0; i < _queue.length; i++)

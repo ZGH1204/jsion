@@ -15,12 +15,16 @@ package jsion.core.loaders
 
 	public class VideoLoader extends JLoader
 	{
+		/** @private */
 		protected var nc:NetConnection;
 		
+		/** @private */
 		protected var stream:NetStream;
 		
+		/** @private */
 		protected var _metaData : Object;
 		
+		/** @private */
 		protected var _canBeginStreaming:Boolean;
 		
 		public function VideoLoader(url:String, cfg:Object=null)
@@ -38,6 +42,7 @@ package jsion.core.loaders
 			return true;
 		}
 		
+		/** @private */
 		override protected function configLoader():void
 		{
 			nc = new NetConnection();
@@ -47,6 +52,7 @@ package jsion.core.loaders
 			JUtil.addEnterFrame(createNetStreamEvent);
 		}
 		
+		/** @private */
 		override protected function load():void
 		{
 			if(_isComplete || _isLoading) return;
@@ -76,6 +82,7 @@ package jsion.core.loaders
 			}
 		}
 		
+		/** @private */
 		override protected function addLoadEvent(ed:EventDispatcher):void
 		{
 			if(ed == null) return;
@@ -83,6 +90,7 @@ package jsion.core.loaders
 			ed.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus);
 		}
 		
+		/** @private */
 		override protected function removeLoadEvent(ed:EventDispatcher):void
 		{
 			if(ed == null) return;
@@ -90,6 +98,7 @@ package jsion.core.loaders
 			ed.removeEventListener(NetStatusEvent.NET_STATUS, onNetStatus);
 		}
 		
+		/** @private */
 		protected function onNetStatus(e:NetStatusEvent):void
 		{
 			if(!stream) return;
@@ -107,6 +116,7 @@ package jsion.core.loaders
 			}
 		}
 		
+		/** @private */
 		protected function createNetStreamEvent(e:Event):void
 		{
 			if(_bytesLoaded == _bytesTotal && _bytesTotal > 8)
@@ -143,6 +153,7 @@ package jsion.core.loaders
 			}
 		}
 		
+		/** @private */
 		override protected function onOpenHandler(e:Event):void
 		{
 			_content = stream;
@@ -161,6 +172,7 @@ package jsion.core.loaders
 			super.onOpenHandler(e);
 		}
 		
+		/** @private */
 		override protected function onCompleteHandler(e:Event):void
 		{
 			_content = stream;
@@ -203,6 +215,7 @@ package jsion.core.loaders
 			}
 		}
 		
+		/** @private */
 		protected function fireCanBeginStreamingEvent() : void
 		{
 			if(_canBeginStreaming) return;

@@ -2,8 +2,10 @@ package jsion.core.actions
 {
 	public class Action implements IDispose
 	{
+		/** @private */
 		internal var isPrepared:Boolean;
 		
+		/** @private */
 		internal var isFinished:Boolean;
 		
 		/**
