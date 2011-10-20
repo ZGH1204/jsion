@@ -27,6 +27,10 @@ package
 		private static var _stage:Stage;
 		private static var _actionLine:ActionLine;
 		
+		/**
+		 * 初始化安装
+		 * @param stage 舞台对象
+		 */		
 		public static function setup(stage:Stage):void
 		{
 			_stage = stage;
@@ -38,51 +42,88 @@ package
 			_actionLine = new ActionLine(true);
 		}
 		
+		/**
+		 * 插入Action动作对象
+		 * @param action
+		 */		
 		public static function act(action:Action):void
 		{
 			_actionLine.act(action);
 		}
 		
+		/**
+		 * 当前帧率
+		 */		
 		public static function get fps():int
 		{
 			return _stage.frameRate;
 		}
 		
+		/**
+		 * 舞台宽度
+		 */		
 		public static function get stageWidth():int
 		{
 			return _stage.stageWidth;
 		}
 		
+		/**
+		 * 舞台高度
+		 */		
 		public static function get stageHeight():int
 		{
 			return _stage.stageHeight;
 		}
 		
+		/**
+		 * 鼠标相对于舞台的X坐标
+		 */		
 		public static function get mouseX():Number
 		{
 			return _stage.mouseX;
 		}
 		
+		/**
+		 * 鼠标相对于舞台的Y坐标
+		 */		
 		public static function get mouseY():Number
 		{
 			return _stage.mouseY;
 		}
 		
+		/**
+		 * 强制FP在下次呈现时发送 render 事件
+		 */		
 		public static function invalidate():void
 		{
 			_stage.invalidate();
 		}
 		
+		/**
+		 * 获取指定显示对象相对于舞台的Rectangle范围
+		 * @param display
+		 */		
 		public static function getBounds(display:DisplayObject):Rectangle
 		{
 			return display.getBounds(_stage);
 		}
 		
+		/**
+		 * 获取舞台中指定坐标下的所有显示对象
+		 * @param point
+		 */		
 		public static function getObjectsUnderPoint(point:Point):Array
 		{
 			return _stage.getObjectsUnderPoint(point);
 		}
 		
+		/**
+		 * 舞台截图
+		 * @param bmd
+		 * @param dx
+		 * @param dy
+		 * 
+		 */		
 		public static function drawTo(bmd:BitmapData, dx:Number, dy:Number):void
 		{
 			var matrix:Matrix = new Matrix();
@@ -100,16 +141,30 @@ package
 			_stage.removeEventListener(type, listener, useCapture);
 		}
 		
+		/**
+		 * 设置指定对象为当前焦点
+		 * @param display
+		 * 
+		 */		
 		public static function setFocus(display:InteractiveObject):void
 		{
 			_stage.focus = display;
 		}
 		
+		/**
+		 * 添加指定显示对象到舞台
+		 * @param child
+		 */		
 		public static function addChild(child:DisplayObject):DisplayObject
 		{
 			return _stage.addChild(child);
 		}
 		
+		/**
+		 * 将指定显示对象添加到舞台上，并设置为指定索引深度。
+		 * @param child
+		 * @param index
+		 */		
 		public static function addChildAt(child:DisplayObject, index:int):DisplayObject
 		{
 			return _stage.addChildAt(child, index);

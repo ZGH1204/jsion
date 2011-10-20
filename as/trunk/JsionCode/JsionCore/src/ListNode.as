@@ -1,5 +1,10 @@
 package
 {
+	/**
+	 * 双向链表
+	 * @author Jsion
+	 * 
+	 */	
 	public class ListNode
 	{
 		private var data:*;

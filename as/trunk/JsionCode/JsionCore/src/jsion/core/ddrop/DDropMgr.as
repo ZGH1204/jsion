@@ -336,6 +336,12 @@ package jsion.core.ddrop
 				StageRef.addChild(_dragIcon);
 			}
 			
+			if(_dragger.lockCenter)
+			{
+				_dragIcon.x = _dragStartGlobarPoint.x - _dragIcon.width / 2;
+				_dragIcon.y = _dragStartGlobarPoint.y - _dragIcon.height / 2;
+			}
+			
 			//添加拖动是的事件监听
 			if(_useFPS) StageRef.addEventListener(Event.ENTER_FRAME, __dragingHandler);
 			else StageRef.addEventListener(MouseEvent.MOUSE_MOVE, __dragingHandler);

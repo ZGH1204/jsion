@@ -193,7 +193,9 @@ package jsion.utils
 		 */		
 		public static function delAll(dic:Dictionary):void
 		{
-			for(var key:* in dic)
+			var list:Array = getKeys(dic);
+			
+			for each(var key:* in list)
 			{
 				delete dic[key];
 			}

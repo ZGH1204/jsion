@@ -6,6 +6,11 @@ package jsion.socket
 	import jsion.socket.events.SocketEvent;
 	import jsion.utils.DisposeUtil;
 	
+	/**
+	 * 网络通信模块
+	 * @author Jsion
+	 * 
+	 */	
 	public class SocketModule extends BaseModule
 	{
 		private var _socket:PacketSocket;

@@ -4,6 +4,10 @@ package jsion.core.actions
 	
 	import jsion.utils.*;
 
+	/**
+	 * Action动作轴
+	 * @author Jsion
+	 */	
 	public class ActionLine implements IDispose
 	{
 		private var _multiple:Boolean;
@@ -16,11 +20,18 @@ package jsion.core.actions
 			JUtil.addEnterFrame(__enterFrameHandler);
 		}
 		
+		/**
+		 * 当前Action数量
+		 */		
 		public function numAction():int
 		{
 			return _queue.length;
 		}
 		
+		/**
+		 * 添加Action对象
+		 * @param a
+		 */		
 		public function act(a:Action):void
 		{
 			if(a == null) return;

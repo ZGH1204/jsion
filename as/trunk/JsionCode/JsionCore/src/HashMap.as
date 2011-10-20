@@ -3,7 +3,12 @@ package
 	import flash.utils.Dictionary;
 	
 	import jsion.utils.*;
-
+	
+	/**
+	 * 提供键/值对的哈希表
+	 * @author Jsion
+	 * 
+	 */	
 	public class HashMap implements IDispose
 	{
 		private var length:int;
@@ -15,16 +20,25 @@ package
 			content = new Dictionary();
 		}
 		
+		/**
+		 * 哈希表长度
+		 */		
 		public function get size():int
 		{
 			return length;
 		}
 		
+		/**
+		 * 指示哈希表是否为空
+		 */		
 		public function isEmpty():Boolean
 		{
 			return (length == 0);
 		}
 		
+		/**
+		 * 获取哈希表中所有的Key
+		 */		
 		public function getKeys():Array
 		{
 			var tmp:Array = [];
@@ -35,6 +49,9 @@ package
 			return tmp;
 		}
 		
+		/**
+		 * 获取哈希表中所有的Value
+		 */		
 		public function getValues():Array
 		{
 			var tmp:Array = [];
@@ -45,6 +62,10 @@ package
 			return tmp;
 		}
 		
+		/**
+		 * 对哈希表中的所有key执行指定函数[fn(key)]
+		 * @param fn 拥有一个参数的遍历函数
+		 */		
 		public function eachKey(fn:Function):void
 		{
 			if(fn == null) return;
@@ -54,6 +75,10 @@ package
 			}
 		}
 		
+		/**
+		 * 对哈希表中的所有value执行指定函数[fn(value)]
+		 * @param fn 拥有一个参数的遍历函数
+		 */		
 		public function eachValue(fn:Function):void
 		{
 			if(fn == null) return;
@@ -63,11 +88,19 @@ package
 			}
 		}
 		
+		/**
+		 * 指示哈希表中是否包含指定key的项
+		 * @param key
+		 */		
 		public function containsKey(key:*):Boolean
 		{
 			return (content[key] != undefined);
 		}
 		
+		/**
+		 * 指示哈希表中是否包含指定的value
+		 * @param value
+		 */		
 		public function containsValue(value:*):Boolean
 		{
 			for each(var val:* in content)
@@ -77,16 +110,28 @@ package
 			return false;
 		}
 		
+		/**
+		 * 获取指定key的项
+		 * @param key
+		 */		
 		public function get(key:*):*
 		{
 			return content[key];
 		}
 		
+		/**
+		 * 获取指定key的项,与get(key)相同.
+		 * @param key
+		 */		
 		public function getValue(key:*):*
 		{
 			return get(key);
 		}
 		
+		/**
+		 * 获取指定项的key
+		 * @param value
+		 */		
 		public function getKey(value:*):*
 		{
 			for(var key:* in content)
@@ -96,6 +141,11 @@ package
 			return null;
 		}
 		
+		/**
+		 * 插入一个键/值对数据
+		 * @param key
+		 * @param value
+		 */		
 		public function put(key:*, value:*):*
 		{
 			if(key == null)
@@ -124,6 +174,10 @@ package
 			}
 		}
 		
+		/**
+		 * 移除指定key的项，并返回移除的项。
+		 * @param key
+		 */		
 		public function remove(key:*):*
 		{
 			if(containsKey(key) == false) return null;
@@ -134,6 +188,10 @@ package
 			return temp;
 		}
 		
+		/**
+		 * 移除指定的项，并返回对应的key。
+		 * @param value
+		 */		
 		public function removeValue(value:*):*
 		{
 			var temp:* = null;
@@ -141,7 +199,7 @@ package
 			{
 				if(content[key] == value)
 				{
-					temp = content[key];
+					temp = key;
 					delete content[key];
 					length--;
 					break;
@@ -150,6 +208,9 @@ package
 			return temp;
 		}
 		
+		/**
+		 * 移除哈希表中的所有数据，不对数据项进行释放操作。
+		 */		
 		public function removeAll():void
 		{
 			var keys:Array = DictionaryUtil.getKeys(content);
@@ -157,14 +218,22 @@ package
 			{
 				delete content[key];
 			}
+			length = 0;
 		}
 		
+		/**
+		 * 移除哈希表中的所有数据，并对数据项进行释放操作。
+		 */		
 		public function clear():void
 		{
 			length = 0;
-			content = new Dictionary();
+			DisposeUtil.free(content);
+			//content = new Dictionary();
 		}
 		
+		/**
+		 * 对哈希表进行浅复制
+		 */		
 		public function clone():HashMap
 		{
 			var temp:HashMap = new HashMap();
@@ -175,12 +244,18 @@ package
 			return temp;
 		}
 		
+		/**
+		 * 释放哈希表
+		 */		
 		public function dispose():void
 		{
 			DisposeUtil.free(content);
 			content = null;
 		}
 		
+		/**
+		 * 获取字符串形式
+		 */		
 		public function toString():String{
 			var ks:Array = getKeys();
 			var vs:Array = getValues();

@@ -37,6 +37,10 @@ package jsion.core.modules
 		
 		private static var m_loadViewController:IModuleLoading;
 		
+		/**
+		 * 初始化安装
+		 * @param config 配置
+		 */		
 		public static function setup(config:XML):void
 		{
 			var moduleXL:XMLList = config.Modules.Module;
@@ -67,6 +71,10 @@ package jsion.core.modules
 			}
 		}
 		
+		/**
+		 * 设置模块加载时的等待界面
+		 * @param loadViewController
+		 */		
 		public static function setLoadingViewController(loadViewController:IModuleLoading):void
 		{
 			m_loadViewController = loadViewController;
@@ -82,11 +90,6 @@ package jsion.core.modules
 		
 		
 		
-		internal static function upModuleLoadInfo(module:BaseModule):void
-		{
-			
-		}
-		
 		
 		
 		
@@ -100,36 +103,64 @@ package jsion.core.modules
 			return null;
 		}
 		
+		/**
+		 * 指示指定ID的模块是否已加载
+		 * @param id 模块ID
+		 */		
 		public static function hasLoaded(id:String):Boolean
 		{
 			return getModuleLoadInfo(id).loaded;
 		}
 		
+		/**
+		 * 指示指定ID的模块是否加载出错
+		 * @param id 模块ID
+		 */		
 		public static function isErrored(id:String):Boolean
 		{
 			return getModuleLoadInfo(id).errored;
 		}
 		
+		/**
+		 * 获取指定ID的模块启动类的完整类路径
+		 * @param id 模块ID
+		 */		
 		public static function getClassStr(id:String):String
 		{
 			return getModuleLoadInfo(id).cls;
 		}
 		
+		/**
+		 * 获取指定ID的模块信息
+		 * @param id 模块ID
+		 */		
 		public static function getModuleInfo(id:String):ModuleInfo
 		{
 			return getModuleLoadInfo(id).moduleInfo;
 		}
 		
+		/**
+		 * 获取指定ID的模块
+		 * @param id 模块ID
+		 */		
 		public static function getModule(id:String):BaseModule
 		{
 			return getModuleLoadInfo(id).module;
 		}
 		
+		/**
+		 * 获取指定ID的模块的应用程序域
+		 * @param id 模块ID
+		 */		
 		public static function getModuleDomain(id:String):ApplicationDomain
 		{
 			return getModuleLoadInfo(id).domain;
 		}
 		
+		/**
+		 * 获取指定ID的模块的程序集信息
+		 * @param id 模块ID
+		 */		
 		public static function getAssembly(id:String):Assembly
 		{
 			return getModuleLoadInfo(id).assembly;
@@ -143,7 +174,10 @@ package jsion.core.modules
 		
 		
 		
-		
+		/**
+		 * 创建指定ID的模块，并返回该模块。
+		 * @param id 模块ID
+		 */		
 		public static function createModule(id:String):BaseModule
 		{
 			var loadInfo:ModuleLoadInfo = getModuleLoadInfo(id);
@@ -160,6 +194,10 @@ package jsion.core.modules
 			return module;
 		}
 		
+		/**
+		 * 创建并启动指定ID的模块
+		 * @param id 模块ID
+		 */		
 		public static function createAndStartupModule(id:String):void
 		{
 			var loadInfo:ModuleLoadInfo = getModuleLoadInfo(id);
@@ -176,6 +214,10 @@ package jsion.core.modules
 			if(module) module.startup();
 		}
 		
+		/**
+		 * 移除指定ID的模块，并返回该模块。
+		 * @param id 模块ID
+		 */		
 		public static function removeModule(id:String):BaseModule
 		{
 			var loadInfo:ModuleLoadInfo = getModuleLoadInfo(id);
@@ -190,6 +232,10 @@ package jsion.core.modules
 			return module;
 		}
 		
+		/**
+		 * 移除并释放指定ID的模块
+		 * @param id 模块ID
+		 */		
 		public static function removeAndFreeModule(id:String):void
 		{
 			DisposeUtil.free(removeModule(id));
@@ -202,7 +248,11 @@ package jsion.core.modules
 		
 		
 		
-		
+		/**
+		 * 创建指定ID的模块加载器，不会立即进行加载。
+		 * @param id 模块ID
+		 * @param callback 回调函数
+		 */		
 		public static function createModuleLoader(id:String, callback:Function = null):ILoader
 		{
 			var loadInfo:ModuleLoadInfo = getModuleLoadInfo(id);
@@ -244,6 +294,11 @@ package jsion.core.modules
 			return loadInfo.loader;
 		}
 		
+		/**
+		 * 加载指定ID的模块，并返回模块加载器，立即开始加载。
+		 * @param id 模块ID
+		 * @param callback 回调函数
+		 */		
 		public static function loadModule(id:String, callback:Function = null):ILoader
 		{
 			var loader:ILoader = createModuleLoader(id, callback);
@@ -367,6 +422,10 @@ package jsion.core.modules
 		private static var embedQueue:Array = [];
 		private static var embeding:Boolean = false;
 		
+		/**
+		 * 加载自启动加载模块
+		 * @param callback 回调函数
+		 */		
 		public static function loadAutoLoadModule(callback:Function = null):ILoaders
 		{
 			if(m_autoLoadList.length > 0 && autoLoading == false)
@@ -548,6 +607,7 @@ package jsion.core.modules
 		}
 	}
 }
+
 
 class ModuleLoadInfo
 {

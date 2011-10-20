@@ -2,6 +2,11 @@ package
 {
 	import flash.utils.Dictionary;
 	
+	/**
+	 * 弱引用哈希表
+	 * @author Jsion
+	 * 
+	 */	
 	public class WeakMap
 	{
 		
@@ -13,6 +18,12 @@ package
 			dic = new Dictionary(true);
 		}
 		
+		/**
+		 * 插入一个键/值对
+		 * @param key
+		 * @param value
+		 * 
+		 */		
 		public function put(key:*, value:*):void
 		{
 			var wd:Dictionary = new Dictionary(true);
@@ -20,6 +31,10 @@ package
 			dic[key] = wd;
 		}
 		
+		/**
+		 * 获取指定Key对应的值
+		 * @param key
+		 */		
 		public function getValue(key:*):*
 		{
 			var wd:Dictionary = dic[key];
@@ -37,6 +52,10 @@ package
 			return undefined;
 		}
 		
+		/**
+		 * 移除指定Key对应的值，并返回该值。
+		 * @param key
+		 */		
 		public function remove(key:*):*
 		{
 			var value:* = getValue(key);
