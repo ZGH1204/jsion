@@ -9,11 +9,11 @@ package jsion.ui.components.buttons
 	import flash.geom.Rectangle;
 	
 	import jsion.ui.Component;
+	import jsion.ui.IComponentUI;
 	import jsion.ui.IICON;
 	import jsion.ui.UIConstants;
 	import jsion.ui.events.ButtonEvent;
 	import jsion.ui.events.ReleaseEvent;
-	
 	import jsion.utils.DisposeUtil;
 	
 	public class AbstractButton extends Component
@@ -548,6 +548,14 @@ package jsion.ui.components.buttons
 		
 		private var m_ignoreTransparents:Boolean;
 		
+		override public function set UI(value:IComponentUI):void
+		{
+			DisposeUtil.free(m_bitmapForHit);
+			m_bitmapForHit = null;
+			
+			super.UI = value;
+		}
+		
 		public function get alphaTolerance():uint
 		{
 			return m_threshold;
@@ -569,14 +577,14 @@ package jsion.ui.components.buttons
 			{
 				m_ignoreTransparents = value;
 				
+				DisposeUtil.free(m_bitmapForHit);
+				m_bitmapForHit = null;
+				
 				if(m_ignoreTransparents)
 				{
 					m_hited = false;
 					m_enterFraming = false;
 					mouseEnabled = true;
-					
-					DisposeUtil.free(m_bitmapForHit);
-					m_bitmapForHit = null;
 					
 					buttonMode = false;
 					

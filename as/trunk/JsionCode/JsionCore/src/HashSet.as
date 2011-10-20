@@ -98,10 +98,19 @@ package
 		}
 		
 		/**
+		 * 移除哈希表中的所有数据
+		 */		
+		public function removeAll():void
+		{
+			DictionaryUtil.delAll(container);
+			length = 0;
+		}
+		
+		/**
 		 * 将指定数组中的项从哈希表中移除
 		 * @param arr
 		 */		
-		public function removeAll(arr:Array):void
+		public function removeAllByList(arr:Array):void
 		{
 			for each(var i:* in arr)
 			{
@@ -155,7 +164,7 @@ package
 		
 		public function dispose():void
 		{
-			clear();
+			removeAll();
 			container = null;
 		}
 	}

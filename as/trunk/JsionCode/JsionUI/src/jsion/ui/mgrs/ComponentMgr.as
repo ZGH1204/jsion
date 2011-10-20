@@ -71,7 +71,7 @@ package jsion.ui.mgrs
 			while(hasInvalidates)
 			{
 				var list:Array = invalidates.toArray();
-				invalidates.clear();
+				invalidates.removeAll();
 				
 				hasInvalidates = false;
 				
