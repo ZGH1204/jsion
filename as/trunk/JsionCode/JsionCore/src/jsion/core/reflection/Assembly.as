@@ -8,7 +8,7 @@ package jsion.core.reflection
 
 	public class Assembly extends EventDispatcher
 	{
-		public var clsList:Vector.<String>;
+		public var clsList:Array;
 		
 		/** @private */
 		protected var callback:Function;
@@ -16,7 +16,7 @@ package jsion.core.reflection
 		/** @private */
 		protected var typeList:Vector.<Type>;
 		
-		public function Assembly(clsList:Vector.<String> = null)
+		public function Assembly(clsList:Array = null)
 		{
 			this.clsList = clsList;
 			

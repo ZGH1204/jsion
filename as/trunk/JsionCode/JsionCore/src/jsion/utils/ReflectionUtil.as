@@ -47,11 +47,11 @@ package jsion.utils
 		 * 解析类库内的所有类的完整类路径列表
 		 * @param catalogXml
 		 */		
-		public static function parseCatalogXml(catalogXml:XML):Vector.<String>
+		public static function parseCatalogXml(catalogXml:XML):Array
 		{
-			if(catalogXml == null) return new Vector.<String>();
+			if(catalogXml == null) return [];
 			
-			var cList:Vector.<String> = new Vector.<String>();
+			var cList:Array = [];
 			
 			var nodes:XMLList = catalogXml.children();
 			
@@ -153,9 +153,9 @@ package jsion.utils
 		 * 解析实现的接口列表
 		 * @param factoryXml
 		 */		
-		public static function parseInterfaces(factoryXml:XML):Vector.<String>
+		public static function parseInterfaces(factoryXml:XML):Array
 		{
-			var list:Vector.<String> = new Vector.<String>();
+			var list:Array = [];
 			var interfaces:XMLList = factoryXml.implementsInterface;
 			for each(var interfaceXml:XML in interfaces)
 			{
@@ -290,9 +290,9 @@ package jsion.utils
 		 * @param factoryXml
 		 * @param declaredBy
 		 */		
-		public static function parseExtendsClass(factoryXml:XML, declaredBy:String):Vector.<String>
+		public static function parseExtendsClass(factoryXml:XML, declaredBy:String):Array
 		{
-			var list:Vector.<String> = new Vector.<String>();
+			var list:Array = [];
 			
 			var exts:XMLList = factoryXml.extendsClass;
 			
