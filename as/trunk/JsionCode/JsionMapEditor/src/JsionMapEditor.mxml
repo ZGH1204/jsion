@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx" 
+					   width="1200" height="680" 
+					   applicationComplete="init(event)">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import editor.EditorMenu;
+			
+			import mx.events.FlexEvent;
+			
+			import org.aswing.AsWingManager;
+			import org.aswing.BorderLayout;
+			import org.aswing.Container;
+			import org.aswing.JPanel;
+			import org.aswing.JWindow;
+			import org.aswing.SoftBoxLayout;
+			
+			/**
+			 * 主容器
+			 */ 
+			private var mainWindow:JWindow;
+			
+			/**
+			 * 左侧容器
+			 */ 
+			private var leftContainer:JPanel;
+			
+			/**
+			 * 地图显示容器
+			 */ 
+			private var mainContainer:JPanel;
+			
+			/**
+			 * 菜单容器
+			 */
+			private var menuContainer:EditorMenu;
+			
+			/**
+			 * 工具容器
+			 */ 
+			private var toolContainer:JPanel;
+			
+			/**
+			 * 状态栏
+			 */ 
+			private var statusContainer:JPanel;
+			
+			
+			
+			public function get Window():JWindow
+			{
+				return mainWindow;
+			}
+			
+			protected function init(event:FlexEvent):void
+			{
+				addEventListener(NativeWindowDisplayStateEvent.DISPLAY_STATE_CHANGE,onResize);
+				
+				JsionEditor.W = stage.width;
+				JsionEditor.H = stage.height;
+				JsionEditor.stage = stage;
+				
+				AsWingManager.initAsStandard(stage);
+				
+				mainWindow = new JWindow();
+				
+				// 得到窗口容器
+				var pane:Container = mainWindow.getContentPane();
+				pane.setLayout(new BorderLayout());
+				
+				
+				var top:JPanel = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
+				pane.append(top, BorderLayout.NORTH);
+				
+				leftContainer = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
+				pane.append(leftContainer, BorderLayout.WEST);
+				
+				mainContainer = new JPanel();
+				pane.append(mainContainer, BorderLayout.CENTER);
+				
+				statusContainer = new JPanel();
+				pane.append(statusContainer, BorderLayout.SOUTH);
+				
+				
+				menuContainer = new EditorMenu(this);
+				top.append(menuContainer);
+				
+				toolContainer = new JPanel();
+				top.append(toolContainer);
+				
+				
+				menuContainer.setOpaque(true);
+				mainContainer.setOpaque(true);
+				leftContainer.setOpaque(true);
+				toolContainer.setOpaque(true);
+				statusContainer.setOpaque(true);
+				
+				
+				
+				
+				
+				mainWindow.setSizeWH(JsionEditor.W, JsionEditor.H);
+				mainWindow.show();
+			}
+			
+			private function onResize(e:*):void
+			{
+				mainWindow.setSizeWH(stage.nativeWindow.width,stage.nativeWindow.height);
+			}
+
+		]]>
+	</fx:Script>
+</s:WindowedApplication>
