@@ -1,5 +1,7 @@
 package editor
 {
+	import editor.forms.FileNewForm;
+	
 	import org.aswing.JMenu;
 	import org.aswing.JMenuBar;
 	import org.aswing.JMenuItem;
@@ -9,13 +11,17 @@ package editor
 	
 	public class EditorMenu extends JPanel
 	{
+		private static const File_New:String = "新建地图";
+		
+		private static const Tool_Map_Cut:String = "地图切割器";
+		
 		private var bar:JMenuBar;
 		
-		private var _root:JsionMapEditor;
+		private var mapEditor:JsionMapEditor;
 		
 		public function EditorMenu(owner:JsionMapEditor)
 		{
-			_root = owner;
+			mapEditor = owner;
 			
 			super();
 			
@@ -23,16 +29,27 @@ package editor
 			bar = new JMenuBar();
 			
 			var file:JMenu = new JMenu("文件(&F)");
-			var file_new:JMenuItem = new JMenuItem("新建");
-			var file_mapcut:JMenuItem = new JMenuItem("地图切割器");
-			file.append(file_new);
-			file.append(file_mapcut);
 			
+			
+			var file_new:JMenuItem = new JMenuItem(File_New);
 			file_new.addActionListener(__itemClickHandler);
-			file_mapcut.addActionListener(__itemClickHandler);
+			file.append(file_new);
 			
 			
 			bar.append(file);
+			
+			
+			
+			
+			var tool:JMenu = new JMenu("工具(&T)");
+			
+			
+			var file_mapcut:JMenuItem = new JMenuItem(Tool_Map_Cut);
+			file_mapcut.addActionListener(__itemClickHandler);
+			tool.append(file_mapcut);
+			
+			
+			bar.append(tool);
 			
 			
 			
@@ -45,11 +62,12 @@ package editor
 			
 			switch(item.getText())
 			{
-				//case "新建":
-				//	break;
-				case "地图切割器":
-					var win:MapCut = new MapCut(_root);
-					win.show();
+				case File_New:
+					new FileNewForm(mapEditor).show();
+					break;
+				case Tool_Map_Cut:
+					if(JsionEditor.MAP_NEWED_OPENED) new MapCut(mapEditor).show();
+					else mapEditor.msg("未创建或打开地图");
 					break;
 				default:
 					trace(item.getText());

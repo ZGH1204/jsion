@@ -2,7 +2,7 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
 					   xmlns:s="library://ns.adobe.com/flex/spark" 
 					   xmlns:mx="library://ns.adobe.com/flex/mx" 
-					   width="1200" height="680" 
+					   width="1000" height="600" 
 					   applicationComplete="init(event)">
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
@@ -10,8 +10,10 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import editor.AlertFrame;
 			import editor.EditorMenu;
 			
+			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			
 			import org.aswing.AsWingManager;
@@ -60,13 +62,18 @@
 			
 			protected function init(event:FlexEvent):void
 			{
-				addEventListener(NativeWindowDisplayStateEvent.DISPLAY_STATE_CHANGE,onResize);
-				
 				JsionEditor.W = stage.width;
 				JsionEditor.H = stage.height;
 				JsionEditor.stage = stage;
 				
+				this.nativeWindow.x = (Capabilities.screenResolutionX - JsionEditor.W) / 2;
+				this.nativeWindow.y = (Capabilities.screenResolutionY - JsionEditor.H - 40) / 2;
+				
+				addEventListener(NativeWindowDisplayStateEvent.DISPLAY_STATE_CHANGE,onResize);
+				
 				AsWingManager.initAsStandard(stage);
+				
+				//UIManager.setLookAndFeel(new AeonLAF());
 				
 				mainWindow = new JWindow();
 				
@@ -111,9 +118,16 @@
 			
 			private function onResize(e:*):void
 			{
-				mainWindow.setSizeWH(stage.nativeWindow.width,stage.nativeWindow.height);
+				JsionEditor.W = stage.nativeWindow.width;
+				JsionEditor.H = stage.nativeWindow.height;
+				mainWindow.setSizeWH(stage.nativeWindow.width, stage.nativeWindow.height);
 			}
-
+			
+			public function msg(text:String, t:String = "提示"):void
+			{
+				//Alert.show(text, t);
+				AlertFrame.msg(this, text, t);
+			}
 		]]>
 	</fx:Script>
 </s:WindowedApplication>

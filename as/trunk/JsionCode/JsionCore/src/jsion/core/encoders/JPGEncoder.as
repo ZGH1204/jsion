@@ -31,8 +31,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package jsion.core.encoders
 {
-	import flash.geom.*;
 	import flash.display.*;
+	import flash.geom.*;
 	import flash.utils.*;
 	
 	/**
@@ -40,6 +40,14 @@ package jsion.core.encoders
 	 */		
 	public class JPGEncoder
 	{
+		private static var encoder:JPGEncoder;
+		
+		public static function encode(img:BitmapData):ByteArray
+		{
+			if(encoder == null) encoder = new JPGEncoder(100);
+			
+			return encoder.encode(img);
+		}
 		
 		// Static table initialization
 		

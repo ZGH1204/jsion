@@ -20,9 +20,9 @@ package editor
 	import jsion.utils.ScaleUtil;
 	import jsion.utils.StringUtil;
 	
+	import org.aswing.AbstractButton;
 	import org.aswing.AssetBackground;
 	import org.aswing.ButtonGroup;
-	import org.aswing.DefaultBoundedRangeModel;
 	import org.aswing.JButton;
 	import org.aswing.JLabel;
 	import org.aswing.JPanel;
@@ -35,14 +35,12 @@ package editor
 	public class MapCut extends JsionEditorWin
 	{
 		private var _fileName:JTextField;
+		private var openBtn:JButton;
 		
 		private var _codetype_png:JRadioButton;
 		private var _codetype_jpg:JRadioButton;
 		
 		private var _progressbar:JProgressBar;
-		
-		private var _winWidth:int = 285;
-		private var _winHeight:int = 260;
 		
 		/**
 		 * 缩略图
@@ -55,7 +53,10 @@ package editor
 		private var _resource:Bitmap;
 		private var smallMap:BitmapData;
 		
-		private var main:JPanel;
+		
+		private var _winWidth:int = 250;
+		private var _winHeight:int = 350;
+		private var _boxHeight:int = 120;
 		
 		
 		private var _loopx:uint;
@@ -66,46 +67,54 @@ package editor
 		
 		public function MapCut(owner:JsionMapEditor=null)
 		{
-			super(owner);
+			mytitle = "地图切割器";
+			super(owner, true);
 		}
 		
 		override protected function init():void
 		{
-			setResizable(false);
+			main = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS, padding));
 			
-			main = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS, _padding));
+			_show = new JPanel();
 			
-			_show = new JPanel2();
+			box = new Form();
+			box.y = 10;
 			
-			_box = new Form();
-			
-			_fileName = new JTextField("", 20);
+			_fileName = new JTextField("", 12);
 			_fileName.setEditable(false);
 			
 			var lab0:JLabel = new JLabel("选择文件：");
 			
-			var btn0:JButton = new JButton("打开");
-			btn0.addActionListener(openMap);
+			openBtn = new JButton("打开");
+			openBtn.addActionListener(openMap);
 			
 			var lab1:JLabel = new JLabel("编码类型：");
 			
 			_codetype_png = new JRadioButton("PNG");
+			_codetype_png.setHorizontalAlignment(AbstractButton.LEFT);
+			_codetype_png.setPreferredWidth(80);
 			_codetype_png.setSelected(true);
 			_codetype_jpg = new JRadioButton("JPG");
+			_codetype_jpg.setHorizontalAlignment(AbstractButton.LEFT);
+			_codetype_jpg.setPreferredWidth(60);
 			var gp:ButtonGroup = new ButtonGroup();
 			gp.appendAll(_codetype_png, _codetype_jpg);
+			var pane:JPanel = new JPanel(new SoftBoxLayout(SoftBoxLayout.X_AXIS));
+			pane.appendAll(_codetype_png, _codetype_jpg);
 			
-			_box.addRow(lab0, _fileName, btn0);
-			_box.addRow(lab1, _codetype_png, _codetype_jpg);
-			_box.setSizeWH(_winWidth, _winHeight);
+			box.addRow(lab0, _fileName, openBtn);
+			box.addRow(lab1, pane);
+			box.setSizeWH(_winWidth, _boxHeight);
+			main.setSizeWH(_winWidth, _winHeight);
 			
 			_progressbar = new JProgressBar(JProgressBar.HORIZONTAL);
-			_progressbar.setModel(new DefaultBoundedRangeModel(0,100));
+			//_progressbar.setModel(new DefaultBoundedRangeModel(0,100));
 			
-			main.append(_box);
+			main.append(new JPanel());
+			main.append(box);
 			main.append(_progressbar);
 			main.append(_show);
-			getContentPane().append(main);
+			//getContentPane().append(main);
 			
 			super.init();
 		}
@@ -139,8 +148,8 @@ package editor
 			var target:LoaderInfo = e.target as LoaderInfo;
 			_resource = target.loader.content as Bitmap;
 			
-			var _bWidth:int = _winWidth - _padding;
-			var _bHeight:int = 140;//_winHeight - _padding * 4;
+			var _bWidth:int = main.width;//_winWidth - _padding * 2;
+			var _bHeight:int = main.height - box.height - _progressbar.height - 5 - padding * 4;
 			
 			var scale:Number = ScaleUtil.calcScaleFullSize(_resource.width, _resource.height, _bWidth, _bHeight);
 			
@@ -158,15 +167,16 @@ package editor
 			target.loader.unload();
 			
 			var bmp:Bitmap = new Bitmap(smallMap);
+			_show.setPreferredWidth(bmp.width);
+			_show.setPreferredHeight(bmp.height);
 			_show.setSizeWH(bmp.width, bmp.height);
 			_show.setBackgroundDecorator(new AssetBackground(bmp));
 		}
 		
-		override protected function onCancle(e:Event):void
+		override public function closeReleased():void
 		{
 			if(_making) return;
-			
-			super.onCancle(e);
+			super.closeReleased();
 		}
 		
 		override protected function onSubmit(e:Event):void
@@ -174,6 +184,7 @@ package editor
 			if(e == null)
 			{
 				//navigateToURL(new URLRequest(JsionEditor.EIDTOR_OUTPUT_ROOT));
+				_making = false;
 				super.onSubmit(null);
 				return;
 			}
@@ -181,6 +192,11 @@ package editor
 			if(_resource == null || _making) return;
 			
 			_making = true;
+			
+			AbstractButton(e.currentTarget).setEnabled(false);
+			_codetype_jpg.setEnabled(false);
+			_codetype_png.setEnabled(false);
+			openBtn.setEnabled(false);
 			
 			makeSmallMap();
 			
@@ -208,7 +224,7 @@ package editor
 			
 			var mapid:String = JsionEditor.mapid;
 			var dir:String = StringUtil.format(JsionEditor.MAP_OUTPUT_FORMAT, mapid);
-			dir = new File(JsionEditor.EIDTOR_OUTPUT_ROOT).resolvePath(dir).nativePath;
+			dir = new File(JsionEditor.MAP_OUTPUT_ROOT).resolvePath(dir).nativePath;
 			var file:File = new File(dir);
 			file.createDirectory();
 			
@@ -241,7 +257,7 @@ package editor
 			
 			var mapid:String = JsionEditor.mapid;
 			var dir:String = StringUtil.format(JsionEditor.MAP_TILES_OUTPUT_FORMAT, mapid);
-			dir = new File(JsionEditor.EIDTOR_OUTPUT_ROOT).resolvePath(dir).nativePath;
+			dir = new File(JsionEditor.MAP_OUTPUT_ROOT).resolvePath(dir).nativePath;
 			var file:File = new File(dir);
 			file.createDirectory();
 			
@@ -259,8 +275,7 @@ package editor
 			}
 			else
 			{
-				var encoder:JPGEncoder = new JPGEncoder();
-				bytes = encoder.encode(bmd);
+				bytes = JPGEncoder.encode(bmd);
 				extName = ".jpg";
 			}
 			
@@ -288,6 +303,27 @@ package editor
 					onSubmit(null);
 				}
 			}
+		}
+		
+		override public function dispose():void
+		{
+			_fileName = null;
+			
+			_codetype_jpg = null;
+			
+			_codetype_png = null;
+			
+			_show = null;
+			
+			openBtn = null;
+			
+			if(_resource) _resource.bitmapData.dispose();
+			_resource = null;
+			
+			if(smallMap) smallMap.dispose();
+			smallMap = null;
+			
+			super.dispose();
 		}
 	}
 }

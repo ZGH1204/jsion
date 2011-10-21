@@ -13,17 +13,19 @@ package
 		
 		
 		
-		public static var EIDTOR_OUTPUT_ROOT:String = File.desktopDirectory.nativePath;
+		public static var MAP_NEWED_OPENED:Boolean = false;
 		
-		public static var MAP_OUTPUT_FORMAT:String = "map_{0}";
+		public static var MAP_OUTPUT_ROOT:String = File.applicationDirectory.nativePath;
+		
+		public static var MAP_OUTPUT_FORMAT:String = "{0}";
 		
 		public static var SMALLMAP_FILE_NAME:String = "small";
 		
-		public static var MAP_TILES_OUTPUT_FORMAT:String = "map_{0}/tiles";
+		public static var MAP_TILES_OUTPUT_FORMAT:String = "{0}/tiles";
 		
 		public static var MAP_TILES_FILENAME_FORMAT:String = "{1}_{0}{2}";
 		
-		public static var mapid:String = "Demo";
+		public static var mapid:String = "未命名地图";
 		
 		public static var MAP_WIDTH:int = 2600;
 		
