@@ -34,6 +34,9 @@ package editor
 		 */ 
 		protected var mapEditor:JsionMapEditor;
 		
+		protected var bt_ok:JButton;
+		protected var bt_cancle:JButton;
+		
 		public function JsionEditorWin(owner:JsionMapEditor, modal:Boolean = false)
 		{
 			mapEditor = owner;
@@ -47,9 +50,9 @@ package editor
 		{
 			setResizable(false);
 			
-			var bt_ok:JButton = new JButton('确认');
+			bt_ok = new JButton('确认');
 			bt_ok.setPreferredWidth(80);
-			var bt_cancle:JButton = new JButton('取消');
+			bt_cancle = new JButton('取消');
 			bt_cancle.setPreferredWidth(80);
 			
 			bt_cancle.addActionListener(onCancle);
@@ -87,6 +90,10 @@ package editor
 			box = null;
 			
 			mapEditor = null;
+			
+			bt_ok = null;
+			
+			bt_cancle = null;
 			
 			super.dispose();
 		}

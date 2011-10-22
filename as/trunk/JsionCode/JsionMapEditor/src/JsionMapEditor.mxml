@@ -3,7 +3,7 @@
 					   xmlns:s="library://ns.adobe.com/flex/spark" 
 					   xmlns:mx="library://ns.adobe.com/flex/mx" 
 					   width="1000" height="600" 
-					   applicationComplete="init(event)">
+					   applicationComplete="init(event)" close="windowedapplication1_closeHandler(event)">
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
@@ -123,11 +123,17 @@
 				mainWindow.setSizeWH(stage.nativeWindow.width, stage.nativeWindow.height);
 			}
 			
-			public function msg(text:String, t:String = "提示"):void
+			public function msg(text:String, textColor:uint = 0xFF0000, t:String = "提示"):void
 			{
 				//Alert.show(text, t);
-				AlertFrame.msg(this, text, t);
+				AlertFrame.msg(this, text, textColor, t);
 			}
+
+			protected function windowedapplication1_closeHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+			}
+
 		]]>
 	</fx:Script>
 </s:WindowedApplication>
