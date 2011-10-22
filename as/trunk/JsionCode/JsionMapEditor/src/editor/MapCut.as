@@ -12,11 +12,13 @@ package editor
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.net.FileFilter;
+	import flash.net.FileReference;
 	import flash.utils.ByteArray;
 	import flash.utils.Timer;
 	
 	import jsion.core.encoders.JPGEncoder;
 	import jsion.core.encoders.PNGEncoder;
+	import jsion.utils.JUtil;
 	import jsion.utils.ScaleUtil;
 	import jsion.utils.StringUtil;
 	
@@ -64,6 +66,7 @@ package editor
 		
 		private var _making:Boolean;
 		
+		private var _mapPic:String;
 		
 		public function MapCut(owner:JsionMapEditor=null)
 		{
@@ -122,13 +125,15 @@ package editor
 		private function openMap(e:Event):void
 		{
 			var file_open:File = File.desktopDirectory;
-			file_open.browseForOpen('打开地图配置文件', [new FileFilter('图片', '*.jpg;*.gif;*.png' )] );
-			file_open.addEventListener(Event.SELECT,onOpen);
+			file_open.browseForOpen('打开地图', [new FileFilter('图片', '*.jpg;*.gif;*.png' )] );
+			file_open.addEventListener(Event.SELECT, onOpen, false, 0, true);
 		}
 		
 		private function onOpen(e:Event):void
 		{
 			var file:File = e.target as File;
+			
+			_mapPic = file.nativePath;
 			
 			_fileName.setText(file.name);
 			
@@ -139,13 +144,46 @@ package editor
 			fs.close();
 			
 			var loader:Loader = new Loader();
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onMapComplate);
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onMapComplate);
 			loader.loadBytes(bytes);
+		}
+		
+		public function startCutMapPic(path:String, isPng:Boolean):void
+		{
+			show();
+			
+			_fileName.setText(path.substr(path.lastIndexOf("\\") + 1));
+			_fileName.setText(_fileName.getText().substr(_fileName.getText().lastIndexOf("/") + 1));
+			
+			if(isPng) _codetype_png.setSelected(true);
+			else _codetype_jpg.setSelected(true);
+			
+			var file:File = new File(path);
+			var bytes:ByteArray = new ByteArray();
+			var fs:FileStream = new FileStream();
+			fs.open(file, FileMode.READ);
+			fs.readBytes(bytes);
+			fs.close();
+			
+			var loader:Loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadMapPicCompleteHandler);
+			loader.loadBytes(bytes);
+		}
+		
+		private function onLoadMapPicCompleteHandler(e:Event):void
+		{
+			var t:LoaderInfo = e.target as LoaderInfo;
+			t.removeEventListener(Event.COMPLETE, onMapComplate);
+			
+			onMapComplate(e);
+			
+			bt_ok.doClick();
 		}
 		
 		private function onMapComplate(e:Event):void
 		{
 			var target:LoaderInfo = e.target as LoaderInfo;
+			target.removeEventListener(Event.COMPLETE, onMapComplate);
 			_resource = target.loader.content as Bitmap;
 			
 			var _bWidth:int = main.width;//_winWidth - _padding * 2;
@@ -193,10 +231,22 @@ package editor
 			
 			_making = true;
 			
+			if(StringUtil.isNotNullOrEmpty(_mapPic))
+			{
+				JsionEditor.MAP_PIC_FILE = _mapPic;
+				copyMapPic();
+			}
+			
 			AbstractButton(e.currentTarget).setEnabled(false);
 			_codetype_jpg.setEnabled(false);
 			_codetype_png.setEnabled(false);
 			openBtn.setEnabled(false);
+			
+			var mapid:String = JsionEditor.mapConfig.MapID;
+			var dir:String = StringUtil.format(JsionEditor.MAP_OUTPUT_FORMAT, mapid);
+			dir = new File(JsionEditor.MAP_OUTPUT_ROOT).resolvePath(dir).nativePath;
+			var file:File = new File(dir);
+			if(file.exists) file.deleteDirectory(true);
 			
 			makeSmallMap();
 			
@@ -207,14 +257,38 @@ package editor
 			t.start();
 		}
 		
+		private function copyMapPic():void
+		{
+			var file:File = new File(_mapPic);
+			
+			var fs:FileStream = new FileStream();
+			var bytes:ByteArray = new ByteArray();
+			fs.open(file, FileMode.READ);
+			fs.readBytes(bytes);
+			fs.close();
+			bytes.position = 0;
+			
+			var mapid:String = JsionEditor.mapConfig.MapID;
+			var extName:String = "." + JUtil.getExtension(_mapPic);
+			file = new File(JsionEditor.MAP_OUTPUT_ROOT);
+			var path:String = file.resolvePath(StringUtil.format(JsionEditor.MAP_OUTPUT_FORMAT, mapid) + "/" + JsionEditor.BIGMAP_FILE_NAME + extName).nativePath;
+			file = new File(path);
+			if(file.exists) file.deleteFile();
+			
+			fs = new FileStream();
+			fs.open(file, FileMode.WRITE);
+			fs.writeBytes(bytes);
+			fs.close();
+		}
+		
 		private function makeSmallMap():void
 		{
-			var scale:Number = ScaleUtil.calcScaleFullSize(_resource.width, _resource.height, JsionEditor.SMALL_MAP_WIDTH, JsionEditor.SMALL_MAP_HEIGHT);
+			var scale:Number = ScaleUtil.calcScaleFullSize(_resource.width, _resource.height, JsionEditor.mapConfig.SmallMapWidth, JsionEditor.mapConfig.SmallMapHeight);
 			
 			var rltWidth:int = _resource.width * scale;
 			var rltHeight:int = _resource.height * scale;
 			
-			var smallBmd:BitmapData = new BitmapData(JsionEditor.SMALL_MAP_WIDTH, JsionEditor.SMALL_MAP_HEIGHT, true, 0);
+			var smallBmd:BitmapData = new BitmapData(JsionEditor.mapConfig.SmallMapWidth, JsionEditor.mapConfig.SmallMapHeight, true, 0);
 			
 			var matrix:Matrix = new Matrix();
 			matrix.scale(scale, scale);
@@ -222,7 +296,7 @@ package editor
 			
 			smallBmd.draw(_resource, matrix);
 			
-			var mapid:String = JsionEditor.mapid;
+			var mapid:String = JsionEditor.mapConfig.MapID;
 			var dir:String = StringUtil.format(JsionEditor.MAP_OUTPUT_FORMAT, mapid);
 			dir = new File(JsionEditor.MAP_OUTPUT_ROOT).resolvePath(dir).nativePath;
 			var file:File = new File(dir);
@@ -231,17 +305,21 @@ package editor
 			var extName:String;
 			var bytes:ByteArray;
 			
-			if(_codetype_png.isSelected())
-			{
-				bytes = PNGEncoder.encode(smallBmd);
-				extName = ".png";
-			}
-			else
-			{
-				var encoder:JPGEncoder = new JPGEncoder();
-				bytes = encoder.encode(smallBmd);
-				extName = ".jpg";
-			}
+			bytes = PNGEncoder.encode(smallBmd);
+			extName = "";
+			//extName = ".png";
+			
+//			if(_codetype_png.isSelected())
+//			{
+//				bytes = PNGEncoder.encode(smallBmd);
+//				extName = ".png";
+//			}
+//			else
+//			{
+//				var encoder:JPGEncoder = new JPGEncoder();
+//				bytes = encoder.encode(smallBmd);
+//				extName = ".jpg";
+//			}
 			
 			var smallFile:File = new File(file.resolvePath(JsionEditor.SMALLMAP_FILE_NAME + extName).nativePath);
 			var fs:FileStream = new FileStream();
@@ -252,17 +330,17 @@ package editor
 		
 		private function makeFile(e:Event):void
 		{
-			var tile_max_x:uint = Math.ceil(JsionEditor.MAP_WIDTH / JsionEditor.TILE_WIDTH);
-			var tile_max_y:uint = Math.ceil(JsionEditor.MAP_HEIGHT / JsionEditor.TILE_HEIGHT);
+			var tile_max_x:uint = Math.ceil(JsionEditor.mapConfig.MapWidth / JsionEditor.mapConfig.TileWidth);
+			var tile_max_y:uint = Math.ceil(JsionEditor.mapConfig.MapHeight / JsionEditor.mapConfig.TileHeight);
 			
-			var mapid:String = JsionEditor.mapid;
+			var mapid:String = JsionEditor.mapConfig.MapID;
 			var dir:String = StringUtil.format(JsionEditor.MAP_TILES_OUTPUT_FORMAT, mapid);
 			dir = new File(JsionEditor.MAP_OUTPUT_ROOT).resolvePath(dir).nativePath;
 			var file:File = new File(dir);
 			file.createDirectory();
 			
-			var bmd:BitmapData = new BitmapData(JsionEditor.TILE_WIDTH, JsionEditor.TILE_HEIGHT, true, 0);
-			var tileRect:Rectangle = new Rectangle(_loopx * JsionEditor.TILE_WIDTH, _loopy * JsionEditor.TILE_HEIGHT, JsionEditor.TILE_WIDTH, JsionEditor.TILE_HEIGHT);
+			var bmd:BitmapData = new BitmapData(JsionEditor.mapConfig.TileWidth, JsionEditor.mapConfig.TileHeight, true, 0);
+			var tileRect:Rectangle = new Rectangle(_loopx * JsionEditor.mapConfig.TileWidth, _loopy * JsionEditor.mapConfig.TileHeight, JsionEditor.mapConfig.TileWidth, JsionEditor.mapConfig.TileHeight);
 			bmd.copyPixels(_resource.bitmapData, tileRect, Constant.ZeroPoint);
 			
 			var extName:String;
@@ -278,6 +356,8 @@ package editor
 				bytes = JPGEncoder.encode(bmd);
 				extName = ".jpg";
 			}
+			
+			JsionEditor.MAP_TILES_EXTENSION = extName;
 			
 			var fs:FileStream = new FileStream();
 			var filename:String = StringUtil.format(JsionEditor.MAP_TILES_FILENAME_FORMAT, _loopx, _loopy, extName);
@@ -300,6 +380,7 @@ package editor
 				{
 					(e.target as Timer).stop();
 					(e.target as Timer).removeEventListener(TimerEvent.TIMER,makeFile);
+					mapEditor.msg("地图切割完成!", 0);
 					onSubmit(null);
 				}
 			}

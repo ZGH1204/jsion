@@ -12,10 +12,13 @@ package editor
 		
 		private var msgText:String;
 		
-		public function AlertFrame(owner:JsionMapEditor, text:String, t:String = "提示")
+		private var tColor:uint;
+		
+		public function AlertFrame(owner:JsionMapEditor, text:String, textColor:uint = 0xFF0000, t:String = "提示")
 		{
 			mytitle = t;
 			msgText = text;
+			tColor = textColor;
 			super(owner, true);
 		}
 		
@@ -26,7 +29,7 @@ package editor
 			box = new Form();
 			
 			label = new JLabel(msgText);
-			label.setForeground(new ASColor(0xFF0000));
+			label.setForeground(new ASColor(tColor));
 			label.pack();
 			
 			var rltWidth:int;
@@ -64,9 +67,9 @@ package editor
 			super.init();
 		}
 		
-		public static function msg(owner:JsionMapEditor, text:String, t:String = "提示"):void
+		public static function msg(owner:JsionMapEditor, text:String, textColor:uint = 0xFF0000, t:String = "提示"):void
 		{
-			new AlertFrame(owner, text, t).show();
+			new AlertFrame(owner, text, textColor, t).show();
 		}
 	}
 }
