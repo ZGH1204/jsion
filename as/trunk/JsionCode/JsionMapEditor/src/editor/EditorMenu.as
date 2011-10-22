@@ -92,6 +92,7 @@ package editor
 					break;
 				case File_Save:
 					JsionEditor.saveMapConfig();
+					mapEditor.msg("保存成功", 0);
 					break;
 				case Tool_Map_Cut:
 					if(JsionEditor.MAP_NEWED_OPENED) new MapCut(mapEditor).show();
