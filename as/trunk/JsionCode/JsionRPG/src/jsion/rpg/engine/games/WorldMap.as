@@ -2,6 +2,8 @@ package jsion.rpg.engine.games
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.geom.Rectangle;
 	
 	import jsion.core.loaders.ImageLoader;
@@ -10,7 +12,7 @@ package jsion.rpg.engine.games
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.PathUtil;
 
-	public class WorldMap implements IDispose
+	public class WorldMap extends EventDispatcher implements IDispose
 	{
 		public var mapid:String;
 		
@@ -28,11 +30,11 @@ package jsion.rpg.engine.games
 		
 		protected var m_tileAssetRoot:String;
 		
+		protected var m_mapConfig:MapConfig;
+		
 		protected var m_cameraWidth:int;
 		
 		protected var m_cameraHeight:int;
-		
-		protected var m_mapConfig:MapConfig;
 		
 		protected var m_smallMap:BitmapData;
 		
@@ -47,6 +49,10 @@ package jsion.rpg.engine.games
 		
 		
 		protected var m_smallMapLoader:ImageLoader;
+		
+		protected var m_smallMapCallback:Function;
+		
+		protected var m_tileCallback:Function;
 		
 		
 		
@@ -103,6 +109,14 @@ package jsion.rpg.engine.games
 			
 			DisposeUtil.free(m_smallMapLoader);
 			m_smallMapLoader = null;
+			
+			refreshBuffer();
+			
+			needRepaintMap = true;
+			
+			if(m_smallMapCallback != null) m_smallMapCallback();
+			
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		public function render(buffer:BitmapData):void
@@ -134,9 +148,37 @@ package jsion.rpg.engine.games
 			return m_tileAssetRoot;
 		}
 		
+		public function get buffer():BitmapData
+		{
+			return m_buffer;
+		}
+		
 		public function get smallMap():BitmapData
 		{
 			return m_smallMap;
+		}
+		
+		public function get smallMapCallback():Function
+		{
+			return m_smallMapCallback;
+		}
+		
+		public function set smallMapCallback(value:Function):void
+		{
+			m_smallMapCallback = value;
+		}
+		
+		/**
+		 * 调用方式：tileCallback(tileX, tileY, bmd)，其中，tileX和tileY为Tile编号(非坐标)。
+		 */		
+		public function get tileCallback():Function
+		{
+			return m_tileCallback;
+		}
+		
+		public function set tileCallback(value:Function):void
+		{
+			m_tileCallback = tileCallback;
 		}
 		
 		public function dispose():void
