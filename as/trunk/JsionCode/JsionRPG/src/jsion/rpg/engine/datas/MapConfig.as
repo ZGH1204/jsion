@@ -1,4 +1,4 @@
-package editor.datas
+package jsion.rpg.engine.datas
 {
 	public class MapConfig
 	{
@@ -8,7 +8,7 @@ package editor.datas
 		
 		public var MapHeight:int;
 		
-		public var SmallMapWidth:int = 300;
+		public var SmallMapWidth:int = 200;
 		
 		public var SmallMapHeight:int = 200;
 		

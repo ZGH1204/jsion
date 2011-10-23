@@ -283,16 +283,16 @@ package editor
 		
 		private function makeSmallMap():void
 		{
-			var scale:Number = ScaleUtil.calcScaleFullSize(_resource.width, _resource.height, JsionEditor.mapConfig.SmallMapWidth, JsionEditor.mapConfig.SmallMapHeight);
+			var scale:Number = ScaleUtil.calcScaleFullSize(_resource.width, _resource.height, JsionEditor.mapConfig.SmallMapWidth, 0);//JsionEditor.mapConfig.SmallMapHeight);
 			
 			var rltWidth:int = _resource.width * scale;
 			var rltHeight:int = _resource.height * scale;
 			
-			var smallBmd:BitmapData = new BitmapData(JsionEditor.mapConfig.SmallMapWidth, JsionEditor.mapConfig.SmallMapHeight, true, 0);
+			var smallBmd:BitmapData = new BitmapData(JsionEditor.mapConfig.SmallMapWidth, rltHeight, true, 0);//JsionEditor.mapConfig.SmallMapHeight, true, 0);
 			
 			var matrix:Matrix = new Matrix();
 			matrix.scale(scale, scale);
-			matrix.translate((smallBmd.width - rltWidth) / 2, (smallBmd.height - rltHeight) / 2);
+			//matrix.translate((smallBmd.width - rltWidth) / 2, (smallBmd.height - rltHeight) / 2);
 			
 			smallBmd.draw(_resource, matrix);
 			

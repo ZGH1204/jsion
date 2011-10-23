@@ -13,6 +13,9 @@
 			import editor.AlertFrame;
 			import editor.EditorMenu;
 			
+			import jsion.rpg.engine.EngineDemo;
+			import jsion.rpg.engine.games.RPGGame;
+			
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			
@@ -71,6 +74,16 @@
 				
 				addEventListener(NativeWindowDisplayStateEvent.DISPLAY_STATE_CHANGE,onResize);
 				
+				var bytes:ByteArray = new ByteArray();
+				var file:File = new File(File.applicationDirectory.resolvePath("config.xml").nativePath);
+				var fs:FileStream = new FileStream();
+				fs.open(file, FileMode.READ);
+				fs.readBytes(bytes);
+				fs.close();
+				var configXml:XML = new XML(bytes);
+				
+				JsionCoreSetup(stage, configXml);
+				
 				AsWingManager.initAsStandard(stage);
 				
 				//UIManager.setLookAndFeel(new AeonLAF());
@@ -127,6 +140,11 @@
 			{
 				//Alert.show(text, t);
 				AlertFrame.msg(this, text, textColor, t);
+			}
+			
+			public function showMap(configPath:String):void
+			{
+				mainContainer.addChild(new EngineDemo(mainContainer.width, mainContainer.height, configPath).play());
 			}
 
 			protected function windowedapplication1_closeHandler(event:Event):void

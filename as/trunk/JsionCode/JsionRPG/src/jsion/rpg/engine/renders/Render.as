@@ -4,7 +4,7 @@ package jsion.rpg.engine.renders
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import jsion.rpg.engine.GameObject;
+	import jsion.rpg.engine.games.GameObject;
 
 	public class Render
 	{
