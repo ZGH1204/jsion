@@ -14,6 +14,9 @@ package jsion.utils
 			var scaleWidth:Number = targetWidth / sourceWidth;
 			var scaleHeight:Number = targetHeight / sourceHeight;
 			
+			if(targetWidth <= 0) return scaleHeight;
+			else if(targetHeight <= 0) return scaleWidth;
+			
 			if((sourceHeight * scaleWidth) <= targetHeight)
 			{
 				return scaleWidth;

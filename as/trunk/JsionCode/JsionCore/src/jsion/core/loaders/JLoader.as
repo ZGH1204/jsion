@@ -431,14 +431,14 @@ package jsion.core.loaders
 		 */		
 		protected function initialize():void
 		{
-			_uri = _root + url;
+			_uri = PathUtil.combinPath(_root, url);
 			
 			_uri = StringUtil.bindString(_uri, _bindData);
 			
 			_request = new URLRequest(_uri);
 			
 			_request.method = _requestMethod;
-			_request.requestHeaders = _headers;
+			if(_headers) _request.requestHeaders = _headers;
 		}
 		
 		/**

@@ -1,4 +1,4 @@
-package jsion.rpg.engine
+package jsion.rpg.engine.games
 {
 	public class GameObject
 	{

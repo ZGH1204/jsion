@@ -3,9 +3,9 @@ package jsion.rpg.engine
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	public class RPGGame extends Sprite implements IDispose
+	public class EngineSprite extends Sprite implements IDispose
 	{
-		public function RPGGame()
+		public function EngineSprite()
 		{
 			super();
 			

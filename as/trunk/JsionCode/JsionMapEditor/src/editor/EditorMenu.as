@@ -9,6 +9,7 @@ package editor
 	import flash.net.FileFilter;
 	import flash.utils.ByteArray;
 	
+	import jsion.rpg.engine.RPGEngine;
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
 	
@@ -16,7 +17,6 @@ package editor
 	import org.aswing.JMenuBar;
 	import org.aswing.JMenuItem;
 	import org.aswing.JPanel;
-	import org.aswing.LayoutManager;
 	import org.aswing.event.AWEvent;
 	
 	public class EditorMenu extends JPanel
@@ -141,6 +141,11 @@ package editor
 			JsionEditor.MAP_TILES_EXTENSION = JsionEditor.mapConfig.TileExtension;
 			
 			JsionEditor.MAP_NEWED_OPENED = true;
+			
+			
+			RPGEngine.MapAssetRoot = JsionEditor.MAP_OUTPUT_ROOT;
+			mapEditor.showMap(file.nativePath);
+			//worldMap = new WorldMap(JsionEditor.mapConfig, RPGEngine.CameraRect);
 		}
 	}
 }

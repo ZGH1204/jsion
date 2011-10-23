@@ -1,13 +1,12 @@
 package
 {
-	import editor.datas.MapConfig;
-	
 	import flash.display.Stage;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.utils.ByteArray;
 	
+	import jsion.rpg.engine.datas.MapConfig;
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
 
@@ -58,8 +57,8 @@ package
 		public static function saveMapConfig():void
 		{
 			JsionEditor.mapConfig.MapAssetRoot = StringUtil.format(JsionEditor.MAP_OUTPUT_FORMAT, JsionEditor.mapConfig.MapID);
-			JsionEditor.mapConfig.SmallMapFile = JsionEditor.mapConfig.MapAssetRoot + "/" + JsionEditor.SMALLMAP_FILE_NAME;
-			JsionEditor.mapConfig.TileAssetRoot = StringUtil.format(JsionEditor.MAP_TILES_OUTPUT_FORMAT, JsionEditor.mapConfig.MapID);;
+			JsionEditor.mapConfig.SmallMapFile = JsionEditor.SMALLMAP_FILE_NAME;
+			JsionEditor.mapConfig.TileAssetRoot = StringUtil.format(JsionEditor.MAP_TILES_OUTPUT_FORMAT, JsionEditor.mapConfig.MapID);
 			JsionEditor.mapConfig.TileExtension = JsionEditor.MAP_TILES_EXTENSION;
 			
 			var xml:XML = XmlUtil.encodeWithProperty("Map", mapConfig);
