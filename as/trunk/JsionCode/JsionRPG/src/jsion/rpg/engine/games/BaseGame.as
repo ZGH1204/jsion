@@ -45,13 +45,31 @@ package jsion.rpg.engine.games
 			m_buffer = new BitmapData(m_gameWidth, m_gameHeight, true, 0);
 			
 			m_worldMap = new WorldMap(m_mapConfig, m_gameWidth, m_gameHeight);
+			m_worldMap.tileCallback = tileCompleteCallback;
+		}
+		
+		/**
+		 * 单个Tile图片加载完成时同时更新视图
+		 * @param tileX Tile编号(非坐标)
+		 * @param tileY Tile编号(非坐标)
+		 * @param bmd 图片数据
+		 * 
+		 */		
+		protected function tileCompleteCallback(tileX:int, tileY:int, bmd:BitmapData):void
+		{
+			//TODO:保存到新完成的Tile加载检测列表
 		}
 		
 		public function render():void
 		{
 			if(m_worldMap.needRepaintMap)
 			{
+				//TODO:清除新完成的Tile加载检测列表
 				m_worldMap.render(m_buffer);
+			}
+			else
+			{
+				//TODO:检测是否有新完成的Tile加载需要更新视图
 			}
 		}
 		
