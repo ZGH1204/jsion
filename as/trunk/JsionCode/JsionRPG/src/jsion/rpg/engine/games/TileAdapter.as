@@ -54,7 +54,7 @@ package jsion.rpg.engine.games
 				
 				temp.copyPixels(m_map.smallMap, m_tempRect, Constant.ZeroPoint);
 				
-				scale = m_map.mapWidth / m_map.smallMap.width;
+				scale = buffer.width / temp.width;
 				
 				buffer.draw(temp, new Matrix(scale, 0, 0, scale));
 				temp.dispose();
@@ -76,9 +76,12 @@ package jsion.rpg.engine.games
 				yCount++;
 			}
 			
-			for(var y:int = tiley; y < yCount; y++)
+			var maxTileX:int = tilex + xCount;
+			var maxTileY:int = tiley + yCount;
+			
+			for(var y:int = tiley; y < maxTileY; y++)
 			{
-				for(var x:int = tilex; x < xCount; x++)
+				for(var x:int = tilex; x < maxTileX; x++)
 				{
 					if(x < 0 || y < 0) continue;
 					
@@ -92,7 +95,7 @@ package jsion.rpg.engine.games
 					}
 					else
 					{
-						if(m_loadings.containsKey(key)) return;
+						if(m_loadings.containsKey(key)) continue;
 						
 						var loader:ImageLoader = new ImageLoader(key + m_map.tileExtension, {root: m_map.tileAssetRoot});
 						

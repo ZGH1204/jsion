@@ -7,7 +7,6 @@ package editor.forms
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
@@ -28,20 +27,9 @@ package editor.forms
 	import org.aswing.JRadioButton;
 	import org.aswing.JTextField;
 	import org.aswing.SoftBoxLayout;
-	import org.aswing.ext.Form;
 	
 	public class FileNewForm extends JsionEditorWin
 	{
-		private static const FormW:int = 300;
-		
-		private static const FormH:int = 275;
-		
-		/**
-		 * 间距
-		 */ 
-		private static const Padding:uint=5;
-		
-		
 		private var mapidTxt:JTextField;
 		
 		private var mapWidthTxt:JTextField;
@@ -66,16 +54,17 @@ package editor.forms
 		
 		public function FileNewForm(owner:JsionMapEditor)
 		{
-			mytitle = "新建";
+			mytitle = "新建地图";
+			
+			WinWidth = 300;
+			WinHeight = 275;
+			
 			super(owner, true);
 		}
 		
 		override protected function init():void
 		{
-			main = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS, Padding));
-			
-			box = new Form();
-			//_box.setSizeWH(FormW, 100);
+			initMain();
 			
 			var pane:JPanel;
 			
@@ -142,13 +131,9 @@ package editor.forms
 			pane.appendAll(codeType_PNG, codeType_JPG);
 			box.addRow(new JLabel("编码类型："), pane);
 			
-			main.append(new JPanel());
-			main.append(box);
-			main.setSizeWH(FormW, FormH);
-			
-			
 			
 			super.init();
+			
 			
 			hasMapPic = false;
 			
@@ -216,9 +201,10 @@ package editor.forms
 		override protected function onSubmit(e:Event):void
 		{
 			var mapFile:File = new File(mapPicTxt.getText());
-			if(mapFile.exists == false) return;
 			
-			var mapid:String = mapidTxt.getText();
+			var mapid:String = StringUtil.trim(mapidTxt.getText());
+			
+			if(mapFile.exists == false || StringUtil.isNullOrEmpty(mapid)) return;
 			
 			var mapOutputRoot:String = outputDirTxt.getText();
 			var copyToRoot:File = new File(JsionEditor.getMapRoot());
@@ -241,13 +227,15 @@ package editor.forms
 			
 			copyFile(mapFile.nativePath, targetFile.nativePath);
 			
+			JsionEditor.MAP_PIC_FILE = targetFile.nativePath;
+			
 			if(mapCutAtOnce.isSelected())
 			{
 				var isPng:Boolean = codeType_PNG.isSelected();
 				if(isPng) JsionEditor.MAP_TILES_EXTENSION = ".png";
 				else JsionEditor.MAP_TILES_EXTENSION = ".jpg";
 				new MapCut(mapEditor).startCutMapPic(JsionEditor.MAP_PIC_FILE, isPng);
-				JsionEditor.saveMapConfig();
+				JsionEditor.saveMapConfig(null);
 			}
 			
 			mapEditor.fileNewCallabck();

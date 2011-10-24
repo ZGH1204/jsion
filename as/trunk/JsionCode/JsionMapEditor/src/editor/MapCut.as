@@ -31,7 +31,6 @@ package editor
 	import org.aswing.JRadioButton;
 	import org.aswing.JTextField;
 	import org.aswing.SoftBoxLayout;
-	import org.aswing.ext.Form;
 
 	public class MapCut extends JsionEditorWin
 	{
@@ -55,8 +54,6 @@ package editor
 		private var smallMap:BitmapData;
 		
 		
-		private var _winWidth:int = 250;
-		private var _winHeight:int = 350;
 		private var _boxHeight:int = 120;
 		
 		
@@ -70,22 +67,21 @@ package editor
 		public function MapCut(owner:JsionMapEditor=null)
 		{
 			mytitle = "地图切割器";
+			
+			WinWidth = 250;
+			WinHeight = 350;
+			
 			super(owner, true);
+			
+			openPicFile(JsionEditor.MAP_PIC_FILE);
 		}
 		
 		override protected function init():void
 		{
-			main = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS, padding));
-			
-			_show = new JPanel();
-			
-			box = new Form();
-			box.y = 10;
+			initMain();
 			
 			_fileName = new JTextField("", 12);
 			_fileName.setEditable(false);
-			
-			var lab0:JLabel = new JLabel("选择文件：");
 			
 			openBtn = new JButton("打开");
 			openBtn.addActionListener(openMap);
@@ -104,16 +100,16 @@ package editor
 			var pane:JPanel = new JPanel(new SoftBoxLayout(SoftBoxLayout.X_AXIS));
 			pane.appendAll(_codetype_png, _codetype_jpg);
 			
-			box.addRow(lab0, _fileName, openBtn);
+			box.addRow(new JLabel("选择文件："), _fileName, openBtn);
 			box.addRow(lab1, pane);
-			box.setSizeWH(_winWidth, _boxHeight);
-			main.setSizeWH(_winWidth, _winHeight);
+			box.setSizeWH(WinWidth, _boxHeight);
+			
 			
 			_progressbar = new JProgressBar(JProgressBar.HORIZONTAL);
 			//_progressbar.setModel(new DefaultBoundedRangeModel(0,100));
 			
-			main.append(new JPanel());
-			main.append(box);
+			_show = new JPanel();
+			
 			main.append(_progressbar);
 			main.append(_show);
 			//getContentPane().append(main);
@@ -133,6 +129,15 @@ package editor
 			var file:File = e.target as File;
 			
 			_mapPic = file.nativePath;
+			
+			openPicFile(_mapPic);
+		}
+		
+		private function openPicFile(path:String):void
+		{
+			var file:File = new File(path);
+			
+			if(file.exists == false) return;
 			
 			_fileName.setText(file.name);
 			
@@ -186,7 +191,7 @@ package editor
 			_resource = target.loader.content as Bitmap;
 			
 			var _bWidth:int = main.width;//_winWidth - _padding * 2;
-			var _bHeight:int = main.height - box.height - _progressbar.height - 5 - padding * 4;
+			var _bHeight:int = main.height - box.height - _progressbar.height - 5 - Padding * 4;
 			
 			var scale:Number = ScaleUtil.calcScaleFullSize(_resource.width, _resource.height, _bWidth, _bHeight);
 			
@@ -296,22 +301,8 @@ package editor
 			var bytes:ByteArray;
 			
 			bytes = PNGEncoder.encode(smallBmd);
-			extName = "";
-			//extName = ".png";
 			
-//			if(_codetype_png.isSelected())
-//			{
-//				bytes = PNGEncoder.encode(smallBmd);
-//				extName = ".png";
-//			}
-//			else
-//			{
-//				var encoder:JPGEncoder = new JPGEncoder();
-//				bytes = encoder.encode(smallBmd);
-//				extName = ".jpg";
-//			}
-			
-			var smallFile:File = new File(file.resolvePath(JsionEditor.SMALLMAP_FILE_NAME + extName).nativePath);
+			var smallFile:File = new File(JsionEditor.getSmallMapPicPath());
 			var fs:FileStream = new FileStream();
 			fs.open(smallFile, FileMode.WRITE);
 			fs.writeBytes(bytes);
@@ -368,6 +359,7 @@ package editor
 					(e.target as Timer).stop();
 					(e.target as Timer).removeEventListener(TimerEvent.TIMER,makeFile);
 					mapEditor.msg("地图切割完成!", 0);
+					JsionEditor.saveMapConfig(null);
 					mapEditor.showMap(JsionEditor.getMapConfigPath());
 					onSubmit(null);
 				}
