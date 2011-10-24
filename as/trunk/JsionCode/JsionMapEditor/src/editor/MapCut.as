@@ -12,7 +12,6 @@ package editor
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 	import flash.net.FileFilter;
-	import flash.net.FileReference;
 	import flash.utils.ByteArray;
 	import flash.utils.Timer;
 	
@@ -242,10 +241,7 @@ package editor
 			_codetype_png.setEnabled(false);
 			openBtn.setEnabled(false);
 			
-			var mapid:String = JsionEditor.mapConfig.MapID;
-			var dir:String = StringUtil.format(JsionEditor.MAP_OUTPUT_FORMAT, mapid);
-			dir = new File(JsionEditor.MAP_OUTPUT_ROOT).resolvePath(dir).nativePath;
-			var file:File = new File(dir);
+			var file:File = new File(JsionEditor.getMapAssetRoot());
 			if(file.exists) file.deleteDirectory(true);
 			
 			makeSmallMap();
@@ -268,11 +264,8 @@ package editor
 			fs.close();
 			bytes.position = 0;
 			
-			var mapid:String = JsionEditor.mapConfig.MapID;
 			var extName:String = "." + JUtil.getExtension(_mapPic);
-			file = new File(JsionEditor.MAP_OUTPUT_ROOT);
-			var path:String = file.resolvePath(StringUtil.format(JsionEditor.MAP_OUTPUT_FORMAT, mapid) + "/" + JsionEditor.BIGMAP_FILE_NAME + extName).nativePath;
-			file = new File(path);
+			file = new File(JsionEditor.getBigMapPicPath(extName));
 			if(file.exists) file.deleteFile();
 			
 			fs = new FileStream();
@@ -296,10 +289,7 @@ package editor
 			
 			smallBmd.draw(_resource, matrix);
 			
-			var mapid:String = JsionEditor.mapConfig.MapID;
-			var dir:String = StringUtil.format(JsionEditor.MAP_OUTPUT_FORMAT, mapid);
-			dir = new File(JsionEditor.MAP_OUTPUT_ROOT).resolvePath(dir).nativePath;
-			var file:File = new File(dir);
+			var file:File = new File(JsionEditor.getMapAssetRoot());
 			file.createDirectory();
 			
 			var extName:String;
@@ -333,10 +323,7 @@ package editor
 			var tile_max_x:uint = Math.ceil(JsionEditor.mapConfig.MapWidth / JsionEditor.mapConfig.TileWidth);
 			var tile_max_y:uint = Math.ceil(JsionEditor.mapConfig.MapHeight / JsionEditor.mapConfig.TileHeight);
 			
-			var mapid:String = JsionEditor.mapConfig.MapID;
-			var dir:String = StringUtil.format(JsionEditor.MAP_TILES_OUTPUT_FORMAT, mapid);
-			dir = new File(JsionEditor.MAP_OUTPUT_ROOT).resolvePath(dir).nativePath;
-			var file:File = new File(dir);
+			var file:File = new File(JsionEditor.getTileRoot());
 			file.createDirectory();
 			
 			var bmd:BitmapData = new BitmapData(JsionEditor.mapConfig.TileWidth, JsionEditor.mapConfig.TileHeight, true, 0);
@@ -381,6 +368,7 @@ package editor
 					(e.target as Timer).stop();
 					(e.target as Timer).removeEventListener(TimerEvent.TIMER,makeFile);
 					mapEditor.msg("地图切割完成!", 0);
+					mapEditor.showMap(JsionEditor.getMapConfigPath());
 					onSubmit(null);
 				}
 			}

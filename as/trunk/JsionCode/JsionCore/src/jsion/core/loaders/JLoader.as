@@ -214,6 +214,11 @@ package jsion.core.loaders
 		/** @private */
 		protected static const Default_Cfg:Object = {root: ""};
 		
+		/**
+		 * 自定义数据
+		 */		
+		public var tag:Object;
+		
 		/** @private */
 		protected var _url:String;
 		/** @private */
@@ -1134,6 +1139,7 @@ package jsion.core.loaders
 		 */		
 		public function dispose():void
 		{
+			tag = null;
 			_headers = null;
 			_context = null;
 			_cryptor = null;

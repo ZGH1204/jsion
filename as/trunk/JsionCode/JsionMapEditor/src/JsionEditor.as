@@ -54,6 +54,37 @@ package
 //		
 //		public static var TILE_HEIGHT:int = 200;
 		
+		public static function getMapRoot():String
+		{
+			return new File(MAP_OUTPUT_ROOT).resolvePath(mapConfig.MapID).nativePath;
+		}
+		
+		public static function getMapAssetRoot():String
+		{
+			var dir:String = StringUtil.format(MAP_OUTPUT_FORMAT, mapConfig.MapID);
+			dir = new File(MAP_OUTPUT_ROOT).resolvePath(dir).nativePath;
+			return dir;
+		}
+		
+		public static function getTileRoot():String
+		{
+			var dir:String = StringUtil.format(MAP_TILES_OUTPUT_FORMAT, mapConfig.MapID);
+			dir = new File(MAP_OUTPUT_ROOT).resolvePath(dir).nativePath;
+			return dir;
+		}
+		
+		public static function getBigMapPicPath(extName:String):String
+		{
+			var file:File = new File(getMapRoot());
+			
+			return file.resolvePath(BIGMAP_FILE_NAME + extName).nativePath;
+		}
+		
+		public static function getMapConfigPath():String
+		{
+			return JsionEditor.MAP_OUTPUT_ROOT + "\\" + JsionEditor.mapConfig.MapID + "\\" + "config.map";
+		}
+		
 		public static function saveMapConfig():void
 		{
 			JsionEditor.mapConfig.MapAssetRoot = StringUtil.format(JsionEditor.MAP_OUTPUT_FORMAT, JsionEditor.mapConfig.MapID);
@@ -63,7 +94,7 @@ package
 			
 			var xml:XML = XmlUtil.encodeWithProperty("Map", mapConfig);
 			
-			var file:File = new File(JsionEditor.MAP_OUTPUT_ROOT + "\\" + JsionEditor.mapConfig.MapID + "\\" + "config.map");
+			var file:File = new File(getMapConfigPath());
 			if(file.exists) file.deleteFile();
 			var fs:FileStream = new FileStream();
 			fs.open(file, FileMode.WRITE);

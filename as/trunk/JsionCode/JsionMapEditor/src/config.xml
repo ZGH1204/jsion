@@ -1,6 +1,6 @@
 <root>
 	<Policys>
-		<policy file="crossdomain.xml" />
+		<!--<policy file="crossdomain.xml" />-->
 	</Policys>
 	
 	
