@@ -289,8 +289,8 @@ package jsion.rpg.engine.games
 		{
 			var screen_x:int = center.x - int(m_cameraWidth / 2);
 			
-			screen_x = Math.max(0, screen_x);
 			screen_x = Math.min(mapWidth - m_cameraWidth, screen_x);
+			screen_x = Math.max(0, screen_x);
 			
 			return screen_x;
 		}
@@ -299,8 +299,8 @@ package jsion.rpg.engine.games
 		{
 			var screen_y:int = center.y - int(m_cameraHeight / 2);
 			
-			screen_y = Math.max(0, screen_y);
 			screen_y = Math.min(mapHeight - m_cameraHeight, screen_y);
+			screen_y = Math.max(0, screen_y);
 			
 			return screen_y;
 		}
@@ -323,6 +323,7 @@ package jsion.rpg.engine.games
 		public function set center(value:Point):void
 		{
 			m_center = value;
+			needRepaintMap = true;
 		}
 		
 		public function get nowTileX():int

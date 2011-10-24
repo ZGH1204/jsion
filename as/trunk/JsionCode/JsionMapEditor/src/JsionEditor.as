@@ -12,13 +12,6 @@ package
 
 	public class JsionEditor
 	{
-		public static var W:Number;
-		
-		public static var H:Number;
-		
-		public static var stage:Stage;
-		
-		
 		public static var mapConfig:MapConfig = new MapConfig();
 		
 		
@@ -80,13 +73,26 @@ package
 			return file.resolvePath(BIGMAP_FILE_NAME + extName).nativePath;
 		}
 		
+		public static function getSmallMapPicPath():String
+		{
+			var file:File = new File(getMapAssetRoot());
+			
+			return file.resolvePath(SMALLMAP_FILE_NAME).nativePath;
+		}
+		
 		public static function getMapConfigPath():String
 		{
 			return JsionEditor.MAP_OUTPUT_ROOT + "\\" + JsionEditor.mapConfig.MapID + "\\" + "config.map";
 		}
 		
-		public static function saveMapConfig():void
+		public static function saveMapConfig(mapEditor:JsionMapEditor):void
 		{
+			if(MAP_NEWED_OPENED == false)
+			{
+				if(mapEditor) mapEditor.msg("未打开或创建地图");
+				return;
+			}
+			
 			JsionEditor.mapConfig.MapAssetRoot = StringUtil.format(JsionEditor.MAP_OUTPUT_FORMAT, JsionEditor.mapConfig.MapID);
 			JsionEditor.mapConfig.SmallMapFile = JsionEditor.SMALLMAP_FILE_NAME;
 			JsionEditor.mapConfig.TileAssetRoot = StringUtil.format(JsionEditor.MAP_TILES_OUTPUT_FORMAT, JsionEditor.mapConfig.MapID);
@@ -109,6 +115,8 @@ package
 			
 			fs.writeBytes(bytes2);
 			fs.close();
+			
+			if(mapEditor) mapEditor.msg("保存成功", 0);
 		}
 	}
 }

@@ -2,9 +2,6 @@ package editor
 {
 	import org.aswing.ASColor;
 	import org.aswing.JLabel;
-	import org.aswing.JPanel;
-	import org.aswing.SoftBoxLayout;
-	import org.aswing.ext.Form;
 
 	public class AlertFrame extends JsionEditorWin
 	{
@@ -24,9 +21,7 @@ package editor
 		
 		override protected function init():void
 		{
-			main = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS, padding));
-			
-			box = new Form();
+			initMain();
 			
 			label = new JLabel(msgText);
 			label.setForeground(new ASColor(tColor));
@@ -57,12 +52,8 @@ package editor
 			
 			box.addRow(label);
 			
-			main.append(new JPanel());
-			main.append(box);
-			
-			main.setSizeWH(rltWidth, rltHeight);
-			
-			//main.setSizeWH(300, 200);
+			WinWidth = rltWidth;
+			WinHeight = rltHeight;
 			
 			super.init();
 		}

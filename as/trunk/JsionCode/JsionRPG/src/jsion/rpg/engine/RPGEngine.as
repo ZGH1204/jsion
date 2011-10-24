@@ -1,7 +1,6 @@
 package jsion.rpg.engine
 {
 	import flash.display.Bitmap;
-	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -116,9 +115,22 @@ package jsion.rpg.engine
 			
 			m_h = h;
 			
-			m_game.setCameraWH(w, h);
-			
-			m_mapBmp.bitmapData = m_game.buffer;
+			if(m_game)
+			{
+				m_game.setCameraWH(w, h);
+				
+				m_mapBmp.bitmapData = m_game.buffer;
+			}
+		}
+		
+		public function get gameWidth():int
+		{
+			return m_w;
+		}
+		
+		public function get gameHeight():int
+		{
+			return m_h;
 		}
 		
 		public function get game():RPGGame

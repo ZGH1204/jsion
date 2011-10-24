@@ -3,7 +3,8 @@
 					   xmlns:s="library://ns.adobe.com/flex/spark" 
 					   xmlns:mx="library://ns.adobe.com/flex/mx" 
 					   width="1000" height="600" 
-					   applicationComplete="init(event)" close="windowedapplication1_closeHandler(event)">
+					   applicationComplete="init(event)" 
+					   resize="windowedapplication1_resizeHandler(event)">
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
@@ -13,11 +14,13 @@
 			import editor.AlertFrame;
 			import editor.EditorMenu;
 			import editor.EditorTool;
+			import editor.SmallMap;
 			
 			import jsion.rpg.engine.RPGEngine;
 			import jsion.utils.DisposeUtil;
 			
 			import mx.events.FlexEvent;
+			import mx.events.ResizeEvent;
 			
 			import org.aswing.AsWingManager;
 			import org.aswing.BorderLayout;
@@ -33,9 +36,24 @@
 			private var mainWindow:JWindow;
 			
 			/**
+			 * 顶部容器
+			 */ 
+			private var topContainer:JPanel;
+			
+			/**
+			 * 底部容器
+			 */ 
+			private var bottomContainer:JPanel;
+			
+			/**
 			 * 左侧容器
 			 */ 
 			private var leftContainer:JPanel;
+			
+			/**
+			 * 右侧容器
+			 */ 
+			private var rightContainer:JPanel;
 			
 			/**
 			 * 地图显示容器
@@ -60,7 +78,13 @@
 			/**
 			 * 世界地图
 			 */ 
-			private var gameMap:RPGEngine;
+			public var gameMap:RPGEngine;
+			
+			
+			/**
+			 * 缩略地图
+			 */ 
+			private var smallMap:SmallMap;
 			
 			
 			public function get Window():JWindow
@@ -70,14 +94,10 @@
 			
 			protected function init(event:FlexEvent):void
 			{
-				JsionEditor.W = stage.width;
-				JsionEditor.H = stage.height;
-				JsionEditor.stage = stage;
+				statusBar.visible = false;
 				
-				this.nativeWindow.x = (Capabilities.screenResolutionX - JsionEditor.W) / 2;
-				this.nativeWindow.y = (Capabilities.screenResolutionY - JsionEditor.H - 40) / 2;
-				
-				addEventListener(NativeWindowDisplayStateEvent.DISPLAY_STATE_CHANGE,onResize);
+				this.nativeWindow.x = (Capabilities.screenResolutionX - this.nativeWindow.width) / 2;
+				this.nativeWindow.y = (Capabilities.screenResolutionY - this.nativeWindow.height) / 2;
 				
 				var bytes:ByteArray = new ByteArray();
 				var file:File = new File(File.applicationDirectory.resolvePath("config.xml").nativePath);
@@ -97,55 +117,60 @@
 				
 				// 得到窗口容器
 				var pane:Container = mainWindow.getContentPane();
-				pane.setLayout(new BorderLayout());
+				pane.setLayout(new BorderLayout(2, 2));
 				
 				
-				var top:JPanel = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
-				pane.append(top, BorderLayout.NORTH);
+				topContainer = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
+				pane.append(topContainer, BorderLayout.NORTH);
 				
 				leftContainer = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
+				leftContainer.setPreferredWidth(5);
 				pane.append(leftContainer, BorderLayout.WEST);
+				
+				rightContainer = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
+				rightContainer.setPreferredWidth(5);
+				pane.append(rightContainer, BorderLayout.EAST);
+				
+				bottomContainer = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
+				bottomContainer.setPreferredHeight(5);
+				pane.append(bottomContainer, BorderLayout.SOUTH);
 				
 				mainContainer = new JPanel();
 				pane.append(mainContainer, BorderLayout.CENTER);
 				mainContainer.addEventListener(ResizedEvent.RESIZED, __mainContainerResizeHandler);
 				
 				statusContainer = new JPanel();
-				pane.append(statusContainer, BorderLayout.SOUTH);
+				//bottomContainer.append(statusContainer);
 				
 				
 				menuContainer = new EditorMenu(this);
-				top.append(menuContainer);
+				topContainer.append(menuContainer);
 				
 				toolContainer = new JPanel();
-				top.append(toolContainer);
+				topContainer.append(toolContainer);
 				toolContainer.append(new EditorTool(this));
 				
 				
-				menuContainer.setOpaque(true);
-				mainContainer.setOpaque(true);
-				leftContainer.setOpaque(true);
-				toolContainer.setOpaque(true);
-				statusContainer.setOpaque(true);
+//				menuContainer.setOpaque(true);
+//				mainContainer.setOpaque(true);
+//				leftContainer.setOpaque(true);
+//				toolContainer.setOpaque(true);
+//				statusContainer.setOpaque(true);
+//				rightContainer.setOpaque(true);
+//				bottomContainer.setOpaque(true);
 				
-				
-				setLeftView();
-				
-				
-				mainWindow.setSizeWH(JsionEditor.W, JsionEditor.H);
+				mainWindow.setSizeWH(width, height);
 				mainWindow.show();
 			}
 			
 			private function setLeftView():void
 			{
-				leftContainer.setPreferredWidth(JsionEditor.mapConfig.SmallMapWidth);
-			}
-			
-			private function onResize(e:*):void
-			{
-				JsionEditor.W = stage.nativeWindow.width;
-				JsionEditor.H = stage.nativeWindow.height;
-				mainWindow.setSizeWH(stage.nativeWindow.width, stage.nativeWindow.height);
+				leftContainer.setPreferredWidth(JsionEditor.mapConfig.SmallMapWidth + SmallMap.Padding * 2);
+				
+				if(smallMap) leftContainer.remove(smallMap);
+				DisposeUtil.free(smallMap);
+				smallMap = new SmallMap(this);
+				leftContainer.append(smallMap);
 			}
 			
 			public function msg(text:String, textColor:uint = 0xFF0000, t:String = "提示"):void
@@ -161,28 +186,43 @@
 				gameMap = new RPGEngine(mainContainer.width, mainContainer.height, configPath);
 				gameMap.play();
 				mainContainer.addChild(gameMap);
+				
+				setLeftView();
 			}
 			
 			public function fileNewCallabck():void
 			{
-				leftContainer.setPreferredWidth(JsionEditor.mapConfig.SmallMapWidth);
+				clearAll();
 			}
 			
 			public function fileOpenCallback(configPath:String):void
 			{
-				leftContainer.setPreferredWidth(JsionEditor.mapConfig.SmallMapWidth);
-				
+				clearAll();
 				showMap(configPath);
+			}
+			
+			public function clearAll():void
+			{
+				DisposeUtil.free(gameMap);
+				gameMap = null;
+				
+				if(smallMap) leftContainer.remove(smallMap);
+				DisposeUtil.free(smallMap);
+				smallMap = null;
 			}
 			
 			protected function __mainContainerResizeHandler(e:ResizedEvent):void
 			{
 				if(gameMap) gameMap.setCameraWH(mainContainer.width, mainContainer.height);
+				if(smallMap) smallMap.redrawDisplayArea();
 			}
 
-			protected function windowedapplication1_closeHandler(event:Event):void
+
+			protected function windowedapplication1_resizeHandler(event:ResizeEvent):void
 			{
 				// TODO Auto-generated method stub
+				
+				if(mainWindow) mainWindow.setSizeWH(width, height);
 			}
 
 		]]>

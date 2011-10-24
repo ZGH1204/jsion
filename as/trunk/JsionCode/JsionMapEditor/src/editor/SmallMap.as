@@ -1,13 +1,157 @@
 package editor
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.Sprite;
+	import flash.events.MouseEvent;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
+	
+	import jsion.core.loaders.ImageLoader;
+	import jsion.utils.DisposeUtil;
+	
 	import org.aswing.JPanel;
 	import org.aswing.LayoutManager;
+	import org.aswing.border.TitledBorder;
 	
-	public class SmallMap extends JPanel
+	public class SmallMap extends JPanel implements IDispose
 	{
-		public function SmallMap(layout:LayoutManager=null)
+		public static const Padding:int = 5;
+		
+		protected var m_bmp:Bitmap;
+		protected var m_bmd:BitmapData;
+		protected var m_mapEditor:JsionMapEditor;
+		
+		protected var m_areaContainer:Sprite;
+		protected var m_displayArea:Sprite;
+		
+		protected var m_areaWidth:int;
+		protected var m_areaHeight:int;
+		
+		public function SmallMap(mapEditor:JsionMapEditor, layout:LayoutManager=null)
 		{
+			m_mapEditor = mapEditor;
+			
 			super(layout);
+			
+			initialize();
+		}
+		
+		protected function initialize():void
+		{
+			m_bmp = new Bitmap();
+			
+			m_areaContainer = new Sprite();
+			
+			m_areaContainer.x = m_bmp.x = Padding;
+			m_areaContainer.y = m_bmp.y = 20;
+			
+			addChild(m_bmp);
+			
+			addChild(m_areaContainer);
+			
+			m_displayArea = new Sprite();
+			m_displayArea.buttonMode = true;
+			m_areaContainer.addChild(m_displayArea);
+			
+			loadSmallMap();
+			
+			setPreferredHeight(JsionEditor.mapConfig.MapHeight * (JsionEditor.mapConfig.SmallMapWidth / JsionEditor.mapConfig.MapWidth) + Padding + m_bmp.y);
+			
+			setBorder(new TitledBorder(null, '小地图', TitledBorder.TOP, TitledBorder.LEFT, 10));
+		}
+		
+		private var m_draging:Boolean;
+		private var m_tempRect:Rectangle = new Rectangle();
+		private var m_limitRect:Rectangle;
+		
+		private function __mouseDownHandler(e:MouseEvent):void
+		{
+			m_tempRect.x = m_displayArea.x;
+			m_tempRect.y = m_displayArea.y;
+			m_tempRect.width = m_displayArea.width;
+			m_tempRect.height = m_displayArea.height;
+			
+			if(m_tempRect.contains(e.localX + m_displayArea.x, e.localY + m_displayArea.y))
+			{
+				m_draging = true;
+				m_limitRect = new Rectangle(0, 0, m_bmd.width - m_tempRect.width, m_bmd.height - m_tempRect.height);
+				m_displayArea.startDrag(false, m_limitRect);
+			}
+		}
+		
+		private function __mouseUpHandler(e:MouseEvent):void
+		{
+			if(m_draging)
+			{
+				m_draging = false;
+				m_displayArea.stopDrag();
+			}
+		}
+		
+		private function __mouseMoveHandler(e:MouseEvent):void
+		{
+			if(m_draging && e.type == MouseEvent.MOUSE_MOVE)
+			{
+				var point:Point = new Point(m_displayArea.x + m_displayArea.width / 2, m_displayArea.y + m_displayArea.height / 2);
+				
+				var scale:Number = JsionEditor.mapConfig.MapWidth / m_bmd.width;
+				point.x = scale * point.x;
+				point.y = scale * point.y;
+				
+				m_mapEditor.gameMap.game.worldMap.center = point;
+			}
+		}
+		
+		public function redrawDisplayArea():void
+		{
+			if(m_bmd == null) return;
+			
+			m_areaWidth = m_mapEditor.gameMap.gameWidth / JsionEditor.mapConfig.MapWidth * m_bmd.width;
+			m_areaHeight = m_mapEditor.gameMap.gameHeight / JsionEditor.mapConfig.MapHeight * m_bmd.height;
+			
+			m_displayArea.graphics.clear();
+			m_displayArea.graphics.lineStyle(1,0xFFFFFF);
+			m_displayArea.graphics.beginFill(0, 0);
+			m_displayArea.graphics.drawRect(0, 0, m_areaWidth, m_areaHeight);
+			m_displayArea.graphics.endFill();
+		}
+		
+		public function loadSmallMap():void
+		{
+			var smallPic:String = JsionEditor.getSmallMapPicPath();
+			
+			new ImageLoader(smallPic).loadAsync(smallMapLoadCallback);
+		}
+		
+		protected function smallMapLoadCallback(loader:ImageLoader):void
+		{
+			if(loader.isComplete == false)
+			{
+				m_mapEditor.msg("缩略图加载失败");
+				DisposeUtil.free(loader);
+				return;
+			}
+			
+			if(m_bmd) m_bmd.dispose();
+			
+			m_bmd = Bitmap(loader.content).bitmapData.clone();
+			
+			m_bmp.bitmapData = m_bmd;
+			
+			DisposeUtil.free(loader);
+			
+			redrawDisplayArea();
+			
+			addEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
+			addEventListener(MouseEvent.MOUSE_UP, __mouseUpHandler);
+			m_mapEditor.stage.addEventListener(MouseEvent.MOUSE_UP, __mouseUpHandler);
+			addEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveHandler);
+		}
+		
+		public function dispose():void
+		{
+			
 		}
 	}
 }

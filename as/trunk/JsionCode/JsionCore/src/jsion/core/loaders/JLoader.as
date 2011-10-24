@@ -1034,7 +1034,7 @@ package jsion.core.loaders
 			if(_curTryTimes < _hadTryTimes)
 			{
 				_curTryTimes++;
-				
+				_isLoading = false;
 				load();
 			}
 			else
