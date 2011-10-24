@@ -12,11 +12,11 @@
 		<![CDATA[
 			import editor.AlertFrame;
 			import editor.EditorMenu;
+			import editor.EditorTool;
 			
-			import jsion.rpg.engine.EngineDemo;
-			import jsion.rpg.engine.games.RPGGame;
+			import jsion.rpg.engine.RPGEngine;
+			import jsion.utils.DisposeUtil;
 			
-			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			
 			import org.aswing.AsWingManager;
@@ -25,6 +25,7 @@
 			import org.aswing.JPanel;
 			import org.aswing.JWindow;
 			import org.aswing.SoftBoxLayout;
+			import org.aswing.event.ResizedEvent;
 			
 			/**
 			 * 主容器
@@ -56,6 +57,10 @@
 			 */ 
 			private var statusContainer:JPanel;
 			
+			/**
+			 * 世界地图
+			 */ 
+			private var gameMap:RPGEngine;
 			
 			
 			public function get Window():JWindow
@@ -103,6 +108,7 @@
 				
 				mainContainer = new JPanel();
 				pane.append(mainContainer, BorderLayout.CENTER);
+				mainContainer.addEventListener(ResizedEvent.RESIZED, __mainContainerResizeHandler);
 				
 				statusContainer = new JPanel();
 				pane.append(statusContainer, BorderLayout.SOUTH);
@@ -113,6 +119,7 @@
 				
 				toolContainer = new JPanel();
 				top.append(toolContainer);
+				toolContainer.append(new EditorTool(this));
 				
 				
 				menuContainer.setOpaque(true);
@@ -122,11 +129,16 @@
 				statusContainer.setOpaque(true);
 				
 				
-				
+				setLeftView();
 				
 				
 				mainWindow.setSizeWH(JsionEditor.W, JsionEditor.H);
 				mainWindow.show();
+			}
+			
+			private function setLeftView():void
+			{
+				leftContainer.setPreferredWidth(JsionEditor.mapConfig.SmallMapWidth);
 			}
 			
 			private function onResize(e:*):void
@@ -144,7 +156,28 @@
 			
 			public function showMap(configPath:String):void
 			{
-				mainContainer.addChild(new EngineDemo(mainContainer.width, mainContainer.height, configPath).play());
+				DisposeUtil.free(gameMap);
+				RPGEngine.setMapsRoot(JsionEditor.MAP_OUTPUT_ROOT);
+				gameMap = new RPGEngine(mainContainer.width, mainContainer.height, configPath);
+				gameMap.play();
+				mainContainer.addChild(gameMap);
+			}
+			
+			public function fileNewCallabck():void
+			{
+				leftContainer.setPreferredWidth(JsionEditor.mapConfig.SmallMapWidth);
+			}
+			
+			public function fileOpenCallback(configPath:String):void
+			{
+				leftContainer.setPreferredWidth(JsionEditor.mapConfig.SmallMapWidth);
+				
+				showMap(configPath);
+			}
+			
+			protected function __mainContainerResizeHandler(e:ResizedEvent):void
+			{
+				if(gameMap) gameMap.setCameraWH(mainContainer.width, mainContainer.height);
 			}
 
 			protected function windowedapplication1_closeHandler(event:Event):void

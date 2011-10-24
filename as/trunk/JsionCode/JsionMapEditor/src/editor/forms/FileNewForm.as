@@ -221,14 +221,8 @@ package editor.forms
 			var mapid:String = mapidTxt.getText();
 			
 			var mapOutputRoot:String = outputDirTxt.getText();
-			var copyToRoot:File = new File(mapOutputRoot + "\\" + mapid);
+			var copyToRoot:File = new File(JsionEditor.getMapRoot());
 			copyToRoot.createDirectory();
-			
-			var extName:String = "." + JUtil.getExtension(mapFile.nativePath);
-			var targetFile:File = new File(copyToRoot.resolvePath(JsionEditor.BIGMAP_FILE_NAME + extName).nativePath);
-			if(targetFile.exists) targetFile.deleteFile();
-			
-			copyFile(mapFile.nativePath, targetFile.nativePath);
 			
 			JsionEditor.MAP_NEWED_OPENED = true;
 			JsionEditor.MAP_PIC_FILE = mapPicTxt.getText();
@@ -241,6 +235,12 @@ package editor.forms
 			JsionEditor.mapConfig.TileWidth = int(tileWidthTxt.getText());
 			JsionEditor.mapConfig.TileHeight = int(tileHeightTxt.getText());
 			
+			var extName:String = "." + JUtil.getExtension(mapFile.nativePath);
+			var targetFile:File = new File(JsionEditor.getBigMapPicPath(extName));
+			if(targetFile.exists) targetFile.deleteFile();
+			
+			copyFile(mapFile.nativePath, targetFile.nativePath);
+			
 			if(mapCutAtOnce.isSelected())
 			{
 				var isPng:Boolean = codeType_PNG.isSelected();
@@ -249,6 +249,8 @@ package editor.forms
 				new MapCut(mapEditor).startCutMapPic(JsionEditor.MAP_PIC_FILE, isPng);
 				JsionEditor.saveMapConfig();
 			}
+			
+			mapEditor.fileNewCallabck();
 			
 			super.onSubmit(e);
 		}

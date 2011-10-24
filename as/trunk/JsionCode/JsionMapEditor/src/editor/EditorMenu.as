@@ -9,7 +9,6 @@ package editor
 	import flash.net.FileFilter;
 	import flash.utils.ByteArray;
 	
-	import jsion.rpg.engine.RPGEngine;
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
 	
@@ -143,8 +142,7 @@ package editor
 			JsionEditor.MAP_NEWED_OPENED = true;
 			
 			
-			RPGEngine.MapAssetRoot = JsionEditor.MAP_OUTPUT_ROOT;
-			mapEditor.showMap(file.nativePath);
+			mapEditor.fileOpenCallback(file.nativePath);
 			//worldMap = new WorldMap(JsionEditor.mapConfig, RPGEngine.CameraRect);
 		}
 	}
