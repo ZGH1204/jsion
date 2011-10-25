@@ -76,8 +76,8 @@ package jsion.rpg.engine.games
 				yCount++;
 			}
 			
-			var maxTileX:int = tilex + xCount;
-			var maxTileY:int = tiley + yCount;
+			var maxTileX:int = Math.min(tilex + xCount, m_map.maxTileX);
+			var maxTileY:int = Math.min(tiley + yCount, m_map.maxTileY);
 			
 			for(var y:int = tiley; y < maxTileY; y++)
 			{

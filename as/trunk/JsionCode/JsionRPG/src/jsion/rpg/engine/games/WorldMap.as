@@ -27,6 +27,10 @@ package jsion.rpg.engine.games
 		
 		public var tileHeight:int;
 		
+		public var wayTileWidth:int;
+		
+		public var wayTileHeight:int;
+		
 		protected var m_mapRoot:String;
 		
 		protected var m_mapAssetRoot:String;
@@ -53,9 +57,17 @@ package jsion.rpg.engine.games
 		
 		protected var m_areaTileY:int;
 		
+		protected var m_wayAreaTileX:int;
+		
+		protected var m_wayAreaTileY:int;
+		
 		protected var m_nowTileX:int = -1;
 		
 		protected var m_nowTileY:int = -1;
+		
+		protected var m_nowAreaTileX:int = -1;
+		
+		protected var m_nowAreaTileY:int = -1;
 		
 		
 		
@@ -71,7 +83,7 @@ package jsion.rpg.engine.games
 		
 		
 		
-		protected var m_center:Point = new Point(550);
+		protected var m_center:Point = new Point();
 		
 		protected var m_tempRect:Rectangle = new Rectangle();
 		protected var m_tempPoint:Point = new Point();
@@ -95,6 +107,8 @@ package jsion.rpg.engine.games
 			mapHeight = m_mapConfig.MapHeight;
 			tileWidth = m_mapConfig.TileWidth;
 			tileHeight = m_mapConfig.TileHeight;
+			wayTileWidth = m_mapConfig.WayTileWidth;
+			wayTileHeight = m_mapConfig.WayTileHeight;
 			
 			updateAreaTiles();
 			
@@ -115,6 +129,12 @@ package jsion.rpg.engine.games
 			
 			if(tileHeight <= 0) m_areaTileY = 1;
 			else m_areaTileY = Math.ceil(m_cameraHeight / tileHeight);
+			
+			if(wayTileWidth <= 0) m_wayAreaTileX = 1;
+			else m_wayAreaTileX = Math.ceil(m_cameraWidth / wayTileWidth);
+			
+			if(wayTileHeight <= 0) m_wayAreaTileY = 1;
+			else m_wayAreaTileY = Math.ceil(m_cameraHeight / wayTileHeight);
 		}
 		
 		protected function buildBuffer():void
@@ -175,6 +195,9 @@ package jsion.rpg.engine.games
 			m_nowTileX = originTileX;
 			m_nowTileY = originTileY;
 			
+			m_nowAreaTileX = originWayTileX;
+			m_nowAreaTileY = originWayTileY;
+			
 			m_buffer.lock();
 			m_tileAdapter.fill(m_buffer);
 			m_buffer.unlock();
@@ -192,6 +215,32 @@ package jsion.rpg.engine.games
 		{
 			m_tempPoint.x = x - originX;
 			m_tempPoint.y = y - originY;
+			
+			return m_tempPoint;
+		}
+		
+		public function tileToWorld(x:int, y:int):Point
+		{
+			m_tempPoint.x = x * tileWidth;
+			m_tempPoint.y = y * tileHeight;
+			
+			return m_tempPoint;
+		}
+		
+		public function tileToScreen(x:int, y:int):Point
+		{
+			return worldToScreen(x * tileWidth, y * tileHeight);
+		}
+		
+		public function wayTileToScreen(x:int, y:int):Point
+		{
+			return worldToScreen(x * wayTileWidth, y * wayTileHeight);
+		}
+		
+		public function screenToWayTile(x:Number, y:Number):Point
+		{
+			m_tempPoint.x = int((originX + x) / wayTileWidth);
+			m_tempPoint.y = int((originY + y) / wayTileHeight);
 			
 			return m_tempPoint;
 		}
@@ -263,6 +312,28 @@ package jsion.rpg.engine.games
 			return m_tempRect;
 		}
 		
+		public function get maxWayTileX():int
+		{
+			if(wayTileWidth <= 0) return 1;
+			
+			var max_x:int = int(mapWidth / wayTileWidth);
+			
+			if((mapWidth % wayTileWidth) != 0) max_x++;
+			
+			return max_x;
+		}
+		
+		public function get maxWayTileY():int
+		{
+			if(wayTileHeight <= 0) return 1;
+			
+			var max_y:int = int(mapHeight / wayTileHeight);
+			
+			if((mapHeight % wayTileHeight) != 0) max_y++;
+			
+			return max_y;
+		}
+		
 		public function get maxTileX():int
 		{
 			if(tileWidth <= 0) return 1;
@@ -305,6 +376,16 @@ package jsion.rpg.engine.games
 			return screen_y;
 		}
 		
+		public function get originWayTileX():int
+		{
+			return int(originX / wayTileWidth);
+		}
+		
+		public function get originWayTileY():int
+		{
+			return int(originY / wayTileHeight);
+		}
+		
 		public function get originTileX():int
 		{
 			return int(originX / tileWidth);
@@ -317,6 +398,12 @@ package jsion.rpg.engine.games
 		
 		public function get center():Point
 		{
+			m_center.x = Math.min(m_center.x, mapWidth - m_cameraWidth / 2);
+			m_center.x = Math.max(m_center.x, m_cameraWidth / 2);
+			
+			m_center.y = Math.min(m_center.y, mapHeight - m_cameraHeight / 2);
+			m_center.y = Math.max(m_center.y, m_cameraHeight / 2);
+			
 			return m_center;
 		}
 		
@@ -324,6 +411,16 @@ package jsion.rpg.engine.games
 		{
 			m_center = value;
 			needRepaintMap = true;
+		}
+		
+		public function get nowAreaTileX():int
+		{
+			return m_nowAreaTileX;
+		}
+		
+		public function get nowAreaTileY():int
+		{
+			return m_nowAreaTileY;
 		}
 		
 		public function get nowTileX():int
@@ -334,6 +431,16 @@ package jsion.rpg.engine.games
 		public function get nowTileY():int
 		{
 			return m_nowTileY;
+		}
+		
+		public function get wayAreaTileX():int
+		{
+			return m_wayAreaTileX;
+		}
+		
+		public function get wayAreaTileY():int
+		{
+			return m_wayAreaTileY;
 		}
 		
 		public function get areaTileX():int

@@ -9,6 +9,7 @@ package editor.forms
 	import flash.net.FileFilter;
 	import flash.utils.ByteArray;
 	
+	import jsion.utils.RandomUtil;
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
 	
@@ -97,6 +98,35 @@ package editor.forms
 			
 			JsionEditor.MAP_NEWED_OPENED = true;
 			
+			JsionEditor.mapWayConfig = [];
+			
+			var xWayCount:int = JsionEditor.mapConfig.MapWidth / JsionEditor.mapConfig.WayTileWidth;
+			if((JsionEditor.mapConfig.MapWidth % JsionEditor.mapConfig.WayTileWidth) != 0) xWayCount++;
+			
+			var yWayCount:int = JsionEditor.mapConfig.MapHeight / JsionEditor.mapConfig.WayTileHeight;
+			if((JsionEditor.mapConfig.MapHeight % JsionEditor.mapConfig.WayTileHeight) != 0) yWayCount++;
+			
+			JsionEditor.mapWayConfig.length = yWayCount;
+			
+			var tmp:int;
+			
+			for(var j:int = 0; j < yWayCount; j++)
+			{
+				JsionEditor.mapWayConfig[j] = [];
+				JsionEditor.mapWayConfig[j].length = xWayCount;
+				for(var i:int = 0; i < xWayCount; i++)
+				{
+					tmp = RandomUtil.randomRange(0, 100);
+					if(tmp > 60)
+					{
+						JsionEditor.mapWayConfig[j][i] = 1;
+					}
+					else
+					{
+						JsionEditor.mapWayConfig[j][i] = 0;
+					}
+				}
+			}
 			
 			mapEditor.fileOpenCallback(file.nativePath);
 			

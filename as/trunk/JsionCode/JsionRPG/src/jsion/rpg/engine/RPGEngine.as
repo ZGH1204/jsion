@@ -35,12 +35,16 @@ package jsion.rpg.engine
 		public function RPGEngine(w:int, h:int, configPath:String)
 		{
 			super();
+			
 			m_w = w;
 			m_h = h;
 			
 			m_starting = false;
 			
 			new XmlLoader(configPath).loadAsync(configLoadCallback);
+			
+			m_mapBmp = new Bitmap();
+			addChild(m_mapBmp);
 		}
 		
 		private function configLoadCallback(loader:XmlLoader):void
@@ -64,8 +68,15 @@ package jsion.rpg.engine
 			
 			m_emitter = new BaseEmitter(m_game);
 			
-			m_mapBmp = new Bitmap(m_game.buffer);
-			addChild(m_mapBmp);
+			m_mapBmp.bitmapData = m_game.buffer;
+			
+			initialize();
+			
+			play();
+		}
+		
+		protected function initialize():void
+		{
 		}
 		
 		public static function getMapsRoot():String
@@ -101,6 +112,11 @@ package jsion.rpg.engine
 		}
 		
 		private function __enterFrameHandler(e:Event):void
+		{
+			onEnterFrameHandler();
+		}
+		
+		protected function onEnterFrameHandler():void
 		{
 			if(m_emitter) m_emitter.emitte();
 		}

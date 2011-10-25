@@ -103,6 +103,19 @@ package editor
 			}
 		}
 		
+		public function updateDisplayRect($x:int, $y:int):void
+		{
+			if(m_bmd == null) return;
+			
+			var scale:Number = m_bmd.width / JsionEditor.mapConfig.MapWidth;
+			
+			var rltX:Number = $x * scale;
+			var rltY:Number = $y * scale;
+			
+			m_displayArea.x = rltX - m_displayArea.width / 2;
+			m_displayArea.y = rltY - m_displayArea.height / 2;
+		}
+		
 		public function redrawDisplayArea():void
 		{
 			if(m_bmd == null) return;
