@@ -25,6 +25,8 @@ package editor
 		
 		private var showFindPathGridBtn:JToggleButton;
 		
+		private var editPathGridBtn:JToggleButton;
+		
 		public function EditorTool(owner:JsionMapEditor)
 		{
 			mapEditor = owner;
@@ -51,7 +53,7 @@ package editor
 			showFindPathGridBtn.addActionListener(onFindPathGrid);
 			showFindPathGridBtn.setToolTipText(FindPathGrid);
 			
-			var editPathGridBtn:JToggleButton = new JToggleButton(null, new LoadIcon("EditorUI/DrawPathGrid.png", 18, 14));
+			editPathGridBtn = new JToggleButton(null, new LoadIcon("EditorUI/DrawPathGrid.png", 18, 14));
 			editPathGridBtn.addActionListener(onEditPathGrid);
 			editPathGridBtn.setToolTipText(EditPathGrid);
 			
@@ -90,6 +92,8 @@ package editor
 			var btn:JToggleButton = e.currentTarget as JToggleButton;
 			
 			mapEditor.gameMap.assistant.setWayTileGridVisible(btn.isSelected());
+			
+			if(btn.isSelected() == false && editPathGridBtn.isSelected()) editPathGridBtn.doClick();
 		}
 		
 		private function onEditPathGrid(e:AWEvent):void

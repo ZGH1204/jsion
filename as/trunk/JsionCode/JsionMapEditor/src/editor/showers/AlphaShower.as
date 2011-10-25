@@ -74,17 +74,59 @@ package editor.showers
 			}
 		}
 		
-		public function setTileCross(x:int, y:int):void
+		public function setTilesCross(x:int, y:int, $x:int, $y:int):void
 		{
+			var lastStatus:int = -1;
+			
+			var statusAllSame:Boolean = true;
+			
+			if($x < x)
+			{
+				$x = x - $x;
+				x = x - $x;
+				$x = x + $x;
+			}
+			
+			if($y < y)
+			{
+				$y = y - $y;
+				y = y - $y;
+				$y = y + $y;
+			}
+			
+			var i:int, j:int;
+			
 			var list:Array = JsionEditor.mapWayConfig;
 			
-			if(list[y][x] == 1)
+			for(j = y; j <= $y; j++)
 			{
-				list[y][x] = 0;
+				for(i = x; i <= $x; i++)
+				{
+					if(lastStatus == -1)
+					{
+						lastStatus = int(list[j][i]);
+					}
+					else if(lastStatus != int(list[j][i]))
+					{
+						statusAllSame = false;
+						break;
+					}
+				}
 			}
-			else
+			
+			var rltStatus:int = 1;
+			
+			if(statusAllSame)
 			{
-				list[y][x] = 1;
+				if(rltStatus == lastStatus) rltStatus = 0;
+			}
+			
+			for(j = y; j <= $y; j++)
+			{
+				for(i = x; i <= $x; i++)
+				{
+					list[j][i] = rltStatus;
+				}
 			}
 			
 			update();

@@ -7,6 +7,7 @@ package
 	import flash.utils.ByteArray;
 	
 	import jsion.rpg.engine.datas.MapConfig;
+	import jsion.rpg.engine.games.WorldMap;
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
 
@@ -86,6 +87,39 @@ package
 			return JsionEditor.MAP_OUTPUT_ROOT + "\\" + JsionEditor.mapConfig.MapID + "\\" + "config.map";
 		}
 		
+		public static function createWayTileGridData():void
+		{
+			JsionEditor.mapWayConfig = [];
+			
+			var xWayCount:int = JsionEditor.mapConfig.MapWidth / JsionEditor.mapConfig.WayTileWidth;
+			if((JsionEditor.mapConfig.MapWidth % JsionEditor.mapConfig.WayTileWidth) != 0) xWayCount++;
+			
+			var yWayCount:int = JsionEditor.mapConfig.MapHeight / JsionEditor.mapConfig.WayTileHeight;
+			if((JsionEditor.mapConfig.MapHeight % JsionEditor.mapConfig.WayTileHeight) != 0) yWayCount++;
+			
+			JsionEditor.mapWayConfig.length = yWayCount;
+			
+			for(var j:int = 0; j < yWayCount; j++)
+			{
+				JsionEditor.mapWayConfig[j] = [];
+				JsionEditor.mapWayConfig[j].length = xWayCount;
+				for(var i:int = 0; i < xWayCount; i++)
+				{
+					JsionEditor.mapWayConfig[j][i] = 0;
+				}
+			}
+		}
+		
+		public static function getWayTileGridDataStr():String
+		{
+			return WorldMap.getWayTileGridDataStr(mapWayConfig);
+		}
+		
+		public static function parseWayTileGridData(str:String):Array
+		{
+			return WorldMap.parseWayTileGridData(str);
+		}
+		
 		public static function saveMapConfig(mapEditor:JsionMapEditor):void
 		{
 			if(MAP_NEWED_OPENED == false)
@@ -100,6 +134,13 @@ package
 			JsionEditor.mapConfig.TileExtension = JsionEditor.MAP_TILES_EXTENSION;
 			
 			var xml:XML = XmlUtil.encodeWithProperty("Map", mapConfig);
+			
+			//TODO:确定解析格式并保存碰撞格子信息
+			var ways:String = getWayTileGridDataStr();
+			
+			var waysXml:XML = new XML("<ways>" + ways + "</ways>");
+			
+			xml.appendChild(waysXml);
 			
 			var file:File = new File(getMapConfigPath());
 			if(file.exists) file.deleteFile();

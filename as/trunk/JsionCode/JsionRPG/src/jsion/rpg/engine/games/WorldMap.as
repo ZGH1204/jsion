@@ -211,10 +211,23 @@ package jsion.rpg.engine.games
 			return m_tempPoint;
 		}
 		
+		public function screenToTile(x:Number, y:Number):Point
+		{
+			return worldToTile(x + originX, y + originY);
+		}
+		
 		public function worldToScreen(x:Number, y:Number):Point
 		{
 			m_tempPoint.x = x - originX;
 			m_tempPoint.y = y - originY;
+			
+			return m_tempPoint;
+		}
+		
+		public function worldToTile(x:Number, y:Number):Point
+		{
+			m_tempPoint.x = x / tileWidth;
+			m_tempPoint.y = y / tileHeight;
 			
 			return m_tempPoint;
 		}
@@ -474,6 +487,34 @@ package jsion.rpg.engine.games
 		public function set tileCallback(value:Function):void
 		{
 			m_tileCallback = value;
+		}
+		
+		public static function getWayTileGridDataStr(wayTilesConfig:Array):String
+		{
+			var list:Array = [];
+			list.length = wayTilesConfig.length;
+			for(var i:int = 0; i < wayTilesConfig.length; i++)
+			{
+				list[i] = wayTilesConfig[i].join(",");
+			}
+			
+			return list.join("|");
+		}
+		
+		public static function parseWayTileGridData(str:String):Array
+		{
+			var rlt:Array = [];
+			
+			var yList:Array = str.split("|");
+			
+			rlt.length = yList.length;
+			
+			for(var i:int = 0; i < yList.length; i++)
+			{
+				rlt[i] = yList[i].split(",");
+			}
+			
+			return rlt;
 		}
 		
 		public function dispose():void

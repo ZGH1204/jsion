@@ -1,7 +1,9 @@
 package editor.showers
 {
+	import editor.CoordView;
 	import editor.SmallMap;
 	
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
 	import jsion.rpg.engine.RPGEngine;
@@ -12,6 +14,8 @@ package editor.showers
 		
 		protected var m_smallMapShower:SmallMap;
 		
+		protected var m_coordView:CoordView;
+		
 		public function MapShower(w:int, h:int, configPath:String)
 		{
 			super(w, h, configPath);
@@ -21,11 +25,32 @@ package editor.showers
 		{
 			m_editorContainer = new EditorAssistant(this);
 			addChild(m_editorContainer);
+			
+			addEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveHandler);
+		}
+		
+		private function __mouseMoveHandler(e:MouseEvent):void
+		{
+			if(m_coordView)
+			{
+				var p:Point = game.worldMap.screenToWorld(e.localX, e.localY);
+				m_coordView.setWorldPos(p.x, p.y);
+				
+				p = game.worldMap.screenToTile(e.localX, e.localY);
+				m_coordView.setTilePos(p.x, p.y);
+				
+				m_coordView.setScreenPos(e.localX, e.localY);
+			}
 		}
 		
 		public function setSmallMapShower(shower:SmallMap):void
 		{
 			m_smallMapShower = shower;
+		}
+		
+		public function setCoordView(view:CoordView):void
+		{
+			m_coordView = view;
 		}
 		
 		override public function setCameraWH(w:int, h:int):void
