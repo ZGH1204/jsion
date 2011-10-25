@@ -41,6 +41,9 @@ package editor.forms
 		private var tileWidthTxt:JTextField;
 		private var tileHeightTxt:JTextField;
 		
+		private var wayTileWidthTxt:JTextField;
+		private var wayTileHeightTxt:JTextField;
+		
 		private var outputDirTxt:JTextField;
 		private var browserBtn:JButton;
 		
@@ -57,7 +60,7 @@ package editor.forms
 			mytitle = "新建地图";
 			
 			WinWidth = 300;
-			WinHeight = 275;
+			WinHeight = 295;
 			
 			super(owner, true);
 		}
@@ -96,6 +99,14 @@ package editor.forms
 			pane = new JPanel(new SoftBoxLayout(SoftBoxLayout.X_AXIS));
 			pane.appendAll(tileWidthTxt, new JLabel("px * "), tileHeightTxt, new JLabel("px"));
 			box.addRow(new JLabel("Tile大小："), pane);
+			
+			wayTileWidthTxt = new JTextField(String(JsionEditor.mapConfig.WayTileWidth), 7);
+			setTextAlignCenter(wayTileWidthTxt);
+			wayTileHeightTxt = new JTextField(String(JsionEditor.mapConfig.WayTileHeight), 7);
+			setTextAlignCenter(wayTileHeightTxt);
+			pane = new JPanel(new SoftBoxLayout(SoftBoxLayout.X_AXIS));
+			pane.appendAll(wayTileWidthTxt, new JLabel("px * "), wayTileHeightTxt, new JLabel("px"));
+			box.addRow(new JLabel("碰撞格子："), pane);
 			
 			browserBtn = new JButton("浏览");
 			browserBtn.addActionListener(__browserClickHandler);
@@ -220,6 +231,8 @@ package editor.forms
 			JsionEditor.mapConfig.SmallMapHeight = int(smallHeightTxt.getText());
 			JsionEditor.mapConfig.TileWidth = int(tileWidthTxt.getText());
 			JsionEditor.mapConfig.TileHeight = int(tileHeightTxt.getText());
+			JsionEditor.mapConfig.WayTileWidth = int(wayTileWidthTxt.getText());
+			JsionEditor.mapConfig.WayTileHeight = int(wayTileHeightTxt.getText());
 			
 			var extName:String = "." + JUtil.getExtension(mapFile.nativePath);
 			var targetFile:File = new File(JsionEditor.getBigMapPicPath(extName));

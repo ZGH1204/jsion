@@ -15,6 +15,7 @@
 			import editor.EditorMenu;
 			import editor.EditorTool;
 			import editor.SmallMap;
+			import editor.showers.MapShower;
 			
 			import jsion.rpg.engine.RPGEngine;
 			import jsion.utils.DisposeUtil;
@@ -78,7 +79,7 @@
 			/**
 			 * 世界地图
 			 */ 
-			public var gameMap:RPGEngine;
+			public var gameMap:MapShower;
 			
 			
 			/**
@@ -125,11 +126,11 @@
 				
 				leftContainer = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
 				leftContainer.setPreferredWidth(5);
-				pane.append(leftContainer, BorderLayout.WEST);
+				pane.append(leftContainer, BorderLayout.EAST);
 				
 				rightContainer = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
 				rightContainer.setPreferredWidth(5);
-				pane.append(rightContainer, BorderLayout.EAST);
+				pane.append(rightContainer, BorderLayout.WEST);
 				
 				bottomContainer = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
 				bottomContainer.setPreferredHeight(5);
@@ -159,6 +160,7 @@
 //				rightContainer.setOpaque(true);
 //				bottomContainer.setOpaque(true);
 				
+				
 				mainWindow.setSizeWH(width, height);
 				mainWindow.show();
 			}
@@ -183,11 +185,12 @@
 			{
 				DisposeUtil.free(gameMap);
 				RPGEngine.setMapsRoot(JsionEditor.MAP_OUTPUT_ROOT);
-				gameMap = new RPGEngine(mainContainer.width, mainContainer.height, configPath);
-				gameMap.play();
+				gameMap = new MapShower(mainContainer.width, mainContainer.height, configPath);
 				mainContainer.addChild(gameMap);
 				
 				setLeftView();
+				
+				gameMap.setSmallMapShower(smallMap);
 			}
 			
 			public function fileNewCallabck():void

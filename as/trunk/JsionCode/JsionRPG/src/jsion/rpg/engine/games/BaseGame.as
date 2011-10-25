@@ -113,6 +113,13 @@ package jsion.rpg.engine.games
 			
 			buildBuffer();
 			
+			if(temp)
+			{
+				m_buffer.lock();
+				m_buffer.copyPixels(temp, temp.rect, Constant.ZeroPoint);
+				m_buffer.unlock();
+			}
+			
 			m_worldMap.setCameraWH(w, h);
 			
 			temp.dispose();

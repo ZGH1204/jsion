@@ -16,6 +16,10 @@ package jsion.rpg.engine.datas
 		
 		public var TileHeight:int = 200;
 		
+		public var WayTileWidth:int = 50;
+		
+		public var WayTileHeight:int = 50;
+		
 		public var SmallMapFile:String;
 		
 		public var MapAssetRoot:String;

@@ -17,9 +17,13 @@ package editor
 		private static const OpenMap:String = "打开";
 		private static const SaveMap:String = "保存";
 		
-		private static const FindPathGrid:String = "显示/隐藏寻路格子";
+		private static const TileGrid:String = "显示/隐藏网格";
+		private static const FindPathGrid:String = "显示/隐藏碰撞格子";
+		private static const EditPathGrid:String = "编辑碰撞格子";
 		
 		private var mapEditor:JsionMapEditor;
+		
+		private var showFindPathGridBtn:JToggleButton;
 		
 		public function EditorTool(owner:JsionMapEditor)
 		{
@@ -39,15 +43,24 @@ package editor
 			saveMapBtn.addActionListener(onSaveMap);
 			saveMapBtn.setToolTipText(SaveMap);
 			
-			var showFindPathGridBtn:JToggleButton = new JToggleButton(null, new LoadIcon("EditorUI/ShowFindPathGrid.png", 18, 14));
+			var showTileGridBtn:JToggleButton = new JToggleButton(null, new LoadIcon("EditorUI/ShowTileGrid.png", 18, 14));
+			showTileGridBtn.addActionListener(onTileGrid);
+			showTileGridBtn.setToolTipText(TileGrid);
+			
+			showFindPathGridBtn = new JToggleButton(null, new LoadIcon("EditorUI/ShowFindPathGrid.png", 18, 14));
+			showFindPathGridBtn.addActionListener(onFindPathGrid);
 			showFindPathGridBtn.setToolTipText(FindPathGrid);
 			
-			
+			var editPathGridBtn:JToggleButton = new JToggleButton(null, new LoadIcon("EditorUI/DrawPathGrid.png", 18, 14));
+			editPathGridBtn.addActionListener(onEditPathGrid);
+			editPathGridBtn.setToolTipText(EditPathGrid);
 			
 			append(newMapBtn);
 			append(openMapBtn);
 			append(saveMapBtn);
+			append(showTileGridBtn);
 			append(showFindPathGridBtn);
+			append(editPathGridBtn);
 		}
 		
 		private function onNewMap(e:AWEvent):void
@@ -63,6 +76,29 @@ package editor
 		private function onSaveMap(e:AWEvent):void
 		{
 			JsionEditor.saveMapConfig(mapEditor);
+		}
+		
+		private function onTileGrid(e:AWEvent):void
+		{
+			var btn:JToggleButton = e.currentTarget as JToggleButton;
+			
+			mapEditor.gameMap.assistant.setTileGridVisible(btn.isSelected());
+		}
+		
+		private function onFindPathGrid(e:AWEvent):void
+		{
+			var btn:JToggleButton = e.currentTarget as JToggleButton;
+			
+			mapEditor.gameMap.assistant.setWayTileGridVisible(btn.isSelected());
+		}
+		
+		private function onEditPathGrid(e:AWEvent):void
+		{
+			var btn:JToggleButton = e.currentTarget as JToggleButton;
+			
+			mapEditor.gameMap.assistant.setWayTileGridEditable(btn.isSelected());
+			
+			if(btn.isSelected() && showFindPathGridBtn.isSelected() == false) showFindPathGridBtn.doClick();
 		}
 	}
 }

@@ -14,6 +14,7 @@ package
 	{
 		public static var mapConfig:MapConfig = new MapConfig();
 		
+		public static var mapWayConfig:Array = [];
 		
 		public static var MAP_NEWED_OPENED:Boolean = false;
 		
