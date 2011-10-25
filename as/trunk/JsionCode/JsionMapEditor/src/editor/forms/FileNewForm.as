@@ -242,6 +242,12 @@ package editor.forms
 			
 			JsionEditor.MAP_PIC_FILE = targetFile.nativePath;
 			
+			
+			
+			JsionEditor.createWayTileGridData();
+			
+			
+			
 			if(mapCutAtOnce.isSelected())
 			{
 				var isPng:Boolean = codeType_PNG.isSelected();

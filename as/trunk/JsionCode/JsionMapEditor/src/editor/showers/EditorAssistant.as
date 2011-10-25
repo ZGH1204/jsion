@@ -21,6 +21,8 @@ package editor.showers
 		
 		protected var wayTileEditing:Boolean;
 		
+		protected var wayTileSprite:Sprite;
+		
 		
 		protected var draging:Boolean;
 		protected var dragHelper:Sprite;
@@ -57,6 +59,11 @@ package editor.showers
 			wayTileShower = new AlphaShower(shower);
 			addChild(wayTileShower.tileGrid);
 			
+			wayTileSprite = new Sprite();
+			wayTileSprite.mouseEnabled = false;
+			wayTileSprite.mouseChildren = false;
+			addChild(wayTileSprite);
+			
 			updateRect();
 			updateTileGrid();
 		}
@@ -91,11 +98,11 @@ package editor.showers
 		{
 			if(value && wayTileEditing == false)
 			{
-				addEventListener(MouseEvent.CLICK, __mouseClickHandler);
+				addEventListener(MouseEvent.MOUSE_DOWN, __mouseDownEditHandler);
 			}
 			else
 			{
-				removeEventListener(MouseEvent.CLICK, __mouseClickHandler);
+				removeEventListener(MouseEvent.MOUSE_DOWN, __mouseDownEditHandler);
 			}
 			
 			wayTileEditing = value;
@@ -116,13 +123,62 @@ package editor.showers
 			addEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
 		}
 		
-		private function __mouseClickHandler(e:MouseEvent):void
+		private var mouseDownTileX:int = -1;
+		private var mouseDownTileY:int = -1;
+		
+		private var mouseDownStartX:Number = 0;
+		private var mouseDownStartY:Number = 0;
+		
+		private function __mouseDownEditHandler(e:MouseEvent):void
 		{
 			if(wayTileEditing == false) return;
 			
+			mouseDownStartX = e.localX;
+			mouseDownStartY = e.localY;
+			
 			var point:Point = map.screenToWayTile(e.localX, e.localY);
 			
-			wayTileShower.setTileCross(point.x, point.y);
+			mouseDownTileX = point.x;
+			mouseDownTileY = point.y;
+			
+			addEventListener(MouseEvent.MOUSE_UP, __mouseUpEditHandler);
+			addEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveEditHandler);
+			addEventListener(MouseEvent.MOUSE_OUT, __mouseOutEditHandler);
+		}
+		
+		private function __mouseUpEditHandler(e:MouseEvent):void
+		{
+			if(wayTileEditing == false) return;
+			
+			wayTileSprite.graphics.clear();
+			
+			removeEventListener(MouseEvent.MOUSE_UP, __mouseUpEditHandler);
+			removeEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveEditHandler);
+			removeEventListener(MouseEvent.MOUSE_OUT, __mouseOutEditHandler);
+			
+			var point:Point = map.screenToWayTile(e.localX, e.localY);
+			
+			wayTileShower.setTilesCross(mouseDownTileX, mouseDownTileY, point.x, point.y);
+			
+			mouseDownTileX = mouseDownTileY = -1;
+		}
+		
+		private function __mouseMoveEditHandler(e:MouseEvent):void
+		{
+			wayTileSprite.graphics.clear();
+			wayTileSprite.graphics.lineStyle(1, 0xCCCCCC);
+			wayTileSprite.graphics.beginFill(0x336699, 0.5);
+			wayTileSprite.graphics.drawRect(mouseDownStartX, mouseDownStartY, e.localX - mouseDownStartX, e.localY - mouseDownStartY);
+			wayTileSprite.graphics.endFill();
+		}
+		
+		private function __mouseOutEditHandler(e:MouseEvent):void
+		{
+			wayTileSprite.graphics.clear();
+			
+			removeEventListener(MouseEvent.MOUSE_UP, __mouseUpEditHandler);
+			removeEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveEditHandler);
+			removeEventListener(MouseEvent.MOUSE_OUT, __mouseOutEditHandler);
 		}
 		
 		private function __mouseDownHandler(e:MouseEvent):void
