@@ -41,9 +41,11 @@ package editor.rightviews
 			append(npcsTab, "NPC");
 		}
 		
-		public function updateHeight(c:JPanel, subHeight:int):void
-		{
-			buildingsTab.setHeight(c.height - subHeight);
-		}
+//		public function updateHeight(c:JPanel, subHeight:int):void
+//		{
+//			surfaceTab.setHeight(c.height - subHeight);
+//			buildingsTab.setHeight(c.height - subHeight);
+//			npcsTab.setHeight(c.height - subHeight);
+//		}
 	}
 }
