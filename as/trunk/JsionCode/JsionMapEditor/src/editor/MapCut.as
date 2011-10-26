@@ -246,8 +246,11 @@ package editor
 			_codetype_png.setEnabled(false);
 			openBtn.setEnabled(false);
 			
-			var file:File = new File(JsionEditor.getMapAssetRoot());
+			var file:File = new File(JsionEditor.getTileRoot());
 			if(file.exists) file.deleteDirectory(true);
+			
+			file = new File(JsionEditor.getSmallMapPicPath());
+			if(file.exists) file.deleteFile();
 			
 			makeSmallMap();
 			
