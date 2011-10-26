@@ -2,13 +2,13 @@ package editor.showers
 {
 	import flash.display.Shape;
 	
-	import jsion.rpg.engine.games.WorldMap;
+	import jsion.rpg.engine.games.BaseMap;
 
 	public class BaseShower
 	{
 		protected var shower:MapShower;
 		
-		protected var map:WorldMap;
+		protected var map:BaseMap;
 		
 		public function BaseShower(shower:MapShower)
 		{

@@ -363,7 +363,7 @@ package editor
 					(e.target as Timer).removeEventListener(TimerEvent.TIMER,makeFile);
 					mapEditor.msg("地图切割完成!", 0);
 					JsionEditor.saveMapConfig(null);
-					mapEditor.showMap(JsionEditor.getMapConfigPath());
+					mapEditor.showMap(JsionEditor.getMapConfigRelativePath());
 					onSubmit(null);
 				}
 			}

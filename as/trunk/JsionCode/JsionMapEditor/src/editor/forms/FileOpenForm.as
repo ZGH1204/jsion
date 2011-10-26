@@ -106,7 +106,7 @@ package editor.forms
 			
 			
 			
-			mapEditor.fileOpenCallback(file.nativePath);
+			mapEditor.fileOpenCallback();
 			
 			super.onSubmit(e);
 		}

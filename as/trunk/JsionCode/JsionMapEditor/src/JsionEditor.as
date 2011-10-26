@@ -1,13 +1,12 @@
 package
 {
-	import flash.display.Stage;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.utils.ByteArray;
 	
 	import jsion.rpg.engine.datas.MapConfig;
-	import jsion.rpg.engine.games.WorldMap;
+	import jsion.rpg.engine.games.BaseMap;
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
 
@@ -109,6 +108,11 @@ package
 			return file.resolvePath(SMALLMAP_FILE_NAME).nativePath;
 		}
 		
+		public static function getMapConfigRelativePath():String
+		{
+			return JsionEditor.mapConfig.MapID + "\\" + "config.map";
+		}
+		
 		public static function getMapConfigPath():String
 		{
 			return JsionEditor.MAP_OUTPUT_ROOT + "\\" + JsionEditor.mapConfig.MapID + "\\" + "config.map";
@@ -139,12 +143,12 @@ package
 		
 		public static function getWayTileGridDataStr():String
 		{
-			return WorldMap.getWayTileGridDataStr(mapWayConfig);
+			return BaseMap.getWayTileGridDataStr(mapWayConfig);
 		}
 		
 		public static function parseWayTileGridData(str:String):Array
 		{
-			return WorldMap.parseWayTileGridData(str);
+			return BaseMap.parseWayTileGridData(str);
 		}
 		
 		public static function saveMapConfig(mapEditor:JsionMapEditor):void

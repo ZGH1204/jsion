@@ -91,7 +91,7 @@ package jsion.rpg.engine.games
 					{
 						var bmd:BitmapData = m_pool.get(key) as BitmapData;
 						
-						drawTile(buffer, bmd, x, y, startx, starty);
+						m_map.drawTile(buffer, bmd, x, y);
 					}
 					else
 					{
@@ -107,17 +107,6 @@ package jsion.rpg.engine.games
 					}
 				}
 			}
-		}
-		
-		public function drawTile(buffer:BitmapData, tileBmd:BitmapData, x:int, y:int, startx:int, starty:int):void
-		{
-			m_destPoint.x = x * m_map.tileWidth;
-			m_destPoint.x = m_destPoint.x - startx;
-			
-			m_destPoint.y = y * m_map.tileHeight;
-			m_destPoint.y = m_destPoint.y - starty;
-			
-			buffer.copyPixels(tileBmd, tileBmd.rect, m_destPoint);
 		}
 		
 		private function tileLoadCallback(loader:ImageLoader):void
@@ -145,7 +134,7 @@ package jsion.rpg.engine.games
 			
 			DisposeUtil.free(loader);
 			
-			drawTile(m_map.buffer, bmd, x, y, m_map.originX, m_map.originY);
+			m_map.drawTile(m_map.buffer, bmd, x, y);
 			
 			if(m_map.tileCallback != null) m_map.tileCallback(x, y, bmd);
 		}
