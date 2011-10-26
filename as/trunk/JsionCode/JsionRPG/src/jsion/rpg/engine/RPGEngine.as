@@ -1,27 +1,34 @@
 package jsion.rpg.engine
 {
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	import jsion.core.loaders.ImageLoader;
 	import jsion.core.loaders.XmlLoader;
 	import jsion.rpg.engine.datas.MapConfig;
 	import jsion.rpg.engine.emitters.BaseEmitter;
+	import jsion.rpg.engine.games.BaseGame;
+	import jsion.rpg.engine.games.BaseMap;
 	import jsion.rpg.engine.games.RPGGame;
-	import jsion.rpg.engine.games.WorldMap;
 	import jsion.utils.DisposeUtil;
+	import jsion.utils.PathUtil;
 	import jsion.utils.XmlUtil;
 	
 	public class RPGEngine extends Sprite
 	{
+		public static var MapsList:HashMap = new HashMap();
+		
 		protected var m_w:int;
 		
 		protected var m_h:int;
 		
+		protected var m_autoPlay:Boolean;
 		
 		protected var m_mapConfig:MapConfig;
 		
-		protected var m_game:RPGGame;
+		protected var m_game:BaseGame;
 		
 		protected var m_emitter:BaseEmitter;
 		
@@ -31,15 +38,27 @@ package jsion.rpg.engine
 		
 		protected var m_mapBmp:Bitmap;
 		
+		protected var m_ready:Boolean;
 		
-		public function RPGEngine(w:int, h:int, configPath:String)
+		
+		public function RPGEngine(w:int, h:int, mapID:String, autoPlay:Boolean = true)
 		{
 			super();
 			
 			m_w = w;
 			m_h = h;
 			
+			m_autoPlay = autoPlay;
+			
 			m_starting = false;
+			
+			if(MapsList.containsKey(mapID) == false)
+			{
+				throw new Error("RPGEngine.MapsList地图不存在,请查检地图ID是否正确或者为当前地图ID向RPGEngine.MapsList中添加地图配置文件所在路径.");
+				return;
+			}
+			
+			var configPath:String = PathUtil.combinPath(BaseMap.MapsRoot, MapsList.get(mapID));
 			
 			new XmlLoader(configPath).loadAsync(configLoadCallback);
 			
@@ -64,34 +83,61 @@ package jsion.rpg.engine
 			
 			DisposeUtil.free(loader);
 			
-			m_game = new RPGGame(m_w, m_h, m_mapConfig);
+			var mapAssetRoot:String = PathUtil.combinPath(BaseMap.MapsRoot, m_mapConfig.MapAssetRoot, "/")
+			
+			new ImageLoader(m_mapConfig.SmallMapFile, {root: mapAssetRoot}).loadAsync(loadSmallMapCallback);
+		}
+		
+		protected function loadSmallMapCallback(loader:ImageLoader):void
+		{
+			if(loader.isComplete == false)
+			{
+				throw new Error("缩略地图加载失败");
+				DisposeUtil.free(loader);
+				return;
+			}
+			
+			var bmd:BitmapData = Bitmap(loader.content).bitmapData.clone();
+			
+			m_game = new RPGGame(m_w, m_h, m_mapConfig, bmd);
 			
 			m_emitter = new BaseEmitter(m_game);
 			
 			m_mapBmp.bitmapData = m_game.buffer;
 			
+			DisposeUtil.free(loader);
+			
 			initialize();
 			
-			play();
+			if(m_autoPlay) play();
+			
+			dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
 		protected function initialize():void
 		{
+			m_ready = true;
 		}
 		
 		public static function getMapsRoot():String
 		{
-			return WorldMap.MapsRoot;
+			return BaseMap.MapsRoot;
 		}
 		
 		public static function setMapsRoot(path:String):void
 		{
-			WorldMap.MapsRoot = path;
+			BaseMap.MapsRoot = path;
 		}
 		
 		public function play():Sprite
 		{
 			if(m_starting) return this;
+			
+			if(m_ready == false)
+			{
+				throw new Error("未完成准备");
+				return this;
+			}
 			
 			m_starting = true;
 			
@@ -149,7 +195,7 @@ package jsion.rpg.engine
 			return m_h;
 		}
 		
-		public function get game():RPGGame
+		public function get game():BaseGame
 		{
 			return m_game;
 		}

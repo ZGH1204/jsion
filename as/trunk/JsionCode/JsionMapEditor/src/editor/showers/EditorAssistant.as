@@ -7,13 +7,14 @@ package editor.showers
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import jsion.rpg.engine.games.BaseMap;
 	import jsion.rpg.engine.games.WorldMap;
 	
 	public class EditorAssistant extends Sprite
 	{
 		protected var shower:MapShower;
 		
-		protected var map:WorldMap;
+		protected var map:BaseMap;
 		
 		protected var tileShower:TileShower;
 		

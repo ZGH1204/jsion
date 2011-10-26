@@ -227,11 +227,11 @@
 				AlertFrame.msg(this, text, textColor, t);
 			}
 			
-			public function showMap(configPath:String):void
+			public function showMap(configRelativePath:String):void
 			{
 				DisposeUtil.free(gameMap);
 				RPGEngine.setMapsRoot(JsionEditor.MAP_OUTPUT_ROOT);
-				gameMap = new MapShower(mainContainer.width, mainContainer.height, configPath);
+				gameMap = new MapShower(mainContainer.width, mainContainer.height, configRelativePath);
 				mainContainer.addChild(gameMap);
 				
 				setLeftView();
@@ -247,10 +247,10 @@
 				clearAll();
 			}
 			
-			public function fileOpenCallback(configPath:String):void
+			public function fileOpenCallback():void
 			{
 				clearAll();
-				showMap(configPath);
+				showMap(JsionEditor.getMapConfigRelativePath());
 			}
 			
 			public function clearAll():void

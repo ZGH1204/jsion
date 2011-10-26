@@ -18,7 +18,8 @@ package editor.showers
 		
 		public function MapShower(w:int, h:int, configPath:String)
 		{
-			super(w, h, configPath);
+			RPGEngine.MapsList.put("editor", configPath);
+			super(w, h, "editor");
 		}
 		
 		override protected function initialize():void
@@ -27,6 +28,8 @@ package editor.showers
 			addChild(m_editorContainer);
 			
 			addEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveHandler);
+			
+			super.initialize();
 		}
 		
 		private function __mouseMoveHandler(e:MouseEvent):void
