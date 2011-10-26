@@ -26,6 +26,12 @@ package jsion.rpg.engine.datas
 		
 		public var TileAssetRoot:String;
 		
+		public var SurfaceAssetRoot:String;
+		
+		public var BuildingAssetRoot:String;
+		
+		public var NPCAssetRoot:String;
+		
 		public var TileExtension:String;
 	}
 }

@@ -27,6 +27,12 @@ package
 		
 		public static var MAP_TILES_OUTPUT_FORMAT:String = MAP_OUTPUT_FORMAT + "/tiles";
 		
+		public static var MAP_SURFACES_FORMAT:String = MAP_OUTPUT_FORMAT + "/surfaces";
+		
+		public static var MAP_BUILDINGS_FORMAT:String = MAP_OUTPUT_FORMAT + "/buildings";
+		
+		public static var MAP_NPCS_FORMAT:String = MAP_OUTPUT_FORMAT + "/npcs";
+		
 		public static var MAP_TILES_FILENAME_FORMAT:String = "{1}_{0}{2}";
 		
 		public static var MAP_TILES_EXTENSION:String = "";//
@@ -64,6 +70,27 @@ package
 		public static function getTileRoot():String
 		{
 			var dir:String = StringUtil.format(MAP_TILES_OUTPUT_FORMAT, mapConfig.MapID);
+			dir = new File(MAP_OUTPUT_ROOT).resolvePath(dir).nativePath;
+			return dir;
+		}
+		
+		public static function getSurfacesRoot():String
+		{
+			var dir:String = StringUtil.format(MAP_SURFACES_FORMAT, mapConfig.MapID);
+			dir = new File(MAP_OUTPUT_ROOT).resolvePath(dir).nativePath;
+			return dir;
+		}
+		
+		public static function getBuildingsRoot():String
+		{
+			var dir:String = StringUtil.format(MAP_BUILDINGS_FORMAT, mapConfig.MapID);
+			dir = new File(MAP_OUTPUT_ROOT).resolvePath(dir).nativePath;
+			return dir;
+		}
+		
+		public static function getNPCsRoot():String
+		{
+			var dir:String = StringUtil.format(MAP_NPCS_FORMAT, mapConfig.MapID);
 			dir = new File(MAP_OUTPUT_ROOT).resolvePath(dir).nativePath;
 			return dir;
 		}
@@ -131,6 +158,9 @@ package
 			JsionEditor.mapConfig.MapAssetRoot = StringUtil.format(JsionEditor.MAP_OUTPUT_FORMAT, JsionEditor.mapConfig.MapID);
 			JsionEditor.mapConfig.SmallMapFile = JsionEditor.SMALLMAP_FILE_NAME;
 			JsionEditor.mapConfig.TileAssetRoot = StringUtil.format(JsionEditor.MAP_TILES_OUTPUT_FORMAT, JsionEditor.mapConfig.MapID);
+			JsionEditor.mapConfig.SurfaceAssetRoot = StringUtil.format(JsionEditor.MAP_SURFACES_FORMAT, JsionEditor.mapConfig.MapID);
+			JsionEditor.mapConfig.BuildingAssetRoot = StringUtil.format(JsionEditor.MAP_BUILDINGS_FORMAT, JsionEditor.mapConfig.MapID);
+			JsionEditor.mapConfig.NPCAssetRoot = StringUtil.format(JsionEditor.MAP_NPCS_FORMAT, JsionEditor.mapConfig.MapID);
 			JsionEditor.mapConfig.TileExtension = JsionEditor.MAP_TILES_EXTENSION;
 			
 			var xml:XML = XmlUtil.encodeWithProperty("Map", mapConfig);

@@ -16,7 +16,7 @@ package editor
 	
 	public class SmallMap extends JPanel implements IDispose
 	{
-		public static const Padding:int = 5;
+		public static const Padding:int = 2;
 		
 		protected var m_bmp:Bitmap;
 		protected var m_bmd:BitmapData;
@@ -39,16 +39,13 @@ package editor
 		
 		protected function initialize():void
 		{
-			m_bmp = new Bitmap();
-			
 			m_areaContainer = new Sprite();
 			
-			m_areaContainer.x = m_bmp.x = Padding;
-			m_areaContainer.y = m_bmp.y = 20;
-			
-			addChild(m_bmp);
-			
 			addChild(m_areaContainer);
+			
+			m_bmp = new Bitmap();
+			
+			setBackgroundDecorator(new PreviewBackground(m_bmp, m_areaContainer));
 			
 			m_displayArea = new Sprite();
 			m_displayArea.buttonMode = true;
@@ -56,9 +53,9 @@ package editor
 			
 			loadSmallMap();
 			
-			setPreferredHeight(JsionEditor.mapConfig.MapHeight * (JsionEditor.mapConfig.SmallMapWidth / JsionEditor.mapConfig.MapWidth) + Padding + m_bmp.y);
-			
 			setBorder(new TitledBorder(null, '小地图', TitledBorder.TOP, TitledBorder.LEFT, 10));
+			
+			setPreferredHeight(JsionEditor.mapConfig.MapHeight * (JsionEditor.mapConfig.SmallMapWidth / JsionEditor.mapConfig.MapWidth) + getInsets().top + getInsets().bottom + Padding);
 		}
 		
 		private var m_draging:Boolean;

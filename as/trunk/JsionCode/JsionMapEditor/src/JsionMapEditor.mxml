@@ -15,8 +15,12 @@
 			import editor.CoordView;
 			import editor.EditorMenu;
 			import editor.EditorTool;
+			import editor.ResourcePreviewer;
 			import editor.SmallMap;
 			import editor.showers.MapShower;
+			import editor.tabs.BuildingsTab;
+			import editor.tabs.NPCsTab;
+			import editor.tabs.ResourceTabbed;
 			
 			import jsion.rpg.engine.RPGEngine;
 			import jsion.utils.DisposeUtil;
@@ -93,6 +97,16 @@
 			 */ 
 			private var coordView:CoordView;
 			
+			/**
+			 * 资源分类标签容器
+			 */ 
+			private var resourceTabbed:ResourceTabbed;
+			
+			/**
+			 * 资源预览器
+			 */ 
+			private var previewer:ResourcePreviewer;
+			
 			
 			public function get Window():JWindow
 			{
@@ -132,11 +146,11 @@
 				
 				leftContainer = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
 				leftContainer.setPreferredWidth(5);
-				pane.append(leftContainer, BorderLayout.EAST);
+				pane.append(leftContainer, BorderLayout.WEST);
 				
 				rightContainer = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
 				rightContainer.setPreferredWidth(5);
-				pane.append(rightContainer, BorderLayout.WEST);
+				pane.append(rightContainer, BorderLayout.EAST);
 				
 				bottomContainer = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
 				bottomContainer.setPreferredHeight(5);
@@ -173,17 +187,38 @@
 			
 			private function setLeftView():void
 			{
-				leftContainer.setPreferredWidth(JsionEditor.mapConfig.SmallMapWidth + SmallMap.Padding * 2);
+				leftContainer.setPreferredWidth(JsionEditor.mapConfig.SmallMapWidth + 5);
 				
 				if(smallMap) leftContainer.remove(smallMap);
 				DisposeUtil.free(smallMap);
 				smallMap = new SmallMap(this);
 				leftContainer.append(smallMap);
 				
-				if(coordView) leftContainer.remove(coordView);
+				
+				
+				//resourceTabbed.updateHeight(leftContainer, smallMap.height + coordView.height);
+			}
+			
+			private function setRightView():void
+			{
+				rightContainer.setPreferredWidth(165);
+				
+				if(previewer) rightContainer.remove(previewer);
+				DisposeUtil.free(previewer);
+				previewer = new ResourcePreviewer();
+				rightContainer.append(previewer);
+				
+				if(resourceTabbed) rightContainer.remove(resourceTabbed);
+				DisposeUtil.free(resourceTabbed);
+				resourceTabbed = new ResourceTabbed(this, previewer);
+				rightContainer.append(resourceTabbed);
+				
+				
+				
+				if(coordView) rightContainer.remove(coordView);
 				DisposeUtil.free(coordView);
 				coordView = new CoordView();
-				leftContainer.append(coordView);
+				rightContainer.append(coordView);
 			}
 			
 			public function msg(text:String, textColor:uint = 0xFF0000, t:String = "提示"):void
@@ -200,6 +235,8 @@
 				mainContainer.addChild(gameMap);
 				
 				setLeftView();
+				
+				setRightView();
 				
 				gameMap.setSmallMapShower(smallMap);
 				gameMap.setCoordView(coordView);
@@ -224,12 +261,21 @@
 				if(smallMap) leftContainer.remove(smallMap);
 				DisposeUtil.free(smallMap);
 				smallMap = null;
+				
+				if(coordView) leftContainer.remove(coordView);
+				DisposeUtil.free(coordView);
+				coordView = null;
+				
+				if(resourceTabbed) leftContainer.remove(resourceTabbed);
+				DisposeUtil.free(resourceTabbed);
+				resourceTabbed = null;
 			}
 			
 			protected function __mainContainerResizeHandler(e:ResizedEvent):void
 			{
 				if(gameMap) gameMap.setCameraWH(mainContainer.width, mainContainer.height);
 				if(smallMap) smallMap.redrawDisplayArea();
+				//if(resourceTabbed) resourceTabbed.updateHeight(leftContainer, smallMap.height + coordView.height);
 			}
 
 
