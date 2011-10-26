@@ -9,6 +9,8 @@ package editor.showers
 	
 	import jsion.rpg.engine.games.BaseMap;
 	import jsion.rpg.engine.games.WorldMap;
+	import editor.hideshower.AlphaShower;
+	import editor.hideshower.TileShower;
 	
 	public class EditorAssistant extends Sprite
 	{

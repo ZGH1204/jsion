@@ -1,9 +1,10 @@
-package editor.showers
+package editor.hideshower
 {
 	import flash.display.Shape;
 	import flash.geom.Point;
 	
 	import jsion.utils.RandomUtil;
+	import editor.showers.MapShower;
 
 	public class AlphaShower extends BaseShower
 	{

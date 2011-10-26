@@ -1,6 +1,5 @@
 package editor.forms
 {
-	import editor.JsionEditorWin;
 	
 	import flash.events.Event;
 	import flash.filesystem.File;
@@ -18,7 +17,7 @@ package editor.forms
 	import org.aswing.JTextField;
 	import org.aswing.event.AWEvent;
 	
-	public class FileOpenForm extends JsionEditorWin
+	public class FileOpenForm extends BaseEditorForm
 	{
 		private static const FormW:int = 300;
 		

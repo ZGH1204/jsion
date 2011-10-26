@@ -1,9 +1,11 @@
-package editor.tabs
+package editor.rightviews
 {
-	import editor.ResourcePreviewer;
 	
 	import org.aswing.JPanel;
 	import org.aswing.JTabbedPane;
+	import editor.rightviews.tabs.BuildingsTab;
+	import editor.rightviews.tabs.NPCsTab;
+	import editor.rightviews.tabs.SurfaceTab;
 	
 	public class ResourceTabbed extends JTabbedPane
 	{

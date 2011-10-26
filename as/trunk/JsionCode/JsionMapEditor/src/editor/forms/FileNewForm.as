@@ -1,7 +1,5 @@
 package editor.forms
 {
-	import editor.JsionEditorWin;
-	import editor.MapCut;
 	
 	import flash.display.Bitmap;
 	import flash.display.Loader;
@@ -28,7 +26,7 @@ package editor.forms
 	import org.aswing.JTextField;
 	import org.aswing.SoftBoxLayout;
 	
-	public class FileNewForm extends JsionEditorWin
+	public class FileNewForm extends BaseEditorForm
 	{
 		private var mapidTxt:JTextField;
 		
@@ -253,7 +251,7 @@ package editor.forms
 				var isPng:Boolean = codeType_PNG.isSelected();
 				if(isPng) JsionEditor.MAP_TILES_EXTENSION = ".png";
 				else JsionEditor.MAP_TILES_EXTENSION = ".jpg";
-				new MapCut(mapEditor).startCutMapPic(JsionEditor.MAP_PIC_FILE, isPng);
+				new MapCutForm(mapEditor).startCutMapPic(JsionEditor.MAP_PIC_FILE, isPng);
 				JsionEditor.saveMapConfig(null);
 			}
 			

@@ -1,7 +1,7 @@
 package editor.showers
 {
-	import editor.CoordView;
-	import editor.SmallMap;
+	import editor.rightviews.CoordViewer;
+	import editor.leftviews.SmallMap;
 	
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -14,7 +14,7 @@ package editor.showers
 		
 		protected var m_smallMapShower:SmallMap;
 		
-		protected var m_coordView:CoordView;
+		protected var m_coordView:CoordViewer;
 		
 		public function MapShower(w:int, h:int, configPath:String)
 		{
@@ -51,7 +51,7 @@ package editor.showers
 			m_smallMapShower = shower;
 		}
 		
-		public function setCoordView(view:CoordView):void
+		public function setCoordView(view:CoordViewer):void
 		{
 			m_coordView = view;
 		}
