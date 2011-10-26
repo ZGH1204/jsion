@@ -1,4 +1,4 @@
-package editor
+package editor.topviews
 {
 	import editor.forms.FileNewForm;
 	import editor.forms.FileOpenForm;
@@ -8,8 +8,9 @@ package editor
 	import org.aswing.JMenuItem;
 	import org.aswing.JPanel;
 	import org.aswing.event.AWEvent;
+	import editor.forms.MapCutForm;
 	
-	public class EditorMenu extends JPanel
+	public class MenuBox extends JPanel
 	{
 		private static const File_New:String = "新建...";
 		
@@ -23,7 +24,7 @@ package editor
 		
 		private var mapEditor:JsionMapEditor;
 		
-		public function EditorMenu(owner:JsionMapEditor)
+		public function MenuBox(owner:JsionMapEditor)
 		{
 			mapEditor = owner;
 			
@@ -86,7 +87,7 @@ package editor
 					JsionEditor.saveMapConfig(mapEditor);
 					break;
 				case Tool_Map_Cut:
-					if(JsionEditor.MAP_NEWED_OPENED) new MapCut(mapEditor).show();
+					if(JsionEditor.MAP_NEWED_OPENED) new MapCutForm(mapEditor).show();
 					else mapEditor.msg("未创建或打开地图");
 					break;
 				default:

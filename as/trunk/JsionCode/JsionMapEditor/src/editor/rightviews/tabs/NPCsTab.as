@@ -1,6 +1,6 @@
-package editor.tabs
+package editor.rightviews.tabs
 {
-	import editor.ResourcePreviewer;
+	import editor.rightviews.ResourcePreviewer;
 	
 	import org.aswing.LayoutManager;
 	

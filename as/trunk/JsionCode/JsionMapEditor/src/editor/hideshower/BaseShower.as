@@ -1,8 +1,9 @@
-package editor.showers
+package editor.hideshower
 {
 	import flash.display.Shape;
 	
 	import jsion.rpg.engine.games.BaseMap;
+	import editor.showers.MapShower;
 
 	public class BaseShower
 	{

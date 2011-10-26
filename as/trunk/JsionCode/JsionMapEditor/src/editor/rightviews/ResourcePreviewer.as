@@ -1,4 +1,4 @@
-package editor
+package editor.rightviews
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -10,6 +10,7 @@ package editor
 	import org.aswing.JPanel;
 	import org.aswing.LayoutManager;
 	import org.aswing.border.TitledBorder;
+	import editor.aswings.PreviewBackground;
 	
 	public class ResourcePreviewer extends JPanel implements IDispose
 	{

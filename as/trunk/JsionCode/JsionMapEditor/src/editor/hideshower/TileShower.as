@@ -1,7 +1,8 @@
-package editor.showers
+package editor.hideshower
 {
 	import flash.display.Shape;
 	import flash.geom.Point;
+	import editor.showers.MapShower;
 
 	public class TileShower extends BaseShower
 	{

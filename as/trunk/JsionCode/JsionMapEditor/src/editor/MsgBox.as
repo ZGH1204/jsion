@@ -2,8 +2,9 @@ package editor
 {
 	import org.aswing.ASColor;
 	import org.aswing.JLabel;
+	import editor.forms.BaseEditorForm;
 
-	public class AlertFrame extends JsionEditorWin
+	public class MsgBox extends BaseEditorForm
 	{
 		private var label:JLabel;
 		
@@ -11,7 +12,7 @@ package editor
 		
 		private var tColor:uint;
 		
-		public function AlertFrame(owner:JsionMapEditor, text:String, textColor:uint = 0xFF0000, t:String = "提示")
+		public function MsgBox(owner:JsionMapEditor, text:String, textColor:uint = 0xFF0000, t:String = "提示")
 		{
 			mytitle = t;
 			msgText = text;
@@ -60,7 +61,7 @@ package editor
 		
 		public static function msg(owner:JsionMapEditor, text:String, textColor:uint = 0xFF0000, t:String = "提示"):void
 		{
-			new AlertFrame(owner, text, textColor, t).show();
+			new MsgBox(owner, text, textColor, t).show();
 		}
 	}
 }

@@ -1,11 +1,11 @@
-package editor
+package editor.rightviews
 {
 	import org.aswing.JLabel;
 	import org.aswing.JPanel;
 	import org.aswing.border.TitledBorder;
 	import org.aswing.ext.Form;
 	
-	public class CoordView extends JPanel
+	public class CoordViewer extends JPanel
 	{
 		protected var box:Form;
 		
@@ -13,7 +13,7 @@ package editor
 		protected var tilePos:JLabel;
 		protected var scenePos:JLabel;
 		
-		public function CoordView()
+		public function CoordViewer()
 		{
 			super();
 			

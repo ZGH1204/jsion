@@ -11,16 +11,16 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import editor.AlertFrame;
-			import editor.CoordView;
-			import editor.EditorMenu;
-			import editor.EditorTool;
-			import editor.ResourcePreviewer;
-			import editor.SmallMap;
+			import editor.MsgBox;
+			import editor.rightviews.CoordViewer;
+			import editor.topviews.MenuBox;
+			import editor.topviews.ToolBox;
+			import editor.rightviews.ResourcePreviewer;
+			import editor.leftviews.SmallMap;
 			import editor.showers.MapShower;
-			import editor.tabs.BuildingsTab;
-			import editor.tabs.NPCsTab;
-			import editor.tabs.ResourceTabbed;
+			import editor.rightviews.tabs.BuildingsTab;
+			import editor.rightviews.tabs.NPCsTab;
+			import editor.rightviews.ResourceTabbed;
 			
 			import jsion.rpg.engine.RPGEngine;
 			import jsion.utils.DisposeUtil;
@@ -69,7 +69,7 @@
 			/**
 			 * 菜单容器
 			 */
-			private var menuContainer:EditorMenu;
+			private var menuContainer:MenuBox;
 			
 			/**
 			 * 工具容器
@@ -95,7 +95,7 @@
 			/**
 			 * 坐标信息
 			 */ 
-			private var coordView:CoordView;
+			private var coordView:CoordViewer;
 			
 			/**
 			 * 资源分类标签容器
@@ -164,12 +164,12 @@
 				//bottomContainer.append(statusContainer);
 				
 				
-				menuContainer = new EditorMenu(this);
+				menuContainer = new MenuBox(this);
 				topContainer.append(menuContainer);
 				
 				toolContainer = new JPanel();
 				topContainer.append(toolContainer);
-				toolContainer.append(new EditorTool(this));
+				toolContainer.append(new ToolBox(this));
 				
 				
 //				menuContainer.setOpaque(true);
@@ -217,14 +217,14 @@
 				
 				if(coordView) rightContainer.remove(coordView);
 				DisposeUtil.free(coordView);
-				coordView = new CoordView();
+				coordView = new CoordViewer();
 				rightContainer.append(coordView);
 			}
 			
 			public function msg(text:String, textColor:uint = 0xFF0000, t:String = "提示"):void
 			{
 				//Alert.show(text, t);
-				AlertFrame.msg(this, text, textColor, t);
+				MsgBox.msg(this, text, textColor, t);
 			}
 			
 			public function showMap(configRelativePath:String):void

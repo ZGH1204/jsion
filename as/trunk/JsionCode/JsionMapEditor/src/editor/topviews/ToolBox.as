@@ -1,4 +1,4 @@
-package editor
+package editor.topviews
 {
 	import editor.forms.FileNewForm;
 	import editor.forms.FileOpenForm;
@@ -11,7 +11,7 @@ package editor
 	import org.aswing.SoftBoxLayout;
 	import org.aswing.event.AWEvent;
 	
-	public class EditorTool extends JPanel
+	public class ToolBox extends JPanel
 	{
 		private static const NewMap:String = "新建";
 		private static const OpenMap:String = "打开";
@@ -27,7 +27,7 @@ package editor
 		
 		private var editPathGridBtn:JToggleButton;
 		
-		public function EditorTool(owner:JsionMapEditor)
+		public function ToolBox(owner:JsionMapEditor)
 		{
 			mapEditor = owner;
 			

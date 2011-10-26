@@ -1,4 +1,4 @@
-package editor
+package editor.aswings
 {
 	import flash.display.DisplayObject;
 	

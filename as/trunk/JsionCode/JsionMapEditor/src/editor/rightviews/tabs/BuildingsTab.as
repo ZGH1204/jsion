@@ -1,6 +1,6 @@
-package editor.tabs
+package editor.rightviews.tabs
 {
-	import editor.ResourcePreviewer;
+	import editor.rightviews.ResourcePreviewer;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

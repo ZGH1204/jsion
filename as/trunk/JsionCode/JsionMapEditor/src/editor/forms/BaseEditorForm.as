@@ -1,4 +1,4 @@
-package editor
+package editor.forms
 {
 	import flash.events.Event;
 	
@@ -9,7 +9,7 @@ package editor
 	import org.aswing.SoftBoxLayout;
 	import org.aswing.ext.Form;
 	
-	public class JsionEditorWin extends JFrame
+	public class BaseEditorForm extends JFrame
 	{
 		/**
 		 * 间距
@@ -49,7 +49,7 @@ package editor
 		protected var bt_ok:JButton;
 		protected var bt_cancle:JButton;
 		
-		public function JsionEditorWin(owner:JsionMapEditor, modal:Boolean = false)
+		public function BaseEditorForm(owner:JsionMapEditor, modal:Boolean = false)
 		{
 			mapEditor = owner;
 			

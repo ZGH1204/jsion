@@ -1,4 +1,4 @@
-package editor
+package editor.forms
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -32,7 +32,7 @@ package editor
 	import org.aswing.JTextField;
 	import org.aswing.SoftBoxLayout;
 
-	public class MapCut extends JsionEditorWin
+	public class MapCutForm extends BaseEditorForm
 	{
 		private var _fileName:JTextField;
 		private var openBtn:JButton;
@@ -64,7 +64,7 @@ package editor
 		
 		private var _mapPic:String;
 		
-		public function MapCut(owner:JsionMapEditor=null)
+		public function MapCutForm(owner:JsionMapEditor=null)
 		{
 			mytitle = "地图切割器";
 			
