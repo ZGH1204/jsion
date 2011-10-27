@@ -3,6 +3,7 @@ package jsion.rpg.engine.games
 	import flash.display.BitmapData;
 	
 	import jsion.rpg.engine.datas.MapConfig;
+	import jsion.rpg.engine.gameobjects.GameObject;
 
 	public class BaseGame implements IDispose
 	{
