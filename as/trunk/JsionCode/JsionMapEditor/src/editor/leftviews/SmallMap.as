@@ -54,9 +54,9 @@ package editor.leftviews
 			
 			loadSmallMap();
 			
-			setBorder(new TitledBorder(null, '小地图', TitledBorder.TOP, TitledBorder.LEFT, 10));
+			setBorder(new TitledBorder(null, "", TitledBorder.TOP, TitledBorder.LEFT, 10));
 			
-			setPreferredHeight(JsionEditor.mapConfig.MapHeight * (JsionEditor.mapConfig.SmallMapWidth / JsionEditor.mapConfig.MapWidth) + getInsets().top + getInsets().bottom + Padding);
+			//setPreferredHeight(JsionEditor.mapConfig.MapHeight * (JsionEditor.mapConfig.SmallMapWidth / JsionEditor.mapConfig.MapWidth) + getInsets().top + getInsets().bottom + Padding);
 		}
 		
 		private var m_draging:Boolean;

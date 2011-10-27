@@ -12,15 +12,16 @@
 	<fx:Script>
 		<![CDATA[
 			import editor.MsgBox;
-			import editor.rightviews.CoordViewer;
-			import editor.topviews.MenuBox;
-			import editor.topviews.ToolBox;
-			import editor.rightviews.ResourcePreviewer;
+			import editor.forms.SmallMapForm;
 			import editor.leftviews.SmallMap;
-			import editor.showers.MapShower;
+			import editor.rightviews.CoordViewer;
+			import editor.rightviews.ResourcePreviewer;
+			import editor.rightviews.ResourceTabbed;
 			import editor.rightviews.tabs.BuildingsTab;
 			import editor.rightviews.tabs.NPCsTab;
-			import editor.rightviews.ResourceTabbed;
+			import editor.showers.MapShower;
+			import editor.topviews.MenuBox;
+			import editor.topviews.ToolBox;
 			
 			import jsion.rpg.engine.RPGEngine;
 			import jsion.utils.DisposeUtil;
@@ -31,6 +32,7 @@
 			import org.aswing.AsWingManager;
 			import org.aswing.BorderLayout;
 			import org.aswing.Container;
+			import org.aswing.JFrame;
 			import org.aswing.JPanel;
 			import org.aswing.JWindow;
 			import org.aswing.SoftBoxLayout;
@@ -77,6 +79,11 @@
 			private var toolContainer:JPanel;
 			
 			/**
+			 * 工具条
+			 */ 
+			private var toolBox:ToolBox;
+			
+			/**
 			 * 状态栏
 			 */ 
 			private var statusContainer:JPanel;
@@ -91,6 +98,11 @@
 			 * 缩略地图
 			 */ 
 			private var smallMap:SmallMap;
+			
+			/**
+			 * 缩略地图容器
+			 */ 
+			private var smallMapForm:SmallMapForm;
 			
 			/**
 			 * 坐标信息
@@ -169,7 +181,9 @@
 				
 				toolContainer = new JPanel();
 				topContainer.append(toolContainer);
-				toolContainer.append(new ToolBox(this));
+				
+				toolBox = new ToolBox(this);
+				toolContainer.append(toolBox);
 				
 				
 //				menuContainer.setOpaque(true);
@@ -187,15 +201,13 @@
 			
 			private function setLeftView():void
 			{
-				leftContainer.setPreferredWidth(JsionEditor.mapConfig.SmallMapWidth + 5);
+				//leftContainer.setPreferredWidth(JsionEditor.mapConfig.SmallMapWidth + 5);
 				
-				if(smallMap) leftContainer.remove(smallMap);
-				DisposeUtil.free(smallMap);
-				smallMap = new SmallMap(this);
-				leftContainer.append(smallMap);
+				leftContainer.removeAll();
 				
+				leftContainer.updateUI();
 				
-				
+				//smallMapForm.show();
 				//resourceTabbed.updateHeight(leftContainer, smallMap.height + coordView.height);
 			}
 			
@@ -203,22 +215,36 @@
 			{
 				rightContainer.setPreferredWidth(165);
 				
-				if(previewer) rightContainer.remove(previewer);
+				rightContainer.removeAll();
+				
+				rightContainer.updateUI();
+				
+				//if(previewer) rightContainer.remove(previewer);
 				DisposeUtil.free(previewer);
 				previewer = new ResourcePreviewer();
 				rightContainer.append(previewer);
 				
-				if(resourceTabbed) rightContainer.remove(resourceTabbed);
+				//if(resourceTabbed) rightContainer.remove(resourceTabbed);
 				DisposeUtil.free(resourceTabbed);
 				resourceTabbed = new ResourceTabbed(this, previewer);
 				rightContainer.append(resourceTabbed);
 				
 				
 				
-				if(coordView) rightContainer.remove(coordView);
+				//if(coordView) rightContainer.remove(coordView);
 				DisposeUtil.free(coordView);
 				coordView = new CoordViewer();
 				rightContainer.append(coordView);
+			}
+			
+			public function showSmallMap():void
+			{
+				if(smallMapForm) smallMapForm.show();
+			}
+			
+			public function hideSmallMap():void
+			{
+				if(smallMapForm) smallMapForm.hide();
 			}
 			
 			public function msg(text:String, textColor:uint = 0xFF0000, t:String = "提示"):void
@@ -234,9 +260,18 @@
 				gameMap = new MapShower(mainContainer.width, mainContainer.height, configRelativePath);
 				mainContainer.addChild(gameMap);
 				
+				if(smallMapForm) smallMapForm.removeSmallMap();
+				DisposeUtil.free(smallMap);
+				smallMap = new SmallMap(this);
+				
+				if(smallMapForm) smallMapForm.closeReleased();
+				smallMapForm = new SmallMapForm(this, smallMap);
+				
 				setLeftView();
 				
 				setRightView();
+				
+				toolBox.updateBoxBtns();
 				
 				gameMap.setSmallMapShower(smallMap);
 				gameMap.setCoordView(coordView);
@@ -258,15 +293,23 @@
 				DisposeUtil.free(gameMap);
 				gameMap = null;
 				
-				if(smallMap) leftContainer.remove(smallMap);
+				if(smallMapForm)
+				{
+					smallMapForm.removeSmallMap();
+					smallMapForm.closeReleased();
+				}
 				DisposeUtil.free(smallMap);
 				smallMap = null;
 				
-				if(coordView) leftContainer.remove(coordView);
+				leftContainer.removeAll();
+				
+				rightContainer.removeAll();
+				
+				//if(coordView) rightContainer.remove(coordView);
 				DisposeUtil.free(coordView);
 				coordView = null;
 				
-				if(resourceTabbed) leftContainer.remove(resourceTabbed);
+				//if(resourceTabbed) rightContainer.remove(resourceTabbed);
 				DisposeUtil.free(resourceTabbed);
 				resourceTabbed = null;
 			}
