@@ -13,7 +13,11 @@ package jsion.rpg.engine.emitters
 		
 		public function emitte():void
 		{
+			m_game.buffer.lock();
+			
 			m_game.render();
+			
+			m_game.buffer.unlock();
 		}
 		
 		public function dispose():void

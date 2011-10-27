@@ -16,13 +16,15 @@ package jsion.rpg.engine
 	import jsion.utils.PathUtil;
 	import jsion.utils.XmlUtil;
 	
-	public class RPGEngine extends Sprite
+	public class RPGEngine extends EngineSprite
 	{
-		public static var MapsList:HashMap = new HashMap();
+		protected var m_gameWidth:int;
 		
-		protected var m_w:int;
+		protected var m_gameHeight:int;
 		
-		protected var m_h:int;
+		protected var m_mapID:String;
+		
+		protected var m_mapsRoot:String;
 		
 		protected var m_autoPlay:Boolean;
 		
@@ -41,29 +43,31 @@ package jsion.rpg.engine
 		protected var m_ready:Boolean;
 		
 		
-		public function RPGEngine(w:int, h:int, mapID:String, autoPlay:Boolean = true)
+		public function RPGEngine(w:int, h:int, mapID:String, mapsRoot:String, autoPlay:Boolean = true)
 		{
 			super();
 			
-			m_w = w;
-			m_h = h;
-			
-			m_autoPlay = autoPlay;
-			
-			m_starting = false;
-			
-			if(MapsList.containsKey(mapID) == false)
+			if(EngineGlobal.MapsList.containsKey(mapID) == false)
 			{
-				throw new Error("RPGEngine.MapsList地图不存在,请查检地图ID是否正确或者为当前地图ID向RPGEngine.MapsList中添加地图配置文件所在路径.");
+				throw new Error("EngineGlobal.MapsList中不存在地图ID为：" + mapID + " 的地图,请查检地图ID是否正确或者为当前地图ID向EngineGlobal.MapsList中添加地图配置文件所在路径.");
 				return;
 			}
 			
-			var configPath:String = PathUtil.combinPath(BaseMap.MapsRoot, MapsList.get(mapID));
+			m_gameWidth = w;
+			m_gameHeight = h;
+			
+			m_autoPlay = autoPlay;
+			
+			m_ready = false;
+			m_starting = false;
+			
+			m_mapID = mapID;
+			
+			m_mapsRoot = mapsRoot;
+			
+			var configPath:String = PathUtil.combinPath(m_mapsRoot, EngineGlobal.MapsList.get(mapID));
 			
 			new XmlLoader(configPath).loadAsync(configLoadCallback);
-			
-			m_mapBmp = new Bitmap();
-			addChild(m_mapBmp);
 		}
 		
 		private function configLoadCallback(loader:XmlLoader):void
@@ -83,7 +87,7 @@ package jsion.rpg.engine
 			
 			DisposeUtil.free(loader);
 			
-			var mapAssetRoot:String = PathUtil.combinPath(BaseMap.MapsRoot, m_mapConfig.MapAssetRoot, "/")
+			var mapAssetRoot:String = PathUtil.combinPath(m_mapsRoot, m_mapConfig.MapAssetRoot, "/")
 			
 			new ImageLoader(m_mapConfig.SmallMapFile, {root: mapAssetRoot}).loadAsync(loadSmallMapCallback);
 		}
@@ -97,9 +101,12 @@ package jsion.rpg.engine
 				return;
 			}
 			
+			m_mapBmp = new Bitmap();
+			addChild(m_mapBmp);
+			
 			var bmd:BitmapData = Bitmap(loader.content).bitmapData.clone();
 			
-			m_game = new RPGGame(m_w, m_h, m_mapConfig, bmd);
+			m_game = new RPGGame(m_gameWidth, m_gameHeight, m_mapConfig, m_mapsRoot, bmd);
 			
 			m_emitter = new BaseEmitter(m_game);
 			
@@ -119,14 +126,14 @@ package jsion.rpg.engine
 			m_ready = true;
 		}
 		
-		public static function getMapsRoot():String
+		public function get mapsRoot():String
 		{
-			return BaseMap.MapsRoot;
+			return m_mapsRoot;
 		}
 		
-		public static function setMapsRoot(path:String):void
+		public function set mapsRoot(path:String):void
 		{
-			BaseMap.MapsRoot = path;
+			m_mapsRoot = path;
 		}
 		
 		public function play():Sprite
@@ -171,11 +178,11 @@ package jsion.rpg.engine
 		{
 			if(w <= 0 || h <= 0) return;
 			
-			if(m_w == w && m_h == h) return;
+			if(m_gameWidth == w && m_gameHeight == h) return;
 			
-			m_w = w;
+			m_gameWidth = w;
 			
-			m_h = h;
+			m_gameHeight = h;
 			
 			if(m_game)
 			{
@@ -187,12 +194,12 @@ package jsion.rpg.engine
 		
 		public function get gameWidth():int
 		{
-			return m_w;
+			return m_gameWidth;
 		}
 		
 		public function get gameHeight():int
 		{
-			return m_h;
+			return m_gameHeight;
 		}
 		
 		public function get game():BaseGame

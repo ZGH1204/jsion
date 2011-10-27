@@ -1,11 +1,12 @@
 package editor.showers
 {
-	import editor.rightviews.CoordViewer;
 	import editor.leftviews.SmallMap;
+	import editor.rightviews.CoordViewer;
 	
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import jsion.rpg.engine.EngineGlobal;
 	import jsion.rpg.engine.RPGEngine;
 	
 	public class MapShower extends RPGEngine
@@ -16,10 +17,10 @@ package editor.showers
 		
 		protected var m_coordView:CoordViewer;
 		
-		public function MapShower(w:int, h:int, configPath:String)
+		public function MapShower(w:int, h:int, configPath:String, mapsRoot:String)
 		{
-			RPGEngine.MapsList.put("editor", configPath);
-			super(w, h, "editor");
+			EngineGlobal.MapsList.put("editor", configPath);
+			super(w, h, "editor", mapsRoot);
 		}
 		
 		override protected function initialize():void

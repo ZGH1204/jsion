@@ -11,11 +11,7 @@ package jsion.rpg.engine.games
 	
 	public class BaseMap extends EventDispatcher implements IDispose
 	{
-		public static var MapsRoot:String = "";
-		
-		
 		public var needRepaintMap:Boolean;
-		
 		
 		public var mapid:String;
 		
@@ -40,6 +36,8 @@ package jsion.rpg.engine.games
 		protected var m_tileExtension:String;
 		
 		protected var m_mapConfig:MapConfig;
+		
+		protected var m_mapsRoot:String;
 		
 		protected var m_buffer:BitmapData;
 		
@@ -74,11 +72,13 @@ package jsion.rpg.engine.games
 		
 		protected var m_center:Point = new Point();
 		
-		public function BaseMap(mapConfig:MapConfig, cameraWidth:int, cameraHeight:int)
+		public function BaseMap(mapConfig:MapConfig, mapsRoot:String, cameraWidth:int, cameraHeight:int)
 		{
 			super();
 			
 			m_mapConfig = mapConfig;
+			
+			m_mapsRoot = mapsRoot;
 			
 			m_cameraWidth = cameraWidth;
 			m_cameraHeight = cameraHeight;
@@ -96,9 +96,9 @@ package jsion.rpg.engine.games
 			wayTileWidth = m_mapConfig.WayTileWidth;
 			wayTileHeight = m_mapConfig.WayTileHeight;
 			
-			m_mapRoot = PathUtil.combinPath(MapsRoot, mapid, "/");
-			m_mapAssetRoot = PathUtil.combinPath(MapsRoot, m_mapConfig.MapAssetRoot, "/");
-			m_tileAssetRoot = PathUtil.combinPath(MapsRoot, m_mapConfig.TileAssetRoot, "/");
+			m_mapRoot = PathUtil.combinPath(m_mapsRoot, mapid, "/");
+			m_mapAssetRoot = PathUtil.combinPath(m_mapsRoot, m_mapConfig.MapAssetRoot, "/");
+			m_tileAssetRoot = PathUtil.combinPath(m_mapsRoot, m_mapConfig.TileAssetRoot, "/");
 			m_tileExtension = m_mapConfig.TileExtension;
 			
 			updateAreaTiles();

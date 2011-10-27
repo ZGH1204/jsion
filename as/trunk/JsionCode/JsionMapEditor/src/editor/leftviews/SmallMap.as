@@ -1,5 +1,7 @@
 package editor.leftviews
 {
+	import editor.aswings.PreviewBackground;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
@@ -13,7 +15,6 @@ package editor.leftviews
 	import org.aswing.JPanel;
 	import org.aswing.LayoutManager;
 	import org.aswing.border.TitledBorder;
-	import editor.aswings.PreviewBackground;
 	
 	public class SmallMap extends JPanel implements IDispose
 	{
@@ -120,6 +121,9 @@ package editor.leftviews
 			
 			m_areaWidth = m_mapEditor.gameMap.gameWidth / JsionEditor.mapConfig.MapWidth * m_bmd.width;
 			m_areaHeight = m_mapEditor.gameMap.gameHeight / JsionEditor.mapConfig.MapHeight * m_bmd.height;
+			
+			m_areaWidth = Math.min(m_areaWidth, m_bmd.width);
+			m_areaHeight = Math.min(m_areaHeight, m_bmd.height);
 			
 			m_displayArea.graphics.clear();
 			m_displayArea.graphics.lineStyle(1,0xFFFFFF);

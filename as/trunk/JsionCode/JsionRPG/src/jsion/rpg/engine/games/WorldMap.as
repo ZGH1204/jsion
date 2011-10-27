@@ -14,11 +14,11 @@ package jsion.rpg.engine.games
 		
 		protected var m_smallMapLoader:ImageLoader;
 		
-		public function WorldMap(mapConfig:MapConfig, smallMapBmd:BitmapData, cameraWidth:int, cameraHeight:int)
+		public function WorldMap(mapConfig:MapConfig, mapsRoot:String, smallMapBmd:BitmapData, cameraWidth:int, cameraHeight:int)
 		{
 			m_smallMap = smallMapBmd;
 			
-			super(mapConfig, cameraWidth, cameraHeight);
+			super(mapConfig, mapsRoot, cameraWidth, cameraHeight);
 		}
 		
 		override protected function initialize():void

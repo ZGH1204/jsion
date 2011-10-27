@@ -17,8 +17,6 @@ package jsion.rpg.engine.games
 		
 		protected var m_pool:ResourcePool;
 		
-		protected var m_destPoint:Point;
-		
 		protected var m_tempRect:Rectangle;
 		
 		protected var m_loadings:HashMap;
@@ -26,8 +24,6 @@ package jsion.rpg.engine.games
 		public function TileAdapter(map:WorldMap)
 		{
 			m_map = map;
-			
-			m_destPoint = new Point();
 			
 			m_tempRect = new Rectangle();
 			
@@ -87,9 +83,9 @@ package jsion.rpg.engine.games
 					
 					var key:String = y + "_" + x;
 					
-					if(m_pool.containsKey(key))
+					if(m_pool.hasResource(key))
 					{
-						var bmd:BitmapData = m_pool.get(key) as BitmapData;
+						var bmd:BitmapData = m_pool.getResource(key) as BitmapData;
 						
 						m_map.drawTile(buffer, bmd, x, y);
 					}
@@ -130,7 +126,7 @@ package jsion.rpg.engine.games
 			
 			var bmd:BitmapData = Bitmap(loader.content).bitmapData.clone();
 			
-			m_pool.put(key, bmd);
+			m_pool.addResource(key, bmd);
 			
 			DisposeUtil.free(loader);
 			
