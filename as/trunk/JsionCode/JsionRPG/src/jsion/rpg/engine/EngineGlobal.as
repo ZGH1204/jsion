@@ -6,6 +6,8 @@ package jsion.rpg.engine
 		
 		public static var GlobalPool:ResourcePool = new ResourcePool();
 		
+		public static var Timer:int;
+		
 		public function EngineGlobal()
 		{
 		}

@@ -5,6 +5,7 @@ package jsion.rpg.engine.renders
 	import flash.geom.Rectangle;
 	
 	import jsion.rpg.engine.gameobjects.GameObject;
+	import jsion.rpg.engine.games.BaseGame;
 
 	public class Render
 	{
@@ -22,31 +23,29 @@ package jsion.rpg.engine.renders
 		
 		public function render(object:GameObject):void
 		{
-			
 		}
 		
 		public function renderClear(object:GameObject):void
 		{
-			
 		}
 		
-		protected function drawClear(source:BitmapData, rect:Rectangle, object:GameObject = null):void
+		protected function drawClear(source:BitmapData, objRenderRect:Rectangle, game:BaseGame):void
 		{
-			dirtyRect.x = rect.x - object.game.worldMap.originX;
-			dirtyRect.y = rect.y - object.game.worldMap.originY;
-			dirtyRect.width = rect.width;
-			dirtyRect.height = rect.height;
+			dirtyRect.x = lastPoint.x;
+			dirtyRect.y = lastPoint.y;
+			dirtyRect.width = objRenderRect.width;
+			dirtyRect.height = objRenderRect.height;
 			
-			buffer.copyPixels(source, dirtyRect, lastPoint);
+			buffer.copyPixels(game.worldMap.buffer, dirtyRect, lastPoint);
 		}
 		
-		protected function draw(source:BitmapData, rect:Rectangle, object:GameObject = null):void
+		protected function draw(source:BitmapData, sourceRect:Rectangle, game:BaseGame):void
 		{
 			if(source == null) return;
 			
 			try
 			{
-				buffer.copyPixels(source, rect, renderPoint, null, null, true);
+				buffer.copyPixels(source, sourceRect, renderPoint, null, null, true);
 			}
 			catch(err:Error)
 			{
