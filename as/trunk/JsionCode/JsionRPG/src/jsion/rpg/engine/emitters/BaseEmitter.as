@@ -1,5 +1,8 @@
 package jsion.rpg.engine.emitters
 {
+	import flash.utils.getTimer;
+	
+	import jsion.rpg.engine.EngineGlobal;
 	import jsion.rpg.engine.games.BaseGame;
 
 	public class BaseEmitter implements IDispose
@@ -13,6 +16,8 @@ package jsion.rpg.engine.emitters
 		
 		public function emitte():void
 		{
+			EngineGlobal.Timer = getTimer();
+			
 			m_game.buffer.lock();
 			
 			m_game.render();
