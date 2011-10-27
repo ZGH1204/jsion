@@ -20,6 +20,15 @@ package editor.topviews
 		private static const TileGrid:String = "显示/隐藏网格";
 		private static const FindPathGrid:String = "显示/隐藏碰撞格子";
 		private static const EditPathGrid:String = "编辑碰撞格子";
+		private static const SmallMapTip:String = "小地图";
+		
+		private var newMapBtn:JButton;
+		
+		private var openMapBtn:JButton;
+		
+		private var saveMapBtn:JButton;
+		
+		private var showTileGridBtn:JToggleButton;
 		
 		private var mapEditor:JsionMapEditor;
 		
@@ -27,25 +36,27 @@ package editor.topviews
 		
 		private var editPathGridBtn:JToggleButton;
 		
+		private var smallMapBtn:JToggleButton;
+		
 		public function ToolBox(owner:JsionMapEditor)
 		{
 			mapEditor = owner;
 			
 			super(new SoftBoxLayout(SoftBoxLayout.X_AXIS, 5));
 			
-			var newMapBtn:JButton = new JButton(null, new LoadIcon("EditorUI/NewMap.png", 18, 14));
+			newMapBtn = new JButton(null, new LoadIcon("EditorUI/NewMap.png", 18, 14));
 			newMapBtn.addActionListener(onNewMap);
 			newMapBtn.setToolTipText(NewMap);
 			
-			var openMapBtn:JButton = new JButton(null, new LoadIcon("EditorUI/OpenMap.png", 18, 14));
+			openMapBtn = new JButton(null, new LoadIcon("EditorUI/OpenMap.png", 18, 14));
 			openMapBtn.addActionListener(onOpenMap);
 			openMapBtn.setToolTipText(OpenMap);
 			
-			var saveMapBtn:JButton = new JButton(null, new LoadIcon("EditorUI/SaveMap.png", 18, 14));
+			saveMapBtn = new JButton(null, new LoadIcon("EditorUI/SaveMap.png", 18, 14));
 			saveMapBtn.addActionListener(onSaveMap);
 			saveMapBtn.setToolTipText(SaveMap);
 			
-			var showTileGridBtn:JToggleButton = new JToggleButton(null, new LoadIcon("EditorUI/ShowTileGrid.png", 18, 14));
+			showTileGridBtn = new JToggleButton(null, new LoadIcon("EditorUI/ShowTileGrid.png", 18, 14));
 			showTileGridBtn.addActionListener(onTileGrid);
 			showTileGridBtn.setToolTipText(TileGrid);
 			
@@ -57,12 +68,17 @@ package editor.topviews
 			editPathGridBtn.addActionListener(onEditPathGrid);
 			editPathGridBtn.setToolTipText(EditPathGrid);
 			
+			smallMapBtn = new JToggleButton(null, new LoadIcon("EditorUI/SmallMap.png", 18, 14));
+			smallMapBtn.addActionListener(onSmallMapShow);
+			smallMapBtn.setToolTipText(SmallMapTip);
+			
 			append(newMapBtn);
 			append(openMapBtn);
 			append(saveMapBtn);
 			append(showTileGridBtn);
 			append(showFindPathGridBtn);
 			append(editPathGridBtn);
+			append(smallMapBtn);
 		}
 		
 		private function onNewMap(e:AWEvent):void
@@ -103,6 +119,32 @@ package editor.topviews
 			mapEditor.gameMap.assistant.setWayTileGridEditable(btn.isSelected());
 			
 			if(btn.isSelected() && showFindPathGridBtn.isSelected() == false) showFindPathGridBtn.doClick();
+		}
+		
+		private function onSmallMapShow(e:AWEvent):void
+		{
+			var btn:JToggleButton = e.currentTarget as JToggleButton;
+			
+			if(btn.isSelected())
+			{
+				mapEditor.showSmallMap();
+			}
+			else
+			{
+				mapEditor.hideSmallMap();
+			}
+		}
+		
+		public function updateBoxBtns():void
+		{
+			showTileGridBtn.setSelected(false);
+			
+			showFindPathGridBtn.setSelected(false);
+			
+			editPathGridBtn.setSelected(false);
+			
+			smallMapBtn.setSelected(false);
+			
 		}
 	}
 }
