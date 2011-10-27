@@ -1,8 +1,9 @@
-package jsion.rpg.engine.games
+package jsion.rpg.engine.gameobjects
 {
 	import flash.geom.Point;
 	
 	import jsion.rpg.engine.renders.Render;
+	import jsion.rpg.engine.games.BaseGame;
 
 	public class GameObject
 	{
