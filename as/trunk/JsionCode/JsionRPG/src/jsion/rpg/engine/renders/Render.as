@@ -10,9 +10,9 @@ package jsion.rpg.engine.renders
 	{
 		public var buffer:BitmapData;
 		
-		protected var oldPoint:Point = new Point();
+		protected var lastPoint:Point = new Point();
 		
-		protected var newPoint:Point = new Point();
+		protected var renderPoint:Point = new Point();
 		
 		protected var dirtyRect:Rectangle = new Rectangle();
 		
@@ -20,21 +20,24 @@ package jsion.rpg.engine.renders
 		{
 		}
 		
-		public function clear():void
+		public function render(object:GameObject):void
 		{
 			
 		}
 		
-		public function render(object:GameObject):void
+		public function renderClear(object:GameObject):void
 		{
 			
 		}
 		
 		protected function drawClear(source:BitmapData, rect:Rectangle, object:GameObject = null):void
 		{
-			buffer.lock();
+			dirtyRect.x = rect.x - object.game.worldMap.originX;
+			dirtyRect.y = rect.y - object.game.worldMap.originY;
+			dirtyRect.width = rect.width;
+			dirtyRect.height = rect.height;
 			
-			dirtyRect
+			buffer.copyPixels(source, dirtyRect, lastPoint);
 		}
 		
 		protected function draw(source:BitmapData, rect:Rectangle, object:GameObject = null):void
@@ -43,15 +46,11 @@ package jsion.rpg.engine.renders
 			
 			try
 			{
-				buffer.copyPixels(source, rect, newPoint, null, null, true);
+				buffer.copyPixels(source, rect, renderPoint, null, null, true);
 			}
 			catch(err:Error)
 			{
 				trace('渲染错误：', err.name, err.message);
-			}
-			finally
-			{
-				buffer.unlock();
 			}
 		}
 	}

@@ -8,9 +8,9 @@ package jsion.rpg.engine.games
 	{
 		protected var m_tileCompleteList:HashMap;
 		
-		public function RPGGame(w:int, h:int, mapConfig:MapConfig, smallMapBmd:BitmapData)
+		public function RPGGame(w:int, h:int, mapConfig:MapConfig, mapsRoot:String, smallMapBmd:BitmapData)
 		{
-			super(w, h, mapConfig, smallMapBmd);
+			super(w, h, mapConfig, mapsRoot, smallMapBmd);
 		}
 		
 		override protected function initialize():void
@@ -19,7 +19,7 @@ package jsion.rpg.engine.games
 			
 			m_tileCompleteList = new HashMap();
 			
-			m_worldMap = new WorldMap(m_mapConfig, m_smallMapBmd, m_gameWidth, m_gameHeight);
+			m_worldMap = new WorldMap(m_mapConfig, m_mapsRoot, m_smallMapBmd, m_gameWidth, m_gameHeight);
 			m_worldMap.tileCallback = tileCompleteCallback;
 		}
 		

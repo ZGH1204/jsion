@@ -256,8 +256,8 @@
 			public function showMap(configRelativePath:String):void
 			{
 				DisposeUtil.free(gameMap);
-				RPGEngine.setMapsRoot(JsionEditor.MAP_OUTPUT_ROOT);
-				gameMap = new MapShower(mainContainer.width, mainContainer.height, configRelativePath);
+				//RPGEngine.setMapsRoot(JsionEditor.MAP_OUTPUT_ROOT);
+				gameMap = new MapShower(mainContainer.width, mainContainer.height, configRelativePath, JsionEditor.MAP_OUTPUT_ROOT);
 				mainContainer.addChild(gameMap);
 				
 				if(smallMapForm) smallMapForm.removeSmallMap();
