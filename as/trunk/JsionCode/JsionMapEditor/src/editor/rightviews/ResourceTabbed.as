@@ -1,11 +1,13 @@
 package editor.rightviews
 {
 	
-	import org.aswing.JPanel;
-	import org.aswing.JTabbedPane;
 	import editor.rightviews.tabs.BuildingsTab;
 	import editor.rightviews.tabs.NPCsTab;
 	import editor.rightviews.tabs.SurfaceTab;
+	
+	import org.aswing.JPanel;
+	import org.aswing.JTabbedPane;
+	import org.aswing.border.TitledBorder;
 	
 	public class ResourceTabbed extends JTabbedPane
 	{
@@ -39,6 +41,9 @@ package editor.rightviews
 			
 			npcsTab = new NPCsTab(mapEditor, resourcePreview);
 			append(npcsTab, "NPC");
+			
+			
+			setBorder(new TitledBorder(null, '预览', TitledBorder.TOP, TitledBorder.LEFT, 10));
 		}
 		
 //		public function updateHeight(c:JPanel, subHeight:int):void

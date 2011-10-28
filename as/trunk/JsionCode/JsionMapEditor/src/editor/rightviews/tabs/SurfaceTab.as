@@ -13,7 +13,7 @@ package editor.rightviews.tabs
 		
 		override protected function initialize():void
 		{
-			parseResourcesByDirectory(JsionEditor.getNPCsRoot());
+			parseResourcesByDirectory(JsionEditor.getSurfacesRoot());
 			
 			super.initialize();
 		}
