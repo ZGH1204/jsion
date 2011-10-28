@@ -2,6 +2,7 @@ package editor.topviews
 {
 	import editor.forms.FileNewForm;
 	import editor.forms.FileOpenForm;
+	import editor.forms.MovieEditorForm;
 	
 	import org.aswing.JButton;
 	import org.aswing.JPanel;
@@ -21,6 +22,7 @@ package editor.topviews
 		private static const FindPathGrid:String = "显示/隐藏碰撞格子";
 		private static const EditPathGrid:String = "编辑碰撞格子";
 		private static const SmallMapTip:String = "小地图";
+		private static const MovieEditorTip:String = "序列图配置器";
 		
 		private var newMapBtn:JButton;
 		
@@ -37,6 +39,8 @@ package editor.topviews
 		private var editPathGridBtn:JToggleButton;
 		
 		private var smallMapBtn:JToggleButton;
+		
+		private var movieEditorBtn:JButton;
 		
 		public function ToolBox(owner:JsionMapEditor)
 		{
@@ -72,6 +76,10 @@ package editor.topviews
 			smallMapBtn.addActionListener(onSmallMapShow);
 			smallMapBtn.setToolTipText(SmallMapTip);
 			
+			movieEditorBtn = new JButton(null, new LoadIcon("EditorUI/MovieEditor.png", 18, 14));
+			movieEditorBtn.addActionListener(onMovieEditorShow);
+			movieEditorBtn.setToolTipText(MovieEditorTip);
+			
 			append(newMapBtn);
 			append(openMapBtn);
 			append(saveMapBtn);
@@ -79,6 +87,7 @@ package editor.topviews
 			append(showFindPathGridBtn);
 			append(editPathGridBtn);
 			append(smallMapBtn);
+			append(movieEditorBtn);
 		}
 		
 		private function onNewMap(e:AWEvent):void
@@ -133,6 +142,12 @@ package editor.topviews
 			{
 				mapEditor.hideSmallMap();
 			}
+		}
+		
+		private function onMovieEditorShow(e:AWEvent):void
+		{
+			if(JsionEditor.MAP_NEWED_OPENED) new MovieEditorForm(mapEditor).show();
+			else mapEditor.msg("未创建或打开地图");
 		}
 		
 		public function updateBoxBtns():void

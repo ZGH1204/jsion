@@ -1,5 +1,7 @@
 package editor.rightviews
 {
+	import editor.aswings.PreviewBackground;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;
@@ -10,14 +12,21 @@ package editor.rightviews
 	import org.aswing.JPanel;
 	import org.aswing.LayoutManager;
 	import org.aswing.border.TitledBorder;
-	import editor.aswings.PreviewBackground;
 	
 	public class ResourcePreviewer extends JPanel implements IDispose
 	{
 		protected var bmp:Bitmap;
 		
-		public function ResourcePreviewer()
+		protected var m_viewWidth:int;
+		
+		protected var m_viewHeight:int;
+		
+		public function ResourcePreviewer(viewWidth:int = 160, viewHeight:int = 170)
 		{
+			m_viewWidth = viewWidth;
+			
+			m_viewHeight = viewHeight;
+			
 			super();
 			
 			initialize();
@@ -27,7 +36,7 @@ package editor.rightviews
 		{
 			setPreferredHeight(195);
 			
-			bmp = new Bitmap(new BitmapData(160, 170, true, 0));
+			bmp = new Bitmap(new BitmapData(m_viewWidth, m_viewHeight, true, 0));
 			setBackgroundDecorator(new PreviewBackground(bmp));
 			
 			setBorder(new TitledBorder(null, '预览', TitledBorder.TOP, TitledBorder.LEFT, 10));

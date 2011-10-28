@@ -148,7 +148,7 @@ package editor.rightviews.tabs
 		{
 			var filename:String = e.getCell().getCellValue();
 			
-			if(overFilename == filename) return;
+			//if(overFilename == filename) return;
 			
 			overFilename = filename;
 			
