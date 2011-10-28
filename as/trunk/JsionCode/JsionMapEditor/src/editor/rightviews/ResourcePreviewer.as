@@ -34,7 +34,7 @@ package editor.rightviews
 		
 		protected function initialize():void
 		{
-			setPreferredHeight(195);
+			setPreferredHeight(m_viewHeight + getInsets().top + getInsets().bottom);
 			
 			bmp = new Bitmap(new BitmapData(m_viewWidth, m_viewHeight, true, 0));
 			setBackgroundDecorator(new PreviewBackground(bmp));

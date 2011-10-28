@@ -1,6 +1,7 @@
 package editor.forms
 {
 	import editor.forms.movieparts.MovieInfoForm;
+	import editor.forms.movieparts.RendererForm;
 	import editor.rightviews.ResourcePreviewer;
 	import editor.rightviews.ResourceTabbed;
 	
@@ -24,11 +25,13 @@ package editor.forms
 		
 		protected var movieInfoForm:MovieInfoForm;
 		
+		protected var rendererForm:RendererForm;
+		
 		public function MovieEditorForm(owner:JsionMapEditor)
 		{
 			mytitle = "序列图配置器";
-			WinWidth = 800;
-			WinHeight = 500;
+			WinWidth = 680;
+			WinHeight = 470;
 			super(owner, true);
 		}
 		
@@ -92,7 +95,8 @@ package editor.forms
 			
 			
 			
-			
+			rendererForm = new RendererForm(this, 380, 288);
+			mainContainer.append(rendererForm);
 			
 			movieInfoForm = new MovieInfoForm(this);
 			mainContainer.append(movieInfoForm);

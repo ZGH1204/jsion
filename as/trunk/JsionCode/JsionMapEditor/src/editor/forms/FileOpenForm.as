@@ -39,7 +39,7 @@ package editor.forms
 		{
 			initMain();
 			
-			filePathTxt = new JTextField("", 17);
+			filePathTxt = new JTextField("C:\\Users\\Jsion\\Desktop\\Maps\\未命名地图\\config.map", 17);
 			filePathTxt.setEditable(false);
 			
 			var browserBtn:JButton = new JButton("浏览");
