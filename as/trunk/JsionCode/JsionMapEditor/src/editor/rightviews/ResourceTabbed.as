@@ -11,13 +11,13 @@ package editor.rightviews
 	
 	public class ResourceTabbed extends JTabbedPane
 	{
+		public var buildingsTab:BuildingsTab;
+		
+		public var npcsTab:NPCsTab;
+		
+		public var surfaceTab:SurfaceTab;
+		
 		protected var mapEditor:JsionMapEditor;
-		
-		protected var buildingsTab:BuildingsTab;
-		
-		protected var npcsTab:NPCsTab;
-		
-		protected var surfaceTab:SurfaceTab;
 		
 		protected var resourcePreview:ResourcePreviewer;
 		
