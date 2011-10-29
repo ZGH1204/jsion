@@ -26,6 +26,8 @@ package editor.forms.movieparts
 		
 		protected var m_frameTotalTxt:JTextField;
 		
+		protected var m_frameRateTxt:JTextField;
+		
 		protected var m_applyBtn:JButton;
 		
 		public function MovieInfoForm(form:MovieEditorForm)
@@ -41,28 +43,32 @@ package editor.forms.movieparts
 		
 		protected function initialize():void
 		{
-			var jpanle:JPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0));
-			
-			m_resourcePathTxt = new JTextField("", 37);
-			jpanle.append(new JLabel("资源路径： "));
-			jpanle.append(m_resourcePathTxt);
-			append(jpanle);
-			
 			m_frameWidthTxt = new JTextField("0", 15);
-			
 			m_frameHeightTxt = new JTextField("0", 15);
 			addRow(new JLabel("每帧宽度："), m_frameWidthTxt, new JLabel("每帧高度："), m_frameHeightTxt);
 			
 			m_frameOffsetXTxt = new JTextField("0", 15);
-			
 			m_frameOffsetYTxt = new JTextField("0", 15);
 			addRow(new JLabel("横轴偏移："), m_frameOffsetXTxt, new JLabel("纵轴偏移："), m_frameOffsetYTxt);
 			
-			jpanle = new JPanel(new FlowLayout(FlowLayout.LEFT, 0));
-			m_frameTotalTxt = new JTextField("1", 34);
+			m_frameTotalTxt = new JTextField("1", 15);
+			m_frameRateTxt = new JTextField("30");
+			addRow(new JLabel("帧总数量："), m_frameTotalTxt, new JLabel("帧　　率："), m_frameRateTxt);
+			
+			
+			
+			
+			
+			var jpanle:JPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0));
+			
+			
+			
+			
 			m_applyBtn = new JButton("应用");
-			jpanle.append(new JLabel("帧总数量： "));
-			jpanle.append(m_frameTotalTxt);
+			m_resourcePathTxt = new JTextField("", 34);
+			
+			jpanle.append(new JLabel("资源路径： "));
+			jpanle.append(m_resourcePathTxt);
 			jpanle.append(m_applyBtn);
 			append(jpanle);
 		}

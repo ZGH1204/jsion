@@ -31,7 +31,7 @@ package editor.forms
 		{
 			mytitle = "序列图配置器";
 			WinWidth = 680;
-			WinHeight = 470;
+			WinHeight = 481;
 			super(owner, true);
 		}
 		
@@ -78,7 +78,7 @@ package editor.forms
 			
 			
 			
-			previewer = new ResourcePreviewer(170);
+			previewer = new ResourcePreviewer(170, 179);
 			leftContainer.append(previewer);
 			
 			resourceTabbed = new ResourceTabbed(mapEditor, previewer);
@@ -95,7 +95,7 @@ package editor.forms
 			
 			
 			
-			rendererForm = new RendererForm(this, 380, 288);
+			rendererForm = new RendererForm(this, 489, 307);
 			mainContainer.append(rendererForm);
 			
 			movieInfoForm = new MovieInfoForm(this);
