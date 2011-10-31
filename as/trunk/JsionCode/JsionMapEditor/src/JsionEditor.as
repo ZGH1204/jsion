@@ -26,11 +26,17 @@ package
 		
 		public static var MAP_TILES_OUTPUT_FORMAT:String = MAP_OUTPUT_FORMAT + "/tiles";
 		
-		public static var MAP_SURFACES_FORMAT:String = MAP_OUTPUT_FORMAT + "/surfaces";
+		public static var MAP_SURFACES_DIR:String = "surfaces";
 		
-		public static var MAP_BUILDINGS_FORMAT:String = MAP_OUTPUT_FORMAT + "/buildings";
+		public static var MAP_SURFACES_FORMAT:String = MAP_OUTPUT_FORMAT + "/" + MAP_SURFACES_DIR;
 		
-		public static var MAP_NPCS_FORMAT:String = MAP_OUTPUT_FORMAT + "/npcs";
+		public static var MAP_BUILDINGS_DIR:String = "buildings";
+		
+		public static var MAP_BUILDINGS_FORMAT:String = MAP_OUTPUT_FORMAT + "/" + MAP_BUILDINGS_DIR;
+		
+		public static var MAP_NPCS_DIR:String = "npcs";
+		
+		public static var MAP_NPCS_FORMAT:String = MAP_OUTPUT_FORMAT + "/" + MAP_NPCS_DIR;
 		
 		public static var MAP_TILES_FILENAME_FORMAT:String = "{1}_{0}{2}";
 		
