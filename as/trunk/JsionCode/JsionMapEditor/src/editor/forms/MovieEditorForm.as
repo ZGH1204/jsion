@@ -1,9 +1,15 @@
 package editor.forms
 {
+	import editor.events.LibTabEvent;
 	import editor.forms.movieparts.MovieInfoForm;
 	import editor.forms.movieparts.RendererForm;
 	import editor.rightviews.ResourcePreviewer;
 	import editor.rightviews.ResourceTabbed;
+	
+	import flash.display.BitmapData;
+	
+	import jsion.utils.PathUtil;
+	import jsion.utils.StringUtil;
 	
 	import org.aswing.BorderLayout;
 	import org.aswing.Container;
@@ -25,7 +31,7 @@ package editor.forms
 		
 		protected var movieInfoForm:MovieInfoForm;
 		
-		protected var rendererForm:RendererForm;
+		public var rendererForm:RendererForm;
 		
 		public function MovieEditorForm(owner:JsionMapEditor)
 		{
@@ -100,6 +106,39 @@ package editor.forms
 			
 			movieInfoForm = new MovieInfoForm(this);
 			mainContainer.append(movieInfoForm);
+		}
+		
+		override protected function initEvent():void
+		{
+			resourceTabbed.buildingsTab.addEventListener(LibTabEvent.SELECT_FILE, __buildingSelectHandler, false, 0, true);
+			resourceTabbed.npcsTab.addEventListener(LibTabEvent.SELECT_FILE, __npcSelectHandler, false, 0, true);
+			resourceTabbed.surfaceTab.addEventListener(LibTabEvent.SELECT_FILE, __surfaceSelectHandler, false, 0, true);
+		}
+		
+		private function __buildingSelectHandler(e:LibTabEvent):void
+		{
+			var path:String = PathUtil.combinPath(JsionEditor.MAP_BUILDINGS_DIR, e.filename);
+			
+			onSelect(path, e.obj as BitmapData);
+		}
+		
+		private function __npcSelectHandler(e:LibTabEvent):void
+		{
+			var path:String = PathUtil.combinPath(JsionEditor.MAP_NPCS_DIR, e.filename);
+			
+			onSelect(path, e.obj as BitmapData);
+		}
+		
+		private function __surfaceSelectHandler(e:LibTabEvent):void
+		{
+			var path:String = PathUtil.combinPath(JsionEditor.MAP_SURFACES_DIR, e.filename);
+			
+			onSelect(path, e.obj as BitmapData);
+		}
+		
+		private function onSelect(path:String, bmd:BitmapData):void
+		{
+			movieInfoForm.updateInfo(path, bmd);
 		}
 	}
 }

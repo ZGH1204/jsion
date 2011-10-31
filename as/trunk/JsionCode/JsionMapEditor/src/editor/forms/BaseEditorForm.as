@@ -56,6 +56,8 @@ package editor.forms
 			super(mapEditor.Window, mytitle, modal);
 			
 			init();
+			
+			initEvent();
 		}
 		
 		protected function init():void
@@ -85,6 +87,11 @@ package editor.forms
 			
 			getContentPane().append(main);
 			//JFrameTitleBar(titleBar).setPreferredHeight(42);
+		}
+		
+		protected function initEvent():void
+		{
+			
 		}
 		
 		protected function initMain():void

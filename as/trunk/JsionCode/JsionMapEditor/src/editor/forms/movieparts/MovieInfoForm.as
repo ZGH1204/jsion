@@ -1,6 +1,9 @@
 package editor.forms.movieparts
 {
 	import editor.forms.MovieEditorForm;
+	import editor.forms.renders.RenderInfo;
+	
+	import flash.display.BitmapData;
 	
 	import org.aswing.FlowLayout;
 	import org.aswing.JButton;
@@ -8,13 +11,12 @@ package editor.forms.movieparts
 	import org.aswing.JPanel;
 	import org.aswing.JTextField;
 	import org.aswing.border.TitledBorder;
+	import org.aswing.event.AWEvent;
 	import org.aswing.ext.Form;
 	
 	public class MovieInfoForm extends Form
 	{
 		protected var movieEditorForm:MovieEditorForm;
-		
-		protected var m_resourcePathTxt:JTextField;
 		
 		protected var m_frameWidthTxt:JTextField;
 		
@@ -27,6 +29,8 @@ package editor.forms.movieparts
 		protected var m_frameTotalTxt:JTextField;
 		
 		protected var m_frameRateTxt:JTextField;
+		
+		protected var m_resourcePathTxt:JTextField;
 		
 		protected var m_applyBtn:JButton;
 		
@@ -65,12 +69,48 @@ package editor.forms.movieparts
 			
 			
 			m_applyBtn = new JButton("应用");
+			m_applyBtn.setEnabled(false);
+			m_applyBtn.addActionListener(__applyClickHandler);
 			m_resourcePathTxt = new JTextField("", 34);
 			
 			jpanle.append(new JLabel("资源路径： "));
 			jpanle.append(m_resourcePathTxt);
 			jpanle.append(m_applyBtn);
 			append(jpanle);
+		}
+		
+		private function __applyClickHandler(e:AWEvent):void
+		{
+			var ri:RenderInfo = new RenderInfo();
+			
+			ri.frameWidth = int(m_frameWidthTxt.getText());
+			ri.frameHeight = int(m_frameHeightTxt.getText());
+			ri.offsetX = int(m_frameOffsetXTxt.getText());
+			ri.offsetY = int(m_frameOffsetYTxt.getText());
+			ri.frameTotal = int(m_frameTotalTxt.getText());
+			ri.fps = int(m_frameRateTxt.getText());
+			ri.path = m_resourcePathTxt.getText();
+			
+			movieEditorForm.rendererForm.setRenderInfo(ri);
+		}
+		
+		public function updateInfo(path:String, bmd:BitmapData):void
+		{
+			m_resourcePathTxt.setText(path);
+			
+			m_frameWidthTxt.setText(bmd.width.toString());
+			m_frameHeightTxt.setText(bmd.height.toString());
+			
+			m_frameOffsetXTxt.setText("0");
+			m_frameOffsetYTxt.setText("0");
+			
+			m_frameTotalTxt.setText("1");
+			
+			m_frameRateTxt.setText("30");
+			
+			m_applyBtn.setEnabled(true);
+			
+			__applyClickHandler(null);
 		}
 	}
 }

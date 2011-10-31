@@ -40,6 +40,8 @@ package editor.forms.renders
 		
 		protected var m_tempRect:Rectangle = new Rectangle();
 		
+		protected var m_currentPath:String;
+		
 		public function Render()
 		{
 		}
@@ -101,27 +103,32 @@ package editor.forms.renders
 			m_destPoint.x = (renderer.width - m_renderInfo.frameWidth) / 2;
 			m_destPoint.y = (renderer.height - m_renderInfo.frameHeight) / 2;
 			
-			//TODO:可以设置成默认位图数据
-			DisposeUtil.free(bitmapData);
-			bitmapData = null;
-			
-			var file:File = new File(PathUtil.combinPath(JsionEditor.getMapAssetRoot(), m_renderInfo.path));
-			
-			if(file.exists == false)
+			if(m_currentPath != m_renderInfo.path)
 			{
-				throw new Error("资源不存在");
-				return;
+				//TODO:可以设置成默认位图数据
+				DisposeUtil.free(bitmapData);
+				bitmapData = null;
+				
+				m_currentPath = m_renderInfo.path;
+				
+				var file:File = new File(PathUtil.combinPath(JsionEditor.getMapAssetRoot(), m_renderInfo.path));
+				
+				if(file.exists == false)
+				{
+					throw new Error("资源不存在");
+					return;
+				}
+				
+				var bytes:ByteArray = new ByteArray();
+				
+				var fs:FileStream = new FileStream();
+				
+				fs.open(file, FileMode.READ);
+				fs.readBytes(bytes);
+				fs.close();
+				
+				new ImageLoader(file.nativePath).loadAsync(loadCallback);
 			}
-			
-			var bytes:ByteArray = new ByteArray();
-			
-			var fs:FileStream = new FileStream();
-			
-			fs.open(file, FileMode.READ);
-			fs.readBytes(bytes);
-			fs.close();
-			
-			new ImageLoader(file.nativePath).loadAsync(loadCallback);
 		}
 		
 		private function loadCallback(loader:ImageLoader):void

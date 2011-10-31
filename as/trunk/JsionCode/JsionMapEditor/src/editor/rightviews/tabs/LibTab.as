@@ -1,5 +1,6 @@
 package editor.rightviews.tabs
 {
+	import editor.events.LibTabEvent;
 	import editor.rightviews.ResourcePreviewer;
 	
 	import flash.display.Bitmap;
@@ -96,6 +97,8 @@ package editor.rightviews.tabs
 			resourcePreview.draw(bmd);
 			
 			DisposeUtil.free(loader);
+			
+			dispatchEvent(new LibTabEvent(LibTabEvent.SELECT_FILE, overFilename, bmd));
 		}
 		
 		protected function parseResourcesByDirectory(directory:String):void
