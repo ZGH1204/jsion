@@ -30,7 +30,7 @@ package editor.forms.movieparts
 			
 			super();
 			
-			setBorder(new TitledBorder(null, '序列图配置信息', TitledBorder.TOP, TitledBorder.LEFT, 10));
+			setBorder(new TitledBorder(null, '动画预览', TitledBorder.TOP, TitledBorder.LEFT, 10));
 			
 			m_fWidth = w;
 			m_fHeight = h;

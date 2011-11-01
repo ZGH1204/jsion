@@ -15,6 +15,7 @@ package editor.forms
 	import org.aswing.Container;
 	import org.aswing.JPanel;
 	import org.aswing.SoftBoxLayout;
+	import org.aswing.VectorListModel;
 	import org.aswing.ext.Form;
 
 	public class MovieEditorForm extends BaseEditorForm
@@ -33,11 +34,17 @@ package editor.forms
 		
 		public var rendererForm:RendererForm;
 		
+		public var renderInfos:HashMap;
+		
+		public var module:VectorListModel;
+		
 		public function MovieEditorForm(owner:JsionMapEditor)
 		{
 			mytitle = "序列图配置器";
 			WinWidth = 680;
 			WinHeight = 481;
+			renderInfos = JsionEditor.surfaceRenderInfo;
+			module = JsionEditor.surfaceModule;
 			super(owner, true);
 		}
 		
@@ -117,28 +124,37 @@ package editor.forms
 		
 		private function __buildingSelectHandler(e:LibTabEvent):void
 		{
+			renderInfos = JsionEditor.buildingRenderInfo;
+			module = JsionEditor.buildingModule;
+			
 			var path:String = PathUtil.combinPath(JsionEditor.MAP_BUILDINGS_DIR, e.filename);
 			
-			onSelect(path, e.obj as BitmapData);
+			onSelect(path, e.filename, e.obj as BitmapData);
 		}
 		
 		private function __npcSelectHandler(e:LibTabEvent):void
 		{
+			renderInfos = JsionEditor.npcRenderInfo;
+			module = JsionEditor.npcModule;
+			
 			var path:String = PathUtil.combinPath(JsionEditor.MAP_NPCS_DIR, e.filename);
 			
-			onSelect(path, e.obj as BitmapData);
+			onSelect(path, e.filename, e.obj as BitmapData);
 		}
 		
 		private function __surfaceSelectHandler(e:LibTabEvent):void
 		{
+			renderInfos = JsionEditor.surfaceRenderInfo;
+			module = JsionEditor.surfaceModule;
+			
 			var path:String = PathUtil.combinPath(JsionEditor.MAP_SURFACES_DIR, e.filename);
 			
-			onSelect(path, e.obj as BitmapData);
+			onSelect(path, e.filename, e.obj as BitmapData);
 		}
 		
-		private function onSelect(path:String, bmd:BitmapData):void
+		private function onSelect(path:String, filename:String, bmd:BitmapData):void
 		{
-			movieInfoForm.updateInfo(path, bmd);
+			movieInfoForm.updateInfo(path, filename, bmd);
 		}
 	}
 }

@@ -4,6 +4,10 @@ package editor.forms.movieparts
 	import editor.forms.renders.RenderInfo;
 	
 	import flash.display.BitmapData;
+	import flash.filesystem.File;
+	
+	import jsion.utils.ObjectUtil;
+	import jsion.utils.PathUtil;
 	
 	import org.aswing.FlowLayout;
 	import org.aswing.JButton;
@@ -32,7 +36,11 @@ package editor.forms.movieparts
 		
 		protected var m_resourcePathTxt:JTextField;
 		
+		protected var m_filename:String;
+		
 		protected var m_applyBtn:JButton;
+		
+		protected var m_applyAllNPCBtn:JButton;
 		
 		public function MovieInfoForm(form:MovieEditorForm)
 		{
@@ -68,20 +76,44 @@ package editor.forms.movieparts
 			
 			
 			
-			m_applyBtn = new JButton("应用");
+			m_resourcePathTxt = new JTextField("", 10);
+			m_resourcePathTxt.setEditable(false);
+			m_applyBtn = new JButton("更新");
 			m_applyBtn.setEnabled(false);
 			m_applyBtn.addActionListener(__applyClickHandler);
-			m_resourcePathTxt = new JTextField("", 34);
+			m_applyAllNPCBtn = new JButton("批量更新NPC");
+			m_applyAllNPCBtn.setEnabled(false);
+			m_applyAllNPCBtn.setToolTipText("使用以上配置信息批量更新所有NPC资源配置");
+			m_applyAllNPCBtn.addActionListener(__applyAllNPCClickHandler);
 			
 			jpanle.append(new JLabel("资源路径： "));
 			jpanle.append(m_resourcePathTxt);
 			jpanle.append(m_applyBtn);
+			jpanle.append(m_applyAllNPCBtn);
 			append(jpanle);
 		}
 		
 		private function __applyClickHandler(e:AWEvent):void
 		{
-			var ri:RenderInfo = new RenderInfo();
+			var ri:RenderInfo;
+			
+			if(movieEditorForm.renderInfos.containsKey(m_filename))
+			{
+				ri = movieEditorForm.renderInfos.get(m_filename);
+				getFormInfo(ri);
+			}
+			else
+			{
+				ri = getFormInfo();
+				movieEditorForm.renderInfos.put(ri.filename, ri);
+			}
+			
+			movieEditorForm.rendererForm.setRenderInfo(ri);
+		}
+		
+		private function getFormInfo(ri:RenderInfo = null):RenderInfo
+		{
+			if(ri == null) ri = new RenderInfo();
 			
 			ri.frameWidth = int(m_frameWidthTxt.getText());
 			ri.frameHeight = int(m_frameHeightTxt.getText());
@@ -90,25 +122,88 @@ package editor.forms.movieparts
 			ri.frameTotal = int(m_frameTotalTxt.getText());
 			ri.fps = int(m_frameRateTxt.getText());
 			ri.path = m_resourcePathTxt.getText();
+			ri.filename = m_filename;
 			
-			movieEditorForm.rendererForm.setRenderInfo(ri);
+			return ri;
 		}
 		
-		public function updateInfo(path:String, bmd:BitmapData):void
+		private function __applyAllNPCClickHandler(e:AWEvent):void
 		{
-			m_resourcePathTxt.setText(path);
+			applyAllByForm(JsionEditor.npcRenderInfo, JsionEditor.getNPCsRoot());
+		}
+		
+		private function applyAllByForm(hashMap:HashMap, dir:String):void
+		{
+			hashMap.removeAll();
 			
-			m_frameWidthTxt.setText(bmd.width.toString());
-			m_frameHeightTxt.setText(bmd.height.toString());
+			var file:File = new File(dir);
 			
-			m_frameOffsetXTxt.setText("0");
-			m_frameOffsetYTxt.setText("0");
+			if(file.exists == false)
+			{
+				return;
+			}
 			
-			m_frameTotalTxt.setText("1");
+			var ri:RenderInfo = getFormInfo();
 			
-			m_frameRateTxt.setText("30");
+			var fileList:Array = file.getDirectoryListing();
+			
+			for(var i:int = 0; i < fileList.length; i++)
+			{
+				var f:File = fileList[i] as File;
+				
+				if(f.isDirectory)
+				{
+					i--;
+					fileList.splice(i, 1);
+					continue;
+				}
+				
+				var tmp:RenderInfo = new RenderInfo();
+				ObjectUtil.copyToTarget(ri, tmp);
+				
+				tmp.filename = f.name;
+				tmp.path = PathUtil.combinPath(JsionEditor.MAP_NPCS_DIR, tmp.filename);
+				hashMap.put(tmp.filename, tmp);
+			}
+		}
+		
+		public function updateInfo(path:String, filename:String, bmd:BitmapData):void
+		{
+			if(movieEditorForm.renderInfos.containsKey(filename))
+			{
+				var ri:RenderInfo = movieEditorForm.renderInfos.get(filename);
+				
+				m_resourcePathTxt.setText(ri.path);
+				
+				m_frameWidthTxt.setText(ri.frameWidth.toString());
+				m_frameHeightTxt.setText(ri.frameHeight.toString());
+				
+				m_frameOffsetXTxt.setText(ri.offsetX.toString());
+				m_frameOffsetYTxt.setText(ri.offsetY.toString());
+				
+				m_frameTotalTxt.setText(ri.frameTotal.toString());
+				
+				m_frameRateTxt.setText(ri.fps.toString());
+			}
+			else
+			{
+				m_resourcePathTxt.setText(path);
+				
+				m_frameWidthTxt.setText(bmd.width.toString());
+				m_frameHeightTxt.setText(bmd.height.toString());
+				
+				m_frameOffsetXTxt.setText("0");
+				m_frameOffsetYTxt.setText("0");
+				
+				m_frameTotalTxt.setText("1");
+				
+				m_frameRateTxt.setText("30");
+			}
+			
+			m_filename = filename;
 			
 			m_applyBtn.setEnabled(true);
+			m_applyAllNPCBtn.setEnabled(true);
 			
 			__applyClickHandler(null);
 		}

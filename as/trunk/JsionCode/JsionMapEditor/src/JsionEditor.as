@@ -9,6 +9,8 @@ package
 	import jsion.rpg.engine.games.BaseMap;
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
+	
+	import org.aswing.VectorListModel;
 
 	public class JsionEditor
 	{
@@ -45,6 +47,23 @@ package
 		public static var BIGMAP_FILE_NAME:String = "big_map";
 		
 		public static var SMALLMAP_FILE_NAME:String = "small_map.png";
+		
+		
+		
+		public static var surfaceRenderInfo:HashMap = new HashMap();
+		
+		public static var buildingRenderInfo:HashMap = new HashMap();
+		
+		public static var npcRenderInfo:HashMap = new HashMap();
+		
+		public static var surfaceModule:VectorListModel = new VectorListModel();
+		
+		public static var buildingModule:VectorListModel = new VectorListModel();
+		
+		public static var npcModule:VectorListModel = new VectorListModel();
+		
+		
+		
 		
 //		public static var mapid:String = "未命名地图";
 //		

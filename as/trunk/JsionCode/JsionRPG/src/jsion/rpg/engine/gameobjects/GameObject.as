@@ -4,6 +4,7 @@ package jsion.rpg.engine.gameobjects
 	import flash.geom.Rectangle;
 	
 	import jsion.rpg.engine.games.BaseGame;
+	import jsion.rpg.engine.graphics.GraphicResource;
 	import jsion.rpg.engine.renders.Render;
 
 	/**
@@ -33,6 +34,11 @@ package jsion.rpg.engine.gameobjects
 		 * 渲染器
 		 */		
 		public var render:Render;
+		
+		/**
+		 * 图形资源
+		 */		
+		protected var m_graphicResource:GraphicResource;
 		
 		/**
 		 * 游戏世界坐标
@@ -161,6 +167,30 @@ package jsion.rpg.engine.gameobjects
 		public function set direction(value:int):void
 		{
 			m_direction = value;
+		}
+		
+		/**
+		 * 图形资源
+		 */		
+		public function get graphicResource():GraphicResource
+		{
+			return m_graphicResource;
+		}
+		
+		public function set graphicResource(value:GraphicResource):void
+		{
+			m_graphicResource = value;
+		}
+		
+		public function get renderRect():Rectangle
+		{
+			m_tempRect.x = 0;
+			m_tempRect.y = 0;
+			
+			m_tempRect.width = m_graphicResource.frameWidth;
+			m_tempRect.height = m_graphicResource.frameHeight;
+			
+			return m_tempRect;
 		}
 		
 		public function dispose():void
