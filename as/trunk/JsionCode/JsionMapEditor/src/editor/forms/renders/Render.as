@@ -24,10 +24,6 @@ package editor.forms.renders
 		
 		protected var m_currentFrame:int = -1;
 		
-		protected var m_currentFrameRight:int;
-		
-		protected var m_currentFrameBottom:int;
-		
 		protected var m_lastFrame:int;
 		
 		protected var m_playTimeSpan:int;
@@ -48,24 +44,37 @@ package editor.forms.renders
 		
 		public function render(bmd:BitmapData):void
 		{
-			if(bitmapData && (EngineGlobal.Timer - m_lastFrameTime) >= m_playTimeSpan)
+			if(bitmapData)
 			{
-				m_currentFrame++;
-				
-				if(m_currentFrame >= m_renderInfo.frameTotal)
+				if((EngineGlobal.Timer - m_lastFrameTime) >= m_playTimeSpan)
 				{
-					m_currentFrame = 0;
-				}
-				
-				
-				m_renderRect.x = m_currentFrame * m_renderRect.width;
-				if(m_renderRect.x >= bitmapData.width)
-				{
-					m_renderRect.x = 0;
+					m_lastFrame = m_currentFrame;
 					
-					m_renderRect.y += m_renderRect.height;
+					m_currentFrame++;
+					
+					if(m_currentFrame >= m_renderInfo.frameTotal)
+					{
+						m_currentFrame = 0;
+					}
+					
+					
+					m_renderRect.x = m_currentFrame * m_renderRect.width;
+					
+					if(m_renderRect.x > 0) m_renderRect.x -= m_renderInfo.offsetX;
+					
+					if(m_renderRect.x >= bitmapData.width)
+					{
+						m_renderRect.x = 0;
+						
+						m_renderRect.y += m_renderRect.height;
+						
+						if(m_renderRect.y > 0) m_renderRect.y -= m_renderInfo.offsetY;
+						
+						if(m_renderRect.y >= bitmapData.height) m_renderRect.y = 0;
+					}
+					
+					m_lastFrameTime = EngineGlobal.Timer;
 				}
-				
 				
 				bmd.copyPixels(bitmapData, m_renderRect, m_destPoint, null, null, true);
 			}

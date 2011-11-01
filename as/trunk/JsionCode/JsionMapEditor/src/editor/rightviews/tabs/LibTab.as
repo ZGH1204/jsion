@@ -30,7 +30,7 @@ package editor.rightviews.tabs
 		
 		protected var mapEditor:JsionMapEditor;
 		
-		protected var module:VectorListModel;
+		public var module:VectorListModel;
 		
 		protected var list:JList;
 		
