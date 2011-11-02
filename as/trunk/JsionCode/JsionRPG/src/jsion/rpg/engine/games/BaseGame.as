@@ -1,9 +1,12 @@
 package jsion.rpg.engine.games
 {
 	import flash.display.BitmapData;
+	import flash.geom.Point;
 	
 	import jsion.rpg.engine.datas.MapConfig;
 	import jsion.rpg.engine.gameobjects.GameObject;
+	import jsion.rpg.engine.graphics.GraphicInfo;
+	import jsion.rpg.engine.renders.RenderStatic;
 
 	public class BaseGame implements IDispose
 	{
@@ -24,6 +27,7 @@ package jsion.rpg.engine.games
 		
 		protected var m_worldMap:BaseMap;
 		
+		protected var m_renderBuilding:RenderStatic;
 		
 		protected var m_gameWidth:int;
 		
@@ -122,6 +126,11 @@ package jsion.rpg.engine.games
 		public function get worldMap():BaseMap
 		{
 			return m_worldMap;
+		}
+		
+		public function createBuilding(info:GraphicInfo, pos:Point):GameObject
+		{
+			return null;
 		}
 		
 		public function dispose():void
