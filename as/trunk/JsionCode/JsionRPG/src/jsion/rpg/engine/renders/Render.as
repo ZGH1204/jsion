@@ -33,12 +33,26 @@ package jsion.rpg.engine.renders
 		{
 		}
 		
+		public function isOutScreen(object:GameObject):Boolean
+		{
+			var tmp:Point = object.game.worldMap.worldToScreen(object.x, object.y);
+			
+			if(tmp.x < 0 || tmp.y < 0 ||
+				object.x > object.game.gameWidth ||
+				object.y > object.game.gameHeight) return true;
+			
+			return false;
+		}
+		
 		public function render(object:GameObject):void
 		{
+			lastPoint.x = renderPoint.x;
+			lastPoint.y = renderPoint.y;
 		}
 		
 		public function renderClear(object:GameObject):void
 		{
+			drawClear(null, object.renderRect, object.game);
 		}
 		
 		/**

@@ -275,6 +275,7 @@
 				
 				gameMap.setSmallMapShower(smallMap);
 				gameMap.setCoordView(coordView);
+				gameMap.setResourceTabbed(resourceTabbed);
 			}
 			
 			public function fileNewCallabck():void

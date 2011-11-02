@@ -1,6 +1,8 @@
 package editor.forms
 {
 	
+	import editor.forms.renders.RenderInfo;
+	
 	import flash.events.Event;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
@@ -8,6 +10,8 @@ package editor.forms
 	import flash.net.FileFilter;
 	import flash.utils.ByteArray;
 	
+	import jsion.utils.DisposeUtil;
+	import jsion.utils.ObjectUtil;
 	import jsion.utils.RandomUtil;
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
@@ -103,11 +107,38 @@ package editor.forms
 			JsionEditor.mapWayConfig = JsionEditor.parseWayTileGridData(xml.ways.text());
 			//JsionEditor.createWayTileGridData();
 			
+			JsionEditor.npcRenderInfo.removeAll();
+			JsionEditor.surfaceRenderInfo.removeAll();
+			JsionEditor.buildingRenderInfo.removeAll();
+			
+			translateToRenderInfo(xml.configs.npcs..item, JsionEditor.npcRenderInfo);
+			
+			translateToRenderInfo(xml.configs.surfaces..item, JsionEditor.surfaceRenderInfo);
+			
+			translateToRenderInfo(xml.configs.buildings..item, JsionEditor.buildingRenderInfo);
 			
 			
 			mapEditor.fileOpenCallback();
 			
 			super.onSubmit(e);
+		}
+		
+		private function translateToRenderInfo(xl:XMLList, rlt:HashMap):void
+		{
+			var hashMap:HashMap = JsionEditor.parseGraphicInfo(xl);
+			
+			var list:Array = hashMap.getValues();
+			
+			for each(var obj:Object in list)
+			{
+				var info:RenderInfo = new RenderInfo();
+				
+				ObjectUtil.copyToTarget(obj, info);
+				
+				rlt.put(info.filename, info);
+			}
+			
+			DisposeUtil.free(hashMap);
 		}
 	}
 }

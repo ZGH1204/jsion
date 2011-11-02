@@ -6,6 +6,8 @@ package editor.events
 	{
 		public static const SELECT_FILE:String = "selectFile";
 		
+		public static const DOUBLE_CLICK:String = "itemDoubleClick";
+		
 		public var filename:String;
 		
 		public var obj:Object;

@@ -9,8 +9,6 @@ package
 	import jsion.rpg.engine.games.BaseMap;
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
-	
-	import org.aswing.VectorListModel;
 
 	public class JsionEditor
 	{
@@ -55,12 +53,6 @@ package
 		public static var buildingRenderInfo:HashMap = new HashMap();
 		
 		public static var npcRenderInfo:HashMap = new HashMap();
-		
-		public static var surfaceModule:VectorListModel = new VectorListModel();
-		
-		public static var buildingModule:VectorListModel = new VectorListModel();
-		
-		public static var npcModule:VectorListModel = new VectorListModel();
 		
 		
 		
@@ -201,6 +193,18 @@ package
 			
 			xml.appendChild(waysXml);
 			
+			
+			
+			var renderConfig:XML = new XML("<configs></configs>");
+			
+			renderConfig.appendChild(encodeRenderInfos("npcs", npcRenderInfo));
+			renderConfig.appendChild(encodeRenderInfos("surfaces", surfaceRenderInfo));
+			renderConfig.appendChild(encodeRenderInfos("buildings", buildingRenderInfo));
+			
+			xml.appendChild(renderConfig);
+			
+			
+			
 			var file:File = new File(getMapConfigPath());
 			if(file.exists) file.deleteFile();
 			var fs:FileStream = new FileStream();
@@ -218,6 +222,16 @@ package
 			fs.close();
 			
 			if(mapEditor) mapEditor.msg("保存成功", 0);
+		}
+		
+		private static function encodeRenderInfos(nodeName:String, hashMap:HashMap):XML
+		{
+			return BaseMap.encodeRenderInfos(nodeName, hashMap);
+		}
+		
+		public static function parseGraphicInfo(xl:XMLList):HashMap
+		{
+			return BaseMap.parseGraphicInfo(xl);
 		}
 	}
 }

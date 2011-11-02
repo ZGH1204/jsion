@@ -6,8 +6,10 @@ package jsion.rpg.engine.games
 	import flash.geom.Rectangle;
 	
 	import jsion.rpg.engine.datas.MapConfig;
+	import jsion.rpg.engine.graphics.GraphicInfo;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.PathUtil;
+	import jsion.utils.XmlUtil;
 	
 	public class BaseMap extends EventDispatcher implements IDispose
 	{
@@ -488,6 +490,39 @@ package jsion.rpg.engine.games
 			}
 			
 			return rlt;
+		}
+		
+		
+		
+		public static function encodeRenderInfos(nodeName:String, hashMap:HashMap):XML
+		{
+			var xml:XML = new XML("<" + nodeName + ">" + "</" + nodeName + ">");
+			
+			var list:Array = hashMap.getValues();
+			
+			for each(var info:GraphicInfo in list)
+			{
+				var x:XML = XmlUtil.encodeWithProperty("item", info);
+				xml.appendChild(x);
+			}
+			
+			return xml;
+		}
+		
+		public static function parseGraphicInfo(xl:XMLList):HashMap
+		{
+			var hashMap:HashMap = new HashMap();
+			
+			for each(var xml:XML in xl)
+			{
+				var info:GraphicInfo = new GraphicInfo();
+				
+				XmlUtil.decodeWithProperty(info, xml);
+				
+				hashMap.put(info.filename, info);
+			}
+			
+			return hashMap;
 		}
 		
 		public function dispose():void

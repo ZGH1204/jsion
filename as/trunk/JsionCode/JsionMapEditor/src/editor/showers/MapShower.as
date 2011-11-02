@@ -1,7 +1,9 @@
 package editor.showers
 {
+	import editor.events.LibTabEvent;
 	import editor.leftviews.SmallMap;
 	import editor.rightviews.CoordViewer;
+	import editor.rightviews.ResourceTabbed;
 	
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -16,6 +18,8 @@ package editor.showers
 		protected var m_smallMapShower:SmallMap;
 		
 		protected var m_coordView:CoordViewer;
+		
+		protected var m_resourceTabbed:ResourceTabbed;
 		
 		public function MapShower(w:int, h:int, configPath:String, mapsRoot:String)
 		{
@@ -55,6 +59,35 @@ package editor.showers
 		public function setCoordView(view:CoordViewer):void
 		{
 			m_coordView = view;
+		}
+		
+		public function setResourceTabbed(bed:ResourceTabbed):void
+		{
+//			if(m_resourceTabbed)
+//			{
+//				if(m_resourceTabbed.npcsTab) m_resourceTabbed.npcsTab.removeEventListener(LibTabEvent.DOUBLE_CLICK, __itemDoubleClickHandler);
+//			
+//				if(m_resourceTabbed.buildingsTab) m_resourceTabbed.buildingsTab.removeEventListener(LibTabEvent.DOUBLE_CLICK, __buildingItemDoubleClickHandler);
+//			}
+			
+			m_resourceTabbed = bed;
+			
+			if(m_resourceTabbed)
+			{
+				if(m_resourceTabbed.npcsTab) m_resourceTabbed.npcsTab.addEventListener(LibTabEvent.DOUBLE_CLICK, __npcItemDoubleClickHandler);
+				
+				if(m_resourceTabbed.buildingsTab) m_resourceTabbed.buildingsTab.addEventListener(LibTabEvent.DOUBLE_CLICK, __buildingItemDoubleClickHandler);
+			}
+		}
+		
+		private function __npcItemDoubleClickHandler(e:LibTabEvent):void
+		{
+			
+		}
+		
+		private function __buildingItemDoubleClickHandler(e:LibTabEvent):void
+		{
+			
 		}
 		
 		override public function setCameraWH(w:int, h:int):void
