@@ -21,6 +21,11 @@ package jsion.rpg.engine.gameobjects
 		public static const RENDER_BOTTOM_CENTER:int = 3;
 		
 		/**
+		 * 游戏对象名称
+		 */		
+		public var name:String;
+		
+		/**
 		 * 游戏数据引用
 		 */		
 		public var game:BaseGame;
@@ -78,19 +83,17 @@ package jsion.rpg.engine.gameobjects
 		
 		public function clearMe():void
 		{
-			if(render != null)
-			{
-				render.renderClear(this);
-			}
+			if(render == null) return;
+			
+			render.renderClear(this);
 		}
 		
 		public function renderMe():void
 		{
 			//TODO:计算判断是否完全超出屏幕
-			if(render != null)
-			{
-				render.renderClear(this);
-			}
+			if(render == null || render.isOutScreen(this)) return;
+			
+			render.render(this);
 		}
 		
 		/**
@@ -138,6 +141,11 @@ package jsion.rpg.engine.gameobjects
 		public function get y():int
 		{
 			return m_pos.y;
+		}
+		
+		public function get screenPos():Point
+		{
+			return game.worldMap.worldToScreen(x, y);
 		}
 		
 		/**

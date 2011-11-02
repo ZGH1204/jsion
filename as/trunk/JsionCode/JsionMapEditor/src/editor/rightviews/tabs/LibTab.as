@@ -59,8 +59,16 @@ package editor.rightviews.tabs
 			list = new JList(module);
 			list.setVisibleCellWidth(JsionEditor.mapConfig.SmallMapWidth);
 			list.setVisibleRowCount(10);
+			
+//			var count:int = module.size();
+//			for (var i:int = 0; i < count; i++)
+//			{
+//				list.getCellByIndex(i).getCellComponent().doubleClickEnabled = true;
+//			}
+			
 			list.addEventListener(ListItemEvent.ITEM_CLICK, __itemClickHandler);
 			list.addEventListener(ListItemEvent.ITEM_MOUSE_DOWN, __itemMouseDownHandler);
+			list.addEventListener(ListItemEvent.ITEM_DOUBLE_CLICK, __itemDoubleClickHandler);
 			append(new JScrollPane(list));
 			
 			JUtil.addEnterFrame(__enterFrameHandler);
@@ -105,6 +113,8 @@ package editor.rightviews.tabs
 		{
 			var file:File = new File(directory);
 			
+			module = new VectorListModel();
+			
 			if(file.exists == false)
 			{
 				return;
@@ -114,8 +124,6 @@ package editor.rightviews.tabs
 			
 			if(fileList != null) ArrayUtil.removeAll(fileList);
 			fileList = file.getDirectoryListing();
-			
-			module = new VectorListModel();
 			
 			for(var i:int = 0; i < fileList.length; i++)
 			{
@@ -142,9 +150,13 @@ package editor.rightviews.tabs
 			onItemMouseDownHandler(e);
 		}
 		
+		private function __itemDoubleClickHandler(e:ListItemEvent):void
+		{
+			onItemDoubleClickHandler(e);
+		}
+		
 		protected function onItemClickHandler(e:ListItemEvent):void
 		{
-			
 		}
 		
 		protected function onItemMouseDownHandler(e:ListItemEvent):void
@@ -156,6 +168,13 @@ package editor.rightviews.tabs
 			overFilename = filename;
 			
 			delayFrame = PreviewDelay;
+		}
+		
+		protected function onItemDoubleClickHandler(e:ListItemEvent):void
+		{
+			var filename:String = e.getCell().getCellValue();
+			
+			dispatchEvent(new LibTabEvent(LibTabEvent.DOUBLE_CLICK, filename, null));
 		}
 	}
 }
