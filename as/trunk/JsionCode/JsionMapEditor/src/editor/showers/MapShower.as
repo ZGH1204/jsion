@@ -1,15 +1,20 @@
 package editor.showers
 {
 	import editor.events.LibTabEvent;
+	import editor.forms.renders.RenderInfo;
 	import editor.leftviews.SmallMap;
 	import editor.rightviews.CoordViewer;
 	import editor.rightviews.ResourceTabbed;
 	
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import jsion.rpg.engine.EngineGlobal;
 	import jsion.rpg.engine.RPGEngine;
+	import jsion.rpg.engine.gameobjects.GameObject;
+	import jsion.utils.DisposeUtil;
+	import jsion.utils.PathUtil;
 	
 	public class MapShower extends RPGEngine
 	{
@@ -32,9 +37,32 @@ package editor.showers
 			m_editorContainer = new EditorAssistant(this);
 			addChild(m_editorContainer);
 			
+			addEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
 			addEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveHandler);
+			addEventListener(MouseEvent.MOUSE_UP, __mouseUpHandler);
+			stage.addEventListener(MouseEvent.CONTEXT_MENU, __contextMenuHandler);
 			
 			super.initialize();
+		}
+		
+		private function __contextMenuHandler(e:MouseEvent):void
+		{
+			cancelObject();
+		}
+		
+		private var clickRect:Rectangle = new Rectangle(0, 0, 6, 6);
+		private function __mouseDownHandler(e:MouseEvent):void
+		{
+			clickRect.x = e.localX - clickRect.width / 2;
+			clickRect.y = e.localY - clickRect.height / 2;
+		}
+		
+		private function __mouseUpHandler(e:MouseEvent):void
+		{
+			if(clickRect.contains(e.localX, e.localY))
+			{
+				m_dragingObject = null;
+			}
 		}
 		
 		private function __mouseMoveHandler(e:MouseEvent):void
@@ -48,6 +76,13 @@ package editor.showers
 				m_coordView.setTilePos(p.x, p.y);
 				
 				m_coordView.setScreenPos(e.localX, e.localY);
+			}
+			
+			if(m_dragingObject)
+			{
+				var tmp:Point = game.worldMap.screenToWorld(e.localX, e.localY);
+				
+				m_dragingObject.setPos(tmp.x, tmp.y);
 			}
 		}
 		
@@ -80,14 +115,48 @@ package editor.showers
 			}
 		}
 		
+		private var m_dragingObject:GameObject;
+		
 		private function __npcItemDoubleClickHandler(e:LibTabEvent):void
 		{
-			
 		}
 		
 		private function __buildingItemDoubleClickHandler(e:LibTabEvent):void
 		{
+			cancelObject();
 			
+			var filename:String = e.filename;
+			var renderInfo:RenderInfo;
+			if(JsionEditor.buildingRenderInfo.containsKey(filename))
+			{
+				renderInfo = JsionEditor.buildingRenderInfo.get(filename) as RenderInfo;
+			}
+			else
+			{
+				renderInfo = new RenderInfo();
+				renderInfo.path = PathUtil.combinPath(JsionEditor.MAP_BUILDINGS_DIR, filename);
+				renderInfo.filename = filename;
+			}
+			
+			settingObject(renderInfo);
+		}
+		
+		private function settingObject(renderInfo:RenderInfo):void
+		{
+			m_dragingObject = game.createBuilding(renderInfo, game.worldMap.center.clone());
+			
+			game.addObject(m_dragingObject);
+		}
+		
+		private function cancelObject():void
+		{
+			if(m_dragingObject)
+			{
+				m_dragingObject.clearMe();
+				game.removeObject(m_dragingObject);
+				DisposeUtil.free(m_dragingObject);
+				m_dragingObject = null;
+			}
 		}
 		
 		override public function setCameraWH(w:int, h:int):void

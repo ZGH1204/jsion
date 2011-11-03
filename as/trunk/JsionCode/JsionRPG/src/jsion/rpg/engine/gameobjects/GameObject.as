@@ -91,7 +91,7 @@ package jsion.rpg.engine.gameobjects
 		public function renderMe():void
 		{
 			//TODO:计算判断是否完全超出屏幕
-			if(render == null || render.isOutScreen(this)) return;
+			if(render == null || isOutScreen) return;
 			
 			render.render(this);
 		}
@@ -199,6 +199,17 @@ package jsion.rpg.engine.gameobjects
 			m_tempRect.height = m_graphicResource.frameHeight;
 			
 			return m_tempRect;
+		}
+		
+		public function get isOutScreen():Boolean
+		{
+			var tmp:Point = game.worldMap.worldToScreen(x, y);
+			
+			if(tmp.x < 0 || tmp.y < 0 ||
+				tmp.x > game.gameWidth ||
+				tmp.y > game.gameHeight) return true;
+			
+			return false;
 		}
 		
 		public function dispose():void
