@@ -11,9 +11,17 @@ package jsion.rpg.engine.renders
 			super();
 		}
 		
+		override public function renderClear(object:GameObject):void
+		{
+			lastPoint.x = object.lastRenderPoint.x;
+			lastPoint.y = object.lastRenderPoint.y;
+			
+			super.renderClear(object);
+		}
+		
 		override public function render(object:GameObject):void
 		{
-			var tmp:Point = object.screenPos;
+			var tmp:Point = object.renderPoint;
 			
 			renderPoint.x = tmp.x;
 			renderPoint.y = tmp.y;
@@ -23,6 +31,9 @@ package jsion.rpg.engine.renders
 			draw(object.graphicResource.bitmapData, object.renderRect, object.game);
 			
 			super.render(object);
+			
+			object.lastRenderPoint.x = renderPoint.x;
+			object.lastRenderPoint.y = renderPoint.y;
 		}
 	}
 }

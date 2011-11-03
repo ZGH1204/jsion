@@ -50,8 +50,6 @@ package jsion.rpg.engine.renders
 		
 		public function render(object:GameObject):void
 		{
-			lastPoint.x = renderPoint.x;
-			lastPoint.y = renderPoint.y;
 		}
 		
 		public function renderClear(object:GameObject):void
