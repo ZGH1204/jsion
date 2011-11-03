@@ -4,9 +4,12 @@ package jsion.rpg.engine.games
 	import flash.geom.Point;
 	
 	import jsion.rpg.engine.datas.MapConfig;
+	import jsion.rpg.engine.gameobjects.BuildingObject;
 	import jsion.rpg.engine.gameobjects.GameObject;
 	import jsion.rpg.engine.graphics.GraphicInfo;
+	import jsion.rpg.engine.graphics.GraphicResource;
 	import jsion.rpg.engine.renders.RenderStatic;
+	import jsion.utils.ArrayUtil;
 
 	public class BaseGame implements IDispose
 	{
@@ -128,9 +131,39 @@ package jsion.rpg.engine.games
 			return m_worldMap;
 		}
 		
-		public function createBuilding(info:GraphicInfo, pos:Point):GameObject
+		public function addObject(o:GameObject):void
 		{
-			return null;
+			if(m_objects.indexOf(o) != -1) return;
+			
+			m_objects.push(o);
+		}
+		
+		public function removeObject(o:GameObject):void
+		{
+			ArrayUtil.remove(m_objects, o);
+		}
+		
+		public function createBuilding(info:GraphicInfo, pos:Point):BuildingObject
+		{
+			var bo:BuildingObject = new BuildingObject();
+			bo.game = this;
+			bo.render = m_renderBuilding;
+			
+			var grap:GraphicResource = new GraphicResource(this);
+			grap.frameWidth = info.frameWidth;
+			grap.frameHeight = info.frameHeight;
+			grap.offsetX = info.offsetX;
+			grap.offsetY = info.offsetY;
+			grap.frameTotal = info.frameTotal;
+			grap.fps = info.fps;
+			grap.path = info.path;
+			grap.filename = info.filename;
+			bo.graphicResource = grap;
+			grap.loadBitmapData();
+			
+			bo.setPos(pos.x, pos.y);
+			
+			return bo;
 		}
 		
 		public function dispose():void

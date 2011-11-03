@@ -18,7 +18,11 @@ package jsion.rpg.engine.renders
 			renderPoint.x = tmp.x;
 			renderPoint.y = tmp.y;
 			
+			updateRenderPoint(object);
+			
 			draw(object.graphicResource.bitmapData, object.renderRect, object.game);
+			
+			super.render(object);
 		}
 	}
 }

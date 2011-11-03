@@ -33,15 +33,19 @@ package jsion.rpg.engine.renders
 		{
 		}
 		
-		public function isOutScreen(object:GameObject):Boolean
+		protected function updateRenderPoint(object:GameObject):void
 		{
-			var tmp:Point = object.game.worldMap.worldToScreen(object.x, object.y);
-			
-			if(tmp.x < 0 || tmp.y < 0 ||
-				object.x > object.game.gameWidth ||
-				object.y > object.game.gameHeight) return true;
-			
-			return false;
+			switch(object.renderType)
+			{
+				case GameObject.RENDER_BOTTOM_CENTER:
+					renderPoint.x = renderPoint.x - object.graphicResource.frameWidth / 2;
+					renderPoint.y = renderPoint.y - object.graphicResource.frameHeight;
+					break;
+				case GameObject.RENDER_CENTER:
+					renderPoint.x = renderPoint.x - object.graphicResource.frameWidth / 2;
+					renderPoint.y = renderPoint.y - object.graphicResource.frameHeight / 2;
+					break;
+			}
 		}
 		
 		public function render(object:GameObject):void
