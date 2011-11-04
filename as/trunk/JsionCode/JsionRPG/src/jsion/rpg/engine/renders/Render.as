@@ -54,7 +54,6 @@ package jsion.rpg.engine.renders
 		
 		public function renderClear(object:GameObject):void
 		{
-			drawClear(null, object.renderRect, object.game);
 		}
 		
 		/**
