@@ -1,12 +1,13 @@
 package jsion.rpg.engine.renders
 {
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import jsion.rpg.engine.gameobjects.GameObject;
 
-	public class RenderStatic extends Render
+	public class RenderCharactar extends Render
 	{
-		public function RenderStatic()
+		public function RenderCharactar()
 		{
 			super();
 		}
@@ -28,10 +29,31 @@ package jsion.rpg.engine.renders
 			
 			updateRenderPoint(object);
 			
-			draw(object.graphicResource.bitmapData, object.renderRect, object.game);
+			var rect:Rectangle = object.renderRect;
+			
+			updateRenderRectByDir(object.direction, rect);
+			
+			if(checkUseMirror(object.direction))
+			{
+				draw(object.graphicResource.bitmapDataMirror, rect, object.game);
+			}
+			else
+			{
+				draw(object.graphicResource.bitmapData, rect, object.game);
+			}
 			
 			object.lastRenderPoint.x = renderPoint.x;
 			object.lastRenderPoint.y = renderPoint.y;
+		}
+		
+		protected function updateRenderRectByDir(dir:int, rect:Rectangle):void
+		{
+			
+		}
+		
+		protected function checkUseMirror(dir:int):Boolean
+		{
+			return false;
 		}
 	}
 }

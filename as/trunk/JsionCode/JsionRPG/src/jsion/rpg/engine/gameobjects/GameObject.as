@@ -165,7 +165,7 @@ package jsion.rpg.engine.gameobjects
 		}
 		
 		/**
-		 * 方向
+		 * 方向(参见Directions)
 		 */		
 		public function get direction():int
 		{

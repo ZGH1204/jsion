@@ -8,6 +8,7 @@ package jsion.rpg.engine.games
 	import jsion.rpg.engine.gameobjects.GameObject;
 	import jsion.rpg.engine.graphics.GraphicInfo;
 	import jsion.rpg.engine.graphics.GraphicResource;
+	import jsion.rpg.engine.renders.RenderCharactar;
 	import jsion.rpg.engine.renders.RenderStatic;
 	import jsion.utils.ArrayUtil;
 
@@ -31,6 +32,8 @@ package jsion.rpg.engine.games
 		protected var m_worldMap:BaseMap;
 		
 		protected var m_renderBuilding:RenderStatic;
+		
+		protected var m_renderNPC:RenderCharactar;
 		
 		protected var m_gameWidth:int;
 		
@@ -75,9 +78,12 @@ package jsion.rpg.engine.games
 			
 			m_objects.sortOn("zOrder", Array.NUMERIC);
 			
-			for each(object in m_objects)
+			if(m_worldMap.needRepaintMap == false)
 			{
-				object.clearMe();
+				for each(object in m_objects)
+				{
+					object.clearMe();
+				}
 			}
 			
 			for each(object in m_objects)
