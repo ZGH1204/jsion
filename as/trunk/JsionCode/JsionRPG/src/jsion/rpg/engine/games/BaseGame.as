@@ -6,6 +6,7 @@ package jsion.rpg.engine.games
 	import jsion.rpg.engine.datas.MapConfig;
 	import jsion.rpg.engine.gameobjects.BuildingObject;
 	import jsion.rpg.engine.gameobjects.GameObject;
+	import jsion.rpg.engine.gameobjects.NCharactarObject;
 	import jsion.rpg.engine.graphics.GraphicInfo;
 	import jsion.rpg.engine.graphics.GraphicResource;
 	import jsion.rpg.engine.renders.RenderCharactar;
@@ -164,12 +165,35 @@ package jsion.rpg.engine.games
 			grap.fps = info.fps;
 			grap.path = info.path;
 			grap.filename = info.filename;
-			bo.graphicResource = grap;
 			grap.loadBitmapData();
+			bo.graphicResource = grap;
 			
 			bo.setPos(pos.x, pos.y);
 			
 			return bo;
+		}
+		
+		public function createNPC(info:GraphicInfo, pos:Point):NCharactarObject
+		{
+			var no:NCharactarObject = new NCharactarObject();
+			no.game = this;
+			no.render = m_renderNPC;
+			
+			var grap:GraphicResource = new GraphicResource(this);
+			grap.frameWidth = info.frameWidth;
+			grap.frameHeight = info.frameHeight;
+			grap.offsetX = info.offsetX;
+			grap.offsetY = info.offsetY;
+			grap.frameTotal = info.frameTotal;
+			grap.fps = info.fps;
+			grap.path = info.path;
+			grap.filename = info.filename;
+			grap.loadBitmapData();
+			no.graphicResource = grap;
+			
+			no.setPos(pos.x, pos.y);
+			
+			return no;
 		}
 		
 		public function dispose():void

@@ -61,7 +61,7 @@ package editor.showers
 		{
 			if(clickRect.contains(e.localX, e.localY))
 			{
-				m_dragingObject = null;
+				submitObject();
 			}
 		}
 		
@@ -119,6 +119,24 @@ package editor.showers
 		
 		private function __npcItemDoubleClickHandler(e:LibTabEvent):void
 		{
+			cancelObject();
+			
+			var filename:String = e.filename;
+			var renderInfo:RenderInfo;
+			if(JsionEditor.npcRenderInfo.containsKey(filename))
+			{
+				renderInfo = JsionEditor.npcRenderInfo.get(filename) as RenderInfo;
+			}
+			else
+			{
+				renderInfo = new RenderInfo();
+				renderInfo.path = PathUtil.combinPath(JsionEditor.MAP_BUILDINGS_DIR, filename);
+				renderInfo.filename = filename;
+			}
+			
+			m_dragingObject = game.createNPC(renderInfo, game.worldMap.center.clone());
+			
+			startObject(m_dragingObject);
 		}
 		
 		private function __buildingItemDoubleClickHandler(e:LibTabEvent):void
@@ -138,14 +156,14 @@ package editor.showers
 				renderInfo.filename = filename;
 			}
 			
-			settingObject(renderInfo);
-		}
-		
-		private function settingObject(renderInfo:RenderInfo):void
-		{
 			m_dragingObject = game.createBuilding(renderInfo, game.worldMap.center.clone());
 			
-			game.addObject(m_dragingObject);
+			startObject(m_dragingObject);
+		}
+
+		private function startObject(object:GameObject):void
+		{
+			game.addObject(object);
 		}
 		
 		private function cancelObject():void
@@ -157,6 +175,11 @@ package editor.showers
 				DisposeUtil.free(m_dragingObject);
 				m_dragingObject = null;
 			}
+		}
+		
+		private function submitObject():void
+		{
+			m_dragingObject = null;
 		}
 		
 		override public function setCameraWH(w:int, h:int):void
