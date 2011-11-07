@@ -3,6 +3,7 @@ package jsion.rpg.engine.games
 	import flash.display.BitmapData;
 	
 	import jsion.rpg.engine.datas.MapConfig;
+	import jsion.rpg.engine.renders.RenderCharactar;
 	import jsion.rpg.engine.renders.RenderStatic;
 
 	public class RPGGame extends BaseGame
@@ -20,11 +21,7 @@ package jsion.rpg.engine.games
 			
 			m_tileCompleteList = new HashMap();
 			
-			m_worldMap = new WorldMap(m_mapConfig, m_mapsRoot, m_smallMapBmd, m_gameWidth, m_gameHeight);
 			m_worldMap.tileCallback = tileCompleteCallback;
-			
-			m_renderBuilding = new RenderStatic();
-			m_renderBuilding.buffer = m_buffer;
 		}
 		
 		/**

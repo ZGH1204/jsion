@@ -28,6 +28,8 @@ package jsion.rpg.engine
 		
 		protected var m_autoPlay:Boolean;
 		
+		protected var m_configXml:XML;
+		
 		protected var m_mapConfig:MapConfig;
 		
 		protected var m_game:BaseGame;
@@ -81,9 +83,9 @@ package jsion.rpg.engine
 			
 			m_mapConfig = new MapConfig();
 			
-			var xml:XML = loader.content as XML;
+			m_configXml = loader.content as XML;
 			
-			XmlUtil.decodeWithProperty(m_mapConfig, xml);
+			XmlUtil.decodeWithProperty(m_mapConfig, m_configXml);
 			
 			DisposeUtil.free(loader);
 			
