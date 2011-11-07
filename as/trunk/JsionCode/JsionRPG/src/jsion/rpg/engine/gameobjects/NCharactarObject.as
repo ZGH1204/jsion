@@ -5,6 +5,8 @@ package jsion.rpg.engine.gameobjects
 		public function NCharactarObject()
 		{
 			super();
+			
+			m_renderType = GameObject.RENDER_BOTTOM_CENTER;
 		}
 	}
 }

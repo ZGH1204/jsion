@@ -65,6 +65,14 @@ package jsion.rpg.engine.games
 			m_renders = [];
 			
 			buildBuffer();
+			
+			m_worldMap = new WorldMap(m_mapConfig, m_mapsRoot, m_smallMapBmd, m_gameWidth, m_gameHeight);
+			
+			m_renderBuilding = new RenderStatic();
+			m_renderBuilding.buffer = m_buffer;
+			
+			m_renderNPC = new RenderCharactar();
+			m_renderNPC.buffer = m_buffer;
 		}
 		
 		protected function buildBuffer():void
@@ -116,6 +124,9 @@ package jsion.rpg.engine.games
 			m_worldMap.setCameraWH(w, h);
 			
 			temp.dispose();
+			
+			m_renderBuilding.buffer = m_buffer;
+			m_renderNPC.buffer = m_buffer;
 		}
 		
 		public function get gameWidth():int

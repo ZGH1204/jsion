@@ -3,9 +3,12 @@ package
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
+	import flash.geom.Point;
 	import flash.utils.ByteArray;
 	
 	import jsion.rpg.engine.datas.MapConfig;
+	import jsion.rpg.engine.gameobjects.GameObject;
+	import jsion.rpg.engine.games.BaseGame;
 	import jsion.rpg.engine.games.BaseMap;
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
@@ -54,6 +57,13 @@ package
 		
 		public static var npcRenderInfo:HashMap = new HashMap();
 		
+		
+		
+		public static var surfaceObjects:Array = [];
+		
+		public static var buildingObjects:Array = [];
+		
+		public static var npcObjects:Array = [];
 		
 		
 		
@@ -222,6 +232,56 @@ package
 			fs.close();
 			
 			if(mapEditor) mapEditor.msg("保存成功", 0);
+		}
+		
+		private static function encodeBuildingList(list:Array):XML
+		{
+			var xml:XML = new XML("<buildingList></buildingList>");
+			
+			for each(var o:GameObject in list)
+			{
+				var str:String = StringUtil.format("<building filename=\"{0}\" path=\"{1}\" x=\"{2}\" y=\"{3}\" renderType=\"{4}\" />", 
+															o.graphicResource.filename, o.graphicResource.path, o.x, o.y, o.renderType);
+				
+				var x:XML = new XML(str);
+				
+				xml.appendChild(x);
+			}
+			
+			return xml;
+		}
+		
+		private static function parseBuildingList(xl:XMLList, list:Array, g:BaseGame):void
+		{
+			var point:Point = new Point();
+			var renderType:int;
+			
+			for each(var xml:XML in xl)
+			{
+				point.x = int(xml.@x);
+				point.y = int(xml.@y);
+				
+				renderType = int(xml.@renderType);
+				
+				
+			}
+		}
+		
+		private static function encodeNPCList(list:Array):XML
+		{
+			var xml:XML = new XML();
+			
+			for each(var o:GameObject in list)
+			{
+				var str:String = StringUtil.format("<building name=\"{0}\" filename=\"{1}\" path=\"{2}\" x=\"{3}\" y=\"{4}\" renderType=\"{5}\" />", 
+					o.name, o.graphicResource.filename, o.graphicResource.path, o.x, o.y, o.renderType);
+				
+				var x:XML = new XML(str);
+				
+				xml.appendChild(x);
+			}
+			
+			return xml;
 		}
 		
 		private static function encodeRenderInfos(nodeName:String, hashMap:HashMap):XML

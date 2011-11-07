@@ -40,6 +40,8 @@ package editor.forms.movieparts
 		
 		protected var m_applyBtn:JButton;
 		
+		protected var m_delBtn:JButton;
+		
 		protected var m_applyAllNPCBtn:JButton;
 		
 		public function MovieInfoForm(form:MovieEditorForm)
@@ -86,9 +88,14 @@ package editor.forms.movieparts
 			m_applyAllNPCBtn.setToolTipText("使用以上配置信息批量更新所有NPC资源配置");
 			m_applyAllNPCBtn.addActionListener(__applyAllNPCClickHandler);
 			
+			m_delBtn = new JButton("删除");
+			m_delBtn.setEnabled(false);
+			m_delBtn.addActionListener(__delClickHandler);
+			
 			jpanle.append(new JLabel("资源路径： "));
 			jpanle.append(m_resourcePathTxt);
 			jpanle.append(m_applyBtn);
+			jpanle.append(m_delBtn);
 			jpanle.append(m_applyAllNPCBtn);
 			append(jpanle);
 		}
@@ -109,6 +116,11 @@ package editor.forms.movieparts
 			}
 			
 			movieEditorForm.rendererForm.setRenderInfo(ri);
+		}
+		
+		private function __delClickHandler(e:AWEvent):void
+		{
+			movieEditorForm.renderInfos.remove(m_filename);
 		}
 		
 		private function getFormInfo(ri:RenderInfo = null):RenderInfo
@@ -202,6 +214,7 @@ package editor.forms.movieparts
 			
 			m_filename = filename;
 			
+			m_delBtn.setEnabled(true);
 			m_applyBtn.setEnabled(true);
 			m_applyAllNPCBtn.setEnabled(true);
 			

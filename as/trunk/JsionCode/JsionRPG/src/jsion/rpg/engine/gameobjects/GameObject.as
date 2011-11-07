@@ -23,7 +23,7 @@ package jsion.rpg.engine.gameobjects
 		/**
 		 * 游戏对象名称
 		 */		
-		public var name:String;
+		public var name:String = "";
 		
 		/**
 		 * 游戏数据引用

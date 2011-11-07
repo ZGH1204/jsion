@@ -12,7 +12,10 @@ package editor.showers
 	
 	import jsion.rpg.engine.EngineGlobal;
 	import jsion.rpg.engine.RPGEngine;
+	import jsion.rpg.engine.gameobjects.BuildingObject;
 	import jsion.rpg.engine.gameobjects.GameObject;
+	import jsion.rpg.engine.gameobjects.NCharactarObject;
+	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.PathUtil;
 	
@@ -51,6 +54,7 @@ package editor.showers
 		}
 		
 		private var clickRect:Rectangle = new Rectangle(0, 0, 6, 6);
+		
 		private function __mouseDownHandler(e:MouseEvent):void
 		{
 			clickRect.x = e.localX - clickRect.width / 2;
@@ -98,12 +102,12 @@ package editor.showers
 		
 		public function setResourceTabbed(bed:ResourceTabbed):void
 		{
-//			if(m_resourceTabbed)
-//			{
-//				if(m_resourceTabbed.npcsTab) m_resourceTabbed.npcsTab.removeEventListener(LibTabEvent.DOUBLE_CLICK, __itemDoubleClickHandler);
-//			
-//				if(m_resourceTabbed.buildingsTab) m_resourceTabbed.buildingsTab.removeEventListener(LibTabEvent.DOUBLE_CLICK, __buildingItemDoubleClickHandler);
-//			}
+			if(m_resourceTabbed)
+			{
+				if(m_resourceTabbed.npcsTab) m_resourceTabbed.npcsTab.removeEventListener(LibTabEvent.DOUBLE_CLICK, __npcItemDoubleClickHandler);
+			
+				if(m_resourceTabbed.buildingsTab) m_resourceTabbed.buildingsTab.removeEventListener(LibTabEvent.DOUBLE_CLICK, __buildingItemDoubleClickHandler);
+			}
 			
 			m_resourceTabbed = bed;
 			
@@ -116,13 +120,35 @@ package editor.showers
 		}
 		
 		private var m_dragingObject:GameObject;
+		private var m_dragingList:Array;
 		
 		private function __npcItemDoubleClickHandler(e:LibTabEvent):void
 		{
+			m_dragingList = JsionEditor.npcObjects;
+			
 			cancelObject();
 			
-			var filename:String = e.filename;
+			m_dragingObject = createNPC(e.filename, game.worldMap.center.clone());
+			
+			startObject(m_dragingObject);
+		}
+		
+		private function __buildingItemDoubleClickHandler(e:LibTabEvent):void
+		{
+			m_dragingList = JsionEditor.buildingObjects;
+			
+			cancelObject();
+			
+			m_dragingObject = createBuilding(e.filename, game.worldMap.center.clone());
+			
+			startObject(m_dragingObject);
+		}
+		
+		
+		public function createNPC(filename:String, pos:Point):NCharactarObject
+		{
 			var renderInfo:RenderInfo;
+			
 			if(JsionEditor.npcRenderInfo.containsKey(filename))
 			{
 				renderInfo = JsionEditor.npcRenderInfo.get(filename) as RenderInfo;
@@ -130,21 +156,17 @@ package editor.showers
 			else
 			{
 				renderInfo = new RenderInfo();
-				renderInfo.path = PathUtil.combinPath(JsionEditor.MAP_BUILDINGS_DIR, filename);
+				renderInfo.path = PathUtil.combinPath(JsionEditor.MAP_NPCS_DIR, filename);
 				renderInfo.filename = filename;
 			}
 			
-			m_dragingObject = game.createNPC(renderInfo, game.worldMap.center.clone());
-			
-			startObject(m_dragingObject);
+			return game.createNPC(renderInfo, pos);
 		}
 		
-		private function __buildingItemDoubleClickHandler(e:LibTabEvent):void
+		public function createBuilding(filename:String, pos:Point):BuildingObject
 		{
-			cancelObject();
-			
-			var filename:String = e.filename;
 			var renderInfo:RenderInfo;
+			
 			if(JsionEditor.buildingRenderInfo.containsKey(filename))
 			{
 				renderInfo = JsionEditor.buildingRenderInfo.get(filename) as RenderInfo;
@@ -156,20 +178,20 @@ package editor.showers
 				renderInfo.filename = filename;
 			}
 			
-			m_dragingObject = game.createBuilding(renderInfo, game.worldMap.center.clone());
-			
-			startObject(m_dragingObject);
+			return game.createBuilding(renderInfo, pos);
 		}
 
 		private function startObject(object:GameObject):void
 		{
 			game.addObject(object);
+			m_dragingList.push(object);
 		}
 		
 		private function cancelObject():void
 		{
 			if(m_dragingObject)
 			{
+				ArrayUtil.remove(m_dragingList, m_dragingObject);
 				m_dragingObject.clearMe();
 				game.removeObject(m_dragingObject);
 				DisposeUtil.free(m_dragingObject);
