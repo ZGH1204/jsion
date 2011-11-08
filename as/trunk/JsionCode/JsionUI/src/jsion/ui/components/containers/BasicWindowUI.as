@@ -45,7 +45,7 @@ package jsion.ui.components.containers
 			
 			win.titleBar = title;
 			
-			title.setup(component);
+			//title.setup(component);
 		}
 		
 		protected function installCloseButton(component:Component):void
