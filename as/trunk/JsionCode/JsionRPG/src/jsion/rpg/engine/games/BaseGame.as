@@ -12,6 +12,7 @@ package jsion.rpg.engine.games
 	import jsion.rpg.engine.renders.RenderCharactar;
 	import jsion.rpg.engine.renders.RenderStatic;
 	import jsion.utils.ArrayUtil;
+	import jsion.utils.PathUtil;
 
 	public class BaseGame implements IDispose
 	{
@@ -46,6 +47,12 @@ package jsion.rpg.engine.games
 		
 		protected var m_smallMapBmd:BitmapData;
 		
+		public var surfaceRenderInfo:HashMap;
+		
+		public var buildingRenderInfo:HashMap;
+		
+		public var npcRenderInfo:HashMap;
+		
 		public function BaseGame(w:int, h:int, mapConfig:MapConfig, mapsRoot:String, smallMapBmd:BitmapData)
 		{
 			m_gameWidth = w;
@@ -63,6 +70,10 @@ package jsion.rpg.engine.games
 			m_objects = [];
 			
 			m_renders = [];
+			
+			npcRenderInfo = new HashMap();
+			surfaceRenderInfo = new HashMap();
+			buildingRenderInfo = new HashMap();
 			
 			buildBuffer();
 			

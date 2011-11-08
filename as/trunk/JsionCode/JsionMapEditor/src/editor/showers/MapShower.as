@@ -45,7 +45,9 @@ package editor.showers
 			addEventListener(MouseEvent.MOUSE_UP, __mouseUpHandler);
 			stage.addEventListener(MouseEvent.CONTEXT_MENU, __contextMenuHandler);
 			
-			super.initialize();
+			m_ready = true;
+			
+			//super.initialize();
 		}
 		
 		private function __contextMenuHandler(e:MouseEvent):void
@@ -71,6 +73,8 @@ package editor.showers
 		
 		private function __mouseMoveHandler(e:MouseEvent):void
 		{
+			if(game == null) return;
+			
 			if(m_coordView)
 			{
 				var p:Point = game.worldMap.screenToWorld(e.localX, e.localY);

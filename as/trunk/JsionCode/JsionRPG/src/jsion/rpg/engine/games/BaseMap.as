@@ -509,9 +509,9 @@ package jsion.rpg.engine.games
 			return xml;
 		}
 		
-		public static function parseGraphicInfo(xl:XMLList):HashMap
+		public static function parseGraphicInfo(xl:XMLList, hashMap:HashMap = null):HashMap
 		{
-			var hashMap:HashMap = new HashMap();
+			if(hashMap == null) hashMap = new HashMap();
 			
 			for each(var xml:XML in xl)
 			{
