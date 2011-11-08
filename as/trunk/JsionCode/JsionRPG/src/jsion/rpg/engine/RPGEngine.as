@@ -126,6 +126,14 @@ package jsion.rpg.engine
 		protected function initialize():void
 		{
 			m_ready = true;
+			
+			BaseMap.parseGraphicInfo(m_configXml.configs.npcs..item, m_game.npcRenderInfo);
+			BaseMap.parseGraphicInfo(m_configXml.configs.surfaces..item, m_game.surfaceRenderInfo);
+			BaseMap.parseGraphicInfo(m_configXml.configs.buildings..item, m_game.buildingRenderInfo);
+			
+//			m_game.npcRenderInfo = BaseMap.parseGraphicInfo(m_configXml.configs.npcs..item);
+//			m_game.surfaceRenderInfo = BaseMap.parseGraphicInfo(m_configXml.configs.surfaces..item);
+//			m_game.buildingRenderInfo = BaseMap.parseGraphicInfo(m_configXml.configs.buildings..item);
 		}
 		
 		public function get mapsRoot():String
