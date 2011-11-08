@@ -1,6 +1,7 @@
 package jsion.rpg
 {
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -12,21 +13,23 @@ package jsion.rpg
 	{
 		protected var m_bmp:Bitmap;
 		
+		
+		protected var m_game:RPGGame;
+		
 		protected var m_emitter:BaseEmitter;
 		
-		public function RPGView()
+		
+		
+		public function RPGView(cameraWidth:int, cameraHeight:int)
 		{
 			super();
 			
-			initialize();
-		}
-		
-		private function initialize():void
-		{
-			m_bmp = new Bitmap();
-			addChild(m_bmp);
+			m_game = new RPGGame(cameraWidth, cameraHeight);
 			
-			m_emitter = new RPGEmitter();
+			m_emitter = new RPGEmitter(m_game);
+			
+			m_bmp = new Bitmap(m_game.buffer);
+			addChild(m_bmp);
 			
 			addEventListener(Event.ENTER_FRAME, __enterFrameHandler);
 		}
