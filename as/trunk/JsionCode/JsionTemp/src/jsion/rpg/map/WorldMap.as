@@ -35,6 +35,11 @@ package jsion.rpg.map
 			m_centerPointRect = new Rectangle();
 		}
 		
+		public function get needRepaint():Boolean
+		{
+			return m_needRepaintBuffer;
+		}
+		
 		public function setMapID(mapid:String):void
 		{
 			m_mapid = mapid;
@@ -63,10 +68,18 @@ package jsion.rpg.map
 			m_tileHeight = h;
 		}
 		
-		public function calcCameraSize():void
+		public function calcCameraTileSize():void
 		{
 			m_cameraTileWidth = Math.ceil(m_cameraWidth / m_tileWidth);
 			m_cameraTileHeight = Math.ceil(m_cameraHeight / m_tileHeight);
+		}
+		
+		public function calcCenterPointRect():void
+		{
+			m_centerPointRect.x = Math.ceil(m_cameraWidth / 2);
+			m_centerPointRect.y = Math.ceil(m_cameraHeight / 2);
+			m_centerPointRect.width = m_mapWidth - m_cameraWidth;
+			m_centerPointRect.height = m_mapHeight - m_cameraHeight;
 		}
 		
 		public function reviseCenterPoint():void
@@ -76,20 +89,6 @@ package jsion.rpg.map
 			
 			m_centerPoint.y = Math.max(m_centerPoint.y, m_centerPointRect.y);
 			m_centerPoint.y = Math.max(m_centerPoint.y, m_centerPointRect.bottom);
-			
-			//if(m_centerPoint.x < m_centerPointRect.x) m_centerPoint.x = m_centerPointRect.x;
-			//else if(m_centerPoint.x > m_centerPointRect.right) m_centerPoint.x = m_centerPointRect.right;
-			//
-			//if(m_centerPoint.y < m_centerPointRect.y) m_centerPoint.y = m_centerPointRect.y;
-			//else if(m_centerPoint.y > m_centerPointRect.bottom) m_centerPoint.y = m_centerPointRect.bottom;
-		}
-		
-		public function calcCenterPointRect():void
-		{
-			m_centerPointRect.x = Math.ceil(m_cameraWidth / 2);
-			m_centerPointRect.y = Math.ceil(m_cameraHeight / 2);
-			m_centerPointRect.width = m_mapWidth - m_cameraWidth;
-			m_centerPointRect.height = m_mapHeight - m_cameraHeight;
 		}
 		
 		public function build():void
@@ -117,11 +116,14 @@ package jsion.rpg.map
 		
 		public function render(buffer:BitmapData):void
 		{
-			if(m_needRepaintBuffer) repaintBufferImp();
-			
-			m_needRepaintBuffer = false;
-			
-			buffer.copyPixels(m_buffer, m_buffer.rect, Constant.ZeroPoint);
+			if(m_needRepaintBuffer)
+			{
+				repaintBufferImp();
+				
+				m_needRepaintBuffer = false;
+				
+				buffer.copyPixels(m_buffer, m_buffer.rect, Constant.ZeroPoint);
+			}
 		}
 	}
 }

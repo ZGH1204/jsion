@@ -1,0 +1,15 @@
+<map width="2600" height="2200" tileWidth="200" tileHeight="200" tileExt=".png" hitTileWidth="50" hitTileHeight="50">
+    <hitData>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0|0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</hitData>
+    <renders>
+        <render filename="1.png" fps="30" frameWidth="0" frameHeight="0" frameTotal="1" offsetX="0" offsetY="0" />
+    </renders>
+    <buildings>
+        <building filename="1.png" x="0" y="0" />
+    </buildings>
+    <npcs>
+        <npc name="" filename="1.png" x="0" y="0" />
+    </npcs>
+    <jumps>
+        <jump filename="1.png" x="0" y="0" mapid="跳转的目标地图ID" />
+    </jumps>
+</map>

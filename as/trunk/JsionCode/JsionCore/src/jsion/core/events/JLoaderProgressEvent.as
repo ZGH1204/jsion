@@ -16,7 +16,7 @@ package jsion.core.events
 		/**
 		 * 当加载操作已开始或套接字已接收到数据时，将分派 JLoaderProgressEvent 对象。这些事件通常在将 SWF 文件、图像或数据加载到应用程序中时生成。
 		 */		
-		public static const Progress:String = "progress";
+		public static const PROGRESS:String = "progress";
 		
 		public function JLoaderProgressEvent(type:String, bytesLoaded:uint = 0, bytesTotal:uint = 0, bubbles:Boolean = false, cancelable:Boolean = false)
 		{

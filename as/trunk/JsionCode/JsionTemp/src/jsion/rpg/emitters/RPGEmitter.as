@@ -1,6 +1,9 @@
 package jsion.rpg.emitters
 {
+	import flash.utils.getTimer;
+	
 	import jsion.rpg.RPGGame;
+	import jsion.rpg.RPGGlobal;
 
 	public class RPGEmitter extends BaseEmitter
 	{
@@ -14,6 +17,7 @@ package jsion.rpg.emitters
 		
 		override public function emitte():void
 		{
+			RPGGlobal.TIMER = getTimer();
 			game.render();
 		}
 	}

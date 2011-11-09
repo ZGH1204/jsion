@@ -1091,7 +1091,7 @@ package jsion.core.loaders
 			}
 			_bytesRemaining = e.bytesTotal - e.bytesLoaded;
 			_downloadSpeed = (_bytesLoaded / ((getTimer() - _openTime) / 1000)) / 1024;
-			dispatchEvent(new JLoaderProgressEvent(JLoaderProgressEvent.Progress, e.bytesLoaded, e.bytesTotal));
+			dispatchEvent(new JLoaderProgressEvent(JLoaderProgressEvent.PROGRESS, e.bytesLoaded, e.bytesTotal));
 		}
 		
 		/**

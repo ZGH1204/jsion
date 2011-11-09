@@ -847,7 +847,7 @@ package jsion.core.loaders
 			{
 				var loader:ILoader = _waitList.shift();
 				
-				loader.addEventListener(JLoaderProgressEvent.Progress, __progressHandler);
+				loader.addEventListener(JLoaderProgressEvent.PROGRESS, __progressHandler);
 				loader.addEventListener(JLoaderEvent.Complete, __completeHandler);
 				loader.addEventListener(JLoaderEvent.Error, __errorHandler);
 				
@@ -876,7 +876,7 @@ package jsion.core.loaders
 			if(bLoaded > _bytesLoaded)
 			{
 				_bytesLoaded = bLoaded;
-				dispatchEvent(new JLoaderProgressEvent(JLoaderProgressEvent.Progress, _bytesLoaded, _bytesTotal));
+				dispatchEvent(new JLoaderProgressEvent(JLoaderProgressEvent.PROGRESS, _bytesLoaded, _bytesTotal));
 			}
 		}
 		
@@ -893,7 +893,7 @@ package jsion.core.loaders
 			
 			_completeBytesTotal += loader.bytesLoaded;
 			
-			loader.removeEventListener(JLoaderProgressEvent.Progress, __progressHandler);
+			loader.removeEventListener(JLoaderProgressEvent.PROGRESS, __progressHandler);
 			loader.removeEventListener(JLoaderEvent.Complete, __completeHandler);
 			loader.removeEventListener(JLoaderEvent.Error, __errorHandler);
 			
@@ -917,7 +917,7 @@ package jsion.core.loaders
 			
 			_completeBytesTotal += loader.bytesTotal;
 			
-			loader.removeEventListener(JLoaderProgressEvent.Progress, __progressHandler);
+			loader.removeEventListener(JLoaderProgressEvent.PROGRESS, __progressHandler);
 			loader.removeEventListener(JLoaderEvent.Complete, __completeHandler);
 			loader.removeEventListener(JLoaderEvent.Error, __errorHandler);
 			
@@ -991,7 +991,7 @@ package jsion.core.loaders
 			var list:Array = DictionaryUtil.getValues(_allLoadersDic)
 			for each(var loader:ILoader in list)
 			{
-				loader.removeEventListener(JLoaderProgressEvent.Progress, __progressHandler);
+				loader.removeEventListener(JLoaderProgressEvent.PROGRESS, __progressHandler);
 				loader.removeEventListener(JLoaderEvent.Complete, __completeHandler);
 				loader.removeEventListener(JLoaderEvent.Error, __errorHandler);
 			}
