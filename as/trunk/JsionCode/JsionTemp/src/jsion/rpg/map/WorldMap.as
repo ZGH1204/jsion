@@ -16,8 +16,6 @@ package jsion.rpg.map
 		protected var m_mapHeight:int;
 		protected var m_tileWidth:int;
 		protected var m_tileHeight:int;
-		protected var m_cameraTileWidth:int;
-		protected var m_cameraTileHeight:int;
 		
 		
 		protected var m_buffer:BitmapData;
@@ -28,16 +26,93 @@ package jsion.rpg.map
 		
 		protected var m_centerPointRect:Rectangle;
 		
+		protected var m_startX:int;
+		
+		protected var m_startY:int;
+		
+		protected var m_startTileX:int;
+		
+		protected var m_startTileY:int;
+		
+		protected var m_cameraTileCountX:int;
+		
+		protected var m_cameraTileCountY:int;
+		
+		
+		protected var m_tileLoadCompletes:HashMap;
+		
+		
 		public function WorldMap()
 		{
 			m_needRepaintBuffer = false;
 			m_centerPoint = new Point();
 			m_centerPointRect = new Rectangle();
+			m_tileLoadCompletes = new HashMap();
+		}
+		
+		public function get buffer():BitmapData
+		{
+			return m_buffer;
 		}
 		
 		public function get needRepaint():Boolean
 		{
 			return m_needRepaintBuffer;
+		}
+		
+		public function get center():Point
+		{
+			return m_centerPoint;
+		}
+		
+		public function get startX():int
+		{
+			return m_startX;
+		}
+		
+		public function get startY():int
+		{
+			return m_startY;
+		}
+		
+		public function get startTileX():int
+		{
+			return m_startTileX;
+		}
+		
+		public function get startTileY():int
+		{
+			return m_startTileY;
+		}
+		
+		public function get cameraTileCountX():int
+		{
+			return m_cameraTileCountX;
+		}
+		
+		public function get cameraTileCountY():int
+		{
+			return m_cameraTileCountY;
+		}
+		
+		public function setCenter(x:int, y:int):void
+		{
+			m_centerPoint.x = x;
+			m_centerPoint.y = y;
+			
+			calcOthers();
+			
+			repaintBuffer();
+		}
+		
+		public function setCenterByPoint(pos:Point):void
+		{
+			m_centerPoint.x = pos.x;
+			m_centerPoint.y = pos.y;
+			
+			calcOthers();
+			
+			repaintBuffer();
 		}
 		
 		public function setMapID(mapid:String):void
@@ -68,18 +143,26 @@ package jsion.rpg.map
 			m_tileHeight = h;
 		}
 		
-		public function calcCameraTileSize():void
-		{
-			m_cameraTileWidth = Math.ceil(m_cameraWidth / m_tileWidth);
-			m_cameraTileHeight = Math.ceil(m_cameraHeight / m_tileHeight);
-		}
-		
 		public function calcCenterPointRect():void
 		{
 			m_centerPointRect.x = Math.ceil(m_cameraWidth / 2);
 			m_centerPointRect.y = Math.ceil(m_cameraHeight / 2);
 			m_centerPointRect.width = m_mapWidth - m_cameraWidth;
 			m_centerPointRect.height = m_mapHeight - m_cameraHeight;
+		}
+		
+		public function calcCameraTileCount():void
+		{
+			m_cameraTileCountX = Math.ceil(m_cameraWidth / m_tileWidth);
+			m_cameraTileCountY = Math.ceil(m_cameraHeight / m_tileHeight);
+		}
+		
+		public function calcOthers():void
+		{
+			m_startX = m_centerPoint.x - m_cameraWidth / 2;
+			m_startY = m_centerPoint.y - m_cameraHeight / 2;
+			m_startTileX = m_startX / m_tileWidth;
+			m_startTileY = m_startY / m_tileHeight;
 		}
 		
 		public function reviseCenterPoint():void
@@ -114,7 +197,7 @@ package jsion.rpg.map
 		{
 		}
 		
-		public function render(buffer:BitmapData):void
+		public function render(buff:BitmapData):void
 		{
 			if(m_needRepaintBuffer)
 			{
@@ -122,8 +205,41 @@ package jsion.rpg.map
 				
 				m_needRepaintBuffer = false;
 				
-				buffer.copyPixels(m_buffer, m_buffer.rect, Constant.ZeroPoint);
+				m_tileLoadCompletes.removeAll();
 			}
+			
+			buff.copyPixels(m_buffer, m_buffer.rect, Constant.ZeroPoint);
+		}
+		
+		
+		
+		
+		internal function addTileLoadComplete(x:int, y:int, bmd:BitmapData):void
+		{
+			m_tileLoadCompletes.put(y + "_" + x, bmd);
+		}
+		
+		public function updateTileLoadComplete(buff:BitmapData):void
+		{
+			if(m_tileLoadCompletes.size == 0) return;
+			
+			var keys:Array = m_tileLoadCompletes.getKeys();
+			
+			var list:Array;
+			
+			var x:int, y:int;
+			
+			var bmd:BitmapData;
+			
+			for each(var key:String in keys)
+			{
+				list = key.split("_");
+				x = int(list[1]);
+				y = int(list[0]);
+				bmd = m_tileLoadCompletes[key];
+			}
+			
+			m_tileLoadCompletes.removeAll();
 		}
 	}
 }
