@@ -285,7 +285,7 @@ package jsion.core.modules
 			
 			loadInfo.loader.addEventListener(JLoaderEvent.EmbedComplete, __moduleLoadCompleteHandler, false, int.MAX_VALUE);
 			loadInfo.loader.addEventListener(JLoaderEvent.Error, __moduleLoadErrorHandler, false, int.MAX_VALUE);
-			loadInfo.loader.addEventListener(JLoaderProgressEvent.Progress, __progressHandler, false, int.MAX_VALUE);
+			loadInfo.loader.addEventListener(JLoaderProgressEvent.PROGRESS, __progressHandler, false, int.MAX_VALUE);
 			loadInfo.loader.addEventListener(JLoaderEvent.EmbedComplete, __disposeHandler, false, int.MIN_VALUE);
 			loadInfo.loader.addEventListener(JLoaderEvent.Error, __disposeHandler, false, int.MIN_VALUE);
 			
@@ -337,7 +337,7 @@ package jsion.core.modules
 			
 			loader.removeEventListener(JLoaderEvent.EmbedComplete, __moduleLoadCompleteHandler);
 			loader.removeEventListener(JLoaderEvent.Error, __moduleLoadErrorHandler);
-			loader.removeEventListener(JLoaderProgressEvent.Progress, __progressHandler);
+			loader.removeEventListener(JLoaderProgressEvent.PROGRESS, __progressHandler);
 			loader.removeEventListener(JLoaderEvent.EmbedComplete, __disposeHandler);
 			loader.removeEventListener(JLoaderEvent.Error, __disposeHandler);
 			

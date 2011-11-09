@@ -51,7 +51,7 @@ package jsion.core.loaders
 			JUtil.removeEnterFrame(__loadCompletedAsyncHandler);
 			
 			onOpenHandler(null);
-			onProgressHandler(new JLoaderProgressEvent(JLoaderProgressEvent.Progress, cacheBytes.length * 0.999, cacheBytes.length));
+			onProgressHandler(new JLoaderProgressEvent(JLoaderProgressEvent.PROGRESS, cacheBytes.length * 0.999, cacheBytes.length));
 			loadInDomain(cacheBytes);
 			cacheBytes = null;
 		}

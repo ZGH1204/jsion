@@ -12,21 +12,23 @@ package jsion.rpg.objects
 
 	public class ViewObject
 	{
-		protected var m_frameWidth:int;
-		
-		protected var m_frameHeight:int;
-		
 		public var offsetX:int;
 		
 		public var offsetY:int;
 		
 		public var frameTotal:int;
 		
-		protected var m_fps:int;
-		
 		public var path:String = "";
 		
 		public var rootPath:String = "";
+		
+		
+		
+		protected var m_frameWidth:int;
+		
+		protected var m_frameHeight:int;
+		
+		protected var m_fps:int;
 		
 		
 		
@@ -59,7 +61,7 @@ package jsion.rpg.objects
 		
 		
 		
-		public function ViewObject(mirror:Boolean = false)
+		public function ViewObject(defaultRes:String = null, mirror:Boolean = false)
 		{
 			m_ready = false;
 			m_needMirror = mirror;

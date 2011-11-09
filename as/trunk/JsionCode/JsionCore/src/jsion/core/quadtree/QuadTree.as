@@ -168,21 +168,22 @@ package jsion.core.quadtree
 			}
 			else
 			{
-				for each(var obj:* in node.objects)
-				{
 					if(exact)
 					{
-						var childRect:Rectangle = new Rectangle(obj.x, obj.y, obj.width, obj.height);
-						if(childRect.intersects(rect))
+						for each(var obj:* in node.objects)
 						{
-							list.push(obj);
+							var childRect:Rectangle = new Rectangle(obj.x, obj.y, obj.width, obj.height);
+							
+							if(childRect.intersects(rect))
+							{
+								list.push(obj);
+							}
 						}
 					}
 					else
 					{
-						list.push(obj);
+						list.push.apply(null, node.objects.concat());
 					}
-				}
 			}
 		}
 		
