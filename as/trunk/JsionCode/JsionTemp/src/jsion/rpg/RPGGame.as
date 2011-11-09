@@ -80,15 +80,22 @@ package jsion.rpg
 		
 		public function render():void
 		{
-			m_worldMap.render(m_buffer);
-			
 			var gameObject:GameObject;
 			
 			var list:Array = m_objects;
 			
-			for each(gameObject in list)
+			if(m_worldMap.needRepaint)
 			{
-				gameObject.clearMe();
+				m_worldMap.render(m_buffer);
+			}
+			else
+			{
+				m_worldMap.updateTileLoadComplete(m_buffer);
+				
+				for each(gameObject in list)
+				{
+					gameObject.clearMe();
+				}
 			}
 			
 			for each(gameObject in list)
@@ -203,13 +210,19 @@ package jsion.rpg
 		
 		private function parseMapConfig(config:XML, bmd:BitmapData):void
 		{
-			var mWidth:int = int(config.@width);
-			var mHeight:int = int(config.@height);
-			var tileWidth:int = int(config.@tileWidth);
-			var tileHeight:int = int(config.@tileHeight);
-			var tileExt:String = String(config.@tileExt);
-			var hitTileWidth:int = int(config.@hitTileWidth);
-			var hitTileHeight:int = int(config.@hitTileHeight);
+			parseWorldMapInfo(config, bmd);
+			
+			parseBuildings(config);
+			
+			parseNPCs(config);
+			
+			parseJumps(config);
+			
+			parseHitDatas(config);
+		}
+		
+		private function parseHitDatas(config:XML):void
+		{
 			var hitData:String = config.hitData.text();
 			
 			m_hitDatas = [];
@@ -221,58 +234,88 @@ package jsion.rpg
 				var str:String = list[i];
 				m_hitDatas[i] = str.split(",");
 			}
-			
+		}
+		
+		private function parseRenderInfos(config:XML):void
+		{
 			m_renderInfos.removeAll();
 			
 			var renderInfosXL:XMLList = config.renders..render;
 			
-			var xml:XML;
-			
-			for each(xml in renderInfosXL)
+			for each(var xml:XML in renderInfosXL)
 			{
 				var info:RenderInfo = new RenderInfo();
 				XmlUtil.decodeWithProperty(info, xml);
 				m_renderInfos.put(info.filename, info);
 			}
+		}
+		
+		private function parseWorldMapInfo(config:XML, bmd:BitmapData):void
+		{
+			var mWidth:int = int(config.@width);
+			var mHeight:int = int(config.@height);
+			var tileWidth:int = int(config.@tileWidth);
+			var tileHeight:int = int(config.@tileHeight);
+			var tileExt:String = String(config.@tileExt);
+			var hitTileWidth:int = int(config.@hitTileWidth);
+			var hitTileHeight:int = int(config.@hitTileHeight);
 			
 			m_worldMap.setMapID(m_currentMapID);
 			m_worldMap.setSmallMap(bmd);
 			m_worldMap.setMapSize(mWidth, mHeight);
 			m_worldMap.setTileSize(tileWidth, tileHeight);
-			m_worldMap.calcCameraTileSize();
 			m_worldMap.calcCenterPointRect();
 			m_worldMap.reviseCenterPoint();
+			m_worldMap.calcCameraTileCount();
+			m_worldMap.calcOthers();
 			m_worldMap.build();
 			m_worldMap.repaintBuffer();
-			
-			var buildingsXL:XMLList = config.buildings..building;
-			
-			var mapid:String;
-			var name:String;
+		}
+		
+		private function parseBuildings(config:XML):void
+		{
 			var filename:String;
 			var posX:int;
 			var posY:int;
 			
-			for each(xml in buildingsXL)
+			var buildingsXL:XMLList = config.buildings..building;
+			
+			for each(var xml:XML in buildingsXL)
 			{
 				filename = String(xml.@filename);
 				posX = int(xml.@x);
 				posY = int(xml.@y);
 			}
+		}
+		
+		private function parseNPCs(config:XML):void
+		{
+			var name:String;
+			var filename:String;
+			var posX:int;
+			var posY:int;
 			
 			var npcsXL:XMLList = config.npcs..npc;
 			
-			for each(xml in npcsXL)
+			for each(var xml:XML in npcsXL)
 			{
 				name = String(xml.@name);
 				filename = String(xml.@filename);
 				posX = int(xml.@x);
 				posY = int(xml.@y);
 			}
+		}
+		
+		private function parseJumps(config:XML):void
+		{
+			var mapid:String;
+			var filename:String;
+			var posX:int;
+			var posY:int;
 			
 			var jumpsXL:XMLList = config.jumps..jump;
 			
-			for each(xml in npcsXL)
+			for each(var xml:XML in jumpsXL)
 			{
 				mapid = String(xml.@mapid);
 				filename = String(xml.@filename);
