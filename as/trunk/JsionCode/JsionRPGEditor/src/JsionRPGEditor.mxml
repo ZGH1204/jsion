@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="1000" height="600"
+					   applicationComplete="init(event)"
+					   resize="resizeHandler(event)">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import jsion.rpg.editor.EditorGlobal;
+			import jsion.rpg.editor.MainEditor;
+			
+			import mx.events.FlexEvent;
+			import mx.events.ResizeEvent;
+			
+			import org.aswing.AsWingManager;
+			
+			private function init(e:FlexEvent):void
+			{
+				initApp();
+				
+				EditorGlobal.mainEditor = new MainEditor();
+				EditorGlobal.mainEditor
+				
+				EditorGlobal.mainEditor.setSizeWH(width, height);
+				EditorGlobal.mainEditor.show();
+			}
+			
+			private function initApp():void
+			{
+				statusBar.visible = false;
+				
+				this.nativeWindow.x = (Capabilities.screenResolutionX - this.nativeWindow.width) / 2;
+				this.nativeWindow.y = (Capabilities.screenResolutionY - this.nativeWindow.height) / 2;
+				
+				var bytes:ByteArray = new ByteArray();
+				var file:File = new File(File.applicationDirectory.resolvePath("config.xml").nativePath);
+				var fs:FileStream = new FileStream();
+				fs.open(file, FileMode.READ);
+				fs.readBytes(bytes);
+				fs.close();
+				var configXml:XML = new XML(bytes);
+				
+				JsionCoreSetup(stage, configXml);
+				
+				AsWingManager.initAsStandard(stage);
+			}
+
+			protected function resizeHandler(event:ResizeEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				if(EditorGlobal.mainEditor) EditorGlobal.mainEditor.setSizeWH(width, height);
+			}
+
+		]]>
+	</fx:Script>
+	
+</s:WindowedApplication>
