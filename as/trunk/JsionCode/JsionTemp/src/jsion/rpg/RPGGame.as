@@ -56,6 +56,7 @@ package jsion.rpg
 			
 			m_worldMap = new WorldMap();
 			m_worldMap.setCameraSize(m_cameraWidth, m_cameraHeight);
+			m_worldMap.build();
 		}
 		
 		public function get cameraWidth():int
@@ -267,8 +268,8 @@ package jsion.rpg
 			m_worldMap.calcCenterPointRect();
 			m_worldMap.reviseCenterPoint();
 			m_worldMap.calcCameraTileCount();
+			m_worldMap.calcMaxTileXY();
 			m_worldMap.calcOthers();
-			m_worldMap.build();
 			m_worldMap.repaintBuffer();
 		}
 		

@@ -213,11 +213,14 @@ package
 		 */		
 		public function removeAll():void
 		{
-			var keys:Array = DictionaryUtil.getKeys(content);
-			for each(var key:* in keys)
-			{
-				delete content[key];
-			}
+//			var keys:Array = DictionaryUtil.getKeys(content);
+//			for each(var key:* in keys)
+//			{
+//				delete content[key];
+//			}
+			
+			DictionaryUtil.delAll(content);
+			
 			length = 0;
 		}
 		
@@ -226,8 +229,8 @@ package
 		 */		
 		public function clear():void
 		{
-			length = 0;
 			DisposeUtil.free(content);
+			length = 0;
 			//content = new Dictionary();
 		}
 		

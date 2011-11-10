@@ -16,6 +16,7 @@ package jsion.rpg.map
 		protected var m_mapHeight:int;
 		protected var m_tileWidth:int;
 		protected var m_tileHeight:int;
+		protected var m_tileExt:String;
 		
 		
 		protected var m_buffer:BitmapData;
@@ -34,12 +35,18 @@ package jsion.rpg.map
 		
 		protected var m_startTileY:int;
 		
+		protected var m_maxTileX:int;
+		
+		protected var m_maxTileY:int;
+		
 		protected var m_cameraTileCountX:int;
 		
 		protected var m_cameraTileCountY:int;
 		
 		
 		protected var m_tileLoadCompletes:HashMap;
+		
+		protected var m_tileAdapter:TileAdapter;
 		
 		
 		public function WorldMap()
@@ -48,11 +55,22 @@ package jsion.rpg.map
 			m_centerPoint = new Point();
 			m_centerPointRect = new Rectangle();
 			m_tileLoadCompletes = new HashMap();
+			m_tileAdapter = new TileAdapter(this);
 		}
 		
 		public function get buffer():BitmapData
 		{
 			return m_buffer;
+		}
+		
+		public function get mapID():String
+		{
+			return m_mapid;
+		}
+		
+		public function get smallMap():BitmapData
+		{
+			return m_smallMapBmd;
 		}
 		
 		public function get needRepaint():Boolean
@@ -85,6 +103,16 @@ package jsion.rpg.map
 			return m_startTileY;
 		}
 		
+		public function get maxTileX():int
+		{
+			return m_maxTileX;
+		}
+		
+		public function get maxTileY():int
+		{
+			return m_maxTileY;
+		}
+		
 		public function get cameraTileCountX():int
 		{
 			return m_cameraTileCountX;
@@ -93,6 +121,31 @@ package jsion.rpg.map
 		public function get cameraTileCountY():int
 		{
 			return m_cameraTileCountY;
+		}
+		
+		public function get mapWidth():int
+		{
+			return m_mapWidth;
+		}
+		
+		public function get mapHeight():int
+		{
+			return m_mapHeight;
+		}
+		
+		public function get tileWidth():int
+		{
+			return m_tileWidth;
+		}
+		
+		public function get tileHeight():int
+		{
+			return m_tileHeight;
+		}
+		
+		public function get tileExt():String
+		{
+			return m_tileExt;
 		}
 		
 		public function setCenter(x:int, y:int):void
@@ -118,6 +171,8 @@ package jsion.rpg.map
 		public function setMapID(mapid:String):void
 		{
 			m_mapid = mapid;
+			
+			if(m_tileAdapter) m_tileAdapter.setMapID(mapid);
 		}
 		
 		public function setSmallMap(bmd:BitmapData):void
@@ -129,6 +184,8 @@ package jsion.rpg.map
 		{
 			m_cameraWidth = w;
 			m_cameraHeight = h;
+			
+			if(m_tileAdapter) m_tileAdapter.setCameraSize(w, h);
 		}
 		
 		public function setMapSize(w:int, h:int):void
@@ -143,26 +200,17 @@ package jsion.rpg.map
 			m_tileHeight = h;
 		}
 		
+		public function setTileExt(ext:String):void
+		{
+			m_tileExt = ext;
+		}
+		
 		public function calcCenterPointRect():void
 		{
 			m_centerPointRect.x = Math.ceil(m_cameraWidth / 2);
 			m_centerPointRect.y = Math.ceil(m_cameraHeight / 2);
 			m_centerPointRect.width = m_mapWidth - m_cameraWidth;
 			m_centerPointRect.height = m_mapHeight - m_cameraHeight;
-		}
-		
-		public function calcCameraTileCount():void
-		{
-			m_cameraTileCountX = Math.ceil(m_cameraWidth / m_tileWidth);
-			m_cameraTileCountY = Math.ceil(m_cameraHeight / m_tileHeight);
-		}
-		
-		public function calcOthers():void
-		{
-			m_startX = m_centerPoint.x - m_cameraWidth / 2;
-			m_startY = m_centerPoint.y - m_cameraHeight / 2;
-			m_startTileX = m_startX / m_tileWidth;
-			m_startTileY = m_startY / m_tileHeight;
 		}
 		
 		public function reviseCenterPoint():void
@@ -172,6 +220,31 @@ package jsion.rpg.map
 			
 			m_centerPoint.y = Math.max(m_centerPoint.y, m_centerPointRect.y);
 			m_centerPoint.y = Math.max(m_centerPoint.y, m_centerPointRect.bottom);
+		}
+		
+		public function calcCameraTileCount():void
+		{
+			m_cameraTileCountX = Math.ceil(m_cameraWidth / m_tileWidth);
+			if((m_cameraWidth % m_tileWidth) == 0) m_cameraTileCountX++;
+			
+			m_cameraTileCountY = Math.ceil(m_cameraHeight / m_tileHeight);
+			if((m_cameraHeight % m_tileHeight) == 0) m_cameraTileCountY++;
+		}
+		
+		public function calcMaxTileXY():void
+		{
+			m_maxTileX = ((m_mapWidth % m_tileWidth) == 0) ? (m_mapWidth / m_tileWidth) : ((m_mapWidth / m_tileWidth) + 1);
+			m_maxTileY = ((m_mapHeight % m_tileHeight) == 0) ? (m_mapHeight / m_tileHeight) : ((m_mapHeight / m_tileHeight) + 1);
+		}
+		
+		public function calcOthers():void
+		{
+			m_startX = m_centerPoint.x - m_cameraWidth / 2;
+			m_startY = m_centerPoint.y - m_cameraHeight / 2;
+			m_startTileX = m_startX / m_tileWidth;
+			m_startTileY = m_startY / m_tileHeight;
+			
+			if(m_tileAdapter) m_tileAdapter.calcOthers();
 		}
 		
 		public function build():void
@@ -184,8 +257,6 @@ package jsion.rpg.map
 			
 			DisposeUtil.free(tmp);
 			tmp = null;
-			
-			repaintBuffer();
 		}
 		
 		public function repaintBuffer():void
@@ -195,6 +266,9 @@ package jsion.rpg.map
 		
 		protected function repaintBufferImp():void
 		{
+			m_buffer.lock();
+			m_tileAdapter.fill(m_buffer);
+			m_buffer.unlock();
 		}
 		
 		public function render(buff:BitmapData):void
@@ -237,6 +311,8 @@ package jsion.rpg.map
 				x = int(list[1]);
 				y = int(list[0]);
 				bmd = m_tileLoadCompletes[key];
+				
+				m_tileAdapter.drawTile(buff, bmd, x, y);
 			}
 			
 			m_tileLoadCompletes.removeAll();
