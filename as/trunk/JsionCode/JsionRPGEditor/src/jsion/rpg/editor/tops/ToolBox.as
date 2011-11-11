@@ -1,10 +1,12 @@
 package jsion.rpg.editor.tops
 {
+	import jsion.rpg.editor.controls.FileNewFrame;
 	import jsion.utils.StringUtil;
 	
 	import org.aswing.JButton;
 	import org.aswing.JToolBar;
 	import org.aswing.LoadIcon;
+	import org.aswing.event.AWEvent;
 	
 	public class ToolBox extends JToolBar
 	{
@@ -23,7 +25,12 @@ package jsion.rpg.editor.tops
 		
 		private function initialize():void
 		{
-			m_newMapBtn = createButton("icons/NewMap.png", null, NewMapTipText);
+			m_newMapBtn = createButton("icons/NewMap.png", __newMapBtnClickHandler, NewMapTipText);
+		}
+		
+		private function __newMapBtnClickHandler(e:AWEvent):void
+		{
+			new FileNewFrame().show();
 		}
 		
 		private function createButton(iconPath:String, clickHandler:Function = null, toolTipText:String = null):JButton

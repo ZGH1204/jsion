@@ -10,6 +10,7 @@ package jsion.rpg
 	import jsion.rpg.interfaces.IPrepareMap;
 	import jsion.rpg.map.WorldMap;
 	import jsion.rpg.objects.GameObject;
+	import jsion.rpg.renders.Render2D;
 	import jsion.rpg.renders.RenderInfo;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DictionaryUtil;
@@ -28,6 +29,10 @@ package jsion.rpg
 		protected var m_cameraHeight:int;
 		
 		protected var m_buffer:BitmapData;
+		
+		protected var m_renderBuilding:Render2D;
+		
+		protected var m_renderNPC:Render2D;
 		
 		protected var m_worldMap:WorldMap;
 		
@@ -323,6 +328,47 @@ package jsion.rpg
 				posX = int(xml.@x);
 				posY = int(xml.@y);
 			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		public function setCameraSize(w:int, h:int):void
+		{
+			if(m_cameraWidth == w && m_cameraHeight == h) return;
+			
+			m_cameraWidth = w;
+			m_cameraHeight = h;
+			
+			var temp:BitmapData = m_buffer;
+			m_buffer = new BitmapData(m_cameraWidth, m_cameraHeight, true, 0xFF000000);
+			if(temp) m_buffer.copyPixels(temp, temp.rect, Constant.ZeroPoint);
+			DisposeUtil.free(temp);
+			temp = null;
+			
+			if(m_renderNPC) m_renderNPC.buffer = m_buffer;
+			if(m_renderBuilding) m_renderBuilding.buffer = m_buffer;
+			
+			m_worldMap.setCameraSize(m_cameraWidth, m_cameraHeight);
+			m_worldMap.calcCenterPointRect();
+			m_worldMap.reviseCenterPoint();
+			m_worldMap.calcCameraTileCount();
+			m_worldMap.calcOthers();
+			m_worldMap.build();
+			m_worldMap.repaintBuffer();
 		}
 	}
 }

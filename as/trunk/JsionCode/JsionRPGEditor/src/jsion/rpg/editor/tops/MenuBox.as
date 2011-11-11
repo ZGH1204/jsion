@@ -1,6 +1,7 @@
 package jsion.rpg.editor.tops
 {
 	import jsion.rpg.editor.controls.BaseFrame;
+	import jsion.rpg.editor.controls.FileNewFrame;
 	
 	import org.aswing.JCheckBoxMenuItem;
 	import org.aswing.JMenu;
@@ -57,7 +58,7 @@ package jsion.rpg.editor.tops
 			switch(item.getText())
 			{
 				case File_New:
-					new BaseFrame().show();
+					new FileNewFrame().show();
 					break;
 				default:
 					trace(item.getText());

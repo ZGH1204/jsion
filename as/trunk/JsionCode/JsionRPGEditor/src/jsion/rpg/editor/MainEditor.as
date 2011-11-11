@@ -1,5 +1,6 @@
 package jsion.rpg.editor
 {
+	import jsion.rpg.editor.centers.MapShower;
 	import jsion.rpg.editor.tops.MenuBox;
 	import jsion.rpg.editor.tops.ToolBox;
 	
@@ -8,6 +9,7 @@ package jsion.rpg.editor
 	import org.aswing.JPanel;
 	import org.aswing.JWindow;
 	import org.aswing.SoftBoxLayout;
+	import org.aswing.event.ResizedEvent;
 	
 	public class MainEditor extends JWindow
 	{
@@ -23,6 +25,12 @@ package jsion.rpg.editor
 		
 		protected var m_mainPanel:JPanel;
 		
+		
+		
+		protected var m_mapShower:MapShower;
+		
+		
+		
 		public function MainEditor(owner:*=null, modal:Boolean=false)
 		{
 			super(owner, modal);
@@ -36,8 +44,18 @@ package jsion.rpg.editor
 			configMainUI();
 		}
 		
+		public function get mapShower():MapShower
+		{
+			return m_mapShower;
+		}
+		
 		private function initialize():void
 		{
+			setMinimumWidth(600);
+			setMinimumHeight(500);
+			
+			
+			
 			m_content = getContentPane();
 			m_content.setLayout(new BorderLayout(1, 1));
 			
@@ -56,9 +74,9 @@ package jsion.rpg.editor
 			m_mainPanel.setOpaque(true);
 			
 			
-			m_bottomPanel.setPreferredHeight(1);
+			m_bottomPanel.setPreferredHeight(28);
 			m_leftPanel.setPreferredWidth(200);
-			m_rightPanel.setPreferredWidth(1);
+			m_rightPanel.setPreferredWidth(200);
 			
 			
 			
@@ -89,6 +107,15 @@ package jsion.rpg.editor
 		
 		private function configMainUI():void
 		{
+			m_mapShower = new MapShower(600, 460);
+			m_mainPanel.addChild(m_mapShower);
+			
+			m_mainPanel.addEventListener(ResizedEvent.RESIZED, __resizeHandler);
+		}
+		
+		private function __resizeHandler(e:ResizedEvent):void
+		{
+			m_mapShower.setCameraSize(m_mainPanel.width, m_mainPanel.height);
 		}
 	}
 }
