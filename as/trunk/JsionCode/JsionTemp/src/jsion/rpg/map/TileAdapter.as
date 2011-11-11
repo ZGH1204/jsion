@@ -68,6 +68,8 @@ package jsion.rpg.map
 		
 		public function calcOthers():void
 		{
+			if(m_map.smallMap == null) return;
+			
 			m_smallMapScale = m_map.smallMap.width / m_map.mapWidth;
 			
 			m_smallMapRect.width = m_cameraWidth * m_smallMapScale;

@@ -15,6 +15,7 @@ package jsion.rpg
 		protected var m_bmp:Bitmap;
 		
 		
+		
 		protected var m_game:RPGGame;
 		
 		protected var m_emitter:BaseEmitter;
@@ -25,7 +26,7 @@ package jsion.rpg
 		{
 			super();
 			
-			m_game = new RPGGame(cameraWidth, cameraHeight);
+			m_game = createGame(cameraWidth, cameraHeight);
 			
 			m_emitter = new RPGEmitter(m_game);
 			
@@ -33,6 +34,11 @@ package jsion.rpg
 			addChild(m_bmp);
 			
 			addEventListener(Event.ENTER_FRAME, __enterFrameHandler);
+		}
+		
+		protected function createGame(cameraWidth:int, cameraHeight:int):RPGGame
+		{
+			return new RPGGame(cameraWidth, cameraHeight);
 		}
 		
 		private function __enterFrameHandler(e:Event):void
