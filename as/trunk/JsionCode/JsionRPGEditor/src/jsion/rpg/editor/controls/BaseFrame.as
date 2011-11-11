@@ -57,7 +57,7 @@ package jsion.rpg.editor.controls
 			m_modal = true;
 			m_screenCenter = true;
 			m_frameWidth = 200;
-			m_frameHeight = 80;
+			m_frameHeight = 110;
 		}
 		
 		protected function initialize():void
@@ -66,11 +66,11 @@ package jsion.rpg.editor.controls
 		
 		protected function createOKAndCancelBtn():void
 		{
-			bt_ok = new JButton('确认');
+			bt_ok = new JButton("确定");
 			bt_ok.setPreferredWidth(80);
 			bt_ok.addActionListener(onSubmit);
 			
-			bt_cancle = new JButton('取消');
+			bt_cancle = new JButton("取消");
 			bt_cancle.setPreferredWidth(80);
 			bt_cancle.addActionListener(onCancle);
 			
@@ -81,13 +81,13 @@ package jsion.rpg.editor.controls
 		
 		protected function createOKBtn():void
 		{
-			bt_ok = new JButton('确认');
+			bt_ok = new JButton("确定");
 			bt_ok.setPreferredWidth(80);
 			
 			bt_ok.addActionListener(onSubmit);
 			
-			var jpanle:JPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 16, 5));
-			jpanle.appendAll(bt_ok);
+			var jpanle:JPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
+			jpanle.append(bt_ok);
 			m_container.append(jpanle);
 		}
 		
