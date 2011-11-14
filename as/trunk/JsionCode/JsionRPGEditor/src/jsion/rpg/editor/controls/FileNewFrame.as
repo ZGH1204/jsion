@@ -4,7 +4,9 @@ package jsion.rpg.editor.controls
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
+	import jsion.rpg.RPGGlobal;
 	import jsion.rpg.datas.MapInfo;
+	import jsion.rpg.editor.EditorGlobal;
 	import jsion.utils.StringUtil;
 	
 	import org.aswing.AbstractButton;
@@ -147,6 +149,8 @@ package jsion.rpg.editor.controls
 			{
 				return;
 			}
+			
+			EditorGlobal.mapInfo = mapInfo;
 			
 			super.onSubmit(e);
 		}
