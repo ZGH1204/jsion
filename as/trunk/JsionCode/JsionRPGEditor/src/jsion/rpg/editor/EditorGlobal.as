@@ -9,12 +9,12 @@ package jsion.rpg.editor
 	{
 		private static var m_mapInfo:MapInfo;
 		
-		public function get mapInfo():MapInfo
+		public static function get mapInfo():MapInfo
 		{
 			return m_mapInfo;
 		}
 		
-		public function set mapInfo(value:MapInfo):void
+		public static function set mapInfo(value:MapInfo):void
 		{
 			m_mapInfo = value;
 		}
