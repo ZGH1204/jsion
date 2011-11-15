@@ -134,7 +134,7 @@ package jsion.ui.components.buttons
 				image = tmpImage;
 			}
 			
-			if(image != lastImage && image != null)
+			if(image != lastImage)// && image != null)
 			{
 				if(lastImage) lastImage.visible = false;
 				
