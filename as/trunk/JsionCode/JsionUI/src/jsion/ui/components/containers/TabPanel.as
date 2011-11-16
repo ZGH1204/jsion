@@ -47,6 +47,10 @@ package jsion.ui.components.containers
 		{
 			m_tabsDir = tabDir;
 			
+			super(prefix, id);
+			
+			init();
+			
 			if(m_tabsDir == BOTTOM)
 			{
 				tabsHAlign = LEFT;
@@ -67,10 +71,6 @@ package jsion.ui.components.containers
 				tabsHAlign = LEFT;
 				tabsVAlign = BOTTOM;
 			}
-			
-			init();
-			
-			super(prefix, id);
 		}
 		
 		protected function init():void

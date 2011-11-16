@@ -8,30 +8,30 @@ package jsion.ui
 		
 		public static const RIGHT:int = 3;
 		
-		public static const TOP:int = 1;
+		public static const TOP:int = 4;
 		
-		public static const MIDDLE:int = 2;
+		public static const MIDDLE:int = 5;
 		
-		public static const BOTTOM:int = 3;
+		public static const BOTTOM:int = 6;
 		
 		
-		public static const TOP_LEFT:int = 11;
+		public static const TOP_LEFT:int = 41;
 		
-		public static const TOP_CENTER:int = 12;
+		public static const TOP_CENTER:int = 42;
 		
-		public static const TOP_RIGHT:int = 13;
+		public static const TOP_RIGHT:int = 43;
 		
-		public static const MIDDLE_LEFT:int = 21;
+		public static const MIDDLE_LEFT:int = 51;
 		
-		public static const MIDDLE_CENTER:int = 22;
+		public static const MIDDLE_CENTER:int = 52;
 		
-		public static const MIDDLE_RIGHT:int = 23;
+		public static const MIDDLE_RIGHT:int = 53;
 		
-		public static const BOTTOM_LEFT:int = 31;
+		public static const BOTTOM_LEFT:int = 61;
 		
-		public static const BOTTOM_CENTER:int = 32;
+		public static const BOTTOM_CENTER:int = 62;
 		
-		public static const BOTTOM_RIGHT:int = 33;
+		public static const BOTTOM_RIGHT:int = 63;
 		
 		
 		
