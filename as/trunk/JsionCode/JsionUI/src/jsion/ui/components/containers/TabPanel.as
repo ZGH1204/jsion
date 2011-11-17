@@ -127,6 +127,14 @@ package jsion.ui.components.containers
 			return new IntDimension();
 		}
 		
+		public function setPanelContainerSizeWH(w:int, h:int):void
+		{
+			pSize.width = w;
+			pSize.height = h;
+			
+			panelContainer.setSize(pSize);
+		}
+		
 		public function setPanelContainerLocation(xPos:int, yPos:int):void
 		{
 			if(panelContainer)
@@ -153,6 +161,8 @@ package jsion.ui.components.containers
 			
 			pSize.width = Math.max(pSize.width, dis.width);
 			pSize.height = Math.max(pSize.height, dis.height);
+			
+			panelContainer.setSize(pSize);
 		}
 		
 		public function get tabsDir():int
