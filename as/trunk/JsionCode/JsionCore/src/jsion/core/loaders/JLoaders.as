@@ -461,14 +461,13 @@ package jsion.core.loaders
 			}
 			
 			//生成加载类配置
-			var _cfg:Object;
+			var _cfg:Object = {};
 			if(cfg == null)
 			{
-				_cfg = _defaultCfg;
+				ObjectUtil.copyDynamicToTarget2(_defaultCfg, _cfg);
 			}
 			else
 			{
-				_cfg = {};
 				ObjectUtil.copyDynamicToTarget2(_defaultCfg, _cfg);
 				ObjectUtil.copyDynamicToTarget2(cfg, _cfg);
 			}
