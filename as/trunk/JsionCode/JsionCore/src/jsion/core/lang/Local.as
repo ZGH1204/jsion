@@ -45,7 +45,7 @@ package jsion.core.lang
 			var input:String = languages[key] ? languages[key] : "";
 			
 			var argList:Array = ArrayUtil.clone(args);
-			argList.unshift(key);
+			argList.unshift(input);
 			
 			return StringUtil.format.apply(null, argList);
 		}
