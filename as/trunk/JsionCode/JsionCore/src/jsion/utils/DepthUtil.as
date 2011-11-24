@@ -110,26 +110,49 @@ package jsion.utils
 			}
 
 			var container:DisplayObjectContainer = getContainerByUnion(dis1, dis2);
+			
 			if(container == null) return false;
-			var disList:Array = [null, null];
-
-			for(var i:int = 0; i < container.numChildren; i++)
+			
+			if(dis1.parent == dis2.parent)
 			{
-				var child:DisplayObjectContainer = container.getChildAt(i) as DisplayObjectContainer;
-				if(child == null) continue;
-
-				if(child.contains(dis1))
-					disList[0] = child;
-				else if(child.contains(dis2))
-					disList[1] = child;
-
-				if(disList[0] != null && disList[1] != null) break;
+				return dis1.parent.getChildIndex(dis1) < dis2.parent.getChildIndex(dis2);
+			}
+			else if(dis1.parent.contains(dis2.parent))
+			{
+				return dis1.parent.getChildIndex(dis1) < dis1.parent.getChildIndex(dis2.parent);
+			}
+			else if(dis2.parent.contains(dis1.parent))
+			{
+				return dis2.parent.getChildIndex(dis1) < dis2.parent.getChildIndex(dis1.parent);
+			}
+			else
+			{
+				var disList:Array = [null, null];
+				
+				for(var i:int = 0; i < container.numChildren; i++)
+				{
+					var child:DisplayObjectContainer = container.getChildAt(i) as DisplayObjectContainer;
+					
+					if(child == null) continue;
+	
+					if(child.contains(dis1))
+					{
+						disList[0] = child;
+					}
+					else if(child.contains(dis2))
+					{
+						disList[1] = child;
+					}
+	
+					if(disList[0] != null && disList[1] != null) break;
+				}
+	
+				dis1 = disList[0] as DisplayObject;
+				dis2 = disList[1] as DisplayObject;
+				
+				return container.getChildIndex(dis1) < container.getChildIndex(dis2);
 			}
 
-			dis1 = disList[0] as DisplayObject;
-			dis2 = disList[1] as DisplayObject;
-
-			return container.getChildIndex(dis1) < container.getChildIndex(dis2);
 		}
 
 		/**

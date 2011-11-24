@@ -234,7 +234,7 @@ package jsion.core.ddrop
 				
 				for each(var item:IDragDrop in list)
 				{
-					if(item.contains(display))
+					if(item.contains(display) && dropHitList.indexOf(item) == -1)
 					{
 						dropHitList.push(item);
 						break;
@@ -340,6 +340,12 @@ package jsion.core.ddrop
 			{
 				_dragIcon.x = _dragStartGlobarPoint.x - _dragIcon.width / 2;
 				_dragIcon.y = _dragStartGlobarPoint.y - _dragIcon.height / 2;
+				
+				_dragIconStartPoint.x = _dragIcon.x;
+				_dragIconStartPoint.y = _dragIcon.y;
+				
+				_dragStartPoint.x = _dragStartPoint.x - _dragIcon.width / 2;
+				_dragStartPoint.y = _dragStartPoint.y - _dragIcon.height / 2;
 			}
 			
 			//添加拖动是的事件监听
