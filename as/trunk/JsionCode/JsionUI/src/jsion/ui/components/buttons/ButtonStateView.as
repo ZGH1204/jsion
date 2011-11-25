@@ -437,6 +437,8 @@ package jsion.ui.components.buttons
 			m_disabledSelectedImage = null;
 			
 			lastImage = null;
+			
+			m_size = null;
 		}
 	}
 }

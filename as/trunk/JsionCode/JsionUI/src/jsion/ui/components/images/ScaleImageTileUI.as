@@ -13,6 +13,10 @@ package jsion.ui.components.images
 		private var sourceBitmapData:BitmapData;
 		private var scaleImage:ScaleImageTile;
 		
+		private var bmpList:Array = [];
+		
+		private var bmdList:Array = [];
+		
 		public function ScaleImageTileUI()
 		{
 			super();
@@ -50,10 +54,6 @@ package jsion.ui.components.images
 			
 			paintImage(scaleImage.scaleType, bounds);
 		}
-		
-		private var bmpList:Array = [];
-		
-		private var bmdList:Array = [];
 		
 		private function paintImage(st:int, bounds:IntRectangle):void
 		{
@@ -244,6 +244,19 @@ package jsion.ui.components.images
 			bmdList.push(bmp.bitmapData);
 			
 			return bmp;
+		}
+		
+		override public function dispose():void
+		{
+			DisposeUtil.free(bmpList, false);
+			
+			DisposeUtil.free(bmdList);
+			
+			sourceBitmapData = null;
+			
+			scaleImage = null;
+			
+			super.dispose();
 		}
 	}
 }

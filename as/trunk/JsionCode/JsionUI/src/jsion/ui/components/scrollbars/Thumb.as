@@ -103,6 +103,8 @@ package jsion.ui.components.scrollbars
 		{
 			DDropMgr.unregisteDrag(this);
 			
+			m_startPoint = null;
+			
 			m_dragingFn = null;
 			
 			super.dispose();
@@ -189,7 +191,5 @@ package jsion.ui.components.scrollbars
 		{
 			m_dragingFn = value;
 		}
-		
-		
 	}
 }

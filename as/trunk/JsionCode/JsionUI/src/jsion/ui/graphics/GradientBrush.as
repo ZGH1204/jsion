@@ -117,6 +117,14 @@ package jsion.ui.graphics{
 		public function endFill(target:Graphics):void{
 			target.endFill();
 		}	
+		
+		public function dispose():void
+		{
+			colors = null;
+			alphas = null;
+			ratios = null;
+			matrix = null;
+		}
 	}
 
 }

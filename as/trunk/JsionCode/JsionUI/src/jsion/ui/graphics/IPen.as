@@ -10,7 +10,8 @@ package jsion.ui.graphics{
 	 * Use it with a org.aswing.graphics.Graphics2D instance
 	 * @author n0rthwood
 	 */	
-	public interface IPen{
+	public interface IPen extends IDispose
+	{
 
 		/**
 		 *

@@ -13,7 +13,8 @@ package jsion.ui.graphics{
 	 * @see http://livedocs.macromedia.com/flex/2/langref/flash/display/Graphics.html#beginFill()
 	 * @author iiley
 	 */
-	public class SolidBrush implements IBrush{
+	public class SolidBrush implements IBrush
+	{
 
 		private var color:ASColor;
 
@@ -44,6 +45,11 @@ package jsion.ui.graphics{
 		 */
 		public function endFill(target:Graphics):void{
 			target.endFill();
+		}
+		
+		public function dispose():void
+		{
+			color = null;
 		}
 	}
 }
