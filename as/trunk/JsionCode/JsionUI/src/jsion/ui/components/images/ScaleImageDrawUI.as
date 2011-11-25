@@ -7,7 +7,6 @@ package jsion.ui.components.images
 	import flash.geom.Rectangle;
 	
 	import jsion.ui.Component;
-	
 	import jsion.utils.DisposeUtil;
 	
 	public class ScaleImageDrawUI extends BasicScaleImageUI
@@ -177,6 +176,18 @@ package jsion.ui.components.images
 			if(destTargetRect.width <= 0 || destTargetRect.height <= 0) return;
 			
 			bmd.copyPixels(sourceBitmapData, copySourceRect.toRectangle(), destTargetRect.getLocation().toPoint());
+		}
+		
+		override public function dispose():void
+		{
+			DisposeUtil.free(bmp);
+			bmp = null;
+			
+			sourceBitmapData = null;
+			
+			scaleImage = null;
+			
+			super.dispose();
 		}
 	}
 }

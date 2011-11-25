@@ -12,6 +12,9 @@ package jsion.ui.components.labels
 	{
 		private var textField:TextField;
 		
+		private var viewRect:IntRectangle = new IntRectangle();
+		private var textRect:IntRectangle = new IntRectangle();
+		
 		public function BasicLabelUI()
 		{
 			super();
@@ -59,9 +62,6 @@ package jsion.ui.components.labels
 			paintText(component, bounds);
 		}
 		
-		private var viewRect:IntRectangle = new IntRectangle();
-		private var textRect:IntRectangle = new IntRectangle();
-		
 		private function paintText(component:Component, bounds:IntRectangle):void
 		{
 			var label:Label = Label(component);
@@ -80,6 +80,17 @@ package jsion.ui.components.labels
 			textField.text = text;
 			label.font.apply(textField);
 			textField.textColor = label.forecolor.getRGB();
+		}
+		
+		override public function dispose():void
+		{
+			textField = null;
+			
+			viewRect = null;
+			
+			textRect = null;
+			
+			super.dispose();
 		}
 	}
 }

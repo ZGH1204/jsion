@@ -47,7 +47,8 @@ package jsion.ui.graphics
 	 * @see org.aswing.graphics
 	 * @author iiley
 	 */
-	public class Graphics2D {
+	public class Graphics2D implements IDispose
+	{
 
 		protected var target:Graphics;
 		private var brush:IBrush;
@@ -64,11 +65,6 @@ package jsion.ui.graphics
 
 		protected function setTarget(target:Graphics):void{
 			this.target = target;
-		}
-
-		protected function dispose():void{
-			target = null;
-			brush = null;
 		}
 
 		private function startPen(p:IPen):void{
@@ -687,7 +683,11 @@ package jsion.ui.graphics
 			target._y = y; */
 		}	
 
-
+		public function dispose():void
+		{
+			target = null;
+			brush = null;
+		}
 	}
 
 

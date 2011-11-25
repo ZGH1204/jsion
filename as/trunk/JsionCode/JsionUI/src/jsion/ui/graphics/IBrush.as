@@ -11,7 +11,8 @@ package jsion.ui.graphics{
 	 * Use it with a org.aswing.graphics.Graphics2D instance
 	 * @author iiley
 	 */
-	public interface IBrush{
+	public interface IBrush extends IDispose
+	{
 
 		/**
 		 *

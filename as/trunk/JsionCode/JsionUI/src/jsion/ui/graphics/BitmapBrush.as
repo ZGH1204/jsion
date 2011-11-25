@@ -14,8 +14,8 @@ package jsion.ui.graphics
 	 * @see http://livedocs.macromedia.com/flex/2/langref/flash/display/Graphics.html#beginBitmapFill()
 	 * @author n0rthwood
 	 */
-	public class BitmapBrush implements IBrush{
-
+	public class BitmapBrush implements IBrush
+	{
 		private var _bitmapData:BitmapData;
 		private var _matrix:Matrix;
 		private var _repeat:Boolean;
@@ -85,7 +85,13 @@ package jsion.ui.graphics
 		public function setSmooth(smooth:Boolean):void{
 			this._smooth = smooth;
 		}
-
+		
+		public function dispose():void
+		{
+			_bitmapData = null;
+			
+			_matrix = null;
+		}
 	}
 
 }

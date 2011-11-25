@@ -15,7 +15,8 @@ package jsion.ui.graphics{
 	 * @see http://livedocs.macromedia.com/flex/2/langref/flash/display/Graphics.html#lineGradientStyle()
 	 * @author n0rthwood
 	 */		
-	public class GradientPen implements IPen{
+	public class GradientPen implements IPen
+	{
 
 		private var pen:Pen;
 		private var fillType:String;
@@ -133,6 +134,15 @@ package jsion.ui.graphics{
 		public function setTo(target:Graphics):void{
 			pen.setTo(target);
 			target.lineGradientStyle(fillType,colors,alphas,ratios,matrix,spreadMethod,interpolationMethod,focalPointRatio);
+		}
+		
+		public function dispose():void
+		{
+			pen = null;
+			colors = null;
+			alphas = null;
+			ratios = null;
+			matrix = null;
 		}
 	}
 

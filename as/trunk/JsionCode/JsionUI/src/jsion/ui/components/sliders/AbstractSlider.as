@@ -6,7 +6,6 @@ package jsion.ui.components.sliders
 	import jsion.ui.IBoundedRangeModel;
 	import jsion.ui.UIConstants;
 	import jsion.ui.events.ComponentEvent;
-	
 	import jsion.utils.DisposeUtil;
 	
 	public class AbstractSlider extends Component
@@ -238,6 +237,7 @@ package jsion.ui.components.sliders
 		{
 			if(m_model) m_model.removeStateListener(__modelStateListener);
 			
+			DisposeUtil.free(m_model);
 			m_model = null;
 			
 			super.dispose();

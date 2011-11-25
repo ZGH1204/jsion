@@ -111,5 +111,14 @@ package jsion.ui.components.images
 //			
 //			super.setSizeWH(w, h);
 //		}
+		
+		override public function dispose():void
+		{
+			m_scaleInsets = null;
+			
+			m_sourceBitmapData = null;
+			
+			super.dispose();
+		}
 	}
 }

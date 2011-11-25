@@ -6,6 +6,7 @@ package jsion.ui.components.scrollbars
 	import jsion.ui.IBoundedRangeModel;
 	import jsion.ui.UIConstants;
 	import jsion.ui.events.ComponentEvent;
+	import jsion.utils.DisposeUtil;
 	
 	public class AbstractScrollBar extends Component
 	{
@@ -397,6 +398,7 @@ package jsion.ui.components.scrollbars
 		{
 			if(m_model) m_model.removeStateListener(__modelStateListener);
 			
+			DisposeUtil.free(m_model);
 			m_model = null;
 			
 			super.dispose();

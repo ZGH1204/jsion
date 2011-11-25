@@ -1,6 +1,7 @@
 package jsion.ui.components.containers
 {
 	import flash.display.DisplayObject;
+	import flash.events.MouseEvent;
 	
 	import jsion.ui.Component;
 	import jsion.ui.Container;
@@ -8,6 +9,7 @@ package jsion.ui.components.containers
 	import jsion.ui.UIConstants;
 	import jsion.ui.components.buttons.AbstractButton;
 	import jsion.ui.components.buttons.ButtonGroup;
+	import jsion.utils.DisposeUtil;
 	
 	public class TabPanel extends Container
 	{
@@ -24,6 +26,12 @@ package jsion.ui.components.containers
 		protected var tabBtnsList:Array = [];
 		
 		protected var panelsList:Array = [];
+		
+		protected var currentTab:ITab;
+		
+		protected var currentTabBtn:AbstractButton;
+		
+		protected var currentPanel:DisplayObject;
 		
 		protected var btnGround:ButtonGroup;
 		
@@ -154,15 +162,40 @@ package jsion.ui.components.containers
 			tabBtnsList.push(tab.getTabButton());
 			btnGround.append(tabBtn);
 			tabContainer.addChild(tabBtn);
+			tabBtn.addEventListener(MouseEvent.CLICK, __tabBtnClickHandler);
 			
 			var dis:DisplayObject = tab.getTabContent();
 			panelsList.push(dis);
 			panelContainer.addChild(dis);
+			dis.visible = false;
 			
 			pSize.width = Math.max(pSize.width, dis.width);
 			pSize.height = Math.max(pSize.height, dis.height);
 			
 			panelContainer.setSize(pSize);
+		}
+		
+		private function __tabBtnClickHandler(e:MouseEvent):void
+		{
+			var btn:AbstractButton = e.currentTarget as AbstractButton;
+			
+			var index:int = tabBtnsList.indexOf(btn);
+			
+			setActiveTab(index);
+		}
+		
+		public function setActiveTab(index:int):void
+		{
+			if(index >= 0 && index < tabsList.length)
+			{
+				currentTab = tabsList[index] as ITab;
+				
+				currentTabBtn = tabBtnsList[index] as AbstractButton;
+				
+				if(currentPanel) currentPanel.visible = false;
+				currentPanel = panelsList[index] as DisplayObject;
+				currentPanel.visible = true;
+			}
 		}
 		
 		public function get tabsDir():int
@@ -262,6 +295,40 @@ package jsion.ui.components.containers
 				
 				invalidate();
 			}
+		}
+		
+		override public function dispose():void
+		{
+			for each(var tabBtn:AbstractButton in tabBtnsList)
+			{
+				tabBtn.removeEventListener(MouseEvent.CLICK, __tabBtnClickHandler);
+			}
+			
+			currentTab = null;
+			
+			currentTabBtn = null;
+			
+			currentPanel = null;
+			
+			DisposeUtil.free(btnGround);
+			btnGround = null;
+			
+			DisposeUtil.free(tabsList);
+			tabsList = null;
+			
+			DisposeUtil.free(tabBtnsList);
+			tabBtnsList = null;
+			
+			DisposeUtil.free(panelsList);
+			panelsList = null;
+			
+			DisposeUtil.free(tabContainer);
+			tabContainer = null;
+			
+			DisposeUtil.free(panelContainer);
+			panelContainer = null;
+			
+			super.dispose();
 		}
 	}
 }
