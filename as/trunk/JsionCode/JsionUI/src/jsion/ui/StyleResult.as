@@ -1,9 +1,10 @@
 package jsion.ui{
+	import jsion.utils.DisposeUtil;
 
 	/**
 	 * The class for a result of a main color adjusted by a adjuster.
 	 */
-	public class StyleResult
+	public class StyleResult implements IDispose
 	{
 
 		/**
@@ -41,6 +42,20 @@ package jsion.ui{
 			round  = tune.round;
 		}
 
+		public function dispose():void
+		{
+			DisposeUtil.free(clight);
+			clight = null;
+			
+			DisposeUtil.free(cdark);
+			cdark = null;
+			
+			DisposeUtil.free(blight);
+			blight = null;
+			
+			DisposeUtil.free(bdark);
+			bdark = null;
+		}
 	}
 }
 
