@@ -245,9 +245,6 @@ package jsion.ui
 
 		override public function dispose():void
 		{
-			m_backcolor = null;
-			m_forecolor = null;
-
 			DisposeUtil.free(m_background);
 			m_background = null;
 
@@ -287,9 +284,14 @@ package jsion.ui
 			m_cachedMaximumSize = null;;
 			
 			
+			m_backcolor = null;
+			m_forecolor = null;
+			
 			container = null;
 			
 			m_bounds = null;
+			
+			m_styleTune = null;
 
 			ComponentMgr.Instance.unregiste(m_id);
 			

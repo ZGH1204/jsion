@@ -6,7 +6,7 @@ package jsion.ui
 	 * This is used to affect the component's UI style.
 	 * </p>
 	 */
-	public class StyleTune
+	public class StyleTune implements IDispose
 	{
 
 		/**
@@ -139,6 +139,11 @@ package jsion.ui
 		public function toString() : String
 		{
 			return "StyleTune{cGradient:" + cGradient + ", bOffset:" + bOffset + ", bGradient:" + bGradient + ", shadowAlpha:" + shadowAlpha + ", round:" + round + (mideAdjuster != this ? "mide:" + mideAdjuster.toString() : "") + "}";
+		}
+		
+		public function dispose():void
+		{
+			mideAdjuster = null;
 		}
 	}
 }
