@@ -71,6 +71,7 @@
     <Compile Include="Ext\StringExt.cs" />
     <Compile Include="SerializationUtil.cs" />
     <Compile Include="ServerUtil.cs" />
+    <Compile Include="TickUtil.cs" />
     <Compile Include="TypeParse.cs" />
   </ItemGroup>
   <ItemGroup>
