@@ -9,5 +9,7 @@ package jsion.ui.components.containers
 		function getTabButton():AbstractButton;
 		
 		function getTabContent():DisplayObject;
+		
+		function onShowContent():void;
 	}
 }

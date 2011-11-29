@@ -24,7 +24,7 @@ package jsion.core.reflection
 			return getIsImplInterface(clsPath);
 		}
 		
-		internal function getIsImplInterface(interfaceString:String):Boolean
+		public function getIsImplInterface(interfaceString:String):Boolean
 		{
 			return interfaces.indexOf(interfaceString) != -1;
 		}

@@ -89,6 +89,24 @@ package jsion.core.reflection
 			return null;
 		}
 		
+		public function getTypesByInterface(iCls:Class):Vector.<Type>
+		{
+			var tList:Vector.<Type> = new Vector.<Type>();
+			
+			var str:String = ReflectionUtil.getClassPath(iCls);
+			
+			for each(var clsPath:String in clsList)
+			{
+				var cls:Class = AppDomainUtil.getClass(clsPath);
+				if(cls == null) continue;
+				var type:Type = ReflectionUtil.parseTypeWithInterface(describeType(cls));
+				
+				if(type && type.interfaces.indexOf(str) != -1)
+					tList.push(type);
+			}
+			return tList;
+		}
+		
 		public function getTypes():Vector.<Type>
 		{
 			if(typeList) return typeList;

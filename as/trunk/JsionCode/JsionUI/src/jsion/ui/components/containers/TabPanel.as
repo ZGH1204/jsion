@@ -159,7 +159,7 @@ package jsion.ui.components.containers
 			tabsList.push(tab);
 			
 			var tabBtn:AbstractButton = tab.getTabButton();
-			tabBtnsList.push(tab.getTabButton());
+			tabBtnsList.push(tabBtn);
 			btnGround.append(tabBtn);
 			tabContainer.addChild(tabBtn);
 			tabBtn.addEventListener(MouseEvent.CLICK, __tabBtnClickHandler);
@@ -169,10 +169,21 @@ package jsion.ui.components.containers
 			panelContainer.addChild(dis);
 			dis.visible = false;
 			
-			pSize.width = Math.max(pSize.width, dis.width);
-			pSize.height = Math.max(pSize.height, dis.height);
+//			if(m_tabsDir == TOP || m_tabsDir == BOTTOM)
+//			{
+//				pSize.width = Math.max(pSize.width, dis.width);
+//				pSize.height = Math.max(pSize.height, dis.height + tabBtn.height + tabsVGap);
+//			}
+//			else
+//			{
+//				pSize.width = Math.max(pSize.width, dis.width + tabBtn.width + tabsHGap);
+//				pSize.height = Math.max(pSize.height, dis.height);
+//			}
 			
-			panelContainer.setSize(pSize);
+//			pSize.width = Math.max(pSize.width, dis.width);
+//			pSize.height = Math.max(pSize.height, dis.height);
+//			
+//			panelContainer.setSize(pSize);
 		}
 		
 		private function __tabBtnClickHandler(e:MouseEvent):void
@@ -195,6 +206,7 @@ package jsion.ui.components.containers
 				if(currentPanel) currentPanel.visible = false;
 				currentPanel = panelsList[index] as DisplayObject;
 				currentPanel.visible = true;
+				currentTab.onShowContent();
 			}
 		}
 		
