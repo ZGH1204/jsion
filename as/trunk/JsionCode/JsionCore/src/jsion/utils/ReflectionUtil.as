@@ -79,6 +79,21 @@ package jsion.utils
 			return cList;
 		}
 		
+		public static function parseTypeWithInterface(describeTypeXml:XML):Type
+		{
+			var type:Type = new Type();
+			
+			var factoryXml:XML = describeTypeXml.factory[0];
+			
+			XmlUtil.decodeWithProperty(type, describeTypeXml);
+			
+			type.metadatas = parseMetaDatas(factoryXml);
+			type.interfaces = parseInterfaces(factoryXml);
+			type.analyze();
+			
+			return type;
+		}
+		
 		/**
 		 * 解析为Type对象
 		 * @param describeTypeXml

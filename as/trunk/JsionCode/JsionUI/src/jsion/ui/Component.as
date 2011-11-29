@@ -993,6 +993,8 @@ package jsion.ui
 		{
 			var g:Graphics2D = new Graphics2D(graphics);
 			g.fillRectangle(bg_trigger_brush, bounds.x, bounds.y, bounds.width, bounds.height);
+			DisposeUtil.free(g);
+			g = null;
 		}
 
 		private function initialize():void
