@@ -3,7 +3,6 @@ package jsion.ui
 	import flash.display.DisplayObject;
 	
 	import jsion.ui.layouts.ILayoutManager;
-	
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 
@@ -115,7 +114,8 @@ package jsion.ui
 		{
 			while(children.length > 0)
 			{
-				removeAt(children.length - 1);
+				DisposeUtil.free(children.pop());
+				//removeAt(children.length - 1);
 			}
 		}
 		
