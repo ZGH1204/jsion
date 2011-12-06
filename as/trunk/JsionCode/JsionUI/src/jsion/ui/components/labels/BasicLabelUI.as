@@ -77,9 +77,9 @@ package jsion.ui.components.labels
 			
 			textField.x = textRect.x;
 			textField.y = textRect.y;
-			textField.text = text;
 			label.font.apply(textField);
 			textField.textColor = label.forecolor.getRGB();
+			textField.htmlText = text;
 		}
 		
 		override public function dispose():void

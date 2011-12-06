@@ -37,7 +37,7 @@ package jsion.ui.components.buttons
 		protected var m_verticalTextAlginment:int;
 		protected var m_horizontalTextAlginment:int;
 		
-		protected var m_rolloverEnabled:Boolean
+		protected var m_rolloverEnabled:Boolean;
 		
 		private var m_textFilters:Array;
 		
