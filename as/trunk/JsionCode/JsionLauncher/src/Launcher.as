@@ -36,6 +36,8 @@ package
 		
 		protected var m_callback:Function;
 		
+		protected var m_resRoot:String;
+		
 		
 		public function Launcher(stage:Stage)
 		{
@@ -62,6 +64,8 @@ package
 		private function __configCompleteHandler(e:Event):void
 		{
 			configXML = new XML(configLoader.data);
+			
+			m_resRoot = String(configXML.config.@ResRoot);
 			
 			configLoader.removeEventListener(Event.COMPLETE, __configCompleteHandler);
 			configLoader.removeEventListener(IOErrorEvent.IO_ERROR, __errorHandler);
@@ -113,7 +117,7 @@ package
 			startupLoader.addEventListener(IOErrorEvent.IO_ERROR, __errorHandler);
 			startupLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, __errorHandler);
 			
-			var url:String = startupInfo.url + "?v=" + version;
+			var url:String = combinPath(m_resRoot, startupInfo.url + "?v=" + version);
 			
 			startupLoader.load(new URLRequest(url));
 		}
@@ -170,6 +174,36 @@ package
 		private function loadAutoModuleCallback():void
 		{
 			if(m_callback != null) m_callback(configXML);
+		}
+		
+		public static function combinPath(...args):String
+		{
+			var path:String = "";
+			
+			if(args.length <= 0) return path;
+			else if(args.length == 1) return args[0];
+			else path = args.shift();
+			
+			var splitor:String;
+			
+			if(path.lastIndexOf("\\") != -1) splitor = "\\";
+			else splitor = "/";
+			
+			for each(var arg:String in args)
+			{
+				if(path.lastIndexOf("\\") == (path.length - 1) || path.lastIndexOf("/") == (path.length - 1))
+				{
+					if(arg.indexOf("\\") == 0 || arg.indexOf("/") == 0) path = path + arg.substr(1);
+					else path = path + arg;
+				}
+				else
+				{
+					if(arg.indexOf("\\") == 0 || arg.indexOf("/") == 0) path = path + arg;
+					else path = path + splitor + arg;
+				}
+			}
+			
+			return path;
 		}
 		
 		public function dispose():void
