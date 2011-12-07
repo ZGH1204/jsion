@@ -167,8 +167,8 @@ package jsion.ui.components.containers
 			
 			var dis:DisplayObject = tab.getTabContent();
 			panelsList.push(dis);
-			panelContainer.addChild(dis);
-			dis.visible = false;
+			//panelContainer.addChild(dis);
+			//dis.visible = false;
 			
 //			if(m_tabsDir == TOP || m_tabsDir == BOTTOM)
 //			{
@@ -204,9 +204,11 @@ package jsion.ui.components.containers
 				
 				currentTabBtn = tabBtnsList[index] as AbstractButton;
 				
-				if(currentPanel) currentPanel.visible = false;
+				if(currentPanel && currentPanel.parent != null)
+					currentPanel.parent.removeChild(currentPanel);
+				
 				currentPanel = panelsList[index] as DisplayObject;
-				currentPanel.visible = true;
+				if(currentPanel) panelContainer.addChild(currentPanel);
 				currentTab.onShowContent();
 			}
 		}
