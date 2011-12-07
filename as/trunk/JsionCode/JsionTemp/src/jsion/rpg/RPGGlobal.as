@@ -1,5 +1,7 @@
 package jsion.rpg
 {
+	import jsion.HashMap;
+
 	public class RPGGlobal
 	{
 		public static const MAP_CONFIG_FILE:String = "Config.map";

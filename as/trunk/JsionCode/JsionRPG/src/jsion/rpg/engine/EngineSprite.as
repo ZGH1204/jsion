@@ -3,6 +3,8 @@ package jsion.rpg.engine
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	import jsion.IDispose;
+	
 	public class EngineSprite extends Sprite implements IDispose
 	{
 		public function EngineSprite()

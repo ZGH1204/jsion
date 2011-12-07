@@ -3,6 +3,7 @@ package jsion.ui.components.labels
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	
+	import jsion.*;
 	import jsion.ui.BasicComponentUI;
 	import jsion.ui.Component;
 	import jsion.ui.UIUtil;

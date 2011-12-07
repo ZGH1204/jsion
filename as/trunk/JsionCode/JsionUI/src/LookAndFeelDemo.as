@@ -1,5 +1,6 @@
 package
 {
+	import jsion.*;
 	import jsion.ui.BasicLookAndFeel;
 	import jsion.ui.ImageBackGround;
 	import jsion.ui.components.buttons.ButtonIcon;

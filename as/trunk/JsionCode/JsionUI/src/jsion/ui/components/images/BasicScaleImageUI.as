@@ -1,5 +1,6 @@
 package jsion.ui.components.images
 {
+	import jsion.*;
 	import jsion.ui.BasicComponentUI;
 	
 	public class BasicScaleImageUI extends BasicComponentUI

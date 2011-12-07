@@ -6,6 +6,8 @@ package jsion.ui.graphics
 {
 
 	import flash.display.Graphics;
+	
+	import jsion.*;
 
 	/**
 	 * Encapsulate and enhance flash.display.graphics drawing API.

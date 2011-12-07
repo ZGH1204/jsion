@@ -2,6 +2,7 @@ package jsion.rpg.engine.games
 {
 	import flash.display.BitmapData;
 	
+	import jsion.HashMap;
 	import jsion.rpg.engine.datas.MapConfig;
 	import jsion.rpg.engine.renders.RenderCharactar;
 	import jsion.rpg.engine.renders.RenderStatic;

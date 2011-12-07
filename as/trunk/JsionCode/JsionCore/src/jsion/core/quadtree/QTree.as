@@ -2,6 +2,7 @@ package jsion.core.quadtree
 {
 	import flash.geom.Rectangle;
 	
+	import jsion.IDispose;
 	import jsion.utils.DisposeUtil;
 	
 	/**

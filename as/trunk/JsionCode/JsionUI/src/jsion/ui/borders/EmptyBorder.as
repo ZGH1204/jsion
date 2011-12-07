@@ -2,7 +2,8 @@ package jsion.ui.borders
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-
+	
+	import jsion.*;
 	import jsion.ui.Component;
 	import jsion.ui.DefaultRes;
 	import jsion.ui.IComponentUI;

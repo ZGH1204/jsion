@@ -2,6 +2,7 @@ package jsion.ui.mgrs
 {
 	import flash.events.Event;
 	
+	import jsion.*;
 	import jsion.ui.Component;
 	
 	import jsion.utils.InstanceUtil;

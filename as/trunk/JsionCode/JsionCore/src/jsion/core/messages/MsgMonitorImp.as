@@ -3,6 +3,7 @@ package jsion.core.messages
 	import flash.utils.Dictionary;
 	import flash.utils.getTimer;
 	
+	import jsion.IDispose;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DictionaryUtil;
 	import jsion.utils.DisposeUtil;

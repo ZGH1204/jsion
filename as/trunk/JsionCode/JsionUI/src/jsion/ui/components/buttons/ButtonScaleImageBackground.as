@@ -3,6 +3,7 @@ package jsion.ui.components.buttons
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	
+	import jsion.*;
 	import jsion.ui.Component;
 	import jsion.ui.IComponentUI;
 	import jsion.ui.components.images.ScaleImageTile;

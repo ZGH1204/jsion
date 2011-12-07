@@ -1,5 +1,6 @@
 package jsion.ui.components.containers
 {
+	import jsion.*;
 	import jsion.ui.BasicComponentUI;
 	import jsion.ui.Component;
 	import jsion.ui.DefaultConfigKeys;

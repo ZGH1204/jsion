@@ -2,6 +2,8 @@ package jsion.core.scenes
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	
+	import jsion.IDispose;
 
 	/**
 	 * 场景基类

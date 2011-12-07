@@ -2,6 +2,7 @@ package jsion.ui.layouts
 {
 	import flash.display.DisplayObject;
 	
+	import jsion.*;
 	import jsion.ui.Container;
 	import jsion.ui.IGroundDecorator;
 	import jsion.ui.UIUtil;

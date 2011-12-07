@@ -4,6 +4,7 @@ package jsion.ui
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	
+	import jsion.*;
 	import jsion.ui.borders.IBorder;
 	import jsion.utils.AppDomainUtil;
 	import jsion.utils.DisposeUtil;

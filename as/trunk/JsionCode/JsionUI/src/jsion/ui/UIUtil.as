@@ -9,6 +9,7 @@ package jsion.ui
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	
+	import jsion.*;
 	import jsion.utils.JUtil;
 	import jsion.utils.StringUtil;
 

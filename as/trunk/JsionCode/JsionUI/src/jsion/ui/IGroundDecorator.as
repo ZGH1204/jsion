@@ -1,5 +1,7 @@
 package jsion.ui
 {
+	import jsion.*;
+	
 	public interface IGroundDecorator extends IDecorator
 	{
 //		function setup(component:Component, ui:IComponentUI):void;

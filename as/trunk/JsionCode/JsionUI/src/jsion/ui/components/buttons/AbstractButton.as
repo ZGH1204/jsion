@@ -8,6 +8,7 @@ package jsion.ui.components.buttons
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import jsion.*;
 	import jsion.ui.Component;
 	import jsion.ui.IComponentUI;
 	import jsion.ui.IICON;

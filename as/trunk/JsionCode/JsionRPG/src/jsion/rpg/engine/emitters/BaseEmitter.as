@@ -2,6 +2,7 @@ package jsion.rpg.engine.emitters
 {
 	import flash.utils.getTimer;
 	
+	import jsion.IDispose;
 	import jsion.rpg.engine.EngineGlobal;
 	import jsion.rpg.engine.games.BaseGame;
 

@@ -5,6 +5,9 @@ package jsion.rpg.engine.games
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import jsion.Constant;
+	import jsion.HashMap;
+	import jsion.IDispose;
 	import jsion.rpg.engine.datas.MapConfig;
 	import jsion.rpg.engine.graphics.GraphicInfo;
 	import jsion.utils.DisposeUtil;

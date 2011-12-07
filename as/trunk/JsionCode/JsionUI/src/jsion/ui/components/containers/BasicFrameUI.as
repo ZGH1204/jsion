@@ -2,6 +2,7 @@ package jsion.ui.components.containers
 {
 	import flash.display.Sprite;
 	
+	import jsion.*;
 	import jsion.ui.Component;
 	import jsion.ui.DefaultConfigKeys;
 

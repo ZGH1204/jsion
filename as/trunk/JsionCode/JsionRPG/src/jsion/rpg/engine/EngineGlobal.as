@@ -2,6 +2,7 @@ package jsion.rpg.engine
 {
 	import flash.display.BitmapData;
 	
+	import jsion.HashMap;
 	import jsion.core.loaders.ImageLoader;
 	import jsion.utils.DisposeUtil;
 

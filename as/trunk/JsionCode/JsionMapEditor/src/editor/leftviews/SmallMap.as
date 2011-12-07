@@ -9,6 +9,7 @@ package editor.leftviews
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import jsion.IDispose;
 	import jsion.core.loaders.ImageLoader;
 	import jsion.utils.DisposeUtil;
 	

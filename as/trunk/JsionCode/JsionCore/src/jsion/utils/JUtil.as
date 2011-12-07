@@ -11,6 +11,7 @@ package jsion.utils
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	
+	import jsion.IntDimension;
 	import jsion.utils.*;
 
 	/**

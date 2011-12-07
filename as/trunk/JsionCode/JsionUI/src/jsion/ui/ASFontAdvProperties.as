@@ -6,7 +6,8 @@ package jsion.ui
 {
 
 	import flash.text.TextField;
-
+	
+	import jsion.*;
 
 	/**
 	 * The advanced properties for font.

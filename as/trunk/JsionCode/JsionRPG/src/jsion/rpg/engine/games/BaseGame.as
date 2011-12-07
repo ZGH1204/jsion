@@ -3,6 +3,9 @@ package jsion.rpg.engine.games
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	
+	import jsion.Constant;
+	import jsion.HashMap;
+	import jsion.IDispose;
 	import jsion.rpg.engine.datas.MapConfig;
 	import jsion.rpg.engine.gameobjects.BuildingObject;
 	import jsion.rpg.engine.gameobjects.GameObject;

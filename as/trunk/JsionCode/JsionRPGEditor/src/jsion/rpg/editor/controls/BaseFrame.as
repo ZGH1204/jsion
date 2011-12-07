@@ -2,6 +2,7 @@ package jsion.rpg.editor.controls
 {
 	import flash.events.Event;
 	
+	import jsion.*;
 	import jsion.rpg.editor.EditorGlobal;
 	import jsion.utils.DisposeUtil;
 	

@@ -1,6 +1,8 @@
 package jsion.ui
 {
 	import flash.display.DisplayObject;
+	
+	import jsion.*;
 
 	public class BasicGroundDecorator implements IGroundDecorator
 	{

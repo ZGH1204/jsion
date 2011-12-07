@@ -1,5 +1,6 @@
 package jsion.core.serialize.xml
 {
+	import jsion.Constant;
 	import jsion.utils.*;
 
 	public class XmlPropertyTransfer

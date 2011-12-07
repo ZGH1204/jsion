@@ -6,6 +6,7 @@ package editor.forms.movieparts
 	import flash.display.BitmapData;
 	import flash.filesystem.File;
 	
+	import jsion.HashMap;
 	import jsion.utils.ObjectUtil;
 	import jsion.utils.PathUtil;
 	

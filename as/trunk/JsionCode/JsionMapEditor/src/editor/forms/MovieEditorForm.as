@@ -8,6 +8,7 @@ package editor.forms
 	
 	import flash.display.BitmapData;
 	
+	import jsion.*;
 	import jsion.utils.PathUtil;
 	
 	import org.aswing.BorderLayout;

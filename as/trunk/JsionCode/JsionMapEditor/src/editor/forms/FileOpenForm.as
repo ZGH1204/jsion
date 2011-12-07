@@ -10,6 +10,7 @@ package editor.forms
 	import flash.net.FileFilter;
 	import flash.utils.ByteArray;
 	
+	import jsion.HashMap;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.ObjectUtil;
 	import jsion.utils.RandomUtil;

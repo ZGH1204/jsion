@@ -3,6 +3,7 @@ package jsion.ui.components.images
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	
+	import jsion.*;
 	import jsion.ui.DefaultConfigKeys;
 	
 	public class ScaleImageDraw extends AbstractImage

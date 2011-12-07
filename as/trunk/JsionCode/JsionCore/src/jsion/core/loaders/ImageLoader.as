@@ -4,6 +4,7 @@ package jsion.core.loaders
 	import flash.events.Event;
 	import flash.utils.ByteArray;
 	
+	import jsion.Cache;
 	import jsion.core.events.JLoaderProgressEvent;
 	import jsion.utils.JUtil;
 

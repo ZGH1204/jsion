@@ -5,6 +5,7 @@ package jsion.rpg
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	import jsion.IDispose;
 	import jsion.core.quadtree.QTree;
 	import jsion.rpg.emitters.BaseEmitter;
 	import jsion.rpg.emitters.RPGEmitter;

@@ -15,6 +15,7 @@ package editor.forms
 	import flash.utils.ByteArray;
 	import flash.utils.Timer;
 	
+	import jsion.*;
 	import jsion.core.encoders.JPGEncoder;
 	import jsion.core.encoders.PNGEncoder;
 	import jsion.utils.JUtil;

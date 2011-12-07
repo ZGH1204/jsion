@@ -1,5 +1,6 @@
 package jsion.ui.borders
 {
+	import jsion.*;
 	import jsion.ui.Component;
 	import jsion.ui.IComponentUI;
 	import jsion.ui.IDecorator;

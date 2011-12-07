@@ -9,6 +9,7 @@ package jsion.ui
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	
+	import jsion.*;
 	import jsion.utils.DisposeUtil;
 
 	/**

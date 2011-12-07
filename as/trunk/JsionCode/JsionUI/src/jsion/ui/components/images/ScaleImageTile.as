@@ -2,6 +2,7 @@ package jsion.ui.components.images
 {
 	import flash.display.BitmapData;
 	
+	import jsion.*;
 	import jsion.ui.DefaultConfigKeys;
 	
 	public class ScaleImageTile extends AbstractImage

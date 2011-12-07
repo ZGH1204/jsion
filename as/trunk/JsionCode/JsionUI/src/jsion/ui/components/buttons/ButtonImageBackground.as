@@ -2,6 +2,7 @@ package jsion.ui.components.buttons
 {
 	import flash.display.DisplayObject;
 	
+	import jsion.*;
 	import jsion.ui.BasicGroundDecorator;
 	import jsion.ui.Component;
 	import jsion.ui.DefaultConfigKeys;

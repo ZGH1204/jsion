@@ -7,6 +7,7 @@ package jsion.core.loaders
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 	
+	import jsion.IDispose;
 	import jsion.core.reflection.Assembly;
 	
 	

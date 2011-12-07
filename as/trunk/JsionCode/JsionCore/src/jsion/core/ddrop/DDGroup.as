@@ -1,5 +1,7 @@
 package jsion.core.ddrop
 {
+	import jsion.List;
+
 	internal class DDGroup extends List
 	{
 		private var _group:String;

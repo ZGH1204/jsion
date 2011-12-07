@@ -4,6 +4,7 @@ package jsion.ui.components.scrollbars
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import jsion.*;
 	import jsion.ui.BasicComponentUI;
 	import jsion.ui.Component;
 	import jsion.ui.DefaultConfigKeys;
