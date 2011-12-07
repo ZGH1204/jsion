@@ -1,5 +1,6 @@
 package jsion.ui.components.scrollbars
 {
+	import jsion.*;
 	import jsion.ui.Component;
 	import jsion.ui.DefaultBoundedRangeModel;
 	import jsion.ui.DefaultConfigKeys;

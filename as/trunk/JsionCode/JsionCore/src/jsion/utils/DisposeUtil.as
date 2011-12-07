@@ -2,6 +2,8 @@ package jsion.utils
 {
 	import flash.display.*;
 	import flash.utils.*;
+	
+	import jsion.IDispose;
 
 	/**
 	 * 释放内存工具

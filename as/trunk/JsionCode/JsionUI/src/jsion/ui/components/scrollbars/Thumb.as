@@ -2,6 +2,7 @@ package jsion.ui.components.scrollbars
 {
 	import flash.display.DisplayObject;
 	
+	import jsion.*;
 	import jsion.ui.UIConstants;
 	import jsion.ui.components.buttons.ScaleImageButton;
 	

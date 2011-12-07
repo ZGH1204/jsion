@@ -3,6 +3,7 @@ package jsion.rpg.engine.gameobjects
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import jsion.IDispose;
 	import jsion.rpg.engine.games.BaseGame;
 	import jsion.rpg.engine.graphics.GraphicResource;
 	import jsion.rpg.engine.renders.Render;

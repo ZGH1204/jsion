@@ -4,6 +4,8 @@ package jsion.rpg.map
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import jsion.Constant;
+	import jsion.HashMap;
 	import jsion.utils.DisposeUtil;
 
 	public class WorldMap

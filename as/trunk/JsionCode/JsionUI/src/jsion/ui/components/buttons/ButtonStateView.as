@@ -3,6 +3,7 @@ package jsion.ui.components.buttons
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
+	import jsion.*;
 	import jsion.ui.ASColor;
 	import jsion.ui.Component;
 	import jsion.ui.graphics.Graphics2D;

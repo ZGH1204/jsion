@@ -23,6 +23,7 @@
 			import editor.topviews.MenuBox;
 			import editor.topviews.ToolBox;
 			
+			import jsion.*;
 			import jsion.rpg.engine.RPGEngine;
 			import jsion.utils.DisposeUtil;
 			

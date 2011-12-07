@@ -6,6 +6,7 @@ package jsion.ui.components.images
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import jsion.*;
 	import jsion.ui.Component;
 	import jsion.utils.DisposeUtil;
 	

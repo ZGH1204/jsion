@@ -3,6 +3,8 @@ package jsion.rpg
 	import flash.display.BitmapData;
 	import flash.utils.Dictionary;
 	
+	import jsion.Constant;
+	import jsion.HashMap;
 	import jsion.core.events.JLoaderEvent;
 	import jsion.core.events.JLoaderProgressEvent;
 	import jsion.core.loaders.JLoaders;

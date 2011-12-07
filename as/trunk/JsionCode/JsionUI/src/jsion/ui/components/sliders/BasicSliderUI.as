@@ -3,6 +3,7 @@ package jsion.ui.components.sliders
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	
+	import jsion.*;
 	import jsion.ui.BasicComponentUI;
 	import jsion.ui.Component;
 	import jsion.ui.DefaultConfigKeys;

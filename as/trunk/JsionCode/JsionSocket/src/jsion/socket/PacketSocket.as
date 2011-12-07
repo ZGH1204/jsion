@@ -8,6 +8,7 @@ package jsion.socket
 	import flash.events.SecurityErrorEvent;
 	import flash.net.Socket;
 	
+	import jsion.IDispose;
 	import jsion.socket.events.SocketEvent;
 	
 	/**

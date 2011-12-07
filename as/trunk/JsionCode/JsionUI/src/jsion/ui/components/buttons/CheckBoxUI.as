@@ -1,5 +1,6 @@
 package jsion.ui.components.buttons
 {
+	import jsion.*;
 	import jsion.ui.Component;
 	import jsion.ui.DefaultConfigKeys;
 	import jsion.ui.IGroundDecorator;

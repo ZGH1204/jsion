@@ -3,6 +3,7 @@ package jsion.ui.mgrs
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	
+	import jsion.*;
 	import jsion.ui.ASColor;
 	import jsion.ui.ASFont;
 	import jsion.ui.BasicLookAndFeel;

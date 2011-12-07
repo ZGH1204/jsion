@@ -11,6 +11,8 @@ package jsion.core.ddrop
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 	
+	import jsion.Constant;
+	import jsion.StageRef;
 	import jsion.utils.*;
 
 	/**

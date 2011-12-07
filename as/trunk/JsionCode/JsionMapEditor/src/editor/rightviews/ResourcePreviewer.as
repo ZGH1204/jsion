@@ -6,6 +6,7 @@ package editor.rightviews
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;
 	
+	import jsion.IDispose;
 	import jsion.utils.ScaleUtil;
 	
 	import org.aswing.AssetBackground;

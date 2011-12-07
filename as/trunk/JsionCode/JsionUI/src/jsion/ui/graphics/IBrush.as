@@ -5,7 +5,9 @@
 package jsion.ui.graphics{
 
 	import flash.display.Graphics;
-
+	
+	import jsion.*;
+	
 	/**
 	 * Brush to fill a closed area.<br>
 	 * Use it with a org.aswing.graphics.Graphics2D instance

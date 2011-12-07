@@ -3,6 +3,7 @@ package jsion.debug
 	import flash.text.StyleSheet;
 	import flash.text.TextField;
 	
+	import jsion.StageRef;
 	import jsion.core.loaders.TextLoader;
 	import jsion.core.modules.BaseModule;
 	import jsion.core.modules.ModuleInfo;

@@ -10,6 +10,7 @@ package jsion.core.loaders
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 	
+	import jsion.IDispose;
 	import jsion.core.events.JLoaderEvent;
 	import jsion.core.events.JLoaderProgressEvent;
 	import jsion.core.reflection.Assembly;
@@ -1032,6 +1033,8 @@ package jsion.core.loaders
 		}
 	}
 }
+
+import jsion.IDispose;
 
 class ReadyJLoader implements IDispose
 {

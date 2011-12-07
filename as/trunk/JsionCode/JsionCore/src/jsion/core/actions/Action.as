@@ -1,5 +1,7 @@
 package jsion.core.actions
 {
+	import jsion.IDispose;
+
 	public class Action implements IDispose
 	{
 		/** @private */

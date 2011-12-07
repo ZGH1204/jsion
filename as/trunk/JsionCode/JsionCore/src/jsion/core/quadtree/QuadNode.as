@@ -3,6 +3,7 @@ package jsion.core.quadtree
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import jsion.IDispose;
 	import jsion.utils.*;
 
 	public class QuadNode implements IDispose

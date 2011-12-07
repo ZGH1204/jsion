@@ -4,7 +4,9 @@
 package jsion.ui.graphics{
 
 	import flash.display.Graphics;	
-
+	
+	import jsion.*;
+	
 	/**
 	 * Pen to draw lines.<br>
 	 * Use it with a org.aswing.graphics.Graphics2D instance

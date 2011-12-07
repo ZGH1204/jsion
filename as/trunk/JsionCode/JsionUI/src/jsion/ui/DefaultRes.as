@@ -1,5 +1,6 @@
 package jsion.ui
 {
+	import jsion.*;
 	import jsion.ui.borders.EmptyBorder;
 	import jsion.ui.borders.IBorder;
 

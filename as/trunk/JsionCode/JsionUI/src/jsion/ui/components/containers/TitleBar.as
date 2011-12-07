@@ -5,6 +5,7 @@ package jsion.ui.components.containers
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	
+	import jsion.*;
 	import jsion.ui.ASColor;
 	import jsion.ui.ASFont;
 	import jsion.ui.Component;

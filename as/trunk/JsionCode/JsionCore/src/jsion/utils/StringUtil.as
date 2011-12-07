@@ -2,6 +2,8 @@ package jsion.utils
 {
 	import flash.text.TextField;
 	
+	import jsion.Constant;
+	
 	/**
 	 * 字符串工具
 	 * @author Jsion

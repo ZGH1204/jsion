@@ -4,6 +4,7 @@ package jsion.ui.components.images
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	
+	import jsion.*;
 	import jsion.ui.Component;
 	
 	import jsion.utils.DisposeUtil;

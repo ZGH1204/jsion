@@ -12,6 +12,8 @@ package jsion.core.loaders
 	import flash.utils.ByteArray;
 	import flash.utils.getTimer;
 	
+	import jsion.Constant;
+	import jsion.IDispose;
 	import jsion.core.cryptor.*;
 	import jsion.core.events.*;
 	import jsion.utils.*;

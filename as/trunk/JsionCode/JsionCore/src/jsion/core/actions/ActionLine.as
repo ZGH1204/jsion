@@ -2,6 +2,7 @@ package jsion.core.actions
 {
 	import flash.events.Event;
 	
+	import jsion.IDispose;
 	import jsion.utils.*;
 
 	/**

@@ -5,6 +5,7 @@ package jsion.ui
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import jsion.*;
 	import jsion.ui.events.ReleaseEvent;
 	
 	public class JSprite extends Sprite implements IDispose

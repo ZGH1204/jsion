@@ -1,5 +1,6 @@
 package jsion.ui.components.buttons
 {
+	import jsion.*;
 	import jsion.ui.DefaultConfigKeys;
 
 	public class ImageButton extends AbstractButton

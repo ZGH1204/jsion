@@ -1,5 +1,7 @@
 package jsion.rpg.engine
 {
+	import jsion.HashMap;
+	import jsion.IDispose;
 	import jsion.utils.DisposeUtil;
 
 	public class ResourcePool implements IDispose

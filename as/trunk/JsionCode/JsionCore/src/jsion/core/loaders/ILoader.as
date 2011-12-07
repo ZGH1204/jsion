@@ -2,6 +2,7 @@ package jsion.core.loaders
 {
 	import flash.events.IEventDispatcher;
 	
+	import jsion.IDispose;
 	import jsion.core.cryptor.ICryption;
 	
 	

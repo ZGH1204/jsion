@@ -2,6 +2,7 @@ package jsion.ui.components.buttons
 {
 	import flash.events.EventDispatcher;
 	
+	import jsion.*;
 	import jsion.ui.events.ButtonEvent;
 
 	public class DefaultButtonModel extends EventDispatcher implements IButtonModel, IDispose

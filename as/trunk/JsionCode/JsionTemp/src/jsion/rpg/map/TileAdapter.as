@@ -6,6 +6,9 @@ package jsion.rpg.map
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import jsion.Constant;
+	import jsion.HashMap;
+	import jsion.IDispose;
 	import jsion.core.loaders.ImageLoader;
 	import jsion.rpg.RPGGlobal;
 	import jsion.rpg.ResourcePool;

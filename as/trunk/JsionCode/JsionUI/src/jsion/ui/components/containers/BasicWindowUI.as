@@ -2,6 +2,7 @@ package jsion.ui.components.containers
 {
 	import flash.display.DisplayObject;
 	
+	import jsion.*;
 	import jsion.ui.Component;
 	import jsion.ui.DefaultConfigKeys;
 	import jsion.ui.IGroundDecorator;

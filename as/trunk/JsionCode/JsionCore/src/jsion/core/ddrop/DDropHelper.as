@@ -4,6 +4,8 @@ package jsion.core.ddrop
 	import flash.events.Event;
 	import flash.geom.Point;
 	
+	import jsion.IDispose;
+	
 	public class DDropHelper implements IDragDrop, IDispose
 	{
 		protected var m_trigger:DisplayObject;

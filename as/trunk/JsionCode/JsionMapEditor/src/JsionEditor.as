@@ -6,6 +6,7 @@ package
 	import flash.geom.Point;
 	import flash.utils.ByteArray;
 	
+	import jsion.*;
 	import jsion.rpg.engine.datas.MapConfig;
 	import jsion.rpg.engine.gameobjects.GameObject;
 	import jsion.rpg.engine.games.BaseGame;

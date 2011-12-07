@@ -1,5 +1,7 @@
 package jsion.ui
 {
+	import jsion.*;
+	
 	public interface IComponentUI extends IUIResources
 	{
 		function install(component:Component):void;

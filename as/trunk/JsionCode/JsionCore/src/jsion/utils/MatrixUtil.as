@@ -2,6 +2,8 @@ package jsion.utils
 {
 	import flash.geom.*;
 	
+	import jsion.Constant;
+	
 	/**
 	 * 矩阵工具
 	 * @author Jsion

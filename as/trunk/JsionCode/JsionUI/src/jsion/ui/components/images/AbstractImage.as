@@ -2,6 +2,7 @@ package jsion.ui.components.images
 {
 	import flash.display.BitmapData;
 	
+	import jsion.*;
 	import jsion.ui.Component;
 	import jsion.ui.UIConstants;
 	

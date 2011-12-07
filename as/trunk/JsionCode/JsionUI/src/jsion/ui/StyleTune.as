@@ -1,5 +1,6 @@
 package jsion.ui
 {
+	import jsion.*;
 	/**
 	 * The style tune include factors to generate colors for gradient content and border,
 	 * and include the round property and shaow alpha property.<p>

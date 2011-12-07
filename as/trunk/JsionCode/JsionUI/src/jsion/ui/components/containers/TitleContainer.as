@@ -4,6 +4,7 @@ package jsion.ui.components.containers
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
+	import jsion.*;
 	import jsion.core.ddrop.DDropMgr;
 	import jsion.core.ddrop.IDragDrop;
 	

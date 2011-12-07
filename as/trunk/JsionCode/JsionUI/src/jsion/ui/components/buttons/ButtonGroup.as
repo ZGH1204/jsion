@@ -1,5 +1,6 @@
 package jsion.ui.components.buttons
 {
+	import jsion.*;
 	import jsion.utils.ArrayUtil;
 
 	public class ButtonGroup implements IDispose

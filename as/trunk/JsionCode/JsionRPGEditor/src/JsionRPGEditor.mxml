@@ -11,6 +11,7 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import jsion.*;
 			import jsion.rpg.editor.EditorGlobal;
 			import jsion.rpg.editor.MainEditor;
 			

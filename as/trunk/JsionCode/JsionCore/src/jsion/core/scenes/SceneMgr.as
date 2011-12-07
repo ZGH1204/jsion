@@ -4,6 +4,7 @@ package jsion.core.scenes
 	import flash.display.Sprite;
 	import flash.utils.Dictionary;
 	
+	import jsion.GC;
 	import jsion.utils.*;
 
 	/**

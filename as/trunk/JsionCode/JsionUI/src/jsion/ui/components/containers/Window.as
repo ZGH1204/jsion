@@ -3,6 +3,7 @@ package jsion.ui.components.containers
 	import flash.display.DisplayObjectContainer;
 	import flash.events.MouseEvent;
 	
+	import jsion.*;
 	import jsion.ui.DefaultConfigKeys;
 	import jsion.ui.UIConstants;
 	import jsion.ui.components.buttons.AbstractButton;

@@ -3,6 +3,7 @@ package jsion.core.messages
 	import flash.events.Event;
 	import flash.utils.Dictionary;
 	
+	import jsion.IDispose;
 	import jsion.utils.DictionaryUtil;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.JUtil;

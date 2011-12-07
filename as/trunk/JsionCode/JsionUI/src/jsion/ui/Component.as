@@ -4,6 +4,7 @@ package jsion.ui
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	
+	import jsion.*;
 	import jsion.ui.borders.IBorder;
 	import jsion.ui.graphics.Graphics2D;
 	import jsion.ui.graphics.SolidBrush;

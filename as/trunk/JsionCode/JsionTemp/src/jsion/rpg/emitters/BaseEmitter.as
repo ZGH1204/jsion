@@ -1,5 +1,7 @@
 package jsion.rpg.emitters
 {
+	import jsion.IDispose;
+
 	public class BaseEmitter implements IDispose
 	{
 		public function BaseEmitter()
