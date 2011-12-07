@@ -21,6 +21,7 @@ package jsion.core.modules
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.JUtil;
 	import jsion.utils.NameUtil;
+	import jsion.utils.PathUtil;
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
 
@@ -37,12 +38,17 @@ package jsion.core.modules
 		
 		private static var m_loadViewController:IModuleLoading;
 		
+		private static var m_resRoot:String;
+		
 		/**
 		 * 初始化安装
 		 * @param config 配置
 		 */		
 		public static function setup(config:XML):void
 		{
+			m_resRoot = (config.config.@ResRoot);
+			Module_Loader_Cfg["root"] = m_resRoot;
+			
 			var moduleXL:XMLList = config.Modules.Module;
 			
 			for each(var moduleXml:XML in moduleXL)
