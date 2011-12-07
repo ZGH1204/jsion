@@ -155,7 +155,7 @@ package
 			embedLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __embedCompleteHandler);
 			embedLoader = null;
 			
-			var fn:Function = ApplicationDomain.currentDomain.getDefinition("JsionCoreSetup") as Function;
+			var fn:Function = ApplicationDomain.currentDomain.getDefinition("jsion.JsionCoreSetup") as Function;
 			
 			if(fn != null) fn(m_stage, configXML);
 			
