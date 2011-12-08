@@ -165,8 +165,8 @@ package jsion.ui.components.containers
 			tabContainer.addChild(tabBtn);
 			tabBtn.addEventListener(MouseEvent.CLICK, __tabBtnClickHandler);
 			
-			var dis:DisplayObject = tab.getTabContent();
-			panelsList.push(dis);
+			//var dis:DisplayObject = tab.getTabContent();
+			panelsList.push(null);
 			//panelContainer.addChild(dis);
 			//dis.visible = false;
 			
@@ -206,6 +206,9 @@ package jsion.ui.components.containers
 				
 				if(currentPanel && currentPanel.parent != null)
 					currentPanel.parent.removeChild(currentPanel);
+				
+				if(panelsList[index] == null)
+					panelsList[index] = currentTab.getTabContent();
 				
 				currentPanel = panelsList[index] as DisplayObject;
 				if(currentPanel) panelContainer.addChild(currentPanel);
