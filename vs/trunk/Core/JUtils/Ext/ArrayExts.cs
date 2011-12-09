@@ -217,6 +217,27 @@ namespace System
         }
 
         /// <summary>
+        /// 返回指定对象在数组中的索引位置
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="arr"></param>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static int IndexOf<T>(this T[] arr, T obj)
+            where T : class
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i].Equals(obj))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
         /// 查找数组中由 predicate 方法返回值为true时的第一个对象,没有满足条件时则返回类型默认值.
         /// </summary>
         /// <typeparam name="T"></typeparam>
