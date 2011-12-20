@@ -2,7 +2,6 @@ package jsion.comps
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Matrix;
@@ -26,9 +25,7 @@ package jsion.comps
 		
 		private var m_model:StateModel;
 		
-		protected var m_rolloverEnabled:Boolean;
-		
-		private var m_stopPropagation:Boolean;
+		private var m_rolloverEnabled:Boolean;
 		
 		private var m_ignoreTransparents:Boolean;
 		
@@ -43,31 +40,45 @@ package jsion.comps
 			addEventListener(MouseEvent.ROLL_OUT, __rollOutHandler);
 			addEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
 			addEventListener(ReleaseEvent.RELEASE, __releaseHandler);
-			addEventListener(MouseEvent.CLICK, __clickHandler);
 			
 			initialize();
 			
 			initEvents();
+			
+			setSize(originalWidth, originalHeight);
 		}
 		
 		
 		protected function initialize():void
 		{
+			addChildren();
+			invalidate();
 		}
 		
 		protected function initEvents():void
 		{
 		}
 		
-		
-		public function get stopPropagation():Boolean
+		protected function addChildren():void
 		{
-			return m_stopPropagation;
 		}
 		
-		public function set stopPropagation(value:Boolean):void
+		
+		
+		public function setData(data:*):void
 		{
-			m_stopPropagation = value;
+		}
+		
+		override public function set enabled(value:Boolean):void
+		{
+			super.enabled = value;
+			
+			if(m_model.rollOver && value == false)
+			{
+				m_model.rollOver = false;
+			}
+			
+			m_model.enabled = value;
 		}
 		
 		public function get rolloverEnabled():Boolean
@@ -167,15 +178,6 @@ package jsion.comps
 		}
 		
 		//==================================================		update state model			==================================================
-		
-		private function __clickHandler(e:MouseEvent):void
-		{
-			if(stopPropagation)
-			{
-				e.stopPropagation();
-			}
-		}
-		
 		
 		
 		//==============================================		忽略透明像素			==============================================
@@ -301,7 +303,6 @@ package jsion.comps
 			removeEventListener(MouseEvent.ROLL_OUT, __rollOutHandler);
 			removeEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
 			removeEventListener(ReleaseEvent.RELEASE, __releaseHandler);
-			removeEventListener(MouseEvent.CLICK, __clickHandler);
 			removeEventListener(Event.ENTER_FRAME, __trackMouseWhileInBounds);
 			removeEventListener(MouseEvent.MOUSE_UP, __upHandler);
 			
