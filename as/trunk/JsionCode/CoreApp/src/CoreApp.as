@@ -4,7 +4,7 @@ package
 	
 	import jsion.core.ant.generateCompcDemo;
 	
-	[SWF(width="900", height="580", frameRate="30")]
+	[SWF(width="1250", height="650", frameRate="30")]
 	public class CoreApp extends Sprite
 	{
 		private var launcher:Launcher;
