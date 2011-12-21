@@ -2,6 +2,8 @@ package jsion.comps
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Matrix;
@@ -13,6 +15,10 @@ package jsion.comps
 	
 	public class Component extends ComSprite implements ITip
 	{
+		public static const FONT:String = CompGlobal.FONT;
+		
+		public static const COLOR:String = CompGlobal.COLOR;
+		
 		private var m_mousePoint:Point = new Point();
 		
 		private var m_bitmapForHit:Bitmap;
@@ -29,25 +35,43 @@ package jsion.comps
 		
 		private var m_ignoreTransparents:Boolean;
 		
-		public function Component()
+		private var m_resources:CompResources;
+		
+//		private var m_font:ASFont;
+//		
+//		private var m_color:ASColor;
+		
+		public function Component(container:DisplayObjectContainer = null, xPos:Number = 0, yPos:Number = 0)
 		{
 			super();
 			
+			m_rolloverEnabled = true;
+			
 			m_model = new StateModel();
 			
+			m_resources = new CompResources();
+			
+			move(xPos, yPos);
 			
 			addEventListener(MouseEvent.MOUSE_OVER, __rollOverHandler);
 			addEventListener(MouseEvent.ROLL_OUT, __rollOutHandler);
 			addEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
 			addEventListener(ReleaseEvent.RELEASE, __releaseHandler);
 			
+			initResources();
+			
 			initialize();
 			
 			initEvents();
 			
-			setSize(originalWidth, originalHeight);
+			//pack();
+			
+			if(container) container.addChild(this);
 		}
 		
+		protected function initResources():void
+		{
+		}
 		
 		protected function initialize():void
 		{
@@ -65,8 +89,104 @@ package jsion.comps
 		
 		
 		
+		public function setStyle(key:String, value:*, freeBMD:Boolean = true):void
+		{
+			m_resources.setStyle(key, value, freeBMD);
+			invalidate();
+		}
+		
+		public function getBoolean(key:String):Boolean
+		{
+			return m_resources.getBoolean(key);
+		}
+		
+		public function getNumber(key:String):Number
+		{
+			return m_resources.getNumber(key);
+		}
+		
+		public function getInt(key:String):int
+		{
+			return m_resources.getInt(key);
+		}
+		
+		public function getUint(key:String):uint
+		{
+			return m_resources.getUint(key);
+		}
+		
+		public function getString(key:String):String
+		{
+			return m_resources.getString(key);
+		}
+		
+		public function getArray(key:String):Array
+		{
+			return m_resources.getArray(key);
+		}
+		
+		public function getFont(key:String):ASFont
+		{
+			return m_resources.getFont(key);
+		}
+		
+		public function getColor(key:String):ASColor
+		{
+			return m_resources.getColor(key);
+		}
+		
+		public function getDisplayObject(key:String):DisplayObject
+		{
+			return m_resources.getDisplayObject(key);
+		}
+		
+		
+		
+		
 		public function setData(data:*):void
 		{
+		}
+		
+//		public function get font():ASFont
+//		{
+//			return m_font;
+//		}
+//		
+//		public function set font(value:ASFont):void
+//		{
+//			m_font = value;
+//			invalidate();
+//		}
+//		
+//		public function get color():ASColor
+//		{
+//			return m_color;
+//		}
+//		
+//		public function set color(value:ASColor):void
+//		{
+//			m_color = value;
+//			invalidate();
+//		}
+		
+		public function get model():StateModel
+		{
+			return m_model;
+		}
+		
+		public function set model(value:StateModel):void
+		{
+			m_model = value;
+		}
+		
+		public function get threshold():int
+		{
+			return m_threshold;
+		}
+		
+		public function set threshold(value:int):void
+		{
+			m_threshold = Math.min(value, 255);
 		}
 		
 		override public function set enabled(value:Boolean):void
@@ -308,10 +428,20 @@ package jsion.comps
 			
 			deactivateMouseTrap();
 			
+			DisposeUtil.free(m_model);
+			m_model = null;
+			
 			DisposeUtil.free(m_bitmapForHit);
 			m_bitmapForHit = null;
 			
+			DisposeUtil.free(m_resources);
+			m_resources = null;
+			
 			m_mousePoint = null;
+			
+//			m_font = null;
+//			
+//			m_color = null;
 			
 			super.dispose();
 		}
