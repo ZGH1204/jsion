@@ -1,5 +1,7 @@
 package jsion.comps
 {
+	import flash.text.StyleSheet;
+
 	public class Style
 	{
 //		// NOTE: Flex 4 introduces DefineFont4, which is used by default and does not work in native text fields.
@@ -13,8 +15,14 @@ package jsion.comps
 //		protected var Ronda:Class;
 		
 		
+		public static var DEFAULT_FONT:ASFont = new ASFont();
 		
 		public static var DROPSHADOW:uint = 0x000000;
+		
+		public static var CSS:StyleSheet = new StyleSheet();
+		
+		
+		public static var embedFonts:Boolean = true;
 		
 		public function Style()
 		{

@@ -4,14 +4,16 @@ package jsion.comps
 	
 	import jsion.IDispose;
 	import jsion.comps.events.StateEvent;
-
+	
+	[Event(name="stateChanged", type="jsion.comps.events.StateEvent")]
+	[Event(name="selectionChanged", type="jsion.comps.events.StateEvent")]
 	public class StateModel extends EventDispatcher implements IDispose
 	{
 		protected var m_enabled:Boolean;
 		protected var m_rollOver:Boolean;
 		protected var m_armed:Boolean;
 		protected var m_pressed:Boolean;
-		protected var m_selected:Boolean;
+//		protected var m_selected:Boolean;
 		
 		public function StateModel()
 		{
@@ -19,7 +21,7 @@ package jsion.comps
 			m_rollOver = false;
 			m_armed = false;
 			m_pressed = false;
-			m_selected = false;
+//			m_selected = false;
 		}
 		
 		
@@ -84,21 +86,21 @@ package jsion.comps
 			fireStateChanged();
 		}
 		
-		public function get selected():Boolean
-		{
-			return m_selected;
-		}
-		
-		public function set selected(value:Boolean):void
-		{
-			if(m_selected == value) return;
-			
-			m_selected = value;
-			
-			fireStateChanged();
-			
-			fireSelectionChanged();
-		}
+//		public function get selected():Boolean
+//		{
+//			return m_selected;
+//		}
+//		
+//		public function set selected(value:Boolean):void
+//		{
+//			if(m_selected == value) return;
+//			
+//			m_selected = value;
+//			
+//			fireStateChanged();
+//			
+//			fireSelectionChanged();
+//		}
 		
 		
 		

@@ -11,6 +11,7 @@ package jsion.comps
 	import jsion.comps.events.ReleaseEvent;
 	import jsion.comps.events.UIEvent;
 	import jsion.utils.ArrayUtil;
+	import jsion.utils.DepthUtil;
 	import jsion.utils.DisposeUtil;
 	
 	[Event(name="resize", type="jsion.comps.events.UIEvent")]
@@ -78,6 +79,21 @@ package jsion.comps
 			m_children.removeAll();
 			
 			DisposeUtil.free(list);
+		}
+		
+		public function bring2Top():void
+		{
+			DepthUtil.bringToTop(this);
+		}
+		
+		public function bring2Bottom():void
+		{
+			DepthUtil.bringToBottom(this);
+		}
+		
+		public function pack():void
+		{
+			setSize(originalWidth, originalHeight);
 		}
 		
 		//==========================================		覆盖重写方法			==========================================
@@ -253,6 +269,11 @@ package jsion.comps
 			}
 		}
 		
+		public function get autoPack():Boolean
+		{
+			return true;
+		}
+		
 		public function setSize(w:Number, h:Number):void
 		{
 			if(w > 0 && h > 0 && (w != m_width || h != m_height))
@@ -331,12 +352,19 @@ package jsion.comps
 		
 		private function __invalidate(e:Event):void
 		{
+			drawAtOnce();
+		}
+		
+		public function drawAtOnce():void
+		{
 			removeEventListener(Event.ENTER_FRAME, __invalidate);
 			draw();
 		}
 		
 		public function draw():void
 		{
+			//if(autoPack) pack();
+			
 			dispatchEvent(new UIEvent(UIEvent.DRAW));
 		}
 		
@@ -376,6 +404,8 @@ package jsion.comps
 			
 			removeAllChildren();
 			m_children = null;
+			
+			pressedTarget = null;
 		}
 	}
 }
