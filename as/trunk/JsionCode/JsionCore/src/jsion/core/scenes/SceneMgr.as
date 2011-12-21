@@ -55,6 +55,14 @@ package jsion.core.scenes
 		}
 		
 		/**
+		 * 获取当前场景对象
+		 */		
+		public static function getCurrentScene():BaseScene
+		{
+			return getScene(currentType);
+		}
+		
+		/**
 		 * 切换场景
 		 * @param type 场景类型
 		 * @param data 场景切换数据
