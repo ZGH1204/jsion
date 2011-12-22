@@ -1,9 +1,9 @@
 HBox			完成
 VBox			完成
 
-Slider
-VSlider
-HSlider
+Slider			完成
+VSlider			完成
+HSlider			完成
 
 ScrollBar
 HScrollBar
@@ -14,7 +14,9 @@ ListItem
 
 ComboBox
 
-ScrollPanel
+ScrollPane
+
+TabPane
 
 FocusMgr
 

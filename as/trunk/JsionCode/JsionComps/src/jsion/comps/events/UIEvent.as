@@ -8,6 +8,8 @@ package jsion.comps.events
 		
 		public static const RESIZE:String = "resize";
 		
+		public static const CHANGE:String = "change";
+		
 		public function UIEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
 		{
 			super(type, bubbles, cancelable);
