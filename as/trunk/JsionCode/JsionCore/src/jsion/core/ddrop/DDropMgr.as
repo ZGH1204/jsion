@@ -66,6 +66,8 @@ package jsion.core.ddrop
 		 */		
 		public static function registeDrag(dragger:IDragDrop, group:String = null):void
 		{
+			if(dragger == null) return;
+			
 			var g:DDGroup = getDDGroup(group);
 			
 			if(g.contains(dragger)) return;

@@ -34,6 +34,7 @@ package jsion.comps
 		
 		private var m_stopPropagation:Boolean;
 		
+		private var m_invaliding:Boolean;
 		
 		public function BasicSprite()
 		{
@@ -143,6 +144,8 @@ package jsion.comps
 		
 		override public function addChild(child:DisplayObject):DisplayObject
 		{
+			if(child == null) return null;
+			
 			super.addChild(child);
 			
 			m_children.put(child, child);
@@ -152,6 +155,8 @@ package jsion.comps
 		
 		override public function addChildAt(child:DisplayObject, index:int):DisplayObject
 		{
+			if(child == null) return null;
+			
 			super.addChildAt(child, index);
 			
 			m_children.put(child, child);
@@ -161,6 +166,8 @@ package jsion.comps
 		
 		override public function removeChild(child:DisplayObject):DisplayObject
 		{
+			if(child == null) return null;
+			
 			super.removeChild(child);
 			
 			m_children.remove(child);
@@ -170,6 +177,8 @@ package jsion.comps
 		
 		override public function removeChildAt(index:int):DisplayObject
 		{
+			if(index < 0 || index >= numChildren) return null;
+			
 			var child:DisplayObject = super.removeChildAt(index);
 			
 			m_children.remove(child);
@@ -348,6 +357,7 @@ package jsion.comps
 		protected function invalidate():void
 		{
 			addEventListener(Event.ENTER_FRAME, __invalidate);
+			m_invaliding = true;
 		}
 		
 		private function __invalidate(e:Event):void
@@ -357,15 +367,18 @@ package jsion.comps
 		
 		public function drawAtOnce():void
 		{
-			removeEventListener(Event.ENTER_FRAME, __invalidate);
-			draw();
+			if(m_invaliding)
+			{
+				removeEventListener(Event.ENTER_FRAME, __invalidate);
+				draw();
+			}
 		}
 		
 		public function draw():void
 		{
 			//if(autoPack) pack();
-			
 			dispatchEvent(new UIEvent(UIEvent.DRAW));
+			m_invaliding = false;
 		}
 		
 		

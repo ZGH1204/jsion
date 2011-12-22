@@ -244,6 +244,16 @@ package jsion.comps
 			}
 		}
 		
+		public function get realWidth():Number
+		{
+			return width > 0 ? width : originalWidth;
+		}
+		
+		public function get realHeight():Number
+		{
+			return height > 0 ? height : originalHeight;
+		}
+		
 		public function hitTestMouse():Boolean
 		{
 			if(stage)

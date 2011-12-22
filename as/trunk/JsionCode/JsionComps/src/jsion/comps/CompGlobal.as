@@ -4,6 +4,9 @@ package jsion.comps
 
 	public class CompGlobal
 	{
+		public static const THUMB:String = "thumb";
+		public static const BACKGROUND:String = "background";
+		
 		public static const UP_IMG:String = "upImg";
 		public static const OVER_IMG:String = "overImg";
 		public static const DOWN_IMG:String = "downImg";
