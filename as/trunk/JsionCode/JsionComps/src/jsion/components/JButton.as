@@ -156,14 +156,14 @@ package jsion.components
 					m_curImg.parent.removeChild(m_curImg);
 				
 				m_curImg = image;
+			}
+			
+			if(m_curImg)
+			{
+				if(width > 0) m_curImg.width = width;
+				if(height > 0) m_curImg.height = height;
 				
-				if(m_curImg)
-				{
-					if(width > 0) m_curImg.width = width;
-					if(height > 0) m_curImg.height = height;
-					
-					m_back.addChild(m_curImg);
-				}
+				m_back.addChild(m_curImg);
 			}
 		}
 		

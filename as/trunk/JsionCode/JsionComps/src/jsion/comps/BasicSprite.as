@@ -234,12 +234,12 @@ package jsion.comps
 		
 		override public function set x(value:Number):void
 		{
-			super.x = Math.round(value);
+			super.x = value;//Math.round(value);
 		}
 		
 		override public function set y(value:Number):void
 		{
-			super.y = Math.round(value);
+			super.y = value;//Math.round(value);
 		}
 		
 		public function move(xPos:Number, yPos:Number):void
@@ -367,10 +367,13 @@ package jsion.comps
 		
 		public function drawAtOnce():void
 		{
+			removeEventListener(Event.ENTER_FRAME, __invalidate);
+			
 			if(m_invaliding)
 			{
-				removeEventListener(Event.ENTER_FRAME, __invalidate);
 				draw();
+				
+				m_invaliding = false;
 			}
 		}
 		
@@ -378,7 +381,6 @@ package jsion.comps
 		{
 			//if(autoPack) pack();
 			dispatchEvent(new UIEvent(UIEvent.DRAW));
-			m_invaliding = false;
 		}
 		
 		
