@@ -49,10 +49,13 @@ package jsion.components
 		
 		private var m_buttonOffset:Number;
 		
+		private var m_scrollRect:Number;
+		
 		public function ScrollBar(orientation:String = HORIZONTAL, container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_viewSize = 0;
 			m_scrollSize = 0;
+			m_scrollValue = 0;
 			m_buttonOffset = 0;
 			
 			m_orientation = orientation;
@@ -101,6 +104,15 @@ package jsion.components
 			{
 				m_scrollSize = value;
 				
+				if(m_orientation == HORIZONTAL)
+				{
+					width = m_scrollSize;
+				}
+				else
+				{
+					height = m_scrollSize;
+				}
+				
 				invalidate();
 			}
 		}
@@ -131,6 +143,8 @@ package jsion.components
 			{
 				m_scrollValue = value;
 				
+				correctValue();
+				positionBar();
 				fireChangeEvent();
 			}
 		}
@@ -145,6 +159,21 @@ package jsion.components
 			scrollValue = (m_bar.y - minPosLimit) / (maxPosLimit - minPosLimit) * (m_maximum - m_minimum);
 		}
 		
+		public function setUpOrLeftStyle(key:String, value:*, freeBMD:Boolean = true):void
+		{
+			m_upButton.setStyle(key, value, freeBMD);
+		}
+		
+		public function setDownOrRightStyle(key:String, value:*, freeBMD:Boolean = true):void
+		{
+			m_downButton.setStyle(key, value, freeBMD);
+		}
+		
+		public function setBarStyle(key:String, value:*, freeBMD:Boolean = true):void
+		{
+			m_bar.setStyle(key, value, freeBMD);
+		}
+		
 		protected function correctValue():void
 		{
 			m_scrollValue = Math.min(m_scrollValue, m_maximum);
@@ -155,15 +184,15 @@ package jsion.components
 		{
 			if(m_orientation == HORIZONTAL)
 			{
-				m_bar.x = (m_scrollValue - 0) / (viewSize - scrollSize) * (maxPosLimit - minPosLimit) + minPosLimit;
+				m_bar.x = (m_scrollValue - m_minimum) / (m_maximum - m_minimum) * (maxPosLimit - minPosLimit) + minPosLimit;
 			}
 			else
 			{
-				m_bar.y = (m_scrollValue - 0) / (viewSize - scrollSize) * (maxPosLimit - minPosLimit) + minPosLimit;
+				m_bar.y = (m_scrollValue - m_minimum) / (m_maximum - m_minimum) * (maxPosLimit - minPosLimit) + minPosLimit;
 			}
 		}
 		
-		public function fireChangeEvent():void
+		private function fireChangeEvent():void
 		{
 			dispatchEvent(new UIEvent(UIEvent.CHANGE));
 		}
@@ -179,7 +208,7 @@ package jsion.components
 			m_downButton = new JButton();
 			addChild(m_downButton);
 			
-			m_bar = new ScrollThumb();
+			m_bar = new ScrollThumb(m_orientation);
 			m_bar.scrollBar = this;
 			m_bar.enableDrag = true;
 			addChild(m_bar);
@@ -196,6 +225,10 @@ package jsion.components
 			updateBarPos();
 			
 			updateLimitPos();
+			
+			correctValue();
+			positionBar();
+			fireChangeEvent();
 			
 			graphics.clear();
 			graphics.beginFill(0x0, 0);
@@ -231,25 +264,6 @@ package jsion.components
 				m_upButton.enabled = false;
 				m_downButton.enabled = false;
 			}
-		}
-		
-		private function updateLimitPos():void
-		{
-			if(m_orientation == HORIZONTAL)
-			{
-				m_minPosLimit = m_upButton.x + m_upButton.realWidth + m_buttonOffset;
-				
-				m_maxPosLimit = m_downButton.x - m_bar.realWidth - m_buttonOffset;
-			}
-			else
-			{
-				m_minPosLimit = m_upButton.y + m_upButton.realHeight + m_buttonOffset;
-				
-				m_maxPosLimit = m_downButton.y - m_bar.realHeight - m_buttonOffset;
-			}
-			
-			m_minimum = 0;
-			m_maximum = m_viewSize - m_scrollSize;
 		}
 		
 		private function updateBackground():void
@@ -289,17 +303,14 @@ package jsion.components
 		
 		private function updateBarPos():void
 		{
-			var tmp:Number;
-			
 			if(m_orientation == HORIZONTAL)
 			{
-				tmp = realWidth - m_upButton.x - m_upButton.realWidth;
-				tmp = tmp - m_downButton.x - m_downButton.realWidth;
-				tmp = tmp - 2 * m_buttonOffset;
+				m_scrollRect = realWidth - m_upButton.x - m_upButton.realWidth;
+				m_scrollRect = m_scrollRect - m_downButton.realWidth - m_buttonOffset;
 				
 				if(m_viewSize > m_scrollSize)
 				{
-					m_bar.width = m_scrollSize / m_viewSize * tmp;
+					m_bar.width = m_scrollSize / m_viewSize * m_scrollRect;
 				}
 				
 				m_bar.y = (realHeight - m_bar.realHeight) / 2;
@@ -308,19 +319,37 @@ package jsion.components
 			}
 			else
 			{
-				tmp = realHeight - m_upButton.y - m_upButton.realHeight;
-				tmp = tmp - m_downButton.y - m_downButton.realHeight;
-				tmp = tmp - 2 * m_buttonOffset;
+				m_scrollRect = realHeight - m_upButton.y - m_upButton.realHeight;
+				m_scrollRect = m_scrollRect - m_downButton.realHeight - m_buttonOffset;
 				
 				if(m_viewSize > m_scrollSize)
 				{
-					m_bar.height = m_scrollSize / m_viewSize * tmp;
+					m_bar.height = m_scrollSize / m_viewSize * m_scrollRect;
 				}
 				
 				m_bar.x = (realWidth - m_bar.realWidth) / 2;
 				
 				m_barFixPos = m_bar.x;
 			}
+		}
+		
+		private function updateLimitPos():void
+		{
+			if(m_orientation == HORIZONTAL)
+			{
+				m_minPosLimit = m_upButton.x + m_upButton.realWidth + m_buttonOffset;
+				
+				m_maxPosLimit = m_downButton.x - m_bar.realWidth - m_buttonOffset;
+			}
+			else
+			{
+				m_minPosLimit = m_upButton.y + m_upButton.realHeight + m_buttonOffset;
+				
+				m_maxPosLimit = m_downButton.y - m_bar.realHeight - m_buttonOffset;
+			}
+			
+			m_minimum = 0;
+			m_maximum = m_viewSize - m_scrollSize;
 		}
 	}
 }

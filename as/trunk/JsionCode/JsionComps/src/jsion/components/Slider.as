@@ -243,7 +243,7 @@ package jsion.components
 			sliderValue = (m_bar.y - minPosLimit) / (maxPosLimit - minPosLimit) * (maximum - minimum) + minimum;
 		}
 		
-		public function fireChangeEvent():void
+		private function fireChangeEvent():void
 		{
 			dispatchEvent(new UIEvent(UIEvent.CHANGE));
 		}
