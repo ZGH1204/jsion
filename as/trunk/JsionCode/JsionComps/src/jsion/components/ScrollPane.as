@@ -7,6 +7,7 @@ package jsion.components
 	import jsion.comps.CompGlobal;
 	import jsion.comps.Component;
 	import jsion.comps.events.UIEvent;
+	import jsion.utils.DepthUtil;
 	import jsion.utils.DisposeUtil;
 	
 	public class ScrollPane extends Component
@@ -22,6 +23,9 @@ package jsion.components
 		public static const OVER_FILTERS:String = CompGlobal.OVER_FILTERS;
 		public static const DOWN_FILTERS:String = CompGlobal.DOWN_FILTERS;
 		public static const DISABLED_FILTERS:String = CompGlobal.DISABLED_FILTERS;
+		
+		public static const OFFSET_X:String = CompGlobal.OFFSET_X;
+		public static const OFFSET_Y:String = CompGlobal.OFFSET_Y;
 		
 		private var m_background:DisplayObject;
 		
@@ -80,9 +84,6 @@ package jsion.components
 		
 		override protected function addChildren():void
 		{
-			m_background = getDisplayObject(BACKGROUND);
-			addChild(m_background);
-			
 			m_panel = new Panel();
 			addChild(m_panel);
 			
@@ -115,6 +116,13 @@ package jsion.components
 		
 		override public function draw():void
 		{
+			if(m_background == null)
+			{
+				m_background = getDisplayObject(BACKGROUND);
+				addChild(m_background);
+				DepthUtil.bringToBottom(m_background);
+			}
+			
 			if(m_view)
 			{
 				m_panel.addChild(m_view);
@@ -126,14 +134,17 @@ package jsion.components
 				m_vScroll.viewSize = 0;
 			}
 			
-			m_vScroll.scrollSize = realHeight;
+			m_vScroll.scrollSize = realHeight - 2 * getNumber(OFFSET_Y);
 			m_vScroll.drawAtOnce();
 			
-			m_vScroll.x = realWidth - m_vScroll.realWidth;
-			m_vScroll.y = 0;
+			m_vScroll.x = realWidth - m_vScroll.realWidth - getNumber(OFFSET_X);
+			m_vScroll.y = getNumber(OFFSET_Y);
 			
-			m_panel.width = realWidth - m_vScroll.realWidth;
-			m_panel.height = realHeight;
+			m_panel.x = getNumber(OFFSET_X);
+			m_panel.y = getNumber(OFFSET_Y);
+			
+			m_panel.width = realWidth - m_vScroll.realWidth - 2 * getNumber(OFFSET_X);
+			m_panel.height = realHeight - 2 * getNumber(OFFSET_Y);
 			
 			if(m_background)
 			{

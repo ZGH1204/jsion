@@ -11,6 +11,7 @@ package jsion.components
 	import jsion.comps.Component;
 	import jsion.comps.events.UIEvent;
 	import jsion.core.ddrop.DDropMgr;
+	import jsion.utils.DepthUtil;
 	import jsion.utils.DisposeUtil;
 	
 	[Event(name="change", type="jsion.comps.events.UIEvent")]
@@ -288,9 +289,6 @@ package jsion.components
 		
 		override protected function addChildren():void
 		{
-			m_background = getDisplayObject(BACKGROUND);
-			addChild(m_background);
-			
 			m_rule = new Sprite();
 			addChild(m_rule);
 			
@@ -329,6 +327,13 @@ package jsion.components
 		
 		override public function draw():void
 		{
+			if(m_background == null)
+			{
+				m_background = getDisplayObject(BACKGROUND);
+				addChild(m_background);
+				DepthUtil.bringToBottom(m_background);
+			}
+			
 			m_bar.drawAtOnce();
 			
 			updateBackground();
