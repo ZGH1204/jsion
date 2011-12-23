@@ -2,6 +2,8 @@ package
 {
 	import flash.display.Sprite;
 	
+	import jsion.components.List;
+	import jsion.components.ListItem;
 	import jsion.components.ScrollBar;
 	import jsion.components.ScrollPane;
 	import jsion.components.Slider;
@@ -46,25 +48,82 @@ package
 //			
 //			addChild(bar);
 			
-			var scrollPanel:ScrollPane = new ScrollPane(this);
+//			var scrollPanel:ScrollPane = new ScrollPane(this);
+//			
+//			scrollPanel.setUpOrLeftStyle(ScrollPane.UP_IMG, new ScrollBarUpBtnAsset());
+//			scrollPanel.setDownOrRightStyle(ScrollPane.UP_IMG, new ScrollBarUpBtnAsset());
+//			scrollPanel.setBarStyle(ScrollPane.UP_IMG, new ScrollBarThumbAsset());
+//			
+//			scrollPanel.width = 200;
+//			scrollPanel.height = 200;
+//			
+//			var sprite:Sprite = new Sprite();
+//			sprite.graphics.clear();
+//			sprite.graphics.beginFill(0x0);
+//			sprite.graphics.drawRect(0, 0, 183, 150);
+//			sprite.graphics.endFill();
+//			sprite.graphics.beginFill(0x336699);
+//			sprite.graphics.drawRect(0, 150, 183, 350);
+//			sprite.graphics.endFill();
+//			
+//			scrollPanel.view = sprite;
 			
-			scrollPanel.setUpOrLeftStyle(ScrollPane.UP_IMG, new ScrollBarUpBtnAsset());
-			scrollPanel.setDownOrRightStyle(ScrollPane.UP_IMG, new ScrollBarUpBtnAsset());
-			scrollPanel.setBarStyle(ScrollPane.UP_IMG, new ScrollBarThumbAsset());
+			var list:List = new List(this);
 			
-			scrollPanel.width = 200;
-			scrollPanel.height = 200;
+			list.setUpOrLeftStyle(ScrollPane.UP_IMG, new ScrollBarUpBtnAsset());
+			list.setDownOrRightStyle(ScrollPane.UP_IMG, new ScrollBarUpBtnAsset());
+			list.setBarStyle(ScrollPane.UP_IMG, new ScrollBarThumbAsset());
 			
-			var sprite:Sprite = new Sprite();
-			sprite.graphics.clear();
-			sprite.graphics.beginFill(0x0);
-			sprite.graphics.drawRect(0, 0, 183, 150);
-			sprite.graphics.endFill();
-			sprite.graphics.beginFill(0x336699);
-			sprite.graphics.drawRect(0, 150, 183, 350);
-			sprite.graphics.endFill();
+			list.width = 200;
+			list.height = 200;
 			
-			scrollPanel.view = sprite;
+			for(var i:int = 0; i < 10; i++)
+			{
+				var sprite:Sprite;
+				var item:ListItem;
+				
+				item = new ListItem("未选", "已选");
+				
+				sprite = new Sprite();
+				sprite.graphics.clear();
+				sprite.graphics.beginFill(0xFF0000);
+				sprite.graphics.drawRect(0, 0, 183, 25);
+				sprite.graphics.endFill();
+				item.setSelectedStyle(ListItem.UP_IMG, sprite);
+				
+				sprite = new Sprite();
+				sprite.graphics.clear();
+				sprite.graphics.beginFill(0x336699);
+				sprite.graphics.drawRect(0, 0, 183, 25);
+				sprite.graphics.endFill();
+				item.setUnSelectedStyle(ListItem.UP_IMG, sprite);
+				
+				list.addItem(item);
+				
+				
+				
+				
+				
+				item = new ListItem("未选", "已选");
+				
+				sprite = new Sprite();
+				sprite.graphics.clear();
+				sprite.graphics.beginFill(0xFF0000);
+				sprite.graphics.drawRect(0, 0, 183, 25);
+				sprite.graphics.endFill();
+				item.setSelectedStyle(ListItem.UP_IMG, sprite);
+				
+				sprite = new Sprite();
+				sprite.graphics.clear();
+				sprite.graphics.beginFill(0x996633);
+				sprite.graphics.drawRect(0, 0, 183, 25);
+				sprite.graphics.endFill();
+				item.setUnSelectedStyle(ListItem.UP_IMG, sprite);
+				list.addItem(item);
+			}
+			
+			list.selectedIndex = 15;
+			list.scrollToSelected();
 			
 //			trace(generateCompcDemo("ReleaseSLG", 
 //				"C:\\Users\\Jsion\\Desktop\\CompilerDir", 

@@ -6,6 +6,7 @@ package jsion.components
 	import jsion.comps.Component;
 	import jsion.comps.events.UIEvent;
 	
+	[Event(name="change", type="jsion.comps.events.UIEvent")]
 	public class VBox extends Component
 	{
 		private var m_spacing:int;
@@ -97,7 +98,7 @@ package jsion.components
 				
 				child.y = yPos + m_spacing * i;
 				
-				yPos += child.height + m_spacing * i;
+				yPos += child.height;
 				
 				maxWidth = Math.max(child.width, maxWidth);
 			}
