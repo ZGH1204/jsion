@@ -2,8 +2,9 @@ package
 {
 	import flash.display.Sprite;
 	
-	import jsion.components.Slider;
 	import jsion.components.ScrollBar;
+	import jsion.components.ScrollPane;
+	import jsion.components.Slider;
 	import jsion.comps.events.UIEvent;
 	import jsion.core.ant.generateCompcDemo;
 	
@@ -32,18 +33,38 @@ package
 //			
 //			addChild(slider);
 			
-			var bar:ScrollBar = new ScrollBar(ScrollBar.VERTICAL);
+//			var bar:ScrollBar = new ScrollBar(ScrollBar.VERTICAL);
+//			
+//			bar.setUpOrLeftStyle(ScrollBar.UP_IMG, new ScrollBarUpBtnAsset());
+//			bar.setDownOrRightStyle(ScrollBar.UP_IMG, new ScrollBarUpBtnAsset());
+//			bar.setBarStyle(ScrollBar.UP_IMG, new ScrollBarThumbAsset());
+//			
+////			bar.viewSize = 1000;
+////			bar.scrollSize = 300;
+//			
+//			bar.addEventListener(UIEvent.CHANGE, __changeHandler);
+//			
+//			addChild(bar);
 			
-			bar.setUpOrLeftStyle(ScrollBar.UP_IMG, new ScrollBarUpBtnAsset());
-			bar.setDownOrRightStyle(ScrollBar.UP_IMG, new ScrollBarUpBtnAsset());
-			bar.setBarStyle(ScrollBar.UP_IMG, new ScrollBarThumbAsset());
+			var scrollPanel:ScrollPane = new ScrollPane(this);
 			
-//			bar.viewSize = 1000;
-//			bar.scrollSize = 300;
+			scrollPanel.setUpOrLeftStyle(ScrollPane.UP_IMG, new ScrollBarUpBtnAsset());
+			scrollPanel.setDownOrRightStyle(ScrollPane.UP_IMG, new ScrollBarUpBtnAsset());
+			scrollPanel.setBarStyle(ScrollPane.UP_IMG, new ScrollBarThumbAsset());
 			
-			bar.addEventListener(UIEvent.CHANGE, __changeHandler);
+			scrollPanel.width = 200;
+			scrollPanel.height = 200;
 			
-			addChild(bar);
+			var sprite:Sprite = new Sprite();
+			sprite.graphics.clear();
+			sprite.graphics.beginFill(0x0);
+			sprite.graphics.drawRect(0, 0, 183, 150);
+			sprite.graphics.endFill();
+			sprite.graphics.beginFill(0x336699);
+			sprite.graphics.drawRect(0, 150, 183, 350);
+			sprite.graphics.endFill();
+			
+			scrollPanel.view = sprite;
 			
 //			trace(generateCompcDemo("ReleaseSLG", 
 //				"C:\\Users\\Jsion\\Desktop\\CompilerDir", 

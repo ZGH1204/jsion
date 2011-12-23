@@ -11,8 +11,6 @@ package jsion.components
 	import jsion.comps.events.UIEvent;
 	import jsion.utils.DisposeUtil;
 	
-	import mx.controls.scrollClasses.ScrollThumb;
-	
 	public class ScrollBar extends Component
 	{
 		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
@@ -245,6 +243,16 @@ package jsion.components
 			scrollValue = scrollV;
 		}
 		
+		public function scrollWheelUpOrLeft():void
+		{
+			if(enabled) scrollValue = scrollValue - m_wheelStep;
+		}
+		
+		public function scrollWheelDownOrRight():void
+		{
+			if(enabled) scrollValue = scrollValue + m_wheelStep;
+		}
+		
 		protected function correctValue():void
 		{
 			m_scrollValue = Math.min(m_scrollValue, m_maximum);
@@ -363,13 +371,15 @@ package jsion.components
 		
 		private function __wheelHandler(e:MouseEvent):void
 		{
+			e.stopPropagation();
+			
 			if(e.delta > 0)
 			{
-				scrollValue = scrollValue - m_wheelStep;
+				scrollWheelUpOrLeft();
 			}
 			else
 			{
-				scrollValue = scrollValue + m_wheelStep;
+				scrollWheelDownOrRight();
 			}
 		}
 		
@@ -517,6 +527,23 @@ package jsion.components
 		
 		override public function dispose():void
 		{
+			removeEventListener(Event.ENTER_FRAME, __enterFrameHandler);
+			
+			if(m_upButton)
+			{
+				m_upButton.removeEventListener(MouseEvent.MOUSE_DOWN, __upMouseDownHandler);
+				m_upButton.removeEventListener(ReleaseEvent.RELEASE, __releaseHandler);
+			}
+			
+			if(m_downButton)
+			{
+				m_downButton.removeEventListener(MouseEvent.MOUSE_DOWN, __downMouseDownHandler);
+				m_downButton.removeEventListener(ReleaseEvent.RELEASE, __releaseHandler);
+			}
+			
+			removeEventListener(MouseEvent.CLICK, __clickHandler);
+			removeEventListener(MouseEvent.MOUSE_WHEEL, __wheelHandler);
+			
 			DisposeUtil.free(m_upButton);
 			m_upButton = null;
 			

@@ -102,6 +102,8 @@ package jsion.utils
 			{
 				display.filters = null;
 				
+				display.mask = null;
+				
 				if(display.hasOwnProperty("graphics")) display["graphics"].clear();
 			}
 		}

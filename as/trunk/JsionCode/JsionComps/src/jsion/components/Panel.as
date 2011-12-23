@@ -20,6 +20,7 @@ package jsion.components
 			m_mask = new Sprite();
 			m_mask.mouseEnabled = false;
 			m_mask.mouseChildren = false;
+			mask = m_mask;
 			addChild(m_mask);
 		}
 		
