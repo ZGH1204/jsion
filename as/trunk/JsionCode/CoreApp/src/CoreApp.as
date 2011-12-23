@@ -2,6 +2,7 @@ package
 {
 	import flash.display.Sprite;
 	
+	import jsion.components.ComboBox;
 	import jsion.components.List;
 	import jsion.components.ListItem;
 	import jsion.components.ScrollBar;
@@ -68,62 +69,127 @@ package
 //			
 //			scrollPanel.view = sprite;
 			
-			var list:List = new List(this);
+//			var list:List = new List(this);
+//			
+//			list.setUpOrLeftStyle(ScrollPane.UP_IMG, new ScrollBarUpBtnAsset());
+//			list.setDownOrRightStyle(ScrollPane.UP_IMG, new ScrollBarUpBtnAsset());
+//			list.setBarStyle(ScrollPane.UP_IMG, new ScrollBarThumbAsset());
+//			
+//			list.width = 200;
+//			list.height = 200;
+//			
+//			for(var i:int = 0; i < 10; i++)
+//			{
+//				var sprite:Sprite;
+//				var item:ListItem;
+//				
+//				item = new ListItem("未选", "已选");
+//				
+//				sprite = new Sprite();
+//				sprite.graphics.clear();
+//				sprite.graphics.beginFill(0xFF0000);
+//				sprite.graphics.drawRect(0, 0, 183, 25);
+//				sprite.graphics.endFill();
+//				item.setSelectedStyle(ListItem.UP_IMG, sprite);
+//				
+//				sprite = new Sprite();
+//				sprite.graphics.clear();
+//				sprite.graphics.beginFill(0x336699);
+//				sprite.graphics.drawRect(0, 0, 183, 25);
+//				sprite.graphics.endFill();
+//				item.setUnSelectedStyle(ListItem.UP_IMG, sprite);
+//				
+//				list.addItem(item);
+//				
+//				
+//				
+//				
+//				
+//				item = new ListItem("未选", "已选");
+//				
+//				sprite = new Sprite();
+//				sprite.graphics.clear();
+//				sprite.graphics.beginFill(0xFF0000);
+//				sprite.graphics.drawRect(0, 0, 183, 25);
+//				sprite.graphics.endFill();
+//				item.setSelectedStyle(ListItem.UP_IMG, sprite);
+//				
+//				sprite = new Sprite();
+//				sprite.graphics.clear();
+//				sprite.graphics.beginFill(0x996633);
+//				sprite.graphics.drawRect(0, 0, 183, 25);
+//				sprite.graphics.endFill();
+//				item.setUnSelectedStyle(ListItem.UP_IMG, sprite);
+//				list.addItem(item);
+//			}
+//			
+//			list.selectedIndex = 15;
+//			list.scrollToSelected();
 			
-			list.setUpOrLeftStyle(ScrollPane.UP_IMG, new ScrollBarUpBtnAsset());
-			list.setDownOrRightStyle(ScrollPane.UP_IMG, new ScrollBarUpBtnAsset());
-			list.setBarStyle(ScrollPane.UP_IMG, new ScrollBarThumbAsset());
 			
-			list.width = 200;
-			list.height = 200;
 			
-			for(var i:int = 0; i < 10; i++)
+			var combo:ComboBox = new ComboBox(ComboBox.UP);
+			
+			combo.move(10, 200);
+			combo.height = 25;
+			
+			combo.setListStyle(ComboBox.BACKGROUND, new ComboLabelButtonAsset());
+			combo.setListStyle(ComboBox.OFFSET_X, 2);
+			combo.setListStyle(ComboBox.OFFSET_Y, 2);
+			combo.setLabelButtonStyle(ComboBox.UP_IMG, new ComboLabelButtonAsset());
+			combo.setListUpStyle(ComboBox.UP_IMG, new ScrollBarUpBtnAsset());
+			combo.setListDownStyle(ComboBox.UP_IMG, new ScrollBarUpBtnAsset());
+			combo.setListBarStyle(ComboBox.UP_IMG, new ScrollBarThumbAsset());
+			
+			combo.width = 120;
+			combo.listWidth = 120;
+			
+			for(var i:int = 0; i < 20; i += 1)
 			{
 				var sprite:Sprite;
 				var item:ListItem;
 				
-				item = new ListItem("未选", "已选");
+				item = new ListItem("选择" + (i + 1));
 				
 				sprite = new Sprite();
 				sprite.graphics.clear();
 				sprite.graphics.beginFill(0xFF0000);
-				sprite.graphics.drawRect(0, 0, 183, 25);
+				sprite.graphics.drawRect(0, 0, 105, 25);
 				sprite.graphics.endFill();
 				item.setSelectedStyle(ListItem.UP_IMG, sprite);
 				
 				sprite = new Sprite();
 				sprite.graphics.clear();
 				sprite.graphics.beginFill(0x336699);
-				sprite.graphics.drawRect(0, 0, 183, 25);
+				sprite.graphics.drawRect(0, 0, 105, 25);
 				sprite.graphics.endFill();
 				item.setUnSelectedStyle(ListItem.UP_IMG, sprite);
 				
-				list.addItem(item);
+				combo.addItem(item);
 				
 				
 				
 				
 				
-				item = new ListItem("未选", "已选");
-				
-				sprite = new Sprite();
-				sprite.graphics.clear();
-				sprite.graphics.beginFill(0xFF0000);
-				sprite.graphics.drawRect(0, 0, 183, 25);
-				sprite.graphics.endFill();
-				item.setSelectedStyle(ListItem.UP_IMG, sprite);
-				
-				sprite = new Sprite();
-				sprite.graphics.clear();
-				sprite.graphics.beginFill(0x996633);
-				sprite.graphics.drawRect(0, 0, 183, 25);
-				sprite.graphics.endFill();
-				item.setUnSelectedStyle(ListItem.UP_IMG, sprite);
-				list.addItem(item);
+//				item = new ListItem("选择" + (i + 2));
+//				
+//				sprite = new Sprite();
+//				sprite.graphics.clear();
+//				sprite.graphics.beginFill(0xFF0000);
+//				sprite.graphics.drawRect(0, 0, 105, 25);
+//				sprite.graphics.endFill();
+//				item.setSelectedStyle(ListItem.UP_IMG, sprite);
+//				
+//				sprite = new Sprite();
+//				sprite.graphics.clear();
+//				sprite.graphics.beginFill(0x996633);
+//				sprite.graphics.drawRect(0, 0, 105, 25);
+//				sprite.graphics.endFill();
+//				item.setUnSelectedStyle(ListItem.UP_IMG, sprite);
+//				combo.addItem(item);
 			}
 			
-			list.selectedIndex = 15;
-			list.scrollToSelected();
+			addChild(combo);
 			
 //			trace(generateCompcDemo("ReleaseSLG", 
 //				"C:\\Users\\Jsion\\Desktop\\CompilerDir", 

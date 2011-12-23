@@ -1,7 +1,6 @@
 package jsion.components
 {
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
 	import jsion.comps.CompGlobal;
@@ -23,6 +22,9 @@ package jsion.components
 		public static const OVER_FILTERS:String = CompGlobal.OVER_FILTERS;
 		public static const DOWN_FILTERS:String = CompGlobal.DOWN_FILTERS;
 		public static const DISABLED_FILTERS:String = CompGlobal.DISABLED_FILTERS;
+		
+		public static const OFFSET_X:String = CompGlobal.OFFSET_X;
+		public static const OFFSET_Y:String = CompGlobal.OFFSET_Y;
 		
 		private var m_items:Array;
 		
@@ -51,9 +53,13 @@ package jsion.components
 				m_selectedItem = value;
 				
 				if(m_selectedItem) m_selectedItem.selected = true;
-				
-				dispatchEvent(new UIEvent(UIEvent.SELECTED));
 			}
+			else if(m_selectedItem != null)
+			{
+				m_selectedItem.selected = true;
+			}
+			
+			dispatchEvent(new UIEvent(UIEvent.SELECTED));
 		}
 		
 		public function get selectedIndex():int

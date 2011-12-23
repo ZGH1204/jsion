@@ -56,6 +56,13 @@ package jsion.comps
 		
 		public static const MIDDLE:String = "middle";
 		
+		public static const UP:String = "up";
+		
+		public static const DOWN:String = "down";
+		
+		
+		public static const OFFSET_X:String = "offsetX";
+		public static const OFFSET_Y:String = "offsetY";
 		
 		
 		public static const ZeroPoint:Point = new Point();
