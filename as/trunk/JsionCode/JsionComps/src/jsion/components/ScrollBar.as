@@ -78,6 +78,8 @@ package jsion.components
 			m_orientation = orientation;
 			
 			super(container, xPos, yPos);
+			
+			scrollSize = 100;
 		}
 		
 		public function get autoHide():Boolean
@@ -413,6 +415,7 @@ package jsion.components
 				addChild(m_bar);
 				m_upButton.enabled = true;
 				m_downButton.enabled = true;
+				enabled = true;
 				visible = true;
 			}
 			else
@@ -421,7 +424,7 @@ package jsion.components
 				
 				m_upButton.enabled = false;
 				m_downButton.enabled = false;
-				
+				enabled = false;
 				if(m_autoHide) visible = false;
 			}
 		}

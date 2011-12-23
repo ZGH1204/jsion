@@ -38,8 +38,8 @@ package
 			bar.setDownOrRightStyle(ScrollBar.UP_IMG, new ScrollBarUpBtnAsset());
 			bar.setBarStyle(ScrollBar.UP_IMG, new ScrollBarThumbAsset());
 			
-			bar.viewSize = 1000;
-			bar.scrollSize = 300;
+//			bar.viewSize = 1000;
+//			bar.scrollSize = 300;
 			
 			bar.addEventListener(UIEvent.CHANGE, __changeHandler);
 			
