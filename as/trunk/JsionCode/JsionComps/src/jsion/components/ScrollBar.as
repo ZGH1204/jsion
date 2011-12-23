@@ -40,6 +40,8 @@ package jsion.components
 		
 		private var m_bar:ScrollThumb;
 		
+		private var m_autoHide:Boolean;
+		
 		private var m_minimum:Number;
 		private var m_maximum:Number;
 		
@@ -76,6 +78,21 @@ package jsion.components
 			m_orientation = orientation;
 			
 			super(container, xPos, yPos);
+		}
+		
+		public function get autoHide():Boolean
+		{
+			return m_autoHide;
+		}
+		
+		public function set autoHide(value:Boolean):void
+		{
+			if(m_autoHide != value)
+			{
+				m_autoHide = value;
+				
+				invalidate();
+			}
 		}
 		
 		public function get barFixPos():Number
@@ -217,6 +234,13 @@ package jsion.components
 		public function setBarStyle(key:String, value:*, freeBMD:Boolean = true):void
 		{
 			m_bar.setStyle(key, value, freeBMD);
+		}
+		
+		public function setScrollParams(scrollS:Number, viewS:Number, scrollV:Number):void
+		{
+			scrollSize = scrollS;
+			viewSize = viewS;
+			scrollValue = scrollV;
 		}
 		
 		protected function correctValue():void
@@ -389,6 +413,7 @@ package jsion.components
 				addChild(m_bar);
 				m_upButton.enabled = true;
 				m_downButton.enabled = true;
+				visible = true;
 			}
 			else
 			{
@@ -396,6 +421,8 @@ package jsion.components
 				
 				m_upButton.enabled = false;
 				m_downButton.enabled = false;
+				
+				if(m_autoHide) visible = false;
 			}
 		}
 		
