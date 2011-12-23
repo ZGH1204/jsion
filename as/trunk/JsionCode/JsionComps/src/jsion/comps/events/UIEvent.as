@@ -10,6 +10,8 @@ package jsion.comps.events
 		
 		public static const CHANGE:String = "change";
 		
+		public static const SELECTED:String = "selected";
+		
 		public function UIEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
 		{
 			super(type, bubbles, cancelable);
