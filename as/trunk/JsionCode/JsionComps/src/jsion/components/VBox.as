@@ -89,6 +89,7 @@ package jsion.components
 		override public function draw():void
 		{
 			var yPos:int = 0;
+			var maxWidth:Number;
 			
 			for(var i:int = 0; i < numChildren; i++)
 			{
@@ -97,7 +98,13 @@ package jsion.components
 				child.y = yPos + m_spacing * i;
 				
 				yPos += child.height + m_spacing * i;
+				
+				maxWidth = Math.max(child.width, maxWidth);
 			}
+			
+			m_width = maxWidth;
+			m_height = originalHeight;
+			dispatchEvent(new UIEvent(UIEvent.RESIZE));
 			
 			super.draw();
 		}

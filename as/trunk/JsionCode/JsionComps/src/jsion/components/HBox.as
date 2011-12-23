@@ -90,6 +90,8 @@ package jsion.components
 		{
 			var xPos:int = 0;
 			
+			var maxHeight:Number = 0;
+			
 			for(var i:int = 0; i < numChildren; i++)
 			{
 				var child:DisplayObject = getChildAt(i);
@@ -97,7 +99,13 @@ package jsion.components
 				child.x = xPos + m_spacing * i;
 				
 				xPos += child.width + m_spacing * i;
+				
+				maxHeight = Math.max(child.height, maxHeight);
 			}
+			
+			m_width = originalWidth;
+			m_height = maxHeight;
+			dispatchEvent(new UIEvent(UIEvent.RESIZE));
 			
 			super.draw();
 		}

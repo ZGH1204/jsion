@@ -22,10 +22,6 @@ package jsion.comps
 	{
 		private var pressedTarget:DisplayObject;
 		
-		private var m_width:Number = 0;
-		
-		private var m_height:Number = 0;
-		
 		private var m_listeners:HashMap;
 		
 		private var m_children:HashMap;
@@ -35,6 +31,10 @@ package jsion.comps
 		private var m_stopPropagation:Boolean;
 		
 		private var m_invaliding:Boolean;
+		
+		protected var m_width:Number = 0;
+		
+		protected var m_height:Number = 0;
 		
 		public function BasicSprite()
 		{
