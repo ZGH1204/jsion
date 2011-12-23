@@ -5,9 +5,11 @@ package jsion.components
 	import flash.events.MouseEvent;
 	
 	import jsion.comps.CompGlobal;
+	import jsion.comps.events.UIEvent;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 	
+	[Event(name="selected", type="jsion.comps.events.UIEvent")]
 	public class List extends ScrollPane
 	{
 		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
@@ -49,6 +51,8 @@ package jsion.components
 				m_selectedItem = value;
 				
 				if(m_selectedItem) m_selectedItem.selected = true;
+				
+				dispatchEvent(new UIEvent(UIEvent.SELECTED));
 			}
 		}
 		
