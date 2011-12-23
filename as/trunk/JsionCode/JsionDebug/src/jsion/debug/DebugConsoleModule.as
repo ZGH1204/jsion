@@ -25,18 +25,18 @@ package jsion.debug
 		
 		private function loadCallback(l:TextLoader):void
 		{
-			var str:String = l.content as String;
-			
-			var txt:TextField = new TextField();
-			var style:StyleSheet = new StyleSheet();
-			
-			style.parseCSS(str);
-			
-			txt.styleSheet = style;
-			
-			txt.htmlText = "<jsion>lkjsdflkjasdf</jsion>";
-			
-			StageRef.addChild(txt);
+//			var str:String = l.content as String;
+//			
+//			var txt:TextField = new TextField();
+//			var style:StyleSheet = new StyleSheet();
+//			
+//			style.parseCSS(str);
+//			
+//			txt.styleSheet = style;
+//			
+//			txt.htmlText = "<jsion>lkjsdflkjasdf</jsion>";
+//			
+//			StageRef.addChild(txt);
 		}
 		
 		override public function stop():void

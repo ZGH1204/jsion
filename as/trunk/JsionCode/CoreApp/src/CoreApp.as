@@ -2,6 +2,7 @@ package
 {
 	import flash.display.Sprite;
 	
+	import jsion.components.Slider;
 	import jsion.components.ScrollBar;
 	import jsion.comps.events.UIEvent;
 	import jsion.core.ant.generateCompcDemo;
@@ -16,6 +17,20 @@ package
 			launcher = new Launcher(stage);
 			
 			launcher.launch("config.xml");
+			
+//			var slider:Slider = new Slider(Slider.VERTICAL);
+//			
+//			slider.move(10, 100);
+//			
+//			slider.showRule = true;
+//			slider.ruleCount = 5;
+////			slider.ruleOffset = -8;
+////			slider.barOffset = 8;
+//			slider.setBarStyle(Slider.UP_IMG, new SliderBarAsset());
+//			slider.height = 100;
+//			slider.addEventListener(UIEvent.CHANGE, __changeHandler);
+//			
+//			addChild(slider);
 			
 			var bar:ScrollBar = new ScrollBar(ScrollBar.VERTICAL);
 			
@@ -39,6 +54,11 @@ package
 //				"out",
 //				"D:\\Program Files\\Adobe\\Adobe Flash Builder 4\\sdks\\4.0.0"));
 		}
+		
+//		private function __changeHandler(e:UIEvent):void
+//		{
+//			trace(Slider(e.currentTarget).sliderValue.toFixed(2));
+//		}
 		
 		private function __changeHandler(e:UIEvent):void
 		{
