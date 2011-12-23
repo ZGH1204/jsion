@@ -6,7 +6,7 @@ package jsion.components
 	import jsion.comps.Component;
 	import jsion.comps.events.UIEvent;
 	
-	[Event(name="change", type="jsion.comps.events.UIEvent")]
+	[Event(name="resize", type="jsion.comps.events.UIEvent")]
 	public class HBox extends Component
 	{
 		private var m_spacing:int;
