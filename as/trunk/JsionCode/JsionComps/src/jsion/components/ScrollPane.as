@@ -64,6 +64,16 @@ package jsion.components
 			}
 		}
 		
+		public function get scrollValue():Number
+		{
+			return m_vScroll.scrollValue;
+		}
+		
+		public function set scrollValue(value:Number):void
+		{
+			m_vScroll.scrollValue = value;
+		}
+		
 		override protected function addChildren():void
 		{
 			m_panel = new Panel();

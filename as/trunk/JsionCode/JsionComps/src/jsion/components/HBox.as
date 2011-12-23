@@ -6,6 +6,7 @@ package jsion.components
 	import jsion.comps.Component;
 	import jsion.comps.events.UIEvent;
 	
+	[Event(name="change", type="jsion.comps.events.UIEvent")]
 	public class HBox extends Component
 	{
 		private var m_spacing:int;
@@ -98,7 +99,7 @@ package jsion.components
 				
 				child.x = xPos + m_spacing * i;
 				
-				xPos += child.width + m_spacing * i;
+				xPos += child.width;
 				
 				maxHeight = Math.max(child.height, maxHeight);
 			}

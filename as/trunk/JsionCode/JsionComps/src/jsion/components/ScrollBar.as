@@ -11,6 +11,7 @@ package jsion.components
 	import jsion.comps.events.UIEvent;
 	import jsion.utils.DisposeUtil;
 	
+	[Event(name="change", type="jsion.comps.events.UIEvent")]
 	public class ScrollBar extends Component
 	{
 		public static const BACKGROUND:String = CompGlobal.BACKGROUND;

@@ -128,6 +128,24 @@ package jsion.utils
 		}
 		
 		/**
+		 * 移除数组中指定索引位置的对象
+		 * @param array 数组对象
+		 * @param index 索引位置
+		 * @return 移除的对象
+		 * 
+		 */		
+		public static function removeAt(array:Array, index:int):*
+		{
+			if(index < 0 || index >= array.length) return null;
+			
+			var obj:* = array[index];
+			
+			array.splice(index, 1);
+			
+			return obj;
+		}
+		
+		/**
 		 * 移除数组中的所有对象
 		 * @param array 数组对象
 		 * 

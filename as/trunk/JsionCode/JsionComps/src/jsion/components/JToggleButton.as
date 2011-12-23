@@ -136,6 +136,9 @@ package jsion.components
 		
 		override public function draw():void
 		{
+			m_button.draw();
+			m_selectedButton.draw();
+			
 			if(m_selected == false && m_curButton != m_button)
 			{
 				if(m_curButton) removeChild(m_curButton);
