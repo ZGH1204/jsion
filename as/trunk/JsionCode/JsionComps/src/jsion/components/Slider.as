@@ -466,14 +466,13 @@ package jsion.components
 			removeEventListener(MouseEvent.CLICK, __clickHandler);
 			removeEventListener(MouseEvent.MOUSE_WHEEL, __wheelHandler);
 			
-			DisposeUtil.free(m_background);
-			m_background = null;
-			
 			DisposeUtil.free(m_bar);
 			m_bar = null;
 			
 			DisposeUtil.free(m_rule);
 			m_rule = null;
+			
+			m_background = null;
 			
 			super.dispose();
 		}

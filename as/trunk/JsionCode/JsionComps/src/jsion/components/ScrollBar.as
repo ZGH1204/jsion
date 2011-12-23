@@ -2,10 +2,14 @@ package jsion.components
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	import jsion.comps.CompGlobal;
 	import jsion.comps.Component;
+	import jsion.comps.events.ReleaseEvent;
 	import jsion.comps.events.UIEvent;
+	import jsion.utils.DisposeUtil;
 	
 	import mx.controls.scrollClasses.ScrollThumb;
 	
@@ -51,12 +55,23 @@ package jsion.components
 		
 		private var m_scrollRect:Number;
 		
+		private var m_clickOffset:Number;
+		
+		private var m_wheelStep:Number;
+		
+		private var m_delayFrames:int;
+		private var m_curFrame:int;
+		private var m_isUpBtnClick:Boolean;
+		
 		public function ScrollBar(orientation:String = HORIZONTAL, container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_viewSize = 0;
 			m_scrollSize = 0;
 			m_scrollValue = 0;
 			m_buttonOffset = 0;
+			m_clickOffset = 10;
+			m_wheelStep = 10;
+			m_delayFrames = 20;
 			
 			m_orientation = orientation;
 			
@@ -149,6 +164,36 @@ package jsion.components
 			}
 		}
 		
+		public function get clickOffset():Number
+		{
+			return m_clickOffset;
+		}
+		
+		public function set clickOffset(value:Number):void
+		{
+			m_clickOffset = value;
+		}
+		
+		public function get wheelStep():Number
+		{
+			return m_wheelStep;
+		}
+		
+		public function set wheelStep(value:Number):void
+		{
+			m_wheelStep = value;
+		}
+		
+		public function get delayFrames():int
+		{
+			return m_delayFrames;
+		}
+		
+		public function set delayFrames(value:int):void
+		{
+			m_delayFrames = value;
+		}
+		
 		public function calcHScrollValue():void
 		{
 			scrollValue = (m_bar.x - minPosLimit) / (maxPosLimit - minPosLimit) * (m_maximum - m_minimum);
@@ -197,21 +242,109 @@ package jsion.components
 			dispatchEvent(new UIEvent(UIEvent.CHANGE));
 		}
 		
+//		override protected function initialize():void
+//		{
+//			super.initialize();
+//			
+//			buttonMode = true;
+//			useHandCursor = true;
+//		}
+		
 		override protected function addChildren():void
 		{
 			m_background = getDisplayObject(BACKGROUND);
 			addChild(m_background);
 			
 			m_upButton = new JButton();
+			m_upButton.stopPropagation = true;
 			addChild(m_upButton);
 			
 			m_downButton = new JButton();
+			m_downButton.stopPropagation = true;
 			addChild(m_downButton);
 			
 			m_bar = new ScrollThumb(m_orientation);
 			m_bar.scrollBar = this;
 			m_bar.enableDrag = true;
 			addChild(m_bar);
+		}
+		
+		override protected function initEvents():void
+		{
+			m_upButton.addEventListener(MouseEvent.MOUSE_DOWN, __upMouseDownHandler);
+			m_upButton.addEventListener(ReleaseEvent.RELEASE, __releaseHandler);
+			m_downButton.addEventListener(MouseEvent.MOUSE_DOWN, __downMouseDownHandler);
+			m_downButton.addEventListener(ReleaseEvent.RELEASE, __releaseHandler);
+			addEventListener(MouseEvent.CLICK, __clickHandler);
+			addEventListener(MouseEvent.MOUSE_WHEEL, __wheelHandler);
+		}
+		
+		private function __upMouseDownHandler(e:MouseEvent):void
+		{
+			scrollValue = scrollValue - m_wheelStep;
+			m_curFrame = 0;
+			m_isUpBtnClick = true;
+			addEventListener(Event.ENTER_FRAME, __enterFrameHandler);
+		}
+		
+		private function __downMouseDownHandler(e:MouseEvent):void
+		{
+			scrollValue = scrollValue + m_wheelStep;
+			m_curFrame = 0;
+			m_isUpBtnClick = false;
+			addEventListener(Event.ENTER_FRAME, __enterFrameHandler);
+		}
+		
+		private function __enterFrameHandler(e:Event):void
+		{
+			if(m_curFrame < m_delayFrames)
+			{
+				m_curFrame++;
+				
+				return;
+			}
+			else
+			{
+				if(m_isUpBtnClick)
+				{
+					scrollValue = scrollValue - m_wheelStep;
+				}
+				else
+				{
+					scrollValue = scrollValue + m_wheelStep;
+				}
+			}
+		}
+		
+		private function __releaseHandler(e:ReleaseEvent):void
+		{
+			removeEventListener(Event.ENTER_FRAME, __enterFrameHandler);
+		}
+		
+		private function __clickHandler(e:MouseEvent):void
+		{
+			if(m_orientation == HORIZONTAL)
+			{
+				if(e.localX > m_bar.x) scrollValue = scrollValue + m_scrollSize - m_clickOffset;
+				else scrollValue = scrollValue - m_scrollSize + m_clickOffset;
+			}
+			else
+			{
+				if(e.localY > m_bar.y) scrollValue = scrollValue + m_scrollSize - m_clickOffset;
+				else scrollValue = scrollValue - m_scrollSize + m_clickOffset;
+			}
+		}
+		
+		private function __wheelHandler(e:MouseEvent):void
+		{
+			if(e.delta > 0)
+			{
+				scrollValue = scrollValue - m_wheelStep;
+			}
+			else
+			{
+				scrollValue = scrollValue + m_wheelStep;
+			}
 		}
 		
 		override public function draw():void
@@ -234,11 +367,11 @@ package jsion.components
 			graphics.beginFill(0x0, 0);
 			if(m_orientation == HORIZONTAL)
 			{
-				graphics.drawRect(m_minPosLimit, m_barFixPos, m_maxPosLimit - m_minPosLimit, m_bar.realHeight);
+				graphics.drawRect(m_minPosLimit, m_barFixPos, m_maxPosLimit - m_minPosLimit + m_bar.realWidth, m_bar.realHeight);
 			}
 			else
 			{
-				graphics.drawRect(m_barFixPos, m_minPosLimit, m_bar.realWidth, m_maxPosLimit - m_minPosLimit);
+				graphics.drawRect(m_barFixPos, m_minPosLimit, m_bar.realWidth, m_maxPosLimit - m_minPosLimit + m_bar.realHeight);
 			}
 			graphics.endFill();
 			
@@ -351,6 +484,22 @@ package jsion.components
 			m_minimum = 0;
 			m_maximum = m_viewSize - m_scrollSize;
 		}
+		
+		override public function dispose():void
+		{
+			DisposeUtil.free(m_upButton);
+			m_upButton = null;
+			
+			DisposeUtil.free(m_downButton);
+			m_downButton = null;
+			
+			DisposeUtil.free(m_bar);
+			m_bar = null;
+			
+			m_background = null;
+			
+			super.dispose();
+		}
 	}
 }
 
@@ -389,6 +538,11 @@ class ScrollThumb extends JButton
 	public function set scrollBar(value:ScrollBar):void
 	{
 		m_scrollBar = value;
+	}
+	
+	override public function get stopPropagation():Boolean
+	{
+		return true;
 	}
 	
 	override protected function addChildren():void
@@ -477,5 +631,13 @@ class ScrollThumb extends JButton
 		}
 		
 		return 10;
+	}
+	
+	override public function dispose():void
+	{
+		m_scrollBar = null;
+		m_thumb = null;
+		
+		super.dispose();
 	}
 }
