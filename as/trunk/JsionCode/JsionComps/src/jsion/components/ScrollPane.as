@@ -11,6 +11,8 @@ package jsion.components
 	
 	public class ScrollPane extends Component
 	{
+		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
+		
 		public static const UP_IMG:String = CompGlobal.UP_IMG;
 		public static const OVER_IMG:String = CompGlobal.OVER_IMG;
 		public static const DOWN_IMG:String = CompGlobal.DOWN_IMG;
@@ -20,6 +22,8 @@ package jsion.components
 		public static const OVER_FILTERS:String = CompGlobal.OVER_FILTERS;
 		public static const DOWN_FILTERS:String = CompGlobal.DOWN_FILTERS;
 		public static const DISABLED_FILTERS:String = CompGlobal.DISABLED_FILTERS;
+		
+		private var m_background:DisplayObject;
 		
 		private var m_panel:Panel;
 		
@@ -76,6 +80,9 @@ package jsion.components
 		
 		override protected function addChildren():void
 		{
+			m_background = getDisplayObject(BACKGROUND);
+			addChild(m_background);
+			
 			m_panel = new Panel();
 			addChild(m_panel);
 			
@@ -128,6 +135,12 @@ package jsion.components
 			m_panel.width = realWidth - m_vScroll.realWidth;
 			m_panel.height = realHeight;
 			
+			if(m_background)
+			{
+				m_background.width = realWidth;
+				m_background.height = realHeight;
+			}
+			
 			super.draw();
 		}
 		
@@ -144,6 +157,8 @@ package jsion.components
 			
 			DisposeUtil.free(m_vScroll);
 			m_vScroll = null;
+			
+			m_background = null;
 			
 			super.dispose();
 		}

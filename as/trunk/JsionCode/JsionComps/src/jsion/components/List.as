@@ -4,11 +4,24 @@ package jsion.components
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
+	import jsion.comps.CompGlobal;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 	
 	public class List extends ScrollPane
 	{
+		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
+		
+		public static const UP_IMG:String = CompGlobal.UP_IMG;
+		public static const OVER_IMG:String = CompGlobal.OVER_IMG;
+		public static const DOWN_IMG:String = CompGlobal.DOWN_IMG;
+		public static const DISABLED_IMG:String = CompGlobal.DISABLED_IMG;
+		
+		public static const UP_FILTERS:String = CompGlobal.UP_FILTERS;
+		public static const OVER_FILTERS:String = CompGlobal.OVER_FILTERS;
+		public static const DOWN_FILTERS:String = CompGlobal.DOWN_FILTERS;
+		public static const DISABLED_FILTERS:String = CompGlobal.DISABLED_FILTERS;
+		
 		private var m_items:Array;
 		
 		private var m_selectedItem:ListItem;
