@@ -8,6 +8,7 @@ package
 	import jsion.components.ScrollBar;
 	import jsion.components.ScrollPane;
 	import jsion.components.Slider;
+	import jsion.components.TabPane;
 	import jsion.comps.events.UIEvent;
 	import jsion.core.ant.generateCompcDemo;
 	
@@ -128,50 +129,28 @@ package
 			
 			
 			
-			var combo:ComboBox = new ComboBox(ComboBox.UP);
-			
-			combo.move(10, 200);
-			combo.height = 25;
-			
-			combo.setListStyle(ComboBox.BACKGROUND, new ComboLabelButtonAsset());
-			combo.setListStyle(ComboBox.OFFSET_X, 2);
-			combo.setListStyle(ComboBox.OFFSET_Y, 2);
-			combo.setLabelButtonStyle(ComboBox.UP_IMG, new ComboLabelButtonAsset());
-			combo.setListUpStyle(ComboBox.UP_IMG, new ScrollBarUpBtnAsset());
-			combo.setListDownStyle(ComboBox.UP_IMG, new ScrollBarUpBtnAsset());
-			combo.setListBarStyle(ComboBox.UP_IMG, new ScrollBarThumbAsset());
-			
-			combo.width = 120;
-			combo.listWidth = 120;
-			
-			for(var i:int = 0; i < 20; i += 1)
-			{
-				var sprite:Sprite;
-				var item:ListItem;
-				
-				item = new ListItem("选择" + (i + 1));
-				
-				sprite = new Sprite();
-				sprite.graphics.clear();
-				sprite.graphics.beginFill(0xFF0000);
-				sprite.graphics.drawRect(0, 0, 105, 25);
-				sprite.graphics.endFill();
-				item.setSelectedStyle(ListItem.UP_IMG, sprite);
-				
-				sprite = new Sprite();
-				sprite.graphics.clear();
-				sprite.graphics.beginFill(0x336699);
-				sprite.graphics.drawRect(0, 0, 105, 25);
-				sprite.graphics.endFill();
-				item.setUnSelectedStyle(ListItem.UP_IMG, sprite);
-				
-				combo.addItem(item);
-				
-				
-				
-				
-				
-//				item = new ListItem("选择" + (i + 2));
+//			var combo:ComboBox = new ComboBox(ComboBox.UP);
+//			
+//			combo.move(10, 200);
+//			combo.height = 25;
+//			
+//			combo.setListStyle(ComboBox.BACKGROUND, new ComboLabelButtonAsset());
+//			combo.setListStyle(ComboBox.OFFSET_X, 2);
+//			combo.setListStyle(ComboBox.OFFSET_Y, 2);
+//			combo.setLabelButtonStyle(ComboBox.UP_IMG, new ComboLabelButtonAsset());
+//			combo.setListUpStyle(ComboBox.UP_IMG, new ScrollBarUpBtnAsset());
+//			combo.setListDownStyle(ComboBox.UP_IMG, new ScrollBarUpBtnAsset());
+//			combo.setListBarStyle(ComboBox.UP_IMG, new ScrollBarThumbAsset());
+//			
+//			combo.width = 120;
+//			combo.listWidth = 120;
+//			
+//			for(var i:int = 0; i < 20; i += 1)
+//			{
+//				var sprite:Sprite;
+//				var item:ListItem;
+//				
+//				item = new ListItem("选择" + (i + 1));
 //				
 //				sprite = new Sprite();
 //				sprite.graphics.clear();
@@ -182,14 +161,53 @@ package
 //				
 //				sprite = new Sprite();
 //				sprite.graphics.clear();
-//				sprite.graphics.beginFill(0x996633);
+//				sprite.graphics.beginFill(0x336699);
 //				sprite.graphics.drawRect(0, 0, 105, 25);
 //				sprite.graphics.endFill();
 //				item.setUnSelectedStyle(ListItem.UP_IMG, sprite);
+//				
 //				combo.addItem(item);
-			}
+//				
+//				
+//				
+//				
+//				
+////				item = new ListItem("选择" + (i + 2));
+////				
+////				sprite = new Sprite();
+////				sprite.graphics.clear();
+////				sprite.graphics.beginFill(0xFF0000);
+////				sprite.graphics.drawRect(0, 0, 105, 25);
+////				sprite.graphics.endFill();
+////				item.setSelectedStyle(ListItem.UP_IMG, sprite);
+////				
+////				sprite = new Sprite();
+////				sprite.graphics.clear();
+////				sprite.graphics.beginFill(0x996633);
+////				sprite.graphics.drawRect(0, 0, 105, 25);
+////				sprite.graphics.endFill();
+////				item.setUnSelectedStyle(ListItem.UP_IMG, sprite);
+////				combo.addItem(item);
+//			}
+//			
+//			addChild(combo);
 			
-			addChild(combo);
+			var tabPane:TabPane = new TabPane();
+			
+			tabPane.addTab(new TabDemo("Tab1", 0x996600));
+			tabPane.addTab(new TabDemo("Tab2", 0x325891));
+			tabPane.addTab(new TabDemo("Tab3", 0xf0a9dd));
+			tabPane.addTab(new TabDemo("Tab4", 0xa5d833));
+			
+			//tabPane.padding = -2;
+			tabPane.btnSpacing = 5;
+			
+			tabPane.width = 680;
+			tabPane.height = 300;
+			
+			tabPane.setActiveTab(0);
+			
+			addChild(tabPane);
 			
 //			trace(generateCompcDemo("ReleaseSLG", 
 //				"C:\\Users\\Jsion\\Desktop\\CompilerDir", 

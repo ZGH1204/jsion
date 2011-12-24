@@ -3,30 +3,53 @@ package jsion.components
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	
+	import jsion.comps.CompGlobal;
 	import jsion.comps.Component;
 	import jsion.comps.events.UIEvent;
 	
 	[Event(name="resize", type="jsion.comps.events.UIEvent")]
 	public class VBox extends Component
 	{
-		private var m_spacing:int;
+		public static const LEFT:String = CompGlobal.LEFT;
+		public static const CENTER:String = CompGlobal.CENTER;
+		public static const RIGHT:String = CompGlobal.RIGHT;
+		
+		private var m_spacing:Number;
+		
+		private var m_align:String;
 		
 		public function VBox(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
-			m_spacing = 5;
+			m_spacing = 0;
+			m_align = LEFT;
 			super(container, xPos, yPos);
 		}
 		
-		public function get spacing():int
+		public function get spacing():Number
 		{
 			return m_spacing;
 		}
 		
-		public function set spacing(value:int):void
+		public function set spacing(value:Number):void
 		{
 			if(m_spacing != value)
 			{
 				m_spacing = value;
+				
+				invalidate();
+			}
+		}
+		
+		public function get align():String
+		{
+			return m_align;
+		}
+		
+		public function set align(value:String):void
+		{
+			if(m_align == value)
+			{
+				m_align = value;
 				
 				invalidate();
 			}
@@ -91,16 +114,36 @@ package jsion.components
 		{
 			var yPos:int = 0;
 			var maxWidth:Number;
+			var child:DisplayObject;
 			
 			for(var i:int = 0; i < numChildren; i++)
 			{
-				var child:DisplayObject = getChildAt(i);
+				child = getChildAt(i);
 				
 				child.y = yPos + m_spacing * i;
 				
 				yPos += child.height;
 				
 				maxWidth = Math.max(child.width, maxWidth);
+			}
+			
+			for(var j:int = 0; j < numChildren; j++)
+			{
+				child = getChildAt(j);
+				
+				if(m_align == RIGHT)
+				{
+					child.x = maxWidth - child.width;
+				}
+				else if(m_align == CENTER)
+				{
+					child.x = maxWidth - child.width;
+					child.x /= 2;
+				}
+				else
+				{
+					child.x = 0;
+				}
 			}
 			
 			m_width = maxWidth;
