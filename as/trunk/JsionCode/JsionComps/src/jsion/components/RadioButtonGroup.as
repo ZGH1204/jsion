@@ -3,22 +3,23 @@ package jsion.components
 	import jsion.IDispose;
 	import jsion.utils.ArrayUtil;
 
-	public class ButtonGroup implements IDispose
+	public class RadioButtonGroup implements IDispose
 	{
 		private var m_list:Array;
 		
 		private var m_selected:RadioButton;
 		
-		public function ButtonGroup()
+		public function RadioButtonGroup()
 		{
+			m_list = [];
 		}
 		
-		public function add(radioButton:RadioButton):void
+		public function add(groupButton:RadioButton):void
 		{
-			if(ArrayUtil.push(m_list, radioButton) != -1)
+			if(ArrayUtil.push(m_list, groupButton) != -1)
 			{
-				radioButton.group = this;
-				radioButton.selected = false;
+				groupButton.group = this;
+				groupButton.selected = false;
 			}
 		}
 		
@@ -29,6 +30,13 @@ package jsion.components
 		
 		public function set selected(value:RadioButton):void
 		{
+			if(m_selected == value)
+			{
+				m_selected.selected = true;
+				
+				return;
+			}
+			
 			if(m_selected) m_selected.selected = false;
 			
 			m_selected = value;

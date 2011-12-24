@@ -5,9 +5,11 @@ package jsion.components
 	
 	import jsion.comps.CompGlobal;
 	import jsion.comps.Component;
+	import jsion.comps.events.UIEvent;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.StringUtil;
 	
+	[Event(name="selected", type="jsion.comps.events.UIEvent")]
 	public class JToggleButton extends Component
 	{
 		public static const UP_IMG:String = CompGlobal.UP_IMG;
@@ -44,6 +46,8 @@ package jsion.components
 		
 		private var m_curButton:JButton;
 		
+		private var m_group:ToggleButtonGroup;
+		
 		public function JToggleButton(label:String = "", selectedLabel:String = "", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_label = label;
@@ -53,6 +57,16 @@ package jsion.components
 				m_selectedLabel = m_label;
 			
 			super(container, xPos, yPos);
+		}
+		
+		public function get group():ToggleButtonGroup
+		{
+			return m_group;
+		}
+		
+		public function set group(value:ToggleButtonGroup):void
+		{
+			m_group = value;
 		}
 		
 		public function get selected():Boolean
@@ -67,6 +81,8 @@ package jsion.components
 				m_selected = value;
 				
 				invalidate();
+				
+				dispatchEvent(new UIEvent(UIEvent.SELECTED));
 			}
 		}
 		
@@ -107,7 +123,14 @@ package jsion.components
 		
 		private function __clickHandler(e:MouseEvent):void
 		{
-			selected = !selected;
+			if(m_group)
+			{
+				m_group.selected = this;
+			}
+			else
+			{
+				selected = !selected;
+			}
 		}
 		
 		override protected function addChildren():void
@@ -172,6 +195,8 @@ package jsion.components
 			m_selectedButton = null;
 			
 			m_curButton = null;
+			
+			m_group = null;
 			
 			super.dispose();
 		}
