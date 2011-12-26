@@ -91,16 +91,10 @@ package jsion.components
 			invalidate();
 		}
 		
-		override public function setStyle(key:String, value:*, freeBMD:Boolean=true):void
+		public function setLabelStyle(key:String, value:*, freeBMD:Boolean=true):void
 		{
-			if(key == FONT || key == COLOR)
-			{
-				m_label.setStyle(key, value, freeBMD);
-			}
-			else
-			{
-				super.setStyle(key, value, freeBMD);
-			}
+			m_label.setStyle(key, value, freeBMD);
+			invalidate();
 		}
 		
 		override protected function addChildren():void
@@ -111,7 +105,7 @@ package jsion.components
 			m_label = new JLabel(m_text);
 			addChild(m_label);
 			
-			draw();
+			//draw();
 		}
 		
 		override public function draw():void
@@ -240,7 +234,6 @@ package jsion.components
 		private function updateLabelAndPos():void
 		{
 			m_label.text = m_text;
-			m_label.autoSize = true;
 			m_label.drawAtOnce();
 
 			m_labelRect.x = m_labelRect.y = 0;

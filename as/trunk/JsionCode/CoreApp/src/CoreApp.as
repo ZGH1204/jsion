@@ -3,12 +3,17 @@ package
 	import flash.display.Sprite;
 	
 	import jsion.components.ComboBox;
+	import jsion.components.FocusMgr;
+	import jsion.components.JButton;
 	import jsion.components.List;
 	import jsion.components.ListItem;
 	import jsion.components.ScrollBar;
 	import jsion.components.ScrollPane;
 	import jsion.components.Slider;
 	import jsion.components.TabPane;
+	import jsion.components.TitleBar;
+	import jsion.components.Window;
+	import jsion.comps.ASColor;
 	import jsion.comps.events.UIEvent;
 	import jsion.core.ant.generateCompcDemo;
 	
@@ -192,22 +197,41 @@ package
 //			
 //			addChild(combo);
 			
-			var tabPane:TabPane = new TabPane();
+//			var tabPane:TabPane = new TabPane();
+//			
+//			tabPane.addTab(new TabDemo("Tab1", 0x996600));
+//			tabPane.addTab(new TabDemo("Tab2", 0x325891));
+//			tabPane.addTab(new TabDemo("Tab3", 0xf0a9dd));
+//			tabPane.addTab(new TabDemo("Tab4", 0xa5d833));
+//			
+//			//tabPane.padding = -2;
+//			tabPane.btnSpacing = 5;
+//			
+//			tabPane.width = 680;
+//			tabPane.height = 300;
+//			
+//			tabPane.setActiveTab(0);
+//			
+//			addChild(tabPane);
 			
-			tabPane.addTab(new TabDemo("Tab1", 0x996600));
-			tabPane.addTab(new TabDemo("Tab2", 0x325891));
-			tabPane.addTab(new TabDemo("Tab3", 0xf0a9dd));
-			tabPane.addTab(new TabDemo("Tab4", 0xa5d833));
+			FocusMgr.Instance.setup(stage);
 			
-			//tabPane.padding = -2;
-			tabPane.btnSpacing = 5;
+			var win:Window = new Window("", this, 0, 50);
 			
-			tabPane.width = 680;
-			tabPane.height = 300;
-			
-			tabPane.setActiveTab(0);
-			
-			addChild(tabPane);
+			win.title = "测试窗体";
+			win.setStyle(Window.BACKGROUND, new ComboLabelButtonAsset());
+			var sprite:Sprite = new Sprite();
+			sprite.graphics.clear();
+			sprite.graphics.beginFill(0xFF0000);
+			sprite.graphics.drawRect(0, 0, 15, 15);
+			sprite.graphics.endFill();
+			win.setCloseStyle(JButton.UP_IMG, sprite);
+			win.setTitleBarStyle(TitleBar.BACKGROUND, new ComboLabelButtonAsset());
+			win.setTitleLabelStyle(TitleBar.COLOR, new ASColor(0xFFFFFF));
+			win.titleOffsetY = -25;
+			win.titleWidth = 350;
+			win.width = 350;
+			win.height = 200;
 			
 //			trace(generateCompcDemo("ReleaseSLG", 
 //				"C:\\Users\\Jsion\\Desktop\\CompilerDir", 

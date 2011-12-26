@@ -74,24 +74,25 @@ package jsion.components
 		
 		override public function setStyle(key:String, value:*, freeBMD:Boolean=true):void
 		{
-			if(key == FONT || key == COLOR)
-			{
-				m_label.setStyle(key, value, freeBMD);
-			}
-			else
-			{
-				throw new Error("除了 font 和 color 使用此方法,其他请使用setUnCheckedStyle或setCheckedStyle方法.");
-			}
+			throw new Error("请使用setUnCheckedStyle或setCheckedStyle方法.");
+		}
+		
+		public function setLabelStyle(key:String, value:*, freeBMD:Boolean=true):void
+		{
+			m_label.setStyle(key, value, freeBMD);
+			invalidate();
 		}
 		
 		public function setUnCheckedStyle(key:String, value:*, freeBMD:Boolean=true):void
 		{
 			m_button.setUnSelectedStyle(key, value, freeBMD);
+			invalidate();
 		}
 		
 		public function setCheckedStyle(key:String, value:*, freeBMD:Boolean=true):void
 		{
 			m_button.setSelectedStyle(key, value, freeBMD);
+			invalidate();
 		}
 		
 		override protected function initEvents():void

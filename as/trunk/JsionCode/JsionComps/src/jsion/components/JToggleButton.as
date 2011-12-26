@@ -147,20 +147,34 @@ package jsion.components
 			throw new Error("请使用setUnSelectedStyle或setSelectedStyle方法.");
 		}
 		
+		public function setUnSelectedLabelStyle(key:String, value:*, freeBMD:Boolean=true):void
+		{
+			m_button.setLabelStyle(key, value, freeBMD);
+			invalidate();
+		}
+		
 		public function setUnSelectedStyle(key:String, value:*, freeBMD:Boolean=true):void
 		{
 			m_button.setStyle(key, value, freeBMD);
+			invalidate();
+		}
+		
+		public function setSelectedLabelStyle(key:String, value:*, freeBMD:Boolean=true):void
+		{
+			m_selectedButton.setLabelStyle(key, value, freeBMD);
+			invalidate();
 		}
 		
 		public function setSelectedStyle(key:String, value:*, freeBMD:Boolean=true):void
 		{
 			m_selectedButton.setStyle(key, value, freeBMD);
+			invalidate();
 		}
 		
 		override public function draw():void
 		{
-			m_button.draw();
-			m_selectedButton.draw();
+			m_button.drawAtOnce();
+			m_selectedButton.drawAtOnce();
 			
 			if(m_selected == false && m_curButton != m_button)
 			{
