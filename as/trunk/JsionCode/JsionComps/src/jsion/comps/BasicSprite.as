@@ -354,7 +354,7 @@ package jsion.comps
 		
 		
 		
-		protected function invalidate():void
+		public function invalidate():void
 		{
 			addEventListener(Event.ENTER_FRAME, __invalidate);
 			m_invaliding = true;

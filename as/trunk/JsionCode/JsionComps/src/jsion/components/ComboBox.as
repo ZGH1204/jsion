@@ -128,34 +128,46 @@ package jsion.components
 			}
 		}
 		
-		public function setLabelButtonStyle(key:String, value:*, freeBMD:Boolean = true):void
+		override public function setStyle(key:String, value:*, freeBMD:Boolean=true):void
 		{
 			m_labelButton.setStyle(key, value, freeBMD);
+			invalidate();
+		}
+		
+		public function setLabelStyle(key:String, value:*, freeBMD:Boolean = true):void
+		{
+			m_labelButton.setLabelStyle(key, value, freeBMD);
+			invalidate();
 		}
 		
 		public function setListStyle(key:String, value:*, freeBMD:Boolean = true):void
 		{
 			m_list.setStyle(key, value, freeBMD);
+			invalidate();
 		}
 		
 		public function setListUpStyle(key:String, value:*, freeBMD:Boolean = true):void
 		{
 			m_list.setUpOrLeftStyle(key, value, freeBMD);
+			invalidate();
 		}
 		
 		public function setListDownStyle(key:String, value:*, freeBMD:Boolean = true):void
 		{
 			m_list.setDownOrRightStyle(key, value, freeBMD);
+			invalidate();
 		}
 		
 		public function setListBarStyle(key:String, value:*, freeBMD:Boolean = true):void
 		{
 			m_list.setBarStyle(key, value, freeBMD);
+			invalidate();
 		}
 		
 		public function addItem(item:ListItem):void
 		{
 			m_list.addItem(item);
+			invalidate();
 		}
 		
 		override protected function addChildren():void

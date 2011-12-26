@@ -6,13 +6,18 @@ package jsion.components
 	
 	import jsion.comps.ASColor;
 	import jsion.comps.ASFont;
+	import jsion.comps.CompGlobal;
 	import jsion.comps.Component;
 	import jsion.comps.Style;
 	import jsion.utils.DisposeUtil;
 	
 	public class JLabel extends Component
 	{
-		private var m_autoSize:Boolean;
+		public static const FONT:String = CompGlobal.FONT;
+		
+		public static const COLOR:String = CompGlobal.COLOR;
+		
+		public static const AUTO_SIZE:String = CompGlobal.AUTO_SIZE;
 		
 		private var m_text:String;
 		
@@ -21,7 +26,6 @@ package jsion.components
 		public function JLabel(text:String = "", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_text = text;
-			m_autoSize = true;
 			
 			super(container, xPos, yPos);
 		}
@@ -31,6 +35,11 @@ package jsion.components
 			super.initialize();
 			mouseEnabled = false;
 			mouseEnabled = false;
+		}
+		
+		override protected function initResources():void
+		{
+			setStyle(AUTO_SIZE, true);
 		}
 		
 		override protected function addChildren():void
@@ -58,7 +67,7 @@ package jsion.components
 			var color:ASColor = getColor(COLOR);
 			if(color) m_tf.textColor = color.getRGB();
 			
-			if(m_autoSize)
+			if(getBoolean(AUTO_SIZE))
 			{
 				m_tf.autoSize = TextFieldAutoSize.LEFT;
 				width = m_tf.width;
@@ -86,21 +95,6 @@ package jsion.components
 				m_text = value;
 				
 				if(m_text == null) m_text = "";
-				
-				invalidate();
-			}
-		}
-		
-		public function get autoSize():Boolean
-		{
-			return m_autoSize;
-		}
-		
-		public function set autoSize(value:Boolean):void
-		{
-			if(m_autoSize != value)
-			{
-				m_autoSize = value;
 				
 				invalidate();
 			}
