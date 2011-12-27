@@ -6,11 +6,11 @@ package jsion.components
 	import jsion.comps.Component;
 	import jsion.utils.DisposeUtil;
 	
-	public class Panel extends Component
+	public class JPanel extends Component
 	{
 		private var m_mask:Sprite;
 		
-		public function Panel(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JPanel(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			super(container, xPos, yPos);
 		}

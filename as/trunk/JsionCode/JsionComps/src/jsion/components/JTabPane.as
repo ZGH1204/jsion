@@ -10,7 +10,7 @@ package jsion.components
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DepthUtil;
 	
-	public class TabPane extends Component
+	public class JTabPane extends Component
 	{
 		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
 		
@@ -34,7 +34,7 @@ package jsion.components
 		
 		private var m_paneContainer:Sprite;
 		
-		private var m_group:ToggleButtonGroup;
+		private var m_group:JToggleButtonGroup;
 		
 		
 		
@@ -56,7 +56,7 @@ package jsion.components
 		
 		private var m_curTabPane:DisplayObject;
 		
-		public function TabPane(dir:String = TOP, container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JTabPane(dir:String = TOP, container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_dir = dir;
 			
@@ -77,7 +77,7 @@ package jsion.components
 			
 			m_tabPanes = [];
 			
-			m_group = new ToggleButtonGroup();
+			m_group = new JToggleButtonGroup();
 			
 			super(container, xPos, yPos);
 		}
@@ -244,11 +244,11 @@ package jsion.components
 			
 			if(m_dir == LEFT || m_dir == RIGHT)
 			{
-				m_btnBox = new VBox();
+				m_btnBox = new JVBox();
 			}
 			else
 			{
-				m_btnBox = new HBox();
+				m_btnBox = new JHBox();
 			}
 			addChild(m_btnBox);
 		}
@@ -279,28 +279,28 @@ package jsion.components
 		{
 			if(m_dir == LEFT || m_dir == RIGHT)
 			{
-				VBox(m_btnBox).spacing = m_btnSpacing;
+				JVBox(m_btnBox).spacing = m_btnSpacing;
 				
 				if(m_dir == LEFT)
 				{
-					VBox(m_btnBox).align = VBox.RIGHT;
+					JVBox(m_btnBox).align = JVBox.RIGHT;
 				}
 				else
 				{
-					VBox(m_btnBox).align = VBox.LEFT;
+					JVBox(m_btnBox).align = JVBox.LEFT;
 				}
 			}
 			else
 			{
-				HBox(m_btnBox).spacing = m_btnSpacing;
+				JHBox(m_btnBox).spacing = m_btnSpacing;
 				
 				if(m_dir == BOTTOM)
 				{
-					HBox(m_btnBox).align = HBox.TOP;
+					JHBox(m_btnBox).align = JHBox.TOP;
 				}
 				else
 				{
-					HBox(m_btnBox).align = HBox.BOTTOM;
+					JHBox(m_btnBox).align = JHBox.BOTTOM;
 				}
 			}
 			

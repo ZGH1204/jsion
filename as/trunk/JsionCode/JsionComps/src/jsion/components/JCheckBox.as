@@ -7,7 +7,7 @@ package jsion.components
 	import jsion.comps.Component;
 	import jsion.utils.DisposeUtil;
 	
-	public class CheckBox extends Component
+	public class JCheckBox extends Component
 	{
 		public static const LEFT:String = CompGlobal.LEFT;
 		public static const RIGHT:String = CompGlobal.RIGHT;
@@ -23,7 +23,7 @@ package jsion.components
 		
 		private var m_boxDir:String;
 		
-		public function CheckBox(label:String = "", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JCheckBox(label:String = "", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_text = label;
 			

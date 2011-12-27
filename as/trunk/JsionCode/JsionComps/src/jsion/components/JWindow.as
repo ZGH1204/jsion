@@ -10,7 +10,7 @@ package jsion.components
 	import jsion.utils.DepthUtil;
 	import jsion.utils.DisposeUtil;
 	
-	public class Window extends FocusRoot
+	public class JWindow extends JFocusRoot
 	{
 		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
 		
@@ -38,7 +38,7 @@ package jsion.components
 		private var m_dragger:TitleDragger;
 		
 		
-		private var m_titleBar:TitleBar;
+		private var m_titleBar:JTitleBar;
 		private var m_closeBtn:JButton;
 		
 		
@@ -57,7 +57,7 @@ package jsion.components
 		
 		private var m_fullTitleDragger:Boolean;
 		
-		public function Window(title:String = "", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JWindow(title:String = "", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_title = title;
 			
@@ -182,7 +182,7 @@ package jsion.components
 			}
 		}
 
-		public function get titleBar():TitleBar
+		public function get titleBar():JTitleBar
 		{
 			return m_titleBar;
 		}
@@ -294,7 +294,7 @@ package jsion.components
 		
 		override protected function addChildren():void
 		{
-			m_titleBar = new TitleBar(this);
+			m_titleBar = new JTitleBar(this);
 			addChild(m_titleBar);
 			
 			m_dragger = new TitleDragger(this);
@@ -401,15 +401,15 @@ import flash.display.DisplayObject;
 import flash.display.Sprite;
 
 import jsion.IDispose;
-import jsion.components.Window;
+import jsion.components.JWindow;
 import jsion.core.ddrop.DDropMgr;
 import jsion.core.ddrop.IDragDrop;
 
 class TitleDragger extends Sprite implements IDragDrop, IDispose
 {
-	private var m_window:Window;
+	private var m_window:JWindow;
 	
-	public function TitleDragger(window:Window)
+	public function TitleDragger(window:JWindow)
 	{
 		m_window = window;
 		

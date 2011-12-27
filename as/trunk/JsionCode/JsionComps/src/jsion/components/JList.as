@@ -9,7 +9,7 @@ package jsion.components
 	import jsion.utils.DisposeUtil;
 	
 	[Event(name="selected", type="jsion.comps.events.UIEvent")]
-	public class List extends ScrollPane
+	public class JList extends JScrollPane
 	{
 		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
 		
@@ -28,23 +28,23 @@ package jsion.components
 		
 		private var m_items:Array;
 		
-		private var m_selectedItem:ListItem;
+		private var m_selectedItem:JListItem;
 		
 		private var m_scrollToSelected:Boolean;
 		
-		public function List(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JList(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_items = [];
 			
 			super(container, xPos, yPos);
 		}
 		
-		public function get selectedItem():ListItem
+		public function get selectedItem():JListItem
 		{
 			return m_selectedItem;
 		}
 		
-		public function set selectedItem(value:ListItem):void
+		public function set selectedItem(value:JListItem):void
 		{
 			if(m_selectedItem != value)
 			{
@@ -81,24 +81,24 @@ package jsion.components
 			invalidate();
 		}
 		
-		public function addItem(item:ListItem):void
+		public function addItem(item:JListItem):void
 		{
 			if(ArrayUtil.containsValue(m_items, item)) return;
 			
 			m_items.push(item);
-			VBox(view).addChild(item);
+			JVBox(view).addChild(item);
 			
 			item.addEventListener(MouseEvent.CLICK, __itemClickHandler);
 			
 			invalidate();
 		}
 		
-		public function removeItem(item:ListItem):void
+		public function removeItem(item:JListItem):void
 		{
 			if(ArrayUtil.containsValue(m_items, item) == false) return;
 			
 			ArrayUtil.remove(m_items, item);
-			VBox(view).removeChild(item);
+			JVBox(view).removeChild(item);
 			
 			item.removeEventListener(MouseEvent.CLICK, __itemClickHandler);
 			
@@ -109,8 +109,8 @@ package jsion.components
 		{
 			if(index < 0 || index >= m_items.length) return;
 			
-			var item:ListItem = ArrayUtil.removeAt(m_items, index) as ListItem;
-			VBox(view).removeChildAt(index);
+			var item:JListItem = ArrayUtil.removeAt(m_items, index) as JListItem;
+			JVBox(view).removeChildAt(index);
 			
 			if(item) item.removeEventListener(MouseEvent.CLICK, __itemClickHandler);
 			
@@ -119,24 +119,24 @@ package jsion.components
 		
 		private function __itemClickHandler(e:MouseEvent):void
 		{
-			selectedItem = ListItem(e.currentTarget);
+			selectedItem = JListItem(e.currentTarget);
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
 			
-			view = new VBox();
+			view = new JVBox();
 		}
 		
 		override public function draw():void
 		{
-			for each(var item:ListItem in m_items)
+			for each(var item:JListItem in m_items)
 			{
 				item.drawAtOnce();
 			}
 			
-			VBox(view).drawAtOnce();
+			JVBox(view).drawAtOnce();
 			
 			super.draw();
 			
@@ -156,7 +156,7 @@ package jsion.components
 		
 		override public function dispose():void
 		{
-			for each(var item:ListItem in m_items)
+			for each(var item:JListItem in m_items)
 			{
 				if(item) item.removeEventListener(MouseEvent.CLICK, __itemClickHandler);
 			}

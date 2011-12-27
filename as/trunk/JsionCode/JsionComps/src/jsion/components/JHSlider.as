@@ -2,9 +2,9 @@ package jsion.components
 {
 	import flash.display.DisplayObjectContainer;
 	
-	public class HSlider extends Slider
+	public class JHSlider extends JSlider
 	{
-		public function HSlider(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JHSlider(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			super(HORIZONTAL, container, xPos, yPos);
 		}

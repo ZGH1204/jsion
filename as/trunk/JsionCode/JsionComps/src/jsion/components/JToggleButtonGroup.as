@@ -3,13 +3,13 @@ package jsion.components
 	import jsion.IDispose;
 	import jsion.utils.ArrayUtil;
 
-	public class ToggleButtonGroup implements IDispose
+	public class JToggleButtonGroup implements IDispose
 	{
 		private var m_list:Array;
 		
 		private var m_selected:JToggleButton;
 		
-		public function ToggleButtonGroup()
+		public function JToggleButtonGroup()
 		{
 			m_list = [];
 		}

@@ -6,7 +6,7 @@ package jsion.components
 	import jsion.comps.Component;
 	import jsion.comps.events.UIEvent;
 	
-	public class ListItem extends JToggleButton
+	public class JListItem extends JToggleButton
 	{
 		public static const UP_IMG:String = CompGlobal.UP_IMG;
 		public static const OVER_IMG:String = CompGlobal.OVER_IMG;
@@ -30,7 +30,7 @@ package jsion.components
 		public static const VGAP:String = CompGlobal.VGAP;
 		
 		
-		public function ListItem(label:String = "", selectedLabel:String = "", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JListItem(label:String = "", selectedLabel:String = "", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			super(label, selectedLabel, container, xPos, yPos);
 		}

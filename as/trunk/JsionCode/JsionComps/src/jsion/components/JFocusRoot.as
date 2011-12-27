@@ -6,9 +6,9 @@ package jsion.components
 	
 	import jsion.comps.Component;
 	
-	public class FocusRoot extends Component
+	public class JFocusRoot extends Component
 	{
-		public function FocusRoot(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JFocusRoot(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			super(container, xPos, yPos);
 		}
@@ -53,12 +53,12 @@ package jsion.components
 		
 		public function setFocusIn():void
 		{
-			FocusMgr.Instance.setFocusIn(this);
+			JFocusMgr.Instance.setFocusIn(this);
 		}
 		
 		public function setFocusOut():void
 		{
-			FocusMgr.Instance.setFocusOut(this);
+			JFocusMgr.Instance.setFocusOut(this);
 		}
 		
 		override public function dispose():void

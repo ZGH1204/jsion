@@ -8,7 +8,7 @@ package jsion.components
 	import jsion.comps.events.UIEvent;
 	
 	[Event(name="resize", type="jsion.comps.events.UIEvent")]
-	public class HBox extends Component
+	public class JHBox extends Component
 	{
 		public static const TOP:String = CompGlobal.TOP;
 		
@@ -20,7 +20,7 @@ package jsion.components
 		
 		private var m_align:String;
 		
-		public function HBox(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JHBox(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_spacing = 0;
 			m_align = TOP;

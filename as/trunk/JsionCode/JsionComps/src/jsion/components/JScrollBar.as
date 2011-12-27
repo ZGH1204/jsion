@@ -13,7 +13,7 @@ package jsion.components
 	import jsion.utils.DisposeUtil;
 	
 	[Event(name="change", type="jsion.comps.events.UIEvent")]
-	public class ScrollBar extends Component
+	public class JScrollBar extends Component
 	{
 		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
 		
@@ -65,7 +65,7 @@ package jsion.components
 		private var m_curFrame:int;
 		private var m_isUpBtnClick:Boolean;
 		
-		public function ScrollBar(orientation:String = HORIZONTAL, container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JScrollBar(orientation:String = HORIZONTAL, container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_viewSize = 0;
 			m_scrollSize = 0;
@@ -571,7 +571,7 @@ import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 
 import jsion.components.JButton;
-import jsion.components.ScrollBar;
+import jsion.components.JScrollBar;
 import jsion.comps.CompGlobal;
 
 class ScrollThumb extends JButton
@@ -584,7 +584,7 @@ class ScrollThumb extends JButton
 	
 	private var m_orientation:String;
 	
-	private var m_scrollBar:ScrollBar;
+	private var m_scrollBar:JScrollBar;
 	
 	public function ScrollThumb(orientation:String = HORIZONTAL, container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 	{
@@ -593,12 +593,12 @@ class ScrollThumb extends JButton
 		super("", container, xPos, yPos);
 	}
 	
-	public function get scrollBar():ScrollBar
+	public function get scrollBar():JScrollBar
 	{
 		return m_scrollBar;
 	}
 	
-	public function set scrollBar(value:ScrollBar):void
+	public function set scrollBar(value:JScrollBar):void
 	{
 		m_scrollBar = value;
 	}

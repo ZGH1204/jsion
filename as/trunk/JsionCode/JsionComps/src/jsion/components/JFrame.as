@@ -8,7 +8,7 @@ package jsion.components
 	
 	import mx.validators.ValidationResult;
 	
-	public class Frame extends Window
+	public class JFrame extends JWindow
 	{
 		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
 		
@@ -37,7 +37,7 @@ package jsion.components
 		private var m_contentOffsetY:Number;
 		
 		
-		public function Frame(title:String="", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JFrame(title:String="", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			super(title, container, xPos, yPos);
 		}
