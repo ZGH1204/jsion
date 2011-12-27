@@ -9,6 +9,28 @@ package jsion.components
 	
 	public class JCheckBox extends Component
 	{
+		public static const UP_IMG:String = CompGlobal.UP_IMG;
+		public static const OVER_IMG:String = CompGlobal.OVER_IMG;
+		public static const DOWN_IMG:String = CompGlobal.DOWN_IMG;
+		public static const DISABLED_IMG:String = CompGlobal.DISABLED_IMG;
+		
+		public static const UP_FILTERS:String = CompGlobal.UP_FILTERS;
+		public static const OVER_FILTERS:String = CompGlobal.OVER_FILTERS;
+		public static const DOWN_FILTERS:String = CompGlobal.DOWN_FILTERS;
+		public static const DISABLED_FILTERS:String = CompGlobal.DISABLED_FILTERS;
+		
+		public static const LABEL_UP_FILTERS:String = CompGlobal.LABEL_UP_FILTERS;
+		public static const LABEL_OVER_FILTERS:String = CompGlobal.LABEL_OVER_FILTERS;
+		public static const LABEL_DOWN_FILTERS:String = CompGlobal.LABEL_DOWN_FILTERS;
+		public static const LABEL_DISABLED_FILTERS:String = CompGlobal.LABEL_DISABLED_FILTERS;
+		
+		public static const HALIGN:String = CompGlobal.HALIGN;
+		public static const HGAP:String = CompGlobal.HGAP;
+		
+		public static const VALIGN:String = CompGlobal.VALIGN;
+		public static const VGAP:String = CompGlobal.VGAP;
+		
+		
 		public static const LEFT:String = CompGlobal.LEFT;
 		public static const RIGHT:String = CompGlobal.RIGHT;
 		public static const TOP:String = CompGlobal.TOP;
@@ -93,6 +115,15 @@ package jsion.components
 		{
 			m_button.setSelectedStyle(key, value, freeBMD);
 			invalidate();
+		}
+		
+		override public function set enabled(value:Boolean):void
+		{
+			super.enabled = value;
+			
+			m_button.enabled = value;
+			
+			m_label.enabled = value;
 		}
 		
 		override protected function initEvents():void

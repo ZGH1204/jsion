@@ -130,6 +130,15 @@ package jsion.components
 			invalidate();
 		}
 		
+		override public function set enabled(value:Boolean):void
+		{
+			super.enabled = value;
+			
+			m_box.enabled = value;
+			
+			m_label.enabled = value;
+		}
+		
 		override protected function initEvents():void
 		{
 			addEventListener(MouseEvent.CLICK, __clickHandler);

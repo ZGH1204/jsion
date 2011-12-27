@@ -278,6 +278,15 @@ package jsion.components
 			dispatchEvent(new UIEvent(UIEvent.CHANGE));
 		}
 		
+		override public function set enabled(value:Boolean):void
+		{
+			super.enabled = value;
+			
+			m_upButton.enabled = value;
+			m_downButton.enabled = value;
+			m_bar.enabled = value;
+		}
+		
 //		override protected function initialize():void
 //		{
 //			super.initialize();

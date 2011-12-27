@@ -82,6 +82,13 @@ package jsion.components
 			m_vScroll.scrollValue = value;
 		}
 		
+		override public function set enabled(value:Boolean):void
+		{
+			super.enabled = value;
+			
+			m_vScroll.enabled = value;
+		}
+		
 		override protected function addChildren():void
 		{
 			m_panel = new JPanel();

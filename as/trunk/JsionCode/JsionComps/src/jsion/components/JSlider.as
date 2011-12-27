@@ -279,6 +279,13 @@ package jsion.components
 			}
 		}
 		
+		override public function set enabled(value:Boolean):void
+		{
+			super.enabled = value;
+			
+			m_bar.enabled = value;
+		}
+		
 		override protected function initialize():void
 		{
 			super.initialize();
