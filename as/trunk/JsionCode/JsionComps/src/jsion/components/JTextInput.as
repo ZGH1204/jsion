@@ -70,6 +70,7 @@ package jsion.components
 				m_background = getDisplayObject(BACKGROUND);
 				addChild(m_background);
 				DepthUtil.bringToBottom(m_background);
+				safeDrawAtOnceByDisplay(m_background);
 				
 				if(m_background)
 				{
@@ -114,6 +115,7 @@ package jsion.components
 			{
 				m_background.width = realWidth;
 				m_background.height = realHeight;
+				safeDrawAtOnceByDisplay(m_background);
 			}
 			
 			super.draw();

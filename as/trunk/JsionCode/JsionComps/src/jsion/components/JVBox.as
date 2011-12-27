@@ -120,6 +120,8 @@ package jsion.components
 			{
 				child = getChildAt(i);
 				
+				safeDrawAtOnceByDisplay(child);
+				
 				child.y = yPos + m_spacing * i;
 				
 				yPos += child.height;

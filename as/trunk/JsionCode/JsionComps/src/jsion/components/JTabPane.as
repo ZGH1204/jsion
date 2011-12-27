@@ -202,6 +202,7 @@ package jsion.components
 				
 				m_curTabPane = content;
 				m_paneContainer.addChild(m_curTabPane);
+				safeDrawAtOnceByDisplay(m_curTabPane);
 				
 				tab.onShowPane();
 			}
@@ -260,6 +261,7 @@ package jsion.components
 				m_background = getDisplayObject(BACKGROUND);
 				addChild(m_background);
 				DepthUtil.bringToBottom(m_background);
+				safeDrawAtOnceByDisplay(m_background);
 			}
 			
 			drawButtonBox();
@@ -270,6 +272,7 @@ package jsion.components
 			{
 				m_background.width = realWidth;
 				m_background.height = realHeight;
+				safeDrawAtOnceByDisplay(m_background);
 			}
 			
 			super.draw();
