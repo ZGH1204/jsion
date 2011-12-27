@@ -205,7 +205,6 @@ package jsion.comps
 				m_enabled = value;
 				mouseEnabled = mouseChildren = m_enabled;
 				tabEnabled = m_enabled;
-				alpha = m_enabled ? 1.0 : 0.5;
 			}
 		}
 		
