@@ -7,7 +7,7 @@ package jsion.components
 	import jsion.comps.Component;
 	import jsion.utils.DisposeUtil;
 	
-	public class RadioButton extends Component
+	public class JRadioButton extends Component
 	{
 		public static const UP_IMG:String = CompGlobal.UP_IMG;
 		public static const OVER_IMG:String = CompGlobal.OVER_IMG;
@@ -46,9 +46,9 @@ package jsion.components
 		
 		private var m_boxDir:String;
 		
-		private var m_group:RadioButtonGroup;
+		private var m_group:JRadioButtonGroup;
 		
-		public function RadioButton(label:String = "", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JRadioButton(label:String = "", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_text = label;
 			
@@ -57,12 +57,12 @@ package jsion.components
 			super(container, xPos, yPos);
 		}
 		
-		public function get group():RadioButtonGroup
+		public function get group():JRadioButtonGroup
 		{
 			return m_group;
 		}
 		
-		public function set group(value:RadioButtonGroup):void
+		public function set group(value:JRadioButtonGroup):void
 		{
 			m_group = value;
 		}

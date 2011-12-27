@@ -10,7 +10,7 @@ package jsion.components
 	import jsion.utils.DepthUtil;
 	import jsion.utils.DisposeUtil;
 	
-	public class ScrollPane extends Component
+	public class JScrollPane extends Component
 	{
 		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
 		
@@ -29,13 +29,13 @@ package jsion.components
 		
 		private var m_background:DisplayObject;
 		
-		private var m_panel:Panel;
+		private var m_panel:JPanel;
 		
 		private var m_view:DisplayObject;
 		
-		private var m_vScroll:VScrollBar;
+		private var m_vScroll:JVScrollBar;
 		
-		public function ScrollPane(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JScrollPane(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			super(container, xPos, yPos);
 		}
@@ -84,10 +84,10 @@ package jsion.components
 		
 		override protected function addChildren():void
 		{
-			m_panel = new Panel();
+			m_panel = new JPanel();
 			addChild(m_panel);
 			
-			m_vScroll = new VScrollBar();
+			m_vScroll = new JVScrollBar();
 			addChild(m_vScroll);
 		}
 		

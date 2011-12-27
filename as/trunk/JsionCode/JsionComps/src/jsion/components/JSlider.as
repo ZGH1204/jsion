@@ -15,7 +15,7 @@ package jsion.components
 	import jsion.utils.DisposeUtil;
 	
 	[Event(name="change", type="jsion.comps.events.UIEvent")]
-	public class Slider extends Component
+	public class JSlider extends Component
 	{
 		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
 		
@@ -55,7 +55,7 @@ package jsion.components
 		private var m_barOffset:Number;
 		
 		
-		public function Slider(orientation:String = HORIZONTAL,container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JSlider(orientation:String = HORIZONTAL,container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_orientation = orientation;
 			
@@ -486,7 +486,7 @@ package jsion.components
 import flash.display.DisplayObjectContainer;
 
 import jsion.components.JButton;
-import jsion.components.Slider;
+import jsion.components.JSlider;
 import jsion.comps.CompGlobal;
 
 class SliderBar extends JButton
@@ -496,7 +496,7 @@ class SliderBar extends JButton
 	
 	private var m_orientation:String;
 	
-	private var m_slider:Slider;
+	private var m_slider:JSlider;
 	
 	public function SliderBar(orientation:String = HORIZONTAL, container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 	{
@@ -505,12 +505,12 @@ class SliderBar extends JButton
 		super("", container, xPos, yPos);
 	}
 	
-	public function get slider():Slider
+	public function get slider():JSlider
 	{
 		return m_slider;
 	}
 	
-	public function set slider(value:Slider):void
+	public function set slider(value:JSlider):void
 	{
 		m_slider = value;
 	}

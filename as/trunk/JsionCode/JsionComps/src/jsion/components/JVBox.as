@@ -8,7 +8,7 @@ package jsion.components
 	import jsion.comps.events.UIEvent;
 	
 	[Event(name="resize", type="jsion.comps.events.UIEvent")]
-	public class VBox extends Component
+	public class JVBox extends Component
 	{
 		public static const LEFT:String = CompGlobal.LEFT;
 		public static const CENTER:String = CompGlobal.CENTER;
@@ -18,7 +18,7 @@ package jsion.components
 		
 		private var m_align:String;
 		
-		public function VBox(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JVBox(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_spacing = 0;
 			m_align = LEFT;

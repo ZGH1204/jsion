@@ -2,17 +2,17 @@ package
 {
 	import flash.display.Sprite;
 	
-	import jsion.components.ComboBox;
-	import jsion.components.FocusMgr;
+	import jsion.components.JComboBox;
+	import jsion.components.JFocusMgr;
 	import jsion.components.JButton;
-	import jsion.components.List;
-	import jsion.components.ListItem;
-	import jsion.components.ScrollBar;
-	import jsion.components.ScrollPane;
-	import jsion.components.Slider;
-	import jsion.components.TabPane;
-	import jsion.components.TitleBar;
-	import jsion.components.Window;
+	import jsion.components.JList;
+	import jsion.components.JListItem;
+	import jsion.components.JScrollBar;
+	import jsion.components.JScrollPane;
+	import jsion.components.JSlider;
+	import jsion.components.JTabPane;
+	import jsion.components.JTitleBar;
+	import jsion.components.JWindow;
 	import jsion.comps.ASColor;
 	import jsion.comps.events.UIEvent;
 	import jsion.core.ant.generateCompcDemo;
@@ -214,20 +214,20 @@ package
 //			
 //			addChild(tabPane);
 			
-			FocusMgr.Instance.setup(stage);
+			JFocusMgr.Instance.setup(stage);
 			
-			var win:Window = new Window("", this, 0, 50);
+			var win:JWindow = new JWindow("", this, 0, 50);
 			
 			win.title = "测试窗体";
-			win.setStyle(Window.BACKGROUND, new ComboLabelButtonAsset());
+			win.setStyle(JWindow.BACKGROUND, new ComboLabelButtonAsset());
 			var sprite:Sprite = new Sprite();
 			sprite.graphics.clear();
 			sprite.graphics.beginFill(0xFF0000);
 			sprite.graphics.drawRect(0, 0, 15, 15);
 			sprite.graphics.endFill();
 			win.setCloseStyle(JButton.UP_IMG, sprite);
-			win.setTitleBarStyle(TitleBar.BACKGROUND, new ComboLabelButtonAsset());
-			win.setTitleLabelStyle(TitleBar.COLOR, new ASColor(0xFFFFFF));
+			win.setTitleBarStyle(JTitleBar.BACKGROUND, new ComboLabelButtonAsset());
+			win.setTitleLabelStyle(JTitleBar.COLOR, new ASColor(0xFFFFFF));
 			win.titleOffsetY = -25;
 			win.titleWidth = 350;
 			win.width = 350;
@@ -250,7 +250,7 @@ package
 		
 		private function __changeHandler(e:UIEvent):void
 		{
-			trace(ScrollBar(e.currentTarget).scrollValue.toFixed(2));
+			trace(JScrollBar(e.currentTarget).scrollValue.toFixed(2));
 		}
 	}
 }

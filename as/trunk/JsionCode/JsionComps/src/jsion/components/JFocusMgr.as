@@ -6,13 +6,13 @@ package jsion.components
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.InstanceUtil;
 
-	public class FocusMgr
+	public class JFocusMgr
 	{
 		private var m_stage:Stage;
 		
 		private var m_list:Array;
 		
-		public function FocusMgr()
+		public function JFocusMgr()
 		{
 			m_list = [];
 		}
@@ -23,7 +23,7 @@ package jsion.components
 			m_stage.focus = m_stage;
 		}
 		
-		public function setFocusIn(focuser:FocusRoot):void
+		public function setFocusIn(focuser:JFocusRoot):void
 		{
 			var index:int = m_list.indexOf(focuser);
 			
@@ -43,7 +43,7 @@ package jsion.components
 			m_stage.focus = focuser;
 		}
 		
-		public function setFocusOut(focuser:FocusRoot):void
+		public function setFocusOut(focuser:JFocusRoot):void
 		{
 			var index:int = m_list.indexOf(focuser);
 			
@@ -56,9 +56,9 @@ package jsion.components
 			else m_stage.focus = m_stage;
 		}
 		
-		public static function get Instance():FocusMgr
+		public static function get Instance():JFocusMgr
 		{
-			return InstanceUtil.createSingletion(FocusMgr) as FocusMgr;
+			return InstanceUtil.createSingletion(JFocusMgr) as JFocusMgr;
 		}
 	}
 }

@@ -8,7 +8,7 @@ package jsion.components
 	import jsion.comps.events.UIEvent;
 	import jsion.utils.DisposeUtil;
 	
-	public class ComboBox extends Component
+	public class JComboBox extends Component
 	{
 		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
 		
@@ -30,7 +30,7 @@ package jsion.components
 		
 		private var m_labelButton:JButton;
 		
-		private var m_list:List;
+		private var m_list:JList;
 		
 		private var m_dir:String;
 		
@@ -40,7 +40,7 @@ package jsion.components
 		private var m_listWidth:Number;
 		private var m_listHeight:Number;
 		
-		public function ComboBox(dir:String = DOWN, container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JComboBox(dir:String = DOWN, container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_dir = dir;
 			
@@ -164,7 +164,7 @@ package jsion.components
 			invalidate();
 		}
 		
-		public function addItem(item:ListItem):void
+		public function addItem(item:JListItem):void
 		{
 			m_list.addItem(item);
 			invalidate();
@@ -175,7 +175,7 @@ package jsion.components
 			m_labelButton = new JButton();
 			addChild(m_labelButton);
 			
-			m_list = new List();
+			m_list = new JList();
 		}
 		
 		override protected function initEvents():void

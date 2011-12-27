@@ -9,7 +9,7 @@ package jsion.components
 	import jsion.comps.Component;
 	import jsion.utils.DepthUtil;
 	
-	public class TitleBar extends Component
+	public class JTitleBar extends Component
 	{
 		public static const FONT:String = CompGlobal.FONT;
 		
@@ -39,7 +39,7 @@ package jsion.components
 		public static const MIDDLE:String = CompGlobal.MIDDLE;
 		
 		
-		private var m_window:Window;
+		private var m_window:JWindow;
 		
 		private var m_background:DisplayObject;
 		
@@ -47,7 +47,7 @@ package jsion.components
 		
 		private var m_label:JLabel;
 		
-		public function TitleBar(window:Window, container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JTitleBar(window:JWindow, container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_window = window;
 			

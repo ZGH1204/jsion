@@ -46,7 +46,7 @@ package jsion.components
 		
 		private var m_curButton:JButton;
 		
-		private var m_group:ToggleButtonGroup;
+		private var m_group:JToggleButtonGroup;
 		
 		public function JToggleButton(label:String = "", selectedLabel:String = "", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
@@ -59,12 +59,12 @@ package jsion.components
 			super(container, xPos, yPos);
 		}
 		
-		public function get group():ToggleButtonGroup
+		public function get group():JToggleButtonGroup
 		{
 			return m_group;
 		}
 		
-		public function set group(value:ToggleButtonGroup):void
+		public function set group(value:JToggleButtonGroup):void
 		{
 			m_group = value;
 		}

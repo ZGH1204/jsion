@@ -40,7 +40,7 @@ package
 			sprite.graphics.beginFill(0xFF0000);
 			sprite.graphics.drawRect(0, 0, 80, 25);
 			sprite.graphics.endFill();
-			btn.setSelectedStyle(RadioButton.UP_IMG, sprite);
+			btn.setSelectedStyle(JRadioButton.UP_IMG, sprite);
 			
 			return btn;
 		}

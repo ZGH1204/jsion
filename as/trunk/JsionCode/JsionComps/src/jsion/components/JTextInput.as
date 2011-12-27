@@ -11,7 +11,7 @@ package jsion.components
 	import jsion.comps.Component;
 	import jsion.utils.DepthUtil;
 	
-	public class TextInput extends Component
+	public class JTextInput extends Component
 	{
 		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
 		
@@ -41,7 +41,7 @@ package jsion.components
 		
 		private var m_tf:TextField;
 		
-		public function TextInput(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
+		public function JTextInput(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			super(container, xPos, yPos);
 		}
