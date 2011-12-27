@@ -1,10 +1,13 @@
 package
 {
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	
+	import jsion.Insets;
+	import jsion.components.Image;
+	import jsion.components.JButton;
 	import jsion.components.JComboBox;
 	import jsion.components.JFocusMgr;
-	import jsion.components.JButton;
 	import jsion.components.JList;
 	import jsion.components.JListItem;
 	import jsion.components.JScrollBar;
@@ -216,22 +219,33 @@ package
 			
 			JFocusMgr.Instance.setup(stage);
 			
-			var win:JWindow = new JWindow("", this, 0, 50);
+//			var win:JWindow = new JWindow("", this, 0, 50);
+//			
+//			win.title = "测试窗体";
+//			win.setStyle(JWindow.BACKGROUND, new ComboLabelButtonAsset());
+//			var sprite:Sprite = new Sprite();
+//			sprite.graphics.clear();
+//			sprite.graphics.beginFill(0xFF0000);
+//			sprite.graphics.drawRect(0, 0, 15, 15);
+//			sprite.graphics.endFill();
+//			win.setCloseStyle(JButton.UP_IMG, sprite);
+//			win.setTitleBarStyle(JTitleBar.BACKGROUND, new ComboLabelButtonAsset());
+//			win.setTitleLabelStyle(JTitleBar.COLOR, new ASColor(0xFFFFFF));
+//			win.titleOffsetY = -25;
+//			win.titleWidth = 350;
+//			win.width = 350;
+//			win.height = 200;
 			
-			win.title = "测试窗体";
-			win.setStyle(JWindow.BACKGROUND, new ComboLabelButtonAsset());
-			var sprite:Sprite = new Sprite();
-			sprite.graphics.clear();
-			sprite.graphics.beginFill(0xFF0000);
-			sprite.graphics.drawRect(0, 0, 15, 15);
-			sprite.graphics.endFill();
-			win.setCloseStyle(JButton.UP_IMG, sprite);
-			win.setTitleBarStyle(JTitleBar.BACKGROUND, new ComboLabelButtonAsset());
-			win.setTitleLabelStyle(JTitleBar.COLOR, new ASColor(0xFFFFFF));
-			win.titleOffsetY = -25;
-			win.titleWidth = 350;
-			win.width = 350;
-			win.height = 200;
+			var img:Image = new Image(new ButtonUpImgAsset(0, 0), this);
+			
+			img.scale9Grids = new Insets(10, 12, 10, 12);
+			img.width = 301;
+			img.height = 201;
+			
+//			var bmp:Bitmap = new Bitmap(new ButtonUpImgAsset(0, 0));
+//			bmp.x = 300;
+//			
+//			addChild(bmp);
 			
 //			trace(generateCompcDemo("ReleaseSLG", 
 //				"C:\\Users\\Jsion\\Desktop\\CompilerDir", 
