@@ -116,6 +116,14 @@ package jsion.components
 			}
 		}
 		
+		override public function set enabled(value:Boolean):void
+		{
+			super.enabled = value;
+			
+			m_button.enabled = value;
+			m_selectedButton.enabled = value;
+		}
+		
 		override protected function initEvents():void
 		{
 			addEventListener(MouseEvent.CLICK, __clickHandler);

@@ -58,9 +58,9 @@ package jsion.comps
 			addEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
 			addEventListener(ReleaseEvent.RELEASE, __releaseHandler);
 			
-			initResources();
-			
 			initialize();
+			
+			initResources();
 			
 			initEvents();
 			

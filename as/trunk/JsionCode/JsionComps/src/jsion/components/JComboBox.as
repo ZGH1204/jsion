@@ -170,6 +170,14 @@ package jsion.components
 			invalidate();
 		}
 		
+		override public function set enabled(value:Boolean):void
+		{
+			super.enabled = value;
+			
+			m_labelButton.enabled = value;
+			m_list.enabled = value;
+		}
+		
 		override protected function addChildren():void
 		{
 			m_labelButton = new JButton();
