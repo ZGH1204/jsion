@@ -66,6 +66,11 @@ package jsion.comps
 		public static const OFFSET_Y:String = "offsetY";
 		
 		
+		public static const SCALE:String = "scale";
+		
+		public static const TILE:String = "tile";
+		
+		
 		public static const ZeroPoint:Point = new Point();
 		
 		public function CompGlobal()

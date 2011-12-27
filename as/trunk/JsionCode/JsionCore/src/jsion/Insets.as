@@ -59,6 +59,96 @@ package jsion
 			return r;
 		}
 		
+		public function getTopBounds(bounds:IntRectangle):IntRectangle
+		{
+			var r:IntRectangle = bounds.clone();
+			
+			r.x += left;
+			r.width -= (left + right);
+			r.height = top;
+			
+			return r;
+		}
+		
+		public function getBottomBounds(bounds:IntRectangle):IntRectangle
+		{
+			var r:IntRectangle = bounds.clone();
+			
+			r.x += left;
+			r.y += (r.height - bottom);
+			r.width -= (left + right);
+			r.height = bottom;
+			
+			return r;
+		}
+		
+		public function getLeftBounds(bounds:IntRectangle):IntRectangle
+		{
+			var r:IntRectangle = bounds.clone();
+			
+			r.y += top;
+			r.width = left;
+			r.height -= (top + bottom);
+			
+			return r;
+		}
+		
+		public function getRightBounds(bounds:IntRectangle):IntRectangle
+		{
+			var r:IntRectangle = bounds.clone();
+			
+			r.x += (r.width - right);
+			r.y += top;
+			r.width = right;
+			r.height -= (top + bottom);
+			
+			return r;
+		}
+		
+		public function getLeftTopCornerBounds(bounds:IntRectangle):IntRectangle
+		{
+			var r:IntRectangle = bounds.clone();
+			
+			r.width = left;
+			r.height = top;
+			
+			return r;
+		}
+		
+		public function getRightTopCornerBounds(bounds:IntRectangle):IntRectangle
+		{
+			var r:IntRectangle = bounds.clone();
+			
+			r.x += (r.width - right);
+			r.width = right;
+			r.height = top;
+			
+			return r;
+		}
+		
+		public function getLeftBottomCornerBounds(bounds:IntRectangle):IntRectangle
+		{
+			var r:IntRectangle = bounds.clone();
+			
+			r.y += (r.height - bottom);
+			r.width = left;
+			r.height = bottom;
+			
+			return r;
+		}
+		
+		public function getRightBottomCornerBounds(bounds:IntRectangle):IntRectangle
+		{
+			var r:IntRectangle = bounds.clone();
+			
+			r.x += (r.width - right);
+			r.y += (r.height - bottom);
+			r.width = right;
+			r.height = bottom;
+			
+			return r;
+		}
+		
 		public function getOutsideSize(size:IntDimension=null):IntDimension
 		{
 			if(size == null) size = new IntDimension();
@@ -74,6 +164,78 @@ package jsion
 			var s:IntDimension = size.clone();
 			s.width -= (left + right);
 			s.height -= (top + bottom);
+			return s;
+		}
+		
+		public function getTopSize(size:IntDimension=null):IntDimension
+		{
+			if(size == null) size = new IntDimension();
+			var s:IntDimension = size.clone();
+			s.width -= (left + right);
+			s.height = top;
+			return s;
+		}
+		
+		public function getBottomSize(size:IntDimension=null):IntDimension
+		{
+			if(size == null) size = new IntDimension();
+			var s:IntDimension = size.clone();
+			s.width -= (left + right);
+			s.height = bottom;
+			return s;
+		}
+		
+		public function getLeftSize(size:IntDimension=null):IntDimension
+		{
+			if(size == null) size = new IntDimension();
+			var s:IntDimension = size.clone();
+			s.width = left;
+			s.height -= (top + bottom);
+			return s;
+		}
+		
+		public function getRightSize(size:IntDimension=null):IntDimension
+		{
+			if(size == null) size = new IntDimension();
+			var s:IntDimension = size.clone();
+			s.width = right;
+			s.height -= (top + bottom);
+			return s;
+		}
+		
+		public function getLeftTopCornerSize(size:IntDimension=null):IntDimension
+		{
+			if(size == null) size = new IntDimension();
+			var s:IntDimension = size.clone();
+			s.width = left;
+			s.height = top;
+			return s;
+		}
+		
+		public function getRightTopCornerSize(size:IntDimension=null):IntDimension
+		{
+			if(size == null) size = new IntDimension();
+			var s:IntDimension = size.clone();
+			s.width = right;
+			s.height = top;
+			return s;
+		}
+		
+		public function getLeftBottomCornerSize(size:IntDimension=null):IntDimension
+		{
+			if(size == null) size = new IntDimension();
+			var s:IntDimension = size.clone();
+			s.width = left;
+			s.height = bottom;
+			return s;
+		}
+		
+		public function getRightBottomCornerSize(size:IntDimension=null):IntDimension
+		{
+			if(size == null) size = new IntDimension();
+			var s:IntDimension = size.clone();
+			s.width = right;
+			s.height = bottom;
 			return s;
 		}
 		
