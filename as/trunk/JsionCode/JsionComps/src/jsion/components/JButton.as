@@ -157,6 +157,8 @@ package jsion.components
 				if(width > 0) m_curImg.width = width;
 				if(height > 0) m_curImg.height = height;
 				
+				if(m_curImg is Component) Component(m_curImg).drawAtOnce();
+				
 				m_back.addChild(m_curImg);
 			}
 		}

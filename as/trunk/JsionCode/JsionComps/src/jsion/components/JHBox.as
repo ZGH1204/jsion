@@ -124,6 +124,8 @@ package jsion.components
 			{
 				child = getChildAt(i);
 				
+				safeDrawAtOnceByDisplay(child);
+				
 				child.x = xPos + m_spacing * i;
 				
 				xPos += child.width;

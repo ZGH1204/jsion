@@ -128,10 +128,13 @@ package jsion.components
 				m_background = getDisplayObject(BACKGROUND);
 				addChild(m_background);
 				DepthUtil.bringToBottom(m_background);
+				safeDrawAtOnceByDisplay(m_background);
 			}
 			
 			if(m_view)
 			{
+				safeDrawAtOnceByDisplay(m_view);
+				
 				m_panel.addChild(m_view);
 				
 				m_vScroll.viewSize = m_view.height;
@@ -157,6 +160,7 @@ package jsion.components
 			{
 				m_background.width = realWidth;
 				m_background.height = realHeight;
+				safeDrawAtOnceByDisplay(m_background);
 			}
 			
 			super.draw();

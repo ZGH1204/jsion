@@ -141,6 +141,15 @@ package jsion.comps
 		}
 		
 		
+		protected function safeDrawAtOnceByDisplay(display:DisplayObject):void
+		{
+			if(display != null && display is Component)
+			{
+				Component(display).drawAtOnce();
+			}
+		}
+		
+		
 		
 		
 		public function setData(data:*):void

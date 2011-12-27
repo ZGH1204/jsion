@@ -398,6 +398,7 @@ package jsion.components
 				m_background = getDisplayObject(BACKGROUND);
 				addChild(m_background);
 				DepthUtil.bringToBottom(m_background);
+				safeDrawAtOnceByDisplay(m_background);
 			}
 			
 			updateAtOnce();
@@ -466,6 +467,8 @@ package jsion.components
 				
 				if(height > 0) m_background.height = height;
 				else m_background.height = originalHeight;
+				
+				safeDrawAtOnceByDisplay(m_background);
 			}
 		}
 		
@@ -628,6 +631,8 @@ class ScrollThumb extends JButton
 	override public function draw():void
 	{
 		super.draw();
+		
+		safeDrawAtOnceByDisplay(m_thumb);
 		
 		if(m_thumb)
 		{
