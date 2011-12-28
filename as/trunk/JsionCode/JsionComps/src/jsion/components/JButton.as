@@ -12,6 +12,7 @@ package jsion.components
 	import jsion.comps.CompUtil;
 	import jsion.comps.Component;
 	import jsion.comps.events.StateEvent;
+	import jsion.utils.DepthUtil;
 	import jsion.utils.DisposeUtil;
 	
 	public class JButton extends Component
@@ -165,6 +166,7 @@ package jsion.components
 				if(m_curImg is Component) Component(m_curImg).drawAtOnce();
 				
 				m_back.addChild(m_curImg);
+				DepthUtil.bringToBottom(m_curImg);
 			}
 		}
 		
