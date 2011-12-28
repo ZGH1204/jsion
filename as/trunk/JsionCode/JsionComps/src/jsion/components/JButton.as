@@ -67,6 +67,11 @@ package jsion.components
 			super(container, xPos, yPos);
 		}
 		
+		public function get content():Sprite
+		{
+			return m_back;
+		}
+		
 		override protected function initResources():void
 		{
 			setStyle(HALIGN, CompGlobal.CENTER);
