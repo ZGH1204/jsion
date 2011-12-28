@@ -35,8 +35,12 @@ package jsion.components
 		
 		private var m_vScroll:JVScrollBar;
 		
+		private var m_enabledScrollBar:Boolean;
+		
 		public function JScrollPane(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
+			m_enabledScrollBar = true;
+			
 			super(container, xPos, yPos);
 		}
 		
@@ -80,6 +84,26 @@ package jsion.components
 		public function set scrollValue(value:Number):void
 		{
 			m_vScroll.scrollValue = value;
+		}
+		
+		public function get scrollBar():JVScrollBar
+		{
+			return m_vScroll;
+		}
+		
+		public function get enabledScrollBar():Boolean
+		{
+			return m_enabledScrollBar;
+		}
+		
+		public function set enabledScrollBar(value:Boolean):void
+		{
+			if(m_enabledScrollBar != value)
+			{
+				m_enabledScrollBar = value;
+				
+				invalidate();
+			}
 		}
 		
 		override public function set enabled(value:Boolean):void
@@ -144,6 +168,8 @@ package jsion.components
 				m_vScroll.viewSize = 0;
 			}
 			
+			m_vScroll.visible = m_enabledScrollBar;
+			
 			m_vScroll.scrollSize = realHeight - 2 * getNumber(OFFSET_Y);
 			m_vScroll.drawAtOnce();
 			
@@ -153,7 +179,11 @@ package jsion.components
 			m_panel.x = getNumber(OFFSET_X);
 			m_panel.y = getNumber(OFFSET_Y);
 			
-			m_panel.width = realWidth - m_vScroll.realWidth - 2 * getNumber(OFFSET_X);
+			if(m_enabledScrollBar)
+				m_panel.width = realWidth - m_vScroll.realWidth - 2 * getNumber(OFFSET_X);
+			else
+				m_panel.width = realWidth - 2 * getNumber(OFFSET_X);
+			
 			m_panel.height = realHeight - 2 * getNumber(OFFSET_Y);
 			
 			if(m_background)

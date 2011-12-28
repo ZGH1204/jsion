@@ -28,6 +28,14 @@ package jsion
 		private static var _actionLine:ActionLine;
 		
 		/**
+		 * 舞台对象
+		 */		
+		public static function get stage():Stage
+		{
+			return _stage;
+		}
+		
+		/**
 		 * 初始化安装
 		 * @param stage 舞台对象
 		 */		
@@ -57,6 +65,24 @@ package jsion
 		public static function get fps():int
 		{
 			return _stage.frameRate;
+		}
+		
+		/**
+		 * 如果不能将焦点设置到目标，则会引发错误。
+		 */		
+		public static function get focus():InteractiveObject
+		{
+			return _stage.focus;
+		}
+		
+		/**
+		 * @private
+		 * @param value
+		 * 
+		 */		
+		public static function set focus(value:InteractiveObject):void
+		{
+			_stage.focus = value;
 		}
 		
 		/**

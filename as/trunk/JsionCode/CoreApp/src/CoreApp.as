@@ -217,8 +217,6 @@ package
 //			
 //			addChild(tabPane);
 			
-			JFocusMgr.Instance.setup(stage);
-			
 //			var win:JWindow = new JWindow("", this, 0, 50);
 //			
 //			win.title = "测试窗体";

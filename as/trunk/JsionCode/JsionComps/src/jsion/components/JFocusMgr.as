@@ -1,14 +1,14 @@
 package jsion.components
 {
 	import flash.display.InteractiveObject;
-	import flash.display.Stage;
 	
+	import jsion.StageRef;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.InstanceUtil;
 
 	public class JFocusMgr
 	{
-		private var m_stage:Stage;
+//		private var m_stage:Stage;
 		
 		private var m_list:Array;
 		
@@ -17,11 +17,11 @@ package jsion.components
 			m_list = [];
 		}
 		
-		public function setup(stage:Stage):void
-		{
-			m_stage = stage;
-			m_stage.focus = m_stage;
-		}
+//		public function setup(stage:Stage):void
+//		{
+//			m_stage = stage;
+//			m_stage.focus = m_stage;
+//		}
 		
 		public function setFocusIn(focuser:JFocusRoot):void
 		{
@@ -40,7 +40,7 @@ package jsion.components
 				m_list.push(focuser);
 			}
 			
-			m_stage.focus = focuser;
+			StageRef.focus = focuser;
 		}
 		
 		public function setFocusOut(focuser:JFocusRoot):void
@@ -52,8 +52,8 @@ package jsion.components
 				ArrayUtil.remove(m_list, focuser);
 			}
 			
-			if(m_list.length != 0) m_stage.focus = m_list[m_list.length - 1] as InteractiveObject;
-			else m_stage.focus = m_stage;
+			if(m_list.length != 0) StageRef.focus = m_list[m_list.length - 1] as InteractiveObject;
+			else StageRef.focus = StageRef.stage;
 		}
 		
 		public static function get Instance():JFocusMgr

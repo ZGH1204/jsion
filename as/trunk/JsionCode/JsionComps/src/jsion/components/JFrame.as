@@ -30,6 +30,27 @@ package jsion.components
 		public static const MIDDLE:String = CompGlobal.MIDDLE;
 		
 		
+		public static const UP_IMG:String = CompGlobal.UP_IMG;
+		public static const OVER_IMG:String = CompGlobal.OVER_IMG;
+		public static const DOWN_IMG:String = CompGlobal.DOWN_IMG;
+		public static const DISABLED_IMG:String = CompGlobal.DISABLED_IMG;
+		
+		public static const UP_FILTERS:String = CompGlobal.UP_FILTERS;
+		public static const OVER_FILTERS:String = CompGlobal.OVER_FILTERS;
+		public static const DOWN_FILTERS:String = CompGlobal.DOWN_FILTERS;
+		public static const DISABLED_FILTERS:String = CompGlobal.DISABLED_FILTERS;
+		
+		public static const LABEL_UP_FILTERS:String = CompGlobal.LABEL_UP_FILTERS;
+		public static const LABEL_OVER_FILTERS:String = CompGlobal.LABEL_OVER_FILTERS;
+		public static const LABEL_DOWN_FILTERS:String = CompGlobal.LABEL_DOWN_FILTERS;
+		public static const LABEL_DISABLED_FILTERS:String = CompGlobal.LABEL_DISABLED_FILTERS;
+		
+		public static const HALIGN:String = CompGlobal.HALIGN;
+		
+		public static const VALIGN:String = CompGlobal.VALIGN;
+		
+		
+		
 		private var m_content:Sprite;
 		
 		private var m_contentOffsetX:Number;
@@ -39,6 +60,9 @@ package jsion.components
 		
 		public function JFrame(title:String="", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
+			m_contentOffsetX = 0;
+			m_contentOffsetY = 0;
+			
 			super(title, container, xPos, yPos);
 		}
 		

@@ -30,6 +30,8 @@ package jsion.components
 		public static const DOWN_FILTERS:String = CompGlobal.DOWN_FILTERS;
 		public static const DISABLED_FILTERS:String = CompGlobal.DISABLED_FILTERS;
 		
+		public static const THUMB:String = CompGlobal.THUMB;
+		
 		private var m_orientation:String;
 		
 		private var m_background:DisplayObject;
@@ -585,6 +587,7 @@ import flash.display.DisplayObjectContainer;
 import jsion.components.JButton;
 import jsion.components.JScrollBar;
 import jsion.comps.CompGlobal;
+import jsion.utils.DepthUtil;
 
 class ScrollThumb extends JButton
 {
@@ -620,24 +623,24 @@ class ScrollThumb extends JButton
 		return true;
 	}
 	
-	override protected function addChildren():void
-	{
-		super.addChildren();
-		
-		m_thumb = getDisplayObject(THUMB);
-		addChild(m_thumb);
-	}
-	
 	override public function draw():void
 	{
-		super.draw();
+		if(m_thumb == null)
+		{
+			m_thumb = getDisplayObject(THUMB);
+			addChild(m_thumb);
+		}
 		
-		safeDrawAtOnceByDisplay(m_thumb);
+		super.draw();
 		
 		if(m_thumb)
 		{
+			safeDrawAtOnceByDisplay(m_thumb);
+			
+			DepthUtil.bringToTop(m_thumb);
+			
 			m_thumb.y = (realHeight - m_thumb.height) / 2;
-			m_thumb.x = (realWidth - m_thumb.height) / 2;
+			m_thumb.x = (realWidth - m_thumb.width) / 2;
 		}
 	}
 	
