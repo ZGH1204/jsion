@@ -9,6 +9,7 @@ package jsion.components
 	import jsion.comps.Component;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DepthUtil;
+	import jsion.utils.DisposeUtil;
 	
 	public class JTabPane extends Component
 	{
@@ -370,6 +371,32 @@ package jsion.components
 					m_paneContainer.y = m_btnBox.y + m_btnBox.realHeight + m_padding;
 				}
 			}
+		}
+		
+		override public function dispose():void
+		{
+			DisposeUtil.free(m_tabs);
+			m_tabs = null;
+			
+			DisposeUtil.free(m_tabBtns);
+			m_tabBtns = null;
+			
+			DisposeUtil.free(m_tabPanes);
+			m_tabPanes = null;
+			
+			DisposeUtil.free(m_btnBox);
+			m_btnBox = null;
+			
+			DisposeUtil.free(m_paneContainer);
+			m_paneContainer = null;
+			
+			DisposeUtil.free(m_group);
+			m_group = null;
+			
+			m_background = null;
+			m_curTabPane = null;
+			
+			super.dispose();
 		}
 	}
 }

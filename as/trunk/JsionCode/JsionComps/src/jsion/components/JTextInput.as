@@ -10,6 +10,7 @@ package jsion.components
 	import jsion.comps.CompUtil;
 	import jsion.comps.Component;
 	import jsion.utils.DepthUtil;
+	import jsion.utils.DisposeUtil;
 	
 	public class JTextInput extends Component
 	{
@@ -119,6 +120,16 @@ package jsion.components
 			}
 			
 			super.draw();
+		}
+		
+		override public function dispose():void
+		{
+			DisposeUtil.free(m_tf);
+			m_tf = null;
+			
+			m_background = null;
+			
+			super.dispose();
 		}
 	}
 }

@@ -5,6 +5,7 @@ package jsion.components
 	import flash.display.Sprite;
 	
 	import jsion.comps.CompGlobal;
+	import jsion.utils.DisposeUtil;
 	
 	public class JFrame extends JWindow
 	{
@@ -126,6 +127,15 @@ package jsion.components
 			{
 				m_content.y = m_contentOffsetY + titleBar.y + titleBar.realHeight;
 			}
+		}
+		
+		override public function dispose():void
+		{
+			DisposeUtil.freeChildren(m_content);
+			DisposeUtil.free(m_content);
+			m_content = null;
+			
+			super.dispose();
 		}
 	}
 }

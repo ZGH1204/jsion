@@ -6,6 +6,7 @@ package jsion.components
 	import jsion.comps.CompGlobal;
 	import jsion.comps.Component;
 	import jsion.comps.events.UIEvent;
+	import jsion.utils.DisposeUtil;
 	
 	[Event(name="resize", type="jsion.comps.events.UIEvent")]
 	public class JHBox extends Component
@@ -156,6 +157,13 @@ package jsion.components
 			dispatchEvent(new UIEvent(UIEvent.RESIZE));
 			
 			super.draw();
+		}
+		
+		override public function dispose():void
+		{
+			DisposeUtil.freeChildren(this);
+			
+			super.dispose();
 		}
 	}
 }
