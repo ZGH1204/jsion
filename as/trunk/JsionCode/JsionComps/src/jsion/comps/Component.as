@@ -89,10 +89,10 @@ package jsion.comps
 		
 		
 		
-		public function setStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_resources.setStyle(key, value, freeBMD);
 			invalidate();
+			return m_resources.setStyle(key, value, freeBMD);
 		}
 		
 		public function getBoolean(key:String):Boolean

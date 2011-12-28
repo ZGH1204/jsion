@@ -225,19 +225,22 @@ package jsion.components
 			scrollValue = (m_bar.y - minPosLimit) / (maxPosLimit - minPosLimit) * (m_maximum - m_minimum);
 		}
 		
-		public function setUpOrLeftStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setUpOrLeftStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_upButton.setStyle(key, value, freeBMD);
+			invalidate();
+			return m_upButton.setStyle(key, value, freeBMD);
 		}
 		
-		public function setDownOrRightStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setDownOrRightStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_downButton.setStyle(key, value, freeBMD);
+			invalidate();
+			return m_downButton.setStyle(key, value, freeBMD);
 		}
 		
-		public function setBarStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setBarStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_bar.setStyle(key, value, freeBMD);
+			invalidate();
+			return m_bar.setStyle(key, value, freeBMD);
 		}
 		
 		public function setScrollParams(scrollS:Number, viewS:Number, scrollV:Number):void

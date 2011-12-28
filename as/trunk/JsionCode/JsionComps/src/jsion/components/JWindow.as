@@ -283,19 +283,22 @@ package jsion.components
 			}
 		}
 		
-		public function setTitleBarStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setTitleBarStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_titleBar.setStyle(key, value, freeBMD);
+			invalidate();
+			return m_titleBar.setStyle(key, value, freeBMD);
 		}
 		
-		public function setTitleLabelStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setTitleLabelStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_titleBar.setLabelStyle(key, value, freeBMD);
+			invalidate();
+			return m_titleBar.setLabelStyle(key, value, freeBMD);
 		}
 		
-		public function setCloseStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setCloseStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_closeBtn.setStyle(key, value, freeBMD);
+			invalidate();
+			return m_closeBtn.setStyle(key, value, freeBMD);
 		}
 		
 		override protected function initEvents():void

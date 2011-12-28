@@ -149,34 +149,34 @@ package jsion.components
 			m_selectedButton = new JButton(m_selectedLabel);
 		}
 		
-		override public function setStyle(key:String, value:*, freeBMD:Boolean=true):void
+		override public function setStyle(key:String, value:*, freeBMD:Boolean=true):Object
 		{
 			//m_button.setStyle(key, value, freeBMD);
 			throw new Error("请使用setUnSelectedStyle或setSelectedStyle方法.");
 		}
 		
-		public function setUnSelectedLabelStyle(key:String, value:*, freeBMD:Boolean=true):void
+		public function setUnSelectedLabelStyle(key:String, value:*, freeBMD:Boolean=true):Object
 		{
-			m_button.setLabelStyle(key, value, freeBMD);
 			invalidate();
+			return m_button.setLabelStyle(key, value, freeBMD);
 		}
 		
-		public function setUnSelectedStyle(key:String, value:*, freeBMD:Boolean=true):void
+		public function setUnSelectedStyle(key:String, value:*, freeBMD:Boolean=true):Object
 		{
-			m_button.setStyle(key, value, freeBMD);
 			invalidate();
+			return m_button.setStyle(key, value, freeBMD);
 		}
 		
-		public function setSelectedLabelStyle(key:String, value:*, freeBMD:Boolean=true):void
+		public function setSelectedLabelStyle(key:String, value:*, freeBMD:Boolean=true):Object
 		{
-			m_selectedButton.setLabelStyle(key, value, freeBMD);
 			invalidate();
+			return m_selectedButton.setLabelStyle(key, value, freeBMD);
 		}
 		
-		public function setSelectedStyle(key:String, value:*, freeBMD:Boolean=true):void
+		public function setSelectedStyle(key:String, value:*, freeBMD:Boolean=true):Object
 		{
-			m_selectedButton.setStyle(key, value, freeBMD);
 			invalidate();
+			return m_selectedButton.setStyle(key, value, freeBMD);
 		}
 		
 		override public function draw():void
