@@ -6,8 +6,6 @@ package jsion.components
 	
 	import jsion.comps.CompGlobal;
 	
-	import mx.validators.ValidationResult;
-	
 	public class JFrame extends JWindow
 	{
 		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
