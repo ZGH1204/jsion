@@ -256,9 +256,10 @@ package jsion.components
 			sliderValue = value;
 		}
 		
-		public function setBarStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setBarStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_bar.setStyle(key, value, freeBMD);
+			invalidate();
+			return m_bar.setStyle(key, value, freeBMD);
 		}
 		
 		protected function correctValue():void

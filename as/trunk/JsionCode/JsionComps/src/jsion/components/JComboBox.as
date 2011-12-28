@@ -128,40 +128,40 @@ package jsion.components
 			}
 		}
 		
-		override public function setStyle(key:String, value:*, freeBMD:Boolean=true):void
+		override public function setStyle(key:String, value:*, freeBMD:Boolean=true):Object
 		{
-			m_labelButton.setStyle(key, value, freeBMD);
 			invalidate();
+			return m_labelButton.setStyle(key, value, freeBMD);
 		}
 		
-		public function setLabelStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setLabelStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_labelButton.setLabelStyle(key, value, freeBMD);
 			invalidate();
+			return m_labelButton.setLabelStyle(key, value, freeBMD);
 		}
 		
-		public function setListStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setListStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_list.setStyle(key, value, freeBMD);
 			invalidate();
+			return m_list.setStyle(key, value, freeBMD);
 		}
 		
-		public function setListUpStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setListUpStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_list.setUpOrLeftStyle(key, value, freeBMD);
 			invalidate();
+			return m_list.setUpOrLeftStyle(key, value, freeBMD);
 		}
 		
-		public function setListDownStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setListDownStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_list.setDownOrRightStyle(key, value, freeBMD);
 			invalidate();
+			return m_list.setDownOrRightStyle(key, value, freeBMD);
 		}
 		
-		public function setListBarStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setListBarStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_list.setBarStyle(key, value, freeBMD);
 			invalidate();
+			return m_list.setBarStyle(key, value, freeBMD);
 		}
 		
 		public function addItem(item:JListItem):void

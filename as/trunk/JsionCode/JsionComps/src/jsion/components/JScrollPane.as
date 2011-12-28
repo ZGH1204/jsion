@@ -44,19 +44,22 @@ package jsion.components
 			super(container, xPos, yPos);
 		}
 		
-		public function setUpOrLeftStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setUpOrLeftStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_vScroll.setUpOrLeftStyle(key, value, freeBMD);
+			invalidate();
+			return m_vScroll.setUpOrLeftStyle(key, value, freeBMD);
 		}
 		
-		public function setDownOrRightStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setDownOrRightStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_vScroll.setDownOrRightStyle(key, value, freeBMD);
+			invalidate();
+			return m_vScroll.setDownOrRightStyle(key, value, freeBMD);
 		}
 		
-		public function setBarStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setBarStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_vScroll.setBarStyle(key, value, freeBMD);
+			invalidate();
+			return m_vScroll.setBarStyle(key, value, freeBMD);
 		}
 		
 		public function get view():DisplayObject

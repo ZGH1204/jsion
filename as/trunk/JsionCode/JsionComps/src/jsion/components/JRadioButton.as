@@ -107,27 +107,27 @@ package jsion.components
 			m_box.selected = value;
 		}
 		
-		override public function setStyle(key:String, value:*, freeBMD:Boolean=true):void
+		override public function setStyle(key:String, value:*, freeBMD:Boolean=true):Object
 		{
 			throw new Error("请使用setLabelStyle、setUnCheckedStyle或setCheckedStyle方法.");
 		}
 		
-		public function setLabelStyle(key:String, value:*, freeBMD:Boolean=true):void
+		public function setLabelStyle(key:String, value:*, freeBMD:Boolean=true):Object
 		{
-			m_label.setStyle(key, value, freeBMD);
 			invalidate();
+			return m_label.setStyle(key, value, freeBMD);
 		}
 		
-		public function setUnCheckedStyle(key:String, value:*, freeBMD:Boolean=true):void
+		public function setUnCheckedStyle(key:String, value:*, freeBMD:Boolean=true):Object
 		{
-			m_box.setUnSelectedStyle(key, value, freeBMD);
 			invalidate();
+			return m_box.setUnSelectedStyle(key, value, freeBMD);
 		}
 		
-		public function setCheckedStyle(key:String, value:*, freeBMD:Boolean=true):void
+		public function setCheckedStyle(key:String, value:*, freeBMD:Boolean=true):Object
 		{
-			m_box.setSelectedStyle(key, value, freeBMD);
 			invalidate();
+			return m_box.setSelectedStyle(key, value, freeBMD);
 		}
 		
 		override public function set enabled(value:Boolean):void

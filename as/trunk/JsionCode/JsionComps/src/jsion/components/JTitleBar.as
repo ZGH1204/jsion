@@ -57,10 +57,10 @@ package jsion.components
 			super(container, xPos, yPos);
 		}
 		
-		public function setLabelStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setLabelStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
-			m_label.setStyle(key, value, freeBMD);
 			invalidate();
+			return m_label.setStyle(key, value, freeBMD);
 		}
 		
 		public function get title():String

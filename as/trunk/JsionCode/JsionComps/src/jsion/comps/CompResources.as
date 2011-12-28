@@ -6,6 +6,7 @@ package jsion.comps
 	
 	import jsion.HashMap;
 	import jsion.IDispose;
+	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 
 	public class CompResources implements IDispose
@@ -19,10 +20,17 @@ package jsion.comps
 			m_freeBMD = new HashMap();
 		}
 		
-		public function setStyle(key:String, value:*, freeBMD:Boolean = true):void
+		public function setStyle(key:String, value:*, freeBMD:Boolean = true):Object
 		{
+			var old:Object = null;
+			
+			if(m_pool.containsKey(key))
+				old = m_pool.get(key);
+			
 			m_pool.put(key, value);
 			m_freeBMD.put(key, freeBMD);
+			
+			return old;
 		}
 		
 		public function getBoolean(key:String):Boolean
@@ -100,8 +108,23 @@ package jsion.comps
 				
 				for(var i:int = 0; i < vList.length; i++)
 				{
-					DisposeUtil.free(vList[i], m_freeBMD.get(kList[i]) as Boolean);
+					if(vList[i] is DisplayObject || vList[i] is BitmapData)
+					{
+						DisposeUtil.free(vList[i], m_freeBMD.get(kList[i]) as Boolean);
+					}
+					else
+					{
+						var b:Boolean = m_freeBMD.get(kList[i]) as Boolean;
+						
+						if(b)
+						{
+							DisposeUtil.free(vList[i]);
+						}
+					}
 				}
+				
+				ArrayUtil.removeAll(kList);
+				ArrayUtil.removeAll(vList);
 				
 				DisposeUtil.free(m_pool);
 				m_pool = null;
