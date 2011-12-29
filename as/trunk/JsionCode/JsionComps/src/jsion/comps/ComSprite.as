@@ -17,6 +17,10 @@ package jsion.comps
 			super();
 		}
 		
+		public function get dragGroup():String
+		{
+			return null;
+		}
 		
 		public function get enableDrag():Boolean
 		{
@@ -31,7 +35,7 @@ package jsion.comps
 				
 				m_enableDrag = value;
 				
-				if(m_enableDrag) DDropMgr.registeDrag(this);
+				if(m_enableDrag) DDropMgr.registeDrag(this, dragGroup);
 			}
 		}
 		
