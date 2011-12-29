@@ -335,8 +335,8 @@ package jsion.core.ddrop
 			_dragIconStartPoint = _dragger.localToGlobal(Constant.ZeroPoint);
 			if(_dragIcon != _dragger)
 			{
-				_dragIcon.x = _dragIconStartPoint.x;
-				_dragIcon.y = _dragIconStartPoint.y;
+				_dragIcon.x += _dragIconStartPoint.x;
+				_dragIcon.y += _dragIconStartPoint.y;
 				StageRef.addChild(_dragIcon);
 			}
 			
