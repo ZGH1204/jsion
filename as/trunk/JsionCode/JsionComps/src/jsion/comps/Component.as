@@ -11,8 +11,10 @@ package jsion.comps
 	import flash.geom.Rectangle;
 	
 	import jsion.comps.events.ReleaseEvent;
+	import jsion.comps.events.UIEvent;
 	import jsion.utils.DisposeUtil;
 	
+	[Event(name="dataChanged", type="jsion.comps.events.UIEvent")]
 	public class Component extends ComSprite implements ITip
 	{
 		public static const FONT:String = CompGlobal.FONT;
@@ -37,6 +39,8 @@ package jsion.comps
 		
 		private var m_resources:CompResources;
 		
+		private var m_data:Object = null;
+		
 //		private var m_font:ASFont;
 //		
 //		private var m_color:ASColor;
@@ -54,6 +58,7 @@ package jsion.comps
 			move(xPos, yPos);
 			
 			addEventListener(MouseEvent.MOUSE_OVER, __rollOverHandler);
+			addEventListener(MouseEvent.MOUSE_UP, __mouseUpHandler);
 			addEventListener(MouseEvent.ROLL_OUT, __rollOutHandler);
 			addEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
 			addEventListener(ReleaseEvent.RELEASE, __releaseHandler);
@@ -152,8 +157,19 @@ package jsion.comps
 		
 		
 		
+		public function getData():*
+		{
+			return m_data;
+		}
+		
 		public function setData(data:*):void
 		{
+			if(m_data != data)
+			{
+				m_data = data;
+				
+				dispatchEvent(new UIEvent(UIEvent.DATA_CHANGED));
+			}
 		}
 		
 //		public function get font():ASFont
@@ -284,6 +300,14 @@ package jsion.comps
 			}
 			
 			if(m_model.pressed) m_model.armed = true;
+		}
+		
+		private function __mouseUpHandler(e:MouseEvent):void
+		{
+			if(rolloverEnabled && hitTestMouse())
+			{
+				m_model.rollOver = true;
+			}
 		}
 		
 		private function __rollOutHandler(e:MouseEvent):void
@@ -439,6 +463,7 @@ package jsion.comps
 		override public function dispose():void
 		{
 			removeEventListener(MouseEvent.MOUSE_OVER, __rollOverHandler);
+			removeEventListener(MouseEvent.MOUSE_UP, __mouseUpHandler);
 			removeEventListener(MouseEvent.ROLL_OUT, __rollOutHandler);
 			removeEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
 			removeEventListener(ReleaseEvent.RELEASE, __releaseHandler);
@@ -457,6 +482,8 @@ package jsion.comps
 			m_resources = null;
 			
 			m_mousePoint = null;
+			
+			m_data = null;
 			
 //			m_font = null;
 //			
