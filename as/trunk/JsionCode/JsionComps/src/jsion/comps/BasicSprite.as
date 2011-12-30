@@ -132,13 +132,16 @@ package jsion.comps
 			
 			var str:String = type + useCapture;
 			
-			var model:ListenerModel = m_listeners.get(str);
-			
-			if(model != null)
+			if(m_listeners)
 			{
-				ArrayUtil.remove(model.listener, listener);
+				var model:ListenerModel = m_listeners.get(str);
 				
-				if(model.listener.length == 0) m_listeners.remove(str);
+				if(model != null)
+				{
+					ArrayUtil.remove(model.listener, listener);
+					
+					if(model.listener.length == 0) m_listeners.remove(str);
+				}
 			}
 		}
 		

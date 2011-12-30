@@ -192,6 +192,7 @@ package jsion.components
 				m_curButton.label = m_label;
 				
 				addChild(m_curButton);
+				m_curButton.bring2Bottom();
 			}
 			else if(m_selected && m_curButton != m_selectedButton)
 			{
@@ -201,6 +202,7 @@ package jsion.components
 				m_curButton.label = m_selectedLabel;
 				
 				addChild(m_curButton);
+				m_curButton.bring2Bottom();
 			}
 			
 			super.draw();
