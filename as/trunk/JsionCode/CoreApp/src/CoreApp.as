@@ -200,22 +200,22 @@ package
 //			
 //			addChild(combo);
 			
-//			var tabPane:TabPane = new TabPane();
-//			
-//			tabPane.addTab(new TabDemo("Tab1", 0x996600));
-//			tabPane.addTab(new TabDemo("Tab2", 0x325891));
-//			tabPane.addTab(new TabDemo("Tab3", 0xf0a9dd));
-//			tabPane.addTab(new TabDemo("Tab4", 0xa5d833));
-//			
-//			//tabPane.padding = -2;
-//			tabPane.btnSpacing = 5;
-//			
-//			tabPane.width = 680;
-//			tabPane.height = 300;
-//			
-//			tabPane.setActiveTab(0);
-//			
-//			addChild(tabPane);
+			var tabPane:JTabPane = new JTabPane();
+			
+			tabPane.addTab(new TabDemo("Tab1", 0x996600));
+			tabPane.addTab(new TabDemo("Tab2", 0x325891));
+			tabPane.addTab(new TabDemo("Tab3", 0xf0a9dd));
+			tabPane.addTab(new TabDemo("Tab4", 0xa5d833));
+			
+			//tabPane.padding = -2;
+			tabPane.btnSpacing = 5;
+			
+			tabPane.width = 680;
+			tabPane.height = 300;
+			
+			tabPane.setActiveTab(0);
+			
+			addChild(tabPane);
 			
 //			var win:JWindow = new JWindow("", this, 0, 50);
 //			
@@ -234,11 +234,11 @@ package
 //			win.width = 350;
 //			win.height = 200;
 			
-			var img:Image = new Image(new ButtonUpImgAsset(0, 0), this);
-			
-			img.scale9Grids = new Insets(10, 12, 10, 12);
-			img.width = 301;
-			img.height = 201;
+//			var img:Image = new Image(new ButtonUpImgAsset(0, 0), this);
+//			
+//			img.scale9Grids = new Insets(10, 12, 10, 12);
+//			img.width = 301;
+//			img.height = 201;
 			
 //			var bmp:Bitmap = new Bitmap(new ButtonUpImgAsset(0, 0));
 //			bmp.x = 300;

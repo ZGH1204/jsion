@@ -6,7 +6,7 @@ package
 	import jsion.components.ITab;
 	import jsion.components.JButton;
 	import jsion.components.JToggleButton;
-	import jsion.components.RadioButton;
+	import jsion.components.JRadioButton;
 	
 	public class TabDemo extends Sprite implements ITab
 	{
@@ -33,7 +33,7 @@ package
 			sprite.graphics.beginFill(0x336699);
 			sprite.graphics.drawRect(0, 0, 80, 25);
 			sprite.graphics.endFill();
-			btn.setUnSelectedStyle(RadioButton.UP_IMG, sprite);
+			btn.setUnSelectedStyle(JRadioButton.UP_IMG, sprite);
 			
 			sprite = new Sprite();
 			sprite.graphics.clear();
