@@ -1,11 +1,14 @@
 
 import flash.system.Capabilities;
 
+import jsion.JsionCoreSetup;
 import jsion.tool.MainWindow;
 import jsion.tool.ToolGlobal;
 
 import mx.events.FlexEvent;
 import mx.events.ResizeEvent;
+
+import org.aswing.AsWingManager;
 
 protected var m_mainWindow:MainWindow;
 
@@ -16,7 +19,22 @@ private function init(e:FlexEvent):void
 	this.nativeWindow.x = (Capabilities.screenResolutionX - this.nativeWindow.width) / 2;
 	this.nativeWindow.y = (Capabilities.screenResolutionY - this.nativeWindow.height) / 2;
 	
-	ToolGlobal.setup(this.stage);
+	var bytes:ByteArray = new ByteArray();
+	
+	var file:File = new File(File.applicationDirectory.resolvePath("config.xml").nativePath);
+	
+	var fs:FileStream = new FileStream();
+	fs.open(file, FileMode.READ);
+	fs.readBytes(bytes);
+	fs.close();
+	
+	var configXml:XML = new XML(bytes);
+	
+	JsionCoreSetup(this.stage, configXml);
+	
+	AsWingManager.initAsStandard(this.stage);
+	
+	ToolGlobal.setup(this.stage, this.width, this.height);
 }
 
 private function resizeHandler(event:ResizeEvent):void

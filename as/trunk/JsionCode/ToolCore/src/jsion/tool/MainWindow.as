@@ -1,5 +1,7 @@
 package jsion.tool
 {
+	import jsion.tool.menus.MenuBox;
+	
 	import org.aswing.BorderLayout;
 	import org.aswing.Container;
 	import org.aswing.JPanel;
@@ -74,6 +76,7 @@ package jsion.tool
 		
 		protected function initTop():void
 		{
+			m_topPanel.append(new MenuBox(this));
 		}
 		
 		protected function initBottom():void

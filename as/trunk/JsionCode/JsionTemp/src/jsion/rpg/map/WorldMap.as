@@ -253,7 +253,7 @@ package jsion.rpg.map
 		{
 			var tmp:BitmapData = m_buffer;
 			
-			m_buffer = new BitmapData(m_cameraWidth, m_cameraHeight, true, 0xFF000000);
+			m_buffer = new BitmapData(m_cameraWidth, m_cameraHeight, true, 0x00000000);
 			
 			if(tmp) m_buffer.copyPixels(tmp, tmp.rect, Constant.ZeroPoint);
 			
