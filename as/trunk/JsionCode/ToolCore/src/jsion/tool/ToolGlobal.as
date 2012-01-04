@@ -14,13 +14,14 @@ package jsion.tool
 		}
 		
 		
-		public static function setup(stage:Stage):void
+		public static function setup(stage:Stage, w:int, h:int):void
 		{
 			if(m_window) return;
 			
 			AsWingManager.initAsStandard(stage);
 			
 			m_window = new MainWindow();
+			m_window.setSizeWH(w, h);
 			m_window.show();
 		}
 		
