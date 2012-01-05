@@ -60,7 +60,7 @@ package jsion.core.compress
 			list.push(data);
 		}
 		
-		public function save():void
+		public function compress():ByteArray
 		{
 			var imgs:Array = [];
 			for each(var data:PNGData in m_images)
@@ -72,6 +72,16 @@ package jsion.core.compress
 			}
 			
 			getColorsIndex(imgs, m_indexColors, m_replaceColors);
+			
+			var bytes:ByteArray = new ByteArray();
+			writeBytes(bytes);
+			
+			return bytes;
+		}
+		
+		public function save():void
+		{
+			
 		}
 		
 		/**
@@ -238,6 +248,26 @@ package jsion.core.compress
 			//动作数据
 			var actionBytesList:Array = [];
 			getActionBytesList(actionBytesList);
+			
+			//清空字节流
+			bytes.length = 0;
+			bytes.position = 0;
+			
+			//写入文件头
+			bytes.writeBytes(headerBytes);
+			//写入索引颜色数据
+			bytes.writeShort(indexBytes.length);
+			bytes.writeBytes(indexBytes);
+			
+			//写入动作数据
+			bytes.writeByte(actionBytesList.length);//动作数量
+			for(var j:int = 0; j < actionBytesList.length; j++)//循环写入动作数据
+			{
+				var bas:ByteArray = actionBytesList[j] as ByteArray;
+				bas.position = 0;
+				bytes.writeUnsignedInt(bas.length);
+				bytes.writeBytes(bas);
+			}
 		}
 		
 		private function getActionBytesList(list:Array):void
@@ -265,8 +295,6 @@ package jsion.core.compress
 					ba.writeShort(data.bitmapData.width);//帧宽度
 					ba.writeShort(data.bitmapData.height);//帧高度
 					
-					var pngBytes:ByteArray = new ByteArray();
-					
 					for(var i:int = 0; i < dataList.length; i++)
 					{
 						data = dataList[i] as PNGData;
@@ -275,12 +303,18 @@ package jsion.core.compress
 						
 						if(rect.width == 0 || rect.height == 0)
 						{
-							rect.width = data.bitmapData.width;
-							rect.height = data.bitmapData.height;
+							rect.width = data.bitmapData.width - rect.x;
+							rect.height = data.bitmapData.height - rect.y;
 						}
 						
+						var lenPos:int = ba.position;
+						ba.writeUnsignedInt(0);//预留图像数据长度位
 						ba.writeShort(rect.x);//图像有效像素相对于图像(0, 0)点的x偏移量
 						ba.writeShort(rect.y);//图像有效像素相对于图像(0, 0)点的y偏移量
+						ba.writeShort(rect.width);
+						ba.writeShort(rect.height);
+						
+						var pngBytes:ByteArray = new ByteArray();
 						
 						for(var y:int = rect.y; y < rect.height; y++)
 						{
@@ -315,27 +349,59 @@ package jsion.core.compress
 								}
 							}
 						}
-					}
-					
-					pngBytes.position = 0;
-					ba.position = ba.length;
-					var isn:Boolean = false;
-					var isnNum:int = 0;
-					var oldPos:int = ba.position;
-					while(pngBytes.bytesAvailable > 0)
-					{
-						var inde:uint = pngBytes.readUnsignedByte();
-						var colr:uint = m_indexColors[inde];
-						var a1:uint = colr >> 12 & 0xF;
 						
-						if(a1 == 0x0)
+						pngBytes.position = 0;
+						var isn:Boolean = false;
+						var isnNum:int = 0;
+						var oldPos:uint = ba.position;
+						while(pngBytes.bytesAvailable > 0)
 						{
+							var inde:uint = pngBytes.readUnsignedByte();
+							var colr:uint = m_indexColors[inde];
+							var a1:uint = colr >> 12 & 0xF;
 							
+							if(a1 == 0x0)
+							{
+								if(isn == false)
+								{
+									isn = true;
+									isnNum = 1;
+								}
+								else
+								{
+									isnNum += 1;
+								}
+							}
+							else
+							{
+								if(isn)
+								{
+									isn = false;
+									
+									if(isnNum > 255)
+									{
+										ba.writeByte(255);
+										ba.writeShort(isnNum);
+									}
+									else
+									{
+										ba.writeByte(254);
+										ba.writeByte(isnNum);
+									}
+								}
+								
+								ba.writeByte(inde);
+							}
 						}
+						
+						var bytesCount:uint = ba.position - oldPos;
+						ba.position = lenPos;
+						ba.writeUnsignedInt(bytesCount);
+						ba.position = ba.length;
 					}
 					
-					//bytes.writeUnsignedInt(ba.length);
-					//bytes.writeBytes(ba);
+					bytes.writeUnsignedInt(ba.length);
+					bytes.writeBytes(ba);
 				}
 			}
 		}
