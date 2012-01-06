@@ -111,9 +111,12 @@ package jsion.core.compress
 					rect.height = bmd.height;
 				}
 				
-				for(var y:int = rect.y; y < rect.height; y++)
+				var w1:int = rect.x + rect.width;
+				var h1:int = rect.y + rect.height;
+				
+				for(var y:int = rect.y; y < h1; y++)
 				{
-					for(var x:int = rect.x; x < rect.width; x++)
+					for(var x:int = rect.x; x < w1; x++)
 					{
 						var color:uint = bmd.getPixel32(x, y);
 						
@@ -141,38 +144,58 @@ package jsion.core.compress
 			
 			//遍历出所有被使用的颜色值列表
 			var indexColorsMap:HashMap = new HashMap();
+			var orderList:Array = [];
 			
 			for(var j:int = 0; j < 65536; j++)
 			{
 				if(colorsIndex65535[j] != null && colorsIndex65535[j] > 0)
 				{
 					indexColorsMap.put(j, colorsIndex65535[j]);
+					orderList.push({color: j, count: colorsIndex65535[j]});
 				}
 			}
 			
-			//生成索引颜色列表和需要替换的颜色列表
-			var useCountList:Array = indexColorsMap.getValues();//使用次数列表
-			useCountList.sort(Array.NUMERIC);//升序排列使用次数
-			var minUseCount:int = useCountList[useCountList.length - 250];//后250个使用次数中最小的次数
+			orderList.sortOn("count", Array.NUMERIC | Array.DESCENDING);
+//			var minUseCount:int = orderList[249].count as int;//后250个使用次数中最小的次数
 			
-			var colorsList:Array = indexColorsMap.getKeys();//颜色列表
 			var indexColorsCount:int = 0;
-			//var indexColors:Array = [];//索引颜色列表
-			//var replaceColors:HashMap = new HashMap();//需要替换的颜色列表
-			for each(var c:uint in colorsList)
+			
+			for (var k:int = 0; k < orderList.length; k++)
 			{
-				var colorUseCount:int = indexColorsMap.get(c);
+				var obj:Object = orderList[k];
 				
-				if(indexColorsCount < 250 && indexColorsCount >= minUseCount)
+				if(indexColorsCount < 250)// && obj.count >= minUseCount)
 				{
-					indexColors[indexColorsCount] = c;
+					indexColors[k] = obj.color;
 					indexColorsCount++;
 				}
 				else
 				{
-					replaceColors.put(c, colorUseCount);
+					replaceColors.put(obj.color, obj.count);
 				}
 			}
+			
+//			//生成索引颜色列表和需要替换的颜色列表
+//			var useCountList:Array = indexColorsMap.getValues();//使用次数列表
+//			useCountList.sort(Array.NUMERIC);//升序排列使用次数
+//			
+//			var colorsList:Array = indexColorsMap.getKeys();//颜色列表
+//			//var indexColors:Array = [];//索引颜色列表
+//			//var replaceColors:HashMap = new HashMap();//需要替换的颜色列表
+//			for each(var c:uint in colorsList)
+//			{
+//				var colorUseCount:int = indexColorsMap.get(c);
+//				
+//				if(indexColorsCount < 250 && colorUseCount >= minUseCount)
+//				{
+//					indexColors[indexColorsCount] = c;
+//					indexColorsCount++;
+//				}
+//				else
+//				{
+//					replaceColors.put(c, colorUseCount);
+//				}
+//			}
 			
 			//找出替换颜色
 			var replaceColorsList:Array = replaceColors.getKeys();
@@ -254,10 +277,10 @@ package jsion.core.compress
 			bytes.position = 0;
 			
 			//写入文件头
-			bytes.writeBytes(headerBytes);
+			bytes.writeBytes(headerBytes, 0, headerBytes.length);
 			//写入索引颜色数据
-			bytes.writeShort(indexBytes.length);
-			bytes.writeBytes(indexBytes);
+			bytes.writeByte(m_indexColors.length);
+			bytes.writeBytes(indexBytes, 0, indexBytes.length);
 			
 			//写入动作数据
 			bytes.writeByte(actionBytesList.length);//动作数量
@@ -266,7 +289,7 @@ package jsion.core.compress
 				var bas:ByteArray = actionBytesList[j] as ByteArray;
 				bas.position = 0;
 				bytes.writeUnsignedInt(bas.length);
-				bytes.writeBytes(bas);
+				bytes.writeBytes(bas, 0, bas.length);
 			}
 		}
 		
@@ -314,11 +337,14 @@ package jsion.core.compress
 						ba.writeShort(rect.width);
 						ba.writeShort(rect.height);
 						
+						var w1:int = rect.x + rect.width;
+						var h1:int = rect.y + rect.height;
+						
 						var pngBytes:ByteArray = new ByteArray();
 						
-						for(var y:int = rect.y; y < rect.height; y++)
+						for(var y:int = rect.y; y < h1; y++)
 						{
-							for(var x:int = rect.x; x < rect.width; x++)
+							for(var x:int = rect.x; x < w1; x++)
 							{
 								var color:uint = data.bitmapData.getPixel32(x, y);
 								
@@ -401,7 +427,7 @@ package jsion.core.compress
 					}
 					
 					bytes.writeUnsignedInt(ba.length);
-					bytes.writeBytes(ba);
+					bytes.writeBytes(ba, 0, ba.length);
 				}
 			}
 		}
