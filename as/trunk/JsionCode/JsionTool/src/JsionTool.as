@@ -1,5 +1,6 @@
 
 import flash.display.Bitmap;
+import flash.display.BitmapData;
 import flash.display.Loader;
 import flash.events.Event;
 import flash.filesystem.File;
@@ -13,6 +14,7 @@ import jsion.StageRef;
 import jsion.core.compress.PNGCompress;
 import jsion.core.compress.PNGData;
 import jsion.core.compress.PNGUncompress;
+import jsion.core.serialize.res.ResPacker;
 import jsion.tool.MainWindow;
 import jsion.tool.ToolGlobal;
 
@@ -23,11 +25,6 @@ import mx.states.AddChild;
 import org.aswing.AsWingManager;
 
 protected var m_mainWindow:MainWindow;
-
-private var m_compress:PNGCompress;
-private var m_loader:Loader;
-
-private var m_uncompress:PNGUncompress;
 
 private function init(e:FlexEvent):void
 {
@@ -53,8 +50,16 @@ private function init(e:FlexEvent):void
 	
 	//ToolGlobal.setup(this.stage, this.width, this.height);
 	
-//	m_compress = new PNGCompress();
-//	
+	packPng();
+}
+
+private var m_packer:ResPacker;
+private var m_loader:Loader;
+
+private function packPng():void
+{
+	m_packer = new ResPacker();
+	
 	var files:File = new File(File.applicationDirectory.resolvePath("1.png").nativePath);
 	var bytess:ByteArray = new ByteArray();
 	var fss:FileStream = new FileStream();
@@ -65,35 +70,15 @@ private function init(e:FlexEvent):void
 	m_loader = new Loader();
 	m_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, __completeHandler);
 	m_loader.loadBytes(bytess);
-	//AddChild(m_loader);
-	
-	
-	var filess:File = new File(File.applicationDirectory.resolvePath("test.hy").nativePath);
-	var bytesss:ByteArray = new ByteArray();
-	var fsss:FileStream = new FileStream();
-	fsss.open(filess, FileMode.READ);
-	fsss.readBytes(bytesss);
-	fsss.close();
-	
-	m_uncompress = new PNGUncompress(bytesss);
-	
-	image1.addChild(new Bitmap(m_uncompress.getBmd(1, 0, 0)));
 }
 
 private function __completeHandler(e:Event):void
 {
-	var data:PNGData = new PNGData();
+	var bmd:BitmapData = Bitmap(m_loader.content).bitmapData.clone();
 	
-	data.bitmapData = Bitmap(m_loader.content).bitmapData.clone();
-	data.action = 1;
+	m_packer.addImage(bmd, 1, 1);
 	
-	this.image2.addChild(new Bitmap(data.bitmapData));
-	
-	return;
-	
-	m_compress.addPNG(data);
-	
-	var bytes:ByteArray = m_compress.compress();
+	var bytes:ByteArray = m_packer.pack();
 	
 	var f:File = new File(File.applicationDirectory.resolvePath("test.hy").nativePath);
 	

@@ -367,7 +367,7 @@ package jsion.core.compress
 								
 								if(index != -1)
 								{
-									pngBytes.writeByte(index)
+									pngBytes.writeByte(index);
 								}
 								else
 								{
