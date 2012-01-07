@@ -11,8 +11,6 @@ package jsion.rpg.objects
 		
 		protected var m_renderType:int;
 		
-		protected var m_viewObject:ViewObject;
-		
 		protected var m_render:Render2D;
 		
 		public function GameObject()
@@ -25,11 +23,6 @@ package jsion.rpg.objects
 		{
 			m_pos.x = posX;
 			m_pos.y = posY;
-		}
-		
-		public function setViewObject(vo:ViewObject):void
-		{
-			m_viewObject = vo;
 		}
 		
 		public function setRender(r:Render2D):void
@@ -47,16 +40,6 @@ package jsion.rpg.objects
 		public function get y():Number
 		{
 			return m_pos.y;
-		}
-		
-		public function get width():int
-		{
-			return m_viewObject.frameWidth;
-		}
-		
-		public function get height():int
-		{
-			return m_viewObject.frameHeight;
 		}
 		
 		public function get renderType():int
