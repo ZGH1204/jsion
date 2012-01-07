@@ -49,10 +49,10 @@ private function init(e:FlexEvent):void
 	
 	AsWingManager.initAsStandard(this.stage);
 	
-	//ToolGlobal.setup(this.stage, this.width, this.height);
+	ToolGlobal.setup(this.stage, this.width, this.height);
 	
 	//packPng();
-	unpackPng();
+	//unpackPng();
 }
 
 private var m_unpacker:ResUnpacker;
