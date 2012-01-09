@@ -24,6 +24,32 @@ package jsion.core.serialize.res
 			parseBytes(bytes);
 		}
 		
+		public function getTotalFrame(action:int, dir:int):int
+		{
+			var dirMap:HashMap = m_actions.get(action);
+			
+			if(dirMap == null) return 0;
+			
+			var list:Array = dirMap.get(dir);
+			
+			if(list == null) return 0;
+			
+			return list.length;
+		}
+		
+		public function getBitmapDataList(action:int, dir:int, frame:uint):Array
+		{
+			var dirMap:HashMap = m_actions.get(action);
+			
+			if(dirMap == null) return null;
+			
+			var list:Array = dirMap.get(dir);
+			
+			if(list == null) return null;
+			
+			return list;
+		}
+		
 		public function getBitmapData(action:int, dir:int, frame:uint):BitmapData
 		{
 			var dirMap:HashMap = m_actions.get(action);
@@ -36,7 +62,12 @@ package jsion.core.serialize.res
 			
 			if(frame >= list.length) return null;
 			
-			return ResSerializeUtil.bytesTransToImage(list[frame] as ByteArray, m_indexColors, m_width, m_height);
+			if(list[frame] is ByteArray)
+			{
+				return ResSerializeUtil.bytesTransToImage(list[frame] as ByteArray, m_indexColors, m_width, m_height);
+			}
+			
+			return list[frame] as BitmapData;
 		}
 		
 		private function parseBytes(bytes:ByteArray):void
@@ -77,7 +108,9 @@ package jsion.core.serialize.res
 						var bmdBytes:ByteArray = new ByteArray();
 						bytes.readBytes(bmdBytes, 0, bytesLen);//图像压缩后的字节流
 						
-						list.push(bmdBytes);
+						var bmd:BitmapData = ResSerializeUtil.bytesTransToImage(bmdBytes, m_indexColors, m_width, m_height);
+						
+						list.push(bmd);
 					}
 				}
 			}
