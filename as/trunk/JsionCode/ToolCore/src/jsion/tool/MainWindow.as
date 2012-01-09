@@ -69,8 +69,8 @@ package jsion.tool
 			
 			m_content.append(m_topPanel, BorderLayout.NORTH);
 			m_content.append(m_bottomPanel, BorderLayout.SOUTH);
-			m_content.append(m_leftPanel, BorderLayout.WEST);
-			m_content.append(m_rightPanel, BorderLayout.EAST);
+			//m_content.append(m_leftPanel, BorderLayout.WEST);
+			//m_content.append(m_rightPanel, BorderLayout.EAST);
 			m_content.append(m_mainPanel, BorderLayout.CENTER);
 		}
 		
