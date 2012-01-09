@@ -2,6 +2,7 @@ package jsion.tool.menus
 {
 	import jsion.tool.BaseFrame;
 	import jsion.tool.MainWindow;
+	import jsion.tool.pngpacker.PNGPackerFrame;
 	
 	import org.aswing.JMenu;
 	import org.aswing.JMenuBar;
@@ -23,12 +24,12 @@ package jsion.tool.menus
 		
 		private function initialize():void
 		{
-			var file:JMenu = new JMenu("文件(&F)");
+			var file:JMenu = new JMenu("工具(&T)");
 			
 			var item:JMenuItem;
 			
 			
-			item = new JMenuItem("新建..");
+			item = new JMenuItem("资源打包器");
 			item.setPreferredWidth(150);
 			item.addActionListener(onItemClickHandler);
 			file.append(item);
@@ -39,11 +40,7 @@ package jsion.tool.menus
 		
 		private function onItemClickHandler(e:AWEvent):void
 		{
-			var frame:BaseFrame = new BaseFrame(m_owner);
-			
-			frame.setSizeWH(300, 130);
-			
-			frame.show();
+			var frame:BaseFrame = new PNGPackerFrame(m_owner);
 		}
 	}
 }
