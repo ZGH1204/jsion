@@ -31,12 +31,11 @@ package jsion.tool
 		
 		private function __contentResizeHandler(e:ResizedEvent):void
 		{
-			onContentResized();
+			onContentResized(m_content.width, m_content.height);
 		}
 		
-		protected function onContentResized():void
+		protected function onContentResized(w:int, h:int):void
 		{
-			
 		}
 		
 		override public function dispose():void
