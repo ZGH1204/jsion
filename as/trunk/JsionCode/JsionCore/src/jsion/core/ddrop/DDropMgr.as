@@ -378,6 +378,18 @@ package jsion.core.ddrop
 			
 			//回调
 			_dragger.startDragCallback();
+			
+			if(_dragingGroup)
+			{
+				var count:int = _dragingGroup.count;
+				
+				for(var i:int = 0; i < count; i++)
+				{
+					var obj:IDragDrop = _dragingGroup.get(i);
+					
+					if(obj) obj.groupDragCallback(_dragger, _transData);
+				}
+			}
 		}
 		
 		private static function __dragingHandler(e:Event):void
@@ -425,6 +437,19 @@ package jsion.core.ddrop
 			}
 			
 			_dragger.dropCallback();
+			
+			if(_dragingGroup)
+			{
+				var count:int = _dragingGroup.count;
+				
+				for(var i:int = 0; i < count; i++)
+				{
+					var obj:IDragDrop = _dragingGroup.get(i);
+					
+					if(obj) obj.groupDragCallback(_dragger, _transData);
+				}
+			}
+			
 			checkDropHits();
 			stopDraging();
 			removeDragingEvent();
