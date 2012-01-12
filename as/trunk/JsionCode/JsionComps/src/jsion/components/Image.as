@@ -280,8 +280,15 @@ package jsion.components
 			sourceRect = inset.getInsideBounds(sourceBound);
 			targetRect = inset.getInsideBounds(targetBound);
 			DisposeUtil.free(m_bmp1);
-			m_bmp1 = copyScaleBmp(source, sourceRect, targetRect);
-			addChild(m_bmp1);
+//			if(targetRect.width <= 0 || targetRect.height <= 0)
+//			{
+//				m_bmp1 = null;
+//			}
+//			else
+//			{
+				m_bmp1 = copyScaleBmp(source, sourceRect, targetRect);
+				addChild(m_bmp1);
+//			}
 			
 			
 			

@@ -49,17 +49,21 @@ private function init(e:FlexEvent):void
 	
 	AsWingManager.initAsStandard(this.stage);
 	
-	ToolGlobal.setup(this.stage, this.width, this.height);
+	//ToolGlobal.setup(this.stage, this.width, this.height);
 	
 	//packPng();
-	//unpackPng();
+	unpackPng();
 }
 
 private var m_unpacker:ResUnpacker;
 
+private var m_bmp1:Bitmap;
+
+private var m_bmp2:Bitmap;
+
 private function unpackPng():void
 {
-	var f:File = new File(File.applicationDirectory.resolvePath("test.hy").nativePath);
+	var f:File = new File(File.applicationDirectory.resolvePath("ceshi.hy").nativePath);
 	
 	var fs:FileStream = new FileStream();
 	
@@ -71,11 +75,17 @@ private function unpackPng():void
 	
 	m_unpacker = new ResUnpacker(bytes);
 	
-	var bmd:BitmapData = m_unpacker.getBitmapData(1, 1, 0);
+	var bmd:BitmapData = m_unpacker.getBitmapData(1, 4, 0);
 	
-	this.image1.addChild(new Bitmap(bmd));
+	m_bmp1 = new Bitmap(bmd);
+	
+	this.image1.addChild(m_bmp1);
 	
 	
+	m_bmp2 = new Bitmap(bmd);
+	this.image2.addChild(m_bmp2);
+	
+	return;
 	
 	
 	var files:File = new File(File.applicationDirectory.resolvePath("1.png").nativePath);

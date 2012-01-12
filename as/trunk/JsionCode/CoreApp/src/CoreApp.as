@@ -1,7 +1,15 @@
 package
 {
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.net.URLLoader;
+	import flash.net.URLLoaderDataFormat;
+	import flash.net.URLRequest;
+	import flash.system.System;
+	import flash.utils.ByteArray;
 	
 	import jsion.Insets;
 	import jsion.components.Image;
@@ -19,17 +27,65 @@ package
 	import jsion.comps.ASColor;
 	import jsion.comps.events.UIEvent;
 	import jsion.core.ant.generateCompcDemo;
+	import jsion.core.serialize.res.ResUnpacker;
 	
 	[SWF(width="1250", height="650", frameRate="30")]
 	public class CoreApp extends Sprite
 	{
 		private var launcher:Launcher;
 		
+		private var m_bmp1:Bitmap;
+		
+		private var m_bmp2:Bitmap;
+		
+		private var m_unpacker:ResUnpacker;
+		
+		private var m_list:Array;
+		
+		private var m_index:int;
+		
+		private var m_kljkj:Array = [];
+		
+		private function __complete(e:Event):void
+		{
+			var loader:URLLoader = URLLoader(e.currentTarget);
+			
+			var bytes:ByteArray = loader.data as ByteArray;
+			
+			m_unpacker = new ResUnpacker(bytes);
+			
+			m_list = m_unpacker.getBitmapDataList(1, 4, 0);
+			
+			m_bmp1 = new Bitmap(m_list[0]);
+			addChild(m_bmp1);
+			
+			m_bmp2 = new Bitmap(m_list[0]);
+			addChild(m_bmp2);
+			m_bmp2.x = m_bmp2.y = 100;
+		}
+		
+		private function __clickHandler(e:MouseEvent):void
+		{
+			m_index++;
+			
+			if(m_index >= m_list.length) m_index = 0;
+			
+			m_bmp1.bitmapData = m_list[m_index];
+			m_bmp2.bitmapData = m_list[m_index];
+		}
+
 		public function CoreApp()
 		{
-			launcher = new Launcher(stage);
+//			launcher = new Launcher(stage);
+//			
+//			launcher.launch("config.xml");
 			
-			launcher.launch("config.xml");
+			var loader:URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.BINARY;
+			loader.addEventListener(Event.COMPLETE, __complete);
+			loader.load(new URLRequest("ceshi.hy"));
+			
+			stage.addEventListener(MouseEvent.CLICK, __clickHandler);
 			
 //			var slider:Slider = new Slider(Slider.VERTICAL);
 //			
@@ -200,22 +256,22 @@ package
 //			
 //			addChild(combo);
 			
-			var tabPane:JTabPane = new JTabPane();
-			
-			tabPane.addTab(new TabDemo("Tab1", 0x996600));
-			tabPane.addTab(new TabDemo("Tab2", 0x325891));
-			tabPane.addTab(new TabDemo("Tab3", 0xf0a9dd));
-			tabPane.addTab(new TabDemo("Tab4", 0xa5d833));
-			
-			//tabPane.padding = -2;
-			tabPane.btnSpacing = 5;
-			
-			tabPane.width = 680;
-			tabPane.height = 300;
-			
-			tabPane.setActiveTab(0);
-			
-			addChild(tabPane);
+//			var tabPane:JTabPane = new JTabPane();
+//			
+//			tabPane.addTab(new TabDemo("Tab1", 0x996600));
+//			tabPane.addTab(new TabDemo("Tab2", 0x325891));
+//			tabPane.addTab(new TabDemo("Tab3", 0xf0a9dd));
+//			tabPane.addTab(new TabDemo("Tab4", 0xa5d833));
+//			
+//			//tabPane.padding = -2;
+//			tabPane.btnSpacing = 5;
+//			
+//			tabPane.width = 680;
+//			tabPane.height = 300;
+//			
+//			tabPane.setActiveTab(0);
+//			
+//			addChild(tabPane);
 			
 //			var win:JWindow = new JWindow("", this, 0, 50);
 //			
