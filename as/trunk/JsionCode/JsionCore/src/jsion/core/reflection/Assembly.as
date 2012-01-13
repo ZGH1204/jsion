@@ -104,6 +104,24 @@ package jsion.core.reflection
 				if(type && type.interfaces.indexOf(str) != -1)
 					tList.push(type);
 			}
+			
+			return tList;
+		}
+		
+		public function getTypesByMetaData(meta:String):Vector.<Type>
+		{
+			var tList:Vector.<Type> = new Vector.<Type>();
+			
+			for each(var clsPath:String in clsList)
+			{
+				var cls:Class = AppDomainUtil.getClass(clsPath);
+				if(cls == null) continue;
+				var type:Type = ReflectionUtil.parseTypeWithMetaData(describeType(cls));
+				
+				if(type && type.getCustomMetadatas(meta))
+					tList.push(type);
+			}
+			
 			return tList;
 		}
 		
