@@ -87,8 +87,23 @@ package jsion.utils
 			
 			XmlUtil.decodeWithProperty(type, describeTypeXml);
 			
-			type.metadatas = parseMetaDatas(factoryXml);
 			type.interfaces = parseInterfaces(factoryXml);
+			
+			type.analyze();
+			
+			return type;
+		}
+		
+		public static function parseTypeWithMetaData(describeTypeXml:XML):Type
+		{
+			var type:Type = new Type();
+			
+			var factoryXml:XML = describeTypeXml.factory[0];
+			
+			XmlUtil.decodeWithProperty(type, describeTypeXml);
+			
+			type.metadatas = parseMetaDatas(factoryXml);
+			
 			type.analyze();
 			
 			return type;
