@@ -37,7 +37,7 @@ package jsion.core.serialize.res
 			return list.length;
 		}
 		
-		public function getBitmapDataList(action:int, dir:int, frame:uint):Array
+		public function getBitmapDataList(action:int, dir:int):Array
 		{
 			var dirMap:HashMap = m_actions.get(action);
 			
