@@ -54,7 +54,7 @@ package
 			
 			m_unpacker = new ResUnpacker(bytes);
 			
-			m_list = m_unpacker.getBitmapDataList(1, 4, 0);
+			m_list = m_unpacker.getBitmapDataList(1, 4);
 			
 			m_bmp1 = new Bitmap(m_list[0]);
 			addChild(m_bmp1);
