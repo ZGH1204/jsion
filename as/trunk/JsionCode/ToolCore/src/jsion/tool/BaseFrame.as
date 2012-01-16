@@ -1,8 +1,14 @@
 package jsion.tool
 {
+	import flash.events.Event;
+	
 	import org.aswing.Container;
+	import org.aswing.FlowLayout;
+	import org.aswing.JButton;
 	import org.aswing.JFrame;
+	import org.aswing.JPanel;
 	import org.aswing.event.ResizedEvent;
+	import org.aswing.ext.Form;
 	
 	public class BaseFrame extends JFrame
 	{
@@ -11,6 +17,11 @@ package jsion.tool
 		protected var m_title:String;
 		
 		protected var m_content:Container;
+		
+		protected var box:Form;
+		
+		protected var bt_ok:JButton;
+		protected var bt_cancle:JButton;
 		
 		public function BaseFrame(owner:* = null, modal:Boolean = false)
 		{
@@ -36,6 +47,39 @@ package jsion.tool
 		
 		protected function onContentResized(w:int, h:int):void
 		{
+		}
+		
+		protected function buildForm():void
+		{
+			box = new Form();
+			m_content.append(box);
+			
+			box.append(new JPanel());
+		}
+		
+		protected function buildFormButton():void
+		{
+			bt_ok = new JButton('确认');
+			bt_ok.setPreferredWidth(80);
+			bt_cancle = new JButton('取消');
+			bt_cancle.setPreferredWidth(80);
+			
+			bt_cancle.addActionListener(onCancle);
+			bt_ok.addActionListener(onSubmit);
+			
+			var jpanle:JPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 16, 5));
+			jpanle.appendAll(bt_ok, bt_cancle);
+			box.append(jpanle);
+		}
+		
+		protected function onCancle(e:Event):void
+		{
+			closeReleased();
+		}
+		
+		protected function onSubmit(e:Event):void
+		{
+			closeReleased();
 		}
 		
 		override public function dispose():void
