@@ -1,5 +1,7 @@
 package jsion.tool.pngpacker
 {
+	import jsion.tool.pngpacker.frames.AddActionFrame;
+	
 	import org.aswing.FlowLayout;
 	import org.aswing.JButton;
 	import org.aswing.JPanel;
@@ -12,7 +14,7 @@ package jsion.tool.pngpacker
 	{
 		private var m_frame:PNGPackerFrame;
 		
-		private var m_newPackageBtn:JButton;
+		private var m_newActionBtn:JButton;
 		
 		public function ToolBox(frame:PNGPackerFrame)
 		{
@@ -20,15 +22,16 @@ package jsion.tool.pngpacker
 			
 			super(new FlowLayout(FlowLayout.LEFT, 3, 3));
 			
-			m_newPackageBtn = new JButton(null, new LoadIcon("assets/NewPackage.png"));
-			m_newPackageBtn.addActionListener(onNewPackage);
-			m_newPackageBtn.setToolTipText("新建资源包");
-			append(m_newPackageBtn);
+			m_newActionBtn = new JButton("新建动作", new LoadIcon("assets/NewPackage.png"));
+			m_newActionBtn.addActionListener(onNewAction);
+			append(m_newActionBtn);
 		}
 		
-		private function onNewPackage(e:AWEvent):void
+		private function onNewAction(e:AWEvent):void
 		{
+			var frame:AddActionFrame = new AddActionFrame(m_frame);
 			
+			frame.show();
 		}
 	}
 }

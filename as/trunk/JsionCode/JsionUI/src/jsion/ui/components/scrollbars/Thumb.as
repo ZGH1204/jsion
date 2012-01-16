@@ -66,6 +66,14 @@ package jsion.ui.components.scrollbars
 			return this;
 		}
 		
+		public function groupDragCallback(dragger:IDragDrop, data:*):void
+		{
+		}
+		
+		public function groupDropCallback(dragger:IDragDrop, data:*):void
+		{
+		}
+		
 		public function startDragCallback():void
 		{
 		}

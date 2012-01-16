@@ -53,6 +53,14 @@ package jsion.ui.components.containers
 			return m_win;
 		}
 		
+		public function groupDragCallback(dragger:IDragDrop, data:*):void
+		{
+		}
+		
+		public function groupDropCallback(dragger:IDragDrop, data:*):void
+		{
+		}
+		
 //		override public function get x():Number
 //		{
 //			return m_win.x;

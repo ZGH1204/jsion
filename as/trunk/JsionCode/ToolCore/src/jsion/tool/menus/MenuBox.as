@@ -41,6 +41,8 @@ package jsion.tool.menus
 		private function onItemClickHandler(e:AWEvent):void
 		{
 			var frame:BaseFrame = new PNGPackerFrame(m_owner);
+			
+			frame.show();
 		}
 	}
 }
