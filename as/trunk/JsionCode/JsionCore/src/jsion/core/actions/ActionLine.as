@@ -66,8 +66,8 @@ package jsion.core.actions
 		/** @private */
 		protected function __enterFrameHandler(e:Event):void
 		{
-			if(_multiple) executeLine();
-			else executeMulti();
+			if(_multiple) executeMulti();
+			else executeLine();
 		}
 		
 		/** @private */
@@ -108,9 +108,9 @@ package jsion.core.actions
 				
 				if(_queue[i].isFinished)
 				{
-					i--;
 					_queue[i].finish();
 					DisposeUtil.free(_queue.splice(i, 1)[0]);
+					i--;
 				}
 				else
 				{
