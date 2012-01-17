@@ -2,6 +2,7 @@ package jsion.core.loaders
 {
 	import flash.display.Loader;
 	import flash.events.Event;
+	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
 	
 	import jsion.Cache;
@@ -77,7 +78,7 @@ package jsion.core.loaders
 			
 			_imgLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, __completeHandler, false, int.MAX_VALUE);
 			
-			_imgLoader.loadBytes(bytes);
+			_imgLoader.loadBytes(bytes, _context as LoaderContext);
 		}
 		
 		private function __completeHandler(e:Event):void
