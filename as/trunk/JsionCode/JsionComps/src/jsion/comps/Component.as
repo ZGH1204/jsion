@@ -405,12 +405,24 @@ package jsion.comps
 					buttonMode = true;
 					mouseEnabled = true;
 					deactivateMouseTrap();
+					
+					if(m_model.rollOver == false)
+					{
+						dispatchEvent(new MouseEvent(MouseEvent.ROLL_OVER, true, false, m_bitmapForHit.mouseX, m_bitmapForHit.mouseY));
+						dispatchEvent(new MouseEvent(MouseEvent.MOUSE_OVER, true, false, m_bitmapForHit.mouseX, m_bitmapForHit.mouseY));
+					}
 				}
 				else
 				{
 					mouseEnabled = false;
 					
 					buttonMode = false;
+					
+					if(m_model.rollOver)
+					{
+						dispatchEvent(new MouseEvent(MouseEvent.ROLL_OUT, true, false, m_bitmapForHit.mouseX, m_bitmapForHit.mouseY));
+						dispatchEvent(new MouseEvent(MouseEvent.MOUSE_OUT, true, false, m_bitmapForHit.mouseX, m_bitmapForHit.mouseY));
+					}
 				}
 			}
 			
