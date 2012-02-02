@@ -30,6 +30,23 @@ package jsion.core.actions
 		}
 		
 		/**
+		 * 清除所有Action
+		 */		
+		public function clear():void
+		{
+			while(_queue && _queue.length > 0)
+			{
+				var a:Action = _queue.pop() as Action;
+				
+				if(a.prepared == false) a.prepare();
+				
+				a.finish();
+				
+				DisposeUtil.free(a);
+			}
+		}
+		
+		/**
 		 * 添加Action对象
 		 * @param a
 		 */		
@@ -123,10 +140,8 @@ package jsion.core.actions
 		{
 			JUtil.removeEnterFrame(__enterFrameHandler);
 			
-			while(_queue && _queue.length > 0)
-			{
-				_queue.shift();
-			}
+			clear();
+			
 			_queue = null;
 		}
 	}
