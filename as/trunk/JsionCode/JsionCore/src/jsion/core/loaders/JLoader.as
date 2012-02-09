@@ -1115,6 +1115,11 @@ package jsion.core.loaders
 				removeBytesTotalEvent(e.currentTarget as EventDispatcher);
 			}
 			
+			DelayUtil.setDelayApply(fireCompleteEvent, 2);
+		}
+		
+		private function fireCompleteEvent():void
+		{
 			if(_callback != null) _callback(this);
 			
 			dispatchEvent(new JLoaderEvent(JLoaderEvent.Complete));
