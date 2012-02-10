@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllDelegate.cs" />
+    <Compile Include="BufferMgr.cs" />
     <Compile Include="ByteArray.cs" />
     <Compile Include="FSM.cs" />
     <Compile Include="IPacketCryptor.cs" />

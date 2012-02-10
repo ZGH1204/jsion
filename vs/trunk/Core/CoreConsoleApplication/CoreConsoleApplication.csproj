@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeneralTemplate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -52,6 +53,10 @@
       <Project>{CE5B34F6-C947-474D-82F1-B21948C2904D}</Project>
       <Name>Command</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameBase\GameBase.csproj">
+      <Project>{8305358E-10F4-4E5A-921A-0CD0999A4F1A}</Project>
+      <Name>GameBase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JUtils\JUtils.csproj">
       <Project>{95C86590-B6FC-4003-8A56-EEBCCFAA66B3}</Project>
       <Name>JUtils</Name>
@@ -59,6 +64,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Templates.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
