@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4E2E5FF3-A40A-46BA-A213-2D97D927E565}</ProjectGuid>
+    <ProjectGuid>{49D59700-6637-404B-8DE0-F5DE8587AC1B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CenterServer</RootNamespace>
-    <AssemblyName>CenterServer</AssemblyName>
+    <RootNamespace>GameServer</RootNamespace>
+    <AssemblyName>GameServer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -34,8 +34,7 @@
     <Reference Include="AppConfig">
       <HintPath>..\libs\AppConfig.dll</HintPath>
     </Reference>
-    <Reference Include="Command, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Command">
       <HintPath>..\libs\Command.dll</HintPath>
     </Reference>
     <Reference Include="JUtils">
@@ -57,10 +56,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyHelper.cs" />
-    <Compile Include="CenterClient.cs" />
     <Compile Include="Commands\Startups\ListenPortCmd.cs" />
-    <Compile Include="CenterSrv.cs" />
     <Compile Include="Commands\Startups\SearchHandlersCmd.cs" />
+    <Compile Include="GameClient.cs" />
+    <Compile Include="GameSrv.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,7 +68,6 @@
       <Name>GameBase</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

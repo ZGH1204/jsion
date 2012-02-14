@@ -45,6 +45,10 @@ namespace GameBase
             {
                 RootDirectory = new FileInfo(Assembly.GetAssembly(typeof(ServerConfig)).Location).DirectoryName;
             }
+            else
+            {
+                RootDirectory = new FileInfo(Assembly.GetEntryAssembly().Location).DirectoryName;
+            }
 
             Load(typeof(ServerConfig));
         }

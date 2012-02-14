@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Command;
-using log4net;
+using GameBase.Packets;
 using System.Reflection;
-using GameBase;
+using log4net;
 
-namespace CenterServer.Commands.Startups
+namespace GameServer.Commands.Startups
 {
-    [Cmd("Listen", "监听端口", "仅启动时使用")]
-    public class ListenPortCmd : ICommand
+    [Cmd("SearchHandlers", "搜索处理类", "")]
+    public class SearchHandlersCmd : ICommand
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -18,13 +18,16 @@ namespace CenterServer.Commands.Startups
         {
             try
             {
-                CenterSrv.Server.Listen(ServerConfig.Configuration.Port);
+                PacketHandlers.SearchPacketHandler(Assembly.GetAssembly(typeof(AssemblyHelper)));
+
+                return true;
             }
             catch (Exception ex)
             {
-                log.Error(string.Format("监听端口失败! Port:{0}", ServerConfig.Configuration.Port), ex);
+                log.Error("搜索处理类失败!", ex);
             }
-            return true;
+
+            return false;
         }
     }
 }

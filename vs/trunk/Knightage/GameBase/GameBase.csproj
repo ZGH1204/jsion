@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="BufferMgr.cs" />
     <Compile Include="ClientBase.cs" />
+    <Compile Include="ClientMgr.cs" />
     <Compile Include="Commands\Startups\AllocBufferCmd.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Net\GamePacket.cs" />
