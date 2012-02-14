@@ -30,18 +30,24 @@ namespace GameBase.Net
 
         public int Code { get; set; }
 
-        public override int HeaderSize { get { return 6; } }
+        public int Code2 { get; set; }
+
+        public uint PlayerID { get; set; }
+
+        public override int HeaderSize { get { return 14; } }
         public override int PkgLenOffset { get { return 0; } }
 
         public override void ReadHeader()
         {
-            //base.ReadHeader();
-
             Position = 0;
 
             Length = ReadShort();
 
             Code = ReadInt();
+
+            Code2 = ReadInt();
+
+            PlayerID = ReadUnsignedInt();
         }
 
         public override void WriteHeader()
@@ -53,21 +59,17 @@ namespace GameBase.Net
             WriteShort((short)Length);
 
             WriteInt(Code);
+
+            WriteInt(Code2);
+
+            WriteUnsignedInt(PlayerID);
         }
 
         public override void Pack()
         {
-            //base.Pack();
-
             Position = 0;
 
             WriteShort((short)Length);
-        }
-
-        public void ClearContext()
-        {
-            Position = HeaderSize;
-            Length = HeaderSize;
         }
 
         public GamePacket Clone()
@@ -75,8 +77,6 @@ namespace GameBase.Net
             GamePacket packet = new GamePacket(Buffer, Endian);
 
             packet.ReadHeader();
-
-            //packet.Reset();
 
             return packet;
         }
