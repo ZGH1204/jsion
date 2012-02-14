@@ -7,6 +7,7 @@ using log4net;
 using System.Reflection;
 using GameBase.Net;
 using Net;
+using GameBase.Packets;
 
 namespace GameBase
 {
@@ -15,6 +16,8 @@ namespace GameBase
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         protected GameSocket m_socket;
+
+        protected PacketHandlers m_handlers;
 
         public event ReceiveDelegate ReceivedPacket;
 
@@ -43,9 +46,36 @@ namespace GameBase
 
         protected virtual void Initialize()
         {
+            m_handlers = new PacketHandlers(this);
         }
 
         #endregion
+
+        public byte[] sBuffer
+        {
+            get
+            {
+                if (m_socket != null)
+                {
+                    return m_socket.SendBuffer;
+                }
+
+                return null;
+            }
+        }
+
+        public byte[] rBuffer
+        {
+            get
+            {
+                if (m_socket != null)
+                {
+                    return m_socket.ReceiveBuffer;
+                }
+
+                return null;
+            }
+        }
 
         #region Accept Socket
 
@@ -119,10 +149,14 @@ namespace GameBase
 
         protected virtual void OnReceivePacket(GamePacket packet)
         {
+            m_handlers.HandlePacket(packet);
         }
 
         protected virtual void OnDisconnected()
         {
+            BufferMgr.ReleaseBuffer(sBuffer);
+
+            BufferMgr.ReleaseBuffer(rBuffer);
         }
 
         #endregion
