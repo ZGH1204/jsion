@@ -20,7 +20,7 @@ namespace GameBase.Packets
             m_client = client;
         }
 
-        public void HandlePacket(GamePacket packet)
+        public virtual void HandlePacket(GamePacket packet)
         {
             if (packet == null)
             {
@@ -28,8 +28,22 @@ namespace GameBase.Packets
                 return;
             }
 
-            int code = packet.Code;
+            HandlePacketImp(packet.Code, packet);
+        }
 
+        public virtual void HandlePacket2(GamePacket packet)
+        {
+            if (packet == null)
+            {
+                log.Error("Packet is null!");
+                return;
+            }
+
+            HandlePacketImp(packet.Code2, packet);
+        }
+
+        private void HandlePacketImp(int code, GamePacket packet)
+        {
             IPacketHandler handler = null;
 
             if (m_packagesHandlers.ContainsKey(code))

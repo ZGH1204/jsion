@@ -31,6 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AppConfig">
+      <HintPath>..\libs\AppConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="Command, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\Command.dll</HintPath>
+    </Reference>
     <Reference Include="JUtils">
       <HintPath>..\libs\JUtils.dll</HintPath>
     </Reference>
@@ -50,6 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyHelper.cs" />
+    <Compile Include="CenterClient.cs" />
+    <Compile Include="Commands\Startups\ListenPortCmd.cs" />
+    <Compile Include="CnterSrv.cs" />
+    <Compile Include="Commands\Startups\SearchHandlersCmd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +69,7 @@
       <Name>GameBase</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
