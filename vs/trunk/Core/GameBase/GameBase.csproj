@@ -58,6 +58,10 @@
     <Compile Include="TemplateMgr.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Command\Command.csproj">
+      <Project>{CE5B34F6-C947-474D-82F1-B21948C2904D}</Project>
+      <Name>Command</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JUtils\JUtils.csproj">
       <Project>{95C86590-B6FC-4003-8A56-EEBCCFAA66B3}</Project>
       <Name>JUtils</Name>

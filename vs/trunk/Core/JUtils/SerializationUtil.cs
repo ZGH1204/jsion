@@ -3,6 +3,8 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Text;
+using log4net;
+using System.Reflection;
 
 namespace JUtils
 {
@@ -11,6 +13,8 @@ namespace JUtils
     /// </summary>
     public class SerializationUtil
     {
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// 泛型方法将指定对象序列化保存到文件中
         /// </summary>
@@ -32,10 +36,16 @@ namespace JUtils
                 try
                 {
                     xs.Serialize(ms, obj);
+
+                    byte[] bytes = ms.ToArray();
+
+                    fs.Write(bytes, 0, bytes.Length);
+
+                    fs.Flush();
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    log.Error("序列化失败!", ex);
                 }
             }
         }
@@ -64,6 +74,8 @@ namespace JUtils
                     }
                     catch (Exception ex)
                     {
+                        log.Error("反序列化失败!", ex);
+
                         return default(T);
                     }
                 }
