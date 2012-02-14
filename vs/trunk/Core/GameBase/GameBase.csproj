@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="BufferMgr.cs" />
     <Compile Include="ClientBase.cs" />
+    <Compile Include="ClientMgr.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Net\GameSocket.cs" />
     <Compile Include="Net\GamePacket.cs" />
