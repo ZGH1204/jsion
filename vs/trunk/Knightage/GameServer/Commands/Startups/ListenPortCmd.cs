@@ -7,7 +7,7 @@ using log4net;
 using System.Reflection;
 using GameBase;
 
-namespace CenterServer.Commands.Startups
+namespace GameServer.Commands.Startups
 {
     [Cmd("Listen", "监听端口", "仅启动时使用")]
     public class ListenPortCmd : ICommand
@@ -18,7 +18,7 @@ namespace CenterServer.Commands.Startups
         {
             try
             {
-                CenterSrv.Server.Listen(ServerConfig.Configuration.Port);
+                GameSrv.Server.Listen(ServerConfig.Configuration.Port);
             }
             catch (Exception ex)
             {
