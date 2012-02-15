@@ -36,6 +36,12 @@ namespace GameBase
         [AppConfig("TemplateFile", "模板文件", "templates.xml")]
         public string TemplateFile;
 
+        [AppConfig("CenterServer", "中心服务器IP", "127.0.0.1")]
+        public string CenterServer;
+
+        [AppConfig("CenterPort", "中心服务器端口", "8000")]
+        public string CenterPort;
+
         [AppConfig("StartupCmds", "启动依次执行的命令列表", "")]
         public string StartupCmds;
 
