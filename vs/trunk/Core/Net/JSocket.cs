@@ -138,6 +138,8 @@ namespace Net
         {
             if (ConnectedSuccess == null) return;
             ConnectedSuccess(this);
+
+            m_reader.AsyncReceive();
         }
 
         internal void ConnectedFailded()

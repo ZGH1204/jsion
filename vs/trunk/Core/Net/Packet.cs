@@ -36,6 +36,12 @@ namespace Net
 
         #region 数据包函数
 
+        public void ClearContext()
+        {
+            Position = HeaderSize;
+            Length = HeaderSize;
+        }
+
         internal bool Writed { get; set; }
 
         public virtual void ReadHeader()
