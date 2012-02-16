@@ -5,6 +5,7 @@ using System.Text;
 using log4net;
 using System.Reflection;
 using System.Collections.Specialized;
+using GameBase.Net;
 
 namespace GameBase.Managers
 {
@@ -17,6 +18,42 @@ namespace GameBase.Managers
         private readonly HybridDictionary m_connected = new HybridDictionary();
 
         private readonly HybridDictionary m_connecting = new HybridDictionary();
+
+        private int m_index = -1;
+
+        public void SendToServer(GamePacket pkg)
+        {
+            if (m_servers.Count > 0)
+            {
+                m_index++;
+
+                if (m_index >= m_servers.Count)
+                {
+                    m_index = 0;
+                }
+
+                m_servers[m_index].SendTCP(pkg);
+            }
+        }
+
+        public void SendToAllServer(GamePacket pkg)
+        {
+            foreach (ServerConnector connector in m_servers)
+            {
+                connector.SendTCP(pkg);
+            }
+        }
+
+        public void SendToAllServer(GamePacket pkg, ServerConnector except)
+        {
+            foreach (ServerConnector connector in m_servers)
+            {
+                if (connector != except)
+                {
+                    connector.SendTCP(pkg);
+                }
+            }
+        }
 
         public void AddConnector(ServerConnector connector)
         {

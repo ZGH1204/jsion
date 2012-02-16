@@ -162,5 +162,14 @@ namespace GameBase
         }
 
         #endregion
+
+        #region 发送数据
+
+        public void SendTCP(GamePacket pkg)
+        {
+            m_socket.SendPacket(pkg);
+        }
+
+        #endregion
     }
 }
