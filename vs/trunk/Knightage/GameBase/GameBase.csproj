@@ -62,6 +62,8 @@
     <Compile Include="Managers\ClientMgr.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Managers\ServerMgr.cs" />
+    <Compile Include="Net\BattlePacket.cs" />
+    <Compile Include="Net\CenterPacket.cs" />
     <Compile Include="Net\GamePacket.cs" />
     <Compile Include="Net\GameSocket.cs" />
     <Compile Include="Packets\IPacketHandler.cs" />
