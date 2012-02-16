@@ -28,6 +28,8 @@ namespace GameBase.Net
 
         #endregion
 
+        #region 协议数据结构
+
         public int Code { get; set; }
 
         public int Code2 { get; set; }
@@ -72,6 +74,12 @@ namespace GameBase.Net
             WriteShort((short)Length);
         }
 
+        #endregion
+
+        /// <summary>
+        /// 复制一个数据包,使用同一个字节流.
+        /// </summary>
+        /// <returns></returns>
         public GamePacket Clone()
         {
             GamePacket packet = new GamePacket(Buffer, Endian);
