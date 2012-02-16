@@ -25,13 +25,13 @@ namespace GameBase
         }
 
         public ServerBase(int port)
-            : base()
+            : this()
         {
             Listen(port);
         }
 
         public ServerBase(string ip, int port)
-            : base()
+            : this()
         {
             Connect(ip, port);
         }
