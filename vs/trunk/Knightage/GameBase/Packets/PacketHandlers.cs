@@ -28,7 +28,25 @@ namespace GameBase.Packets
                 return;
             }
 
-            HandlePacketImp(packet.Code, packet);
+            if (packet.Code2 == 0)
+            {
+                HandlePacketImp(packet.Code, packet);
+            }
+            else
+            {
+                HandlePacketImp(packet.Code2, packet);
+            }
+
+            //switch (packet.Code2)
+            //{
+            //    case (int)BasePacketCode.Center_Code:
+            //    case (int)BasePacketCode.Battle_Code:
+            //        HandlePacketImp(packet.Code2, packet);
+            //        break;
+            //    default:
+            //        HandlePacketImp(packet.Code, packet);
+            //        break;
+            //}
         }
 
         //public virtual void HandlePacket2(GamePacket packet)
