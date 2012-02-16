@@ -18,18 +18,17 @@ namespace CenterServerApp
 
         static void Main(string[] args)
         {
-            Console.Title = ServerConfig.Configuration.ServerName;
+            Console.Title = CenterServerConfig.Configuration.ServerName;
 
             ResourceUtil.ExtractResourceSafe("LogConfig.xml", "LogConfig.xml", Assembly.GetAssembly(typeof(ResourceUtil)));
 
             //ServerUtil.DisabledCloseBtn();
 
-            CommandMgr.Instance.SearchCommand(Assembly.GetAssembly(typeof(ServerBase)));
-            CommandMgr.Instance.CombinCommand(Assembly.GetAssembly(typeof(AssemblyHelper)), false);
+            CommandMgr.Instance.SearchCommand(Assembly.GetAssembly(typeof(AssemblyHelper)));
 
             log.Info("指令系统初始化成功!!!");
 
-            string[] list = ServerConfig.Configuration.StartupCmds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] list = CenterServerConfig.Configuration.StartupCmds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
 
             foreach (string cmd in list)
@@ -47,7 +46,7 @@ namespace CenterServerApp
 
             Console.WriteLine("服务器启动成功!!!\r\n");
 
-            ServerUtil.WaitingCmd(ServerConfig.Configuration.ServerName);
+            ServerUtil.WaitingCmd(CenterServerConfig.Configuration.ServerName);
         }
 
         static void ServerUtil_ReceiveCmdEvent(string cmd)

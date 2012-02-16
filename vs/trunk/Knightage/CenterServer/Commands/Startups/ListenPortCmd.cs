@@ -18,11 +18,11 @@ namespace CenterServer.Commands.Startups
         {
             try
             {
-                CenterSrv.Server.Listen(ServerConfig.Configuration.Port);
+                CenterSrv.Server.Listen(CenterServerConfig.Configuration.Port);
             }
             catch (Exception ex)
             {
-                log.Error(string.Format("监听端口失败! Port:{0}", ServerConfig.Configuration.Port), ex);
+                log.Error(string.Format("监听端口失败! Port:{0}", CenterServerConfig.Configuration.Port), ex);
             }
             return true;
         }

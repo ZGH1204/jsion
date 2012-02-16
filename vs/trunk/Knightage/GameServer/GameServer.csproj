@@ -56,9 +56,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyHelper.cs" />
+    <Compile Include="Commands\Startups\AllocBufferCmd.cs" />
     <Compile Include="Commands\Startups\ListenPortCmd.cs" />
     <Compile Include="Commands\Startups\SearchHandlersCmd.cs" />
     <Compile Include="GameClient.cs" />
+    <Compile Include="GameServerConfig.cs" />
     <Compile Include="GameSrv.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

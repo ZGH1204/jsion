@@ -18,11 +18,11 @@ namespace GameServer.Commands.Startups
         {
             try
             {
-                GameSrv.Server.Listen(ServerConfig.Configuration.Port);
+                GameSrv.Server.Listen(GameServerConfig.Configuration.Port);
             }
             catch (Exception ex)
             {
-                log.Error(string.Format("监听端口失败! Port:{0}", ServerConfig.Configuration.Port), ex);
+                log.Error(string.Format("监听端口失败! Port:{0}", GameServerConfig.Configuration.Port), ex);
             }
             return true;
         }

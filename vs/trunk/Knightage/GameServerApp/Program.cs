@@ -18,18 +18,17 @@ namespace GameServerApp
 
         static void Main(string[] args)
         {
-            Console.Title = ServerConfig.Configuration.ServerName;
+            Console.Title = GameServerConfig.Configuration.ServerName;
 
             ResourceUtil.ExtractResourceSafe("LogConfig.xml", "LogConfig.xml", Assembly.GetAssembly(typeof(ResourceUtil)));
 
             //ServerUtil.DisabledCloseBtn();
 
-            CommandMgr.Instance.SearchCommand(Assembly.GetAssembly(typeof(ServerBase)));
-            CommandMgr.Instance.CombinCommand(Assembly.GetAssembly(typeof(AssemblyHelper)), false);
+            CommandMgr.Instance.SearchCommand(Assembly.GetAssembly(typeof(AssemblyHelper)));
 
             log.Info("指令系统初始化成功!!!");
 
-            string[] list = ServerConfig.Configuration.StartupCmds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] list = GameServerConfig.Configuration.StartupCmds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
 
             foreach (string cmd in list)
@@ -47,7 +46,7 @@ namespace GameServerApp
 
             Console.WriteLine("服务器启动成功!!!\r\n");
 
-            ServerUtil.WaitingCmd(ServerConfig.Configuration.ServerName);
+            ServerUtil.WaitingCmd(GameServerConfig.Configuration.ServerName);
         }
 
         static void ServerUtil_ReceiveCmdEvent(string cmd)
