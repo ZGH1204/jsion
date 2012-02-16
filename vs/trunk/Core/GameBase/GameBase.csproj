@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Managers\BufferMgr.cs" />
     <Compile Include="ClientBase.cs" />
     <Compile Include="Managers\ClientMgr.cs" />
     <Compile Include="Delegates.cs" />
