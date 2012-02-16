@@ -31,16 +31,16 @@ namespace GameBase.Packets
             HandlePacketImp(packet.Code, packet);
         }
 
-        public virtual void HandlePacket2(GamePacket packet)
-        {
-            if (packet == null)
-            {
-                log.Error("Packet is null!");
-                return;
-            }
+        //public virtual void HandlePacket2(GamePacket packet)
+        //{
+        //    if (packet == null)
+        //    {
+        //        log.Error("Packet is null!");
+        //        return;
+        //    }
 
-            HandlePacketImp(packet.Code2, packet);
-        }
+        //    HandlePacketImp(packet.Code2, packet);
+        //}
 
         private void HandlePacketImp(int code, GamePacket packet)
         {
