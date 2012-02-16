@@ -44,7 +44,7 @@ namespace CenterServerApp
 
             Thread.Sleep(3000);
 
-            Console.WriteLine("服务器启动成功!!!\r\n");
+            Console.WriteLine("{0}启动成功!!!\r\n", CenterServerConfig.Configuration.ServerName);
 
             ServerUtil.WaitingCmd(CenterServerConfig.Configuration.ServerName);
         }

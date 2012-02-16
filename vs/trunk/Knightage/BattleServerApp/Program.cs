@@ -43,7 +43,7 @@ namespace BattleServerApp
 
             Thread.Sleep(3000);
 
-            Console.WriteLine("服务器启动成功!!!\r\n");
+            Console.WriteLine("{0}启动成功!!!\r\n", BattleServerConfig.Configuration.ServerName);
 
             ServerUtil.WaitingCmd(BattleServerConfig.Configuration.ServerName);
         }
