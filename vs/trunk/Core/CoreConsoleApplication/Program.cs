@@ -6,6 +6,7 @@ using Command;
 using System.Reflection;
 using JUtils;
 using GameBase;
+using GameBase.Managers;
 
 namespace CoreConsoleApplication
 {

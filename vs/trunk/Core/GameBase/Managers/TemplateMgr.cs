@@ -9,7 +9,7 @@ using JUtils;
 using log4net;
 using System.Reflection;
 
-namespace GameBase
+namespace GameBase.Managers
 {
     public class TemplateMgr<T> where T:Template
     {
