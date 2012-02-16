@@ -14,10 +14,5 @@ namespace CenterServer
         public CenterClient()
             : base()
         { }
-
-        protected override void OnReceivePacket(GamePacket packet)
-        {
-            m_handlers.HandlePacket2(packet);
-        }
     }
 }
