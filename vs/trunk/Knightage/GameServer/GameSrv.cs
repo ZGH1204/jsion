@@ -22,19 +22,8 @@ namespace GameServer
             return client;
         }
 
-        private static GameSrv m_server;
+        private static readonly GameSrv m_server = new GameSrv();
 
-        public static GameSrv Server
-        {
-            get
-            {
-                if (m_server == null)
-                {
-                    m_server = new GameSrv();
-                }
-
-                return m_server;
-            }
-        }
+        public static GameSrv Server { get { return m_server; } }
     }
 }

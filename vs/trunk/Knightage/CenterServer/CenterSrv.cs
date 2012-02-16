@@ -22,19 +22,8 @@ namespace CenterServer
             return client;
         }
 
-        private static CenterSrv m_server;
+        private static readonly CenterSrv m_server = new CenterSrv();
 
-        public static CenterSrv Server
-        {
-            get
-            {
-                if (m_server == null)
-                {
-                    m_server = new CenterSrv();
-                }
-
-                return m_server;
-            }
-        }
+        public static CenterSrv Server { get { return m_server; } }
     }
 }
