@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using Net;
 using log4net;
 using System.Reflection;
+using GameBase.Managers;
 
 namespace GameBase
 {
@@ -109,7 +110,7 @@ namespace GameBase
 
         protected virtual void SaveClient(ClientBase client)
         {
-            ClientMgr.AddClient(client);
+            ClientMgr.Instance.AddClient(client);
         }
 
         protected virtual void ReceivePacket(GamePacket packet)
@@ -158,6 +159,15 @@ namespace GameBase
             {
                 m_socket.Connect(ip, port);
             }
+        }
+
+        #endregion
+
+        #region 发送数据
+
+        public void SendTCP(GamePacket pkg)
+        {
+            m_socket.SendPacket(pkg);
         }
 
         #endregion

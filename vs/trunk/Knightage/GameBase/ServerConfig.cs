@@ -8,15 +8,15 @@ using System.IO;
 
 namespace GameBase
 {
-    public class ServerConfig : AppConfigAbstract
+    public abstract class ServerConfig : AppConfigAbstract
     {
-        public static ServerConfig Configuration { get; protected set; }
+        //public static ServerConfig Configuration { get; protected set; }
 
-        static ServerConfig()
-        {
-            Configuration = new ServerConfig();
-            Configuration.Load();
-        }
+        //static ServerConfig()
+        //{
+        //    Configuration = new ServerConfig();
+        //    Configuration.Load();
+        //}
 
         [AppConfig("ServerName", "服务器名称", "未配置")]
         public string ServerName;
@@ -36,12 +36,6 @@ namespace GameBase
         [AppConfig("TemplateFile", "模板文件", "templates.xml")]
         public string TemplateFile;
 
-        [AppConfig("CenterServer", "中心服务器IP", "127.0.0.1")]
-        public string CenterServer;
-
-        [AppConfig("CenterPort", "中心服务器端口", "8000")]
-        public string CenterPort;
-
         [AppConfig("StartupCmds", "启动依次执行的命令列表", "")]
         public string StartupCmds;
 
@@ -56,7 +50,7 @@ namespace GameBase
                 RootDirectory = new FileInfo(Assembly.GetEntryAssembly().Location).DirectoryName;
             }
 
-            Load(typeof(ServerConfig));
+            Load(this.GetType());
         }
 
         public string RootDirectory { get; set; }

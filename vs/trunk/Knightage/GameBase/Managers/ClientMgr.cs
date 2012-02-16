@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Collections.Specialized;
 
-namespace GameBase
+namespace GameBase.Managers
 {
     public class ClientMgr
     {
-        private static readonly HybridDictionary m_clients = new HybridDictionary();
+        private readonly HybridDictionary m_clients = new HybridDictionary();
 
-        public static void AddClient(ClientBase client)
+        public void AddClient(ClientBase client)
         {
             lock (m_clients.SyncRoot)
             {
@@ -22,12 +22,12 @@ namespace GameBase
             }
         }
 
-        static void client_Disconnected(ClientBase client)
+        void client_Disconnected(ClientBase client)
         {
             RemoveClient(client);
         }
 
-        public static void RemoveClient(ClientBase client)
+        public void RemoveClient(ClientBase client)
         {
             lock (m_clients.SyncRoot)
             {
@@ -38,7 +38,7 @@ namespace GameBase
             }
         }
 
-        public static ClientBase[] GetAllClients()
+        public ClientBase[] GetAllClients()
         {
             ClientBase[] list;
 
@@ -52,6 +52,11 @@ namespace GameBase
             return list;
         }
 
-        public static int ClientCount { get { return m_clients.Count; } }
+        public int ClientCount { get { return m_clients.Count; } }
+
+
+        private static readonly ClientMgr m_instance = new ClientMgr();
+
+        public static ClientMgr Instance { get { return m_instance; } }
     }
 }
