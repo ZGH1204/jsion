@@ -43,9 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BufferMgr.cs" />
+    <Compile Include="Managers\BufferMgr.cs" />
     <Compile Include="ClientBase.cs" />
-    <Compile Include="ClientMgr.cs" />
+    <Compile Include="Managers\ClientMgr.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Net\GameSocket.cs" />
     <Compile Include="Net\GamePacket.cs" />
@@ -57,7 +57,7 @@
     <Compile Include="ServerBase.cs" />
     <Compile Include="ServerConnector.cs" />
     <Compile Include="Template.cs" />
-    <Compile Include="TemplateMgr.cs" />
+    <Compile Include="Managers\TemplateMgr.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Command\Command.csproj">

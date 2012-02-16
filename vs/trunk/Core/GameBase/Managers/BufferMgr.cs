@@ -6,7 +6,7 @@ using System.Collections;
 using System.Reflection;
 using log4net;
 
-namespace GameBase
+namespace GameBase.Managers
 {
     public class BufferMgr
     {
