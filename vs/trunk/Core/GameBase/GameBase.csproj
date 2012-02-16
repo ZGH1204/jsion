@@ -55,11 +55,16 @@
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerBase.cs" />
+    <Compile Include="ServerConfig.cs" />
     <Compile Include="ServerConnector.cs" />
     <Compile Include="Template.cs" />
     <Compile Include="Managers\TemplateMgr.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppConfig\AppConfig.csproj">
+      <Project>{39FA5298-9323-4D9D-96BF-20B796FA499B}</Project>
+      <Name>AppConfig</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Command\Command.csproj">
       <Project>{CE5B34F6-C947-474D-82F1-B21948C2904D}</Project>
       <Name>Command</Name>
