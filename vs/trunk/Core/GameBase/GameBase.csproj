@@ -46,6 +46,7 @@
     <Compile Include="ClientBase.cs" />
     <Compile Include="Managers\ClientMgr.cs" />
     <Compile Include="Delegates.cs" />
+    <Compile Include="Managers\ServerMgr.cs" />
     <Compile Include="Net\GameSocket.cs" />
     <Compile Include="Net\GamePacket.cs" />
     <Compile Include="Packets\IPacketHandler.cs" />

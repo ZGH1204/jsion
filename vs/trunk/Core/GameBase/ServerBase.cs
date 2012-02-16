@@ -110,7 +110,7 @@ namespace GameBase
 
         protected virtual void SaveClient(ClientBase client)
         {
-            ClientMgr.AddClient(client);
+            ClientMgr.Instance.AddClient(client);
         }
 
         protected virtual void ReceivePacket(GamePacket packet)
