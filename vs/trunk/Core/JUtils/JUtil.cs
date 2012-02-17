@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Net;
+using System.Net.Sockets;
 
 namespace JUtils
 {
@@ -198,6 +200,54 @@ namespace JUtils
         public static string AddedTime(uint seconds)
         {
             return DateTime.Now.AddSeconds(seconds).ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
+        /// <summary>
+        /// 获取本地IPv4地址
+        /// </summary>
+        /// <returns></returns>
+        public static string GetLocalIP()
+        {
+            IPHostEntry entry = Dns.GetHostEntry(Dns.GetHostName());
+
+            string ip = null;
+
+            IPAddress[] list = entry.AddressList;
+
+            foreach (IPAddress address in list)
+            {
+                if (address.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    ip = address.ToString();
+                    break;
+                }
+            }
+
+            return ip;
+        }
+
+        /// <summary>
+        /// 获取本地IPv6地址
+        /// </summary>
+        /// <returns></returns>
+        public static string GetLocalIPv6()
+        {
+            IPHostEntry entry = Dns.GetHostEntry(Dns.GetHostName());
+
+            string ip = null;
+
+            IPAddress[] list = entry.AddressList;
+
+            foreach (IPAddress address in list)
+            {
+                if (address.AddressFamily == AddressFamily.InterNetworkV6)
+                {
+                    ip = address.ToString();
+                    break;
+                }
+            }
+
+            return ip;
         }
     }
 }
