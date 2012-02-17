@@ -55,6 +55,13 @@ namespace GameBase.Managers
             }
         }
 
+        public bool Contains(string ip, int port)
+        {
+            string str = ip + ":" + port.ToString();
+
+            return m_connected.Contains(str);
+        }
+
         public void AddConnector(ServerConnector connector)
         {
             if (m_connected.Contains(connector.RemoteEndPoint)) return;
