@@ -42,7 +42,7 @@ namespace Net
             Length = HeaderSize;
         }
 
-        internal bool Writed { get; set; }
+        public bool Writed { get; protected set; }
 
         public virtual void ReadHeader()
         { }
