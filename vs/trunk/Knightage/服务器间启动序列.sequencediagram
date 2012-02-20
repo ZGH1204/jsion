@@ -1,0 +1,755 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" dslVersion="1.0.0.0" Id="b01208c3-0411-4d08-a34c-0c1d2eaba79d" name="服务器间启动序列" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
+  <packagedElements>
+    <packageHasNamedElement>
+      <interaction Id="c7a0f505-6eda-4e42-b867-2a49639f6ca8" name="服务器间启动序列" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
+        <fragments>
+          <interactionUse Id="bb507930-e5ad-4b1d-a1b7-379fe949d60c" name="游戏服务器启动时交互序列">
+            <coveredLifelines>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </coveredLifelines>
+            <interactionUseOccurrenceSpecifications>
+              <interactionUseOccurrenceSpecificationMoniker Id="42e81d2a-ec92-43c9-8924-0d1b1c243269" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="ebedba6a-b3b4-4af4-b897-db6cf766c460" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="3f372481-2977-4299-87c3-193b3f185673" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="8c95812a-070d-4892-8e02-f8938cde2b73" LastKnownName="InteractionUseOccurrenceSpecification" />
+            </interactionUseOccurrenceSpecifications>
+          </interactionUse>
+          <interactionUseOccurrenceSpecification Id="42e81d2a-ec92-43c9-8924-0d1b1c243269" name="InteractionUseOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+            </covered>
+          </interactionUseOccurrenceSpecification>
+          <interactionUseOccurrenceSpecification Id="ebedba6a-b3b4-4af4-b897-db6cf766c460" name="InteractionUseOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+            </covered>
+          </interactionUseOccurrenceSpecification>
+          <interactionUseOccurrenceSpecification Id="8c95812a-070d-4892-8e02-f8938cde2b73" name="InteractionUseOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </interactionUseOccurrenceSpecification>
+          <interactionUseOccurrenceSpecification Id="3f372481-2977-4299-87c3-193b3f185673" name="InteractionUseOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </interactionUseOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="2f19cfb9-1245-4fbc-94db-bece3fbeeac7" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="d9976b18-60ae-4f8b-8aa1-fed8d8f6754b" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="13a9582a-61fe-4666-9ab2-b14ecb190837" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="2958a935-31b7-4246-b223-d978505e7223" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="bafabd7d-d404-4366-9927-c65c802999fa" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="13a9582a-61fe-4666-9ab2-b14ecb190837" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="88ec267b-aecc-420d-b1c5-38be70f6df95" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="2958a935-31b7-4246-b223-d978505e7223" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="db551669-0e94-497f-96ff-5f93eec52bd9" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="fd2a147e-45bb-4160-9b8d-bb98976e7e09" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="3ca6a6ea-c70a-4b07-9157-bd4448f3e18d" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="b681c07f-91e0-4fda-b628-281647de1cfe" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="813fed92-7b0d-42ac-a83d-edbb8c964aaf" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="b5091f80-63d4-4e03-a06e-8fd70e393908" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="b681c07f-91e0-4fda-b628-281647de1cfe" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="43fef75d-3872-4031-b0a0-fa468dd13916" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="813fed92-7b0d-42ac-a83d-edbb8c964aaf" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="bafabd7d-d404-4366-9927-c65c802999fa" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="d9976b18-60ae-4f8b-8aa1-fed8d8f6754b" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="c8a3c161-e8fd-458d-ada1-b062f3e57588" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="e4060cef-1a85-4247-8eea-f1eed241024c" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="7956aaab-f19d-496e-b2a0-0aaae7621511" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="2e985c4c-5b33-408e-969f-81ad2c253161" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="822f1d73-d44e-429f-b9e5-544189e8f538" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="2e985c4c-5b33-408e-969f-81ad2c253161" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="d1b27c04-3d46-4195-8c09-c9d9f3ad61ee" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="b5091f80-63d4-4e03-a06e-8fd70e393908" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="822f1d73-d44e-429f-b9e5-544189e8f538" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="3ca6a6ea-c70a-4b07-9157-bd4448f3e18d" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="22326ade-44c1-4a04-bf97-51aff7f98c4e" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="7956aaab-f19d-496e-b2a0-0aaae7621511" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="da887cea-da98-4b90-9158-b0c2c76ceec2" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <interactionUse Id="781137d6-fe19-4126-a196-4915043b451a" name="战斗服务器启动时的交互序列">
+            <coveredLifelines>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </coveredLifelines>
+            <interactionUseOccurrenceSpecifications>
+              <interactionUseOccurrenceSpecificationMoniker Id="7b32628c-ee4c-41ab-836f-75a89af6dd82" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="fff40843-0a9a-4fa9-8900-262edd65c5cc" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="3b85d358-ecf5-4b55-829f-f5ae8d6a0deb" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="cb7b80e1-1ea3-41f1-b56d-26475be48cfd" LastKnownName="InteractionUseOccurrenceSpecification" />
+            </interactionUseOccurrenceSpecifications>
+          </interactionUse>
+          <interactionUseOccurrenceSpecification Id="3b85d358-ecf5-4b55-829f-f5ae8d6a0deb" name="InteractionUseOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </interactionUseOccurrenceSpecification>
+          <interactionUseOccurrenceSpecification Id="fff40843-0a9a-4fa9-8900-262edd65c5cc" name="InteractionUseOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+            </covered>
+          </interactionUseOccurrenceSpecification>
+          <interactionUseOccurrenceSpecification Id="cb7b80e1-1ea3-41f1-b56d-26475be48cfd" name="InteractionUseOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </interactionUseOccurrenceSpecification>
+          <interactionUseOccurrenceSpecification Id="7b32628c-ee4c-41ab-836f-75a89af6dd82" name="InteractionUseOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+            </covered>
+          </interactionUseOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="0386311f-a08c-477f-8aaf-183a53c7ba64" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="ba68714e-f1d9-4bcb-852b-211c337914e1" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="41bd85cb-f1db-47f2-a982-d786f7824509" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="3b2d6a0c-bf68-4fc7-b63e-b2f055c3e8d1" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="5436f9b0-bc8b-4cc9-90d0-e268a655bd72" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="41bd85cb-f1db-47f2-a982-d786f7824509" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="80296e86-7eba-454e-bfa1-61d78cbe8a1d" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="b1ab521c-58df-4435-a999-8445b15b7aee" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="3b2d6a0c-bf68-4fc7-b63e-b2f055c3e8d1" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="32b3309d-6abb-42bf-a7ea-9d88d13579df" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="2be7ca28-14f8-4161-89b1-2802069b7b0e" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="f0ff7bb1-3879-49b6-bacd-5462726d9d68" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="2c52db38-0d93-40bb-8967-3467dd971564" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="7349ad2b-f1f5-4809-909a-2cf2c4206aa2" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="f0ff7bb1-3879-49b6-bacd-5462726d9d68" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="26c87d38-182a-41b8-954c-1505460eac0a" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="2c52db38-0d93-40bb-8967-3467dd971564" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="5436f9b0-bc8b-4cc9-90d0-e268a655bd72" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="ba68714e-f1d9-4bcb-852b-211c337914e1" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="71a666b0-12e4-4cfc-a34a-8dfaf8418844" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="a8d13466-9e9e-4e9b-8c54-42af3b2f65bf" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="24770774-2618-421a-95bb-58807c2015eb" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="a54ba99d-f799-48e4-8b02-e413656f5c38" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="04c2ff4b-c0d9-4151-8047-076086b51b87" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="a54ba99d-f799-48e4-8b02-e413656f5c38" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="b10b3583-6e88-406f-8715-317fb84db8c7" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="04c2ff4b-c0d9-4151-8047-076086b51b87" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="7349ad2b-f1f5-4809-909a-2cf2c4206aa2" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="2be7ca28-14f8-4161-89b1-2802069b7b0e" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="6d75de88-76af-41e2-bf94-98b5903549b8" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="24770774-2618-421a-95bb-58807c2015eb" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="d626cc57-5bba-414e-951a-59a8349126b9" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <interactionUse Id="80bff9ba-5a9d-4f42-a89d-1ab84b241d33" name="网关服务器启动时交互序列">
+            <coveredLifelines>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </coveredLifelines>
+            <interactionUseOccurrenceSpecifications>
+              <interactionUseOccurrenceSpecificationMoniker Id="f5167920-2519-4207-ba86-72feaa344ef8" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="3f8c5cd6-d862-40ca-9638-7d8a2f021a6e" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="c4a47d7a-9be9-4b2d-a180-96eba656c66b" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="34860b5f-26df-4fa6-9760-ea54a1e16a5b" LastKnownName="InteractionUseOccurrenceSpecification" />
+            </interactionUseOccurrenceSpecifications>
+          </interactionUse>
+          <interactionUseOccurrenceSpecification Id="34860b5f-26df-4fa6-9760-ea54a1e16a5b" name="InteractionUseOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </interactionUseOccurrenceSpecification>
+          <interactionUseOccurrenceSpecification Id="3f8c5cd6-d862-40ca-9638-7d8a2f021a6e" name="InteractionUseOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+            </covered>
+          </interactionUseOccurrenceSpecification>
+          <interactionUseOccurrenceSpecification Id="f5167920-2519-4207-ba86-72feaa344ef8" name="InteractionUseOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+            </covered>
+          </interactionUseOccurrenceSpecification>
+          <interactionUseOccurrenceSpecification Id="c4a47d7a-9be9-4b2d-a180-96eba656c66b" name="InteractionUseOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </interactionUseOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="23776d72-7472-4695-8066-583ab667d852" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="7e5f3217-ba66-49e6-a03b-cc85ca3dbfbe" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="77c5bacc-d7a8-4952-a37b-bda4d9b8fcb5" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="40551d1d-c30d-469d-8dbb-1702fc15632b" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="22d22eb8-f38b-46bb-8793-90d6b78ef598" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="77c5bacc-d7a8-4952-a37b-bda4d9b8fcb5" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="4403e8d8-9125-451e-aec6-896d7e5d6ef1" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="40551d1d-c30d-469d-8dbb-1702fc15632b" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="c498b6a9-6336-498a-9e4e-21d2f9a384e6" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="0facadbf-ce29-4e1e-afa2-f622f35bfa46" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="413fed45-2e4b-41b4-a31d-b20123e5577a" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="3e175fec-f64c-4e26-8b24-395072a9c426" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="fc4375d7-b225-44c8-b4fa-472a022ca9e4" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="ac646508-bfea-4f96-bbf2-fa3fa442dc5c" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="f5496309-29a3-4c23-92b4-133c203548e9" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="3e175fec-f64c-4e26-8b24-395072a9c426" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="d9152c3d-561e-41b0-b661-f3f8a6f90fed" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="fc4375d7-b225-44c8-b4fa-472a022ca9e4" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="22d22eb8-f38b-46bb-8793-90d6b78ef598" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="fe8e4510-7fca-471d-8af0-4e454f665998" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="c128ddaf-4a9b-4df0-8f3a-304e46f25ff8" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="880d13e3-c00f-4905-9fe3-1fb631ff76aa" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="0d9cf69d-dc81-48f4-9c46-77da3d0e1131" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="880d13e3-c00f-4905-9fe3-1fb631ff76aa" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="5552c0cd-717e-4717-a4e8-d6c0e2b2bb5a" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="7e5f3217-ba66-49e6-a03b-cc85ca3dbfbe" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="88190825-6756-4591-ac13-30b4750405c5" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" LastKnownName="中心服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="0d9cf69d-dc81-48f4-9c46-77da3d0e1131" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="ac646508-bfea-4f96-bbf2-fa3fa442dc5c" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="6fb972cf-0a0b-43b0-85be-0cec94465caf" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="3bbfe50a-a8a0-4b05-b994-681008be9922" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="c446f6f4-45db-44ca-8566-af4dba4f7901" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="3e97b306-f053-4883-8022-c34b35668df7" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="c446f6f4-45db-44ca-8566-af4dba4f7901" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="1addc5fb-9abf-4e30-b748-76075912febf" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="f5496309-29a3-4c23-92b4-133c203548e9" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="3e97b306-f053-4883-8022-c34b35668df7" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="c128ddaf-4a9b-4df0-8f3a-304e46f25ff8" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="f074bf4b-574f-4ce3-9261-913561c1972b" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" LastKnownName="游戏服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="413fed45-2e4b-41b4-a31d-b20123e5577a" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="61897b17-d5ef-4b28-b639-9a6694aff0b2" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" LastKnownName="网关服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="3bbfe50a-a8a0-4b05-b994-681008be9922" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="e979c78b-fa74-423d-b664-427492f68702" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="fa14f345-2f46-46ea-a71e-23777e62eccd" LastKnownName="战斗服务器" />
+            </covered>
+          </executionOccurrenceSpecification>
+        </fragments>
+        <lifelines>
+          <lifeline Id="973cacaf-fffa-48f7-835f-5aa3fa5d498a" name="游戏服务器" isActor="false" lifelineDisplayName="‎游戏服务器‎">
+            <topLevelOccurrences>
+              <interactionUseOccurrenceSpecificationMoniker Id="42e81d2a-ec92-43c9-8924-0d1b1c243269" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="db551669-0e94-497f-96ff-5f93eec52bd9" LastKnownName="MessageOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="2e985c4c-5b33-408e-969f-81ad2c253161" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="7956aaab-f19d-496e-b2a0-0aaae7621511" LastKnownName="ExecutionOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="7b32628c-ee4c-41ab-836f-75a89af6dd82" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="f5167920-2519-4207-ba86-72feaa344ef8" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="880d13e3-c00f-4905-9fe3-1fb631ff76aa" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="c128ddaf-4a9b-4df0-8f3a-304e46f25ff8" LastKnownName="ExecutionOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="fa14f345-2f46-46ea-a71e-23777e62eccd" name="战斗服务器" isActor="false" lifelineDisplayName="‎战斗服务器‎">
+            <topLevelOccurrences>
+              <interactionUseOccurrenceSpecificationMoniker Id="ebedba6a-b3b4-4af4-b897-db6cf766c460" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="fff40843-0a9a-4fa9-8900-262edd65c5cc" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="b1ab521c-58df-4435-a999-8445b15b7aee" LastKnownName="MessageOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="a54ba99d-f799-48e4-8b02-e413656f5c38" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="24770774-2618-421a-95bb-58807c2015eb" LastKnownName="ExecutionOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="3f8c5cd6-d862-40ca-9638-7d8a2f021a6e" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="c446f6f4-45db-44ca-8566-af4dba4f7901" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="3bbfe50a-a8a0-4b05-b994-681008be9922" LastKnownName="ExecutionOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="2e6bf26d-ca63-47bb-8a85-3f08cdadd5df" name="网关服务器" isActor="false" lifelineDisplayName="‎网关服务器‎">
+            <topLevelOccurrences>
+              <interactionUseOccurrenceSpecificationMoniker Id="3f372481-2977-4299-87c3-193b3f185673" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="b681c07f-91e0-4fda-b628-281647de1cfe" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="3ca6a6ea-c70a-4b07-9157-bd4448f3e18d" LastKnownName="ExecutionOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="3b85d358-ecf5-4b55-829f-f5ae8d6a0deb" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="f0ff7bb1-3879-49b6-bacd-5462726d9d68" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="2be7ca28-14f8-4161-89b1-2802069b7b0e" LastKnownName="ExecutionOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="c4a47d7a-9be9-4b2d-a180-96eba656c66b" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="c498b6a9-6336-498a-9e4e-21d2f9a384e6" LastKnownName="MessageOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="3e175fec-f64c-4e26-8b24-395072a9c426" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="413fed45-2e4b-41b4-a31d-b20123e5577a" LastKnownName="ExecutionOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="269ef41c-f29c-42eb-8c5c-206d1a1d3161" name="中心服务器" isActor="false" lifelineDisplayName="‎中心服务器‎">
+            <topLevelOccurrences>
+              <interactionUseOccurrenceSpecificationMoniker Id="8c95812a-070d-4892-8e02-f8938cde2b73" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="13a9582a-61fe-4666-9ab2-b14ecb190837" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="d9976b18-60ae-4f8b-8aa1-fed8d8f6754b" LastKnownName="ExecutionOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="cb7b80e1-1ea3-41f1-b56d-26475be48cfd" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="41bd85cb-f1db-47f2-a982-d786f7824509" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="ba68714e-f1d9-4bcb-852b-211c337914e1" LastKnownName="ExecutionOccurrenceSpecification" />
+              <interactionUseOccurrenceSpecificationMoniker Id="34860b5f-26df-4fa6-9760-ea54a1e16a5b" LastKnownName="InteractionUseOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="77c5bacc-d7a8-4952-a37b-bda4d9b8fcb5" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="7e5f3217-ba66-49e6-a03b-cc85ca3dbfbe" LastKnownName="ExecutionOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+        </lifelines>
+        <messages>
+          <message Id="232c89c1-4ea9-405d-b46b-bc55f01a1f79" name="连接到中心服务器,同时发送IP和端口验证游戏服务器是否有效" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="db551669-0e94-497f-96ff-5f93eec52bd9" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="2958a935-31b7-4246-b223-d978505e7223" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="d41a1fe1-8e81-47b3-9899-0b1dc5eeb97b" name="有效服务器时通知所有网关连接游戏服务器" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="bafabd7d-d404-4366-9927-c65c802999fa" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="813fed92-7b0d-42ac-a83d-edbb8c964aaf" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="093fc21f-61f7-4b87-86fd-278358e72c8e" name="连接到游戏服务器上" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="b5091f80-63d4-4e03-a06e-8fd70e393908" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="822f1d73-d44e-429f-b9e5-544189e8f538" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="3d7ccc74-f6a5-4bc2-9c5f-b93175463c35" name="连接到中心服务器,同时发送IP和端口验证战斗服务器是否有效" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="b1ab521c-58df-4435-a999-8445b15b7aee" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="3b2d6a0c-bf68-4fc7-b63e-b2f055c3e8d1" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="f1854b22-bfc8-40bc-8fd7-93973b186219" name="有效服务器时通知所有网关连接战斗服务器" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="5436f9b0-bc8b-4cc9-90d0-e268a655bd72" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="2c52db38-0d93-40bb-8967-3467dd971564" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="56608d41-4d64-406b-9c64-872718e8bfd9" name="连接到战斗服务器上" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="7349ad2b-f1f5-4809-909a-2cf2c4206aa2" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="04c2ff4b-c0d9-4151-8047-076086b51b87" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="f0cdee32-6f4c-4320-9839-cffa0fc63457" name="连接到中心服务器,同时发送IP和端口验证网关服务器是否有效" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="c498b6a9-6336-498a-9e4e-21d2f9a384e6" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="40551d1d-c30d-469d-8dbb-1702fc15632b" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="c97d1b0b-3ab5-4abf-984c-da512f34935e" name="有效时发送所有游戏和战斗服务器信息" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="22d22eb8-f38b-46bb-8793-90d6b78ef598" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="fc4375d7-b225-44c8-b4fa-472a022ca9e4" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="c92ff0b8-61f8-4215-add0-99f022f5ecd1" name="连接到游戏服务器上" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="ac646508-bfea-4f96-bbf2-fa3fa442dc5c" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="0d9cf69d-dc81-48f4-9c46-77da3d0e1131" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="101121c4-2986-4318-b0fb-02e895db98ac" name="连接到战斗服务器上" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="f5496309-29a3-4c23-92b4-133c203548e9" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="3e97b306-f053-4883-8022-c34b35668df7" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+        </messages>
+      </interaction>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="88ec267b-aecc-420d-b1c5-38be70f6df95" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="c8a3c161-e8fd-458d-ada1-b062f3e57588" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="43fef75d-3872-4031-b0a0-fa468dd13916" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="22326ade-44c1-4a04-bf97-51aff7f98c4e" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="d1b27c04-3d46-4195-8c09-c9d9f3ad61ee" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="da887cea-da98-4b90-9158-b0c2c76ceec2" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="80296e86-7eba-454e-bfa1-61d78cbe8a1d" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="71a666b0-12e4-4cfc-a34a-8dfaf8418844" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="26c87d38-182a-41b8-954c-1505460eac0a" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="6d75de88-76af-41e2-bf94-98b5903549b8" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="b10b3583-6e88-406f-8715-317fb84db8c7" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="d626cc57-5bba-414e-951a-59a8349126b9" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="4403e8d8-9125-451e-aec6-896d7e5d6ef1" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="88190825-6756-4591-ac13-30b4750405c5" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="d9152c3d-561e-41b0-b661-f3f8a6f90fed" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="61897b17-d5ef-4b28-b639-9a6694aff0b2" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="5552c0cd-717e-4717-a4e8-d6c0e2b2bb5a" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="f074bf4b-574f-4ce3-9261-913561c1972b" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="1addc5fb-9abf-4e30-b748-76075912febf" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="e979c78b-fa74-423d-b664-427492f68702" name="ExecutionEvent" />
+    </packageHasNamedElement>
+  </packagedElements>
+</SequenceDesignerModel>
