@@ -18,10 +18,10 @@ namespace GameServer
             Configuration.Load();
         }
 
-        [AppConfig("CenterServer", "中心服务器IP", "127.0.0.1")]
-        public string CenterServer;
+        [AppConfig("CenterIP", "中心服务器IP", "127.0.0.1")]
+        public string CenterIP;
 
-        [AppConfig("CenterPort", "中心服务器端口", 8000)]
+        [AppConfig("CenterPort", "中心服务器端口", 9000)]
         public int CenterPort;
     }
 }

@@ -6,6 +6,12 @@ using System.Collections.Specialized;
 
 namespace GameBase.Managers
 {
+    public class ClientMgr
+    {
+        private static readonly ClientMgr<ClientBase> m_instance = new ClientMgr<ClientBase>();
+
+        public static ClientMgr<ClientBase> Instance { get { return m_instance; } }
+    }
     public class ClientMgr<T> where T:ClientBase
     {
         private readonly HybridDictionary m_clients = new HybridDictionary();
@@ -53,10 +59,5 @@ namespace GameBase.Managers
         }
 
         public int ClientCount { get { return m_clients.Count; } }
-
-
-        private static readonly ClientMgr<ClientBase> m_instance = new ClientMgr<ClientBase>();
-
-        public static ClientMgr<ClientBase> Instance { get { return m_instance; } }
     }
 }
