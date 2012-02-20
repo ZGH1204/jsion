@@ -6,11 +6,11 @@ using System.Collections.Specialized;
 
 namespace GameBase.Managers
 {
-    public class ClientMgr
+    public class ClientMgr<T> where T:ClientBase
     {
         private readonly HybridDictionary m_clients = new HybridDictionary();
 
-        public void AddClient(ClientBase client)
+        public void AddClient(T client)
         {
             lock (m_clients.SyncRoot)
             {
@@ -24,10 +24,10 @@ namespace GameBase.Managers
 
         void client_Disconnected(ClientBase client)
         {
-            RemoveClient(client);
+            RemoveClient(client as T);
         }
 
-        public void RemoveClient(ClientBase client)
+        public void RemoveClient(T client)
         {
             lock (m_clients.SyncRoot)
             {
@@ -38,13 +38,13 @@ namespace GameBase.Managers
             }
         }
 
-        public ClientBase[] GetAllClients()
+        public T[] GetAllClients()
         {
-            ClientBase[] list;
+            T[] list;
 
             lock (m_clients.SyncRoot)
             {
-                list = new ClientBase[m_clients.Count];
+                list = new T[m_clients.Count];
 
                 m_clients.Keys.CopyTo(list, 0);
             }
@@ -55,8 +55,8 @@ namespace GameBase.Managers
         public int ClientCount { get { return m_clients.Count; } }
 
 
-        private static readonly ClientMgr m_instance = new ClientMgr();
+        private static readonly ClientMgr<ClientBase> m_instance = new ClientMgr<ClientBase>();
 
-        public static ClientMgr Instance { get { return m_instance; } }
+        public static ClientMgr<ClientBase> Instance { get { return m_instance; } }
     }
 }
