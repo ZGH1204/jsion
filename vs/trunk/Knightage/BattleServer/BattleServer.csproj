@@ -59,7 +59,9 @@
     <Compile Include="BattleClient.cs" />
     <Compile Include="BattleServerConfig.cs" />
     <Compile Include="BattleSrv.cs" />
+    <Compile Include="CenterServerConnector.cs" />
     <Compile Include="Commands\Startups\AllocBufferCmd.cs" />
+    <Compile Include="Commands\Startups\ConnectCenterCmd.cs" />
     <Compile Include="Commands\Startups\ListenPortCmd.cs" />
     <Compile Include="Commands\Startups\SearchHandlersCmd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

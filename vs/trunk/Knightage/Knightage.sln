@@ -29,6 +29,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayServer", "GatewaySer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayServerApp", "GatewayServerApp\GatewayServerApp.csproj", "{4DD600D8-C957-456C-AC86-E9B7AA633428}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bat批处理", "bat批处理", "{BFB2C4A3-E016-4E73-988E-C8E37B8EF954}"
+	ProjectSection(SolutionItems) = preProject
+		Closed.bat = Closed.bat
+		Startup.bat = Startup.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
