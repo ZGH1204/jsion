@@ -12,4 +12,4 @@ taskkill /f /t /im GameServerApp.exe
 echo 关闭中心服务器...
 taskkill /f /t /im CenterServerApp.exe
 
-pause
+@rem pause

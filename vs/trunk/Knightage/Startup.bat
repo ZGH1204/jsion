@@ -20,4 +20,4 @@ cd %~dp0GatewayServerApp\bin\Debug
 echo 启动网关服务器...
 start GatewayServerApp.exe
 
-pause
+@rem pause
