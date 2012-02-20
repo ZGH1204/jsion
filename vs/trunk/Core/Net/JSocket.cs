@@ -59,7 +59,7 @@ namespace Net
                 if (Socket != null && Socket.Connected && Socket.RemoteEndPoint != null)
                     return Socket.RemoteEndPoint.ToString();
 
-                return "Not connected!";
+                return IP + ":" + Port;
             }
         }
 
@@ -157,6 +157,9 @@ namespace Net
             if (socket == null) return;
 
             Socket = socket;
+
+            IP = socket.RemoteEndPoint.ToString().Split(':')[0];
+            Port = int.Parse(socket.RemoteEndPoint.ToString().Split(':')[1]);
 
             m_reader.AsyncReceive();
         }
