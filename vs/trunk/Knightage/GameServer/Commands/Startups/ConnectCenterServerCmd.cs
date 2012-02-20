@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Command;
+using GameBase.Managers;
 
 namespace GameServer.Commands.Startups
 {
@@ -11,7 +12,12 @@ namespace GameServer.Commands.Startups
     {
         public bool Execute(string[] paramsList)
         {
-            new CenterServerConnector(GameServerConfig.Configuration.CenterServer, GameServerConfig.Configuration.CenterPort);
+            if (ServerMgr.Instance.Contains(GameServerConfig.Configuration.CenterIP, GameServerConfig.Configuration.CenterPort))
+            {
+                return true;
+            }
+
+            new CenterServerConnector(GameServerConfig.Configuration.CenterIP, GameServerConfig.Configuration.CenterPort);
 
             return true;
         }

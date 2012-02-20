@@ -56,7 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyHelper.cs" />
+    <Compile Include="CenterServerConnector.cs" />
     <Compile Include="Commands\Startups\AllocBufferCmd.cs" />
+    <Compile Include="Commands\Startups\ConnectCenterCmd.cs" />
     <Compile Include="Commands\Startups\ListenPortCmd.cs" />
     <Compile Include="Commands\Startups\SearchHandlersCmd.cs" />
     <Compile Include="GatewayClient.cs" />

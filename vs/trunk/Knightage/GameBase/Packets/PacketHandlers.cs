@@ -30,38 +30,22 @@ namespace GameBase.Packets
 
             if (packet.Code2 == 0)
             {
-                HandlePacketImp(packet.Code, packet);
+                HandlePacket(packet.Code, packet);
             }
             else
             {
-                HandlePacketImp(packet.Code2, packet);
+                HandlePacket(packet.Code2, packet);
             }
-
-            //switch (packet.Code2)
-            //{
-            //    case (int)BasePacketCode.Center_Code:
-            //    case (int)BasePacketCode.Battle_Code:
-            //        HandlePacketImp(packet.Code2, packet);
-            //        break;
-            //    default:
-            //        HandlePacketImp(packet.Code, packet);
-            //        break;
-            //}
         }
 
-        //public virtual void HandlePacket2(GamePacket packet)
-        //{
-        //    if (packet == null)
-        //    {
-        //        log.Error("Packet is null!");
-        //        return;
-        //    }
-
-        //    HandlePacketImp(packet.Code2, packet);
-        //}
-
-        private void HandlePacketImp(int code, GamePacket packet)
+        public virtual void HandlePacket(int code, GamePacket packet)
         {
+            if (packet == null)
+            {
+                log.Error("Packet is null!");
+                return;
+            }
+
             IPacketHandler handler = null;
 
             if (m_packagesHandlers.ContainsKey(code))

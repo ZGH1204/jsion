@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<root>
+  <ArrayOfGatewayInfo>
+    <GatewayInfo TemplateID="1" TemplateName="网关1" IP="192.168.1.200" Summary="" />
+    <GatewayInfo TemplateID="2" TemplateName="网关2" IP="192.168.1.201" Summary="" />
+  </ArrayOfGatewayInfo>
+  <ArrayOfGameLogicInfo>
+    <GameLogicInfo TemplateID="1" TemplateName="苏-逻辑服务器" IP="192.168.1.200" Port="7000" Summary="" />
+  </ArrayOfGameLogicInfo>
+  <ArrayOfBattleInfo>
+    <BattleInfo TemplateID="1" TemplateName="苏-战斗服务器" IP="192.168.1.200" Port="8000" Summary="" />
+  </ArrayOfBattleInfo>
+</root>

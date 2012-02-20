@@ -73,6 +73,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerBase.cs" />
     <Compile Include="ServerConfig.cs" />
+    <Compile Include="ServerConfigs\BattleInfo.cs" />
+    <Compile Include="ServerConfigs\GameLogicInfo.cs" />
+    <Compile Include="ServerConfigs\GatewayInfo.cs" />
     <Compile Include="ServerConnector.cs" />
     <Compile Include="Template.cs" />
     <Compile Include="Managers\TemplateMgr.cs" />

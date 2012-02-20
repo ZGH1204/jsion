@@ -9,6 +9,13 @@ using GameBase.Net;
 
 namespace GameBase.Managers
 {
+    public class ServerMgr
+    {
+        private static readonly ServerMgr<ServerConnector> m_instance = new ServerMgr<ServerConnector>();
+
+        public static ServerMgr<ServerConnector> Instance { get { return m_instance; } }
+    }
+
     public class ServerMgr<T> where T:ServerConnector
     {
         private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
@@ -121,8 +128,5 @@ namespace GameBase.Managers
 
         public int ServerCount { get { return m_servers.Count; } }
 
-        private static readonly ServerMgr<ServerConnector> m_instance = new ServerMgr<ServerConnector>();
-
-        public static ServerMgr<ServerConnector> Instance { get { return m_instance; } }
     }
 }
