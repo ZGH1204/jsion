@@ -5,19 +5,19 @@ using System.Text;
 using Command;
 using GameBase.Managers;
 
-namespace GameServer.Commands.Startups
+namespace BattleServer.Commands.Startups
 {
     [Cmd("ConnectCenter", "连接中心服务器", "")]
-    public class ConnectCenterServerCmd : ICommand
+    public class ConnectCenterCmd : ICommand
     {
         public bool Execute(string[] paramsList)
         {
-            if (ServerMgr.Instance.Contains(GameServerConfig.Configuration.CenterIP, GameServerConfig.Configuration.CenterPort))
+            if (ServerMgr.Instance.Contains(BattleServerConfig.Configuration.CenterIP, BattleServerConfig.Configuration.CenterPort))
             {
                 return true;
             }
 
-            new CenterServerConnector(GameServerConfig.Configuration.CenterIP, GameServerConfig.Configuration.CenterPort);
+            new CenterServerConnector(BattleServerConfig.Configuration.CenterIP, BattleServerConfig.Configuration.CenterPort);
 
             return true;
         }
