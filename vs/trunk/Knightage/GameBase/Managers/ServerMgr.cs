@@ -9,11 +9,11 @@ using GameBase.Net;
 
 namespace GameBase.Managers
 {
-    public class ServerMgr
+    public class ServerMgr<T> where T:ServerConnector
     {
         private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private readonly List<ServerConnector> m_servers = new List<ServerConnector>(10);
+        private readonly List<T> m_servers = new List<T>(10);
 
         private readonly HybridDictionary m_connected = new HybridDictionary();
 
@@ -38,15 +38,15 @@ namespace GameBase.Managers
 
         public void SendToAllServer(GamePacket pkg)
         {
-            foreach (ServerConnector connector in m_servers)
+            foreach (T connector in m_servers)
             {
                 connector.SendTCP(pkg);
             }
         }
 
-        public void SendToAllServer(GamePacket pkg, ServerConnector except)
+        public void SendToAllServer(GamePacket pkg, T except = null)
         {
-            foreach (ServerConnector connector in m_servers)
+            foreach (T connector in m_servers)
             {
                 if (connector != except)
                 {
@@ -62,19 +62,19 @@ namespace GameBase.Managers
             return m_connected.Contains(str);
         }
 
-        public ServerConnector GetConnector(string ip, int port)
+        public T GetConnector(string ip, int port)
         {
             string str = ip + ":" + port.ToString();
 
             if (m_connected.Contains(str))
             {
-                return m_connected[str] as ServerConnector;
+                return m_connected[str] as T;
             }
 
             return null;
         }
 
-        public void AddConnector(ServerConnector connector)
+        public void AddConnector(T connector)
         {
             if (m_connected.Contains(connector.RemoteEndPoint)) return;
 
@@ -83,7 +83,7 @@ namespace GameBase.Managers
             m_connecting.Add(connector.Socket, connector);
         }
 
-        public void RemoveConnector(ServerConnector connector)
+        public void RemoveConnector(T connector)
         {
             if (m_connected.Contains(connector.RemoteEndPoint))
             {
@@ -96,7 +96,7 @@ namespace GameBase.Managers
             }
         }
 
-        public void SuccessConnector(ServerConnector connector)
+        public void SuccessConnector(T connector)
         {
             if (m_connecting.Contains(connector.Socket))
             {
@@ -106,7 +106,7 @@ namespace GameBase.Managers
             }
         }
 
-        public void FaildConnector(ServerConnector connector)
+        public void FaildConnector(T connector)
         {
             if (m_connecting.Contains(connector.Socket))
             {
@@ -121,8 +121,8 @@ namespace GameBase.Managers
 
         public int ServerCount { get { return m_servers.Count; } }
 
-        private static readonly ServerMgr m_instance = new ServerMgr();
+        private static readonly ServerMgr<ServerConnector> m_instance = new ServerMgr<ServerConnector>();
 
-        public static ServerMgr Instance { get { return m_instance; } }
+        public static ServerMgr<ServerConnector> Instance { get { return m_instance; } }
     }
 }
