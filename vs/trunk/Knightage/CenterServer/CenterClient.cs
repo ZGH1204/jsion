@@ -11,8 +11,57 @@ namespace CenterServer
 {
     public class CenterClient : ClientBase
     {
+        public int ID { get; set; }
+
+        public ServerType Type { get; set; }
+
+        public bool Validated { get; set; }
+
         public CenterClient()
             : base()
-        { }
+        {
+            ID = 0;
+            Type = ServerType.UnKnowServer;
+            Validated = false;
+        }
+
+        protected override void Initialize()
+        {
+            m_handlers = new PacketHandlers(this);
+        }
+
+        public override void HandlePacket(GamePacket packet)
+        {
+            m_handlers.HandlePacket(packet.Code, packet);
+        }
+
+        protected override void OnDisconnected()
+        {
+            base.OnDisconnected();
+
+            switch (Type)
+            {
+                //case ServerType.UnKnowServer:
+                //    break;
+                //case ServerType.CenterServer:
+                //    break;
+                case ServerType.LogicServer:
+                    CenterGlobal.GameLogicServerMgr.Remove(this);
+                    break;
+                case ServerType.BattleServer:
+                    CenterGlobal.BattleServerMgr.Remove(this);
+                    break;
+                case ServerType.GatewayServer:
+                    CenterGlobal.GatewayServerMgr.Remove(this);
+                    break;
+                default:
+                    break;
+            }
+
+            ID = 0;
+            Type = ServerType.UnKnowServer;
+            Validated = false;
+
+        }
     }
 }

@@ -13,6 +13,9 @@ namespace GameBase.ServerConfigs
         public string IP { get; set; }
 
         [XmlAttribute]
+        public int Port { get; set; }
+
+        [XmlAttribute]
         public string Summary { get; set; }
     }
 }

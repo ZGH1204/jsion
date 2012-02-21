@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using GameBase;
 using GameBase.Net;
+using GameBase.Packets.OutPackets;
+using JUtils;
 
 namespace GameServer
 {
@@ -21,9 +23,20 @@ namespace GameServer
             }
         }
 
-        protected override void ReceivePacket(GamePacket packet)
+        protected override void OnConnected(bool successed)
         {
-            //TODO: 转发给玩家客户端
+            base.OnConnected(successed);
+
+            if (successed)
+            {
+                ValidateServerTypePacket pkg = new ValidateServerTypePacket();
+
+                pkg.ServerType = ServerType.LogicServer;
+                pkg.IP = JUtil.GetLocalIP();
+                pkg.Port = GameServerConfig.Configuration.Port;
+
+                SendTCP(pkg);
+            }
         }
     }
 }
