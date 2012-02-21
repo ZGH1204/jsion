@@ -6,6 +6,7 @@ using GameBase.Net;
 using GameBase.Managers;
 using log4net;
 using System.Reflection;
+using GameBase.Packets;
 
 namespace GameBase
 {
@@ -13,9 +14,13 @@ namespace GameBase
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        protected ServerPacketHandlers m_handlers;
+
         public ServerConnector(string ip, int port)
             : base(ip, port)
         {
+            m_handlers = new ServerPacketHandlers(this);
+
             OnInitialize();
         }
 
@@ -60,6 +65,11 @@ namespace GameBase
             log.ErrorFormat("{2}连接断开!IP:{0}, Port:{1}", Socket.IP, Socket.Port, ServerName);
 
             ServerMgr.Instance.RemoveConnector(this);
+        }
+
+        protected override void ReceivePacket(GamePacket packet)
+        {
+            m_handlers.HandlePacket(packet);
         }
     }
 }

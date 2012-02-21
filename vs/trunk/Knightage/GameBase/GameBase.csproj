@@ -61,14 +61,20 @@
     <Compile Include="ClientBase.cs" />
     <Compile Include="Managers\ClientMgr.cs" />
     <Compile Include="Delegates.cs" />
+    <Compile Include="Managers\ObjectMgr.cs" />
     <Compile Include="Managers\ServerMgr.cs" />
     <Compile Include="Net\BattlePacket.cs" />
     <Compile Include="Net\CenterPacket.cs" />
     <Compile Include="Net\GamePacket.cs" />
     <Compile Include="Net\GameSocket.cs" />
     <Compile Include="Packets\IPacketHandler.cs" />
+    <Compile Include="Packets\IServerPacketHandler.cs" />
+    <Compile Include="Packets\OutPackets\ConnectLogicServerPacket.cs" />
+    <Compile Include="Packets\OutPackets\ValidateServerTypePacket.cs" />
+    <Compile Include="Packets\OutPackets\ConnectBattleServerPacket.cs" />
     <Compile Include="Packets\PacketHandlerAttribute.cs" />
     <Compile Include="Packets\PacketHandlers.cs" />
+    <Compile Include="Packets\ServerPacketHandlers.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerBase.cs" />
@@ -77,6 +83,7 @@
     <Compile Include="ServerConfigs\GameLogicInfo.cs" />
     <Compile Include="ServerConfigs\GatewayInfo.cs" />
     <Compile Include="ServerConnector.cs" />
+    <Compile Include="ServerType.cs" />
     <Compile Include="Template.cs" />
     <Compile Include="Managers\TemplateMgr.cs" />
   </ItemGroup>

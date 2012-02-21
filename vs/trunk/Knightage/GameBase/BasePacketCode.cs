@@ -19,5 +19,27 @@ namespace GameBase
         /// 转发给战斗服务器
         /// </summary>
         Battle_Code = 2,
+
+        /// <summary>
+        /// 转发给逻辑服务器
+        /// </summary>
+        Logic_Code = 3,
+
+
+
+        /// <summary>
+        /// 验证服务器IP、端口、类型
+        /// </summary>
+        ValidateServer = 101,
+
+        /// <summary>
+        /// 连接逻辑服务器
+        /// </summary>
+        ConnectLogicServer = 102,
+
+        /// <summary>
+        /// 连接战斗服务器
+        /// </summary>
+        ConnectBattleServer = 103
     }
 }

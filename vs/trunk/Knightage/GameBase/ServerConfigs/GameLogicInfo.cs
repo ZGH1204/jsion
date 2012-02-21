@@ -9,7 +9,5 @@ namespace GameBase.ServerConfigs
     [Serializable]
     public class GameLogicInfo : GatewayInfo
     {
-        [XmlAttribute]
-        public int Port { get; set; }
     }
 }

@@ -98,5 +98,34 @@ namespace GameBase.Managers
 
             return default(T);
         }
+
+        public virtual int GetID(Predicate<T> match)
+        {
+            int id = 0;
+
+            m_lock.AcquireReaderLock(Timeout.Infinite);
+
+            try
+            {
+                int[] keys = new int[m_list.Keys.Count];
+
+                m_list.Keys.CopyTo(keys, 0);
+
+                foreach (int key in keys)
+                {
+                    if (match(m_list[key] as T))
+                    {
+                        id = key;
+                        break;
+                    }
+                }
+            }
+            finally
+            {
+                m_lock.ReleaseReaderLock();
+            }
+
+            return id;
+        }
     }
 }

@@ -19,6 +19,8 @@ namespace GameBase
 
         protected PacketHandlers m_handlers;
 
+        public Player Player { get; set; }
+
         public event ReceiveDelegate ReceivedPacket;
 
         public event DisconnectDelegate Disconnected;
@@ -123,7 +125,7 @@ namespace GameBase
 
         protected virtual void OnReceivePacket(GamePacket packet)
         {
-            m_handlers.HandlePacket(packet);
+            HandlePacket(packet);
         }
 
 
@@ -136,11 +138,16 @@ namespace GameBase
 
         #endregion
 
-        public void SendTcp(GamePacket pkg)
+        public virtual void SendTcp(GamePacket pkg)
         {
             //if (m_socket == null) return;
 
             m_socket.SendPacket(pkg);
+        }
+
+        public virtual void HandlePacket(GamePacket packet)
+        {
+            m_handlers.HandlePacket(packet);
         }
 
         public bool Connected

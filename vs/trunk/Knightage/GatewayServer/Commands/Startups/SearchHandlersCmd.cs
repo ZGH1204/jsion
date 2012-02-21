@@ -18,7 +18,10 @@ namespace GatewayServer.Commands.Startups
         {
             try
             {
-                PacketHandlers.SearchPacketHandler(Assembly.GetAssembly(typeof(AssemblyHelper)));
+                Assembly assembly = Assembly.GetAssembly(typeof(AssemblyHelper));
+
+                PacketHandlers.SearchPacketHandler(assembly);
+                ServerPacketHandlers.SearchPacketHandler(assembly);
 
                 return true;
             }
