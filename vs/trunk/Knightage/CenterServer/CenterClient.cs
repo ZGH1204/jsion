@@ -30,11 +30,6 @@ namespace CenterServer
             m_handlers = new PacketHandlers(this);
         }
 
-        public override void HandlePacket(GamePacket packet)
-        {
-            m_handlers.HandlePacket(packet.Code, packet);
-        }
-
         protected override void OnDisconnected()
         {
             base.OnDisconnected();

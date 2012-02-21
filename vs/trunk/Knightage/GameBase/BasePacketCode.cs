@@ -11,19 +11,24 @@ namespace GameBase
     public enum BasePacketCode
     {
         /// <summary>
-        /// 转发给中心服务器
+        /// 转发给中心服务器处理
         /// </summary>
         Center_Code = 1,
 
         /// <summary>
-        /// 转发给战斗服务器
+        /// 转发给战斗服务器处理
         /// </summary>
         Battle_Code = 2,
 
         /// <summary>
-        /// 转发给逻辑服务器
+        /// 转发给逻辑服务器处理
         /// </summary>
         Logic_Code = 3,
+
+        /// <summary>
+        /// 转发给网关服务器处理
+        /// </summary>
+        Gateway_Code = 4,
 
 
 

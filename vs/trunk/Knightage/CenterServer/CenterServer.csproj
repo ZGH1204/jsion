@@ -66,7 +66,7 @@
     <Compile Include="CenterSrv.cs" />
     <Compile Include="Commands\Startups\SearchHandlersCmd.cs" />
     <Compile Include="Packets\CenterPacketHandlers.cs" />
-    <Compile Include="Packets\CenterPacketHandler.cs" />
+    <Compile Include="Packets\ProgressCenterPacketHandler.cs" />
     <Compile Include="Packets\Handlers\ValidateServerTypeHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

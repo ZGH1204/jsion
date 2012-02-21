@@ -125,7 +125,7 @@ namespace GameBase
 
         protected virtual void OnReceivePacket(GamePacket packet)
         {
-            HandlePacket(packet);
+            m_handlers.HandlePacket(packet);
         }
 
 
@@ -148,6 +148,11 @@ namespace GameBase
         public virtual void HandlePacket(GamePacket packet)
         {
             m_handlers.HandlePacket(packet);
+        }
+
+        public virtual void HandlePacket(int code, GamePacket packet)
+        {
+            m_handlers.HandlePacket(code, packet);
         }
 
         public bool Connected
