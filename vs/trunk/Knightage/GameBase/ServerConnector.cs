@@ -39,6 +39,16 @@ namespace GameBase
             get { return "服务器"; }
         }
 
+        public virtual void HandlePacket(GamePacket pkg)
+        {
+            m_handlers.HandlePacket(pkg);
+        }
+
+        public virtual void HandlePacket(int code, GamePacket pkg)
+        {
+            m_handlers.HandlePacket(code, pkg);
+        }
+
         protected virtual void OnInitialize()
         {
             ServerMgr.Instance.AddConnector(this);

@@ -6,7 +6,7 @@ using GameBase.Packets;
 using GameBase;
 using GameBase.Net;
 
-namespace GatewayServer.Packets.Handlers
+namespace GatewayServer.Packets
 {
     //[PacketHandler((int)BasePacketCode.Logic_Code, "转发到逻辑服务器")]
     //public class Trans2LogicServerHandler : IPacketHandler

@@ -69,7 +69,8 @@
     <Compile Include="GatewaySrv.cs" />
     <Compile Include="Packets\Handlers\Servers\ConnectBattleServerHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\ConnectGameLogicServerHandler.cs" />
-    <Compile Include="Packets\Handlers\Trans2LogicServerHandler.cs" />
+    <Compile Include="Packets\ProcessGatewayPacketHandler.cs" />
+    <Compile Include="Packets\Trans2LogicServerHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -8,12 +8,12 @@ using GameBase;
 
 namespace CenterServer.Packets
 {
-    [PacketHandler((int)BasePacketCode.Center_Code, "处理转发到中心服务器的数据包")]
-    public class CenterPacketHandler : IPacketHandler
+    [PacketHandler((int)BasePacketCode.Center_Code, "处理中心服务器的数据包")]
+    public class ProgressCenterPacketHandler : IPacketHandler
     {
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
-            client.HandlePacket(packet);
+            client.HandlePacket(packet.Code, packet);
 
             return 0;
         }
