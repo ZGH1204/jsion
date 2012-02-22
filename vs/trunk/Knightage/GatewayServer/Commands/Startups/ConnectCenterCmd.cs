@@ -17,7 +17,7 @@ namespace GatewayServer.Commands.Startups
                 return true;
             }
 
-            new CenterServerConnector(GatewayServerConfig.Configuration.CenterIP, GatewayServerConfig.Configuration.CenterPort);
+            GatewayGlobal.CenterServer = new CenterServerConnector(GatewayServerConfig.Configuration.CenterIP, GatewayServerConfig.Configuration.CenterPort);
 
             return true;
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GameBase;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace GatewayServer
 {
@@ -18,6 +19,10 @@ namespace GatewayServer
             GatewayClient client = new GatewayClient();
 
             client.Accept(socket);
+
+            Interlocked.Increment(ref GatewayGlobal.ClientCount);
+
+            client.ClientID = GatewayGlobal.ClientCount;
 
             return client;
         }

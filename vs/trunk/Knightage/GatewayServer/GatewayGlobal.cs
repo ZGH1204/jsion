@@ -9,6 +9,10 @@ namespace GatewayServer
 {
     public class GatewayGlobal
     {
+        public static int ClientCount = 0;
+
+        public static CenterServerConnector CenterServer;
+
         public static readonly ObjectMgr<ServerConnector> ConnectingMgr = new ObjectMgr<ServerConnector>();
 
         public static readonly ObjectMgr<GameLogicServerConnector> GameLogicServerMgr = new ObjectMgr<GameLogicServerConnector>();

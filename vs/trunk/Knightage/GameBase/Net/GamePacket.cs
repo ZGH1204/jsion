@@ -28,7 +28,7 @@ namespace GameBase.Net
 
         #endregion
 
-        #region 协议数据结构
+        #region 协议数据包头结构
 
         public int Code { get; set; }
 
@@ -41,6 +41,8 @@ namespace GameBase.Net
 
         public override void ReadHeader()
         {
+            base.ReadHeader();
+
             Position = 0;
 
             Length = ReadShort();

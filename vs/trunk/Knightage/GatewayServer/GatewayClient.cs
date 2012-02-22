@@ -8,6 +8,8 @@ namespace GatewayServer
 {
     public class GatewayClient : ClientBase
     {
+        public int ClientID { get; set; }
+
         public GatewayClient()
             : base()
         { }
