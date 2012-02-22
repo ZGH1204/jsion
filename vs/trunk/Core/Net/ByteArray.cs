@@ -132,6 +132,7 @@ namespace Net
         /// <returns></returns>
         public sbyte ReadByte()
         {
+            if (Position >= Length) throw new Exception("遇到文件尾!");
             return (sbyte)Buffer[Position++];
         }
 
@@ -141,6 +142,7 @@ namespace Net
         /// <returns></returns>
         public byte ReadUnsignedByte()
         {
+            if (Position >= Length) throw new Exception("遇到文件尾!");
             return (byte)Buffer[Position++];
         }
 
@@ -150,6 +152,7 @@ namespace Net
         /// <returns></returns>
         public bool ReadBoolean()
         {
+            if (Position >= Length) throw new Exception("遇到文件尾!");
             return Buffer[Position++] != 0;
         }
 
@@ -161,6 +164,8 @@ namespace Net
         public byte[] ReadBytes(int len = 0)
         {
             len = (len <= 0 ? Length - Position : len);
+
+            if ((Position + len) > Length) throw new Exception("遇到文件尾!");
 
             byte[] bytes = new byte[len];
             Array.Copy(Buffer, Position, bytes, 0, len);
@@ -237,6 +242,7 @@ namespace Net
         public string ReadUTF()
         {
             ushort len = ReadUnsignedShort();
+            if ((Position + len) > Length) throw new Exception("遇到文件尾!");
             string temp = Encoding.UTF8.GetString(Buffer, Position, len);
             Position += len;
             return temp.Replace("\0", "");
