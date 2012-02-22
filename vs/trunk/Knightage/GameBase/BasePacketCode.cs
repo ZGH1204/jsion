@@ -6,7 +6,9 @@ using System.Text;
 namespace GameBase
 {
     /// <summary>
-    /// 0-100为预留协议号
+    /// 0-100为Code2预留协议号
+    /// 101-200为服务器间的预留协议号
+    /// 200以上为游戏逻辑协议号
     /// </summary>
     public enum BasePacketCode
     {
@@ -45,6 +47,12 @@ namespace GameBase
         /// <summary>
         /// 连接战斗服务器
         /// </summary>
-        ConnectBattleServer = 103
+        ConnectBattleServer = 103,
+
+
+        /// <summary>
+        /// 玩家登陆
+        /// </summary>
+        Login = 201,
     }
 }

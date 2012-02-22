@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CEEB1DCC-C617-4520-852C-32A479FC223A}</ProjectGuid>
+    <ProjectGuid>{C83DABC5-6D4B-4D1F-9402-426BB124C744}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GatewayServer</RootNamespace>
-    <AssemblyName>GatewayServer</AssemblyName>
+    <RootNamespace>Bussiness</RootNamespace>
+    <AssemblyName>Bussiness</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,20 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AppConfig">
-      <HintPath>..\libs\AppConfig.dll</HintPath>
-    </Reference>
-    <Reference Include="Command">
-      <HintPath>..\libs\Command.dll</HintPath>
-    </Reference>
-    <Reference Include="JUtils">
-      <HintPath>..\libs\JUtils.dll</HintPath>
+    <Reference Include="DBProvider">
+      <HintPath>..\libs\DBProvider.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\libs\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Net">
-      <HintPath>..\libs\Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,24 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyHelper.cs" />
-    <Compile Include="BattleServerConnector.cs" />
-    <Compile Include="CenterServerConnector.cs" />
-    <Compile Include="Commands\Startups\AllocBufferCmd.cs" />
-    <Compile Include="Commands\Startups\ConnectCenterCmd.cs" />
-    <Compile Include="Commands\Startups\ListenPortCmd.cs" />
-    <Compile Include="Commands\Startups\SearchHandlersCmd.cs" />
-    <Compile Include="GameLogicServerConnector.cs" />
-    <Compile Include="GatewayClient.cs" />
-    <Compile Include="GatewayGlobal.cs" />
-    <Compile Include="GatewayServerConfig.cs" />
-    <Compile Include="GatewaySrv.cs" />
-    <Compile Include="Packets\Handlers\Servers\PlayerLoginHandler.cs" />
-    <Compile Include="Packets\Handlers\Servers\ConnectBattleServerHandler.cs" />
-    <Compile Include="Packets\Handlers\Servers\ConnectGameLogicServerHandler.cs" />
-    <Compile Include="Packets\ProcessGatewayPacketHandler.cs" />
-    <Compile Include="Packets\Trans2CenterServerHandler.cs" />
-    <Compile Include="Packets\Trans2LogicServerHandler.cs" />
+    <Compile Include="BaseBussiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,7 +55,6 @@
       <Name>GameBase</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

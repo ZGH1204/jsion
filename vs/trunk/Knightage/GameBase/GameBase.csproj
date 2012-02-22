@@ -61,6 +61,7 @@
     <Compile Include="ClientBase.cs" />
     <Compile Include="Managers\ClientMgr.cs" />
     <Compile Include="Delegates.cs" />
+    <Compile Include="Managers\LoginMgr.cs" />
     <Compile Include="Managers\ObjectMgr.cs" />
     <Compile Include="Managers\ServerMgr.cs" />
     <Compile Include="Net\BattlePacket.cs" />
