@@ -13,5 +13,12 @@ namespace GatewayServer
         public GatewayClient()
             : base()
         { }
+
+        protected override void OnDisconnected()
+        {
+            base.OnDisconnected();
+
+            GatewayGlobal.PlayerClientMgr.Remove(ClientID);
+        }
     }
 }
