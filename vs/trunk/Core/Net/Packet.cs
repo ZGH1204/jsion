@@ -45,7 +45,7 @@ namespace Net
         public bool Writed { get; protected set; }
 
         public virtual void ReadHeader()
-        { Writed = true; }
+        { }
 
         public virtual void WriteHeader()
         { Writed = true; }
