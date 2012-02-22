@@ -27,6 +27,15 @@ namespace GatewayServer
             return client;
         }
 
+        protected override void SaveClient(ClientBase client)
+        {
+            base.SaveClient(client);
+
+            GatewayClient c = (GatewayClient)client;
+
+            GatewayGlobal.PlayerClientMgr.Add(c.ClientID, c);
+        }
+
         private static readonly GatewaySrv m_server = new GatewaySrv();
 
         public static GatewaySrv Server { get { return m_server; } }

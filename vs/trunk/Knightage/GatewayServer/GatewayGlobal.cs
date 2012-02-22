@@ -13,6 +13,8 @@ namespace GatewayServer
 
         public static CenterServerConnector CenterServer;
 
+        public static readonly ObjectMgr<GatewayClient> PlayerClientMgr = new ObjectMgr<GatewayClient>();
+
         public static readonly ObjectMgr<ServerConnector> ConnectingMgr = new ObjectMgr<ServerConnector>();
 
         public static readonly ObjectMgr<GameLogicServerConnector> GameLogicServerMgr = new ObjectMgr<GameLogicServerConnector>();
