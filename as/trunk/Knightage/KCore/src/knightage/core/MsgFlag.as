@@ -126,7 +126,7 @@ package knightage.core
 		
 		
 		
-		
+		public static const StartGame:uint = 101;
 		
 		
 		

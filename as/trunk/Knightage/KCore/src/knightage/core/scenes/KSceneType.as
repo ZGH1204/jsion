@@ -1,8 +1,8 @@
 package knightage.core.scenes
 {
-	public class SLGSceneType
+	public class KSceneType
 	{
-		public static const INNER_CITY:String = "innerCityScene";
+		public static const CITY:String = "cityScene";
 		
 		public static const FIGHTER:String = "fighterScene";
 		
