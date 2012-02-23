@@ -70,6 +70,7 @@
     <Compile Include="Packets\Handlers\Servers\PlayerLoginHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\ConnectBattleServerHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\ConnectGameLogicServerHandler.cs" />
+    <Compile Include="Packets\Handlers\Servers\UpdateServerIDHandler.cs" />
     <Compile Include="Packets\ProcessGatewayPacketHandler.cs" />
     <Compile Include="Packets\Trans2CenterServerHandler.cs" />
     <Compile Include="Packets\Trans2LogicServerHandler.cs" />

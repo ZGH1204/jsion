@@ -9,6 +9,8 @@ namespace GatewayServer
 {
     public class GatewayGlobal
     {
+        public static int GatewayID = 0;
+
         public static int ClientCount = 0;
 
         public static CenterServerConnector CenterServer;

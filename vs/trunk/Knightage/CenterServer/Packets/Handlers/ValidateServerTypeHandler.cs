@@ -62,6 +62,11 @@ namespace CenterServer.Packets.Handlers
                     break;
                 case ServerType.GatewayServer:
                     id = GameGlobal.GatewayMgr.GetID(info => info.IP == ip && info.Port == port);
+
+                    UpdateServerIDPacket pkt = new UpdateServerIDPacket();
+                    pkt.ID = (byte)id;
+                    center.SendTcp(pkt);
+
                     if (id > 0)
                     {
                         CenterGlobal.GatewayServerMgr.Add(id, center);

@@ -49,10 +49,17 @@ namespace GameBase
         /// </summary>
         ConnectBattleServer = 103,
 
+        /// <summary>
+        /// 更新网关服务器ID
+        /// </summary>
+        UpdateServerID = 104,
+
 
         /// <summary>
         /// 玩家登陆
         /// </summary>
         Login = 201,
+
+        //Validate = 202
     }
 }
