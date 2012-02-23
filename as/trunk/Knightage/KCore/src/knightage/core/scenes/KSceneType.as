@@ -2,6 +2,8 @@ package knightage.core.scenes
 {
 	public class KSceneType
 	{
+		public static const LOGIN:String = "loginScene";
+		
 		public static const CITY:String = "cityScene";
 		
 		public static const FIGHTER:String = "fighterScene";

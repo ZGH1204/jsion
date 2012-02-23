@@ -15,6 +15,9 @@ package knightage.core.scenes
 		{
 			switch(type)
 			{
+				case KSceneType.LOGIN:
+					return tryCreate("knightage.login.scene.LoginScene");
+					break;
 //				case SLGSceneType.INNER_CITY:
 //					return tryCreate("slg.innercity.InnerCityScene");
 //					break;

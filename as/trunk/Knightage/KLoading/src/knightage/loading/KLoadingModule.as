@@ -93,6 +93,9 @@ package knightage.loading
 			loader = ModuleMgr.createModuleLoader(ModuleType.K_CITY);//"KCity");
 			loadingLoaders.addLoader(loader);
 			
+			loader = ModuleMgr.createModuleLoader(ModuleType.K_LOGIN);//"KLogin");
+			loadingLoaders.addLoader(loader);
+			
 			loader = ModuleMgr.createModuleLoader(ModuleType.Debug_Login_Module);//"SLGDebugLogin");
 			loadingLoaders.addLoader(loader);
 			

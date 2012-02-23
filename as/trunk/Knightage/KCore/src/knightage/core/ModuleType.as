@@ -15,6 +15,10 @@ package knightage.core
 		 */		
 		public static const K_SOCKET:String = "JsionSocket";
 		/**
+		 * 登陆
+		 */		
+		public static const K_LOGIN:String = "KLogin";
+		/**
 		 * SLG内城
 		 */		
 		public static const K_CITY:String = "KCity";
