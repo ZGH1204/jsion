@@ -91,7 +91,11 @@ package knightage.core
 		 */		
 		public var ForumUrl:String;
 		/**
-		 * 资源根目录，以"/"结尾。
+		 * 模块根目录
+		 */		
+		public var ModRoot:String;
+		/**
+		 * 资源根目录
 		 */		
 		public var ResRoot:String;
 		

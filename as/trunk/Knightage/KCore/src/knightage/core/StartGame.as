@@ -13,9 +13,11 @@ package knightage.core
 	import jsion.utils.BrowserUtil;
 	import jsion.utils.StringUtil;
 	
+	import knightage.core.mgrs.TemplatesMgr;
 	import knightage.core.net.PacketHandlers;
 	import knightage.core.net.SLGPacket;
 	import knightage.core.net.SocketProxy;
+	import knightage.core.scenes.KSceneType;
 	import knightage.core.scenes.SceneCreator;
 
 	public function StartGame(loaders:ILoaders):void
@@ -25,6 +27,8 @@ package knightage.core
 		LoaderGlobal.registeNewType("hy", LoaderGlobal.TYPE_BINARY, BinaryLoader);
 		
 		SocketProxy.setPacketClass(SLGPacket);
+		
+		TemplatesMgr.setup(loaders.getXml(Files.TemplatesFile));
 		
 		var ass:Assembly = ModuleMgr.getAssembly(ModuleType.K_CORE);
 		
@@ -40,18 +44,21 @@ package knightage.core
 		
 		SceneMgr.setup(container, new SceneCreator());
 		
-		if(Config.config.Debug)
-		{
-			var ip:String = BrowserUtil.getVal("ip") as String;
-			var port:int = int(BrowserUtil.getVal("port"));
-			
-			if(StringUtil.isNotNullOrEmpty(ip) && port > 0)
-			{
-				SocketProxy.connect(ip, port);
-				return;
-			}
-		}
-		//SceneMgr.setScene(SLGSceneType.INNER_CITY);
-		SocketProxy.connect(Config.config.SrvIP, Config.config.SrvPort);
+//		if(Config.config.Debug)
+//		{
+//			var ip:String = BrowserUtil.getVal("ip") as String;
+//			var port:int = int(BrowserUtil.getVal("port"));
+//			
+//			if(StringUtil.isNotNullOrEmpty(ip) && port > 0)
+//			{
+//				SocketProxy.connect(ip, port);
+//				return;
+//			}
+//		}
+//		
+//		SocketProxy.connect(Config.config.SrvIP, Config.config.SrvPort);
+		
+		MsgProxy.createAndPostMsg(MsgFlag.StartGame);
+		//SceneMgr.setScene(KSceneType.CITY);
 	}
 }

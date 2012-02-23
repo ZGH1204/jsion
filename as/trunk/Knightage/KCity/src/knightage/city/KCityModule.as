@@ -9,5 +9,9 @@ package knightage.city
 		{
 			super(info);
 		}
+		
+		override public function startup():void
+		{
+		}
 	}
 }

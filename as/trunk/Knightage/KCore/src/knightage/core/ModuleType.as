@@ -11,10 +11,6 @@ package knightage.core
 		 */		
 		public static const K_COMPS:String = "JsionComps";
 		/**
-		 * UI框架
-		 */		
-		public static const K_UI:String = "JsionUI";
-		/**
 		 * 网络库
 		 */		
 		public static const K_SOCKET:String = "JsionSocket";

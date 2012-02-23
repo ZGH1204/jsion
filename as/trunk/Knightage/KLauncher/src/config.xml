@@ -11,19 +11,19 @@
 	</version>
 	
 	
-	<Startup id="JsionCore" cls="jsion.core.JsionCoreModule" url="../../KAssets/libs/JsionCore.swc" crypted="false" />
+	<Startup id="JsionCore" cls="jsion.core.JsionCoreModule" url="KAssets/libs/JsionCore.swc" crypted="false" />
 	
 	<Modules>
-		<Module id="KLoading" cls="knightage.loading.KLoadingModule" url="../../KLoading/bin/KLoading.swc" autoLoad="true" crypted="false" target="_self" />
+		<Module id="KLoading" cls="knightage.loading.KLoadingModule" url="KLoading/bin/KLoading.swc" autoLoad="true" crypted="false" target="_self" />
 		
-		<Module id="KCore" cls="knightage.core.KCoreModule" url="../../KCore/bin/KCore.swc" autoLoad="false" crypted="false" target="_self" ></Module>
-		<Module id="JsionComps" cls="" url="../../KAssets/libs/JsionComps.swc" autoLoad="false" crypted="false" target="_self" />
-		<Module id="JsionSocket" cls="jsion.socket.SocketModule" url="../../KAssets/libs/JsionSocket.swc" autoLoad="false" crypted="false" target="_self" />
+		<Module id="KCore" cls="knightage.core.KCoreModule" url="KCore/bin/KCore.swc" autoLoad="false" crypted="false" target="_self" ></Module>
+		<Module id="JsionComps" cls="" url="KAssets/libs/JsionComps.swc" autoLoad="false" crypted="false" target="_self" />
+		<Module id="JsionSocket" cls="jsion.socket.SocketModule" url="KAssets/libs/JsionSocket.swc" autoLoad="false" crypted="false" target="_self" />
 		
-		<Module id="KDebugLogin" cls="knightage.debuglogin.KDebugLoginModule" url="../../KDebugLogin/bin/KDebugLogin.swc" autoLoad="false" crypted="false" target="_self" />
+		<Module id="KDebugLogin" cls="knightage.debuglogin.KDebugLoginModule" url="KDebugLogin/bin/KDebugLogin.swc" autoLoad="false" crypted="false" target="_self" />
 		
-		<Module id="KCity" cls="knightage.city.KCityModule" url="../../KCity/bin/KCity.swc" autoLoad="false" crypted="false" target="_self" />
-		<!--<Module id="KFighter" cls="slg.fighter.FighterModule" url="../../KFighter/bin/KFighter.swc" autoLoad="false" crypted="false" target="_self" />-->
+		<Module id="KCity" cls="knightage.city.KCityModule" url="KCity/bin/KCity.swc" autoLoad="false" crypted="false" target="_self" />
+		<!--<Module id="KFighter" cls="slg.fighter.FighterModule" url="KFighter/bin/KFighter.swc" autoLoad="false" crypted="false" target="_self" />-->
 	</Modules>
 	
 	<config Ver=""
@@ -46,5 +46,6 @@
 		LoginUrl=""
 		PayUrl=""
 		ForumUrl=""
-		ResRoot="" />
+		ModRoot="../../"
+		ResRoot="assets" />
 </root>
