@@ -10,12 +10,14 @@ package knightage.debuglogin
 	import jsion.core.messages.Msg;
 	import jsion.core.modules.BaseModule;
 	import jsion.core.modules.ModuleInfo;
+	import jsion.core.scenes.SceneMgr;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.StringUtil;
 	
 	import knightage.core.MsgFlag;
 	import knightage.core.net.SocketProxy;
 	import knightage.core.net.packets.LoginPacket;
+	import knightage.core.scenes.KSceneType;
 	
 	public class KDebugLoginModule extends BaseModule
 	{
@@ -66,15 +68,16 @@ package knightage.debuglogin
 			{
 				account = StringUtil.trim(inputTxt.text);
 				
-				var pkg:LoginPacket = new LoginPacket();
-				pkg.account = account;
-				
-				SocketProxy.send(pkg);
-				
 				inputTxt.removeEventListener(KeyboardEvent.KEY_DOWN, __keyDownHandler);
 				StageRef.removeEventListener(MouseEvent.CLICK, __stageClickHandler);
 				DisposeUtil.free(inputTxt);
 				inputTxt = null;
+				
+//				var pkg:LoginPacket = new LoginPacket();
+//				pkg.account = account;
+//				SocketProxy.send(pkg);
+				
+				SceneMgr.setScene(KSceneType.LOGIN, account);
 			}
 		}
 		

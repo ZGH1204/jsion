@@ -55,9 +55,9 @@ package knightage.core.net
 		{
 			if(MsgMonitor.hasReceiver(SLGPacketReceiveID)) return;
 			
-			var handlers:PacketHandlers = new PacketHandlers();
-			
 			searchHandler(ass);
+			
+			var handlers:PacketHandlers = new PacketHandlers();
 		}
 		
 		public static function searchHandler(ass:Assembly):void

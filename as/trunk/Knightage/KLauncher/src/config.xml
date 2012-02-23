@@ -23,6 +23,7 @@
 		<Module id="KDebugLogin" cls="knightage.debuglogin.KDebugLoginModule" url="KDebugLogin/bin/KDebugLogin.swc" autoLoad="false" crypted="false" target="_self" />
 		
 		<Module id="KCity" cls="knightage.city.KCityModule" url="KCity/bin/KCity.swc" autoLoad="false" crypted="false" target="_self" />
+		<Module id="KLogin" cls="knightage.city.KCityModule" url="KLogin/bin/KLogin.swc" autoLoad="false" crypted="false" target="_self" />
 		<!--<Module id="KFighter" cls="slg.fighter.FighterModule" url="KFighter/bin/KFighter.swc" autoLoad="false" crypted="false" target="_self" />-->
 	</Modules>
 	
