@@ -71,6 +71,7 @@
     <Compile Include="Packets\IPacketHandler.cs" />
     <Compile Include="Packets\IServerPacketHandler.cs" />
     <Compile Include="Packets\OutPackets\ConnectLogicServerPacket.cs" />
+    <Compile Include="Packets\OutPackets\UpdateServerIDPacket.cs" />
     <Compile Include="Packets\OutPackets\ValidateServerTypePacket.cs" />
     <Compile Include="Packets\OutPackets\ConnectBattleServerPacket.cs" />
     <Compile Include="Packets\PacketHandlerAttribute.cs" />

@@ -38,6 +38,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bat批处理", "bat批处�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bussiness", "Bussiness\Bussiness.csproj", "{C83DABC5-6D4B-4D1F-9402-426BB124C744}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "序列图", "序列图", "{BA15C74A-A63A-42E5-AD6D-EBE6D4E25503}"
+	ProjectSection(SolutionItems) = preProject
+		客户端连接到网关后的服务器间活动序列.sequencediagram = 客户端连接到网关后的服务器间活动序列.sequencediagram
+		服务器间启动序列.sequencediagram = 服务器间启动序列.sequencediagram
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,5 +169,6 @@ Global
 		{9CDBB9B3-239D-43E2-B8DE-EC63271AC163} = {203AA952-1BD4-4F28-A877-744AE8C426D2}
 		{CEEB1DCC-C617-4520-852C-32A479FC223A} = {EBA1C9FB-07F6-48B6-83AF-F49D8C94534C}
 		{4DD600D8-C957-456C-AC86-E9B7AA633428} = {EBA1C9FB-07F6-48B6-83AF-F49D8C94534C}
+		{BA15C74A-A63A-42E5-AD6D-EBE6D4E25503} = {BFB2C4A3-E016-4E73-988E-C8E37B8EF954}
 	EndGlobalSection
 EndGlobal
