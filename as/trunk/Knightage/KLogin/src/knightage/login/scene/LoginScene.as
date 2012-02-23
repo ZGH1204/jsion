@@ -1,11 +1,19 @@
 package knightage.login.scene
 {
 	import jsion.core.scenes.BaseScene;
+	import jsion.utils.BrowserUtil;
+	import jsion.utils.DisposeUtil;
+	import jsion.utils.StringUtil;
 	
+	import knightage.core.Config;
+	import knightage.core.net.SocketProxy;
 	import knightage.core.scenes.KSceneType;
+	import knightage.login.LoginController;
 	
 	public class LoginScene extends BaseScene
 	{
+		private var controller:LoginController;
+		
 		public function LoginScene()
 		{
 			super();
@@ -19,15 +27,18 @@ package knightage.login.scene
 		override public function enter(preScene:BaseScene, data:Object=null):void
 		{
 			t("Enter login scene", data);
-//			graphics.clear();
-//			graphics.beginFill(0xFF0000);
-//			graphics.drawRect(0,0,100,100);
-//			graphics.endFill();
+			
+			controller = new LoginController(data as String);
+			
+			controller.connectServer();
 		}
 		
 		override public function leaving(nextScene:BaseScene):void
 		{
 			t("Leaving login scene");
+			
+			DisposeUtil.free(controller);
+			controller = null;
 		}
 	}
 }

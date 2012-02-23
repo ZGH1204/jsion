@@ -41,8 +41,8 @@
 		fps = "3"
 		Debug="true" 
 		
-		SrvIP="192.168.1.254"
-		SrvPort="7878"
+		SrvIP="192.168.1.200"
+		SrvPort="6000"
 		
 		LoginUrl=""
 		PayUrl=""
