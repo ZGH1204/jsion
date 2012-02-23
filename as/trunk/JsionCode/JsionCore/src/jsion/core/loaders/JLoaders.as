@@ -968,7 +968,8 @@ package jsion.core.loaders
 				{
 					if(_embedCallback != null) _embedCallback(this);
 					_embedCallback = null;
-					dispatchEvent(new JLoaderEvent(JLoaderEvent.EmbedComplete));
+					JUtil.dispatchEventNextFrame(this, new JLoaderEvent(JLoaderEvent.EmbedComplete));
+					//dispatchEvent(new JLoaderEvent(JLoaderEvent.EmbedComplete));
 					return;
 				}
 				
