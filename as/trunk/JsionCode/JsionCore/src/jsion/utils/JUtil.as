@@ -4,6 +4,7 @@ package jsion.utils
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.text.TextField;
@@ -11,6 +12,7 @@ package jsion.utils
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	
+	import jsion.HashMap;
 	import jsion.IntDimension;
 	import jsion.utils.*;
 
@@ -42,6 +44,8 @@ package jsion.utils
 		 */		
 		private static const _reg2:RegExp = /[:|.|\/|\\]/g;
 		
+		private static const _eventList:HashMap = new HashMap();
+		
 		/**
 		 * 全局帧频刷新事件, 保证所有处理都在同一帧, 避免异步问题。
 		 * @param listener 处理事件的侦听器函数。
@@ -58,6 +62,30 @@ package jsion.utils
 		public static function removeEnterFrame(listener:Function, useCapture:Boolean = false):void
 		{
 			sprite.removeEventListener(Event.ENTER_FRAME, listener, useCapture);
+		}
+		
+		public static function dispatchEventNextFrame(obj:EventDispatcher, e:Event):void
+		{
+			if(_eventList.size == 0)
+			{
+				addEnterFrame(__nextFrameHandler);
+			}
+			
+			_eventList.put(obj, e);
+		}
+		
+		private static function __nextFrameHandler(e:Event):void
+		{
+			removeEnterFrame(__nextFrameHandler);
+			
+			var list:Array = _eventList.getKeys();
+			
+			for each(var sender:EventDispatcher in list)
+			{
+				sender.dispatchEvent(_eventList.get(sender) as Event);
+			}
+			
+			_eventList.removeAll();
 		}
 		
 		/**

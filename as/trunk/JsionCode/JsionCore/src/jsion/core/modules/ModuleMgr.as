@@ -46,7 +46,7 @@ package jsion.core.modules
 		 */		
 		public static function setup(config:XML):void
 		{
-			m_resRoot = (config.config.@ResRoot);
+			m_resRoot = String(config.config.@ModRoot);
 			Module_Loader_Cfg["root"] = m_resRoot;
 			
 			var moduleXL:XMLList = config.Modules.Module;

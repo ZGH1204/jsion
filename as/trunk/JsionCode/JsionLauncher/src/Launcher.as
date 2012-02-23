@@ -65,7 +65,7 @@ package
 		{
 			configXML = new XML(configLoader.data);
 			
-			m_resRoot = String(configXML.config.@ResRoot);
+			m_resRoot = String(configXML.config.@ModRoot);
 			
 			configLoader.removeEventListener(Event.COMPLETE, __configCompleteHandler);
 			configLoader.removeEventListener(IOErrorEvent.IO_ERROR, __errorHandler);
