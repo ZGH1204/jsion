@@ -566,7 +566,7 @@
               <messageOccurrenceSpecificationMoniker Id="07c14022-07f2-4378-8ff0-ea5b53f1b871" LastKnownName="MessageOccurrenceSpecification" />
             </receiveEvent>
           </message>
-          <message Id="86cc1372-4a02-44a2-b32e-0e02822f7eca" name="转发玩家信息给逻辑服务器" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false">
+          <message Id="86cc1372-4a02-44a2-b32e-0e02822f7eca" name="转发玩家信息给客户端" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false">
             <sendEvent>
               <messageOccurrenceSpecificationMoniker Id="296ce146-cc6b-4e3f-a254-47f440977422" LastKnownName="MessageOccurrenceSpecification" />
             </sendEvent>
