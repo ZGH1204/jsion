@@ -2,7 +2,12 @@ package knightage.core.net
 {
 	import jsion.socket.Packet;
 	
-	public class SLGPacket extends Packet
+	/**
+	 * 数据包基类
+	 * @author Jsion
+	 * 
+	 */	
+	public class KPacket extends Packet
 	{
 		private var m_code:int;
 		
@@ -10,11 +15,13 @@ package knightage.core.net
 		
 		private var m_playerID:uint;
 		
-		public function SLGPacket(code:int = 0)
+		public function KPacket(code:int = 0, code2:int = 0)
 		{
 			super();
 			
 			m_code = code;
+			
+			m_code2 = code2;
 			
 			//m_playerID = PlayerMgr.Instance.self.id;
 		}

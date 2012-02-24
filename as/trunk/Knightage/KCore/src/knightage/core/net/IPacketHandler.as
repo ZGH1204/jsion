@@ -5,6 +5,6 @@ package knightage.core.net
 	{
 		function get code():int;
 		
-		function handle(pkg:SLGPacket):void;
+		function handle(pkg:KPacket):void;
 	}
 }

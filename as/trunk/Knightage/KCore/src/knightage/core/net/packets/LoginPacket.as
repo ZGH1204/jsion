@@ -1,9 +1,9 @@
 package knightage.core.net.packets
 {
+	import knightage.core.net.GatewayPacket;
 	import knightage.core.net.PacketCodes;
-	import knightage.core.net.SLGPacket;
 
-	public class LoginPacket extends SLGPacket
+	public class LoginPacket extends GatewayPacket
 	{
 		public function LoginPacket()
 		{
