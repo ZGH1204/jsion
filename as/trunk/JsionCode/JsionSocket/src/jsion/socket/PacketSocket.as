@@ -131,15 +131,9 @@ package jsion.socket
 		 * @param force 是否强制重新连接
 		 * 
 		 */		
-		public function connect(force:Boolean = false):void
+		public function connect():void
 		{
-			if(_statu == CONNECTING) return;
-			
-			if(force && _isConnected)
-			{
-				removeEvent(_socket);
-				close();
-			}
+			if(_statu == CONNECTING || _isConnected) return;
 			
 			connectImp();
 		}
