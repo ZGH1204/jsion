@@ -122,9 +122,11 @@ package jsion.socket
 			var ip:String = msg.wParam as String;
 			var port:int = msg.lParam as int;
 			
-			if(_socket == null) _socket = new PacketSocket(ip, port);
+			removeSocketEvent(_socket);
+			DisposeUtil.free(_socket);
+			_socket = new PacketSocket(ip, port);
 			
-			_socket.connect(true);
+			_socket.connect();
 			addSocketEvent(_socket);
 		}
 		
