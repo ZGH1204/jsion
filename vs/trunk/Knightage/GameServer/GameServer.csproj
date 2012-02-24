@@ -64,6 +64,7 @@
     <Compile Include="GameClient.cs" />
     <Compile Include="GameServerConfig.cs" />
     <Compile Include="GameSrv.cs" />
+    <Compile Include="Packet\ProgressLogicPacketHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

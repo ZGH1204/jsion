@@ -64,6 +64,7 @@
     <Compile Include="Commands\Startups\ConnectCenterCmd.cs" />
     <Compile Include="Commands\Startups\ListenPortCmd.cs" />
     <Compile Include="Commands\Startups\SearchHandlersCmd.cs" />
+    <Compile Include="Packet\ProgressBattlePacketHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
