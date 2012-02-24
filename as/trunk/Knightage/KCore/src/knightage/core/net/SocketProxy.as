@@ -20,6 +20,11 @@ package knightage.core.net
 			postMsg(MsgFlag.SocketConnect, ip, port);
 		}
 		
+		public static function forceConnect(ip:String, port:int):void
+		{
+			postMsg(MsgFlag.SocketForceConnect, ip, port);
+		}
+		
 		public static function send(pkg:SLGPacket):void
 		{
 			postMsg(MsgFlag.SocketSend, pkg);
