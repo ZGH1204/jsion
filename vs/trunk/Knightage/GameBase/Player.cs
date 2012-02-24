@@ -7,7 +7,7 @@ using GameBase.Datas;
 
 namespace GameBase
 {
-    public class Player
+    public partial class Player
     {
         public uint PlayerID { get; protected set; }
 
