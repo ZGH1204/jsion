@@ -3,6 +3,11 @@ package knightage.core.net
 	public class PacketCodes
 	{
 		/**
+		 * 转发给逻辑服务器
+		 */		
+		public static const LogicCode:int = 3;
+		
+		/**
 		 * 重新连接其他网关服务器
 		 */		
 		public static const ReConnect:int = 1001;

@@ -35,7 +35,7 @@ package knightage.core.net
 		
 		protected function receivePacket(msg:Msg):void
 		{
-			var pkg:SLGPacket = msg.wParam as SLGPacket;
+			var pkg:KPacket = msg.wParam as KPacket;
 			
 			var hander:IPacketHandler;
 			

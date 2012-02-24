@@ -15,7 +15,7 @@ package knightage.core
 	
 	import knightage.core.mgrs.TemplatesMgr;
 	import knightage.core.net.PacketHandlers;
-	import knightage.core.net.SLGPacket;
+	import knightage.core.net.KPacket;
 	import knightage.core.net.SocketProxy;
 	import knightage.core.scenes.KSceneType;
 	import knightage.core.scenes.SceneCreator;
@@ -26,7 +26,7 @@ package knightage.core
 		
 		LoaderGlobal.registeNewType("hy", LoaderGlobal.TYPE_BINARY, BinaryLoader);
 		
-		SocketProxy.setPacketClass(SLGPacket);
+		SocketProxy.setPacketClass(KPacket);
 		
 		TemplatesMgr.setup(loaders.getXml(Files.TemplatesFile));
 		

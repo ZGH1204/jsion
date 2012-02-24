@@ -8,6 +8,7 @@ package knightage.login
 	
 	import knightage.core.Config;
 	import knightage.core.MsgFlag;
+	import knightage.core.mgrs.LoginMgr;
 	import knightage.core.net.SocketProxy;
 	import knightage.core.net.packets.LoginPacket;
 
@@ -21,6 +22,9 @@ package knightage.login
 		{
 			m_account = account;
 			
+			LoginMgr.Instance.account = m_account;
+			LoginMgr.Instance.logined = false;
+			
 			super(LoginReceiverID);
 			
 			registeReceive(MsgFlag.SocketConnected, onConnected);
@@ -29,10 +33,6 @@ package knightage.login
 		private function onConnected(msg:Msg):void
 		{
 			t("Socket is connected!");
-			
-//			var pkg:LoginPacket = new LoginPacket();
-//			pkg.account = m_account;
-//			SocketProxy.send(pkg);
 		}
 		
 		public function connectServer():void
@@ -54,7 +54,7 @@ package knightage.login
 		
 		override public function dispose():void
 		{
-			
+			removeReceive(MsgFlag.SocketConnected);
 			
 			super.dispose();
 		}

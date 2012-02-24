@@ -25,7 +25,7 @@ package knightage.core.net
 			postMsg(MsgFlag.SocketForceConnect, ip, port);
 		}
 		
-		public static function send(pkg:SLGPacket):void
+		public static function send(pkg:KPacket):void
 		{
 			postMsg(MsgFlag.SocketSend, pkg);
 		}

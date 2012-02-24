@@ -2,7 +2,7 @@ package knightage.core.net.handlers
 {
 	import knightage.core.net.IPacketHandler;
 	import knightage.core.net.PacketCodes;
-	import knightage.core.net.SLGPacket;
+	import knightage.core.net.KPacket;
 	import knightage.core.net.SocketProxy;
 	
 	public class ReConnectGatewayHandler implements IPacketHandler
@@ -16,7 +16,7 @@ package knightage.core.net.handlers
 			return PacketCodes.ReConnect;
 		}
 		
-		public function handle(pkg:SLGPacket):void
+		public function handle(pkg:KPacket):void
 		{
 			t("重连网关服务器");
 			
