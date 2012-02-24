@@ -19,11 +19,11 @@ namespace CenterServer
         public static int PlayerCount = 0;
 
 
-        public static GatewayInfo GetNormalGateway(int exceptID)
+        public static GatewayInfo GetNormalGateway(uint exceptID)
         {
-            int[] keys = GatewayServerMgr.GetKeys();
+            uint[] keys = GatewayServerMgr.GetKeys();
 
-            foreach (int id in keys)
+            foreach (uint id in keys)
             {
                 if (id == exceptID)
                 {

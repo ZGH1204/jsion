@@ -5,6 +5,7 @@ using System.Text;
 using GameBase;
 using GameBase.Packets.OutPackets;
 using JUtils;
+using GameBase.Net;
 
 namespace GatewayServer
 {
@@ -35,6 +36,21 @@ namespace GatewayServer
                 pkg.Port = GatewayServerConfig.Configuration.Port;
 
                 SendTCP(pkg);
+            }
+        }
+
+        protected override void ReceivePacket(GamePacket packet)
+        {
+            if (packet.Code2 == 0)
+            {
+                if (GatewayGlobal.PlayerLoginMgr[packet.PlayerID] != null)
+                {
+                    GatewayGlobal.PlayerLoginMgr[packet.PlayerID].SendTcp(packet);
+                }
+            }
+            else
+            {
+                base.ReceivePacket(packet);
             }
         }
     }

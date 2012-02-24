@@ -9,13 +9,15 @@ namespace GatewayServer
 {
     public class GatewayGlobal
     {
-        public static int GatewayID = 0;
+        public static uint GatewayID = 0;
 
-        public static int ClientCount = 0;
+        public static uint ClientCount = 0;
 
         public static CenterServerConnector CenterServer;
 
         public static readonly ObjectMgr<GatewayClient> PlayerClientMgr = new ObjectMgr<GatewayClient>();
+
+        public static readonly ObjectMgr<GatewayClient> PlayerLoginMgr = new ObjectMgr<GatewayClient>();
 
         public static readonly ObjectMgr<ServerConnector> ConnectingMgr = new ObjectMgr<ServerConnector>();
 
@@ -23,7 +25,7 @@ namespace GatewayServer
 
         public static readonly ObjectMgr<BattleServerConnector> BattleServerMgr = new ObjectMgr<BattleServerConnector>();
 
-        public static bool ContainsGameLogicServer(int id)
+        public static bool ContainsGameLogicServer(uint id)
         {
             if (id <= 0)
             {
@@ -37,7 +39,7 @@ namespace GatewayServer
             return GameLogicServerMgr.Contains(id);
         }
 
-        public static bool ContainsBattleServer(int id)
+        public static bool ContainsBattleServer(uint id)
         {
             BattleServerConnector connector = ConnectingMgr[id] as BattleServerConnector;
 

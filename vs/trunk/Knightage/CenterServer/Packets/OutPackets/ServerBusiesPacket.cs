@@ -16,11 +16,11 @@ namespace CenterServer.Packets.OutPackets
             Code2 = (int)BasePacketCode.Gateway_Code;
         }
 
-        public int ClientID { get; set; }
+        public uint ClientID { get; set; }
 
         public override void WriteData()
         {
-            WriteInt(ClientID);
+            WriteUnsignedInt(ClientID);
         }
     }
 }

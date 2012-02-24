@@ -13,7 +13,7 @@ namespace GatewayServer.Packets.Handlers.Servers
     {
         public int HandlePacket(ServerConnector connector, GamePacket packet)
         {
-            int clientID = packet.ReadInt();
+            uint clientID = packet.ReadUnsignedInt();
 
             ClientBase client = GatewayGlobal.PlayerClientMgr[clientID];
 

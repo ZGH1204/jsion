@@ -13,7 +13,7 @@ namespace GatewayServer.Packets.Handlers.Servers
     {
         public int HandlePacket(ServerConnector connector, GamePacket packet)
         {
-            int id = packet.ReadInt();
+            uint id = packet.ReadUnsignedInt();
 
             if (GatewayGlobal.ContainsBattleServer(id))
             {

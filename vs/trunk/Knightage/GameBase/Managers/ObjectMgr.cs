@@ -10,7 +10,7 @@ namespace GameBase.Managers
     {
         private readonly HybridDictionary m_objects = new HybridDictionary();
 
-        public virtual void Add(int id, T obj)
+        public virtual void Add(uint id, T obj)
         {
             if (obj == null) return;
 
@@ -22,7 +22,7 @@ namespace GameBase.Managers
             }
         }
 
-        public virtual T Remove(int id)
+        public virtual T Remove(uint id)
         {
             lock (m_objects.SyncRoot)
             {
@@ -41,9 +41,9 @@ namespace GameBase.Managers
 
         public virtual void Remove(T obj)
         {
-            int[] keys = GetKeys();
+            uint[] keys = GetKeys();
 
-            foreach (int key in keys)
+            foreach (uint key in keys)
             {
                 if (m_objects[key] == obj)
                 {
@@ -52,7 +52,7 @@ namespace GameBase.Managers
             }
         }
 
-        public virtual bool Contains(int id)
+        public virtual bool Contains(uint id)
         {
             lock (m_objects.SyncRoot)
             {
@@ -60,11 +60,11 @@ namespace GameBase.Managers
             }
         }
 
-        public virtual int GetID(Predicate<T> match)
+        public virtual uint GetID(Predicate<T> match)
         {
-            int[] keys = GetKeys();
+            uint[] keys = GetKeys();
 
-            foreach (int key in keys)
+            foreach (uint key in keys)
             {
                 if (match(m_objects[key] as T))
                 {
@@ -75,13 +75,18 @@ namespace GameBase.Managers
             return 0;
         }
 
-        public T this[int id]
+        public T this[uint id]
         {
             get
             {
                 lock (m_objects.SyncRoot)
                 {
-                    return m_objects[id] as T;
+                    if (m_objects.Contains(id))
+                    {
+                        return m_objects[id] as T;
+                    }
+
+                    return default(T);
                 }
             }
         }
@@ -96,13 +101,13 @@ namespace GameBase.Managers
             }
         }
 
-        public virtual int[] GetKeys()
+        public virtual uint[] GetKeys()
         {
-            int[] list;
+            uint[] list;
 
             lock (m_objects.SyncRoot)
             {
-                list = new int[m_objects.Count];
+                list = new uint[m_objects.Count];
 
                 m_objects.Keys.CopyTo(list, 0);
             }

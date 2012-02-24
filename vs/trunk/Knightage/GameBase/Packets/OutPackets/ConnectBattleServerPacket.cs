@@ -14,7 +14,7 @@ namespace GameBase.Packets.OutPackets
             Code = (int)BasePacketCode.ConnectBattleServer;
         }
 
-        public int ID { get; set; }
+        public uint ID { get; set; }
 
         public string IP { get; set; }
 
@@ -22,7 +22,7 @@ namespace GameBase.Packets.OutPackets
 
         public override void WriteData()
         {
-            WriteInt(ID);
+            WriteUnsignedInt(ID);
 
             WriteUTF(IP);
 

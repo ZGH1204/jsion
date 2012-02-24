@@ -16,7 +16,7 @@ namespace CenterServer.Packets.OutPackets
             Code2 = (int)BasePacketCode.Gateway_Code;
         }
 
-        public int ClientID { get; set; }
+        public uint ClientID { get; set; }
 
         public string IP { get; set; }
 
@@ -24,7 +24,7 @@ namespace CenterServer.Packets.OutPackets
 
         public override void WriteData()
         {
-            WriteInt(ClientID);
+            WriteUnsignedInt(ClientID);
             WriteUTF(IP);
             WriteInt(Port);
         }
