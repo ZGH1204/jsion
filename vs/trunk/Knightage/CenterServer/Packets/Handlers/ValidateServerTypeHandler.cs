@@ -23,7 +23,7 @@ namespace CenterServer.Packets.Handlers
 
             int port = packet.ReadInt();
 
-            int id = 0;
+            uint id = 0;
 
             switch (type)
             {
@@ -71,9 +71,9 @@ namespace CenterServer.Packets.Handlers
                     {
                         CenterGlobal.GatewayServerMgr.Add(id, center);
 
-                        int[] keys = CenterGlobal.GameLogicServerMgr.GetKeys();
+                        uint[] keys = CenterGlobal.GameLogicServerMgr.GetKeys();
 
-                        foreach (int key in keys)
+                        foreach (uint key in keys)
                         {
                             GameLogicInfo info = GameGlobal.GameLogicMgr.FindTemplate(key);
                             ConnectLogicServerPacket pkg = new ConnectLogicServerPacket();
@@ -84,7 +84,7 @@ namespace CenterServer.Packets.Handlers
                         }
 
                         keys = CenterGlobal.BattleServerMgr.GetKeys();
-                        foreach (int key in keys)
+                        foreach (uint key in keys)
                         {
                             BattleInfo info = GameGlobal.BattleMgr.FindTemplate(key);
                             ConnectBattleServerPacket pkg = new ConnectBattleServerPacket();

@@ -15,15 +15,15 @@ namespace CenterServer.Packets.Handlers
     {
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
-            int gatewayID = packet.ReadInt();
-            int clientID = packet.ReadInt();
+            uint gatewayID = packet.ReadUnsignedInt();
+            uint clientID = packet.ReadUnsignedInt();
 
             ConnectOtherGatewayServer(client, gatewayID, clientID);
 
             return 0;
         }
 
-        public static void ConnectOtherGatewayServer(ClientBase client, int gatewayID, int clientID)
+        public static void ConnectOtherGatewayServer(ClientBase client, uint gatewayID, uint clientID)
         {
             GatewayInfo info = CenterGlobal.GetNormalGateway(gatewayID);
 

@@ -5,6 +5,7 @@ using System.Text;
 using GameBase;
 using System.Reflection;
 using log4net;
+using GameBase.Net;
 
 namespace GatewayServer
 {
@@ -12,9 +13,9 @@ namespace GatewayServer
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public int ID { get; protected set; }
+        public uint ID { get; protected set; }
 
-        public BattleServerConnector(int id, string ip, int port)
+        public BattleServerConnector(uint id, string ip, int port)
             : base(ip, port)
         {
             ID = id;
@@ -53,6 +54,21 @@ namespace GatewayServer
         protected override void OnDisconnect()
         {
             GatewayGlobal.BattleServerMgr.Remove(ID);
+        }
+
+        protected override void ReceivePacket(GamePacket packet)
+        {
+            if (packet.Code2 == 0)
+            {
+                if (GatewayGlobal.PlayerLoginMgr[packet.PlayerID] != null)
+                {
+                    GatewayGlobal.PlayerLoginMgr[packet.PlayerID].SendTcp(packet);
+                }
+            }
+            else
+            {
+                base.ReceivePacket(packet);
+            }
         }
     }
 }

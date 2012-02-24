@@ -11,7 +11,7 @@ namespace CenterServer
 {
     public class CenterClient : ClientBase
     {
-        public int ID { get; set; }
+        public uint ID { get; set; }
 
         public ServerType Type { get; set; }
 

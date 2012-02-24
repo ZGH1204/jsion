@@ -16,9 +16,13 @@ namespace GatewayServer
 
         private System.Timers.Timer m_timer;
 
+        private object m_locker;
+
         public GatewaySrv()
             : base()
-        { }
+        {
+            m_locker = new object();
+        }
 
         protected override ClientBase CreateClient(Socket socket)
         {
@@ -26,9 +30,12 @@ namespace GatewayServer
 
             client.Accept(socket);
 
-            Interlocked.Increment(ref GatewayGlobal.ClientCount);
+            lock (m_locker)
+            {
+                GatewayGlobal.ClientCount++;
 
-            client.ClientID = GatewayGlobal.ClientCount;
+                client.ClientID = GatewayGlobal.ClientCount;
+            }
 
             return client;
         }
