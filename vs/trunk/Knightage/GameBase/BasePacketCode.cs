@@ -12,6 +12,8 @@ namespace GameBase
     /// </summary>
     public enum BasePacketCode
     {
+        None_Code = 0,
+
         /// <summary>
         /// 转发给中心服务器处理
         /// </summary>

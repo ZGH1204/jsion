@@ -6,13 +6,11 @@ using GameBase.Net;
 
 namespace GameBase.Packets.OutPackets
 {
-    public class ConnectBattleServerPacket : GamePacket
+    public class ConnectBattleServerPacket : GatewayPacket
     {
         public ConnectBattleServerPacket()
-            : base()
-        {
-            Code = (int)BasePacketCode.ConnectBattleServer;
-        }
+            : base(BasePacketCode.ConnectBattleServer)
+        { }
 
         public uint ID { get; set; }
 

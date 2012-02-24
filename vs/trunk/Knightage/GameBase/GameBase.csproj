@@ -69,6 +69,7 @@
     <Compile Include="Net\CenterPacket.cs" />
     <Compile Include="Net\GamePacket.cs" />
     <Compile Include="Net\GameSocket.cs" />
+    <Compile Include="Net\GatewayPacket.cs" />
     <Compile Include="Packets\IPacketHandler.cs" />
     <Compile Include="Packets\IServerPacketHandler.cs" />
     <Compile Include="Packets\OutPackets\ConnectLogicServerPacket.cs" />

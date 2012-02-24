@@ -7,14 +7,11 @@ using GameBase;
 
 namespace CenterServer.Packets.OutPackets
 {
-    public class ReConnectGatewayPacket : GamePacket
+    public class ReConnectGatewayPacket : GatewayPacket
     {
         public ReConnectGatewayPacket()
-            : base()
-        {
-            Code = (int)BasePacketCode.ReConnectGateway;
-            Code2 = (int)BasePacketCode.Gateway_Code;
-        }
+            : base(BasePacketCode.ReConnectGateway)
+        { }
 
         public uint ClientID { get; set; }
 

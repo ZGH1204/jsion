@@ -7,14 +7,11 @@ using GameBase;
 
 namespace GatewayServer.Packets.OutPackets.Servers
 {
-    public class UpdateServerNormalPacket : GamePacket
+    public class UpdateServerNormalPacket : CenterPacket
     {
         public UpdateServerNormalPacket()
-            : base()
-        {
-            Code = (int)BasePacketCode.UpdateServerNormal;
-            Code2 = (int)BasePacketCode.Center_Code;
-        }
+            : base(BasePacketCode.UpdateServerNormal)
+        { }
 
         public uint GatewayID { get; set; }
 

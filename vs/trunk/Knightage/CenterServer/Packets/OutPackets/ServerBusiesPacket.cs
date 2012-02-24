@@ -7,14 +7,11 @@ using GameBase;
 
 namespace CenterServer.Packets.OutPackets
 {
-    public class ServerBusiesPacket : GamePacket
+    public class ServerBusiesPacket : GatewayPacket
     {
         public ServerBusiesPacket()
-            : base()
-        {
-            Code = (int)BasePacketCode.ServerBusies;
-            Code2 = (int)BasePacketCode.Gateway_Code;
-        }
+            : base(BasePacketCode.ServerBusies)
+        { }
 
         public uint ClientID { get; set; }
 

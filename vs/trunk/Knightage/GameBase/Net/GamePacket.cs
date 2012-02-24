@@ -14,13 +14,20 @@ namespace GameBase.Net
             : base()
         { }
 
-        public GamePacket(int bufferSize)
-            : base(bufferSize)
-        { }
+        public GamePacket(BasePacketCode code, BasePacketCode code2)
+            : base()
+        {
+            Code = (int)code;
+            Code2 = (int)code2;
+        }
 
-        public GamePacket(int bufferSize, EndianEnum endian)
-            : base(bufferSize, endian)
-        { }
+        //public GamePacket(int bufferSize)
+        //    : base(bufferSize)
+        //{ }
+
+        //public GamePacket(int bufferSize, EndianEnum endian)
+        //    : base(bufferSize, endian)
+        //{ }
 
         public GamePacket(byte[] buff, EndianEnum endian)
             : base(buff, endian)
