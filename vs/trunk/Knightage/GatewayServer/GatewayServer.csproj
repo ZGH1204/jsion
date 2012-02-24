@@ -67,10 +67,15 @@
     <Compile Include="GatewayGlobal.cs" />
     <Compile Include="GatewayServerConfig.cs" />
     <Compile Include="GatewaySrv.cs" />
-    <Compile Include="Packets\Handlers\Servers\PlayerLoginHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\ConnectBattleServerHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\ConnectGameLogicServerHandler.cs" />
+    <Compile Include="Packets\Handlers\Servers\ReConnectGatewayHandler.cs" />
+    <Compile Include="Packets\Handlers\Servers\ServerBusiesHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\UpdateServerIDHandler.cs" />
+    <Compile Include="Packets\OutPackets\NoticeLoginPacket.cs" />
+    <Compile Include="Packets\OutPackets\Servers\ConnectOtherGatewayPacket.cs" />
+    <Compile Include="Packets\OutPackets\Servers\UpdateServerFullPacket.cs" />
+    <Compile Include="Packets\OutPackets\Servers\UpdateServerNormalPacket.cs" />
     <Compile Include="Packets\ProcessGatewayPacketHandler.cs" />
     <Compile Include="Packets\Trans2CenterServerHandler.cs" />
     <Compile Include="Packets\Trans2LogicServerHandler.cs" />

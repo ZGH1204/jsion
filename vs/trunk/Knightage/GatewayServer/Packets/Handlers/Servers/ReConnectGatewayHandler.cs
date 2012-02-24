@@ -8,22 +8,18 @@ using GameBase.Net;
 
 namespace GatewayServer.Packets.Handlers.Servers
 {
-    [PacketHandler((int)BasePacketCode.Login, "玩家登陆结果")]
-    public class PlayerLoginHandler : IServerPacketHandler
+    [PacketHandler((int)BasePacketCode.ReConnectGateway, "转发通知客户端重连其他网关服务器")]
+    public class ReConnectGatewayHandler : IServerPacketHandler
     {
         public int HandlePacket(ServerConnector connector, GamePacket packet)
         {
-            GamePacket pkg = packet.Clone();
+            int clientID = packet.ReadInt();
 
-            bool result = packet.ReadBoolean();
+            ClientBase client = GatewayGlobal.PlayerClientMgr[clientID];
 
-            if (result)
+            if (client != null)
             {
-
-            }
-            else
-            {
-
+                client.SendTcp(packet);
             }
 
             return 0;

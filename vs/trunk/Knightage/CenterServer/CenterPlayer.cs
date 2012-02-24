@@ -16,12 +16,6 @@ namespace CenterServer
 
         public override void Logined()
         {
-            PlayerLoginSuccessPacket pkg = new PlayerLoginSuccessPacket();
-
-            pkg.PlayerID = PlayerInfo.PlayerID;
-            pkg.PlayerInfo = PlayerInfo;
-
-            SendTcp(pkg);
         }
     }
 }

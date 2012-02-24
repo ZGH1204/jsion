@@ -23,5 +23,8 @@ namespace GatewayServer
 
         [AppConfig("CenterPort", "中心服务器端口", 9000)]
         public int CenterPort;
+
+        [AppConfig("FullInterval", "网关满载超时时间", 300)]
+        public int FullInterval;
     }
 }
