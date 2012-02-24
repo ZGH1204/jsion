@@ -6,13 +6,11 @@ using GameBase.Net;
 
 namespace GameBase.Packets.OutPackets
 {
-    public class ConnectLogicServerPacket : GamePacket
+    public class ConnectLogicServerPacket : GatewayPacket
     {
         public ConnectLogicServerPacket()
-            : base()
-        {
-            Code = (int)BasePacketCode.ConnectLogicServer;
-        }
+            : base(BasePacketCode.ConnectLogicServer)
+        { }
 
         public uint ID { get; set; }
 

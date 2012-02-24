@@ -6,12 +6,11 @@ using GameBase.Net;
 
 namespace GameBase.Packets.OutPackets
 {
-    public class ValidateServerTypePacket : GamePacket
+    public class ValidateServerTypePacket : CenterPacket
     {
         public ValidateServerTypePacket()
-            : base()
+            : base(BasePacketCode.ValidateServer)
         {
-            Code = (int)BasePacketCode.ValidateServer;
         }
 
         public ServerType ServerType { get; set; }

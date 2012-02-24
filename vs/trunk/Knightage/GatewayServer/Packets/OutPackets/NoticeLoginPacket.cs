@@ -10,9 +10,7 @@ namespace GatewayServer.Packets.OutPackets
     public class NoticeLoginPacket : GamePacket
     {
         public NoticeLoginPacket()
-            : base()
-        {
-            Code = (int)BasePacketCode.NoticeLogin;
-        }
+            : base(BasePacketCode.NoticeLogin, BasePacketCode.None_Code)
+        { }
     }
 }

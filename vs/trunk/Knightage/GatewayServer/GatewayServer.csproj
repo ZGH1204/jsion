@@ -67,6 +67,7 @@
     <Compile Include="GatewayGlobal.cs" />
     <Compile Include="GatewayServerConfig.cs" />
     <Compile Include="GatewaySrv.cs" />
+    <Compile Include="Packets\Handlers\LoginHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\ConnectBattleServerHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\ConnectGameLogicServerHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\ReConnectGatewayHandler.cs" />
