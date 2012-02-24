@@ -13,6 +13,11 @@ namespace GatewayServer.Packets
     {
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
+            if (packet == null || packet.Code <= 1000)
+            {
+                return 0;
+            }
+
             GatewayClient c = GatewayGlobal.PlayerLoginMgr[packet.PlayerID];
 
             if (c != null && c.LogicServer != null)
