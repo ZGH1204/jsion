@@ -54,12 +54,39 @@ namespace GameBase
         /// </summary>
         UpdateServerID = 104,
 
+        /// <summary>
+        /// 更新网关服务器为满载状态
+        /// </summary>
+        UpdateServerFull = 105,
+
+        /// <summary>
+        /// 更新网关服务器为正常状态
+        /// </summary>
+        UpdateServerNormal = 106,
+
+        /// <summary>
+        /// 在中心服务器查找并通知客户端重定向到其他网关
+        /// </summary>
+        ConnectOtherGateway = 107,
+
+        /// <summary>
+        /// 通知客户端重新连接其他网关
+        /// </summary>
+        ReConnectGateway = 1001,
+
+        /// <summary>
+        /// 服务器繁忙
+        /// </summary>
+        ServerBusies = 1002,
+
+        /// <summary>
+        /// 通知客户端登陆
+        /// </summary>
+        NoticeLogin = 1011,
 
         /// <summary>
         /// 玩家登陆
         /// </summary>
-        Login = 201,
-
-        //Validate = 202
+        Login = 1012
     }
 }

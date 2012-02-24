@@ -15,6 +15,9 @@ namespace GameBase.ServerConfigs
         [XmlAttribute]
         public int Port { get; set; }
 
+        [XmlIgnore]
+        public bool Fulled { get; set; }
+
         [XmlAttribute]
         public string Summary { get; set; }
     }

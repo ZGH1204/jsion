@@ -64,6 +64,7 @@
     <Compile Include="Managers\LoginMgr.cs" />
     <Compile Include="Managers\ObjectMgr.cs" />
     <Compile Include="Managers\ServerMgr.cs" />
+    <Compile Include="Managers\TimerMgr.cs" />
     <Compile Include="Net\BattlePacket.cs" />
     <Compile Include="Net\CenterPacket.cs" />
     <Compile Include="Net\GamePacket.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="ServerType.cs" />
     <Compile Include="Template.cs" />
     <Compile Include="Managers\TemplateMgr.cs" />
+    <Compile Include="TimerAction.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
