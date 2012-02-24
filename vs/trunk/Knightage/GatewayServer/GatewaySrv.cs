@@ -61,7 +61,7 @@ namespace GatewayServer
 
                 Fulled = true;
 
-                m_timer = new System.Timers.Timer(GatewayServerConfig.Configuration.FullInterval);
+                m_timer = new System.Timers.Timer(GatewayServerConfig.Configuration.FullInterval * 1000);
                 m_timer.Elapsed += new System.Timers.ElapsedEventHandler(m_timer_Elapsed);
                 m_timer.Start();
             }
@@ -81,9 +81,12 @@ namespace GatewayServer
             pkg.GatewayID = GatewayGlobal.GatewayID;
             GatewayGlobal.CenterServer.SendTCP(pkg);
 
-            m_timer.Stop();
-            m_timer.Elapsed -= m_timer_Elapsed;
-            m_timer = null;
+            if (m_timer != null)
+            {
+                m_timer.Stop();
+                m_timer.Elapsed -= m_timer_Elapsed;
+                m_timer = null;
+            }
         }
 
         private static readonly GatewaySrv m_server = new GatewaySrv();
