@@ -8,7 +8,7 @@ using GameBase;
 
 namespace GatewayServer.Packets
 {
-    [PacketHandler((int)BasePacketCode.Gateway_Code, "处理网关服务器的数据包")]
+    [PacketHandler((int)BasePacketCode.Gateway_Code, "处理其他服务器发给网关服务器的数据包")]
     public class ProcessGatewayPacketHandler : IServerPacketHandler
     {
         public int HandlePacket(ServerConnector connector, GamePacket packet)
