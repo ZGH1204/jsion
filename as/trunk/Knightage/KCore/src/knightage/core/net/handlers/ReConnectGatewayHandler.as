@@ -20,7 +20,7 @@ package knightage.core.net.handlers
 		{
 			t("重连网关服务器");
 			
-			var clientID:int = pkg.readInt();
+			var clientID:int = pkg.readUnsignedInt();
 			
 			var ip:String = pkg.readUTF();
 			
