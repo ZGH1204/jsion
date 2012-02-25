@@ -72,6 +72,19 @@ namespace GameBase
         ConnectOtherGateway = 107,
 
         /// <summary>
+        /// 验证登陆
+        /// </summary>
+        ValidateLogin = 108,
+
+        /// <summary>
+        /// 验证登陆结果
+        /// </summary>
+        ValidateLoginResult = 109,
+
+
+
+
+        /// <summary>
         /// 通知客户端重新连接其他网关
         /// </summary>
         ReConnectGateway = 1001,

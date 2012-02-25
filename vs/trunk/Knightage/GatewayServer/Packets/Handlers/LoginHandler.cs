@@ -5,6 +5,7 @@ using System.Text;
 using GameBase.Packets;
 using GameBase;
 using GameBase.Net;
+using GatewayServer.Packets.OutPackets.Servers;
 
 namespace GatewayServer.Packets.Handlers
 {
@@ -13,6 +14,15 @@ namespace GatewayServer.Packets.Handlers
     {
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
+            string account = packet.ReadUTF();
+
+            ValidateLoginPacket pkg = new ValidateLoginPacket();
+
+            pkg.ClientID = ((GatewayClient)client).ClientID;
+            pkg.Account = account;
+
+            GatewayGlobal.CenterServer.SendTCP(pkg);
+
             return 0;
         }
     }
