@@ -15,15 +15,12 @@ namespace GatewayServer.Packets.OutPackets
 
         }
 
-        public uint PlayerID { get; set; }
-
         public string NickName { get; set; }
 
         public override void WriteData()
         {
             WriteBoolean(true);
 
-            WriteUnsignedInt(PlayerID);
             WriteUTF(NickName);
         }
     }
