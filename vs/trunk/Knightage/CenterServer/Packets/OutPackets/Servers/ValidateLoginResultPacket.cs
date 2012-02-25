@@ -15,8 +15,6 @@ namespace CenterServer.Packets.OutPackets.Servers
 
         }
 
-        public uint PlayerID { get; set; }
-
         public uint ClientID { get; set; }
 
         public string Account { get; set; }
@@ -25,7 +23,6 @@ namespace CenterServer.Packets.OutPackets.Servers
         {
             WriteBoolean(true);
             WriteUnsignedInt(ClientID);
-            WriteUnsignedInt(PlayerID);
             WriteUTF(Account);
         }
     }
