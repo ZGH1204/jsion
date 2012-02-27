@@ -14,7 +14,7 @@ namespace CenterServer
         public static readonly ObjectMgr<CenterClient> GameLogicServerMgr = new ObjectMgr<CenterClient>();
         public static readonly ObjectMgr<CenterClient> BattleServerMgr = new ObjectMgr<CenterClient>();
 
-        public static readonly LoginMgr<Player> LoginPlayerMgr = new LoginMgr<Player>();
+        public static readonly LoginMgr<uint, Player> LoginPlayerMgr = new LoginMgr<uint, Player>();
 
         public static int PlayerCount = 0;
 
