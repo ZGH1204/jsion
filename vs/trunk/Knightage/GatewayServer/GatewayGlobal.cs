@@ -15,6 +15,8 @@ namespace GatewayServer
 
         public static CenterServerConnector CenterServer;
 
+        public static CacheServerConnector CacheServer;
+
         public static readonly ObjectMgr<GatewayClient> PlayerClientMgr = new ObjectMgr<GatewayClient>();
 
         public static readonly ObjectMgr<GatewayClient> PlayerLoginMgr = new ObjectMgr<GatewayClient>();

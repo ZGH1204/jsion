@@ -34,6 +34,11 @@ namespace GameBase
         /// </summary>
         Gateway_Code = 4,
 
+        /// <summary>
+        /// 转发给缓存服务器处理
+        /// </summary>
+        Cache_Code = 5,
+
 
 
         /// <summary>
@@ -52,34 +57,39 @@ namespace GameBase
         ConnectBattleServer = 103,
 
         /// <summary>
+        /// 连接缓存服务器
+        /// </summary>
+        ConnectCacheServer = 104,
+
+        /// <summary>
         /// 更新网关服务器ID
         /// </summary>
-        UpdateServerID = 104,
+        UpdateServerID = 105,
 
         /// <summary>
         /// 更新网关服务器为满载状态
         /// </summary>
-        UpdateServerFull = 105,
+        UpdateServerFull = 106,
 
         /// <summary>
         /// 更新网关服务器为正常状态
         /// </summary>
-        UpdateServerNormal = 106,
+        UpdateServerNormal = 107,
 
         /// <summary>
         /// 在中心服务器查找并通知客户端重定向到其他网关
         /// </summary>
-        ConnectOtherGateway = 107,
+        ConnectOtherGateway = 108,
 
         /// <summary>
         /// 验证登陆
         /// </summary>
-        ValidateLogin = 108,
+        ValidateLogin = 109,
 
         /// <summary>
         /// 验证登陆结果
         /// </summary>
-        ValidateLoginResult = 109,
+        ValidateLoginResult = 110,
 
 
 

@@ -6,10 +6,10 @@ using GameBase.Packets;
 using GameBase.Net;
 using GameBase;
 
-namespace GameServer.Packets
+namespace CacheServer.Packets
 {
-    [PacketHandler((int)BasePacketCode.Logic_Code, "处理逻辑服务器的数据包")]
-    public class ProgressLogicPacketHandler : IPacketHandler
+    [PacketHandler((int)BasePacketCode.Cache_Code, "处理缓存服务器的数据包")]
+    public class ProgressCachePacketHandler : IPacketHandler
     {
         public int HandlePacket(ClientBase client, GamePacket packet)
         {

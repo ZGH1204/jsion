@@ -10,7 +10,6 @@ namespace GatewayServer
     {
         public uint ClientID { get; set; }
         public uint PlayerID { get; set; }
-        public ServerConnector LogicServer { get; set; }
 
         public GatewayClient()
             : base()
@@ -20,9 +19,10 @@ namespace GatewayServer
         {
             base.OnDisconnected();
 
-            LogicServer = null;
             GatewayGlobal.PlayerClientMgr.Remove(ClientID);
             GatewayGlobal.PlayerLoginMgr.Remove(PlayerID);
         }
+
+        public new GatewayPlayer Player { get; set; }
     }
 }

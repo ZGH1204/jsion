@@ -25,10 +25,10 @@ namespace CenterServer
             Validated = false;
         }
 
-        protected override void Initialize()
-        {
-            m_handlers = new PacketHandlers(this);
-        }
+        //protected override void Initialize()
+        //{
+        //    m_handlers = new PacketHandlers(this);
+        //}
 
         protected override void OnDisconnected()
         {
