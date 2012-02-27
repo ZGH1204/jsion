@@ -69,10 +69,8 @@
     <Compile Include="Packets\Handlers\ConnectOtherGatewayHandler.cs" />
     <Compile Include="Packets\Handlers\UpdateServerFullHandler.cs" />
     <Compile Include="Packets\Handlers\UpdateServerNormalHandler.cs" />
-    <Compile Include="Packets\Handlers\ValidateLoginHandler.cs" />
     <Compile Include="Packets\OutPackets\ReConnectGatewayPacket.cs" />
     <Compile Include="Packets\OutPackets\ServerBusiesPacket.cs" />
-    <Compile Include="Packets\OutPackets\Servers\ValidateLoginResultPacket.cs" />
     <Compile Include="Packets\ProgressCenterPacketHandler.cs" />
     <Compile Include="Packets\Handlers\ValidateServerTypeHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,7 +81,9 @@
       <Name>GameBase</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Packets\OutPackets\Servers\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -68,7 +68,9 @@
     <Compile Include="Commands\Startups\ConnectCenterCmd.cs" />
     <Compile Include="Commands\Startups\ListenPortCmd.cs" />
     <Compile Include="Commands\Startups\SearchHandlersCmd.cs" />
+    <Compile Include="Packets\OutPackets\Servers\ValidateLoginResultPacket.cs" />
     <Compile Include="Packets\ProgressCachePacketHandler.cs" />
+    <Compile Include="Packets\Handlers\ValidateLoginHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +83,7 @@
       <Name>GameBase</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

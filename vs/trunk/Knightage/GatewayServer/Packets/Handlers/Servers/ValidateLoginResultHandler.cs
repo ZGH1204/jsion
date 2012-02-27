@@ -9,7 +9,7 @@ using GatewayServer.Packets.OutPackets;
 
 namespace GatewayServer.Packets.Handlers.Servers
 {
-    [PacketHandler((int)BasePacketCode.ValidateLoginResult, "中心服务器登陆验证结果")]
+    [PacketHandler((int)BasePacketCode.ValidateLoginResult, "缓存服务器登陆验证结果")]
     public class ValidateLoginResultHandler : IServerPacketHandler
     {
         public int HandlePacket(ServerConnector connector, GamePacket packet)

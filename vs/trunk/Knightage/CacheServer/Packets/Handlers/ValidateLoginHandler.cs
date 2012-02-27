@@ -6,7 +6,7 @@ using GameBase.Packets;
 using GameBase;
 using GameBase.Net;
 
-namespace CenterServer.Packets.Handlers
+namespace CacheServer.Packets.Handlers
 {
     [PacketHandler((int)BasePacketCode.ValidateLogin, "验证登陆")]
     public class ValidateLoginHandler : IPacketHandler

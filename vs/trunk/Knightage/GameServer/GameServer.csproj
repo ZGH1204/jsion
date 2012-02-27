@@ -68,6 +68,7 @@
     <Compile Include="GameServerConfig.cs" />
     <Compile Include="GameSrv.cs" />
     <Compile Include="Packet\PacketHandlers\ProgressLogicPacketHandler.cs" />
+    <Compile Include="Packet\PacketHandlers\ValidateLoginResultHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,7 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Packet\OutPackets\" />
-    <Folder Include="Packet\PacketHandlers\Servers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
