@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GameBase.Net;
 using GameBase;
+using GameBase.Datas;
 
 namespace CacheServer.Packets.OutPackets.Servers
 {
@@ -17,13 +18,12 @@ namespace CacheServer.Packets.OutPackets.Servers
 
         public uint ClientID { get; set; }
 
-        public string Account { get; set; }
+        public PlayerInfo Info { get; set; }
 
         public override void WriteData()
         {
             WriteBoolean(true);
             WriteUnsignedInt(ClientID);
-            WriteUTF(Account);
         }
     }
 
