@@ -5,7 +5,7 @@ using System.Text;
 using GameBase.Net;
 using GameBase;
 
-namespace CenterServer.Packets.OutPackets.Servers
+namespace CacheServer.Packets.OutPackets.Servers
 {
     public class ValidateLoginSuccessPacket : GatewayPacket
     {

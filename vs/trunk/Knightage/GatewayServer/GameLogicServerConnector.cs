@@ -6,14 +6,20 @@ using GameBase;
 using System.Reflection;
 using log4net;
 using GameBase.Net;
+using GatewayServer.Packets.OutPackets.Servers;
 
 namespace GatewayServer
 {
     public class GameLogicServerConnector : ServerConnector
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        public static readonly int MaxClients = 5000;
 
         public uint ID { get; protected set; }
+
+        public int ClientCount { get; protected set; }
+
+        public readonly object SyncRoot = new object();
 
         public GameLogicServerConnector(uint id, string ip, int port)
             : base(ip, port)
@@ -68,6 +74,22 @@ namespace GatewayServer
             else
             {
                 base.ReceivePacket(packet);
+            }
+        }
+
+        public void IncrementCount()
+        {
+            lock (SyncRoot)
+            {
+                ClientCount++;
+            }
+        }
+
+        public void DecrementCount()
+        {
+            lock (SyncRoot)
+            {
+                ClientCount--;
             }
         }
     }

@@ -21,7 +21,7 @@ namespace GatewayServer.Packets.Handlers
             pkg.ClientID = ((GatewayClient)client).ClientID;
             pkg.Account = account;
 
-            GatewayGlobal.CenterServer.SendTCP(pkg);
+            GatewayGlobal.Send2CacheServer(pkg);
 
             return 0;
         }

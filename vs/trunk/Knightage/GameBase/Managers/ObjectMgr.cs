@@ -10,16 +10,34 @@ namespace GameBase.Managers
     {
         private readonly HybridDictionary m_objects = new HybridDictionary();
 
+        private uint m_id = 0;
+
         public virtual void Add(uint id, T obj)
         {
-            if (obj == null) return;
+            if (obj == null || id == 0) return;
 
             lock (m_objects.SyncRoot)
             {
                 if (m_objects.Contains(id)) return;
 
                 m_objects.Add(id, obj);
+
+                if (m_id == 0) m_id = id;
             }
+        }
+
+        public virtual T GetFirstObj()
+        {
+            if (m_id == 0)
+            {
+                uint[] keys = GetKeys();
+
+                if(keys.Length > 0) m_id = keys[0];
+
+                if (m_id == 0) return default(T);
+            }
+
+            return this[m_id];
         }
 
         public virtual T Remove(uint id)
@@ -31,6 +49,8 @@ namespace GameBase.Managers
                     T obj = m_objects[id] as T;
 
                     m_objects.Remove(id);
+
+                    if (m_id == id) m_id = 0;
 
                     return obj;
                 }

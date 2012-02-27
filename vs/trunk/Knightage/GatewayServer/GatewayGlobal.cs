@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GameBase.Managers;
 using GameBase;
+using GameBase.Net;
 
 namespace GatewayServer
 {
@@ -48,6 +49,43 @@ namespace GatewayServer
             if (connector != null) return true;
 
             return BattleServerMgr.Contains(id);
+        }
+        public static GameLogicServerConnector GetLogicConnector()
+        {
+            if (GameLogicServerMgr.Count == 0)
+            {
+                return null;
+            }
+
+            return GameLogicServerMgr.GetFirstObj();
+        }
+
+        //public static void Send2LogicServer(uint clientID, GamePacket pkg)
+        //{
+        //    GatewayClient client = GatewayGlobal.PlayerClientMgr[clientID];
+        //    GameLogicServerConnector c = GatewayGlobal.GetLogicConnector();
+
+        //    if (c == null)
+        //    {
+        //        //TODO: 通知客户端没有可用逻辑服务器
+        //    }
+        //    else
+        //    {
+        //        client.Player.LogicServer = c;
+        //        c.SendTCP(pkg);
+        //        c.IncrementCount();
+        //    }
+        //}
+
+        public static void Send2CacheServer(GamePacket pkg)
+        {
+            if (CacheServer == null || CacheServer.Socket.Connected == false)
+            {
+                //TODO: 通知客户端没有可用缓存服务器
+                return;
+            }
+
+            CacheServer.SendTCP(pkg);
         }
     }
 }
