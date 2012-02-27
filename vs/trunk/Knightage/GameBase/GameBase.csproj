@@ -67,12 +67,15 @@
     <Compile Include="Managers\ServerMgr.cs" />
     <Compile Include="Managers\TimerMgr.cs" />
     <Compile Include="Net\BattlePacket.cs" />
+    <Compile Include="Net\CachePacket.cs" />
     <Compile Include="Net\CenterPacket.cs" />
     <Compile Include="Net\GamePacket.cs" />
     <Compile Include="Net\GameSocket.cs" />
     <Compile Include="Net\GatewayPacket.cs" />
+    <Compile Include="Net\LogicPacket.cs" />
     <Compile Include="Packets\IPacketHandler.cs" />
     <Compile Include="Packets\IServerPacketHandler.cs" />
+    <Compile Include="Packets\OutPackets\ConnectCacheServerPacket.cs" />
     <Compile Include="Packets\OutPackets\ConnectLogicServerPacket.cs" />
     <Compile Include="Packets\OutPackets\UpdateServerIDPacket.cs" />
     <Compile Include="Packets\OutPackets\ValidateServerTypePacket.cs" />

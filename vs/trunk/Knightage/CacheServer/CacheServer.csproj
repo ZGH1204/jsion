@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4E2E5FF3-A40A-46BA-A213-2D97D927E565}</ProjectGuid>
+    <ProjectGuid>{9E08EA75-CB3D-431B-9700-9CFD138B5A16}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CenterServer</RootNamespace>
-    <AssemblyName>CenterServer</AssemblyName>
+    <RootNamespace>CacheServer</RootNamespace>
+    <AssemblyName>CacheServer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -34,9 +34,11 @@
     <Reference Include="AppConfig">
       <HintPath>..\libs\AppConfig.dll</HintPath>
     </Reference>
-    <Reference Include="Command, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Command">
       <HintPath>..\libs\Command.dll</HintPath>
+    </Reference>
+    <Reference Include="DBProvider">
+      <HintPath>..\libs\DBProvider.dll</HintPath>
     </Reference>
     <Reference Include="JUtils">
       <HintPath>..\libs\JUtils.dll</HintPath>
@@ -57,33 +59,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyHelper.cs" />
-    <Compile Include="CenterClient.cs" />
-    <Compile Include="CenterGlobal.cs" />
-    <Compile Include="CenterPlayer.cs" />
-    <Compile Include="CenterServerConfig.cs" />
+    <Compile Include="CacheClient.cs" />
+    <Compile Include="CacheGlobal.cs" />
+    <Compile Include="CacheServerConfig.cs" />
+    <Compile Include="CacheSrv.cs" />
+    <Compile Include="CenterServerConnector.cs" />
     <Compile Include="Commands\Startups\AllocBufferCmd.cs" />
-    <Compile Include="Commands\Startups\InitTemplateCmd.cs" />
+    <Compile Include="Commands\Startups\ConnectCenterCmd.cs" />
     <Compile Include="Commands\Startups\ListenPortCmd.cs" />
-    <Compile Include="CenterSrv.cs" />
     <Compile Include="Commands\Startups\SearchHandlersCmd.cs" />
-    <Compile Include="Packets\Handlers\ConnectOtherGatewayHandler.cs" />
-    <Compile Include="Packets\Handlers\UpdateServerFullHandler.cs" />
-    <Compile Include="Packets\Handlers\UpdateServerNormalHandler.cs" />
-    <Compile Include="Packets\Handlers\ValidateLoginHandler.cs" />
-    <Compile Include="Packets\OutPackets\ReConnectGatewayPacket.cs" />
-    <Compile Include="Packets\OutPackets\ServerBusiesPacket.cs" />
-    <Compile Include="Packets\OutPackets\Servers\ValidateLoginResultPacket.cs" />
-    <Compile Include="Packets\ProgressCenterPacketHandler.cs" />
-    <Compile Include="Packets\Handlers\ValidateServerTypeHandler.cs" />
+    <Compile Include="Packets\ProgressCachePacketHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bussiness\Bussiness.csproj">
+      <Project>{C83DABC5-6D4B-4D1F-9402-426BB124C744}</Project>
+      <Name>Bussiness</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameBase\GameBase.csproj">
       <Project>{20A8F6CF-FC47-4F81-8D64-FFFF782C4858}</Project>
       <Name>GameBase</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

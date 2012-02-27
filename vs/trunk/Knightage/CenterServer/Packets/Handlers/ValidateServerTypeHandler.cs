@@ -31,6 +31,21 @@ namespace CenterServer.Packets.Handlers
                 //    break;
                 //case ServerType.CenterServer:
                 //    break;
+                case ServerType.CacheServer:
+                    id = 1;
+                    if (CenterServerConfig.Configuration.CacheIP == ip && CenterServerConfig.Configuration.CachePort == port)
+                    {
+                        CenterGlobal.CacheServer = center;
+
+                        CenterGlobal.GatewayServerMgr.ForEach((c) =>
+                        {
+                            ConnectCacheServerPacket pkg = new ConnectCacheServerPacket();
+                            pkg.IP = ip;
+                            pkg.Port = port;
+                            c.SendTcp(pkg);
+                        });
+                    }
+                    break;
                 case ServerType.LogicServer:
                     id = GameGlobal.GameLogicMgr.GetID(info => info.IP == ip && info.Port == port);
                     if (id > 0)
@@ -92,6 +107,14 @@ namespace CenterServer.Packets.Handlers
                             pkg.IP = info.IP;
                             pkg.Port = info.Port;
                             center.SendTcp(pkg);
+                        }
+
+                        if (CenterGlobal.CacheServer != null && CenterGlobal.CacheServer.Connected)
+                        {
+                            ConnectCacheServerPacket cachePacket = new ConnectCacheServerPacket();
+                            cachePacket.IP = CenterServerConfig.Configuration.CacheIP;
+                            cachePacket.Port = CenterServerConfig.Configuration.CachePort;
+                            center.SendTcp(cachePacket);
                         }
                     }
                     break;

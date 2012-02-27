@@ -6,7 +6,7 @@ using GameBase.Packets;
 using GameBase;
 using GameBase.Net;
 
-namespace GatewayServer.Packets
+namespace GatewayServer.Packets.Handlers
 {
     [PacketHandler((int)BasePacketCode.Logic_Code, "转发到逻辑服务器")]
     public class Trans2LogicServerHandler : IPacketHandler
@@ -20,9 +20,9 @@ namespace GatewayServer.Packets
 
             GatewayClient c = GatewayGlobal.PlayerLoginMgr[packet.PlayerID];
 
-            if (c != null && c.LogicServer != null)
+            if (c != null && c.Player != null && c.Player.LogicServer != null)
             {
-                c.LogicServer.SendTCP(packet);
+                c.Player.LogicServer.SendTCP(packet);
             }
 
             return 0;

@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="AssemblyHelper.cs" />
     <Compile Include="BattleServerConnector.cs" />
+    <Compile Include="CacheServerConnector.cs" />
     <Compile Include="CenterServerConnector.cs" />
     <Compile Include="Commands\Startups\AllocBufferCmd.cs" />
     <Compile Include="Commands\Startups\ConnectCenterCmd.cs" />
@@ -65,13 +66,16 @@
     <Compile Include="GameLogicServerConnector.cs" />
     <Compile Include="GatewayClient.cs" />
     <Compile Include="GatewayGlobal.cs" />
+    <Compile Include="GatewayPlayer.cs" />
     <Compile Include="GatewayServerConfig.cs" />
     <Compile Include="GatewaySrv.cs" />
     <Compile Include="Packets\Handlers\LoginHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\ConnectBattleServerHandler.cs" />
+    <Compile Include="Packets\Handlers\Servers\ConnectCacheServerHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\ConnectGameLogicServerHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\ReConnectGatewayHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\ServerBusiesHandler.cs" />
+    <Compile Include="Packets\Handlers\Servers\Trans2CacheServerHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\UpdateServerIDHandler.cs" />
     <Compile Include="Packets\Handlers\Servers\ValidateLoginResultHandler.cs" />
     <Compile Include="Packets\OutPackets\LoginResultPacket.cs" />
@@ -80,9 +84,9 @@
     <Compile Include="Packets\OutPackets\Servers\UpdateServerFullPacket.cs" />
     <Compile Include="Packets\OutPackets\Servers\UpdateServerNormalPacket.cs" />
     <Compile Include="Packets\OutPackets\Servers\ValidateLoginPacket.cs" />
-    <Compile Include="Packets\ProcessGatewayPacketHandler.cs" />
+    <Compile Include="Packets\Handlers\Servers\ProcessGatewayPacketHandler.cs" />
     <Compile Include="Packets\Trans2CenterServerHandler.cs" />
-    <Compile Include="Packets\Trans2LogicServerHandler.cs" />
+    <Compile Include="Packets\Handlers\Trans2LogicServerHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

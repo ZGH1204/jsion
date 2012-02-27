@@ -11,5 +11,10 @@ namespace GameServer
         public GameClient()
             : base()
         { }
+
+        protected override void Initialize()
+        {
+            m_handlers = new GamePacketHandlers(this);
+        }
     }
 }

@@ -15,6 +15,8 @@ namespace GameBase
 
         BattleServer = 3,
 
-        GatewayServer = 4
+        GatewayServer = 4,
+
+        CacheServer = 5
     }
 }
