@@ -20,7 +20,7 @@ namespace GatewayServer
 
         public static readonly ObjectMgr<GatewayClient> PlayerClientMgr = new ObjectMgr<GatewayClient>();
 
-        public static readonly ObjectMgr<GatewayClient> PlayerLoginMgr = new ObjectMgr<GatewayClient>();
+        public static readonly ObjectMgr<GatewayPlayer> PlayerLoginMgr = new ObjectMgr<GatewayPlayer>();
 
         public static readonly ObjectMgr<ServerConnector> ConnectingMgr = new ObjectMgr<ServerConnector>();
 
@@ -60,9 +60,9 @@ namespace GatewayServer
             return GameLogicServerMgr.GetFirstObj();
         }
 
-        //public static void Send2LogicServer(uint clientID, GamePacket pkg)
+        //public static void Send2LogicServer(GamePacket pkg)
         //{
-        //    GatewayClient client = GatewayGlobal.PlayerClientMgr[clientID];
+        //    GatewayPlayer client = GatewayGlobal.PlayerClientMgr[pkg.PlayerID];
         //    GameLogicServerConnector c = GatewayGlobal.GetLogicConnector();
 
         //    if (c == null)
@@ -71,7 +71,7 @@ namespace GatewayServer
         //    }
         //    else
         //    {
-        //        client.Player.LogicServer = c;
+        //        client.LogicServer = c;
         //        c.SendTCP(pkg);
         //        c.IncrementCount();
         //    }
