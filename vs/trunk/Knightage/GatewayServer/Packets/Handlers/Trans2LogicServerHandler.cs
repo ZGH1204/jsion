@@ -18,11 +18,11 @@ namespace GatewayServer.Packets.Handlers
                 return 0;
             }
 
-            GatewayClient c = GatewayGlobal.PlayerLoginMgr[packet.PlayerID];
+            GatewayPlayer c = GatewayGlobal.PlayerLoginMgr[packet.PlayerID];
 
-            if (c != null && c.Player != null && c.Player.LogicServer != null)
+            if (c != null && c.LogicServer != null)
             {
-                c.Player.LogicServer.SendTCP(packet);
+                c.LogicServer.SendTCP(packet);
             }
 
             return 0;
