@@ -62,6 +62,8 @@ namespace GatewayServer
 
         //public static void Send2LogicServer(GamePacket pkg)
         //{
+        //    pkg.Code2 = (int)BasePacketCode.Logic_Code;
+
         //    GatewayPlayer client = GatewayGlobal.PlayerClientMgr[pkg.PlayerID];
         //    GameLogicServerConnector c = GatewayGlobal.GetLogicConnector();
 
@@ -84,6 +86,8 @@ namespace GatewayServer
                 //TODO: 通知客户端没有可用缓存服务器
                 return;
             }
+
+            pkg.Code2 = (int)BasePacketCode.Cache_Code;
 
             CacheServer.SendTCP(pkg);
         }

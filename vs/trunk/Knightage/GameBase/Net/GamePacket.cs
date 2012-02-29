@@ -52,6 +52,8 @@ namespace GameBase.Net
 
             Position = 0;
 
+            Length = HeaderSize;
+
             Length = ReadShort();
 
             Code = ReadInt();
@@ -91,7 +93,9 @@ namespace GameBase.Net
         /// <returns></returns>
         public GamePacket Clone()
         {
-            GamePacket packet = new GamePacket(Buffer, Endian);
+            GamePacket packet = new GamePacket();
+
+            packet.CopyFrom(Buffer, 0, 0, Length);
 
             packet.ReadHeader();
 
