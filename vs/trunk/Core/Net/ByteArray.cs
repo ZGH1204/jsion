@@ -55,6 +55,7 @@ namespace Net
         public ByteArray(byte[] buff, EndianEnum endianEnum)
         {
             Buffer = buff;
+            BufferSize = Buffer.Length;
             Endian = endianEnum;
             Reset();
         }
