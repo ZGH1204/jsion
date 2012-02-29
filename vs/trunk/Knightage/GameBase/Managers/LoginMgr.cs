@@ -18,6 +18,8 @@ namespace GameBase.Managers
 
             lock (m_locker)
             {
+                player.Logined();
+
                 if (m_list.ContainsKey(key))
                 {
                     temp = m_list[key];
@@ -29,8 +31,6 @@ namespace GameBase.Managers
                     m_list.Add(key, player);
                     m_list2.Add(player, key);
                 }
-
-                player.Logined();
 
                 player.Client.Disconnected += new DisconnectDelegate(Client_Disconnected);
 
@@ -115,6 +115,11 @@ namespace GameBase.Managers
             }
 
             return default(T2);
+        }
+
+        public T2 this[T1 key]
+        {
+            get { return GetPlayer(key); }
         }
     }
 }
