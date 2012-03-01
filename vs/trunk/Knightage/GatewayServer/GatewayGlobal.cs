@@ -62,7 +62,7 @@ namespace GatewayServer
 
         //public static void Send2LogicServer(GamePacket pkg)
         //{
-        //    pkg.Code2 = (int)BasePacketCode.Logic_Code;
+        //    pkg.Code2 = 0;
 
         //    GatewayPlayer client = GatewayGlobal.PlayerClientMgr[pkg.PlayerID];
         //    GameLogicServerConnector c = GatewayGlobal.GetLogicConnector();
@@ -87,7 +87,7 @@ namespace GatewayServer
                 return;
             }
 
-            pkg.Code2 = (int)BasePacketCode.Cache_Code;
+            pkg.Code2 = 0;
 
             CacheServer.SendTCP(pkg);
         }

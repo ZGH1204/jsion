@@ -91,6 +91,11 @@ namespace GameBase
         /// </summary>
         ValidateLoginResult = 110,
 
+        /// <summary>
+        /// 玩家退出
+        /// </summary>
+        LoginOut = 120,
+
 
 
 

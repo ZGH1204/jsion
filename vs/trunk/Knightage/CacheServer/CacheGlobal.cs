@@ -12,5 +12,7 @@ namespace CacheServer
         public static CenterServerConnector CenterServer;
 
         public static readonly LoginMgr<string, Player> LoginPlayerMgr = new LoginMgr<string, Player>();
+
+        public static readonly ObjectMgr<Player> CachePlayerMgr = new ObjectMgr<Player>();
     }
 }

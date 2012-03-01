@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="GameServerConfig.cs" />
     <Compile Include="GameSrv.cs" />
+    <Compile Include="Packet\PacketHandlers\LoginOutHandler.cs" />
     <Compile Include="Packet\PacketHandlers\ProgressLogicPacketHandler.cs" />
     <Compile Include="Packet\PacketHandlers\ValidateLoginResultHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
