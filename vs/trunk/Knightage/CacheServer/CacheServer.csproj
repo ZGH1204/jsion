@@ -68,6 +68,7 @@
     <Compile Include="Commands\Startups\ConnectCenterCmd.cs" />
     <Compile Include="Commands\Startups\ListenPortCmd.cs" />
     <Compile Include="Commands\Startups\SearchHandlersCmd.cs" />
+    <Compile Include="Packets\Handlers\LoginOutHandler.cs" />
     <Compile Include="Packets\OutPackets\Servers\ValidateLoginResultPacket.cs" />
     <Compile Include="Packets\ProgressCachePacketHandler.cs" />
     <Compile Include="Packets\Handlers\ValidateLoginHandler.cs" />

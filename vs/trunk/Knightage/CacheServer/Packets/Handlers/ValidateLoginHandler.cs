@@ -17,7 +17,7 @@ namespace CacheServer.Packets.Handlers
 
             string account = packet.ReadUTF();
 
-            //TODO: 从数据库验证帐号
+            //TODO: 从数据库验证帐号,成功时记录到CacheGlobal中的LoginPlayerMgr和CachePlayerMgr中.
 
             return 0;
         }
