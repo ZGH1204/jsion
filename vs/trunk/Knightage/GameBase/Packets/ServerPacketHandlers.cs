@@ -55,7 +55,7 @@ namespace GameBase.Packets
             else
             {
                 log.ErrorFormat("Receive package's code is not exists! Code: {0}", code);
-                log.Error(Marshal.ToHexDump(string.Format("Code: {0}", code), packet.Buffer));
+                log.Error(Marshal.ToHexDump(string.Format("Code: {0}", code), packet.Buffer, 0, packet.Length));
                 return;
             }
 
