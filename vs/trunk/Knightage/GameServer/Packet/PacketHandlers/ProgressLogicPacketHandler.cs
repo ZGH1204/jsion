@@ -9,18 +9,14 @@ using GameBase;
 namespace GameServer.Packets.PacketHandlers
 {
     [PacketHandler((int)BasePacketCode.Logic_Code, "处理逻辑服务器的数据包")]
-    public class ProgressLogicPacketHandler : IPacketHandler, IServerPacketHandler
+    public class ProgressLogicPacketHandler : IPacketHandler
     {
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
-            client.HandlePacket(packet.Code, packet);
-
-            return 0;
-        }
-
-        public int HandlePacket(ServerConnector connector, GamePacket packet)
-        {
-            connector.HandlePacket(packet.Code, packet);
+            if (packet.Code > 1000)
+            {
+                client.HandlePacket(packet.Code, packet);
+            }
 
             return 0;
         }

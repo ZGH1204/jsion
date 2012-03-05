@@ -28,7 +28,7 @@ namespace GatewayServer
             {
                 GatewayGlobal.ClientCount++;
 
-                client.ClientID = GatewayGlobal.ClientCount;
+                client.SetClientID(GatewayGlobal.ClientCount);
             }
 
             return client;
@@ -37,6 +37,8 @@ namespace GatewayServer
         protected override void SaveClient(ClientBase client)
         {
             base.SaveClient(client);
+
+            GatewayGlobal.CheckMaxClientCount(client as GatewayClient);
         }
 
         private static readonly GatewaySrv m_server = new GatewaySrv();

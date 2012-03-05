@@ -62,9 +62,6 @@
     <Compile Include="Commands\Startups\SearchHandlersCmd.cs" />
     <Compile Include="GameClient.cs" />
     <Compile Include="GameGlobal.cs" />
-    <Compile Include="GamePacketHandlers.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="GamePlayer.cs" />
     <Compile Include="GameServerConfig.cs" />
     <Compile Include="GameSrv.cs" />

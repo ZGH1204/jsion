@@ -79,17 +79,7 @@ namespace GameBase
         /// <summary>
         /// 在中心服务器查找并通知客户端重定向到其他网关
         /// </summary>
-        ConnectOtherGateway = 108,
-
-        /// <summary>
-        /// 验证登陆
-        /// </summary>
-        ValidateLogin = 109,
-
-        /// <summary>
-        /// 验证登陆结果
-        /// </summary>
-        ValidateLoginResult = 110,
+        ChangeGateway = 108,
 
         /// <summary>
         /// 玩家退出

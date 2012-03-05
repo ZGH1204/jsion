@@ -22,7 +22,7 @@ namespace CenterServer.Packets.Handlers
 
             info.Fulled = true;
 
-            ConnectOtherGatewayHandler.ConnectOtherGatewayServer(client, gatewayID, clientID);
+            ChangeGatewayHandler.ConnectOtherGatewayServer(client, gatewayID, clientID);
 
             return 0;
         }
