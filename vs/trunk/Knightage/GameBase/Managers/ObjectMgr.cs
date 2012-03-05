@@ -17,6 +17,22 @@ namespace GameBase.Managers
             SyncRoot = new object();
         }
 
+        public TValue this[TKey key]
+        {
+            get 
+            {
+                lock (SyncRoot)
+                {
+                    if (m_pool.ContainsKey(key))
+                    {
+                        return m_pool[key];
+                    }
+                }
+
+                return default(TValue);
+            }
+        }
+
         public void Add(TKey key, TValue val)
         {
             lock (SyncRoot)

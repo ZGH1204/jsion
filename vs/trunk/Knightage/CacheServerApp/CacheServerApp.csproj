@@ -70,10 +70,6 @@
       <Project>{C83DABC5-6D4B-4D1F-9402-426BB124C744}</Project>
       <Name>Bussiness</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CacheServer\CacheServer.csproj">
-      <Project>{9E08EA75-CB3D-431B-9700-9CFD138B5A16}</Project>
-      <Name>CacheServer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GameBase\GameBase.csproj">
       <Project>{20A8F6CF-FC47-4F81-8D64-FFFF782C4858}</Project>
       <Name>GameBase</Name>

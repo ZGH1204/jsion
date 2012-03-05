@@ -8,18 +8,29 @@ namespace GatewayServer
 {
     public class GatewayClient : ClientBase
     {
-        public uint ClientID { get; set; }
+        public uint ClientID { get; protected set; }
         public uint PlayerID { get; set; }
 
         public new GatewayPlayer Player { get; set; }
+
+        public LogicServerConnector LogicServer { get; set; }
 
         public GatewayClient()
             : base()
         { }
 
+        public void SetClientID(uint id)
+        {
+            ClientID = id;
+
+            GatewayGlobal.Clients.Add(ClientID, this);
+        }
+
         protected override void OnDisconnected()
         {
             base.OnDisconnected();
+
+            GatewayGlobal.Clients.Remove(ClientID);
         }
     }
 }

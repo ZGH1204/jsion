@@ -19,5 +19,21 @@ namespace CenterServer
         public static readonly ObjectMgr<uint, CenterClient> LogicServerMgr = new ObjectMgr<uint, CenterClient>();
         public static readonly ObjectMgr<uint, CenterClient> GatewayServerMgr = new ObjectMgr<uint, CenterClient>();
         public static readonly ObjectMgr<uint, CenterClient> BattleServerMgr = new ObjectMgr<uint, CenterClient>();
+
+        private static uint m_freeID;
+
+        public static GatewayInfo GetFreeGateway(uint exceptID)
+        {
+            GatewayInfo info = GatewayMgr.FindTemplate(m_freeID);
+
+            if (info != null && info.Fulled == false)
+            {
+                return info;
+            }
+
+            m_freeID = GatewayMgr.GetID(gateway => gateway.Fulled == false && gateway.TemplateID != exceptID);
+
+            return GatewayMgr.FindTemplate(m_freeID);
+        }
     }
 }

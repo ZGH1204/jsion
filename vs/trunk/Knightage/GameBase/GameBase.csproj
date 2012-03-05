@@ -67,6 +67,7 @@
     <Compile Include="Net\BattlePacket.cs" />
     <Compile Include="Net\CachePacket.cs" />
     <Compile Include="Net\CenterPacket.cs" />
+    <Compile Include="Net\ClientPacket.cs" />
     <Compile Include="Net\GamePacket.cs" />
     <Compile Include="Net\GameSocket.cs" />
     <Compile Include="Net\GatewayPacket.cs" />

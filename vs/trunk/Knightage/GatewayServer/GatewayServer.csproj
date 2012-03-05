@@ -67,9 +67,17 @@
     <Compile Include="GatewayPlayer.cs" />
     <Compile Include="GatewayServerConfig.cs" />
     <Compile Include="GatewaySrv.cs" />
+    <Compile Include="Packets\ClientHandlers\LoginHandler.cs" />
+    <Compile Include="Packets\ClientHandlers\ProcessLogicPkgHandler.cs" />
+    <Compile Include="Packets\OutClientPackets\NoticeLoginPacket.cs" />
+    <Compile Include="Packets\OutServerPackets\ChangeGatewayPacket.cs" />
+    <Compile Include="Packets\OutServerPackets\UpdateServerFullPacket.cs" />
+    <Compile Include="Packets\OutServerPackets\UpdateServerNormalPacket.cs" />
     <Compile Include="Packets\ServerHandlers\ConnectBattleServerHandler.cs" />
     <Compile Include="Packets\ServerHandlers\ConnectLogicServerHandler.cs" />
     <Compile Include="Packets\ServerHandlers\ProcessGatewayPkgHandler.cs" />
+    <Compile Include="Packets\ServerHandlers\ReConnectGatewayHandler.cs" />
+    <Compile Include="Packets\ServerHandlers\ServerBusiesHandler.cs" />
     <Compile Include="Packets\ServerHandlers\UpdateServerIDHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -79,11 +87,7 @@
       <Name>GameBase</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Packets\ClientHandlers\" />
-    <Folder Include="Packets\OutClientPackets\" />
-    <Folder Include="Packets\OutServerPackets\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
