@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{20A8F6CF-FC47-4F81-8D64-FFFF782C4858}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GameBase</RootNamespace>
+    <AssemblyName>GameBase</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AppConfig">
+      <HintPath>..\libs\AppConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="Command">
+      <HintPath>..\libs\Command.dll</HintPath>
+    </Reference>
+    <Reference Include="JUtils">
+      <HintPath>..\libs\JUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\libs\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Net">
+      <HintPath>..\libs\Net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BasePacketCode.cs" />
+    <Compile Include="Datas\KPlayerInfo.cs" />
+    <Compile Include="Datas\PlayerInfo.cs" />
+    <Compile Include="GameGlobal.cs" />
+    <Compile Include="ClientBase.cs" />
+    <Compile Include="Managers\ClientMgr.cs" />
+    <Compile Include="Delegates.cs" />
+    <Compile Include="Managers\LoginMgr.cs" />
+    <Compile Include="Managers\ObjectMgr.cs" />
+    <Compile Include="Managers\ServerMgr.cs" />
+    <Compile Include="Managers\TimerMgr.cs" />
+    <Compile Include="Net\BattlePacket.cs" />
+    <Compile Include="Net\CachePacket.cs" />
+    <Compile Include="Net\CenterPacket.cs" />
+    <Compile Include="Net\GamePacket.cs" />
+    <Compile Include="Net\GameSocket.cs" />
+    <Compile Include="Net\GatewayPacket.cs" />
+    <Compile Include="Net\LogicPacket.cs" />
+    <Compile Include="Packets\IPacketHandler.cs" />
+    <Compile Include="Packets\IServerPacketHandler.cs" />
+    <Compile Include="Packets\OutPackets\ConnectCacheServerPacket.cs" />
+    <Compile Include="Packets\OutPackets\ConnectLogicServerPacket.cs" />
+    <Compile Include="Packets\OutPackets\LoginOutPacket.cs" />
+    <Compile Include="Packets\OutPackets\UpdateServerIDPacket.cs" />
+    <Compile Include="Packets\OutPackets\ValidateServerTypePacket.cs" />
+    <Compile Include="Packets\OutPackets\ConnectBattleServerPacket.cs" />
+    <Compile Include="Packets\PacketHandlerAttribute.cs" />
+    <Compile Include="Packets\PacketHandlers.cs" />
+    <Compile Include="Packets\ServerPacketHandlers.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerBase.cs" />
+    <Compile Include="ServerConfig.cs" />
+    <Compile Include="ServerConfigs\BattleInfo.cs" />
+    <Compile Include="ServerConfigs\GameLogicInfo.cs" />
+    <Compile Include="ServerConfigs\GatewayInfo.cs" />
+    <Compile Include="ServerConnector.cs" />
+    <Compile Include="ServerType.cs" />
+    <Compile Include="Template.cs" />
+    <Compile Include="Managers\TemplateMgr.cs" />
+    <Compile Include="TimerAction.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
