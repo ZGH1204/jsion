@@ -56,20 +56,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyHelper.cs" />
-    <Compile Include="CenterServerConnector.cs" />
     <Compile Include="Commands\Startups\AllocBufferCmd.cs" />
     <Compile Include="Commands\Startups\ConnectCenterServerCmd.cs" />
     <Compile Include="Commands\Startups\ListenPortCmd.cs" />
     <Compile Include="Commands\Startups\SearchHandlersCmd.cs" />
     <Compile Include="GameClient.cs" />
+    <Compile Include="GameGlobal.cs" />
     <Compile Include="GamePacketHandlers.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GamePlayer.cs" />
     <Compile Include="GameServerConfig.cs" />
     <Compile Include="GameSrv.cs" />
-    <Compile Include="Packet\PacketHandlers\LoginOutHandler.cs" />
     <Compile Include="Packet\PacketHandlers\ProgressLogicPacketHandler.cs" />
-    <Compile Include="Packet\PacketHandlers\ValidateLoginResultHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

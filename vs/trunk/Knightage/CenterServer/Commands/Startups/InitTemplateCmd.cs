@@ -18,9 +18,9 @@ namespace CenterServer.Commands.Startups
         {
             try
             {
-                GameGlobal.GatewayMgr.Load(CenterServerConfig.Configuration.TemplateFile, "/root/ArrayOfGatewayInfo");
-                GameGlobal.GameLogicMgr.Load(CenterServerConfig.Configuration.TemplateFile, "/root/ArrayOfGameLogicInfo");
-                GameGlobal.BattleMgr.Load(CenterServerConfig.Configuration.TemplateFile, "/root/ArrayOfBattleInfo");
+                CenterGlobal.GatewayMgr.Load(CenterServerConfig.Configuration.TemplateFile, "/root/ArrayOfGatewayInfo");
+                CenterGlobal.LogicMgr.Load(CenterServerConfig.Configuration.TemplateFile, "/root/ArrayOfGameLogicInfo");
+                CenterGlobal.BattleMgr.Load(CenterServerConfig.Configuration.TemplateFile, "/root/ArrayOfBattleInfo");
 
                 return true;
             }

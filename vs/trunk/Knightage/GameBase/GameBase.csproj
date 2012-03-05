@@ -56,16 +56,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasePacketCode.cs" />
+    <Compile Include="CenterServerConnector.cs" />
     <Compile Include="Datas\KPlayerInfo.cs" />
     <Compile Include="Datas\PlayerInfo.cs" />
-    <Compile Include="GameGlobal.cs" />
+    <Compile Include="Global.cs" />
     <Compile Include="ClientBase.cs" />
     <Compile Include="Managers\ClientMgr.cs" />
     <Compile Include="Delegates.cs" />
-    <Compile Include="Managers\LoginMgr.cs" />
     <Compile Include="Managers\ObjectMgr.cs" />
-    <Compile Include="Managers\ServerMgr.cs" />
-    <Compile Include="Managers\TimerMgr.cs" />
     <Compile Include="Net\BattlePacket.cs" />
     <Compile Include="Net\CachePacket.cs" />
     <Compile Include="Net\CenterPacket.cs" />
@@ -95,7 +93,6 @@
     <Compile Include="ServerType.cs" />
     <Compile Include="Template.cs" />
     <Compile Include="Managers\TemplateMgr.cs" />
-    <Compile Include="TimerAction.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

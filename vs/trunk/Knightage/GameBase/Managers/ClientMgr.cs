@@ -12,6 +12,7 @@ namespace GameBase.Managers
 
         public static ClientMgr<ClientBase> Instance { get { return m_instance; } }
     }
+
     public class ClientMgr<T> where T:ClientBase
     {
         private readonly HybridDictionary m_clients = new HybridDictionary();

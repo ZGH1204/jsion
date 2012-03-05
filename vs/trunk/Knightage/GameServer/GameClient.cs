@@ -12,6 +12,8 @@ namespace GameServer
             : base()
         { }
 
+        public new GamePlayer Player { get; set; }
+
         protected override void Initialize()
         {
             m_handlers = new GamePacketHandlers(this);

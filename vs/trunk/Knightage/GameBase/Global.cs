@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GameBase.ServerConfigs;
 using GameBase.Managers;
-using GameBase;
 
-namespace CacheServer
+namespace GameBase
 {
-    public class CacheGlobal
+    public class Global
     {
-        public static CenterServerConnector CenterServer;
     }
 }

@@ -12,12 +12,7 @@ namespace GameServer.Commands.Startups
     {
         public bool Execute(string[] paramsList)
         {
-            if (ServerMgr.Instance.Contains(GameServerConfig.Configuration.CenterIP, GameServerConfig.Configuration.CenterPort))
-            {
-                return true;
-            }
-
-            new CenterServerConnector(GameServerConfig.Configuration.CenterIP, GameServerConfig.Configuration.CenterPort);
+            GameGlobal.CenterServer.Connect(GameServerConfig.Configuration.CenterIP, GameServerConfig.Configuration.CenterPort);
 
             return true;
         }
