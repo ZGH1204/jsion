@@ -6,149 +6,133 @@ using System.Collections.Specialized;
 
 namespace GameBase.Managers
 {
-    public class ObjectMgr<T> where T:class
+    public class ObjectMgr<TKey, TValue>
     {
-        private readonly HybridDictionary m_objects = new HybridDictionary();
+        protected Dictionary<TKey, TValue> m_pool = new Dictionary<TKey, TValue>();
 
-        private uint m_id = 0;
+        public object SyncRoot { get; protected set; }
 
-        public virtual void Add(uint id, T obj)
+        public ObjectMgr()
         {
-            if (obj == null || id == 0) return;
-
-            lock (m_objects.SyncRoot)
-            {
-                if (m_objects.Contains(id)) return;
-
-                m_objects.Add(id, obj);
-
-                if (m_id == 0) m_id = id;
-            }
+            SyncRoot = new object();
         }
 
-        public virtual T GetFirstObj()
+        public void Add(TKey key, TValue val)
         {
-            if (m_id == 0)
+            lock (SyncRoot)
             {
-                uint[] keys = GetKeys();
-
-                if(keys.Length > 0) m_id = keys[0];
-
-                if (m_id == 0) return default(T);
-            }
-
-            return this[m_id];
-        }
-
-        public virtual T Remove(uint id)
-        {
-            lock (m_objects.SyncRoot)
-            {
-                if (m_objects.Contains(id))
+                if (m_pool.ContainsKey(key))
                 {
-                    T obj = m_objects[id] as T;
-
-                    m_objects.Remove(id);
-
-                    if (m_id == id) m_id = 0;
-
-                    return obj;
+                    m_pool[key] = val;
                 }
-
-                return default(T);
-            }
-        }
-
-        public virtual void Remove(T obj)
-        {
-            uint[] keys = GetKeys();
-
-            foreach (uint key in keys)
-            {
-                if (m_objects[key] == obj)
+                else
                 {
-                    Remove(key);
+                    m_pool.Add(key, val);
                 }
             }
         }
 
-        public virtual bool Contains(uint id)
+        public bool Remove(TKey key)
         {
-            lock (m_objects.SyncRoot)
+            lock (SyncRoot)
             {
-                return m_objects.Contains(id);
+                return m_pool.Remove(key);
             }
         }
 
-        public virtual uint GetID(Predicate<T> match)
+        public bool Contains(TKey key)
         {
-            uint[] keys = GetKeys();
-
-            foreach (uint key in keys)
+            lock (SyncRoot)
             {
-                if (match(m_objects[key] as T))
+                return m_pool.ContainsKey(key);
+            }
+        }
+
+        public bool Contains(TValue val)
+        {
+            lock (SyncRoot)
+            {
+                return m_pool.ContainsValue(val);
+            }
+        }
+
+        public TValue[] Select(Predicate<TValue> match)
+        {
+            lock (SyncRoot)
+            {
+                List<TValue> list = new List<TValue>();
+
+                foreach (TValue item in m_pool.Values)
                 {
-                    return key;
+                    if (match(item))
+                    {
+                        list.Add(item);
+                    }
+                }
+
+                return list.ToArray();
+            }
+        }
+
+        public TValue SelectSingle(Predicate<TValue> match)
+        {
+            lock (SyncRoot)
+            {
+                foreach (TValue item in m_pool.Values)
+                {
+                    if (match(item))
+                    {
+                        return item;
+                    }
+                }
+
+                return default(TValue);
+            }
+        }
+
+        public void Clear()
+        {
+            lock (SyncRoot)
+            {
+                m_pool.Clear();
+            }
+        }
+
+        public void ForEachKey(Action<TKey> action)
+        {
+            if (action == null) return;
+
+            lock (SyncRoot)
+            {
+                foreach (TKey item in m_pool.Keys)
+                {
+                    action(item);
                 }
             }
-
-            return 0;
         }
 
-        public T this[uint id]
+        public void ForEach(Action<TValue> action)
+        {
+            if (action == null) return;
+
+            lock (SyncRoot)
+            {
+                foreach (TValue item in m_pool.Values)
+                {
+                    action(item);
+                }
+            }
+        }
+
+        public int Count
         {
             get
             {
-                lock (m_objects.SyncRoot)
+                lock (SyncRoot)
                 {
-                    if (m_objects.Contains(id))
-                    {
-                        return m_objects[id] as T;
-                    }
-
-                    return default(T);
+                    return m_pool.Count;
                 }
             }
         }
-
-        public virtual void ForEach(Action<T> action)
-        {
-            T[] list = GetArray();
-
-            foreach (T obj in list)
-            {
-                action(obj);
-            }
-        }
-
-        public virtual uint[] GetKeys()
-        {
-            uint[] list;
-
-            lock (m_objects.SyncRoot)
-            {
-                list = new uint[m_objects.Count];
-
-                m_objects.Keys.CopyTo(list, 0);
-            }
-
-            return list;
-        }
-
-        public virtual T[] GetArray()
-        {
-            T[] list;
-
-            lock (m_objects.SyncRoot)
-            {
-                list = new T[m_objects.Count];
-
-                m_objects.Values.CopyTo(list, 0);
-            }
-
-            return list;
-        }
-
-        public virtual int Count { get { return m_objects.Count; } }
     }
 }

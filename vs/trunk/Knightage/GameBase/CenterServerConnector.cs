@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GameBase;
-using GameBase.Net;
-using GameBase.Packets.OutPackets;
 using JUtils;
+using GameBase.Packets.OutPackets;
 
-namespace GameServer
+namespace GameBase
 {
     public class CenterServerConnector : ServerConnector
     {
-        public CenterServerConnector(string ip, int port)
-            : base(ip, port)
-        { }
+        public ServerType ServerType { get; protected set; }
+
+        public int ListenPort { get; protected set; }
+
+        public CenterServerConnector(ServerType type, int listenPort)
+            : base()
+        {
+            ServerType = type;
+            ListenPort = listenPort;
+        }
 
         public override string ServerName
         {
@@ -31,9 +36,9 @@ namespace GameServer
             {
                 ValidateServerTypePacket pkg = new ValidateServerTypePacket();
 
-                pkg.ServerType = ServerType.LogicServer;
+                pkg.ServerType = ServerType;
                 pkg.IP = JUtil.GetLocalIP();
-                pkg.Port = GameServerConfig.Configuration.Port;
+                pkg.Port = ListenPort;
 
                 SendTCP(pkg);
             }

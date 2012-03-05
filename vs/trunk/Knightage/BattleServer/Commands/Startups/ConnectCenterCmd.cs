@@ -12,12 +12,7 @@ namespace BattleServer.Commands.Startups
     {
         public bool Execute(string[] paramsList)
         {
-            if (ServerMgr.Instance.Contains(BattleServerConfig.Configuration.CenterIP, BattleServerConfig.Configuration.CenterPort))
-            {
-                return true;
-            }
-
-            new CenterServerConnector(BattleServerConfig.Configuration.CenterIP, BattleServerConfig.Configuration.CenterPort);
+            BattleGlobal.CenterServer.Connect(BattleServerConfig.Configuration.CenterIP, BattleServerConfig.Configuration.CenterPort);
 
             return true;
         }

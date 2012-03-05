@@ -15,126 +15,149 @@ namespace CenterServer.Packets.Handlers
     {
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
-            CenterClient center = client as CenterClient;
+            HandlePacket(client as CenterClient, packet);
 
-            ServerType type = (ServerType)packet.ReadUnsignedByte();
+            return 0;
+        }
 
-            string ip = packet.ReadUTF();
 
-            int port = packet.ReadInt();
+        void HandlePacket(CenterClient client, GamePacket pkg)
+        {
+            //服务器类型
+            ServerType type = (ServerType)pkg.ReadUnsignedByte();
+
+            //服务器监听地址和端口
+            string ip = pkg.ReadUTF();
+            int port = pkg.ReadInt();
 
             uint id = 0;
 
             switch (type)
             {
-                //case ServerType.UnKnowServer:
-                //    break;
-                //case ServerType.CenterServer:
-                //    break;
-                case ServerType.CacheServer:
-                    id = 1;
-                    if (CenterServerConfig.Configuration.CacheIP == ip && CenterServerConfig.Configuration.CachePort == port)
-                    {
-                        CenterGlobal.CacheServer = center;
-
-                        CenterGlobal.GatewayServerMgr.ForEach((c) =>
-                        {
-                            ConnectCacheServerPacket pkg = new ConnectCacheServerPacket();
-                            pkg.IP = ip;
-                            pkg.Port = port;
-                            c.SendTcp(pkg);
-                        });
-                    }
-                    break;
                 case ServerType.LogicServer:
-                    id = GameGlobal.GameLogicMgr.GetID(info => info.IP == ip && info.Port == port);
-                    if (id > 0)
                     {
-                        CenterGlobal.GameLogicServerMgr.Add(id, center);
-                        CenterGlobal.GatewayServerMgr.ForEach((c) => {
-                            ConnectLogicServerPacket pkg = new ConnectLogicServerPacket();
-                            pkg.ID = id;
-                            pkg.IP = ip;
-                            pkg.Port = port;
-                            c.SendTcp(pkg);
-                        });
+                        id = CenterGlobal.LogicMgr.GetID(info => info.IP == ip && info.Port == port);
+
+                        if (id > 0)
+                        {
+                            CenterGlobal.LogicServerMgr.Add(id, client);
+                            client.Disconnected += new DisconnectDelegate(logic_Client_Disconnected);
+
+                            //通知所有网关服务器连接逻辑服务器
+                            CenterGlobal.GatewayServerMgr.ForEach(gateway =>
+                            {
+                                ConnectLogicServerPacket p = new ConnectLogicServerPacket();
+
+                                p.ID = id;
+                                p.IP = ip;
+                                p.Port = port;
+
+                                gateway.SendTcp(p);
+                            });
+                        }
+                        break;
                     }
-                    break;
                 case ServerType.BattleServer:
-                    id = GameGlobal.BattleMgr.GetID(info => info.IP == ip && info.Port == port);
-                    if (id > 0)
                     {
-                        CenterGlobal.BattleServerMgr.Add(id, center);
-                        CenterGlobal.GatewayServerMgr.ForEach((c) =>
+                        id = CenterGlobal.BattleMgr.GetID(info => info.IP == ip && info.Port == port);
+
+                        if (id > 0)
                         {
-                            ConnectBattleServerPacket pkg = new ConnectBattleServerPacket();
-                            pkg.ID = id;
-                            pkg.IP = ip;
-                            pkg.Port = port;
-                            c.SendTcp(pkg);
-                        });
+                            CenterGlobal.BattleServerMgr.Add(id, client);
+                            client.Disconnected += new DisconnectDelegate(battle_Client_Disconnected);
+
+                            //通知所有网关服务器连接战斗服务器
+                            CenterGlobal.GatewayServerMgr.ForEach(gateway =>
+                            {
+                                ConnectBattleServerPacket p = new ConnectBattleServerPacket();
+
+                                p.ID = id;
+                                p.IP = ip;
+                                p.Port = port;
+
+                                gateway.SendTcp(p);
+                            });
+                        }
+                        break;
                     }
-                    break;
                 case ServerType.GatewayServer:
-                    id = GameGlobal.GatewayMgr.GetID(info => info.IP == ip && info.Port == port);
-
-                    UpdateServerIDPacket pkt = new UpdateServerIDPacket();
-                    pkt.ID = (byte)id;
-                    center.SendTcp(pkt);
-
-                    if (id > 0)
                     {
-                        CenterGlobal.GatewayServerMgr.Add(id, center);
+                        id = CenterGlobal.GatewayMgr.GetID(info => info.IP == ip && info.Port == port);
 
-                        uint[] keys = CenterGlobal.GameLogicServerMgr.GetKeys();
-
-                        foreach (uint key in keys)
+                        if (id > 0)
                         {
-                            GameLogicInfo info = GameGlobal.GameLogicMgr.FindTemplate(key);
-                            ConnectLogicServerPacket pkg = new ConnectLogicServerPacket();
-                            pkg.ID = key;
-                            pkg.IP = info.IP;
-                            pkg.Port = info.Port;
-                            center.SendTcp(pkg);
-                        }
+                            CenterGlobal.GatewayServerMgr.Add(id, client);
+                            client.Disconnected += new DisconnectDelegate(gateway_Client_Disconnected);
 
-                        keys = CenterGlobal.BattleServerMgr.GetKeys();
-                        foreach (uint key in keys)
-                        {
-                            BattleInfo info = GameGlobal.BattleMgr.FindTemplate(key);
-                            ConnectBattleServerPacket pkg = new ConnectBattleServerPacket();
-                            pkg.ID = key;
-                            pkg.IP = info.IP;
-                            pkg.Port = info.Port;
-                            center.SendTcp(pkg);
-                        }
+                            //更新网关ID
+                            UpdateServerIDPacket pkt = new UpdateServerIDPacket();
+                            pkt.ID = (byte)id;
+                            client.SendTcp(pkt);
 
-                        if (CenterGlobal.CacheServer != null && CenterGlobal.CacheServer.Connected)
-                        {
-                            ConnectCacheServerPacket cachePacket = new ConnectCacheServerPacket();
-                            cachePacket.IP = CenterServerConfig.Configuration.CacheIP;
-                            cachePacket.Port = CenterServerConfig.Configuration.CachePort;
-                            center.SendTcp(cachePacket);
+                            //遍历所有逻辑服务器,通知网关连接.
+                            CenterGlobal.LogicServerMgr.ForEachKey(lid =>
+                            {
+                                GameLogicInfo info = CenterGlobal.LogicMgr.FindTemplate(lid);
+
+                                ConnectLogicServerPacket p = new ConnectLogicServerPacket();
+
+                                p.ID = info.TemplateID;
+                                p.IP = info.IP;
+                                p.Port = info.Port;
+
+                                client.SendTcp(p);
+                            });
+
+                            //遍历所有战斗服务器,通知网关连接.
+                            CenterGlobal.BattleServerMgr.ForEachKey(tid =>
+                            {
+                                BattleInfo info = CenterGlobal.BattleMgr.FindTemplate(tid);
+
+                                ConnectBattleServerPacket p = new ConnectBattleServerPacket();
+
+                                p.ID = info.TemplateID;
+                                p.IP = info.IP;
+                                p.Port = info.Port;
+
+                                client.SendTcp(p);
+                            });
                         }
+                        break;
                     }
-                    break;
-                default:
-                    center.Disconnect();
-                    return 0;
             }
 
+            //有效连接时设置服务器信息
             if (id > 0)
             {
-                center.ID = id;
-                center.Type = type;
-                center.Validated = true;
+                client.ServerID = id;
+                client.Type = type;
+                client.Validated = true;
             }
             else
             {
-                center.Disconnect();
+                client.Disconnect();
             }
+        }
 
-            return 0;
+        static void gateway_Client_Disconnected(ClientBase client)
+        {
+            CenterGlobal.GatewayServerMgr.Remove(((CenterClient)client).ServerID);
+
+            client.Disconnected -= gateway_Client_Disconnected;
+        }
+
+        static void battle_Client_Disconnected(ClientBase client)
+        {
+            CenterGlobal.BattleServerMgr.Remove(((CenterClient)client).ServerID);
+
+            client.Disconnected -= battle_Client_Disconnected;
+        }
+
+        static void logic_Client_Disconnected(ClientBase client)
+        {
+            CenterGlobal.LogicServerMgr.Remove(((CenterClient)client).ServerID);
+
+            client.Disconnected -= logic_Client_Disconnected;
         }
     }
 }

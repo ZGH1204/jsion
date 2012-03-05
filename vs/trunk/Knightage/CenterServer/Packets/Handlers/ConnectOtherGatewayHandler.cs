@@ -25,27 +25,27 @@ namespace CenterServer.Packets.Handlers
 
         public static void ConnectOtherGatewayServer(ClientBase client, uint gatewayID, uint clientID)
         {
-            GatewayInfo info = CenterGlobal.GetNormalGateway(gatewayID);
+            //GatewayInfo info = CenterGlobal.GetNormalGateway(gatewayID);
 
-            if (info != null)
-            {
-                ReConnectGatewayPacket pkg = new ReConnectGatewayPacket();
+            //if (info != null)
+            //{
+            //    ReConnectGatewayPacket pkg = new ReConnectGatewayPacket();
 
-                pkg.ClientID = clientID;
-                pkg.IP = info.IP;
-                pkg.Port = info.Port;
+            //    pkg.ClientID = clientID;
+            //    pkg.IP = info.IP;
+            //    pkg.Port = info.Port;
 
-                client.SendTcp(pkg);
-            }
-            else
-            {
-                //TODO: 通知客户端服务器繁忙
-                ServerBusiesPacket pkg = new ServerBusiesPacket();
+            //    client.SendTcp(pkg);
+            //}
+            //else
+            //{
+            //    //TODO: 通知客户端服务器繁忙
+            //    ServerBusiesPacket pkg = new ServerBusiesPacket();
 
-                pkg.ClientID = clientID;
+            //    pkg.ClientID = clientID;
 
-                client.SendTcp(pkg);
-            }
+            //    client.SendTcp(pkg);
+            //}
         }
     }
 }

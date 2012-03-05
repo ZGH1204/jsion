@@ -10,36 +10,14 @@ namespace CenterServer
 {
     public class CenterGlobal
     {
-        public static readonly ObjectMgr<CenterClient> GatewayServerMgr = new ObjectMgr<CenterClient>();
-        public static readonly ObjectMgr<CenterClient> GameLogicServerMgr = new ObjectMgr<CenterClient>();
-        public static readonly ObjectMgr<CenterClient> BattleServerMgr = new ObjectMgr<CenterClient>();
-        public static CenterClient CacheServer;
-
-        public static readonly LoginMgr<uint, Player> LoginPlayerMgr = new LoginMgr<uint, Player>();
-
         public static int PlayerCount = 0;
 
+        public static readonly TemplateMgr<GatewayInfo> GatewayMgr = new TemplateMgr<GatewayInfo>();
+        public static readonly TemplateMgr<GameLogicInfo> LogicMgr = new TemplateMgr<GameLogicInfo>();
+        public static readonly TemplateMgr<BattleInfo> BattleMgr = new TemplateMgr<BattleInfo>();
 
-        public static GatewayInfo GetNormalGateway(uint exceptID)
-        {
-            uint[] keys = GatewayServerMgr.GetKeys();
-
-            foreach (uint id in keys)
-            {
-                if (id == exceptID)
-                {
-                    continue;
-                }
-
-                GatewayInfo info = GameGlobal.GatewayMgr.FindTemplate(id);
-
-                if (info != null && info.Fulled == false)
-                {
-                    return info;
-                }
-            }
-
-            return null;
-        }
+        public static readonly ObjectMgr<uint, CenterClient> LogicServerMgr = new ObjectMgr<uint, CenterClient>();
+        public static readonly ObjectMgr<uint, CenterClient> GatewayServerMgr = new ObjectMgr<uint, CenterClient>();
+        public static readonly ObjectMgr<uint, CenterClient> BattleServerMgr = new ObjectMgr<uint, CenterClient>();
     }
 }

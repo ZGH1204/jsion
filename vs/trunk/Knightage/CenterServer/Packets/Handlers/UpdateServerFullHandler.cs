@@ -18,7 +18,7 @@ namespace CenterServer.Packets.Handlers
 
             uint clientID = packet.ReadUnsignedInt();
 
-            GatewayInfo info = GameGlobal.GatewayMgr.FindTemplate(gatewayID);
+            GatewayInfo info = CenterGlobal.GatewayMgr.FindTemplate(gatewayID);
 
             info.Fulled = true;
 
