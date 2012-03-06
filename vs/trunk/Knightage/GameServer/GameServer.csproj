@@ -67,6 +67,7 @@
     <Compile Include="GameSrv.cs" />
     <Compile Include="Packet\OutPackets\KitPlayerPacket.cs" />
     <Compile Include="Packet\OutServerPackets\LoginAfterKitPacket.cs" />
+    <Compile Include="Packet\OutServerPackets\UpdateServerPacket.cs" />
     <Compile Include="Packet\PacketHandlers\ClientDisconnectHandler.cs" />
     <Compile Include="Packet\PacketHandlers\ProgressLogicPacketHandler.cs" />
     <Compile Include="Packet\PacketHandlers\ValidateLoginHandler.cs" />

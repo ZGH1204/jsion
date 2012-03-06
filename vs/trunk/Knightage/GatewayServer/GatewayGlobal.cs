@@ -64,20 +64,20 @@ namespace GatewayServer
                 lock (m_syncRoot)
                 {
                     Fulled = true;
+
+                    //TODO: 通知中心服务器此网关已满 并N分钟后重置为未满
+
+                    UpdateServerFullPacket pkg = new UpdateServerFullPacket();
+
+                    pkg.ClientID = client.ClientID;
+
+                    GatewayGlobal.CenterServer.SendTCP(pkg);
+
+                    m_timer.Interval = 300 * 1000;
+                    m_timer.Elapsed += new ElapsedEventHandler(m_timer_Elapsed);
+                    m_timer.AutoReset = true;
+                    m_timer.Start();
                 }
-
-                //TODO: 通知中心服务器此网关已满 并N分钟后重置为未满
-
-                UpdateServerFullPacket pkg = new UpdateServerFullPacket();
-
-                pkg.ClientID = client.ClientID;
-
-                GatewayGlobal.CenterServer.SendTCP(pkg);
-
-                m_timer.Interval = 300 * 1000;
-                m_timer.Elapsed += new ElapsedEventHandler(m_timer_Elapsed);
-                m_timer.AutoReset = true;
-                m_timer.Start();
             }
             else
             {
@@ -94,11 +94,15 @@ namespace GatewayServer
             lock (m_syncRoot)
             {
                 Fulled = false;
+
+                UpdateServerNormalPacket pkg = new UpdateServerNormalPacket();
+
+                GatewayGlobal.CenterServer.SendTCP(pkg);
+
+                m_timer.Elapsed -= m_timer_Elapsed;
+
+                m_timer.Stop();
             }
-
-            UpdateServerNormalPacket pkg = new UpdateServerNormalPacket();
-
-            GatewayGlobal.CenterServer.SendTCP(pkg);
         }
 
 

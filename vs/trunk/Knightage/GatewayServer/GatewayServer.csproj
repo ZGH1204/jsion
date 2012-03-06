@@ -84,6 +84,7 @@
     <Compile Include="Packets\ServerHandlers\ReConnectGatewayHandler.cs" />
     <Compile Include="Packets\ServerHandlers\RegistePlayerHandler.cs" />
     <Compile Include="Packets\ServerHandlers\ServerBusiesHandler.cs" />
+    <Compile Include="Packets\ServerHandlers\UpdateLogicServerHandler.cs" />
     <Compile Include="Packets\ServerHandlers\UpdateServerIDHandler.cs" />
     <Compile Include="Packets\ServerHandlers\ValidateLoginHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
