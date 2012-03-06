@@ -9,9 +9,11 @@ echo 启动中心服务器...
 start CenterServerApp.exe
 
 
+if 1 == 0 (
 cd %~dp0CacheServerApp\bin\Debug
 echo 启动缓存服务器...
 start CacheServerApp.exe
+)
 
 
 cd %~dp0GameServerApp\bin\Debug

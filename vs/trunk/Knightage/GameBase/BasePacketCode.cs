@@ -35,11 +35,6 @@ namespace GameBase
         Gateway_Code = 4,
 
         /// <summary>
-        /// 转发给缓存服务器处理
-        /// </summary>
-        Cache_Code = 5,
-
-        /// <summary>
         /// 转发给客户端
         /// </summary>
         Client_Code = 6,
@@ -60,11 +55,6 @@ namespace GameBase
         /// 连接战斗服务器
         /// </summary>
         ConnectBattleServer = 103,
-
-        /// <summary>
-        /// 连接缓存服务器
-        /// </summary>
-        ConnectCacheServer = 104,
 
         /// <summary>
         /// 更新网关服务器ID
