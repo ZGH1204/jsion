@@ -26,5 +26,15 @@ package knightage.core.net
 		 * 登陆
 		 */		
 		public static const Login:int = 1012;
+		
+		/**
+		 * 玩家角色注册
+		 */		
+		public static const Regist:int = 1013;
+		
+		/**
+		 * 被踢下线
+		 */		
+		public static const KitPlayer:int = 1014;
 	}
 }

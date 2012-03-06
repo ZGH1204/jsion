@@ -30,6 +30,11 @@ package knightage.core.net
 			postMsg(MsgFlag.SocketSend, pkg);
 		}
 		
+		public static function close():void
+		{
+			postMsg(MsgFlag.SocketClose);
+		}
+		
 		private static function postMsg(msg:uint, wParam:Object = null, lParam:Object = null):void
 		{
 			MsgMonitor.createAndPostMsg(msg, SocketSender, SocketReceiver, wParam, lParam);
