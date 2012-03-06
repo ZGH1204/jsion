@@ -14,6 +14,22 @@ namespace GatewayServer
         public GatewayPlayer(PlayerInfo info, GatewayClient client)
             : base(info, client)
         {
+            Client = client;
+
+            Client.PlayerID = PlayerID;
+        }
+
+        public override void OnDisconnect()
+        {
+            base.OnDisconnect();
+
+            lock (GatewayGlobal.Players.SyncRoot)
+            {
+                if (GatewayGlobal.Players[PlayerID] == this)
+                {
+                    GatewayGlobal.Players.Remove(PlayerID);
+                }
+            }
         }
     }
 }

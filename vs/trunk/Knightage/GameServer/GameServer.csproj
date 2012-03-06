@@ -65,18 +65,26 @@
     <Compile Include="GamePlayer.cs" />
     <Compile Include="GameServerConfig.cs" />
     <Compile Include="GameSrv.cs" />
+    <Compile Include="Packet\OutPackets\KitPlayerPacket.cs" />
+    <Compile Include="Packet\OutServerPackets\LoginAfterKitPacket.cs" />
+    <Compile Include="Packet\PacketHandlers\ClientDisconnectHandler.cs" />
     <Compile Include="Packet\PacketHandlers\ProgressLogicPacketHandler.cs" />
+    <Compile Include="Packet\PacketHandlers\ValidateLoginHandler.cs" />
+    <Compile Include="Packet\PacketHandlers\KitPlayerHandler.cs" />
+    <Compile Include="Packet\ServerPacketHandlers\ProgressLogicPacketHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bussiness\Bussiness.csproj">
+      <Project>{C83DABC5-6D4B-4D1F-9402-426BB124C744}</Project>
+      <Name>Bussiness</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameBase\GameBase.csproj">
       <Project>{20A8F6CF-FC47-4F81-8D64-FFFF782C4858}</Project>
       <Name>GameBase</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Packet\OutPackets\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

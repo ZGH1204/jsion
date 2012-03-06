@@ -67,15 +67,25 @@
     <Compile Include="CenterSrv.cs" />
     <Compile Include="Commands\Startups\SearchHandlersCmd.cs" />
     <Compile Include="Packets\Handlers\ChangeGatewayHandler.cs" />
+    <Compile Include="Packets\Handlers\ClientDisconnectHandler.cs" />
+    <Compile Include="Packets\Handlers\LoginAfterKitHandler.cs" />
     <Compile Include="Packets\Handlers\UpdateServerFullHandler.cs" />
     <Compile Include="Packets\Handlers\UpdateServerNormalHandler.cs" />
+    <Compile Include="Packets\Handlers\ValidateLoginHandler.cs" />
+    <Compile Include="Packets\OutPackets\KitPlayerPacket.cs" />
     <Compile Include="Packets\OutPackets\ReConnectGatewayPacket.cs" />
+    <Compile Include="Packets\OutPackets\RegistePlayerPacket.cs" />
     <Compile Include="Packets\OutPackets\ServerBusiesPacket.cs" />
+    <Compile Include="Packets\OutPackets\ValidateLoginPacket.cs" />
     <Compile Include="Packets\ProgressCenterPacketHandler.cs" />
     <Compile Include="Packets\Handlers\ValidateServerTypeHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bussiness\Bussiness.csproj">
+      <Project>{C83DABC5-6D4B-4D1F-9402-426BB124C744}</Project>
+      <Name>Bussiness</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameBase\GameBase.csproj">
       <Project>{20A8F6CF-FC47-4F81-8D64-FFFF782C4858}</Project>
       <Name>GameBase</Name>

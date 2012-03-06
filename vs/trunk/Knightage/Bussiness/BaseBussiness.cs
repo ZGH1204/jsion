@@ -10,7 +10,7 @@ namespace Bussiness
 {
     public class BaseBussiness : IDisposable
     {
-        protected static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         protected Sql_DbObject db;
 

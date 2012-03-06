@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GameBase;
+using GatewayServer.Packets.OutServerPackets;
 
 namespace GatewayServer
 {
@@ -31,6 +32,26 @@ namespace GatewayServer
             base.OnDisconnected();
 
             GatewayGlobal.Clients.Remove(ClientID);
+
+            if (PlayerID != 0)
+            {
+                ClientDisconnectPacket pkg = new ClientDisconnectPacket(PlayerID);
+
+                pkg.ClientID = ClientID;
+
+                LogicServer.SendTCP(pkg);
+
+                pkg = new ClientDisconnectPacket(PlayerID);
+
+                pkg.ClientID = ClientID;
+
+                GatewayGlobal.CenterServer.SendTCP(pkg);
+            }
+
+            if (Player != null)
+            {
+                Player.OnDisconnect();
+            }
         }
     }
 }

@@ -13,6 +13,8 @@ namespace BattleServer
 
         public BattlePlayer(PlayerInfo info, BattleClient client)
             : base(info, client)
-        { }
+        {
+            Client = client;
+        }
     }
 }

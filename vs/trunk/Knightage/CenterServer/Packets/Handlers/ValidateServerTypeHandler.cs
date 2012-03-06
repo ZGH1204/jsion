@@ -7,12 +7,16 @@ using GameBase;
 using GameBase.Net;
 using GameBase.Packets.OutPackets;
 using GameBase.ServerConfigs;
+using log4net;
+using System.Reflection;
 
 namespace CenterServer.Packets.Handlers
 {
     [PacketHandler((int)BasePacketCode.ValidateServer, "验证服务器类型和有效性")]
     public class ValidateServerTypeHandler : IPacketHandler
     {
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
             HandlePacket(client as CenterClient, packet);
@@ -135,6 +139,7 @@ namespace CenterServer.Packets.Handlers
             }
             else
             {
+                log.ErrorFormat("服务器验证无效! IP:{0}  Port:{1}", ip, port);
                 client.Disconnect();
             }
         }
