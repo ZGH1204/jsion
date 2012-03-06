@@ -29,7 +29,7 @@ namespace CenterServer.Packets.Handlers
 
             if (playerID != 0)
             {
-                PlayerInfo info = new PlayerInfo();
+                LoginInfo info = new LoginInfo();
 
                 info.PlayerID = playerID;
                 info.Account = account;

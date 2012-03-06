@@ -57,7 +57,6 @@
   <ItemGroup>
     <Compile Include="BasePacketCode.cs" />
     <Compile Include="CenterServerConnector.cs" />
-    <Compile Include="Datas\KPlayerInfo.cs" />
     <Compile Include="Datas\PlayerInfo.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="ClientBase.cs" />

@@ -17,9 +17,9 @@ namespace GameBase
 
         public ClientBase Client { get; protected set; }
 
-        public PlayerInfo PlayerInfo { get; protected set; }
+        public LoginInfo PlayerInfo { get; protected set; }
 
-        public Player(PlayerInfo info, ClientBase client)
+        public Player(LoginInfo info, ClientBase client)
         {
             PlayerID = info.PlayerID;
             Account = info.Account;

@@ -11,7 +11,7 @@ namespace BattleServer
     {
         public new BattleClient Client { get; protected set; }
 
-        public BattlePlayer(PlayerInfo info, BattleClient client)
+        public BattlePlayer(LoginInfo info, BattleClient client)
             : base(info, client)
         {
             Client = client;

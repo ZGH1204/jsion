@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GameBase.Datas
 {
-    public partial class PlayerInfo
+    public partial class LoginInfo
     {
         public uint PlayerID { get; set; }
 
