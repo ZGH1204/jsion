@@ -11,7 +11,7 @@ namespace GatewayServer
     {
         public new GatewayClient Client { get; protected set; }
 
-        public GatewayPlayer(PlayerInfo info, GatewayClient client)
+        public GatewayPlayer(LoginInfo info, GatewayClient client)
             : base(info, client)
         {
             Client = client;

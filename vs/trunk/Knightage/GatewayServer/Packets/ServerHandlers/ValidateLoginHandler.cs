@@ -18,7 +18,7 @@ namespace GatewayServer.Packets.ServerHandlers
 
             GatewayClient client = GatewayGlobal.Clients[clientID];
 
-            PlayerInfo info = new PlayerInfo();
+            LoginInfo info = new LoginInfo();
 
             info.PlayerID = packet.PlayerID;
 

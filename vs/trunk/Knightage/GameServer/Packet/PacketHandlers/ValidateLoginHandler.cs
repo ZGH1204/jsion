@@ -16,7 +16,7 @@ namespace GameServer.Packet.PacketHandlers
         {
             uint clientID = packet.ReadUnsignedInt();
 
-            PlayerInfo info = new PlayerInfo();
+            LoginInfo info = new LoginInfo();
 
             info.PlayerID = packet.PlayerID;
 

@@ -13,7 +13,7 @@ namespace GameServer
 
         public new GameClient Client { get; protected set; }
 
-        public GamePlayer(PlayerInfo info, GameClient client)
+        public GamePlayer(LoginInfo info, GameClient client)
             : base(info, client)
         {
             Client = client;
