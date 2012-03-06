@@ -72,7 +72,6 @@
     <Compile Include="Net\LogicPacket.cs" />
     <Compile Include="Packets\IPacketHandler.cs" />
     <Compile Include="Packets\IServerPacketHandler.cs" />
-    <Compile Include="Packets\OutPackets\ConnectCacheServerPacket.cs" />
     <Compile Include="Packets\OutPackets\ConnectLogicServerPacket.cs" />
     <Compile Include="Packets\OutPackets\LoginOutPacket.cs" />
     <Compile Include="Packets\OutPackets\UpdateServerIDPacket.cs" />
