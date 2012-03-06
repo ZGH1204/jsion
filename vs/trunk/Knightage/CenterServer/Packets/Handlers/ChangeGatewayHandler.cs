@@ -7,12 +7,16 @@ using GameBase;
 using GameBase.Net;
 using GameBase.ServerConfigs;
 using CenterServer.Packets.OutPackets;
+using System.Reflection;
+using log4net;
 
 namespace CenterServer.Packets.Handlers
 {
     [PacketHandler((int)BasePacketCode.ChangeGateway, "查找并通知客户端重定向到其他网关")]
     public class ChangeGatewayHandler : IPacketHandler
     {
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
             uint gatewayID = packet.ReadUnsignedInt();
@@ -40,6 +44,9 @@ namespace CenterServer.Packets.Handlers
             else
             {
                 //TODO: 通知客户端服务器繁忙
+
+                log.Warn("所有网关服务器满载 请增开新的网关服务器");
+
                 ServerBusiesPacket pkg = new ServerBusiesPacket();
 
                 pkg.ClientID = clientID;

@@ -8,11 +8,15 @@ using GameBase.Net;
 using GatewayServer.Packets.OutClientPackets;
 using GatewayServer.Packets.OutServerPackets;
 using System.Timers;
+using System.Reflection;
+using log4net;
 
 namespace GatewayServer
 {
     public class GatewayGlobal
     {
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public static uint GatewayID = 0;
 
         public static uint ClientCount = 0;
@@ -115,25 +119,28 @@ namespace GatewayServer
         {
             LogicServerConnector connector = LogicServerMgr[m_freeID];
 
-            if (connector != null)
+            if (connector != null && connector.Fulled == false)
             {
                 return connector;
             }
 
-            connector = LogicServerMgr.SelectSingle(conn => conn.Fulled == false);
+            LogicServerConnector connect = LogicServerMgr.SelectSingle(conn => conn.Fulled == false);
 
-            if (connector != null)
+            if (connect != null)
             {
-                m_freeID = connector.ID;
+                m_freeID = connect.ID;
 
-                return connector;
+                connector = connect;
+
+                return connect;
             }
-            else
+            else if(connector == null)
             {
                 //TODO: 通知客户端逻辑服务器已满 稍候登陆
+                log.Warn("所有逻辑服务器满载 请增开新的逻辑服务器");
             }
 
-            return null;
+            return connector;
         }
     }
 }
