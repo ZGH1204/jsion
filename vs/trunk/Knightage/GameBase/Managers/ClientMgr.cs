@@ -59,6 +59,17 @@ namespace GameBase.Managers
             return list;
         }
 
+        public void ForEach(Action<T> action)
+        {
+            lock (m_clients.SyncRoot)
+            {
+                foreach (T item in m_clients.Keys)
+                {
+                    action(item);
+                }
+            }
+        }
+
         public int ClientCount { get { return m_clients.Count; } }
     }
 }

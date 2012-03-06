@@ -28,6 +28,8 @@ namespace GameServer.Packet.PacketHandlers
 
             GameGlobal.PlayerMgr.Add(player.PlayerID, player);
 
+            GameGlobal.CheckMaxClientCount();
+
             return 0;
         }
     }
