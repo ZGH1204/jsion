@@ -39,6 +39,11 @@ namespace GameBase
         /// </summary>
         Cache_Code = 5,
 
+        /// <summary>
+        /// 转发给客户端
+        /// </summary>
+        Client_Code = 6,
+
 
 
         /// <summary>
@@ -82,9 +87,24 @@ namespace GameBase
         ChangeGateway = 108,
 
         /// <summary>
+        /// 验证登陆
+        /// </summary>
+        ValidateLogin = 110,
+
+        /// <summary>
+        /// 旧客户端踢下线后的登陆
+        /// </summary>
+        LoginAfterKit = 111,
+
+        /// <summary>
         /// 玩家退出
         /// </summary>
         LoginOut = 120,
+
+        /// <summary>
+        /// 客户端断开连接
+        /// </summary>
+        ClientDisconnect = 130,
 
 
 
@@ -107,6 +127,16 @@ namespace GameBase
         /// <summary>
         /// 玩家登陆
         /// </summary>
-        Login = 1012
+        Login = 1012,
+
+        /// <summary>
+        /// 玩家注册
+        /// </summary>
+        Registe = 1013,
+
+        /// <summary>
+        /// 踢玩家下线
+        /// </summary>
+        KitPlayer = 1014,
     }
 }

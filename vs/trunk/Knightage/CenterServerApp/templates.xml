@@ -5,9 +5,11 @@
     <GatewayInfo TemplateID="2" TemplateName="框架-网关服务器2" IP="192.168.1.3" Port="6000" Summary="" />
   </ArrayOfGatewayInfo>
   <ArrayOfGameLogicInfo>
-    <GameLogicInfo TemplateID="1" TemplateName="框架-逻辑服务器" IP="192.168.1.3" Port="7000" Summary="" />
+    <GameLogicInfo TemplateID="1" TemplateName="框架-逻辑服务器" IP="192.168.1.200" Port="7000" Summary="" />
+    <GameLogicInfo TemplateID="2" TemplateName="框架-逻辑服务器" IP="192.168.1.3" Port="7000" Summary="" />
   </ArrayOfGameLogicInfo>
   <ArrayOfBattleInfo>
-    <BattleInfo TemplateID="1" TemplateName="框架-战斗服务器" IP="192.168.1.3" Port="8000" Summary="" />
+    <BattleInfo TemplateID="1" TemplateName="框架-战斗服务器" IP="192.168.1.200" Port="8000" Summary="" />
+    <BattleInfo TemplateID="2" TemplateName="框架-战斗服务器" IP="192.168.1.3" Port="8000" Summary="" />
   </ArrayOfBattleInfo>
 </root>

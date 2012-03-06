@@ -8,7 +8,7 @@ namespace GameBase.Net
     public class ClientPacket : GamePacket
     {
         public ClientPacket(BasePacketCode code)
-            : base(code, BasePacketCode.None_Code)
+            : base(code, BasePacketCode.Client_Code)
         {
 
         }

@@ -10,6 +10,8 @@ namespace CenterServer
 {
     public class CenterPlayer : Player
     {
+        public uint ClientID { get; set; }
+
         public CenterPlayer(PlayerInfo info, ClientBase client)
             : base(info, client)
         { }

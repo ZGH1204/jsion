@@ -18,7 +18,10 @@ namespace GameServer.Commands.Startups
         {
             try
             {
-                PacketHandlers.SearchPacketHandler(Assembly.GetAssembly(typeof(AssemblyHelper)));
+                Assembly ass = Assembly.GetAssembly(typeof(AssemblyHelper));
+
+                PacketHandlers.SearchPacketHandler(ass);
+                ServerPacketHandlers.SearchPacketHandler(ass);
 
                 return true;
             }

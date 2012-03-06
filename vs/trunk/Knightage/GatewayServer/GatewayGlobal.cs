@@ -33,6 +33,7 @@ namespace GatewayServer
         public static readonly ObjectMgr<uint, GatewayPlayer> Players = new ObjectMgr<uint, GatewayPlayer>();
 
 
+        //当前网关相关状态
 
         private static bool Fulled = false;
 
@@ -98,6 +99,37 @@ namespace GatewayServer
             UpdateServerNormalPacket pkg = new UpdateServerNormalPacket();
 
             GatewayGlobal.CenterServer.SendTCP(pkg);
+        }
+
+
+
+        //逻辑服务器相关
+
+        private static uint m_freeID;
+
+        public static LogicServerConnector GetFreeLogicServer(GatewayClient client)
+        {
+            LogicServerConnector connector = LogicServerMgr[m_freeID];
+
+            if (connector != null)
+            {
+                return connector;
+            }
+
+            connector = LogicServerMgr.SelectSingle(conn => conn.Fulled == false);
+
+            if (connector != null)
+            {
+                m_freeID = connector.ID;
+
+                return connector;
+            }
+            else
+            {
+                //TODO: 通知客户端逻辑服务器已满 稍候登陆
+            }
+
+            return null;
         }
     }
 }

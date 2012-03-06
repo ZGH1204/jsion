@@ -8,7 +8,7 @@ namespace GameBase.Net
     public class LogicPacket : GamePacket
     {
         public LogicPacket(BasePacketCode code)
-            : base(code, BasePacketCode.None_Code)
+            : base(code, BasePacketCode.Logic_Code)
         {
 
         }

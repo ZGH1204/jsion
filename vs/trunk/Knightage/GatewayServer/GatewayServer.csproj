@@ -71,14 +71,21 @@
     <Compile Include="Packets\ClientHandlers\ProcessLogicPkgHandler.cs" />
     <Compile Include="Packets\OutClientPackets\NoticeLoginPacket.cs" />
     <Compile Include="Packets\OutServerPackets\ChangeGatewayPacket.cs" />
+    <Compile Include="Packets\OutServerPackets\ClientDisconnectPacket.cs" />
+    <Compile Include="Packets\OutServerPackets\ValidateLoginPacket.cs" />
     <Compile Include="Packets\OutServerPackets\UpdateServerFullPacket.cs" />
     <Compile Include="Packets\OutServerPackets\UpdateServerNormalPacket.cs" />
     <Compile Include="Packets\ServerHandlers\ConnectBattleServerHandler.cs" />
     <Compile Include="Packets\ServerHandlers\ConnectLogicServerHandler.cs" />
+    <Compile Include="Packets\ServerHandlers\ProcessCenterPkgHandler.cs" />
+    <Compile Include="Packets\ServerHandlers\ProcessClientPkgHandler.cs" />
     <Compile Include="Packets\ServerHandlers\ProcessGatewayPkgHandler.cs" />
+    <Compile Include="Packets\ServerHandlers\ProcessLogicPkgHandler.cs" />
     <Compile Include="Packets\ServerHandlers\ReConnectGatewayHandler.cs" />
+    <Compile Include="Packets\ServerHandlers\RegistePlayerHandler.cs" />
     <Compile Include="Packets\ServerHandlers\ServerBusiesHandler.cs" />
     <Compile Include="Packets\ServerHandlers\UpdateServerIDHandler.cs" />
+    <Compile Include="Packets\ServerHandlers\ValidateLoginHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

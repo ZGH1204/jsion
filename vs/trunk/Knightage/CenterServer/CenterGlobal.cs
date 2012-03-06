@@ -20,6 +20,9 @@ namespace CenterServer
         public static readonly ObjectMgr<uint, CenterClient> GatewayServerMgr = new ObjectMgr<uint, CenterClient>();
         public static readonly ObjectMgr<uint, CenterClient> BattleServerMgr = new ObjectMgr<uint, CenterClient>();
 
+
+        //维护网关状态
+
         private static uint m_freeID;
 
         public static GatewayInfo GetFreeGateway(uint exceptID)
@@ -35,5 +38,10 @@ namespace CenterServer
 
             return GatewayMgr.FindTemplate(m_freeID);
         }
+
+
+        //已登陆的所有玩家信息
+
+        public static readonly ObjectMgr<uint, CenterPlayer> PlayerMgr = new ObjectMgr<uint, CenterPlayer>();
     }
 }

@@ -9,10 +9,33 @@ namespace GameServer
 {
     public class GamePlayer : Player
     {
-        public GamePlayer(PlayerInfo info, GameClient client)
-            : base(info, client)
-        { }
+        public uint ClientID { get; set; }
 
         public new GameClient Client { get; protected set; }
+
+        public GamePlayer(PlayerInfo info, GameClient client)
+            : base(info, client)
+        {
+            Client = client;
+        }
+
+        public override void Logined()
+        {
+            base.Logined();
+        }
+
+        public override void Logout()
+        {
+            base.Logout();
+        }
+
+        public override void OnDisconnect()
+        {
+            base.OnDisconnect();
+        }
+
+        public virtual void SaveToDatabase()
+        {
+        }
     }
 }
