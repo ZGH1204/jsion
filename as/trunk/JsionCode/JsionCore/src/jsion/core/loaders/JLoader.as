@@ -836,6 +836,11 @@ package jsion.core.loaders
 			_startTime = getTimer();
 			_isLoading = true;
 			
+			updateRequest();
+		}
+		
+		protected function updateRequest():void
+		{
 			if(_request)
 			{
 				var urlVar:URLVariables = _request.data as URLVariables;
@@ -983,6 +988,8 @@ package jsion.core.loaders
 		{
 			_bytesTotalStartTime = getTimer();
 			_status = LoaderGlobal.StatusGetBytesTotal;
+			
+			updateRequest();
 		}
 		
 		/**

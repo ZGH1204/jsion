@@ -5,6 +5,7 @@ package jsion.core.modules
 	import flash.utils.Dictionary;
 	import flash.utils.getQualifiedClassName;
 	
+	import jsion.Cache;
 	import jsion.core.cryptor.ICryption;
 	import jsion.core.cryptor.ModuleCrytor;
 	import jsion.core.events.JLoaderEvent;
@@ -48,6 +49,7 @@ package jsion.core.modules
 		{
 			m_resRoot = String(config.config.@ModRoot);
 			Module_Loader_Cfg["root"] = m_resRoot;
+			Module_Loader_Cfg["urlVariables"] = { v: Cache.version };
 			
 			var moduleXL:XMLList = config.Modules.Module;
 			
