@@ -9,17 +9,37 @@ namespace GameBase.Managers
     public class ObjectMgr<TKey, TValue>
     {
         protected Dictionary<TKey, TValue> m_pool = new Dictionary<TKey, TValue>();
+        protected List<TValue> m_list = new List<TValue>();
 
         public object SyncRoot { get; protected set; }
+
+        protected int m_index = -1;
 
         public ObjectMgr()
         {
             SyncRoot = new object();
         }
 
+        public TValue GetNext()
+        {
+            if (m_list.Count > 0)
+            {
+                m_index++;
+
+                if (m_index >= m_list.Count)
+                {
+                    m_index = 0;
+                }
+
+                return m_list[m_index];
+            }
+
+            return default(TValue);
+        }
+
         public TValue this[TKey key]
         {
-            get 
+            get
             {
                 lock (SyncRoot)
                 {
@@ -39,10 +59,13 @@ namespace GameBase.Managers
             {
                 if (m_pool.ContainsKey(key))
                 {
+                    m_list.Remove(m_pool[key]);
+                    m_list.Add(val);
                     m_pool[key] = val;
                 }
                 else
                 {
+                    m_list.Add(val);
                     m_pool.Add(key, val);
                 }
             }
@@ -52,6 +75,11 @@ namespace GameBase.Managers
         {
             lock (SyncRoot)
             {
+                if (m_pool.ContainsKey(key))
+                {
+                    m_list.Remove(m_pool[key]);
+                }
+
                 return m_pool.Remove(key);
             }
         }
@@ -110,6 +138,7 @@ namespace GameBase.Managers
         {
             lock (SyncRoot)
             {
+                m_list.Clear();
                 m_pool.Clear();
             }
         }
@@ -133,7 +162,7 @@ namespace GameBase.Managers
 
             lock (SyncRoot)
             {
-                foreach (TValue item in m_pool.Values)
+                foreach (TValue item in m_list)
                 {
                     action(item);
                 }
