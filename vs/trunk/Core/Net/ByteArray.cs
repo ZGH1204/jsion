@@ -258,6 +258,11 @@ namespace Net
             return new DateTime(ReadShort(), ReadByte(), ReadByte(), ReadByte(), ReadByte(), ReadByte());
         }
 
+        public DateTime ReadShortDate()
+        {
+            return new DateTime(ReadShort(), ReadByte(), ReadByte(), 0, 0, 0);
+        }
+
         #endregion
 
         #region 写入字节数组方法
@@ -401,6 +406,13 @@ namespace Net
             WriteUnsignedByte((byte)date.Hour);
             WriteUnsignedByte((byte)date.Minute);
             WriteUnsignedByte((byte)date.Second);
+        }
+
+        public void WriteShortDate(DateTime date)
+        {
+            WriteShort((short)date.Year);
+            WriteUnsignedByte((byte)date.Month);
+            WriteUnsignedByte((byte)date.Day);
         }
 
         #endregion
