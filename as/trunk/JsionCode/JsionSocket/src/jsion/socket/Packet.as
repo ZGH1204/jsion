@@ -98,6 +98,18 @@ package jsion.socket
 		}
 		
 		/**
+		 * 读取仅含日期部分的日期数据型
+		 */		
+		public function readShortDate():Date
+		{
+			var year:uint = readUnsignedShort();
+			var month:uint = readUnsignedByte() - 1;
+			var date:uint = readUnsignedByte();
+			
+			return new Date(year, month, date);
+		}
+		
+		/**
 		 * 写入日期数据类型
 		 * @param date 日期对象
 		 */		
@@ -109,6 +121,17 @@ package jsion.socket
 			writeByte(date.hours);
 			writeByte(date.minutes);
 			writeByte(date.seconds);
+		}
+		
+		/**
+		 * 仅写入日期部分的日期数据型
+		 * @param date 日期对象
+		 */
+		public function writeShortDate(date:Date):void
+		{
+			writeShort(date.fullYear);
+			writeByte(date.month + 1);
+			writeByte(date.date);
 		}
 	}
 }
