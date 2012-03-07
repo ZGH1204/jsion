@@ -92,6 +92,7 @@ package jsion.core.loaders
 			}
 			
 			super.getBytesTotal();
+			
 			addBytesTotalEvent(_loader);
 			
 			try
