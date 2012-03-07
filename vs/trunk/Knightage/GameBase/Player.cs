@@ -17,7 +17,7 @@ namespace GameBase
 
         public ClientBase Client { get; protected set; }
 
-        public LoginInfo PlayerInfo { get; protected set; }
+        public LoginInfo LoginInfo { get; protected set; }
 
         public Player(LoginInfo info, ClientBase client)
         {
