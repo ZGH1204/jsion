@@ -32,6 +32,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bat批处理", "bat批处理", "{BFB2C4A3-E016-4E73-988E-C8E37B8EF954}"
 	ProjectSection(SolutionItems) = preProject
 		Closed.bat = Closed.bat
+		Copy.bat = Copy.bat
 		Startup.bat = Startup.bat
 	EndProjectSection
 EndProject
