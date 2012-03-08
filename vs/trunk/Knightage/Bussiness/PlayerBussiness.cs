@@ -6,6 +6,7 @@ using GameBase.Datas;
 using System.Data.SqlClient;
 using log4net;
 using System.Reflection;
+using System.Data;
 
 namespace Bussiness
 {
@@ -19,9 +20,9 @@ namespace Bussiness
 
             try
             {
-                SqlParameter[] paras = new SqlParameter[1];
-
-                paras[0] = new SqlParameter("@account", account);
+                SqlParameter[] paras = {
+                    new SqlParameter("@account", account)
+                };
 
                 db.GetReader(ref reader, "UP_Players_GetID", paras);
 
@@ -40,6 +41,30 @@ namespace Bussiness
                 {
                     reader.Close();
                 }
+            }
+
+            return 0;
+        }
+
+        public uint Registe(string account, string nickName)
+        {
+            try
+            {
+                SqlParameter[] paras = {
+                    new SqlParameter("@playerid", ParameterDirection.Output),
+                    new SqlParameter("@account", account),
+                    new SqlParameter("@nickName", account)
+                };
+
+                db.RunProcedure("UP_Players_Add", paras);
+
+                uint playerID = Convert.ToUInt32(paras[0].SqlValue);
+
+                return playerID;
+            }
+            catch (Exception ex)
+            {
+                log.Error("PlayerBussiness.Registe(string, string)", ex);
             }
 
             return 0;

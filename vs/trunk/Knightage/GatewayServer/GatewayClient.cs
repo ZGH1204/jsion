@@ -11,6 +11,7 @@ namespace GatewayServer
     {
         public uint ClientID { get; protected set; }
         public uint PlayerID { get; set; }
+        public string Account { get; set; }
 
         public new GatewayPlayer Player { get; set; }
 

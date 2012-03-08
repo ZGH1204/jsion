@@ -69,9 +69,11 @@
     <Compile Include="GatewaySrv.cs" />
     <Compile Include="Packets\ClientHandlers\LoginHandler.cs" />
     <Compile Include="Packets\ClientHandlers\ProcessLogicPkgHandler.cs" />
+    <Compile Include="Packets\ClientHandlers\RegisteHandler.cs" />
     <Compile Include="Packets\OutClientPackets\NoticeLoginPacket.cs" />
     <Compile Include="Packets\OutServerPackets\ChangeGatewayPacket.cs" />
     <Compile Include="Packets\OutServerPackets\ClientDisconnectPacket.cs" />
+    <Compile Include="Packets\OutServerPackets\RegisteServerPacket.cs" />
     <Compile Include="Packets\OutServerPackets\ValidateLoginPacket.cs" />
     <Compile Include="Packets\OutServerPackets\UpdateServerFullPacket.cs" />
     <Compile Include="Packets\OutServerPackets\UpdateServerNormalPacket.cs" />
@@ -82,7 +84,8 @@
     <Compile Include="Packets\ServerHandlers\ProcessGatewayPkgHandler.cs" />
     <Compile Include="Packets\ServerHandlers\ProcessLogicPkgHandler.cs" />
     <Compile Include="Packets\ServerHandlers\ReConnectGatewayHandler.cs" />
-    <Compile Include="Packets\ServerHandlers\RegistePlayerHandler.cs" />
+    <Compile Include="Packets\ServerHandlers\NoticeRegisteHandler.cs" />
+    <Compile Include="Packets\ServerHandlers\RegisteServerHandler.cs" />
     <Compile Include="Packets\ServerHandlers\ServerBusiesHandler.cs" />
     <Compile Include="Packets\ServerHandlers\UpdateLogicServerHandler.cs" />
     <Compile Include="Packets\ServerHandlers\UpdateServerIDHandler.cs" />

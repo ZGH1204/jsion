@@ -69,12 +69,14 @@
     <Compile Include="Packets\Handlers\ChangeGatewayHandler.cs" />
     <Compile Include="Packets\Handlers\ClientDisconnectHandler.cs" />
     <Compile Include="Packets\Handlers\LoginAfterKitHandler.cs" />
+    <Compile Include="Packets\Handlers\RegistePlayerHandler.cs" />
     <Compile Include="Packets\Handlers\UpdateServerFullHandler.cs" />
     <Compile Include="Packets\Handlers\UpdateServerNormalHandler.cs" />
     <Compile Include="Packets\Handlers\ValidateLoginHandler.cs" />
     <Compile Include="Packets\OutPackets\KitPlayerPacket.cs" />
     <Compile Include="Packets\OutPackets\ReConnectGatewayPacket.cs" />
-    <Compile Include="Packets\OutPackets\RegistePlayerPacket.cs" />
+    <Compile Include="Packets\OutPackets\NoticeRegistePacket.cs" />
+    <Compile Include="Packets\OutPackets\RegisteResultPacket.cs" />
     <Compile Include="Packets\OutPackets\ServerBusiesPacket.cs" />
     <Compile Include="Packets\OutPackets\ValidateLoginPacket.cs" />
     <Compile Include="Packets\ProgressCenterPacketHandler.cs" />
