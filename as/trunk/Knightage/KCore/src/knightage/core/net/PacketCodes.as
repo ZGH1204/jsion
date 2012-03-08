@@ -28,13 +28,18 @@ package knightage.core.net
 		public static const Login:int = 1012;
 		
 		/**
+		 * 通知玩家注册
+		 */		
+		public static const NoticeRegist:int = 1013
+		
+		/**
 		 * 玩家角色注册
 		 */		
-		public static const Regist:int = 1013;
+		public static const Regist:int = 1014;
 		
 		/**
 		 * 被踢下线
 		 */		
-		public static const KitPlayer:int = 1014;
+		public static const KitPlayer:int = 1015;
 	}
 }
