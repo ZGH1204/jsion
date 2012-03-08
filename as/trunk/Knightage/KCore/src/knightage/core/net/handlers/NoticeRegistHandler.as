@@ -4,20 +4,20 @@ package knightage.core.net.handlers
 	import knightage.core.net.KPacket;
 	import knightage.core.net.PacketCodes;
 	
-	public class RegistPlayerHandler implements IPacketHandler
+	public class NoticeRegistHandler implements IPacketHandler
 	{
-		public function RegistPlayerHandler()
+		public function NoticeRegistHandler()
 		{
 		}
 		
 		public function get code():int
 		{
-			return PacketCodes.Regist;
+			return PacketCodes.NoticeRegist;
 		}
 		
 		public function handle(pkg:KPacket):void
 		{
-			t("玩家角色注册失败");
+			t("通知客户端弹出角色注册UI或界面");
 		}
 	}
 }
