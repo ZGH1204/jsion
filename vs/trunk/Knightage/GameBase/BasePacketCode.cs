@@ -77,6 +77,11 @@ namespace GameBase
         ChangeGateway = 108,
 
         /// <summary>
+        /// 角色注册
+        /// </summary>
+        ValidateRegiste = 109,
+
+        /// <summary>
         /// 验证登陆
         /// </summary>
         ValidateLogin = 110,
@@ -120,13 +125,18 @@ namespace GameBase
         Login = 1012,
 
         /// <summary>
+        /// 通知玩家注册
+        /// </summary>
+        NoticeRegiste = 1013,
+
+        /// <summary>
         /// 玩家注册
         /// </summary>
-        Registe = 1013,
+        Registe = 1014,
 
         /// <summary>
         /// 踢玩家下线
         /// </summary>
-        KitPlayer = 1014,
+        KitPlayer = 1015,
     }
 }

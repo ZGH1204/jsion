@@ -7,10 +7,10 @@ using GameBase;
 
 namespace CenterServer.Packets.OutPackets
 {
-    public class RegistePlayerPacket : GatewayPacket
+    public class NoticeRegistePacket : GatewayPacket
     {
-        public RegistePlayerPacket()
-            : base(BasePacketCode.Registe)
+        public NoticeRegistePacket()
+            : base(BasePacketCode.NoticeRegiste)
         {
 
         }

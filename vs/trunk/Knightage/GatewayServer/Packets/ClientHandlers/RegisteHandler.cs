@@ -9,28 +9,23 @@ using GatewayServer.Packets.OutServerPackets;
 
 namespace GatewayServer.Packets.ClientHandlers
 {
-    [PacketHandler((int)BasePacketCode.Login, "分配逻辑服务器并重新打包登陆数据包")]
-    public class LoginHandler : IPacketHandler
+    [PacketHandler((int)BasePacketCode.Registe, "重新打包注册数据包")]
+    public class RegisteHandler : IPacketHandler
     {
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
             GatewayClient gc = client as GatewayClient;
 
-            gc.LogicServer = GatewayGlobal.GetFreeLogicServer(gc);
-
-            if (gc.LogicServer == null)
+            if (gc.Account.IsNullOrEmpty())
             {
                 return 0;
             }
 
-            string account = packet.ReadUTF();
-
-            gc.Account = account;
-
-            ValidateLoginPacket pkg = new ValidateLoginPacket();
+            RegisteServerPacket pkg = new RegisteServerPacket();
 
             pkg.ClientID = gc.ClientID;
-            pkg.Account = account;
+            pkg.Account = gc.Account;
+            pkg.NickName = packet.ReadUTF();
 
             GatewayGlobal.CenterServer.SendTCP(pkg);
 

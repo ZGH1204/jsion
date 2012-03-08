@@ -27,6 +27,13 @@ namespace CenterServer.Packets.Handlers
             }
 
 
+            SendLoginPacket(client, clientID, account, playerID);
+
+            return 0;
+        }
+
+        public static void SendLoginPacket(ClientBase client, uint clientID, string account, uint playerID)
+        {
             if (playerID != 0)
             {
                 LoginInfo info = new LoginInfo();
@@ -68,14 +75,12 @@ namespace CenterServer.Packets.Handlers
             {
                 //TODO: 无此玩家 发送注册包到客户端进行注册
 
-                RegistePlayerPacket pkg = new RegistePlayerPacket();
+                NoticeRegistePacket pkg = new NoticeRegistePacket();
 
                 pkg.ClientID = clientID;
 
                 client.SendTcp(pkg);
             }
-
-            return 0;
         }
     }
 }

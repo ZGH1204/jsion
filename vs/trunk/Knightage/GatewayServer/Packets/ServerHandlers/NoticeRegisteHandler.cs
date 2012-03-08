@@ -8,8 +8,8 @@ using GameBase.Net;
 
 namespace GatewayServer.Packets.ServerHandlers
 {
-    [PacketHandler((int)BasePacketCode.Registe, "通知客户端玩家进行注册")]
-    public class RegistePlayerHandler : IServerPacketHandler
+    [PacketHandler((int)BasePacketCode.NoticeRegiste, "通知客户端玩家进行注册")]
+    public class NoticeRegisteHandler : IServerPacketHandler
     {
         public int HandlePacket(ServerConnector connector, GamePacket packet)
         {
