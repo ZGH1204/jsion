@@ -22,7 +22,7 @@ namespace Net
 
         private byte[] m_buffer;
 
-        private bool m_policy = false;
+        //private bool m_policy = false;
 
         private int m_dataRemain = 0;
 
@@ -50,17 +50,17 @@ namespace Net
             {
                 lock (this)
                 {
-                    if (m_policy == false && m_buffer[0] == '<')
-                    {
-                        m_policy = true;
-                        m_socket.Socket.Send(POLICY);
-                        log.Info(Marshal.ToHexDump("===============跨域包数据===============", m_buffer, 0, 23));
-                        return;
-                    }
+                    //if (m_policy == false && m_buffer[0] == '<')
+                    //{
+                    //    //m_policy = true;
+                    //    m_socket.Socket.Send(POLICY);
+                    //    log.Info(Marshal.ToHexDump("===============跨域包数据===============", m_buffer, 0, 23));
+                    //    return;
+                    //}
 
                     if (e.BytesTransferred > 0)
                     {
-                        m_policy = true;
+                        //m_policy = true;
 
                         #region 读取数据包
 
