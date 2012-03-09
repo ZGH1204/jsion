@@ -65,12 +65,23 @@ namespace CrossDomainApp
                 port = 843;
             }
 
+            CrossGlobal.Server.AcceptSocket += new AcceptSocketDelegate(Server_AcceptSocket);
+
             CrossGlobal.Server.Listen(port);
 
             while (true)
             {
                 Console.ReadLine();
             }
+        }
+
+        static void Server_AcceptSocket(System.Net.Sockets.Socket socket)
+        {
+            CrossFileClient client = new CrossFileClient(socket);
+
+            client.AsyncReceive();
+
+            ClientMgr.Instance.Add(client);
         }
     }
 }
