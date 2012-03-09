@@ -54,6 +54,7 @@ namespace Net
                     {
                         m_policy = true;
                         m_socket.Socket.Send(POLICY);
+                        log.Info(Marshal.ToHexDump("===============跨域包数据===============", m_buffer, 0, 23));
                         return;
                     }
 
