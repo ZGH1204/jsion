@@ -38,14 +38,14 @@ namespace Net
                 m_socket.Socket.Listen(100);
 
                 log.InfoFormat("建立本地监听成功! Port:{0}", ep.Port.ToString());
+
+                acceptAsync(m_socket.Socket, m_acceptAsyncEvent);
             }
             catch (Exception ex)
             {
                 log.Error("本地监听建立失败.", ex);
                 throw ex;
             }
-
-            acceptAsync(m_socket.Socket, m_acceptAsyncEvent);
         }
 
         void acceptAsync(Socket socket, SocketAsyncEventArgs e)
