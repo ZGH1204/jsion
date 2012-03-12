@@ -333,7 +333,7 @@ package jsion.core.ddrop
 			_dragStartGlobarPoint.x = StageRef.mouseX;
 			_dragStartGlobarPoint.y = StageRef.mouseY;
 			_dragIconStartPoint = _dragger.localToGlobal(Constant.ZeroPoint);
-			if(_dragIcon != _dragger)
+			if(_dragIcon != _dragger && _dragIcon.parent == null && _dragger.contains(_dragIcon) == false)
 			{
 				if(_dragIcon.parent == null)
 				{
