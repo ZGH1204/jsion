@@ -23,6 +23,8 @@ package jsion.comps
 		public static const LABEL_DISABLED_FILTERS:String = "labelDisabledFilters";
 		
 		
+		public static const LBAEL_FILTERS:String = "labelFilters";
+		
 		public static const FONT:String = "font";
 		
 		public static const COLOR:String = "color";
