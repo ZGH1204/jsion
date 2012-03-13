@@ -19,6 +19,8 @@ package jsion.components
 		
 		public static const AUTO_SIZE:String = CompGlobal.AUTO_SIZE;
 		
+		public static const LABEL_FILTERS:String = CompGlobal.LBAEL_FILTERS;
+		
 		private var m_text:String;
 		
 		private var m_tf:TextField;
@@ -78,6 +80,13 @@ package jsion.components
 				m_tf.autoSize = TextFieldAutoSize.NONE;
 				m_tf.width = width;
 				m_tf.height = height;
+			}
+			
+			var list:Array = getArray(LABEL_FILTERS);
+			
+			if(list)
+			{
+				m_tf.filters = list;
 			}
 			
 			super.draw();
