@@ -32,7 +32,7 @@ package jsion.components
 		{
 			if(m_selected == value)
 			{
-				m_selected.selected = true;
+				if(m_selected) m_selected.selected = true;
 				
 				return;
 			}
