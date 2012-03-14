@@ -97,6 +97,8 @@ package jsion.components
 			{
 				m_label = value;
 				
+				m_button.label = m_label;
+				
 				invalidate();
 			}
 		}
@@ -111,6 +113,8 @@ package jsion.components
 			if(m_selectedLabel != value)
 			{
 				m_selectedLabel = value;
+				
+				m_selectedButton.label = m_selectedLabel;
 				
 				invalidate();
 			}
@@ -181,8 +185,6 @@ package jsion.components
 		
 		override public function draw():void
 		{
-			m_button.label = m_label;
-			m_selectedButton.label = m_selectedLabel;
 			m_button.drawAtOnce();
 			m_selectedButton.drawAtOnce();
 			
@@ -191,7 +193,6 @@ package jsion.components
 				if(m_curButton) removeChild(m_curButton);
 				
 				m_curButton = m_button;
-				m_curButton.label = m_label;
 				
 				addChild(m_curButton);
 				m_curButton.bring2Bottom();
@@ -201,7 +202,6 @@ package jsion.components
 				if(m_curButton) removeChild(m_curButton);
 				
 				m_curButton = m_selectedButton;
-				m_curButton.label = m_selectedLabel;
 				
 				addChild(m_curButton);
 				m_curButton.bring2Bottom();
