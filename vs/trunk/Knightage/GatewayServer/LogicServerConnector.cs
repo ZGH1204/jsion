@@ -71,5 +71,15 @@ namespace GatewayServer
                 GatewayGlobal.LogicConnectingMgr.Remove(ID);
             }
         }
+
+        protected override void OnDisconnect()
+        {
+            base.OnDisconnect();
+
+            if (GatewayGlobal.LogicServerMgr[ID] == this)
+            {
+                GatewayGlobal.LogicServerMgr.Remove(ID);
+            }
+        }
     }
 }
