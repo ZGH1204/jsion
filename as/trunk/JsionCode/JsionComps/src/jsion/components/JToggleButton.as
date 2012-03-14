@@ -181,6 +181,8 @@ package jsion.components
 		
 		override public function draw():void
 		{
+			m_button.label = m_label;
+			m_selectedButton.label = m_selectedLabel;
 			m_button.drawAtOnce();
 			m_selectedButton.drawAtOnce();
 			
