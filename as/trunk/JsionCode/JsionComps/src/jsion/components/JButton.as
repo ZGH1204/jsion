@@ -242,14 +242,14 @@ package jsion.components
 		
 		private function updateLabelAndPos():void
 		{
-			m_label.text = m_text;
 			m_label.drawAtOnce();
+			m_label.move(0, 0);
 
 			m_labelRect.x = m_labelRect.y = 0;
 			m_labelRect.width = m_label.width;
 			m_labelRect.height = m_label.height;
 			
-			CompUtil.layoutPosition(originalWidth, originalHeight, getString(HALIGN), getInt(HGAP), getString(VALIGN), getInt(VGAP), m_labelRect);
+			CompUtil.layoutPosition(realWidth, realHeight, getString(HALIGN), getInt(HGAP), getString(VALIGN), getInt(VGAP), m_labelRect);
 			
 			m_label.move(m_labelRect.x, m_labelRect.y);
 		}
@@ -264,6 +264,8 @@ package jsion.components
 			if(m_text != value)
 			{
 				m_text = value;
+				
+				m_label.text = m_text;
 				
 				invalidate();
 			}
