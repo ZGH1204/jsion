@@ -32,7 +32,7 @@ namespace GatewayServer.Packets.ClientHandlers
             pkg.ClientID = gc.ClientID;
             pkg.Account = account;
 
-            GatewayGlobal.CenterServer.SendTCP(pkg);
+            GatewayGlobal.Send2Center(pkg);
 
             return 0;
         }

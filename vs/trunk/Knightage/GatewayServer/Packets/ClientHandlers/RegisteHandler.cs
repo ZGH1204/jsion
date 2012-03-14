@@ -27,7 +27,7 @@ namespace GatewayServer.Packets.ClientHandlers
             pkg.Account = gc.Account;
             pkg.NickName = packet.ReadUTF();
 
-            GatewayGlobal.CenterServer.SendTCP(pkg);
+            GatewayGlobal.Send2Center(pkg);
 
             return 0;
         }

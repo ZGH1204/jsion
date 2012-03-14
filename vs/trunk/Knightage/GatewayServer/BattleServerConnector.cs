@@ -45,5 +45,15 @@ namespace GatewayServer
                 GatewayGlobal.ConnectingMgr.Remove(ID);
             }
         }
+
+        protected override void OnDisconnect()
+        {
+            base.OnDisconnect();
+
+            if (GatewayGlobal.BattleServerMgr[ID] == this)
+            {
+                GatewayGlobal.BattleServerMgr.Remove(ID);
+            }
+        }
     }
 }

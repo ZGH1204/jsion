@@ -37,6 +37,20 @@ namespace GatewayServer
         public static readonly ObjectMgr<uint, GatewayPlayer> Players = new ObjectMgr<uint, GatewayPlayer>();
 
 
+        public static void Send2Center(GamePacket pkg)
+        {
+            if (CenterServer.Socket.Connected)
+            {
+                CenterServer.SendTCP(pkg);
+            }
+            else
+            {
+                //TODO: 通知客户端无可用中心服务器
+            }
+        }
+
+
+
         //当前网关相关状态
 
         private static bool Fulled = false;
@@ -57,7 +71,7 @@ namespace GatewayServer
 
                     pkg.ClientID = client.ClientID;
 
-                    GatewayGlobal.CenterServer.SendTCP(pkg);
+                    GatewayGlobal.Send2Center(pkg);
 
                     return;
                 }
@@ -75,7 +89,7 @@ namespace GatewayServer
 
                     pkg.ClientID = client.ClientID;
 
-                    GatewayGlobal.CenterServer.SendTCP(pkg);
+                    GatewayGlobal.Send2Center(pkg);
 
                     m_timer.Interval = 300 * 1000;
                     m_timer.Elapsed += new ElapsedEventHandler(m_timer_Elapsed);
@@ -101,7 +115,7 @@ namespace GatewayServer
 
                 UpdateServerNormalPacket pkg = new UpdateServerNormalPacket();
 
-                GatewayGlobal.CenterServer.SendTCP(pkg);
+                GatewayGlobal.Send2Center(pkg);
 
                 m_timer.Elapsed -= m_timer_Elapsed;
 
