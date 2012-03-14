@@ -7,6 +7,8 @@ package jsion.comps
 		public static const THUMB:String = "thumb";
 		public static const BACKGROUND:String = "background";
 		
+		public static const MASK:String = "mask";
+		
 //		public static const UP_ICON:String = "upIconImg";
 //		public static const OVER_ICON:String = "overIconImg";
 //		public static const DOWN_ICON:String = "downIconImg";

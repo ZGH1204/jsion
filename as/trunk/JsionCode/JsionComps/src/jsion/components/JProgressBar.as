@@ -15,6 +15,9 @@ package jsion.components
 		public static const HORIZONTAL:String = CompGlobal.HORIZONTAL;
 		public static const VERTICAL:String = CompGlobal.VERTICAL;
 		
+		public static const SCALE:String = CompGlobal.SCALE;
+		public static const MASK:String = CompGlobal.MASK;
+		
 		public static const BAR:String = "bar";
 		
 		private var m_background:DisplayObject;
@@ -28,6 +31,8 @@ package jsion.components
 		private var m_maxValue:Number;
 		
 		private var m_value:Number;
+		
+		private var m_progressType:String;
 		
 		public function JProgressBar(orientation:String = HORIZONTAL, container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
