@@ -97,6 +97,8 @@ package jsion.core.loaders
 		
 		override public function dispose():void
 		{
+			JUtil.removeEnterFrame(__loadCompletedAsyncHandler);
+			
 			cacheBytes = null;
 			
 			if(_imgLoader)
