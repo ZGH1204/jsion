@@ -31,8 +31,7 @@ package jsion.utils
 				var di:DelayInfo = list[i] as DelayInfo;
 				if(di.fn == fn)
 				{
-					ArrayUtil.remove(list, di);
-					i--;
+					di.fn = null;
 				}
 			}
 		}
