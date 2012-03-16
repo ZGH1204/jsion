@@ -24,6 +24,19 @@ package jsion.utils
 			list.push(obj);
 		}
 		
+		public static function removeDelayApply(fn:Function):void
+		{
+			for(var i:int = 0; i < list.length; i++)
+			{
+				var di:DelayInfo = list[i] as DelayInfo;
+				if(di.fn == fn)
+				{
+					ArrayUtil.remove(list, di);
+					i--;
+				}
+			}
+		}
+		
 		private static function __enterFrameHandler(e:Event):void
 		{
 			for(var i:int = 0; i < list.length; i++)
@@ -34,7 +47,7 @@ package jsion.utils
 				
 				if(obj.cur > obj.delay)
 				{
-					obj.fn.apply();
+					if(obj.fn != null) obj.fn.apply();
 					ArrayUtil.removeAt(list, i);
 					DisposeUtil.free(obj);
 					i--;

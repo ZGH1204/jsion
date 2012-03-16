@@ -172,6 +172,8 @@ package jsion.core.loaders
 		
 		override public function dispose():void
 		{
+			JUtil.removeEnterFrame(__loadCompletedAsyncHandler);
+			
 			_waitEmbedBytes = null;
 			_embedCallback = null;
 			cacheBytes = null;

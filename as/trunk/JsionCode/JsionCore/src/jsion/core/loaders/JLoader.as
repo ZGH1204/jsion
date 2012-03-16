@@ -1153,6 +1153,8 @@ package jsion.core.loaders
 		 */		
 		public function dispose():void
 		{
+			DelayUtil.removeDelayApply(fireCompleteEvent);
+			
 			tag = null;
 			_headers = null;
 			_context = null;

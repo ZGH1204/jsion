@@ -989,6 +989,8 @@ package jsion.core.loaders
 		 */		
 		public function dispose():void
 		{
+			JUtil.removeEnterFrame(__tryCompleteHandler);
+			
 			var list:Array = DictionaryUtil.getValues(_allLoadersDic)
 			for each(var loader:ILoader in list)
 			{
