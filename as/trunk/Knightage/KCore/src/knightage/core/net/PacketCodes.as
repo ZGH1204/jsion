@@ -41,5 +41,10 @@ package knightage.core.net
 		 * 被踢下线
 		 */		
 		public static const KitPlayer:int = 1015;
+		
+		/**
+		 * 消息提示
+		 */		
+		public static const Msg:int = 10000;
 	}
 }
