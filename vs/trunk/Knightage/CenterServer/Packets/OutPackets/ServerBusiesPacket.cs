@@ -7,17 +7,17 @@ using GameBase;
 
 namespace CenterServer.Packets.OutPackets
 {
-    public class ServerBusiesPacket : GatewayPacket
-    {
-        public ServerBusiesPacket()
-            : base(BasePacketCode.ServerBusies)
-        { }
+    //public class ServerBusiesPacket : GatewayPacket
+    //{
+    //    public ServerBusiesPacket()
+    //        : base(BasePacketCode.ServerBusies)
+    //    { }
 
-        public uint ClientID { get; set; }
+    //    public uint ClientID { get; set; }
 
-        public override void WriteData()
-        {
-            WriteUnsignedInt(ClientID);
-        }
-    }
+    //    public override void WriteData()
+    //    {
+    //        WriteUnsignedInt(ClientID);
+    //    }
+    //}
 }

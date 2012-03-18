@@ -138,5 +138,10 @@ namespace GameBase
         /// 踢玩家下线
         /// </summary>
         KitPlayer = 1015,
+
+        /// <summary>
+        /// 消息提示包
+        /// </summary>
+        Msg = 10000
     }
 }

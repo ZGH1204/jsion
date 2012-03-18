@@ -10,6 +10,7 @@ using GatewayServer.Packets.OutServerPackets;
 using System.Timers;
 using System.Reflection;
 using log4net;
+using GameBase.Packets.OutPackets;
 
 namespace GatewayServer
 {
@@ -37,7 +38,7 @@ namespace GatewayServer
         public static readonly ObjectMgr<uint, GatewayPlayer> Players = new ObjectMgr<uint, GatewayPlayer>();
 
 
-        public static void Send2Center(GamePacket pkg)
+        public static void Send2Center(GamePacket pkg, ClientBase client)
         {
             if (CenterServer.Socket.Connected)
             {
@@ -46,6 +47,15 @@ namespace GatewayServer
             else
             {
                 //TODO: 通知客户端无可用中心服务器
+
+                if (client != null)
+                {
+                    ClientMsgPacket p = new ClientMsgPacket();
+
+                    p.MsgFlag = MsgFlag.NoneCenter;
+
+                    client.SendTcp(p);
+                }
             }
         }
 
@@ -71,7 +81,7 @@ namespace GatewayServer
 
                     pkg.ClientID = client.ClientID;
 
-                    GatewayGlobal.Send2Center(pkg);
+                    GatewayGlobal.Send2Center(pkg, client);
 
                     return;
                 }
@@ -89,7 +99,7 @@ namespace GatewayServer
 
                     pkg.ClientID = client.ClientID;
 
-                    GatewayGlobal.Send2Center(pkg);
+                    GatewayGlobal.Send2Center(pkg, client);
 
                     m_timer.Interval = 300 * 1000;
                     m_timer.Elapsed += new ElapsedEventHandler(m_timer_Elapsed);
@@ -115,7 +125,7 @@ namespace GatewayServer
 
                 UpdateServerNormalPacket pkg = new UpdateServerNormalPacket();
 
-                GatewayGlobal.Send2Center(pkg);
+                GatewayGlobal.Send2Center(pkg, null);
 
                 m_timer.Elapsed -= m_timer_Elapsed;
 
@@ -151,6 +161,13 @@ namespace GatewayServer
             else if(connector == null)
             {
                 //TODO: 通知客户端逻辑服务器已满 稍候登陆
+
+                ClientMsgPacket pkg = new ClientMsgPacket();
+
+                pkg.MsgFlag = MsgFlag.NoneLogic;
+
+                client.SendTcp(pkg);
+
                 log.Warn("所有逻辑服务器满载 请增开新的逻辑服务器");
             }
 

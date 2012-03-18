@@ -63,6 +63,7 @@
     <Compile Include="Managers\ClientMgr.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Managers\ObjectMgr.cs" />
+    <Compile Include="MsgFlag.cs" />
     <Compile Include="Net\BattlePacket.cs" />
     <Compile Include="Net\CenterPacket.cs" />
     <Compile Include="Net\ClientPacket.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Net\LogicPacket.cs" />
     <Compile Include="Packets\IPacketHandler.cs" />
     <Compile Include="Packets\IServerPacketHandler.cs" />
+    <Compile Include="Packets\OutPackets\ClientMsgPacket.cs" />
     <Compile Include="Packets\OutPackets\ConnectLogicServerPacket.cs" />
     <Compile Include="Packets\OutPackets\LoginOutPacket.cs" />
     <Compile Include="Packets\OutPackets\UpdateServerIDPacket.cs" />
