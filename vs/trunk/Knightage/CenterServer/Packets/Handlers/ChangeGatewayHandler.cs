@@ -9,6 +9,7 @@ using GameBase.ServerConfigs;
 using CenterServer.Packets.OutPackets;
 using System.Reflection;
 using log4net;
+using GameBase.Packets.OutPackets;
 
 namespace CenterServer.Packets.Handlers
 {
@@ -47,9 +48,13 @@ namespace CenterServer.Packets.Handlers
 
                 log.Warn("所有网关服务器满载 请增开新的网关服务器");
 
-                ServerBusiesPacket pkg = new ServerBusiesPacket();
+                ClientMsgPacket pkg = new ClientMsgPacket();
 
-                pkg.ClientID = clientID;
+                pkg.MsgFlag = MsgFlag.NoneGateway;
+
+                //ServerBusiesPacket pkg = new ServerBusiesPacket();
+
+                //pkg.ClientID = clientID;
 
                 client.SendTcp(pkg);
             }

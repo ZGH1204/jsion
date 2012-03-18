@@ -13,7 +13,7 @@ namespace GatewayServer.Packets.ServerHandlers
     {
         public int HandlePacket(ServerConnector connector, GamePacket packet)
         {
-            GatewayGlobal.Send2Center(packet);
+            GatewayGlobal.Send2Center(packet, null);
 
             return 0;
         }

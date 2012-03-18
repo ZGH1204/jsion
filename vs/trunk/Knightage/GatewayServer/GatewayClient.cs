@@ -46,7 +46,7 @@ namespace GatewayServer
 
                 pkg.ClientID = ClientID;
 
-                GatewayGlobal.Send2Center(pkg);
+                GatewayGlobal.Send2Center(pkg, this);
             }
 
             if (Player != null)
