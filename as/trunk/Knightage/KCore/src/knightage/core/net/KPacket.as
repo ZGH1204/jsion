@@ -13,7 +13,7 @@ package knightage.core.net
 		
 		private var m_code2:int;
 		
-		private var m_playerID:uint;
+		private var m_playerID:int;
 		
 		public function KPacket(code:int = 0, code2:int = 0)
 		{
@@ -46,12 +46,12 @@ package knightage.core.net
 			m_code2 = value;
 		}
 		
-		public function get playerID():uint
+		public function get playerID():int
 		{
 			return m_playerID;
 		}
 		
-		public function set playerID(value:uint):void
+		public function set playerID(value:int):void
 		{
 			m_playerID = value;
 		}
@@ -73,7 +73,7 @@ package knightage.core.net
 			
 			m_code2 = readInt();
 			
-			m_playerID = readUnsignedInt();
+			m_playerID = readInt();
 		}
 		
 		override public function writeHeader():void
@@ -88,7 +88,7 @@ package knightage.core.net
 			
 			writeInt(m_code2);
 			
-			writeUnsignedInt(m_playerID);
+			writeInt(m_playerID);
 		}
 		
 		override public function pack():void
