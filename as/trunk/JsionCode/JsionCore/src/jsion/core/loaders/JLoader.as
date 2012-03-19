@@ -946,12 +946,12 @@ package jsion.core.loaders
 		 */		
 		public function stop():void
 		{
-			if(_isComplete || _status == LoaderGlobal.StatusError) return;
+			//if(_isComplete || _status == LoaderGlobal.StatusError) return;
 			
 			_isLoading = false;
 			if(_status == LoaderGlobal.StatusGetBytesTotal) return;
-			_status = LoaderGlobal.StatusStopped;
 			LoaderMonitor.exitManaged(this);
+			_status = LoaderGlobal.StatusStopped;
 		}
 		
 		/**
@@ -1155,6 +1155,8 @@ package jsion.core.loaders
 		{
 			DelayUtil.removeDelayApply(fireCompleteEvent);
 			
+			stop();
+			
 			tag = null;
 			_headers = null;
 			_context = null;
@@ -1166,8 +1168,6 @@ package jsion.core.loaders
 			_callback = null;
 			
 			if(_request) _request.data = null;
-			
-			stop();
 		}
 	}
 }

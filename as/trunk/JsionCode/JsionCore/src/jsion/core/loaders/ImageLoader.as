@@ -97,6 +97,8 @@ package jsion.core.loaders
 		
 		override public function dispose():void
 		{
+			super.dispose();
+			
 			JUtil.removeEnterFrame(__loadCompletedAsyncHandler);
 			
 			cacheBytes = null;
@@ -108,8 +110,6 @@ package jsion.core.loaders
 				_imgLoader.unloadAndStop();
 			}
 			_imgLoader = null;
-			
-			super.dispose();
 		}
 	}
 }

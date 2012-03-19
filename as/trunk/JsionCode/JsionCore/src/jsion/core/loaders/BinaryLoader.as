@@ -122,10 +122,11 @@ package jsion.core.loaders
 		
 		override public function dispose():void
 		{
+			super.dispose();
+			
 			removeLoadEvent(_loader);
 			removeBytesTotalEvent(_loader);
 			_loader = null;
-			super.dispose();
 		}
 	}
 }

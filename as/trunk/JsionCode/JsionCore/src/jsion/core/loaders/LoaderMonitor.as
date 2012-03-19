@@ -77,7 +77,8 @@ package jsion.core.loaders
 				
 				tryLoadNext();
 			}
-			else if(waitingLoader.indexOf(loader) != -1)
+			
+			if(waitingLoader.indexOf(loader) != -1)
 			{
 				ArrayUtil.remove(waitingLoader, loader);
 			}
