@@ -14,12 +14,12 @@ namespace GatewayServer.Packets.OutServerPackets
         {
         }
 
-        public uint ClientID { get; set; }
+        public int ClientID { get; set; }
 
         public override void WriteData()
         {
-            WriteUnsignedInt(GatewayGlobal.GatewayID);
-            WriteUnsignedInt(ClientID);
+            WriteInt(GatewayGlobal.GatewayID);
+            WriteInt(ClientID);
         }
     }
 }

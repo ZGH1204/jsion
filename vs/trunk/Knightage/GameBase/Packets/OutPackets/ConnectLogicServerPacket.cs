@@ -12,7 +12,7 @@ namespace GameBase.Packets.OutPackets
             : base(BasePacketCode.ConnectLogicServer)
         { }
 
-        public uint ID { get; set; }
+        public int ID { get; set; }
 
         public string IP { get; set; }
 
@@ -20,7 +20,7 @@ namespace GameBase.Packets.OutPackets
 
         public override void WriteData()
         {
-            WriteUnsignedInt(ID);
+            WriteInt(ID);
 
             WriteUTF(IP);
 

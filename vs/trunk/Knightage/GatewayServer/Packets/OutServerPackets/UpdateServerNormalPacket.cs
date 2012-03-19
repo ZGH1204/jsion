@@ -17,7 +17,7 @@ namespace GatewayServer.Packets.OutServerPackets
 
         public override void WriteData()
         {
-            WriteUnsignedInt(GatewayGlobal.GatewayID);
+            WriteInt(GatewayGlobal.GatewayID);
         }
     }
 }

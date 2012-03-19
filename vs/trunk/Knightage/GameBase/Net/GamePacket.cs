@@ -41,7 +41,7 @@ namespace GameBase.Net
 
         public int Code2 { get; set; }
 
-        public uint PlayerID { get; set; }
+        public int PlayerID { get; set; }
 
         public override int HeaderSize { get { return 14; } }
         public override int PkgLenOffset { get { return 0; } }
@@ -60,7 +60,7 @@ namespace GameBase.Net
 
             Code2 = ReadInt();
 
-            PlayerID = ReadUnsignedInt();
+            PlayerID = ReadInt();
         }
 
         public override void WriteHeader()
@@ -75,7 +75,7 @@ namespace GameBase.Net
 
             WriteInt(Code2);
 
-            WriteUnsignedInt(PlayerID);
+            WriteInt(PlayerID);
         }
 
         public override void Pack()

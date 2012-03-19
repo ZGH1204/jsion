@@ -15,7 +15,7 @@ namespace GameBase.Managers
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private Dictionary<uint, T> m_list;
+        private Dictionary<int, T> m_list;
 
         private ReaderWriterLock m_lock;
 
@@ -32,7 +32,7 @@ namespace GameBase.Managers
             }
             else
             {
-                Dictionary<uint, T> list = LoadItem(path, xpath);
+                Dictionary<int, T> list = LoadItem(path, xpath);
 
                 m_lock.AcquireWriterLock(Timeout.Infinite);
 
@@ -48,9 +48,9 @@ namespace GameBase.Managers
             }
         }
 
-        private Dictionary<uint, T> LoadItem(string path, string xpath)
+        private Dictionary<int, T> LoadItem(string path, string xpath)
         {
-            Dictionary<uint, T> list = new Dictionary<uint, T>();
+            Dictionary<int, T> list = new Dictionary<int, T>();
 
             XmlDocument doc = new XmlDocument();
 
@@ -80,7 +80,7 @@ namespace GameBase.Managers
             return list;
         }
 
-        public T FindTemplate(uint templateID)
+        public T FindTemplate(int templateID)
         {
             m_lock.AcquireReaderLock(Timeout.Infinite);
 
@@ -99,19 +99,19 @@ namespace GameBase.Managers
             return default(T);
         }
 
-        public virtual uint GetID(Predicate<T> match)
+        public virtual int GetID(Predicate<T> match)
         {
-            uint id = 0;
+            int id = 0;
 
             m_lock.AcquireReaderLock(Timeout.Infinite);
 
             try
             {
-                uint[] keys = new uint[m_list.Keys.Count];
+                int[] keys = new int[m_list.Keys.Count];
 
                 m_list.Keys.CopyTo(keys, 0);
 
-                foreach (uint key in keys)
+                foreach (int key in keys)
                 {
                     if (match(m_list[key] as T))
                     {

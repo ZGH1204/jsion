@@ -9,8 +9,8 @@ namespace GatewayServer
 {
     public class GatewayClient : ClientBase
     {
-        public uint ClientID { get; protected set; }
-        public uint PlayerID { get; set; }
+        public int ClientID { get; protected set; }
+        public int PlayerID { get; set; }
         public string Account { get; set; }
 
         public new GatewayPlayer Player { get; set; }
@@ -21,7 +21,7 @@ namespace GatewayServer
             : base()
         { }
 
-        public void SetClientID(uint id)
+        public void SetClientID(int id)
         {
             ClientID = id;
 

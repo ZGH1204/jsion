@@ -7,7 +7,7 @@ namespace Tools
 {
     public class PlayerInfo
     {
-        public uint PlayerID { get; set; }
+        public int PlayerID { get; set; }
 
         public string NickName { get; set; }
 

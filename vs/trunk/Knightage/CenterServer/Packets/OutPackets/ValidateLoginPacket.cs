@@ -14,11 +14,11 @@ namespace CenterServer.Packets.OutPackets
 
         }
 
-        public uint ClientID { get; set; }
+        public int ClientID { get; set; }
 
         public override void WriteData()
         {
-            WriteUnsignedInt(ClientID);
+            WriteInt(ClientID);
         }
     }
 }

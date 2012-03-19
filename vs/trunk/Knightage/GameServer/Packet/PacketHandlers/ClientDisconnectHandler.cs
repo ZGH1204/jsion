@@ -13,7 +13,7 @@ namespace GameServer.Packet.PacketHandlers
     {
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
-            uint clientID = packet.ReadUnsignedInt();
+            int clientID = packet.ReadInt();
 
             GamePlayer player = GameGlobal.PlayerMgr[packet.PlayerID];
 

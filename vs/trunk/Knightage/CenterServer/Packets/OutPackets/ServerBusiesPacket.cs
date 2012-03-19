@@ -13,7 +13,7 @@ namespace CenterServer.Packets.OutPackets
     //        : base(BasePacketCode.ServerBusies)
     //    { }
 
-    //    public uint ClientID { get; set; }
+    //    public int ClientID { get; set; }
 
     //    public override void WriteData()
     //    {

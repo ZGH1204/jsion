@@ -34,7 +34,7 @@ namespace CenterServer.Packets.Handlers
             string ip = pkg.ReadUTF();
             int port = pkg.ReadInt();
 
-            uint id = 0;
+            int id = 0;
 
             switch (type)
             {

@@ -14,7 +14,7 @@ namespace Bussiness
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public uint GetID(string account)
+        public int GetID(string account)
         {
             SqlDataReader reader = null;
 
@@ -28,7 +28,7 @@ namespace Bussiness
 
                 if (reader != null && reader.Read())
                 {
-                    return Convert.ToUInt32(reader["playerid"]);
+                    return Convert.ToInt32(reader["playerid"]);
                 }
             }
             catch (Exception ex)
@@ -46,7 +46,7 @@ namespace Bussiness
             return 0;
         }
 
-        public uint Registe(string account, string nickName)
+        public int Registe(string account, string nickName)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace Bussiness
 
                 db.RunProcedure("UP_Players_Add", paras);
 
-                uint playerID = Convert.ToUInt32(paras[0].SqlValue);
+                int playerID = Convert.ToInt32(paras[0].SqlValue);
 
                 return playerID;
             }

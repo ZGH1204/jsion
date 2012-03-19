@@ -15,7 +15,7 @@ namespace GameServer
 
 
 
-        public static readonly ObjectMgr<uint, GamePlayer> PlayerMgr = new ObjectMgr<uint, GamePlayer>();
+        public static readonly ObjectMgr<int, GamePlayer> PlayerMgr = new ObjectMgr<int, GamePlayer>();
 
 
 

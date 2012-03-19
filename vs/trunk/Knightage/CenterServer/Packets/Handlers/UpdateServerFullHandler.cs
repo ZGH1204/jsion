@@ -14,9 +14,9 @@ namespace CenterServer.Packets.Handlers
     {
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
-            uint gatewayID = packet.ReadUnsignedInt();
+            int gatewayID = packet.ReadInt();
 
-            uint clientID = packet.ReadUnsignedInt();
+            int clientID = packet.ReadInt();
 
             GatewayInfo info = CenterGlobal.GatewayMgr.FindTemplate(gatewayID);
 

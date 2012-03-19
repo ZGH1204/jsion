@@ -13,9 +13,9 @@ namespace GatewayServer
     {
         //private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public uint ID { get; protected set; }
+        public int ID { get; protected set; }
 
-        public BattleServerConnector(uint id)
+        public BattleServerConnector(int id)
             : base()
         {
             ID = id;

@@ -12,7 +12,7 @@ namespace GameBase
         /// 模板ID
         /// </summary>
         [XmlAttribute]
-        public uint TemplateID { get; set; }
+        public int TemplateID { get; set; }
 
         /// <summary>
         /// 模板名称

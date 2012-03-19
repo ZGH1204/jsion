@@ -9,17 +9,17 @@ namespace GatewayServer.Packets.OutServerPackets
 {
     public class ClientDisconnectPacket : GamePacket
     {
-        public ClientDisconnectPacket(uint playerID)
+        public ClientDisconnectPacket(int playerID)
             : base(BasePacketCode.ClientDisconnect, BasePacketCode.None_Code)
         {
             PlayerID = playerID;
         }
 
-        public uint ClientID { get; set; }
+        public int ClientID { get; set; }
 
         public override void WriteData()
         {
-            WriteUnsignedInt(ClientID);
+            WriteInt(ClientID);
         }
     }
 }

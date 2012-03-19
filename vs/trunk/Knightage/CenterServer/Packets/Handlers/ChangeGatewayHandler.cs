@@ -20,15 +20,15 @@ namespace CenterServer.Packets.Handlers
 
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
-            uint gatewayID = packet.ReadUnsignedInt();
-            uint clientID = packet.ReadUnsignedInt();
+            int gatewayID = packet.ReadInt();
+            int clientID = packet.ReadInt();
 
             ConnectOtherGatewayServer(client, gatewayID, clientID);
 
             return 0;
         }
 
-        public static void ConnectOtherGatewayServer(ClientBase client, uint gatewayID, uint clientID)
+        public static void ConnectOtherGatewayServer(ClientBase client, int gatewayID, int clientID)
         {
             GatewayInfo info = CenterGlobal.GetFreeGateway(gatewayID);
 

@@ -13,7 +13,7 @@ namespace CenterServer.Packets.Handlers
     {
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
-            uint clientID = packet.ReadUnsignedInt();
+            int clientID = packet.ReadInt();
 
             CenterPlayer player = CenterGlobal.PlayerMgr[packet.PlayerID];
 

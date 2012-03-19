@@ -9,7 +9,7 @@ namespace GameServer
 {
     public class GamePlayer : Player
     {
-        public uint ClientID { get; set; }
+        public int ClientID { get; set; }
 
         public new GameClient Client { get; protected set; }
 
