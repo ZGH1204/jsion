@@ -16,10 +16,10 @@ namespace CenterServer.Packets.Handlers
     {
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
-            uint clientID = packet.ReadUnsignedInt();
+            int clientID = packet.ReadInt();
             string account = packet.ReadUTF();
 
-            uint playerID = 0;
+            int playerID = 0;
 
             using (PlayerBussiness pb = new PlayerBussiness())
             {
@@ -32,7 +32,7 @@ namespace CenterServer.Packets.Handlers
             return 0;
         }
 
-        public static void SendLoginPacket(ClientBase client, uint clientID, string account, uint playerID)
+        public static void SendLoginPacket(ClientBase client, int clientID, string account, int playerID)
         {
             if (playerID != 0)
             {

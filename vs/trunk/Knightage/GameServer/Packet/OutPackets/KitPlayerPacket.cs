@@ -8,7 +8,7 @@ namespace GameServer.Packet.OutPackets
 {
     public class KitPlayerPacket : ClientPacket
     {
-        public KitPlayerPacket(uint playerID)
+        public KitPlayerPacket(int playerID)
             : base(GameBase.BasePacketCode.KitPlayer)
         {
             PlayerID = playerID;

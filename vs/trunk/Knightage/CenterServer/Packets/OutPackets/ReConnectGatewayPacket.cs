@@ -13,7 +13,7 @@ namespace CenterServer.Packets.OutPackets
             : base(BasePacketCode.ReConnectGateway)
         { }
 
-        public uint ClientID { get; set; }
+        public int ClientID { get; set; }
 
         public string IP { get; set; }
 
@@ -21,7 +21,7 @@ namespace CenterServer.Packets.OutPackets
 
         public override void WriteData()
         {
-            WriteUnsignedInt(ClientID);
+            WriteInt(ClientID);
             WriteUTF(IP);
             WriteInt(Port);
         }

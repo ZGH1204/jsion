@@ -16,16 +16,16 @@ namespace CenterServer
         public static readonly TemplateMgr<GameLogicInfo> LogicMgr = new TemplateMgr<GameLogicInfo>();
         public static readonly TemplateMgr<BattleInfo> BattleMgr = new TemplateMgr<BattleInfo>();
 
-        public static readonly ObjectMgr<uint, CenterClient> LogicServerMgr = new ObjectMgr<uint, CenterClient>();
-        public static readonly ObjectMgr<uint, CenterClient> GatewayServerMgr = new ObjectMgr<uint, CenterClient>();
-        public static readonly ObjectMgr<uint, CenterClient> BattleServerMgr = new ObjectMgr<uint, CenterClient>();
+        public static readonly ObjectMgr<int, CenterClient> LogicServerMgr = new ObjectMgr<int, CenterClient>();
+        public static readonly ObjectMgr<int, CenterClient> GatewayServerMgr = new ObjectMgr<int, CenterClient>();
+        public static readonly ObjectMgr<int, CenterClient> BattleServerMgr = new ObjectMgr<int, CenterClient>();
 
 
         //维护网关状态
 
-        private static uint m_freeID;
+        private static int m_freeID;
 
-        public static GatewayInfo GetFreeGateway(uint exceptID)
+        public static GatewayInfo GetFreeGateway(int exceptID)
         {
             GatewayInfo info = GatewayMgr.FindTemplate(m_freeID);
 
@@ -42,6 +42,6 @@ namespace CenterServer
 
         //已登陆的所有玩家信息
 
-        public static readonly ObjectMgr<uint, CenterPlayer> PlayerMgr = new ObjectMgr<uint, CenterPlayer>();
+        public static readonly ObjectMgr<int, CenterPlayer> PlayerMgr = new ObjectMgr<int, CenterPlayer>();
     }
 }

@@ -13,7 +13,7 @@ namespace GatewayServer.Packets.ServerHandlers
     {
         public int HandlePacket(ServerConnector connector, GamePacket packet)
         {
-            uint id = packet.ReadUnsignedByte();
+            int id = packet.ReadUnsignedByte();
 
             GatewayGlobal.GatewayID = id;
 

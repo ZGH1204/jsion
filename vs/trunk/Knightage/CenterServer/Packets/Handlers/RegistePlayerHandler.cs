@@ -15,11 +15,11 @@ namespace CenterServer.Packets.Handlers
     {
         public int HandlePacket(ClientBase client, GamePacket packet)
         {
-            uint clientID = packet.ReadUnsignedInt();
+            int clientID = packet.ReadInt();
             string account = packet.ReadUTF();
             string nickName = packet.ReadUTF();
 
-            uint playerID = 0;
+            int playerID = 0;
 
             using (PlayerBussiness pb = new PlayerBussiness())
             {

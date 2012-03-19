@@ -15,7 +15,7 @@ namespace GatewayServer
 
         public static readonly int MaxClients = 5000;
 
-        public uint ID { get; protected set; }
+        public int ID { get; protected set; }
 
         public int ClientCount { get; protected set; }
 
@@ -23,7 +23,7 @@ namespace GatewayServer
 
         private bool m_fulled;
 
-        public LogicServerConnector(uint id)
+        public LogicServerConnector(int id)
             : base()
         {
             ID = id;

@@ -18,24 +18,24 @@ namespace GatewayServer
     {
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public static uint GatewayID = 0;
+        public static int GatewayID = 0;
 
-        public static uint ClientCount = 0;
+        public static int ClientCount = 0;
 
         public static readonly CenterServerConnector CenterServer = new CenterServerConnector(ServerType.GatewayServer, GatewayServerConfig.Configuration.Port);
 
-        public static readonly ObjectMgr<uint, BattleServerConnector> ConnectingMgr = new ObjectMgr<uint, BattleServerConnector>();
+        public static readonly ObjectMgr<int, BattleServerConnector> ConnectingMgr = new ObjectMgr<int, BattleServerConnector>();
 
-        public static readonly ObjectMgr<uint, BattleServerConnector> BattleServerMgr = new ObjectMgr<uint, BattleServerConnector>();
+        public static readonly ObjectMgr<int, BattleServerConnector> BattleServerMgr = new ObjectMgr<int, BattleServerConnector>();
 
-        public static readonly ObjectMgr<uint, LogicServerConnector> LogicConnectingMgr = new ObjectMgr<uint, LogicServerConnector>();
+        public static readonly ObjectMgr<int, LogicServerConnector> LogicConnectingMgr = new ObjectMgr<int, LogicServerConnector>();
 
-        public static readonly ObjectMgr<uint, LogicServerConnector> LogicServerMgr = new ObjectMgr<uint, LogicServerConnector>();
+        public static readonly ObjectMgr<int, LogicServerConnector> LogicServerMgr = new ObjectMgr<int, LogicServerConnector>();
 
 
 
-        public static readonly ObjectMgr<uint, GatewayClient> Clients = new ObjectMgr<uint, GatewayClient>();
-        public static readonly ObjectMgr<uint, GatewayPlayer> Players = new ObjectMgr<uint, GatewayPlayer>();
+        public static readonly ObjectMgr<int, GatewayClient> Clients = new ObjectMgr<int, GatewayClient>();
+        public static readonly ObjectMgr<int, GatewayPlayer> Players = new ObjectMgr<int, GatewayPlayer>();
 
 
         public static void Send2Center(GamePacket pkg, ClientBase client)
@@ -137,7 +137,7 @@ namespace GatewayServer
 
         //逻辑服务器相关
 
-        private static uint m_freeID;
+        private static int m_freeID;
 
         public static LogicServerConnector GetFreeLogicServer(GatewayClient client)
         {

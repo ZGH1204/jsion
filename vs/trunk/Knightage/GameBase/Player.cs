@@ -9,7 +9,7 @@ namespace GameBase
 {
     public partial class Player
     {
-        public uint PlayerID { get; protected set; }
+        public int PlayerID { get; protected set; }
 
         public string Account { get; protected set; }
 

@@ -15,13 +15,13 @@ namespace GatewayServer.Packets.OutServerPackets
 
         }
 
-        public uint ClientID { get; set; }
+        public int ClientID { get; set; }
 
         public string Account { get; set; }
 
         public override void WriteData()
         {
-            WriteUnsignedInt(ClientID);
+            WriteInt(ClientID);
 
             WriteUTF(Account);
         }
