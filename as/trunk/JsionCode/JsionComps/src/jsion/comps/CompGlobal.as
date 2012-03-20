@@ -71,6 +71,8 @@ package jsion.comps
 		
 		public static const AUTO_SIZE:String = "autoSize";
 		
+		public static const OFFSET:String = "offset";
+		
 		public static const OFFSET_X:String = "offsetX";
 		public static const OFFSET_Y:String = "offsetY";
 		
