@@ -32,6 +32,8 @@ package jsion.components
 		public static const DOWN_FILTERS:String = CompGlobal.DOWN_FILTERS;
 		public static const DISABLED_FILTERS:String = CompGlobal.DISABLED_FILTERS;
 		
+		public static const OFFSET:String = CompGlobal.OFFSET;
+		
 		private var m_minimum:Number;
 		private var m_maximum:Number;
 		private var m_sliderValue:Number;
@@ -397,11 +399,22 @@ package jsion.components
 				m_background.x = 0;
 				m_background.y = 0;
 				
-				if(width > 0) m_background.width = width;
-				else m_background.width = originalWidth;
+				var offset:int = getInt(OFFSET);
 				
-				if(height > 0) m_background.height = height;
-				else m_background.height = originalHeight;
+				if(m_orientation == HORIZONTAL)
+				{
+					if(width > 0) m_background.width = width;
+					else m_background.width = originalWidth;
+					
+					m_background.y = (Math.max(m_background.height, m_bar.realHeight) - m_background.height) / 2 + offset;
+				}
+				else
+				{
+					if(height > 0) m_background.height = height;
+					else m_background.height = originalHeight;
+					
+					m_background.x = (Math.max(m_background.width, m_bar.realWidth) - m_background.width) / 2 + offset;
+				}
 				
 				safeDrawAtOnceByDisplay(m_background);
 			}

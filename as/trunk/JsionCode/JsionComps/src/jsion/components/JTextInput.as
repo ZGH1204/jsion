@@ -2,19 +2,28 @@ package jsion.components
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.events.Event;
+	import flash.events.TextEvent;
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
 	
 	import jsion.IntRectangle;
+	import jsion.comps.ASColor;
+	import jsion.comps.ASFont;
 	import jsion.comps.CompGlobal;
 	import jsion.comps.CompUtil;
 	import jsion.comps.Component;
+	import jsion.comps.events.UIEvent;
 	import jsion.utils.DepthUtil;
 	import jsion.utils.DisposeUtil;
 	
 	public class JTextInput extends Component
 	{
 		public static const BACKGROUND:String = CompGlobal.BACKGROUND;
+		
+		public static const FONT:String = CompGlobal.FONT;
+		
+		public static const COLOR:String = CompGlobal.COLOR;
 		
 		public static const HALIGN:String = CompGlobal.HALIGN;
 		
@@ -62,6 +71,49 @@ package jsion.components
 			m_tf.width = 80;
 			m_tf.height = 25;
 			addChild(m_tf);
+			
+			m_tf.addEventListener(Event.CHANGE, __changeHandler);
+			m_tf.addEventListener(TextEvent.TEXT_INPUT, __inputHandler);
+		}
+		
+		private function __changeHandler(e:Event):void
+		{
+			dispatchEvent(new UIEvent(UIEvent.CHANGE));
+		}
+		
+		private function __inputHandler(e:Event):void
+		{
+			dispatchEvent(new UIEvent(UIEvent.TEXT_INPUT));
+		}
+		
+		public function anyInput():void
+		{
+			m_tf.restrict = null;
+		}
+		
+		public function onlyNumber():void
+		{
+			m_tf.restrict = "0-9";
+		}
+		
+		public function onlyChars():void
+		{
+			m_tf.restrict = "a-zA-Z";
+		}
+		
+		public function onlyCharAndNum():void
+		{
+			m_tf.restrict = "a-zA-Z0-9";
+		}
+		
+		public function get maxChars():int
+		{
+			return m_tf.maxChars;
+		}
+		
+		public function set maxChars(value:int):void
+		{
+			m_tf.maxChars = value;
 		}
 		
 		override public function draw():void
@@ -79,6 +131,12 @@ package jsion.components
 					if(m_height <= 0) m_height = m_background.height;
 				}
 			}
+			
+			var font:ASFont = getFont(FONT);
+			if(font) font.apply(m_tf);
+			
+			var color:ASColor = getColor(COLOR);
+			if(color) m_tf.textColor = color.getRGB();
 			
 			var hAlign:String = getString(HALIGN);
 			var vAlign:String = getString(VALIGN);
@@ -122,8 +180,29 @@ package jsion.components
 			super.draw();
 		}
 		
+		public function get textField():TextField
+		{
+			return m_tf;
+		}
+		
+		public function get text():String
+		{
+			return m_tf.text;
+		}
+		
+		public function set text(value:String):void
+		{
+			m_tf.text = value;
+		}
+		
 		override public function dispose():void
 		{
+			if(m_tf)
+			{
+				m_tf.removeEventListener(Event.CHANGE, __changeHandler);
+				m_tf.removeEventListener(TextEvent.TEXT_INPUT, __inputHandler);
+			}
+			
 			DisposeUtil.free(m_tf);
 			m_tf = null;
 			

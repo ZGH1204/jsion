@@ -10,6 +10,8 @@ package jsion.comps.events
 		
 		public static const CHANGE:String = "change";
 		
+		public static const TEXT_INPUT:String = "textInput";
+		
 		public static const DATA_CHANGED:String = "dataChanged";
 		
 		public static const SELECTED:String = "selected";
