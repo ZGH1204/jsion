@@ -32,6 +32,7 @@ package jsion.tool.pngpacker.data
 			{
 				action = new ActionInfo(actionName);
 				action.actionID = actionID;
+				action.root = root;
 				m_actions.put(actionID, action);
 				
 				root.append(action.node);
@@ -54,14 +55,9 @@ package jsion.tool.pngpacker.data
 			return m_actions.get(actionID) as ActionInfo;
 		}
 		
-		public function getPath(node:DefaultMutableTreeNode):Array
+		public function getPath(node:DefaultMutableTreeNode):DirectionInfo
 		{
-			var action:ActionInfo;
-			
 			var dirInfo:DirectionInfo;
-			
-			
-			var isFinded:Boolean = false;
 			
 			var aList:Array = getAllActions();
 			
@@ -74,24 +70,12 @@ package jsion.tool.pngpacker.data
 					if(dItem.node == node)
 					{
 						dirInfo = dItem;
-						isFinded = true;
 						break;
 					}
 				}
-				
-				if(isFinded)
-				{
-					action = aItem;
-					break;
-				}
 			}
 			
-			if(isFinded)
-			{
-				return [action, dirInfo];
-			}
-			
-			return null;
+			return dirInfo;
 		}
 		
 		public function getAllActions():Array

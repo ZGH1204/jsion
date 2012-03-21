@@ -7,13 +7,14 @@ package jsion.tool.menus
 	import org.aswing.JMenu;
 	import org.aswing.JMenuBar;
 	import org.aswing.JMenuItem;
+	import org.aswing.JWindow;
 	import org.aswing.event.AWEvent;
 	
 	public class MenuBox extends JMenuBar
 	{
-		private var m_owner:MainWindow;
+		private var m_owner:JWindow;
 		
-		public function MenuBox(owner:MainWindow)
+		public function MenuBox(owner:JWindow)
 		{
 			super();
 			

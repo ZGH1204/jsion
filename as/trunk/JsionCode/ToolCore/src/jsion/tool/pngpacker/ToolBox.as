@@ -15,6 +15,7 @@ package jsion.tool.pngpacker
 		private var m_frame:PNGPackerFrame;
 		
 		private var m_newActionBtn:JButton;
+		private var m_delActionBtn:JButton;
 		
 		public function ToolBox(frame:PNGPackerFrame)
 		{
@@ -22,9 +23,16 @@ package jsion.tool.pngpacker
 			
 			super(new FlowLayout(FlowLayout.LEFT, 3, 3));
 			
-			m_newActionBtn = new JButton("新建动作", new LoadIcon("assets/NewPackage.png"));
+			m_newActionBtn = new JButton("添加", new LoadIcon("assets/NewPackage.png"));
 			m_newActionBtn.addActionListener(onNewAction);
+			m_newActionBtn.setToolTipText("添加一个动作的方向");
 			append(m_newActionBtn);
+			
+			m_delActionBtn = new JButton("删除", new LoadIcon("assets/NewPackage.png"));
+			m_delActionBtn.addActionListener(onDelAction);
+			m_delActionBtn.setToolTipText("删除一个动作的方向");
+			m_delActionBtn.setEnabled(false);
+			append(m_delActionBtn);
 		}
 		
 		private function onNewAction(e:AWEvent):void
@@ -32,6 +40,16 @@ package jsion.tool.pngpacker
 			var frame:AddActionFrame = new AddActionFrame(m_frame);
 			
 			frame.show();
+		}
+		
+		private function onDelAction(e:AWEvent):void
+		{
+			m_frame.delSelected();
+		}
+		
+		public function setDelBtnEnabled(b:Boolean):void
+		{
+			m_delActionBtn.setEnabled(b);
 		}
 	}
 }
