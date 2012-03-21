@@ -101,7 +101,7 @@ package jsion.utils
 			
 			if(index >= array.length)
 			{
-				return -1;
+				return push(array, obj);
 			}
 			
 			array.splice(index, 0, obj);
