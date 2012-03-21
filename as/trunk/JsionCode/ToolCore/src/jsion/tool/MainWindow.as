@@ -49,26 +49,26 @@ package jsion.tool
 			
 			
 			m_topPanel = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
-			m_bottomPanel = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
-			m_leftPanel = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
-			m_rightPanel = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
+//			m_bottomPanel = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
+//			m_leftPanel = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
+//			m_rightPanel = new JPanel(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
 			m_mainPanel = new JPanel();
 			
 			m_topPanel.setOpaque(true);
-			m_bottomPanel.setOpaque(true);
-			m_leftPanel.setOpaque(true);
-			m_rightPanel.setOpaque(true);
+//			m_bottomPanel.setOpaque(true);
+//			m_leftPanel.setOpaque(true);
+//			m_rightPanel.setOpaque(true);
 			m_mainPanel.setOpaque(true);
 			
 			
-			m_bottomPanel.setPreferredHeight(28);
-			m_leftPanel.setPreferredWidth(200);
-			m_rightPanel.setPreferredWidth(200);
+//			m_bottomPanel.setPreferredHeight(28);
+//			m_leftPanel.setPreferredWidth(200);
+//			m_rightPanel.setPreferredWidth(200);
 			
 			
 			
 			m_content.append(m_topPanel, BorderLayout.NORTH);
-			m_content.append(m_bottomPanel, BorderLayout.SOUTH);
+			//m_content.append(m_bottomPanel, BorderLayout.SOUTH);
 			//m_content.append(m_leftPanel, BorderLayout.WEST);
 			//m_content.append(m_rightPanel, BorderLayout.EAST);
 			m_content.append(m_mainPanel, BorderLayout.CENTER);

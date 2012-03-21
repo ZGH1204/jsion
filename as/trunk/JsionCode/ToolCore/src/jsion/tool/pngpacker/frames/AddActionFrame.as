@@ -11,6 +11,7 @@ package jsion.tool.pngpacker.frames
 	import org.aswing.JComboBox;
 	import org.aswing.JLabel;
 	import org.aswing.JPanel;
+	import org.aswing.event.AWEvent;
 	import org.aswing.ext.Form;
 	import org.aswing.tree.TreePath;
 	
@@ -45,6 +46,8 @@ package jsion.tool.pngpacker.frames
 			actionCombo.setPreferredWidth(200);
 			box.addRow(new JLabel("动作："), actionCombo);
 			
+			actionCombo.addActionListener(actionChangeHandler);
+			
 			directionCombo = new JComboBox(["上", "下", "左", "右", "左上", "右上", "左下", "右下"]);
 			directionCombo.setEditable(false);
 			directionCombo.setPreferredWidth(200);
@@ -53,6 +56,11 @@ package jsion.tool.pngpacker.frames
 			buildFormButton();
 			
 			bt_cancle.setText("保存并新建");
+		}
+		
+		protected function actionChangeHandler(e:AWEvent):void
+		{
+			if(directionCombo) directionCombo.setSelectedIndex(0);
 		}
 		
 		override protected function onSubmit(e:Event):void
@@ -71,6 +79,7 @@ package jsion.tool.pngpacker.frames
 				directionCombo.getSelectedIndex() < 0) return;
 			
 			saveAction();
+			directionCombo.setSelectedIndex(directionCombo.getSelectedIndex() + 1);
 		}
 		
 		private function saveAction():void
@@ -85,7 +94,14 @@ package jsion.tool.pngpacker.frames
 			
 			var dirInfo:DirectionInfo = data.addAction(actionName, actionID, dirName, dirID);
 			
-			frame.setSelected(data.getAction(actionID), dirInfo);
+			frame.setSelected(dirInfo);
+		}
+		
+		override public function closeReleased():void
+		{
+			if(actionCombo) actionCombo.removeActionListener(actionChangeHandler);
+			
+			super.closeReleased();
 		}
 	}
 }

@@ -7,12 +7,14 @@ package jsion.tool
 	import org.aswing.JButton;
 	import org.aswing.JFrame;
 	import org.aswing.JPanel;
+	import org.aswing.JWindow;
 	import org.aswing.event.ResizedEvent;
 	import org.aswing.ext.Form;
+	import org.aswing.geom.IntRectangle;
 	
 	public class BaseFrame extends JFrame
 	{
-		protected var m_win:MainWindow;
+		protected var m_win:JWindow;
 		
 		protected var m_title:String;
 		
@@ -25,9 +27,11 @@ package jsion.tool
 		
 		public function BaseFrame(owner:* = null, modal:Boolean = false)
 		{
-			m_win = owner as MainWindow;
+			m_win = owner as JWindow;
 			
 			super(owner, m_title, modal);
+			
+			getTitleBar().getIconifiedButton().setEnabled(false);
 			
 			addEventListener(ResizedEvent.RESIZED, __resizeHandler);
 			
@@ -37,7 +41,10 @@ package jsion.tool
 		
 		private function __resizeHandler(e:ResizedEvent):void
 		{
-			setLocationXY((m_win.width - width) / 2, (m_win.height - height) / 2);
+			if(state != MAXIMIZED)
+			{
+				setLocationXY((m_win.width - width) / 2, (m_win.height - height) / 2);
+			}
 		}
 		
 		private function __contentResizeHandler(e:ResizedEvent):void
@@ -80,6 +87,18 @@ package jsion.tool
 		protected function onSubmit(e:Event):void
 		{
 			closeReleased();
+		}
+		
+		override public function getMaximizedBounds():IntRectangle
+		{
+			var r:IntRectangle = super.getMaximizedBounds();
+			
+			r.x += 1;
+			r.width -= 1;
+			r.y = 18;
+			r.height -= r.y;
+			
+			return r;
 		}
 		
 		override public function dispose():void
