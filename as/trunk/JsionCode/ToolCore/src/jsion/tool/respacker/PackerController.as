@@ -1,6 +1,7 @@
 package jsion.tool.respacker
 {
 	import jsion.IDispose;
+	import jsion.tool.respacker.datas.DirInfo;
 	import jsion.tool.respacker.events.PackerEvent;
 	import jsion.tool.respacker.frames.AddActionFrame;
 	
@@ -57,7 +58,10 @@ package jsion.tool.respacker
 		{
 			trace("Add action!", m_addFrame.selectedActionName, m_addFrame.selectedDirName);
 			
+			var dir:DirInfo = m_model.addAction(m_addFrame.selectedActionID, m_addFrame.selectedActionName, m_addFrame.selectedDirID, m_addFrame.selectedDirName);
 			
+			m_viewr.leftPane.updateTree();
+			m_viewr.leftPane.setSelected(m_model.treeRoot, dir);
 		}
 		
 		private function onAddFrameClosingHandler(e:AWEvent):void

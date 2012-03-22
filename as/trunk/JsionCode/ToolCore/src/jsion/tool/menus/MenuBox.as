@@ -1,9 +1,7 @@
 package jsion.tool.menus
 {
 	import jsion.tool.BaseFrame;
-	import jsion.tool.MainWindow;
 	import jsion.tool.pngpacker.PNGPackerFrame;
-	import jsion.tool.respacker.PackerFrame;
 	
 	import org.aswing.JMenu;
 	import org.aswing.JMenuBar;
@@ -31,14 +29,9 @@ package jsion.tool.menus
 			var item:JMenuItem;
 			
 			
-			item = new JMenuItem("资源打包器(旧)");
+			item = new JMenuItem("资源打包器");
 			item.setPreferredWidth(150);
 			item.addActionListener(onItemClickHandler);
-			tool.append(item);
-			
-			item = new JMenuItem("资源打包器(新)");
-			item.setPreferredWidth(150);
-			item.addActionListener(onNewItemClickHandler);
 			tool.append(item);
 			
 			
@@ -48,13 +41,6 @@ package jsion.tool.menus
 		private function onItemClickHandler(e:AWEvent):void
 		{
 			var frame:BaseFrame = new PNGPackerFrame(m_owner);
-			
-			frame.show();
-		}
-		
-		private function onNewItemClickHandler(e:AWEvent):void
-		{
-			var frame:BaseFrame = new PackerFrame(m_owner);
 			
 			frame.show();
 		}
