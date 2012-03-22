@@ -6,6 +6,8 @@ package jsion.tool.respacker.events
 	{
 		public static const ADD_ACTION:String = "addAction";
 		
+		public static const SELECTED:String = "selected";
+		
 		protected var m_data:*;
 		
 		public function PackerEvent(type:String, data:* = null)
