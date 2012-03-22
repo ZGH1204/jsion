@@ -149,6 +149,13 @@ namespace CenterServer.Packets.Handlers
             CenterGlobal.GatewayServerMgr.Remove(((CenterClient)client).ServerID);
 
             client.Disconnected -= gateway_Client_Disconnected;
+
+            CenterPlayer[] players = CenterGlobal.PlayerMgr.Select(p => p.Client == client);
+
+            foreach (CenterPlayer player in players)
+            {
+                CenterGlobal.PlayerMgr.Remove(player.PlayerID);
+            }
         }
 
         static void battle_Client_Disconnected(ClientBase client)
