@@ -2,6 +2,8 @@ package jsion.tool
 {
 	import flash.events.Event;
 	
+	import jsion.IDispose;
+	
 	import org.aswing.Container;
 	import org.aswing.FlowLayout;
 	import org.aswing.JButton;
@@ -12,7 +14,7 @@ package jsion.tool
 	import org.aswing.ext.Form;
 	import org.aswing.geom.IntRectangle;
 	
-	public class BaseFrame extends JFrame
+	public class BaseFrame extends JFrame implements IDispose
 	{
 		protected var m_win:JWindow;
 		
