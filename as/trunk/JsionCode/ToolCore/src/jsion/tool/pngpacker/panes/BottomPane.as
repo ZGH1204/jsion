@@ -1,12 +1,18 @@
 package jsion.tool.pngpacker.panes
 {
+	import flash.events.FileListEvent;
+	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
+	import flash.net.FileFilter;
+	import flash.utils.ByteArray;
+	
 	import jsion.tool.pngpacker.PNGPackerFrame;
 	import jsion.tool.pngpacker.data.DirectionInfo;
 	import jsion.tool.pngpacker.panes.parts.FrameItem;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.StringUtil;
 	
-	import org.aswing.ASColor;
 	import org.aswing.AbstractButton;
 	import org.aswing.ButtonGroup;
 	import org.aswing.DefaultButtonModel;
@@ -35,6 +41,8 @@ package jsion.tool.pngpacker.panes
 		
 		private var m_group:ButtonGroup;
 		private var m_itemList:Array;
+		
+		private var m_file:File;
 		
 		public function BottomPane(frame:PNGPackerFrame)
 		{
@@ -87,10 +95,17 @@ package jsion.tool.pngpacker.panes
 			m_nxtPicBtn.setEnabled(false);
 			m_nxtPicBtn.addActionListener(__nxtActionHandler);
 			m_upPane.append(m_nxtPicBtn);
+			
+			m_file = new File();
+			m_file.addEventListener(FileListEvent.SELECT_MULTIPLE, __selectMultiHandler);
 		}
 		
 		private function __addActionHandler(e:AWEvent):void
 		{
+			m_file.browseForOpenMultiple("", [new FileFilter("帧图片", "*.png")]);
+			
+			return;
+			
 			var item:FrameItem = new FrameItem();
 			item.setText((m_itemList.length + 1).toString());
 			
@@ -99,6 +114,28 @@ package jsion.tool.pngpacker.panes
 			m_group.append(item);
 			m_hBox.append(item);
 			m_itemList.push(item);
+		}
+		
+		private function __selectMultiHandler(e:FileListEvent):void
+		{
+			var list:Array = e.files;
+			
+			for each(var f:File in list)
+			{
+				var bytes:ByteArray = readBytes(f);
+			}
+		}
+		
+		private function readBytes(f:File):ByteArray
+		{
+			var bytes:ByteArray = new ByteArray();
+			
+			var fs:FileStream = new FileStream();
+			fs.open(f, FileMode.READ);
+			fs.readBytes(bytes);
+			fs.close();
+			
+			return bytes;
 		}
 		
 		private function __delActionHandler(e:AWEvent):void

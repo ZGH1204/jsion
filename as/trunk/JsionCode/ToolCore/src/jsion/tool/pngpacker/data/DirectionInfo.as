@@ -21,8 +21,6 @@ package jsion.tool.pngpacker.data
 			node = new DefaultMutableTreeNode(str);
 		}
 		
-		
-		
 		public function removeFromAction():void
 		{
 			if(action)
