@@ -80,6 +80,14 @@ namespace GatewayServer
             {
                 GatewayGlobal.LogicServerMgr.Remove(ID);
             }
+
+            GatewayPlayer[] players = GatewayGlobal.Players.Select(p => p.Client.LogicServer == this);
+
+            foreach (GatewayPlayer player in players)
+            {
+                GatewayGlobal.Players.Remove(player.PlayerID);
+                player.Client.Disconnect();
+            }
         }
     }
 }
