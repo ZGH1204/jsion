@@ -1,6 +1,15 @@
 package jsion.tool.pngpacker.data
 {
+	import flash.display.BitmapData;
+	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
+	import flash.utils.ByteArray;
+	
 	import jsion.HashMap;
+	import jsion.core.Global;
+	import jsion.core.serialize.res.ResPacker;
+	import jsion.core.serialize.res.ResUnpacker;
 	
 	import org.aswing.tree.DefaultMutableTreeNode;
 	import org.aswing.tree.DefaultTreeModel;
@@ -14,7 +23,7 @@ package jsion.tool.pngpacker.data
 		public var model:DefaultTreeModel;
 		public var root:DefaultMutableTreeNode;
 		
-		public function PackerModel(name:String = "资源")
+		public function PackerModel(name:String = "动作列表")
 		{
 			this.name = name;
 			m_actions = new HashMap();
@@ -22,8 +31,11 @@ package jsion.tool.pngpacker.data
 			model = new DefaultTreeModel(root);
 		}
 		
-		public function addAction(actionName:String, actionID:int, dirName:String, dir:int):DirectionInfo
+		public function addAction(actionID:int, dir:int):DirectionInfo
 		{
+			var actionName:String = Global.ActionNames[actionID - 1];
+			var dirName:String = Global.DirNames[dir - 1];
+			
 			var action:ActionInfo = m_actions.get(actionID) as ActionInfo;
 			
 			var dirInfo:DirectionInfo;
@@ -81,6 +93,86 @@ package jsion.tool.pngpacker.data
 		public function getAllActions():Array
 		{
 			return m_actions.getValues();;
+		}
+		
+		public function save(file:String):void
+		{
+			var bytes:ByteArray = getPackBytes();
+			
+			var f:File = new File(file);
+			
+			var fs:FileStream = new FileStream();
+			
+			fs.open(f, FileMode.WRITE);
+			fs.writeBytes(bytes);
+			fs.close();
+		}
+		
+		private function getPackBytes():ByteArray
+		{
+			var bytes:ByteArray = new ByteArray();
+			
+			var packer:ResPacker = new ResPacker();
+			
+			var list:Array = getAllActions();
+			
+			for each(var action:ActionInfo in list)
+			{
+				if(action.hasDir == false) continue;
+				
+				var dirList:Array = action.getAllDirInfos();
+				
+				for each(var dir:DirectionInfo in dirList)
+				{
+					if(dir.hasPNG == false) continue;
+					
+					var bmdList:Array = dir.getList();
+					
+					for each(var bmd:BitmapData in bmdList)
+					{
+						packer.addImage(bmd.clone(), action.actionID, dir.dir);
+					}
+				}
+			}
+			
+			return packer.pack();
+		}
+		
+		public function read(f:File):DirectionInfo
+		{
+			var bytes:ByteArray = new ByteArray();
+			
+			var fs:FileStream = new FileStream();
+			
+			fs.open(f, FileMode.READ);
+			fs.readBytes(bytes);
+			fs.close();
+			
+			var first:DirectionInfo;
+			var dir:DirectionInfo;
+			
+			var unpacker:ResUnpacker = new ResUnpacker(bytes);
+			
+			for (var i:int = 1; i <= Global.ActionCount; i++)
+			{
+				for (var j:int = 1; j <= Global.DirCount; j++)
+				{
+					var list:Array = unpacker.getBitmapDataList(i, j);
+					
+					if(list && list.length > 0)
+					{
+						dir = addAction(i, j);
+						if(first == null) first = dir;
+						
+						for each(var bmd:BitmapData in list)
+						{
+							dir.addBitmapData(bmd);
+						}
+					}
+				}
+			}
+			
+			return first;
 		}
 	}
 }

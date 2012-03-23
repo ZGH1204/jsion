@@ -1,16 +1,17 @@
 package jsion.tool.pngpacker.panes
 {
+	import flash.display.BitmapData;
 	import flash.events.FileListEvent;
 	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
 	import flash.net.FileFilter;
-	import flash.utils.ByteArray;
 	
 	import jsion.tool.pngpacker.PNGPackerFrame;
+	import jsion.tool.pngpacker.QueueLoader;
 	import jsion.tool.pngpacker.data.DirectionInfo;
+	import jsion.tool.WaiteFrame;
 	import jsion.tool.pngpacker.panes.parts.FrameItem;
 	import jsion.utils.ArrayUtil;
+	import jsion.utils.DisposeUtil;
 	import jsion.utils.StringUtil;
 	
 	import org.aswing.AbstractButton;
@@ -43,6 +44,10 @@ package jsion.tool.pngpacker.panes
 		private var m_itemList:Array;
 		
 		private var m_file:File;
+		
+		private var m_queue:QueueLoader;
+		
+		private var m_loading:Boolean;
 		
 		public function BottomPane(frame:PNGPackerFrame)
 		{
@@ -102,11 +107,121 @@ package jsion.tool.pngpacker.panes
 		
 		private function __addActionHandler(e:AWEvent):void
 		{
+			if(m_loading) return;
+			
 			m_file.browseForOpenMultiple("", [new FileFilter("帧图片", "*.png")]);
+		}
+		
+		private function __selectMultiHandler(e:FileListEvent):void
+		{
+			m_loading = true;
 			
-			return;
+			DisposeUtil.free(m_queue);
+			m_queue = new QueueLoader();
 			
-			var item:FrameItem = new FrameItem();
+			var list:Array = e.files;
+			
+			for each(var f:File in list)
+			{
+				m_queue.add(f);
+			}
+			
+			m_queue.start(loadCallback);
+			
+			WaiteFrame.show("正在加载图片...");
+		}
+		
+		private function loadCallback(list:Array):void
+		{
+			m_loading = false;
+			
+			for each(var bmd:BitmapData in list)
+			{
+				m_info.addBitmapData(bmd);
+				
+				createItem(bmd);
+				
+//				var item:FrameItem = new FrameItem(bmd);
+//				item.setText((m_itemList.length + 1).toString());
+//				
+//				item.getModel().addSelectionListener(__selectionHandler);
+//				
+//				m_group.append(item);
+//				m_hBox.append(item);
+//				m_itemList.push(item);
+			}
+			
+			WaiteFrame.close();
+		}
+		
+		private function __delActionHandler(e:AWEvent):void
+		{
+			var btn:FrameItem = m_group.getSelectedButton() as FrameItem;
+			
+			if(btn)
+			{
+				deleteItem(btn);
+				
+//				m_info.removeBitmapData(btn.bmd);
+//				m_group.remove(btn);
+//				m_hBox.remove(btn);
+//				ArrayUtil.remove(m_itemList, btn);
+//				btn.setSelected(false);
+//				btn.getModel().removeSelectionListener(__selectionHandler);
+			}
+		}
+		
+		private function __preActionHandler(e:AWEvent):void
+		{
+			var btn:FrameItem = m_group.getSelectedButton() as FrameItem;
+			
+			var index:int = m_itemList.indexOf(btn);
+			
+			if(btn && index > 0)
+			{
+				index--;
+				
+				moveItem(btn, index);
+				
+//				m_info.removeBitmapData(btn.bmd);
+//				m_info.insertBitmapData(btn.bmd, index);
+//				m_hBox.insert(index, btn);
+//				ArrayUtil.remove(m_itemList, btn);
+//				ArrayUtil.insert(m_itemList, btn, index);
+//				
+//				updateBtnEnabled();
+			}
+		}
+		
+		private function __nxtActionHandler(e:AWEvent):void
+		{
+			var btn:FrameItem = m_group.getSelectedButton() as FrameItem;
+			
+			var index:int = m_itemList.indexOf(btn);
+			
+			var maxIndex:int = m_itemList.length - 1;
+			
+			if(btn && index < maxIndex)
+			{
+				index++;
+				
+				moveItem(btn, index);
+				
+//				m_info.removeBitmapData(btn.bmd);
+//				m_info.insertBitmapData(btn.bmd, index);
+//				m_hBox.insert(index, btn);
+//				ArrayUtil.remove(m_itemList, btn);
+//				ArrayUtil.insert(m_itemList, btn, index);
+//				
+//				updateBtnEnabled();
+			}
+		}
+		
+		private function createItem(bmd:BitmapData):void
+		{
+			if(bmd == null) return;
+			
+			var item:FrameItem = new FrameItem(bmd);
 			item.setText((m_itemList.length + 1).toString());
 			
 			item.getModel().addSelectionListener(__selectionHandler);
@@ -116,76 +231,30 @@ package jsion.tool.pngpacker.panes
 			m_itemList.push(item);
 		}
 		
-		private function __selectMultiHandler(e:FileListEvent):void
+		private function deleteItem(item:FrameItem):void
 		{
-			var list:Array = e.files;
+			if(item == null) return;
 			
-			for each(var f:File in list)
-			{
-				var bytes:ByteArray = readBytes(f);
-			}
+			m_info.removeBitmapData(item.bmd);
+			m_group.remove(item);
+			m_hBox.remove(item);
+			ArrayUtil.remove(m_itemList, item);
+			item.setSelected(false);
+			item.getModel().removeSelectionListener(__selectionHandler);
+			DisposeUtil.free(item);
 		}
 		
-		private function readBytes(f:File):ByteArray
+		private function moveItem(item:FrameItem, index:int):void
 		{
-			var bytes:ByteArray = new ByteArray();
+			if(item == null) return;
 			
-			var fs:FileStream = new FileStream();
-			fs.open(f, FileMode.READ);
-			fs.readBytes(bytes);
-			fs.close();
+			m_info.removeBitmapData(item.bmd);
+			m_info.insertBitmapData(item.bmd, index);
+			m_hBox.insert(index, item);
+			ArrayUtil.remove(m_itemList, item);
+			ArrayUtil.insert(m_itemList, item, index);
 			
-			return bytes;
-		}
-		
-		private function __delActionHandler(e:AWEvent):void
-		{
-			var btn:AbstractButton = m_group.getSelectedButton();
-			
-			if(btn)
-			{
-				m_group.remove(btn);
-				m_hBox.remove(btn);
-				ArrayUtil.remove(m_itemList, btn);
-				btn.setSelected(false);
-				btn.getModel().removeSelectionListener(__selectionHandler);
-			}
-		}
-		
-		private function __preActionHandler(e:AWEvent):void
-		{
-			var btn:AbstractButton = m_group.getSelectedButton();
-			
-			var index:int = m_itemList.indexOf(btn);
-			
-			if(index > 0)
-			{
-				index--;
-				m_hBox.insert(index, btn);
-				ArrayUtil.remove(m_itemList, btn);
-				ArrayUtil.insert(m_itemList, btn, index);
-				
-				updateBtnEnabled();
-			}
-		}
-		
-		private function __nxtActionHandler(e:AWEvent):void
-		{
-			var btn:AbstractButton = m_group.getSelectedButton();
-			
-			var index:int = m_itemList.indexOf(btn);
-			
-			var maxIndex:int = m_itemList.length - 1;
-			
-			if(index < maxIndex)
-			{
-				index++;
-				m_hBox.insert(index, btn);
-				ArrayUtil.remove(m_itemList, btn);
-				ArrayUtil.insert(m_itemList, btn, index);
-				
-				updateBtnEnabled();
-			}
+			updateBtnEnabled();
 		}
 		
 		private function __selectionHandler(e:InteractiveEvent):void
@@ -213,14 +282,22 @@ package jsion.tool.pngpacker.panes
 			if(m_info) m_addPicBtn.setEnabled(true);
 			else m_addPicBtn.setEnabled(false);
 			
-			if(btn) m_delPicBtn.setEnabled(true);
-			else m_delPicBtn.setEnabled(false);
-			
-			if(index > 0) m_prePicBtn.setEnabled(true);
-			else m_prePicBtn.setEnabled(false);
-			
-			if(index < maxIndex)m_nxtPicBtn.setEnabled(true);
-			else m_nxtPicBtn.setEnabled(false);
+			if(btn)
+			{
+				m_delPicBtn.setEnabled(true);
+				
+				if(index > 0) m_prePicBtn.setEnabled(true);
+				else m_prePicBtn.setEnabled(false);
+				
+				if(index < maxIndex)m_nxtPicBtn.setEnabled(true);
+				else m_nxtPicBtn.setEnabled(false);
+			}
+			else
+			{
+				m_delPicBtn.setEnabled(false);
+				m_prePicBtn.setEnabled(false);
+				m_nxtPicBtn.setEnabled(false);
+			}
 		}
 		
 		private function setBorderTitle(actionName:String = null, dirName:String = null):void
@@ -246,25 +323,10 @@ package jsion.tool.pngpacker.panes
 			for each(var btn:AbstractButton in list)
 			{
 				m_group.remove(btn);
+				DisposeUtil.free(btn);
 			}
 			
 			updateBtnEnabled();
-		}
-		
-		private function refresh():void
-		{
-			if(m_info)
-			{
-				setBorderTitle(m_info.action.name, m_info.name);
-				
-				updateBtnEnabled();
-			}
-			else
-			{
-				setBorderTitle();
-				
-				updateBtnEnabled();
-			}
 		}
 		
 		public function setDirInfo(dir:DirectionInfo = null):void
@@ -275,7 +337,25 @@ package jsion.tool.pngpacker.panes
 				
 				m_info = dir;
 				
-				refresh();
+				if(m_info)
+				{
+					setBorderTitle(m_info.action.name, m_info.name);
+					
+					var list:Array = m_info.getList();
+					
+					for each(var bmd:BitmapData in list)
+					{
+						createItem(bmd);
+					}
+					
+					updateBtnEnabled();
+				}
+				else
+				{
+					setBorderTitle();
+					
+					updateBtnEnabled();
+				}
 			}
 		}
 	}

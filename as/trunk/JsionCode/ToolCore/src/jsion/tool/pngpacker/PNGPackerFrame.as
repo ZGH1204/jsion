@@ -1,5 +1,7 @@
 package jsion.tool.pngpacker
 {
+	import flash.filesystem.File;
+	
 	import jsion.tool.BaseFrame;
 	import jsion.tool.pngpacker.data.ActionInfo;
 	import jsion.tool.pngpacker.data.DirectionInfo;
@@ -9,6 +11,7 @@ package jsion.tool.pngpacker
 	import jsion.tool.pngpacker.panes.MainPane;
 	import jsion.tool.pngpacker.panes.RenderPane;
 	import jsion.tool.pngpacker.panes.TopPane;
+	import jsion.utils.DisposeUtil;
 	
 	import org.aswing.BorderLayout;
 	import org.aswing.tree.TreePath;
@@ -97,6 +100,15 @@ package jsion.tool.pngpacker
 		public function refreshTree():void
 		{
 			m_leftPanel.refreshTree();
+		}
+		
+		public function read(f:File):void
+		{
+			var dir:DirectionInfo = m_packerData.read(f);
+			
+			m_leftPanel.updateUI();
+			
+			setSelected(dir);
 		}
 	}
 }

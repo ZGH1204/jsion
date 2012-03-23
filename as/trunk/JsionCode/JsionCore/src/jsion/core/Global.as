@@ -8,7 +8,27 @@ package jsion.core
 		public static var ConfigXml:XML;
 		
 		/**
-		 * 正常待机动作
+		 * 动作个数
+		 */		
+		public static const ActionCount:int = 8;
+		
+		/**
+		 * 方向个数
+		 */		
+		public static const DirCount:int = 8;
+		
+		/**
+		 * 动作名称列表
+		 */		
+		public static const ActionNames:Array = ["待机动作", "行走动作", "奔跑动作", "攻击动作", "防御动作", "受伤动作", "技能动作", "死亡动作"];
+		
+		/**
+		 * 方向名称列表
+		 */		
+		public static const DirNames:Array = ["上", "下", "左", "右", "左上", "右上", "左下", "右下"];
+		
+		/**
+		 * 待机动作
 		 */		
 		public static const NormalMotion:int = 1;
 		
