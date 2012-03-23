@@ -2,6 +2,7 @@ package jsion.tool.menus
 {
 	import jsion.tool.BaseFrame;
 	import jsion.tool.pngpacker.PackerFrame;
+	import jsion.tool.textcompress.TextCompressFrame;
 	
 	import org.aswing.JMenu;
 	import org.aswing.JMenuBar;
@@ -29,6 +30,9 @@ package jsion.tool.menus
 			item.addActionListener(onItemClickHandler);
 			tool.append(item);
 			
+			item = new JMenuItem("文件压缩");
+			item.addActionListener(onCompressHandler);
+			tool.append(item);
 			
 			append(tool);
 		}
@@ -36,6 +40,13 @@ package jsion.tool.menus
 		private function onItemClickHandler(e:AWEvent):void
 		{
 			var frame:BaseFrame = new PackerFrame();
+			
+			frame.show();
+		}
+		
+		private function onCompressHandler(e:AWEvent):void
+		{
+			var frame:BaseFrame = new TextCompressFrame();
 			
 			frame.show();
 		}
