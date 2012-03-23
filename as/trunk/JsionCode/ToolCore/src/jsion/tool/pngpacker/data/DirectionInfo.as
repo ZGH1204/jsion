@@ -38,16 +38,22 @@ package jsion.tool.pngpacker.data
 		public function addBitmapData(bmd:BitmapData):void
 		{
 			m_list.push(bmd);
+			
+			action.model.change();
 		}
 		
 		public function insertBitmapData(bmd:BitmapData, index:int):void
 		{
 			ArrayUtil.insert(m_list, bmd, index);
+			
+			action.model.change();
 		}
 		
 		public function removeBitmapData(bmd:BitmapData):void
 		{
 			ArrayUtil.remove(m_list, bmd);
+			
+			action.model.change();
 		}
 		
 		public function removeFromAction():void
@@ -55,6 +61,8 @@ package jsion.tool.pngpacker.data
 			if(action)
 			{
 				action.removeDirInfo(this);
+				
+				action.model.change();
 				
 				action = null;
 				node = null;

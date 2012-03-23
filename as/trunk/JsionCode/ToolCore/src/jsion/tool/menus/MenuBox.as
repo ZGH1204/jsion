@@ -1,23 +1,18 @@
 package jsion.tool.menus
 {
 	import jsion.tool.BaseFrame;
-	import jsion.tool.pngpacker.PNGPackerFrame;
+	import jsion.tool.pngpacker.PackerFrame;
 	
 	import org.aswing.JMenu;
 	import org.aswing.JMenuBar;
 	import org.aswing.JMenuItem;
-	import org.aswing.JWindow;
 	import org.aswing.event.AWEvent;
 	
 	public class MenuBox extends JMenuBar
 	{
-		private var m_owner:JWindow;
-		
-		public function MenuBox(owner:JWindow)
+		public function MenuBox()
 		{
 			super();
-			
-			m_owner = owner;
 			
 			initialize();
 		}
@@ -40,7 +35,7 @@ package jsion.tool.menus
 		
 		private function onItemClickHandler(e:AWEvent):void
 		{
-			var frame:BaseFrame = new PNGPackerFrame(m_owner);
+			var frame:BaseFrame = new PackerFrame();
 			
 			frame.show();
 		}

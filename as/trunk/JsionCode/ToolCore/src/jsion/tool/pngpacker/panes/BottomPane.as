@@ -5,7 +5,7 @@ package jsion.tool.pngpacker.panes
 	import flash.filesystem.File;
 	import flash.net.FileFilter;
 	
-	import jsion.tool.pngpacker.PNGPackerFrame;
+	import jsion.tool.pngpacker.PackerFrame;
 	import jsion.tool.pngpacker.QueueLoader;
 	import jsion.tool.pngpacker.data.DirectionInfo;
 	import jsion.tool.WaiteFrame;
@@ -27,7 +27,7 @@ package jsion.tool.pngpacker.panes
 	
 	public class BottomPane extends JPanel
 	{
-		private var m_frame:PNGPackerFrame;
+		private var m_frame:PackerFrame;
 		
 		private var m_info:DirectionInfo;
 		
@@ -49,7 +49,7 @@ package jsion.tool.pngpacker.panes
 		
 		private var m_loading:Boolean;
 		
-		public function BottomPane(frame:PNGPackerFrame)
+		public function BottomPane(frame:PackerFrame)
 		{
 			m_frame = frame;
 			
@@ -222,7 +222,7 @@ package jsion.tool.pngpacker.panes
 			if(bmd == null) return;
 			
 			var item:FrameItem = new FrameItem(bmd);
-			item.setText((m_itemList.length + 1).toString());
+			//item.setText((m_itemList.length + 1).toString());
 			
 			item.getModel().addSelectionListener(__selectionHandler);
 			

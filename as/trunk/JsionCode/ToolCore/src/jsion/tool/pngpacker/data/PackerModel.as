@@ -23,12 +23,19 @@ package jsion.tool.pngpacker.data
 		public var model:DefaultTreeModel;
 		public var root:DefaultMutableTreeNode;
 		
+		private var m_changed:Boolean;
+		
 		public function PackerModel(name:String = "动作列表")
 		{
 			this.name = name;
 			m_actions = new HashMap();
 			root = new DefaultMutableTreeNode(this.name);
 			model = new DefaultTreeModel(root);
+		}
+		
+		public function change():void
+		{
+			m_changed = true;
 		}
 		
 		public function addAction(actionID:int, dir:int):DirectionInfo
@@ -45,6 +52,7 @@ package jsion.tool.pngpacker.data
 				action = new ActionInfo(actionName);
 				action.actionID = actionID;
 				action.root = root;
+				action.model = this;
 				m_actions.put(actionID, action);
 				
 				root.append(action.node);
@@ -92,11 +100,42 @@ package jsion.tool.pngpacker.data
 		
 		public function getAllActions():Array
 		{
-			return m_actions.getValues();;
+			return m_actions.getValues();
+		}
+		
+		public function getAllDirs():Array
+		{
+			var list:Array = [];
+			
+			var actions:Array = m_actions.getValues();
+			
+			for each(var a:ActionInfo in actions)
+			{
+				var dirs:Array = a.getAllDirInfos();
+				
+				for each(var d:DirectionInfo in dirs)
+				{
+					list.push(d);
+				}
+			}
+			
+			return list;
+		}
+		
+		public function clear():void
+		{
+			var list:Array = getAllDirs();
+			
+			for each(var d:DirectionInfo in list)
+			{
+				d.removeFromAction();
+			}
 		}
 		
 		public function save(file:String):void
 		{
+			if(m_changed == false) return;
+			
 			var bytes:ByteArray = getPackBytes();
 			
 			var f:File = new File(file);

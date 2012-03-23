@@ -1,6 +1,6 @@
 package jsion.tool.pngpacker.panes
 {
-	import jsion.tool.pngpacker.PNGPackerFrame;
+	import jsion.tool.pngpacker.PackerFrame;
 	import jsion.tool.pngpacker.ToolBox;
 	
 	import org.aswing.JPanel;
@@ -9,11 +9,11 @@ package jsion.tool.pngpacker.panes
 	
 	public class TopPane extends JPanel
 	{
-		private var m_frame:PNGPackerFrame;
+		private var m_frame:PackerFrame;
 		
 		private var m_toolBox:ToolBox;
 		
-		public function TopPane(frame:PNGPackerFrame)
+		public function TopPane(frame:PackerFrame)
 		{
 			m_frame = frame;
 			
