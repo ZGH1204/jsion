@@ -3,7 +3,7 @@ package jsion.tool.pngpacker
 	import flash.filesystem.File;
 	
 	import jsion.tool.BaseFrame;
-	import jsion.tool.pngpacker.data.ActionInfo;
+	import jsion.tool.ToolGlobal;
 	import jsion.tool.pngpacker.data.DirectionInfo;
 	import jsion.tool.pngpacker.data.PackerModel;
 	import jsion.tool.pngpacker.panes.BottomPane;
@@ -16,7 +16,7 @@ package jsion.tool.pngpacker
 	import org.aswing.BorderLayout;
 	import org.aswing.tree.TreePath;
 	
-	public class PNGPackerFrame extends BaseFrame
+	public class PackerFrame extends BaseFrame
 	{
 		protected var m_topPanel:TopPane;
 		protected var m_leftPanel:LeftPane;
@@ -26,13 +26,13 @@ package jsion.tool.pngpacker
 		
 		private var m_packerData:PackerModel;
 		
-		public function PNGPackerFrame(owner:*=null, modal:Boolean=false)
+		public function PackerFrame()
 		{
-			m_title = "资源打包器";
+			m_title = "资源打包";
 			
 			m_packerData = new PackerModel();
 			
-			super(owner, modal);
+			super(ToolGlobal.window);
 			
 			m_content.setLayout(new BorderLayout(1,1));
 			
@@ -68,6 +68,8 @@ package jsion.tool.pngpacker
 			m_leftPanel.setCurrent(dirInfo.action, dirInfo, path);
 			
 			m_bottomPanel.setDirInfo(dirInfo);
+			
+			m_renderPanel.setDirInfo(dirInfo);
 		}
 		
 		public function clearCurrent():void
@@ -77,6 +79,8 @@ package jsion.tool.pngpacker
 			m_leftPanel.clearCurrent();
 			
 			m_bottomPanel.setDirInfo();
+			
+			m_renderPanel.setDirInfo();
 		}
 		
 		public function setSelected(dirInfo:DirectionInfo):void
@@ -86,6 +90,8 @@ package jsion.tool.pngpacker
 			m_leftPanel.setSelected(dirInfo);
 			
 			m_bottomPanel.setDirInfo(dirInfo);
+			
+			m_renderPanel.setDirInfo(dirInfo);
 		}
 		
 		public function delSelected():void
@@ -95,6 +101,8 @@ package jsion.tool.pngpacker
 			m_leftPanel.delSelected();
 			
 			m_bottomPanel.setDirInfo();
+			
+			m_renderPanel.setDirInfo();
 		}
 		
 		public function refreshTree():void
@@ -104,6 +112,10 @@ package jsion.tool.pngpacker
 		
 		public function read(f:File):void
 		{
+			DisposeUtil.free(m_packerData);
+			
+			m_packerData.clear();
+			
 			var dir:DirectionInfo = m_packerData.read(f);
 			
 			m_leftPanel.updateUI();

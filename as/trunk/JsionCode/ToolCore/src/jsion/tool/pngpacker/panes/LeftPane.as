@@ -1,6 +1,6 @@
 package jsion.tool.pngpacker.panes
 {
-	import jsion.tool.pngpacker.PNGPackerFrame;
+	import jsion.tool.pngpacker.PackerFrame;
 	import jsion.tool.pngpacker.data.ActionInfo;
 	import jsion.tool.pngpacker.data.DirectionInfo;
 	import jsion.tool.pngpacker.data.PackerModel;
@@ -16,13 +16,13 @@ package jsion.tool.pngpacker.panes
 	{
 		private var m_tree:JTree;
 		
-		private var m_frame:PNGPackerFrame;
+		private var m_frame:PackerFrame;
 		
 		private var m_currentDirInfo:DirectionInfo;
 		
 		private var m_path:TreePath;
 		
-		public function LeftPane(frame:PNGPackerFrame)
+		public function LeftPane(frame:PackerFrame)
 		{
 			m_frame = frame;
 			

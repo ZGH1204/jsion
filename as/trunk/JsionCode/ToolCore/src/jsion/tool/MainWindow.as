@@ -76,7 +76,7 @@ package jsion.tool
 		
 		protected function initTop():void
 		{
-			m_topPanel.append(new MenuBox(this));
+			m_topPanel.append(new MenuBox());
 		}
 		
 		protected function initBottom():void

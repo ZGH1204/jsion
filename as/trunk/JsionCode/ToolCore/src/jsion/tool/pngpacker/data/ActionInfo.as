@@ -16,6 +16,8 @@ package jsion.tool.pngpacker.data
 		
 		public var node:DefaultMutableTreeNode;
 		
+		public var model:PackerModel;
+		
 		public function ActionInfo(str:String)
 		{
 			name = str;

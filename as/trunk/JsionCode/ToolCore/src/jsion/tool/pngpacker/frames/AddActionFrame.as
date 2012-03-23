@@ -5,7 +5,7 @@ package jsion.tool.pngpacker.frames
 	import jsion.core.Global;
 	import jsion.tool.BaseFrame;
 	import jsion.tool.ToolGlobal;
-	import jsion.tool.pngpacker.PNGPackerFrame;
+	import jsion.tool.pngpacker.PackerFrame;
 	import jsion.tool.pngpacker.data.DirectionInfo;
 	import jsion.tool.pngpacker.data.PackerModel;
 	import jsion.utils.ArrayUtil;
@@ -22,9 +22,9 @@ package jsion.tool.pngpacker.frames
 		private var actionCombo:JComboBox;
 		private var directionCombo:JComboBox;
 		
-		private var frame:PNGPackerFrame;
+		private var frame:PackerFrame;
 		
-		public function AddActionFrame(f:PNGPackerFrame)
+		public function AddActionFrame(f:PackerFrame)
 		{
 			m_title = "新建动作";
 			

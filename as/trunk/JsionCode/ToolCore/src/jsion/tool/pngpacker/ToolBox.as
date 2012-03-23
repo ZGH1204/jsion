@@ -16,7 +16,7 @@ package jsion.tool.pngpacker
 	
 	public class ToolBox extends JPanel
 	{
-		private var m_frame:PNGPackerFrame;
+		private var m_frame:PackerFrame;
 		
 		private var m_newActionBtn:JButton;
 		private var m_delActionBtn:JButton;
@@ -28,7 +28,7 @@ package jsion.tool.pngpacker
 		private var m_openFile:File;
 		private var m_browsing:Boolean;
 		
-		public function ToolBox(frame:PNGPackerFrame)
+		public function ToolBox(frame:PackerFrame)
 		{
 			m_frame = frame;
 			
