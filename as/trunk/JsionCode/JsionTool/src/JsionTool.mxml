@@ -10,11 +10,4 @@
 	</fx:Declarations>
 	
 	<fx:Script source="JsionTool.as" />
-	<mx:Image id="image1" width="160" height="160">
-		
-	</mx:Image>
-	
-	<mx:Image id="image2" width="160" height="160" y="80">
-		
-	</mx:Image>
 </s:WindowedApplication>
