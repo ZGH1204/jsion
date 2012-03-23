@@ -2,11 +2,13 @@ package jsion.tool.pngpacker.frames
 {
 	import flash.events.Event;
 	
+	import jsion.core.Global;
 	import jsion.tool.BaseFrame;
 	import jsion.tool.ToolGlobal;
 	import jsion.tool.pngpacker.PNGPackerFrame;
 	import jsion.tool.pngpacker.data.DirectionInfo;
 	import jsion.tool.pngpacker.data.PackerModel;
+	import jsion.utils.ArrayUtil;
 	
 	import org.aswing.JComboBox;
 	import org.aswing.JLabel;
@@ -41,14 +43,14 @@ package jsion.tool.pngpacker.frames
 		{
 			buildForm();
 			
-			actionCombo = new JComboBox(["待机动作", "行走动作", "奔跑动作", "攻击动作", "防御动作", "受伤动作", "技能动作", "死亡动作"]);
+			actionCombo = new JComboBox(ArrayUtil.clone(Global.ActionNames));
 			actionCombo.setEditable(false);
 			actionCombo.setPreferredWidth(200);
 			box.addRow(new JLabel("动作："), actionCombo);
 			
 			actionCombo.addActionListener(actionChangeHandler);
 			
-			directionCombo = new JComboBox(["上", "下", "左", "右", "左上", "右上", "左下", "右下"]);
+			directionCombo = new JComboBox(ArrayUtil.clone(Global.DirNames));
 			directionCombo.setEditable(false);
 			directionCombo.setPreferredWidth(200);
 			box.addRow(new JLabel("朝向："), directionCombo);
@@ -87,12 +89,12 @@ package jsion.tool.pngpacker.frames
 			var data:PackerModel = frame.packerData;
 			
 			var actionID:int = actionCombo.getSelectedIndex() + 1;
-			var actionName:String = actionCombo.getSelectedItem();
+			//var actionName:String = actionCombo.getSelectedItem();
 			
 			var dirID:int = directionCombo.getSelectedIndex() + 1;
-			var dirName:String = directionCombo.getSelectedItem();
+			//var dirName:String = directionCombo.getSelectedItem();
 			
-			var dirInfo:DirectionInfo = data.addAction(actionName, actionID, dirName, dirID);
+			var dirInfo:DirectionInfo = data.addAction(actionID, dirID);
 			
 			frame.setSelected(dirInfo);
 		}

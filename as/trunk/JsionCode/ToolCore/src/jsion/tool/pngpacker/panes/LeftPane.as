@@ -16,8 +16,6 @@ package jsion.tool.pngpacker.panes
 	{
 		private var m_tree:JTree;
 		
-		private var m_packerData:PackerModel;
-		
 		private var m_frame:PNGPackerFrame;
 		
 		private var m_currentDirInfo:DirectionInfo;
@@ -27,7 +25,6 @@ package jsion.tool.pngpacker.panes
 		public function LeftPane(frame:PNGPackerFrame)
 		{
 			m_frame = frame;
-			m_packerData = frame.packerData;
 			
 			super();
 			
@@ -37,7 +34,7 @@ package jsion.tool.pngpacker.panes
 			
 			m_tree = new JTree();
 			
-			m_tree.setModel(m_packerData.model);
+			m_tree.setModel(m_frame.packerData.model);
 			
 			append(m_tree);
 			
@@ -52,14 +49,14 @@ package jsion.tool.pngpacker.panes
 			
 			var treeNode:DefaultMutableTreeNode = path.getLastPathComponent();
 			
-			if(treeNode == m_packerData.root || treeNode.isLeaf() == false)
+			if(treeNode == m_frame.packerData.root || treeNode.isLeaf() == false)
 			{
 				if(m_path) m_tree.setSelectionPath(m_path);
 				
 				return;
 			}
 			
-			var dir:DirectionInfo = m_packerData.getPath(treeNode);
+			var dir:DirectionInfo = m_frame.packerData.getPath(treeNode);
 			
 			if(dir) m_frame.setCurrent(dir, path);
 		}
@@ -76,14 +73,14 @@ package jsion.tool.pngpacker.panes
 		
 		public function setSelected(dirInfo:DirectionInfo):void
 		{
-			m_tree.collapsePath(new TreePath([m_packerData.root]));
-			m_tree.expandPath(new TreePath([m_packerData.root]));
+			m_tree.collapsePath(new TreePath([m_frame.packerData.root]));
+			m_tree.expandPath(new TreePath([m_frame.packerData.root]));
 			
-			m_tree.collapsePath(new TreePath([m_packerData.root, dirInfo.action.node]));
-			m_tree.expandPath(new TreePath([m_packerData.root, dirInfo.action.node]));
+			m_tree.collapsePath(new TreePath([m_frame.packerData.root, dirInfo.action.node]));
+			m_tree.expandPath(new TreePath([m_frame.packerData.root, dirInfo.action.node]));
 			m_tree.setSelectionPath(new TreePath([dirInfo.node]));
 			
-			setCurrent(dirInfo.action, dirInfo, new TreePath([m_packerData.root, dirInfo.action.node, dirInfo.node]));
+			setCurrent(dirInfo.action, dirInfo, new TreePath([m_frame.packerData.root, dirInfo.action.node, dirInfo.node]));
 		}
 		
 		public function delSelected():void
@@ -120,19 +117,19 @@ package jsion.tool.pngpacker.panes
 		
 		public function refreshTree():void
 		{
-			var list:Array = m_packerData.getAllActions();
+			var list:Array = m_frame.packerData.getAllActions();
 			
 			for each(var aInfo:ActionInfo in list)
 			{
-				if(m_tree.isExpanded(new TreePath([m_packerData.root, aInfo.node])))
+				if(m_tree.isExpanded(new TreePath([m_frame.packerData.root, aInfo.node])))
 				{
-					m_tree.collapsePath(new TreePath([m_packerData.root, aInfo.node]));
-					m_tree.expandPath(new TreePath([m_packerData.root, aInfo.node]));
+					m_tree.collapsePath(new TreePath([m_frame.packerData.root, aInfo.node]));
+					m_tree.expandPath(new TreePath([m_frame.packerData.root, aInfo.node]));
 				}
 				else
 				{
-					m_tree.expandPath(new TreePath([m_packerData.root, aInfo.node]));
-					m_tree.collapsePath(new TreePath([m_packerData.root, aInfo.node]));
+					m_tree.expandPath(new TreePath([m_frame.packerData.root, aInfo.node]));
+					m_tree.collapsePath(new TreePath([m_frame.packerData.root, aInfo.node]));
 				}
 			}
 		}
