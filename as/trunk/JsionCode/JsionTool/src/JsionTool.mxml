@@ -4,7 +4,37 @@
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
 					   width="1000" height="600"
 					   applicationComplete="init(event)"
-					   resize="resizeHandler(event)">
+					   resize="resizeHandler(event)" 
+					   nativeDragEnter="nativeDragEnterHandler(event)" 
+					   nativeDragDrop="nativeDragDropHandler(event)"
+					   >
+
+	<fx:Script>
+		<![CDATA[
+			import mx.managers.DragManager;
+			protected function nativeDragEnterHandler(event:NativeDragEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				trace("enter");
+				
+				DragManager.acceptDragDrop(this);
+				
+				ToolGlobal.fireNativeDragEnter(event);
+			}
+
+			protected function nativeDragDropHandler(event:NativeDragEvent):void
+			{
+				// TODO Auto-generated method stub
+				trace("drop");
+				
+				ToolGlobal.fireNativeDragDrop(event);
+			}
+
+		]]>
+	</fx:Script>
+
+
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
