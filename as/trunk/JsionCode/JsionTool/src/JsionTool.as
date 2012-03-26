@@ -9,12 +9,13 @@ import jsion.JsionCoreSetup;
 import jsion.tool.MainWindow;
 import jsion.tool.ToolGlobal;
 
+import mx.core.UIComponent;
 import mx.events.FlexEvent;
 import mx.events.ResizeEvent;
 
-import org.aswing.AsWingManager;
-
 protected var m_mainWindow:MainWindow;
+
+protected var m_container:UIComponent;
 
 private function init(e:FlexEvent):void
 {
@@ -32,13 +33,15 @@ private function init(e:FlexEvent):void
 	fs.readBytes(bytes);
 	fs.close();
 	
+	m_container = new UIComponent();
+	
+	this.addElement(m_container);
+	
 	var configXml:XML = new XML(bytes);
 	
 	JsionCoreSetup(this.stage, configXml);
 	
-	AsWingManager.initAsStandard(this.stage);
-	
-	ToolGlobal.setup(this.stage, this, this.width, this.height);
+	ToolGlobal.setup(this.stage, this, m_container, this.width, this.height);
 }
 
 private function resizeHandler(event:ResizeEvent):void

@@ -1,7 +1,11 @@
 package jsion.tool.menus
 {
 	import jsion.tool.BaseFrame;
+	import jsion.tool.ToolGlobal;
+	import jsion.tool.compresses.CompressPane;
 	import jsion.tool.pngpacker.PackerFrame;
+	
+	import mx.managers.PopUpManager;
 	
 	import org.aswing.JMenu;
 	import org.aswing.JMenuBar;
@@ -29,6 +33,10 @@ package jsion.tool.menus
 			item.addActionListener(onItemClickHandler);
 			tool.append(item);
 			
+			item = new JMenuItem("文件压缩");
+			item.addActionListener(onCompressHandler);
+			tool.append(item);
+			
 			append(tool);
 		}
 		
@@ -37,6 +45,18 @@ package jsion.tool.menus
 			var frame:BaseFrame = new PackerFrame();
 			
 			frame.show();
+		}
+		
+		private function onCompressHandler(e:AWEvent):void
+		{
+//			var pane:CompressPane = new CompressPane();
+//			
+//			pane.x = (ToolGlobal.windowedApp.width - pane.width) / 2;
+//			pane.y = (ToolGlobal.windowedApp.height - pane.height) / 2;
+//			
+//			PopUpManager.addPopUp(pane, ToolGlobal.windowedApp, true);
+			
+			ToolGlobal.dragDropCompress = PopUpManager.createPopUp(ToolGlobal.windowedApp, CompressPane, true);
 		}
 	}
 }
