@@ -1,17 +1,15 @@
 package jsion.tool.pngpacker
 {
-	import flash.events.Event;
 	import flash.filesystem.File;
 	import flash.net.FileFilter;
 	
+	import jsion.tool.mgrs.FileMgr;
 	import jsion.tool.pngpacker.frames.AddActionFrame;
 	
 	import org.aswing.FlowLayout;
 	import org.aswing.JButton;
 	import org.aswing.JPanel;
-	import org.aswing.LayoutManager;
 	import org.aswing.LoadIcon;
-	import org.aswing.SoftBoxLayout;
 	import org.aswing.event.AWEvent;
 	
 	public class ToolBox extends JPanel
@@ -24,8 +22,6 @@ package jsion.tool.pngpacker
 		private var m_savePackBtn:JButton;
 		private var m_openPackBtn:JButton;
 		
-		private var m_saveFile:File;
-		private var m_openFile:File;
 		private var m_browsing:Boolean;
 		
 		public function ToolBox(frame:PackerFrame)
@@ -56,12 +52,6 @@ package jsion.tool.pngpacker
 			append(m_openPackBtn);
 			
 			m_browsing = false;
-			
-			m_saveFile = new File();
-			m_saveFile.addEventListener(Event.SELECT, __saveSelectHandler);
-			
-			m_openFile = new File();
-			m_openFile.addEventListener(Event.SELECT, __openSelectHandler);
 		}
 		
 		private function onNewAction(e:AWEvent):void
@@ -81,7 +71,8 @@ package jsion.tool.pngpacker
 			if(m_browsing == false)
 			{
 				m_browsing = true;
-				m_saveFile.browseForSave("保存到");
+				
+				FileMgr.saveBrowse(saveCallback);
 			}
 		}
 		
@@ -90,26 +81,22 @@ package jsion.tool.pngpacker
 			if(m_browsing == false)
 			{
 				m_browsing = true;
-				m_openFile.browseForOpen("选择一个动作资源", [new FileFilter("动作资源", "*.hy")]);
+				FileMgr.openBrowse(openCallback, [new FileFilter("动作资源", "*.hy")]);
 			}
 		}
 		
-		private function __saveSelectHandler(e:Event):void
+		private function saveCallback(f:File):void
 		{
 			m_browsing = false;
-			
-			var f:File = File(e.target);
 			
 			m_frame.packerData.save(f.nativePath);
 		}
 		
-		private function __openSelectHandler(e:Event):void
+		private function openCallback(f:File):void
 		{
 			m_browsing = false;
 			
 			m_openPackBtn.setEnabled(false);
-			
-			var f:File = File(e.target);
 			
 			m_frame.read(f);
 		}

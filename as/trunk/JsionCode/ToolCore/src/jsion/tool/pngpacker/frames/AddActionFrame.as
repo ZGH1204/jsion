@@ -46,18 +46,18 @@ package jsion.tool.pngpacker.frames
 			actionCombo = new JComboBox(ArrayUtil.clone(Global.ActionNames));
 			actionCombo.setEditable(false);
 			actionCombo.setPreferredWidth(200);
-			box.addRow(new JLabel("动作："), actionCombo);
+			m_box.addRow(new JLabel("动作："), actionCombo);
 			
 			actionCombo.addActionListener(actionChangeHandler);
 			
 			directionCombo = new JComboBox(ArrayUtil.clone(Global.DirNames));
 			directionCombo.setEditable(false);
 			directionCombo.setPreferredWidth(200);
-			box.addRow(new JLabel("朝向："), directionCombo);
+			m_box.addRow(new JLabel("朝向："), directionCombo);
 			
 			buildFormButton();
 			
-			bt_cancle.setText("保存并新建");
+			m_cancleBtn.setText("保存并新建");
 		}
 		
 		protected function actionChangeHandler(e:AWEvent):void

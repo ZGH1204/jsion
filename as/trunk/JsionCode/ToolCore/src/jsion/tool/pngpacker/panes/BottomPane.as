@@ -5,10 +5,11 @@ package jsion.tool.pngpacker.panes
 	import flash.filesystem.File;
 	import flash.net.FileFilter;
 	
+	import jsion.tool.WaiteFrame;
+	import jsion.tool.mgrs.FileMgr;
 	import jsion.tool.pngpacker.PackerFrame;
 	import jsion.tool.pngpacker.QueueLoader;
 	import jsion.tool.pngpacker.data.DirectionInfo;
-	import jsion.tool.WaiteFrame;
 	import jsion.tool.pngpacker.panes.parts.FrameItem;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
@@ -42,8 +43,6 @@ package jsion.tool.pngpacker.panes
 		
 		private var m_group:ButtonGroup;
 		private var m_itemList:Array;
-		
-		private var m_file:File;
 		
 		private var m_queue:QueueLoader;
 		
@@ -100,16 +99,13 @@ package jsion.tool.pngpacker.panes
 			m_nxtPicBtn.setEnabled(false);
 			m_nxtPicBtn.addActionListener(__nxtActionHandler);
 			m_upPane.append(m_nxtPicBtn);
-			
-			m_file = new File();
-			m_file.addEventListener(FileListEvent.SELECT_MULTIPLE, __selectMultiHandler);
 		}
 		
 		private function __addActionHandler(e:AWEvent):void
 		{
 			if(m_loading) return;
 			
-			m_file.browseForOpenMultiple("", [new FileFilter("帧图片", "*.png")]);
+			FileMgr.openMultiBrowse(selectMultiCallback, [new FileFilter("帧图片", "*.png")]);
 		}
 		
 		private function __selectMultiHandler(e:FileListEvent):void
@@ -131,6 +127,23 @@ package jsion.tool.pngpacker.panes
 			WaiteFrame.show("正在加载图片...");
 		}
 		
+		private function selectMultiCallback(list:Array):void
+		{
+			m_loading = true;
+			
+			DisposeUtil.free(m_queue);
+			m_queue = new QueueLoader();
+			
+			for each(var f:File in list)
+			{
+				m_queue.add(f);
+			}
+			
+			m_queue.start(loadCallback);
+			
+			WaiteFrame.show("正在加载图片...");
+		}
+		
 		private function loadCallback(list:Array):void
 		{
 			m_loading = false;
@@ -140,15 +153,6 @@ package jsion.tool.pngpacker.panes
 				m_info.addBitmapData(bmd);
 				
 				createItem(bmd);
-				
-//				var item:FrameItem = new FrameItem(bmd);
-//				item.setText((m_itemList.length + 1).toString());
-//				
-//				item.getModel().addSelectionListener(__selectionHandler);
-//				
-//				m_group.append(item);
-//				m_hBox.append(item);
-//				m_itemList.push(item);
 			}
 			
 			WaiteFrame.close();
@@ -161,13 +165,6 @@ package jsion.tool.pngpacker.panes
 			if(btn)
 			{
 				deleteItem(btn);
-				
-//				m_info.removeBitmapData(btn.bmd);
-//				m_group.remove(btn);
-//				m_hBox.remove(btn);
-//				ArrayUtil.remove(m_itemList, btn);
-//				btn.setSelected(false);
-//				btn.getModel().removeSelectionListener(__selectionHandler);
 			}
 		}
 		
@@ -182,14 +179,6 @@ package jsion.tool.pngpacker.panes
 				index--;
 				
 				moveItem(btn, index);
-				
-//				m_info.removeBitmapData(btn.bmd);
-//				m_info.insertBitmapData(btn.bmd, index);
-//				m_hBox.insert(index, btn);
-//				ArrayUtil.remove(m_itemList, btn);
-//				ArrayUtil.insert(m_itemList, btn, index);
-//				
-//				updateBtnEnabled();
 			}
 		}
 		
@@ -206,14 +195,6 @@ package jsion.tool.pngpacker.panes
 				index++;
 				
 				moveItem(btn, index);
-				
-//				m_info.removeBitmapData(btn.bmd);
-//				m_info.insertBitmapData(btn.bmd, index);
-//				m_hBox.insert(index, btn);
-//				ArrayUtil.remove(m_itemList, btn);
-//				ArrayUtil.insert(m_itemList, btn, index);
-//				
-//				updateBtnEnabled();
 			}
 		}
 		
