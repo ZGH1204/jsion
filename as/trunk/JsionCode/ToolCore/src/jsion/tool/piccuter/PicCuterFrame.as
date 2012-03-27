@@ -26,7 +26,6 @@ package jsion.tool.piccuter
 	
 	import mx.controls.Alert;
 	
-	import org.aswing.ASColor;
 	import org.aswing.AbstractButton;
 	import org.aswing.ButtonGroup;
 	import org.aswing.JButton;
@@ -129,6 +128,7 @@ package jsion.tool.piccuter
 			setSizeWH(405, 455);
 			
 			m_content.setLayout(new SoftBoxLayout(SoftBoxLayout.Y_AXIS, 5));
+			
 			
 			buildForm();
 			
