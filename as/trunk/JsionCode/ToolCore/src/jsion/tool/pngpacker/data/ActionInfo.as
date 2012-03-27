@@ -1,10 +1,12 @@
 package jsion.tool.pngpacker.data
 {
 	import jsion.HashMap;
+	import jsion.IDispose;
+	import jsion.utils.DisposeUtil;
 	
 	import org.aswing.tree.DefaultMutableTreeNode;
 
-	public class ActionInfo
+	public class ActionInfo implements IDispose
 	{
 		public var name:String;
 		
@@ -74,6 +76,16 @@ package jsion.tool.pngpacker.data
 		public function getAllDirInfos():Array
 		{
 			return m_dirs.getValues();
+		}
+		
+		public function dispose():void
+		{
+			DisposeUtil.free(m_dirs);
+			m_dirs = null;
+			
+			root = null;
+			node = null;
+			model = null;
 		}
 	}
 }

@@ -122,5 +122,19 @@ package jsion.tool.pngpacker
 			
 			setSelected(dir);
 		}
+		
+		override public function dispose():void
+		{
+			DisposeUtil.free(m_packerData);
+			m_packerData = null;
+			
+			m_topPanel = null;
+			m_leftPanel = null;
+			m_mainPanel = null;
+			m_renderPanel = null;
+			m_bottomPanel = null;
+			
+			super.dispose();
+		}
 	}
 }

@@ -22,10 +22,11 @@ package jsion.tool
 		
 		protected var m_content:Container;
 		
-		protected var box:Form;
+		protected var m_box:Form;
 		
-		protected var bt_ok:JButton;
-		protected var bt_cancle:JButton;
+		protected var m_okBtn:JButton;
+		
+		protected var m_cancleBtn:JButton;
 		
 		public function BaseFrame(owner:* = null, modal:Boolean = false)
 		{
@@ -60,25 +61,25 @@ package jsion.tool
 		
 		protected function buildForm():void
 		{
-			box = new Form();
-			m_content.append(box);
+			m_box = new Form();
+			m_content.append(m_box);
 			
-			box.append(new JPanel());
+			m_box.append(new JPanel());
 		}
 		
 		protected function buildFormButton():void
 		{
-			bt_ok = new JButton('确认');
-			bt_ok.setPreferredWidth(80);
-			bt_cancle = new JButton('取消');
-			bt_cancle.setPreferredWidth(80);
+			m_okBtn = new JButton('确认');
+			m_okBtn.setPreferredWidth(80);
+			m_cancleBtn = new JButton('取消');
+			m_cancleBtn.setPreferredWidth(80);
 			
-			bt_cancle.addActionListener(onCancle);
-			bt_ok.addActionListener(onSubmit);
+			m_okBtn.addActionListener(onSubmit);
+			m_cancleBtn.addActionListener(onCancle);
 			
 			var jpanle:JPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 16, 5));
-			jpanle.appendAll(bt_ok, bt_cancle);
-			box.append(jpanle);
+			jpanle.appendAll(m_okBtn, m_cancleBtn);
+			m_box.append(jpanle);
 		}
 		
 		protected function onCancle(e:Event):void
@@ -107,11 +108,21 @@ package jsion.tool
 		{
 			removeEventListener(ResizedEvent.RESIZED, __resizeHandler);
 			
-			if(m_content)
-			{
-				m_content.removeEventListener(ResizedEvent.RESIZED, __contentResizeHandler);
-			}
+			if(m_okBtn) m_okBtn.removeActionListener(onSubmit);
+			
+			if(m_cancleBtn) m_cancleBtn.removeActionListener(onCancle);
+			
+			if(m_content) m_content.removeEventListener(ResizedEvent.RESIZED, __contentResizeHandler);
+			
+			m_okBtn = null;
+			
+			m_cancleBtn = null;
+			
+			m_box = null;
+			
 			m_content = null;
+			
+			m_win = null;
 			
 			super.dispose();
 		}

@@ -7,14 +7,16 @@ package jsion.tool.pngpacker.data
 	import flash.utils.ByteArray;
 	
 	import jsion.HashMap;
+	import jsion.IDispose;
 	import jsion.core.Global;
 	import jsion.core.serialize.res.ResPacker;
 	import jsion.core.serialize.res.ResUnpacker;
+	import jsion.utils.DisposeUtil;
 	
 	import org.aswing.tree.DefaultMutableTreeNode;
 	import org.aswing.tree.DefaultTreeModel;
 
-	public class PackerModel
+	public class PackerModel implements IDispose
 	{
 		public var name:String;
 		
@@ -212,6 +214,15 @@ package jsion.tool.pngpacker.data
 			}
 			
 			return first;
+		}
+		
+		public function dispose():void
+		{
+			DisposeUtil.free(m_actions);
+			m_actions = null;
+			
+			model = null;
+			root = null;
 		}
 	}
 }

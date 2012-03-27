@@ -2,11 +2,13 @@ package jsion.tool.pngpacker.data
 {
 	import flash.display.BitmapData;
 	
+	import jsion.IDispose;
 	import jsion.utils.ArrayUtil;
+	import jsion.utils.DisposeUtil;
 	
 	import org.aswing.tree.DefaultMutableTreeNode;
 
-	public class DirectionInfo
+	public class DirectionInfo implements IDispose
 	{
 		public var name:String;
 		
@@ -68,6 +70,15 @@ package jsion.tool.pngpacker.data
 				node = null;
 				m_list = null;
 			}
+		}
+		
+		public function dispose():void
+		{
+			DisposeUtil.free(m_list);
+			m_list = null;
+			
+			action = null;
+			node = null;
 		}
 	}
 }
