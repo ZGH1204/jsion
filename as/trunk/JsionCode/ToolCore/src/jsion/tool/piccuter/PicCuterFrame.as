@@ -8,6 +8,7 @@ package jsion.tool.piccuter
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
+	import flash.net.FileFilter;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	import flash.utils.ByteArray;
@@ -39,10 +40,13 @@ package jsion.tool.piccuter
 	
 	public class PicCuterFrame extends BaseFrame
 	{
+		public static const PNG_EXT:String = ".png";
+		public static const JPG_EXT:String = ".jpg";
+		
 		/**
 		 * 图片文件路径存放显示
 		 */		
-		private var m_filePathTxt:JTextField;
+		private var m_picPathTxt:JTextField;
 		
 		/**
 		 * 浏览选择图片文件
@@ -129,13 +133,13 @@ package jsion.tool.piccuter
 			buildForm();
 			
 			
-			m_filePathTxt = new JTextField("", 25);
-			m_filePathTxt.setEditable(false);
+			m_picPathTxt = new JTextField("", 25);
+			m_picPathTxt.setEditable(false);
 			
 			m_browserBtn = new JButton("浏览");
 			m_browserBtn.addActionListener(openFileHandler);
 			
-			m_box.addRow(new JLabel("选择图片："), m_filePathTxt, m_browserBtn);
+			m_box.addRow(new JLabel("选择图片："), m_picPathTxt, m_browserBtn);
 			
 			
 			
@@ -202,38 +206,49 @@ package jsion.tool.piccuter
 		
 		private function openFileHandler(e:AWEvent):void
 		{
-			FileMgr.openBrowse(openPicCallback);
+			FileMgr.openBrowse(openPicCallback, [new FileFilter("支持的图片文件", "*.png;*.jpg")]);
 		}
 		
 		private function openPicCallback(file:File):void
 		{
-			if(m_filePathTxt)
+			if(m_picPathTxt)
 			{
-				m_filePathTxt.setText(file.nativePath);
+				m_picPathTxt.setText(file.nativePath);
 			
-				if(m_loader)
-				{
-					m_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __loadCompleteHandler);
-					m_loader.unloadAndStop();
-					DisposeUtil.free(m_loader);
-					m_loader = null;
-				}
-				
-				m_bitmapData = null;
-				
-				var bytes:ByteArray = new ByteArray();
-				
-				var fs:FileStream = new FileStream();
-				fs.open(file, FileMode.READ);
-				fs.readBytes(bytes);
-				fs.close();
-				
-				m_loader = new Loader();
-				m_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, __loadCompleteHandler);
-				m_loader.loadBytes(bytes);
-				
-				m_preview.addChild(m_loader);
+				loadPic(file);
 			}
+		}
+		
+		private function loadPic(file:File):void
+		{
+			if(file.exists == false)
+			{
+				Alert.show("图片文件不存在!", "提示");
+				return;
+			}
+			
+			if(m_loader)
+			{
+				m_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __loadCompleteHandler);
+				m_loader.unloadAndStop();
+				DisposeUtil.free(m_loader);
+				m_loader = null;
+			}
+			
+			m_bitmapData = null;
+			
+			var bytes:ByteArray = new ByteArray();
+			
+			var fs:FileStream = new FileStream();
+			fs.open(file, FileMode.READ);
+			fs.readBytes(bytes);
+			fs.close();
+			
+			m_loader = new Loader();
+			m_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, __loadCompleteHandler);
+			m_loader.loadBytes(bytes);
+			
+			m_preview.addChild(m_loader);
 		}
 		
 		private function __loadCompleteHandler(e:Event):void
@@ -300,75 +315,58 @@ package jsion.tool.piccuter
 			
 			m_cutData.tileWidth = int(m_tileWidthTxt.getText());
 			m_cutData.tileHeight = int(m_tileHeightTxt.getText());
+			m_cutData.tileRect.x = m_cutData.tileRect.y = 0;
 			m_cutData.tileRect.width = m_cutData.tileWidth;
 			m_cutData.tileRect.height = m_cutData.tileHeight;
+			m_cutData.tileX = m_cutData.tileY = 0;
 			m_cutData.tileMaxX = Math.ceil(m_bitmapData.width / m_cutData.tileWidth);
 			m_cutData.tileMaxY = Math.ceil(m_bitmapData.height / m_cutData.tileHeight);
 			m_cutData.outDirectory = new File(m_outPathTxt.getText());
-			m_cutData.extension = m_pngRadio.isSelected() ? ".png" : ".jpg";
-			m_cutData.tileRect.x = m_cutData.tileRect.y = 0;
+			m_cutData.extension = m_pngRadio.isSelected() ? PNG_EXT : JPG_EXT;
 			
 			m_cutData.outDirectory.deleteDirectory(true);
 			m_cutData.outDirectory.createDirectory();
 			
 			m_cuting = true;
 			
-			m_timer = new Timer(1);
+			m_timer = new Timer(10);
 			m_timer.addEventListener(TimerEvent.TIMER, cutFile);
 			m_timer.start();
 			
 			setButtonsEnabled(false);
+			setPNGAndJPGEnabled(false);
+			setTileSizeEditable(false);
 		}
 		
 		private function cutFile(e:TimerEvent):void
 		{
-			m_cutData.tileRect.x = m_cutData.tileX * m_cutData.tileWidth;
-			m_cutData.tileRect.y = m_cutData.tileY * m_cutData.tileHeight;
+			m_cutData.updateTileRect();
 			
 			var bmd:BitmapData = new BitmapData(m_cutData.tileWidth, m_cutData.tileHeight, true, 0);
 			bmd.copyPixels(m_bitmapData, m_cutData.tileRect, Constant.ZeroPoint);
 			
-			var bytes:ByteArray;
+			m_cutData.saveBitmapData(bmd);
 			
-			if(m_cutData.extension == ".png")
+			if(m_cutData.finished)
 			{
-				bytes = PNGEncoder.encode(bmd);
-			}
-			else
-			{
-				bytes = JPGEncoder.encode(bmd);
-			}
-			
-			var filename:String = StringUtil.format("{1}_{0}{2}", m_cutData.tileX, m_cutData.tileY, m_cutData.extension);
-			
-			var file:File = m_cutData.outDirectory.resolvePath(filename);
-			
-			var fs:FileStream = new FileStream();
-			
-			fs.open(file, FileMode.WRITE);
-			fs.writeBytes(bytes);
-			fs.close();
-			
-			m_cutData.tileX += 1;
-			
-			if(m_cutData.tileX >= m_cutData.tileMaxX)
-			{
-				m_cutData.tileX = 0;
+				m_timer.stop();
+				m_timer.removeEventListener(TimerEvent.TIMER, cutFile);
+				m_progressbar.setValue(100);
+				setButtonsEnabled(true);
+				setPNGAndJPGEnabled(true);
+				setTileSizeEditable(true);
 				
-				m_cutData.tileY += 1;
+				Alert.show("图片切割完成", "提示");
 				
-				if(m_cutData.tileY >= m_cutData.tileMaxY)
-				{
-					m_timer.stop();
-					m_timer.removeEventListener(TimerEvent.TIMER, cutFile);
-					Alert.show("图片切割完成", "提示");
-					m_timer = null;
-					m_cuting = false;
-					m_progressbar.setValue(100);
-					setButtonsEnabled(true);
-					super.onSubmit(null);
-					return;
-				}
+				m_timer = null;
+				m_cuting = false;
+				m_cutData.tileRect = null;
+				m_cutData.outDirectory = null;
+				m_cutData = null;
+				
+				super.onSubmit(null);
+				
+				return;
 			}
 			
 			m_progressbar.setValue(int(100 * (m_cutData.tileY * m_cutData.tileMaxX + m_cutData.tileX) / (m_cutData.tileMaxX * m_cutData.tileMaxY)));
@@ -390,6 +388,44 @@ package jsion.tool.piccuter
 			m_jpgRadio.setEnabled(b);
 		}
 		
+		public function setPicPath(path:String):void
+		{
+			m_picPathTxt.setText(path);
+			
+			loadPic(new File(path));
+		}
+		
+		public function setOutPath(path:String):void
+		{
+			m_outPathTxt.setText(path);
+		}
+		
+		public function setEncodePNG():void
+		{
+			m_pngRadio.setSelected(true);
+		}
+		
+		public function setEncodeJPG():void
+		{
+			m_jpgRadio.setSelected(true);
+		}
+		
+		public function setTileWidth(w:int):void
+		{
+			m_tileWidthTxt.setText(String(w));
+		}
+		
+		public function setTileHeight(h:int):void
+		{
+			m_tileHeightTxt.setText(String(h));
+		}
+		
+		public function setTileSizeEditable(b:Boolean):void
+		{
+			m_tileWidthTxt.setEditable(b);
+			m_tileHeightTxt.setEditable(b);
+		}
+		
 		override public function dispose():void
 		{
 			if(m_browserBtn) m_browserBtn.removeActionListener(openFileHandler);
@@ -404,7 +440,7 @@ package jsion.tool.piccuter
 			DisposeUtil.free(m_loader);
 			m_loader = null;
 			
-			m_filePathTxt = null;
+			m_picPathTxt = null;
 			m_browserBtn = null;
 			m_outPathTxt = null;
 			m_outBrowserBtn = null;
@@ -421,8 +457,17 @@ package jsion.tool.piccuter
 	}
 }
 
+import flash.display.BitmapData;
 import flash.filesystem.File;
+import flash.filesystem.FileMode;
+import flash.filesystem.FileStream;
 import flash.geom.Rectangle;
+import flash.utils.ByteArray;
+
+import jsion.core.encoders.JPGEncoder;
+import jsion.core.encoders.PNGEncoder;
+import jsion.tool.piccuter.PicCuterFrame;
+import jsion.utils.StringUtil;
 
 class CutData
 {
@@ -443,4 +488,60 @@ class CutData
 	public var extension:String;
 	
 	public var tileRect:Rectangle = new Rectangle();
+	
+	public var finished:Boolean = false;
+	
+	public function updateTileRect():void
+	{
+		tileRect.x = tileX * tileWidth;
+		tileRect.y = tileY * tileHeight;
+	}
+	
+	public function saveBitmapData(bmd:BitmapData):void
+	{
+		if(finished) return;
+		
+		var bytes:ByteArray = encode(bmd);
+		
+		var file:File = resolvePath();
+		
+		var fs:FileStream = new FileStream();
+		
+		fs.open(file, FileMode.WRITE);
+		fs.writeBytes(bytes);
+		fs.close();
+		
+		tileX += 1;
+		
+		if(tileX >= tileMaxX)
+		{
+			tileX = 0;
+			
+			tileY += 1;
+			
+			if(tileY >= tileMaxY)
+			{
+				finished = true;
+			}
+		}
+	}
+	
+	private function encode(bmd:BitmapData):ByteArray
+	{
+		if(extension == PicCuterFrame.PNG_EXT)
+		{
+			return PNGEncoder.encode(bmd);
+		}
+		else
+		{
+			return JPGEncoder.encode(bmd);
+		}
+	}
+	
+	private function resolvePath():File
+	{
+		var filename:String = StringUtil.format("{1}_{0}{2}", tileX, tileY, extension);
+		
+		return outDirectory.resolvePath(filename);
+	}
 }
