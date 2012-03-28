@@ -28,12 +28,6 @@ package jsion.tool
 			super(owner, modal);
 			
 			init();
-			
-			initTop();
-			initBottom();
-			initLeft();
-			initRight();
-			initMain();
 		}
 		
 		protected function init():void
@@ -72,27 +66,9 @@ package jsion.tool
 			//m_content.append(m_leftPanel, BorderLayout.WEST);
 			//m_content.append(m_rightPanel, BorderLayout.EAST);
 			m_content.append(m_mainPanel, BorderLayout.CENTER);
-		}
-		
-		protected function initTop():void
-		{
+			
+			
 			m_topPanel.append(new MenuBox());
-		}
-		
-		protected function initBottom():void
-		{
-		}
-		
-		protected function initLeft():void
-		{
-		}
-		
-		protected function initRight():void
-		{
-		}
-		
-		protected function initMain():void
-		{
 		}
 	}
 }

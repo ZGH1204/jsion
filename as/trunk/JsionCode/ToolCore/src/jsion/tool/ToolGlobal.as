@@ -13,6 +13,7 @@ package jsion.tool
 	import mx.core.UIComponent;
 	
 	import org.aswing.AsWingManager;
+	import org.aswing.UIManager;
 	
 	import spark.components.WindowedApplication;
 
@@ -59,6 +60,7 @@ package jsion.tool
 			m_container = root;
 			
 			AsWingManager.initAsStandard(root, true, true);
+			UIManager.setLookAndFeel(new ToolLookAndFeel());
 			
 			m_window = new MainWindow();
 			m_window.setSizeWH(w, h);
