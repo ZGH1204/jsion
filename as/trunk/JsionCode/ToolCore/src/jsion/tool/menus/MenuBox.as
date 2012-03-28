@@ -3,6 +3,8 @@ package jsion.tool.menus
 	import jsion.tool.BaseFrame;
 	import jsion.tool.ToolGlobal;
 	import jsion.tool.compresses.CompressPane;
+	import jsion.tool.mapeditor.CreateFrame;
+	import jsion.tool.mapeditor.MapFrame;
 	import jsion.tool.piccuter.PicCuterFrame;
 	import jsion.tool.pngpacker.PackerFrame;
 	
@@ -42,6 +44,10 @@ package jsion.tool.menus
 			item.addActionListener(onCutPicHandler);
 			tool.append(item);
 			
+			item = new JMenuItem("新建地图");
+			item.addActionListener(onCreateMapHandler);
+			tool.append(item);
+			
 			append(tool);
 		}
 		
@@ -60,6 +66,13 @@ package jsion.tool.menus
 		private function onCutPicHandler(e:AWEvent):void
 		{
 			var frame:BaseFrame = new PicCuterFrame();
+			
+			frame.show();
+		}
+		
+		private function onCreateMapHandler(e:AWEvent):void
+		{
+			var frame:BaseFrame = new CreateFrame();
 			
 			frame.show();
 		}
