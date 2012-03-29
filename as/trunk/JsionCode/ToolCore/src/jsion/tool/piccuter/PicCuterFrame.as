@@ -324,7 +324,7 @@ package jsion.tool.piccuter
 			m_cutData.outDirectory = new File(m_outPathTxt.getText());
 			m_cutData.extension = m_pngRadio.isSelected() ? PNG_EXT : JPG_EXT;
 			
-			m_cutData.outDirectory.deleteDirectory(true);
+			if(m_cutData.outDirectory.exists) m_cutData.outDirectory.deleteDirectory(true);
 			m_cutData.outDirectory.createDirectory();
 			
 			m_cuting = true;
