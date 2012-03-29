@@ -156,7 +156,7 @@ package jsion.tool.mapeditor
 			
 			
 			//输出目录
-			m_outPathTxt = new JTextField(File.desktopDirectory.resolvePath("").nativePath, 23);
+			m_outPathTxt = new JTextField(File.desktopDirectory.resolvePath("Maps").nativePath, 23);
 			m_outPathBtn = new JButton("浏览");
 			m_outPathBtn.addActionListener(onOpenOutPathHandler);
 			

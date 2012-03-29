@@ -1,7 +1,11 @@
-package jsion.tool.mapeditor.datas
+package jsion.rpg.engine.datas
 {
 	public class MapInfo
 	{
+		public static const TileMap:int = 1;
+		
+		public static const LoopMap:int = 2;
+		
 		/**
 		 * 地图ID
 		 */		
