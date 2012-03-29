@@ -5,6 +5,6 @@ package jsion.rpg
 		/**
 		 * Maps\{MapID}
 		 */		
-		public static const MapRoot:String = "Maps\{0}";
+		public static const MapRoot:String = "Maps\\{0}";
 	}
 }
