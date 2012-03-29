@@ -53,6 +53,9 @@ package jsion.rpg.engine
 			{
 				trace("RPGObject.clearMe();");
 			}
+			
+			
+			trace("RPGObject.renderMe();");
 		}
 		
 		public function dispose():void
