@@ -118,7 +118,7 @@ package jsion.rpg.engine
 		}
 		
 		/**
-		 * 缓冲区结束坐标X
+		 * 缓冲区结束坐标Y
 		 */		
 		public function get endY():int
 		{
