@@ -25,11 +25,17 @@ namespace GameBase
             Account = info.Account;
             NickName = info.NickName;
             Client = client;
-            Client.Player = this;
         }
 
         public void SendTcp(GamePacket pkg)
         {
+            if (pkg == null) return;
+
+            if (pkg.PlayerID == 0)
+            {
+                pkg.PlayerID = PlayerID;
+            }
+
             Client.SendTcp(pkg);
         }
 

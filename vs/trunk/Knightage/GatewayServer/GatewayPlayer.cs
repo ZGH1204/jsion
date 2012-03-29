@@ -17,6 +17,8 @@ namespace GatewayServer
             Client = client;
 
             Client.PlayerID = PlayerID;
+
+            Client.Player = this;
         }
 
         public override void OnDisconnect()

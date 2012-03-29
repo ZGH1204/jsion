@@ -140,14 +140,7 @@ namespace GameBase
 
         public virtual void SendTcp(GamePacket pkg)
         {
-            if (pkg == null) return;
-
-            if (Player != null && pkg.PlayerID == 0)
-            {
-                pkg.PlayerID = Player.PlayerID;
-            }
-
-            m_socket.SendPacket(pkg);
+            if(m_socket.Connected) m_socket.SendPacket(pkg);
         }
 
         public virtual void HandlePacket(GamePacket packet)

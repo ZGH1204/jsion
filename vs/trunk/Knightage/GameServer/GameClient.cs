@@ -8,8 +8,6 @@ namespace GameServer
 {
     public class GameClient : ClientBase
     {
-        public new GamePlayer Player { get; set; }
-
         public GameClient()
             : base()
         { }
