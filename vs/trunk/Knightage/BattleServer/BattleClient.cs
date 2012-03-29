@@ -8,8 +8,6 @@ namespace BattleServer
 {
     public class BattleClient : ClientBase
     {
-        public new BattlePlayer Player { get; set; }
-
         public BattleClient()
             : base()
         { }
