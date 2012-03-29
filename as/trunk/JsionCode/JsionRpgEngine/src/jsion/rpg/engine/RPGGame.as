@@ -1,11 +1,13 @@
 package jsion.rpg.engine
 {
 	import flash.display.BitmapData;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import jsion.IDispose;
 	import jsion.rpg.engine.datas.MapInfo;
 	import jsion.rpg.engine.datas.RPGInfo;
+	import jsion.utils.DisposeUtil;
 	
 	public class RPGGame implements IDispose
 	{
@@ -14,9 +16,9 @@ package jsion.rpg.engine
 		
 		protected var m_map:RPGMap;
 		
-		protected var m_mapRepainted:Boolean;
-		
 		protected var m_rpgInfo:RPGInfo;
+		
+		protected var m_needRepaint:Boolean;
 		
 		public function RPGGame(w:int, h:int)
 		{
@@ -28,7 +30,8 @@ package jsion.rpg.engine
 		public function setMap(info:RPGInfo):void
 		{
 			m_rpgInfo = info;
-			
+			m_needRepaint = true;
+			DisposeUtil.free(m_map);
 			m_map = new RPGMap(info, m_cameraRect.width, m_cameraRect.height);
 		}
 		
@@ -39,23 +42,35 @@ package jsion.rpg.engine
 		
 		public function render():void
 		{
-			if(m_map.needRepaint)
+			if(m_needRepaint)
 			{
-				m_map.render(m_bitmapData);
-				m_mapRepainted = true;
-			}
-			
-			if(m_mapRepainted)
-			{
-				m_mapRepainted = false;
+				if(m_map) m_map.render(m_bitmapData);
+				m_needRepaint = false;
 			}
 			else
 			{
-				trace("RPGObject.clearMe();");
+				if(m_map) m_map.renderLoadComplete(m_bitmapData);
+				//trace("RPGObject.clearMe();");
 			}
 			
 			
-			trace("RPGObject.renderMe();");
+			//trace("RPGObject.renderMe();");
+		}
+		
+		public function get worldMap():RPGMap
+		{
+			return m_map;
+		}
+		
+		public function get centerPoint():Point
+		{
+			return m_map.center;
+		}
+		
+		public function set centerPoint(pos:Point):void
+		{
+			m_needRepaint = true;
+			m_map.center = pos;
 		}
 		
 		public function dispose():void

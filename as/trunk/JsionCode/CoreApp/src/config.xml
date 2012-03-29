@@ -13,7 +13,7 @@
 	
 	
 	<Modules>
-		<Module id="JsionDebug" cls="jsion.debug.DebugConsoleModule" url="../../JsionDebug/bin/JsionDebug.swc" autoLoad="true" crypted="false" target="_self" />
+		<Module id="JsionDebug" cls="jsion.debug.DebugConsoleModule" url="../../JsionDebug/bin/JsionDebug.swc" autoLoad="false" crypted="false" target="_self" />
 		<Module id="JsionUI" cls="jsion.core.JsionCoreModule" url="../../JsionUI/bin/JsionUI.swc" autoLoad="false" crypted="false" target="_self" />
 		<Module id="JsionParser" cls="jsion.parser.ParserModule" url="../../JsionParser/bin/JsionParser.swc" autoLoad="false" crypted="false" target="_self" />
 		<Module id="JsionSocket" cls="jsion.core.JsionCoreModule" url="../../JsionSocket/bin/JsionSocket.swc" autoLoad="false" crypted="false" target="_self" />
