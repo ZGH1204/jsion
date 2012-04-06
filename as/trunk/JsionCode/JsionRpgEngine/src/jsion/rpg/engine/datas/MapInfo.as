@@ -2,8 +2,14 @@ package jsion.rpg.engine.datas
 {
 	public class MapInfo
 	{
+		/**
+		 * 以Tile方法加载显示
+		 */		
 		public static const TileMap:int = 1;
 		
+		/**
+		 * 以循环背景方法显示
+		 */		
 		public static const LoopMap:int = 2;
 		
 		/**
@@ -39,7 +45,7 @@ package jsion.rpg.engine.datas
 		public var smallWidth:int;
 		
 		/**
-		 * 缩略图高度
+		 * 缩略图高度(暂时无效)
 		 */		
 		public var smallHeight:int;
 		
@@ -58,9 +64,9 @@ package jsion.rpg.engine.datas
 		 */		
 		public var tileExt:String;
 		
-		/**
-		 * 循环背景图片相对路径(含完整文件名)
-		 */		
-		public var loopPic:String;
+//		/**
+//		 * 循环背景图片相对路径(含完整文件名)
+//		 */		
+//		public var loopPic:String;
 	}
 }

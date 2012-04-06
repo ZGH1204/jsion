@@ -4,7 +4,9 @@ package jsion.rpg.engine
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+	import flash.utils.ByteArray;
 	
+	import jsion.core.loaders.BinaryLoader;
 	import jsion.core.loaders.ImageLoader;
 	import jsion.rpg.RPGGlobal;
 	import jsion.rpg.engine.datas.MapInfo;
@@ -24,6 +26,8 @@ package jsion.rpg.engine
 		protected var m_game:RPGGame;
 		
 		protected var m_rpgInfo:RPGInfo;
+		
+		protected var m_mapLoader:BinaryLoader;
 		
 		protected var m_loader:ImageLoader;
 		
@@ -59,30 +63,60 @@ package jsion.rpg.engine
 		
 		public function setMapID(id:int):void
 		{
-			m_rpgInfo = new RPGInfo();
-			var mapInfo:MapInfo = new MapInfo();
-			mapInfo.mapID = id;
-			mapInfo.mapName = "测试地图";
-			mapInfo.mapWidth = 2700;
-			mapInfo.mapHeight = 1800;
-			mapInfo.tileWidth = 100;
-			mapInfo.tileHeight = 100;
-			mapInfo.mapType = MapInfo.TileMap;
-			mapInfo.smallWidth = 200;
-			mapInfo.tileExt = ".jpg";
-			m_rpgInfo.mapInfo = mapInfo;
+			loadMapInfo(id);
 			
 			showLoading();
+		}
+		
+		private function loadMapInfo(id:int):void
+		{
+			var root:String = StringUtil.format(RPGGlobal.MapRoot, id);
+			
+			DisposeUtil.free(m_mapLoader);
+			m_mapLoader = new BinaryLoader(id + ".map", { root: root });
+			m_mapLoader.tag = id;
+			m_mapLoader.loadAsync(mapInfoLoadCallback);
+		}
+		
+		private function mapInfoLoadCallback(loader:BinaryLoader):void
+		{
+			if(loader.isComplete == false)
+			{
+				throw new Error("地图信息加载失败!");
+				return;
+			}
+			
+			var bytes:ByteArray = loader.content as ByteArray;
+			
+			m_rpgInfo = new RPGInfo();
+			
+			var mapInfo:MapInfo = RPGGlobal.trans2MapInfo(bytes);
+			m_rpgInfo.mapInfo = mapInfo;
 			
 			var root:String = StringUtil.format(RPGGlobal.MapRoot, mapInfo.mapID);
 			
 			DisposeUtil.free(m_loader);
-			m_loader = new ImageLoader("small.jpg", { root: root });
+			
+			if(mapInfo.mapType == MapInfo.TileMap)
+			{
+				m_loader = new ImageLoader("small.jpg", { root: root });
+			}
+			else
+			{
+				m_loader = new ImageLoader("loop.jpg", { root: root });
+			}
+			
 			m_loader.loadAsync(smallMapLoadCallback);
 		}
 		
 		private function smallMapLoadCallback(loader:ImageLoader):void
 		{
+			if(loader.isComplete == false)
+			{
+				throw new Error("小地图或循环背景加载失败!");
+				return;
+			}
+			
 			if(loader.isComplete)
 			{
 				m_rpgInfo.smallOrLoopBmd = Bitmap(loader.content).bitmapData.clone();
@@ -96,11 +130,16 @@ package jsion.rpg.engine
 		public function showLoading():void
 		{
 			trace("正在加载地图数据...");
+			m_waitingLayer.graphics.clear();
+			m_waitingLayer.graphics.beginFill(0x0);
+			m_waitingLayer.graphics.drawRect(0, 0, m_camera.width, m_camera.height);
+			m_waitingLayer.graphics.endFill();
 		}
 		
 		public function hideLoading():void
 		{
 			trace("地图数据加载完成...");
+			m_waitingLayer.graphics.clear();
 		}
 		
 		public function start():void

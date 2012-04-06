@@ -117,6 +117,11 @@ package jsion.tool.piccuter
 		 */		
 		private var m_cutData:CutData;
 		
+		/**
+		 * 读取图片后自动开始切割
+		 */		
+		private var m_autoCut:Boolean;
+		
 		public function PicCuterFrame(modal:Boolean=false)
 		{
 			m_title = "图片切割";
@@ -200,7 +205,9 @@ package jsion.tool.piccuter
 			m_content.append(m_progressbar);
 			
 			m_preview = new JPanel();
+			m_preview.setPreferredWidth(387);
 			m_preview.setPreferredHeight(240);
+			m_preview.setSizeWH(387, 240);
 			m_content.append(m_preview);
 		}
 		
@@ -263,7 +270,12 @@ package jsion.tool.piccuter
 			m_loader.x = (m_preview.width - m_loader.width) / 2;
 			m_loader.y = (m_preview.height - m_loader.height) / 2;
 			
-			m_bitmapData = Bitmap(m_loader.content).bitmapData;
+			m_bitmapData = Bitmap(m_loader.content).bitmapData.clone();
+			
+			if(m_autoCut)
+			{
+				cut();
+			}
 		}
 		
 		private function selectOutPathHandler(e:AWEvent):void
@@ -285,7 +297,19 @@ package jsion.tool.piccuter
 			super.closeReleased();
 		}
 		
+		public function autoStartCut():void
+		{
+			m_autoCut = true;
+			
+			if(m_bitmapData) cut();
+		}
+		
 		override protected function onSubmit(e:Event):void
+		{
+			cut();
+		}
+		
+		private function cut():void
 		{
 			if(m_cuting)
 			{
@@ -391,7 +415,7 @@ package jsion.tool.piccuter
 		public function setPicPath(path:String):void
 		{
 			m_picPathTxt.setText(path);
-			
+			m_bitmapData = null;
 			loadPic(new File(path));
 		}
 		

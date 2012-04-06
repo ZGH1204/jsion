@@ -1,11 +1,28 @@
 package jsion.tool.mapeditor
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.events.Event;
 	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
+	import flash.geom.Matrix;
 	import flash.net.FileFilter;
+	import flash.utils.ByteArray;
 	
+	import jsion.core.encoders.JPGEncoder;
+	import jsion.core.loaders.ImageLoader;
+	import jsion.rpg.RPGGlobal;
+	import jsion.rpg.engine.datas.MapInfo;
 	import jsion.tool.BaseFrame;
 	import jsion.tool.ToolGlobal;
 	import jsion.tool.mgrs.FileMgr;
+	import jsion.tool.piccuter.PicCuterFrame;
+	import jsion.utils.DisposeUtil;
+	import jsion.utils.ScaleUtil;
+	import jsion.utils.StringUtil;
+	
+	import mx.controls.Alert;
 	
 	import org.aswing.AbstractButton;
 	import org.aswing.BorderLayout;
@@ -55,6 +72,10 @@ package jsion.tool.mapeditor
 		
 		private var m_outPathBtn:JButton;
 		
+		private var m_imageLoader:ImageLoader;
+		
+		private var m_bitmapData:BitmapData;
+		
 		public function CreateFrame(modal:Boolean=false)
 		{
 			m_title = "创建地图";
@@ -63,7 +84,7 @@ package jsion.tool.mapeditor
 			
 			//m_content.setLayout(new SoftBoxLayout(SoftBoxLayout.Y_AXIS, 5));
 			
-			setSizeWH(375, 500);
+			setSizeWH(375, 305);
 			
 			setResizable(false);
 			
@@ -115,6 +136,8 @@ package jsion.tool.mapeditor
 			m_smallWidthTxt.setRestrict("0-9");
 			m_smallHeightTxt = new JTextField("100", 10);
 			m_smallHeightTxt.setRestrict("0-9");
+			m_smallHeightTxt.setToolTipText("此设置暂时无效");
+			m_smallHeightTxt.setEnabled(false);
 			
 			pane = new JPanel(new SoftBoxLayout(SoftBoxLayout.X_AXIS));
 			pane.appendAll(m_smallWidthTxt, new JLabel(" 缩略高度:"), m_smallHeightTxt);
@@ -271,6 +294,24 @@ package jsion.tool.mapeditor
 		private function onOpenMapPicCallback(file:File):void
 		{
 			if(m_mapPicTxt) m_mapPicTxt.setText(file.nativePath);
+			
+			m_okBtn.setEnabled(false);
+			
+			DisposeUtil.free(m_imageLoader);
+			m_imageLoader = new ImageLoader(file.nativePath);
+			m_imageLoader.loadAsync(mapImageLoadCallback);
+		}
+		
+		private function mapImageLoadCallback(loader:ImageLoader):void
+		{
+			m_okBtn.setEnabled(true);
+			
+			var bmp:Bitmap = Bitmap(loader.content);
+			
+			m_bitmapData = bmp.bitmapData.clone();
+			
+			if(m_mapWidthTxt) m_mapWidthTxt.setText(bmp.width.toString());
+			if(m_mapHeightTxt) m_mapHeightTxt.setText(bmp.height.toString());
 		}
 		
 		private function onOpenOutPathHandler(e:AWEvent):void
@@ -281,6 +322,187 @@ package jsion.tool.mapeditor
 		private function onOpenOutPathCallback(file:File):void
 		{
 			if(m_outPathTxt) m_outPathTxt.setText(file.nativePath);
+		}
+		
+		override protected function onSubmit(e:Event):void
+		{
+			if(m_mapTileType.isSelected())
+			{
+				if(StringUtil.isNullOrEmpty(m_mapPicTxt.getText()))
+				{
+					Alert.show("请选择地图文件", "提示");
+					return;
+				}
+			}
+			else
+			{
+				if(StringUtil.isNullOrEmpty(m_loopPicTxt.getText()))
+				{
+					Alert.show("请选择循环背景", "提示");
+					return;
+				}
+				
+				if(int(m_mapWidthTxt.getText()) <= 0 ||
+					int(m_mapHeightTxt.getText()) <= 0)
+				{
+					Alert.show("请填写地图大小", "提示");
+					return;
+				}
+			}
+			
+			//读取要创建的地图信息
+			var mapInfo:MapInfo = createMapInfo();
+			
+			//此地图的资源输出目录
+			var outFile:File = new File(m_outPathTxt.getText());
+			outFile = outFile.resolvePath(m_mapIDTxt.getText());
+			if(outFile.exists) outFile.deleteDirectory(true);
+			outFile.createDirectory();
+			
+			//复制大地图文件到输出目录
+			var mapImgFile:File = new File(m_mapPicTxt.getText());
+			var mapImgBackFile:File = outFile.resolvePath("big." + mapImgFile.extension);
+			FileMgr.copy2Target(mapImgFile, mapImgBackFile);
+			
+			//制作缩略图并保存到输出目录
+			makeSmallMap(m_bitmapData, mapInfo, outFile.resolvePath("small.jpg"));
+			
+			//将地图信息保存到输出目录
+			saveMapInfoFile(mapInfo, outFile.resolvePath(mapInfo.mapID + ".map"));
+			
+			
+			//切割地图并保存到输出目录
+			var frame:PicCuterFrame = new PicCuterFrame(true);
+			
+			if(m_pngRadio.isSelected())
+			{
+				frame.setEncodePNG();
+			}
+			else
+			{
+				frame.setEncodeJPG();
+			}
+			
+			frame.setButtonsEnabled(false);
+			frame.setPNGAndJPGEnabled(false);
+			frame.setTileSizeEditable(false);
+			
+			frame.setOutPath(outFile.resolvePath("tiles").nativePath);
+			frame.setTileWidth(int(m_tileWidthTxt.getText()));
+			frame.setTileHeight(int(m_tileHeightTxt.getText()));
+			frame.setPicPath(mapImgBackFile.nativePath);
+			
+			frame.show();
+			
+			frame.autoStartCut();
+			
+			super.onSubmit(e);
+		}
+		
+		public function createMapInfo():MapInfo
+		{
+			var mapInfo:MapInfo = new MapInfo();
+			
+			if(m_mapTileType.isSelected())
+			{
+				mapInfo.mapType = MapInfo.TileMap;
+			}
+			else
+			{
+				mapInfo.mapType = MapInfo.LoopMap;
+			}
+			
+			if(m_pngRadio.isSelected())
+			{
+				mapInfo.tileExt = ".png";
+			}
+			else
+			{
+				mapInfo.tileExt = ".jpg";
+			}
+			
+			mapInfo.mapID = int(m_mapIDTxt.getText());
+			mapInfo.mapName = m_mapNameTxt.getText();
+			mapInfo.mapWidth = int(m_mapWidthTxt.getText());
+			mapInfo.mapHeight = int(m_mapHeightTxt.getText());
+			mapInfo.smallWidth = int(m_smallWidthTxt.getText());
+			mapInfo.smallHeight = int(m_smallHeightTxt.getText());
+			mapInfo.tileWidth = int(m_tileWidthTxt.getText());
+			mapInfo.tileHeight = int(m_tileHeightTxt.getText());
+			
+			return mapInfo;
+		}
+		
+		public function makeSmallMap(bmd:BitmapData, mapInfo:MapInfo, smallMapFile:File):void
+		{
+			var scale:Number = ScaleUtil.calcScaleFullSize(bmd.width, bmd.height, mapInfo.smallWidth, 0);
+			
+			var rltWidth:int = bmd.width * scale;
+			var rltHeight:int = bmd.height * scale;
+			
+			var smallBmd:BitmapData = new BitmapData(mapInfo.smallWidth, rltHeight, true, 0);//JsionEditor.mapConfig.SmallMapHeight, true, 0);
+			
+			var matrix:Matrix = new Matrix();
+			matrix.scale(scale, scale);
+			
+			smallBmd.draw(bmd, matrix);
+			
+			var bytes:ByteArray = JPGEncoder.encode(smallBmd);
+			
+			if(smallMapFile.exists) smallMapFile.deleteFile();
+			
+			var fs:FileStream = new FileStream();
+			fs.open(smallMapFile, FileMode.WRITE);
+			fs.writeBytes(bytes);
+			fs.close();
+		}
+		
+		public function saveMapInfoFile(mapInfo:MapInfo, mapFile:File):void
+		{
+			var bytes:ByteArray = RPGGlobal.trans2Bytes(mapInfo);
+			
+			var fs:FileStream = new FileStream();
+			fs.open(mapFile, FileMode.WRITE);
+			fs.writeBytes(bytes);
+			fs.close();
+		}
+		
+		override public function dispose():void
+		{
+			DisposeUtil.free(m_imageLoader);
+			m_imageLoader = null;
+			
+			m_mapIDTxt = null;
+			m_mapNameTxt = null;
+			
+			m_mapWidthTxt = null;
+			m_mapHeightTxt = null;
+			
+			m_smallWidthTxt = null;
+			m_smallHeightTxt = null;
+			
+			m_tileWidthTxt = null;
+			m_tileHeightTxt = null;
+			
+			m_mapTileType = null;
+			m_mapLoopType = null;
+			
+			m_loopPicTxt = null;
+			m_loopPicBtn = null;
+			
+			m_mapPicTxt = null;
+			m_mapPicBtn = null;
+			
+			m_pngRadio = null;
+			m_jpgRadio = null;
+			
+			m_outPathTxt = null;
+			
+			m_outPathBtn = null;
+			
+			m_bitmapData = null;
+			
+			super.dispose();
 		}
 	}
 }

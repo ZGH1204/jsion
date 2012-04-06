@@ -72,7 +72,7 @@ package jsion.tool.menus
 		
 		private function onCreateMapHandler(e:AWEvent):void
 		{
-			var frame:BaseFrame = new CreateFrame();
+			var frame:BaseFrame = new CreateFrame(true);
 			
 			frame.show();
 		}
