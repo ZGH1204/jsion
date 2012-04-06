@@ -16,7 +16,8 @@ package jsion.rpg.engine.datas
 		
 		public function dispose():void
 		{
-			
+			mapInfo = null;
+			smallOrLoopBmd = null;
 		}
 	}
 }

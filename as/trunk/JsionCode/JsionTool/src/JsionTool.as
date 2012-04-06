@@ -42,6 +42,30 @@ private function init(e:FlexEvent):void
 	JsionCoreSetup(this.stage, configXml);
 	
 	ToolGlobal.setup(this.stage, this, m_container, this.width, this.height);
+	
+	//writeMapInfo();
+}
+
+private function writeMapInfo():void
+{
+	var bytes:ByteArray = new ByteArray();
+	
+	bytes.writeInt(1);
+	bytes.writeUTF("测试地图");
+	bytes.writeInt(2700);
+	bytes.writeInt(1800);
+	bytes.writeInt(100);
+	bytes.writeInt(100);
+	bytes.writeInt(1);
+	bytes.writeInt(200);
+	bytes.writeUTF(".jpg");
+	bytes.compress();
+	
+	var file:File = File.desktopDirectory.resolvePath("1.map");
+	var fs:FileStream = new FileStream();
+	fs.open(file, FileMode.WRITE);
+	fs.writeBytes(bytes);
+	fs.close();
 }
 
 private function resizeHandler(event:ResizeEvent):void

@@ -354,13 +354,13 @@ package jsion.rpg.engine
 		{
 			if(needRepaint)
 			{
-				fill(m_buffer);
+				fillMapTiles(m_buffer);
 				
 				needRepaint = false;
 			}
 		}
 		
-		protected function fill(bmd:BitmapData):void
+		protected function fillMapTiles(bmd:BitmapData):void
 		{
 			var startX:int = screenX;
 			var startY:int = screenY;
@@ -389,8 +389,11 @@ package jsion.rpg.engine
 				temp = null;
 			}
 			
-			var mxTileX:int = Math.min(m_areaTileX + m_startTileX, m_maxTileX);
-			var mxTileY:int = Math.min(m_areaTileY + m_startTileY, m_maxTileY);
+			//多加载缓冲区外圈一层的Tile资源文件
+			var stTileX:int = Math.max(m_startTileX - 1, 0);
+			var stTileY:int = Math.max(m_startTileY - 1, 0);
+			var mxTileX:int = Math.min(m_areaTileX + m_startTileX + 1, m_maxTileX);
+			var mxTileY:int = Math.min(m_areaTileY + m_startTileY + 1, m_maxTileY);
 			
 			for(var y:int = m_startTileY; y < mxTileY; y++)
 			{

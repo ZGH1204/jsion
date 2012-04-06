@@ -3,6 +3,9 @@ package jsion.tool.mgrs
 	import flash.events.Event;
 	import flash.events.FileListEvent;
 	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
+	import flash.utils.ByteArray;
 	
 	import jsion.HashMap;
 
@@ -82,6 +85,29 @@ package jsion.tool.mgrs
 			m_callbackMap.put(file, callback);
 			
 			file.browseForDirectory("选择目录");
+		}
+		
+		/**
+		 * 将源文件复制到目标文件
+		 * @param source 源文件
+		 * @param target 目录文件
+		 */		
+		public static function copy2Target(source:File, target:File):void
+		{
+			if(source == null || target == null || 
+			    source.isDirectory || target.isDirectory) return;
+			
+			var bytes:ByteArray = new ByteArray();
+			
+			var fs:FileStream = new FileStream();
+			
+			fs.open(source, FileMode.READ);
+			fs.readBytes(bytes);
+			fs.close();
+			
+			fs.open(target, FileMode.WRITE);
+			fs.writeBytes(bytes);
+			fs.close();
 		}
 		
 		
