@@ -50,7 +50,7 @@ package
 		{
 			rpg = new RPGEngine(stage.stageWidth, stage.stageHeight);
 			
-			rpg.setMapID(1);
+			rpg.setMapID(2);
 			
 			rpg.start();
 			

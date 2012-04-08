@@ -2,6 +2,7 @@ package jsion.tool.mapeditor
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
@@ -75,6 +76,12 @@ package jsion.tool.mapeditor
 		private var m_imageLoader:ImageLoader;
 		
 		private var m_bitmapData:BitmapData;
+		
+		private var m_loader:Loader;
+		
+		private var m_frame:PicCuterFrame;
+		
+		private var m_createCallback:Function;
 		
 		public function CreateFrame(modal:Boolean=false)
 		{
@@ -260,6 +267,7 @@ package jsion.tool.mapeditor
 				m_loopPicTxt.setText("");
 				m_loopPicBtn.setEnabled(false);
 				m_mapPicBtn.setEnabled(true);
+				m_smallWidthTxt.setEnabled(true);
 			}
 			else
 			{
@@ -273,6 +281,7 @@ package jsion.tool.mapeditor
 				m_loopPicBtn.setEnabled(true);
 				m_mapPicTxt.setText("");
 				m_mapPicBtn.setEnabled(false);
+				m_smallWidthTxt.setEnabled(false);
 			}
 		}
 		
@@ -359,42 +368,62 @@ package jsion.tool.mapeditor
 			if(outFile.exists) outFile.deleteDirectory(true);
 			outFile.createDirectory();
 			
-			//复制大地图文件到输出目录
-			var mapImgFile:File = new File(m_mapPicTxt.getText());
-			var mapImgBackFile:File = outFile.resolvePath("big." + mapImgFile.extension);
-			FileMgr.copy2Target(mapImgFile, mapImgBackFile);
-			
-			//制作缩略图并保存到输出目录
-			makeSmallMap(m_bitmapData, mapInfo, outFile.resolvePath("small.jpg"));
-			
 			//将地图信息保存到输出目录
 			saveMapInfoFile(mapInfo, outFile.resolvePath(mapInfo.mapID + ".map"));
 			
-			
-			//切割地图并保存到输出目录
-			var frame:PicCuterFrame = new PicCuterFrame(true);
-			
-			if(m_pngRadio.isSelected())
+			if(mapInfo.mapType == MapInfo.TileMap)
 			{
-				frame.setEncodePNG();
+				//复制大地图文件到输出目录
+				var mapImgFile:File = new File(m_mapPicTxt.getText());
+				var mapImgBackFile:File = outFile.resolvePath("big." + mapImgFile.extension);
+				FileMgr.copy2Target(mapImgFile, mapImgBackFile);
+				
+				//制作缩略图并保存到输出目录
+				makeSmallMap(m_bitmapData, mapInfo, outFile.resolvePath("small.jpg"));
+				
+				
+				//切割地图并保存到输出目录
+				showCutFrame(outFile.resolvePath("tiles").nativePath, mapImgBackFile.nativePath);
 			}
 			else
 			{
-				frame.setEncodeJPG();
+				var loopFile:File = new File(m_loopPicTxt.getText());
+				
+				var bytes:ByteArray = new ByteArray();
+				
+				var fs:FileStream = new FileStream();
+				fs.open(loopFile, FileMode.READ);
+				fs.readBytes(bytes);
+				fs.close();
+				
+				DisposeUtil.free(m_loader);
+				m_loader = new Loader();
+				m_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, __loopFileCompleteHandler);
+				m_loader.loadBytes(bytes);
 			}
+		}
+		
+		private function __loopFileCompleteHandler(e:Event):void
+		{
+			m_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __loopFileCompleteHandler);
 			
-			frame.setButtonsEnabled(false);
-			frame.setPNGAndJPGEnabled(false);
-			frame.setTileSizeEditable(false);
+			var bmd:BitmapData = Bitmap(m_loader.content).bitmapData;
 			
-			frame.setOutPath(outFile.resolvePath("tiles").nativePath);
-			frame.setTileWidth(int(m_tileWidthTxt.getText()));
-			frame.setTileHeight(int(m_tileHeightTxt.getText()));
-			frame.setPicPath(mapImgBackFile.nativePath);
+			var bytes:ByteArray = JPGEncoder.encode(bmd);
 			
-			frame.show();
+			var outFile:File = new File(m_outPathTxt.getText());
+			outFile = outFile.resolvePath(m_mapIDTxt.getText());
+			outFile = outFile.resolvePath("loop.jpg");
 			
-			frame.autoStartCut();
+			var fs:FileStream = new FileStream();
+			fs.open(outFile, FileMode.WRITE);
+			fs.writeBytes(bytes);
+			fs.close();
+			
+			DisposeUtil.free(m_loader);
+			m_loader = null;
+			
+			fireCompleteEvent();
 			
 			super.onSubmit(e);
 		}
@@ -457,6 +486,47 @@ package jsion.tool.mapeditor
 			fs.close();
 		}
 		
+		public function showCutFrame(outPath:String, picPatch:String):void
+		{
+			if(m_frame) return;
+			
+			m_frame = new PicCuterFrame(true);
+			
+			if(m_pngRadio.isSelected())
+			{
+				m_frame.setEncodePNG();
+			}
+			else
+			{
+				m_frame.setEncodeJPG();
+			}
+			
+			m_frame.setButtonsEnabled(false);
+			m_frame.setPNGAndJPGEnabled(false);
+			m_frame.setTileSizeEditable(false);
+			
+			m_frame.setOutPath(outPath);
+			m_frame.setTileWidth(int(m_tileWidthTxt.getText()));
+			m_frame.setTileHeight(int(m_tileHeightTxt.getText()));
+			m_frame.setPicPath(picPatch);
+			
+			m_frame.show();
+			
+			m_frame.autoStartCut();
+			
+			m_frame.addEventListener(Event.COMPLETE, __cutCompleteHandler);
+		}
+		
+		private function __cutCompleteHandler(e:Event):void
+		{
+			m_frame.removeEventListener(Event.COMPLETE, __cutCompleteHandler);
+			m_frame = null;
+			
+			fireCompleteEvent();
+			
+			super.onSubmit(e);
+		}
+		
 		public function saveMapInfoFile(mapInfo:MapInfo, mapFile:File):void
 		{
 			var bytes:ByteArray = RPGGlobal.trans2Bytes(mapInfo);
@@ -467,10 +537,25 @@ package jsion.tool.mapeditor
 			fs.close();
 		}
 		
+		public function setCreateCallback(fn:Function):void
+		{
+			m_createCallback = fn;
+		}
+		
+		protected function fireCompleteEvent():void
+		{
+			if(m_createCallback != null)m_createCallback(createMapInfo());
+			
+			dispatchEvent(new Event(Event.COMPLETE));
+		}
+		
 		override public function dispose():void
 		{
 			DisposeUtil.free(m_imageLoader);
 			m_imageLoader = null;
+			
+			if(m_frame) m_frame.removeEventListener(Event.COMPLETE, __cutCompleteHandler);
+			m_frame = null;
 			
 			m_mapIDTxt = null;
 			m_mapNameTxt = null;
@@ -501,6 +586,8 @@ package jsion.tool.mapeditor
 			m_outPathBtn = null;
 			
 			m_bitmapData = null;
+			
+			m_createCallback = null;
 			
 			super.dispose();
 		}
