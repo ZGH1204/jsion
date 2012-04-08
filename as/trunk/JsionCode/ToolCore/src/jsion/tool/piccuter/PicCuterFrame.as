@@ -388,6 +388,8 @@ package jsion.tool.piccuter
 				m_cutData.outDirectory = null;
 				m_cutData = null;
 				
+				dispatchEvent(new Event(Event.COMPLETE));
+				
 				super.onSubmit(null);
 				
 				return;

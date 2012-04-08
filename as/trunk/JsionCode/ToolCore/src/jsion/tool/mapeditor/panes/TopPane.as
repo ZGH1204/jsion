@@ -21,12 +21,12 @@ package jsion.tool.mapeditor.panes
 		{
 			m_frame = frame;
 			
-			super(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
+			super(new SoftBoxLayout(SoftBoxLayout.X_AXIS));
 			
 			m_pane = new JPanel(new FlowLayout(FlowLayout.LEFT, 3, 3));
 			
 			
-			m_importBtn = new JButton("导入");
+			m_importBtn = new JButton("导入建筑");
 			m_importBtn.addActionListener(onImportHandler);
 			m_pane.append(m_importBtn);
 			

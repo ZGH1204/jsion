@@ -1,10 +1,19 @@
 package jsion.tool.menus
 {
+	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
+	import flash.net.FileFilter;
+	import flash.utils.ByteArray;
+	
+	import jsion.rpg.RPGGlobal;
+	import jsion.rpg.engine.datas.MapInfo;
 	import jsion.tool.BaseFrame;
 	import jsion.tool.ToolGlobal;
 	import jsion.tool.compresses.CompressPane;
 	import jsion.tool.mapeditor.CreateFrame;
 	import jsion.tool.mapeditor.MapFrame;
+	import jsion.tool.mgrs.FileMgr;
 	import jsion.tool.piccuter.PicCuterFrame;
 	import jsion.tool.pngpacker.PackerFrame;
 	
@@ -44,6 +53,10 @@ package jsion.tool.menus
 			item.addActionListener(onCutPicHandler);
 			tool.append(item);
 			
+			item = new JMenuItem("打开地图");
+			item.addActionListener(onOpenMapHandler);
+			tool.append(item);
+			
 			item = new JMenuItem("新建地图");
 			item.addActionListener(onCreateMapHandler);
 			tool.append(item);
@@ -70,9 +83,37 @@ package jsion.tool.menus
 			frame.show();
 		}
 		
+		private function onOpenMapHandler(e:AWEvent):void
+		{
+			FileMgr.openBrowse(onOpenMapCallback, [new FileFilter("地图信息文件", "*.map")]);
+		}
+		
+		private function onOpenMapCallback(file:File):void
+		{
+			var bytes:ByteArray = new ByteArray();
+			
+			var fs:FileStream = new FileStream();
+			
+			fs.open(file, FileMode.READ);
+			fs.readBytes(bytes);
+			fs.close();
+			
+			var mapInfo:MapInfo = RPGGlobal.trans2MapInfo(bytes);
+			showMapFrame(mapInfo);
+		}
+		
+		private function showMapFrame(mapInfo:MapInfo):void
+		{
+			var frame:MapFrame = new MapFrame();
+			frame.setMap(mapInfo);
+			frame.show();
+		}
+		
 		private function onCreateMapHandler(e:AWEvent):void
 		{
-			var frame:BaseFrame = new CreateFrame(true);
+			var frame:CreateFrame = new CreateFrame(true);
+			
+			frame.setCreateCallback(showMapFrame);
 			
 			frame.show();
 		}

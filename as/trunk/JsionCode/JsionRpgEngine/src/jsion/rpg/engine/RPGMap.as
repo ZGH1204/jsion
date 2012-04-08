@@ -155,6 +155,24 @@ package jsion.rpg.engine
 			m_loadComplete = new HashMap();
 			
 			needRepaint = true;
+			
+			if(m_mapInfo.mapType == MapInfo.LoopMap)
+			{
+				m_buffer.lock();
+				
+				for(var j:int = 0; j < m_areaTileY; j++)
+				{
+					for(var i:int = 0; i < m_areaTileX; i++)
+					{
+						m_tempPoint.x = i * m_rpgInfo.smallOrLoopBmd.width;
+						m_tempPoint.y = j * m_rpgInfo.smallOrLoopBmd.height;
+						
+						m_buffer.copyPixels(m_rpgInfo.smallOrLoopBmd, m_rpgInfo.smallOrLoopBmd.rect, m_tempPoint);
+					}
+				}
+				
+				m_buffer.unlock();
+			}
 		}
 		
 		/**
@@ -316,7 +334,9 @@ package jsion.rpg.engine
 		
 		public function render(bitmapData:BitmapData):void
 		{
-			refreshBuffer();
+			if(m_mapInfo.mapType == MapInfo.TileMap) refreshTileMapBuffer();
+			
+			needRepaint = false;
 			
 			bitmapData.copyPixels(m_buffer, cameraRect, Constant.ZeroPoint);
 		}
@@ -350,7 +370,7 @@ package jsion.rpg.engine
 			m_loadComplete.removeAll();
 		}
 		
-		protected function refreshBuffer():void
+		protected function refreshTileMapBuffer():void
 		{
 			if(needRepaint)
 			{
