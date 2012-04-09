@@ -30,6 +30,8 @@ package jsion.components
 		
 		private var m_labelButton:JButton;
 		
+		private var m_selectedItem:JListItem;
+		
 		private var m_list:JList;
 		
 		private var m_dir:String;
@@ -211,7 +213,31 @@ package jsion.components
 				m_labelButton.label = m_list.selectedItem.selectedLabel;
 			}
 			
+			m_selectedItem = m_list.selectedItem;
+			
+			dispatchEvent(new UIEvent(UIEvent.SELECTED));
+			
 			removeList();
+		}
+		
+		public function get selectedItem():JListItem
+		{
+			return m_selectedItem;
+		}
+		
+		public function set selectedItem(item:JListItem):void
+		{
+			m_list.selectedItem = item;
+		}
+		
+		public function get selectedIndex():int
+		{
+			return m_list.selectedIndex;
+		}
+		
+		public function set selectedIndex(value:int):void
+		{
+			m_list.selectedIndex = value;
 		}
 		
 		private function addList():void
@@ -266,11 +292,16 @@ package jsion.components
 		
 		override public function dispose():void
 		{
+			if(m_labelButton) m_labelButton.removeEventListener(MouseEvent.CLICK, __clickHandler);
+			if(m_list) m_list.removeEventListener(UIEvent.SELECTED, __selectedHandler);
+			
 			DisposeUtil.free(m_labelButton);
 			m_labelButton = null;
 			
 			DisposeUtil.free(m_list);
 			m_list = null;
+			
+			m_selectedItem = null;
 			
 			super.dispose();
 		}
