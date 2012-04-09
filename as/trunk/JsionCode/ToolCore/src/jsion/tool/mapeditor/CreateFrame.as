@@ -24,6 +24,7 @@ package jsion.tool.mapeditor
 	import jsion.utils.StringUtil;
 	
 	import mx.controls.Alert;
+	import mx.events.CloseEvent;
 	
 	import org.aswing.AbstractButton;
 	import org.aswing.BorderLayout;
@@ -359,14 +360,27 @@ package jsion.tool.mapeditor
 				}
 			}
 			
-			//读取要创建的地图信息
-			var mapInfo:MapInfo = createMapInfo();
-			
 			//此地图的资源输出目录
 			var outFile:File = new File(m_outPathTxt.getText());
 			outFile = outFile.resolvePath(m_mapIDTxt.getText());
-			if(outFile.exists) outFile.deleteDirectory(true);
+			if(outFile.exists)
+			{
+				Alert.show("地图已存在，创建时将删除现有地图信息和资源，是否创建？", "提示", Alert.YES | Alert.NO, null, alertCloseCallback, null, Alert.YES);
+				return;
+			}
+			
+			createMap();
+		}
+		
+		private function createMap():void
+		{
+			//此地图的资源输出目录
+			var outFile:File = new File(m_outPathTxt.getText());
+			outFile = outFile.resolvePath(m_mapIDTxt.getText());
 			outFile.createDirectory();
+			
+			//读取要创建的地图信息
+			var mapInfo:MapInfo = createMapInfo();
 			
 			//将地图信息保存到输出目录
 			saveMapInfoFile(mapInfo, outFile.resolvePath(mapInfo.mapID + ".map"));
@@ -400,6 +414,20 @@ package jsion.tool.mapeditor
 				m_loader = new Loader();
 				m_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, __loopFileCompleteHandler);
 				m_loader.loadBytes(bytes);
+			}
+		}
+		
+		private function alertCloseCallback(e:CloseEvent):void
+		{
+			//此地图的资源输出目录
+			var outFile:File = new File(m_outPathTxt.getText());
+			outFile = outFile.resolvePath(m_mapIDTxt.getText());
+			
+			if(e.detail == Alert.YES)
+			{
+				outFile.deleteDirectory(true);
+				
+				createMap();
 			}
 		}
 		
