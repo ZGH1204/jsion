@@ -49,7 +49,7 @@ package jsion.rpg.engine
 			
 			m_bitmapData = new BitmapData(w, h, true, 0);
 			
-			//if(bmd) m_bitmapData.copyPixels(bmd, bmd.rect, Constant.ZeroPoint);
+			if(bmd) m_bitmapData.copyPixels(bmd, bmd.rect, Constant.ZeroPoint);
 			
 			if(m_map) m_map.setCameraSize(w, h);
 		}
