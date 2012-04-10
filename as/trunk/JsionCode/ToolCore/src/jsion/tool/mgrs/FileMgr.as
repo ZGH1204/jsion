@@ -140,7 +140,7 @@ package jsion.tool.mgrs
 			
 			try
 			{
-				callback(e.target);
+				callback(e.files);
 			}
 			catch(err:Error)
 			{

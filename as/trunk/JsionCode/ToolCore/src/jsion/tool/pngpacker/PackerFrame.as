@@ -128,6 +128,8 @@ package jsion.tool.pngpacker
 			DisposeUtil.free(m_packerData);
 			m_packerData = null;
 			
+			if(m_renderPanel) m_renderPanel.dispose();
+			
 			m_topPanel = null;
 			m_leftPanel = null;
 			m_mainPanel = null;
