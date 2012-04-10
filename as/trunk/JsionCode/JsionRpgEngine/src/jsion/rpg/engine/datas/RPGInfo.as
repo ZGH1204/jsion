@@ -6,6 +6,8 @@ package jsion.rpg.engine.datas
 
 	public class RPGInfo implements IDispose
 	{
+		public var mapRoot:String;
+		
 		public var mapInfo:MapInfo;
 		
 		public var smallOrLoopBmd:BitmapData;

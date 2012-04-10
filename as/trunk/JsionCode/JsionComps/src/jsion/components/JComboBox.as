@@ -212,6 +212,10 @@ package jsion.components
 			{
 				m_labelButton.label = m_list.selectedItem.selectedLabel;
 			}
+			else
+			{
+				m_labelButton.label = "";
+			}
 			
 			m_selectedItem = m_list.selectedItem;
 			
@@ -238,6 +242,16 @@ package jsion.components
 		public function set selectedIndex(value:int):void
 		{
 			m_list.selectedIndex = value;
+		}
+		
+		public function removeItem(item:JListItem):void
+		{
+			m_list.removeItem(item);
+		}
+		
+		public function removeItemAtIndex(index:int):void
+		{
+			m_list.removeAt(index);
 		}
 		
 		private function addList():void

@@ -6,12 +6,6 @@ package jsion.rpg
 
 	public class RPGGlobal
 	{
-		/**
-		 * Maps\{MapID}
-		 */		
-		public static const MapRoot:String = "Maps\\{0}";
-		
-		
 		public static function trans2Bytes(mapInfo:MapInfo):ByteArray
 		{
 			var bytes:ByteArray = new ByteArray();

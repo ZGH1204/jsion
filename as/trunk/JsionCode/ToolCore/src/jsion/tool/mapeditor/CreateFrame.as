@@ -17,6 +17,7 @@ package jsion.tool.mapeditor
 	import jsion.rpg.engine.datas.MapInfo;
 	import jsion.tool.BaseFrame;
 	import jsion.tool.ToolGlobal;
+	import jsion.tool.mapeditor.datas.MapData;
 	import jsion.tool.mgrs.FileMgr;
 	import jsion.tool.piccuter.PicCuterFrame;
 	import jsion.utils.DisposeUtil;
@@ -380,7 +381,7 @@ package jsion.tool.mapeditor
 			outFile.createDirectory();
 			
 			//读取要创建的地图信息
-			var mapInfo:MapInfo = createMapInfo();
+			var mapInfo:MapData = createMapInfo();
 			
 			//将地图信息保存到输出目录
 			saveMapInfoFile(mapInfo, outFile.resolvePath(mapInfo.mapID + ".map"));
@@ -456,9 +457,9 @@ package jsion.tool.mapeditor
 			super.onSubmit(e);
 		}
 		
-		public function createMapInfo():MapInfo
+		public function createMapInfo():MapData
 		{
-			var mapInfo:MapInfo = new MapInfo();
+			var mapInfo:MapData = new MapData();
 			
 			if(m_mapTileType.isSelected())
 			{
@@ -486,6 +487,7 @@ package jsion.tool.mapeditor
 			mapInfo.smallHeight = int(m_smallHeightTxt.getText());
 			mapInfo.tileWidth = int(m_tileWidthTxt.getText());
 			mapInfo.tileHeight = int(m_tileHeightTxt.getText());
+			mapInfo.mapRoot = m_outPathTxt.getText();
 			
 			return mapInfo;
 		}

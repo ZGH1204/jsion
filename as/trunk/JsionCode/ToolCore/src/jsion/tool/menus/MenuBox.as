@@ -13,9 +13,11 @@ package jsion.tool.menus
 	import jsion.tool.compresses.CompressPane;
 	import jsion.tool.mapeditor.CreateFrame;
 	import jsion.tool.mapeditor.MapFrame;
+	import jsion.tool.mapeditor.datas.MapData;
 	import jsion.tool.mgrs.FileMgr;
 	import jsion.tool.piccuter.PicCuterFrame;
 	import jsion.tool.pngpacker.PackerFrame;
+	import jsion.utils.ObjectUtil;
 	
 	import mx.managers.PopUpManager;
 	
@@ -98,11 +100,17 @@ package jsion.tool.menus
 			fs.readBytes(bytes);
 			fs.close();
 			
+			var mapRoot:String = file.nativePath.replace(/([0-9]+)\\([0-9]+).map$/, "");
+			
 			var mapInfo:MapInfo = RPGGlobal.trans2MapInfo(bytes);
-			showMapFrame(mapInfo);
+			
+			var md:MapData = new MapData();
+			ObjectUtil.copyToTarget2(mapInfo, md);
+			md.mapRoot = mapRoot;
+			showMapFrame(md);
 		}
 		
-		private function showMapFrame(mapInfo:MapInfo):void
+		private function showMapFrame(mapInfo:MapData):void
 		{
 			var frame:MapFrame = new MapFrame();
 			frame.setMap(mapInfo);

@@ -116,33 +116,9 @@ package jsion.rpg.engine
 		
 		public function RPGMap(info:RPGInfo, cameraWidth:int, cameraHeight:int)
 		{
-			m_rpgInfo = info;
-			m_mapInfo = info.mapInfo;
 			m_cameraRect = new Rectangle();
-			m_cameraRect.width = cameraWidth;
-			m_cameraRect.height = cameraHeight;
-			
-			m_mapRoot = StringUtil.format(RPGGlobal.MapRoot, m_mapInfo.mapID);
-			m_tilesRoot = PathUtil.combinPath(m_mapRoot, "tiles");
-			m_loaderConfig = { root: m_tilesRoot };
-			
-			m_startTileX = 0;
-			m_startTileY = 0;
-			
-			m_areaTileX = int(m_cameraRect.width / m_mapInfo.tileWidth) + 1;
-			m_areaTileY = int(m_cameraRect.height / m_mapInfo.tileHeight) + 1;
-			
-			m_maxTileX = Math.ceil(m_mapInfo.mapWidth / m_mapInfo.tileWidth);
-			m_maxTileY = Math.ceil(m_mapInfo.mapHeight / m_mapInfo.tileHeight);
-			
-			m_bufferWidth = m_areaTileX * m_mapInfo.tileWidth;
-			m_bufferHeight = m_areaTileY * m_mapInfo.tileHeight;
 			
 			m_center = new Point();
-			
-			m_center = center;
-			
-			m_buffer = new BitmapData(m_bufferWidth, m_bufferHeight, true, 0);
 			
 			m_tempRect = new Rectangle();
 			
@@ -154,7 +130,33 @@ package jsion.rpg.engine
 			
 			m_loadComplete = new HashMap();
 			
-			needRepaint = true;
+			m_startTileX = 0;
+			m_startTileY = 0;
+			
+			m_rpgInfo = info;
+			m_mapInfo = info.mapInfo;
+			
+			setCameraSize(cameraWidth, cameraHeight);
+			
+//			m_cameraRect.width = cameraWidth;
+//			m_cameraRect.height = cameraHeight;
+//			
+//			m_areaTileX = int(m_cameraRect.width / m_mapInfo.tileWidth) + 1;
+//			m_areaTileY = int(m_cameraRect.height / m_mapInfo.tileHeight) + 1;
+//			
+//			m_bufferWidth = m_areaTileX * m_mapInfo.tileWidth;
+//			m_bufferHeight = m_areaTileY * m_mapInfo.tileHeight;
+//			
+//			m_buffer = new BitmapData(m_bufferWidth, m_bufferHeight, true, 0);
+			
+			m_mapRoot = PathUtil.combinPath(m_rpgInfo.mapRoot, m_mapInfo.mapID);
+			m_tilesRoot = PathUtil.combinPath(m_mapRoot, "tiles");
+			m_loaderConfig = { root: m_tilesRoot };
+			
+			m_maxTileX = Math.ceil(m_mapInfo.mapWidth / m_mapInfo.tileWidth);
+			m_maxTileY = Math.ceil(m_mapInfo.mapHeight / m_mapInfo.tileHeight);
+			
+			m_center = center;
 			
 			if(m_mapInfo.mapType == MapInfo.LoopMap)
 			{
@@ -175,13 +177,36 @@ package jsion.rpg.engine
 			}
 		}
 		
-		/**
-		 * 缓冲区
-		 */		
-		public function get buffer():BitmapData
+		public function setCameraSize(w:int, h:int):void
 		{
-			return m_buffer;
+			m_cameraRect.width = w;
+			m_cameraRect.height = h;
+			
+			m_areaTileX = int(m_cameraRect.width / m_mapInfo.tileWidth) + 1;
+			m_areaTileY = int(m_cameraRect.height / m_mapInfo.tileHeight) + 1;
+			
+			if((m_cameraRect.width % m_mapInfo.tileWidth) != 0) m_areaTileX += 1;
+			if((m_cameraRect.height % m_mapInfo.tileHeight) != 0) m_areaTileY += 1;
+			
+			m_bufferWidth = m_areaTileX * m_mapInfo.tileWidth;
+			m_bufferHeight = m_areaTileY * m_mapInfo.tileHeight;
+			
+			needRepaint = true;
+			
+			var bmd:BitmapData = m_buffer;
+			
+			m_buffer = new BitmapData(m_bufferWidth, m_bufferHeight, true, 0);
+			
+			if(bmd) m_buffer.copyPixels(bmd, bmd.rect, Constant.ZeroPoint);
 		}
+		
+//		/**
+//		 * 缓冲区
+//		 */		
+//		public function get buffer():BitmapData
+//		{
+//			return m_buffer;
+//		}
 		
 		/**
 		 * 缓冲区宽度

@@ -1,8 +1,8 @@
 package jsion.tool.mapeditor
 {
-	import jsion.rpg.engine.datas.MapInfo;
 	import jsion.tool.BaseFrame;
 	import jsion.tool.ToolGlobal;
+	import jsion.tool.mapeditor.datas.MapData;
 	import jsion.tool.mapeditor.panes.BottomPane;
 	import jsion.tool.mapeditor.panes.LeftPane;
 	import jsion.tool.mapeditor.panes.MainPane;
@@ -51,9 +51,9 @@ package jsion.tool.mapeditor
 			m_content.append(m_bottomPane, BorderLayout.SOUTH);
 		}
 		
-		public function setMap(mapInfo:MapInfo):void
+		public function setMap(mapInfo:MapData):void
 		{
-			
+			m_mainPane.setMap(mapInfo);
 		}
 	}
 }
