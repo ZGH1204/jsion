@@ -6,6 +6,7 @@ package jsion.tool.pngpacker.panes
 	
 	import jsion.tool.pngpacker.PackerFrame;
 	import jsion.tool.pngpacker.data.DirectionInfo;
+	import jsion.utils.DisposeUtil;
 	import jsion.utils.JUtil;
 	
 	import org.aswing.Box;
@@ -121,6 +122,18 @@ package jsion.tool.pngpacker.panes
 					m_bmp.bitmapData = null;
 				}
 			}
+		}
+		
+		public function dispose():void
+		{
+			JUtil.removeEnterFrame(onEnterFrameHandler);
+			removeEventListener(ResizedEvent.RESIZED, __resizedHandler);
+			
+			DisposeUtil.free(m_bmp, false);
+			m_bmp = null;
+			
+			m_info = null;
+			m_frame = null;
 		}
 	}
 }
