@@ -1,6 +1,6 @@
 package jsion.rpg.engine.datas
 {
-	public class MapInfo
+	public dynamic class MapInfo
 	{
 		/**
 		 * 以Tile方法加载显示

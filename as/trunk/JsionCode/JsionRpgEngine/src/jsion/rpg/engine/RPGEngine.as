@@ -12,6 +12,7 @@ package jsion.rpg.engine
 	import jsion.rpg.engine.datas.MapInfo;
 	import jsion.rpg.engine.datas.RPGInfo;
 	import jsion.utils.DisposeUtil;
+	import jsion.utils.PathUtil;
 	import jsion.utils.StringUtil;
 	
 	public class RPGEngine extends RPGSprite
@@ -31,9 +32,13 @@ package jsion.rpg.engine
 		
 		protected var m_loader:ImageLoader;
 		
-		public function RPGEngine(w:int, h:int)
+		protected var m_root:String;
+		
+		public function RPGEngine(w:int, h:int, root:String = "Maps")
 		{
 			super();
+			
+			setMapRoot(root);
 			
 			m_camera = new Rectangle(0, 0, w, h);
 			
@@ -49,16 +54,28 @@ package jsion.rpg.engine
 			m_waitingLayer = new Sprite();
 			
 			
-			
-			
 			addChild(m_bitmap);
 			addChild(m_waitingLayer);
+		}
+		
+		public function setCameraSize(w:int, h:int):void
+		{
+			m_camera.width = w;
+			m_camera.height = h;
 			
+			m_game.setCameraSize(w, h);
+			
+			m_bitmap.bitmapData = m_game.bitmapData;
 		}
 		
 		public function get game():RPGGame
 		{
 			return m_game;
+		}
+		
+		public function setMapRoot(root:String = "Maps"):void
+		{
+			m_root = root;
 		}
 		
 		public function setMapID(id:int):void
@@ -70,7 +87,7 @@ package jsion.rpg.engine
 		
 		private function loadMapInfo(id:int):void
 		{
-			var root:String = StringUtil.format(RPGGlobal.MapRoot, id);
+			var root:String = PathUtil.combinPath(m_root, id);
 			
 			DisposeUtil.free(m_mapLoader);
 			m_mapLoader = new BinaryLoader(id + ".map", { root: root });
@@ -89,11 +106,12 @@ package jsion.rpg.engine
 			var bytes:ByteArray = loader.content as ByteArray;
 			
 			m_rpgInfo = new RPGInfo();
+			m_rpgInfo.mapRoot = m_root;
 			
 			var mapInfo:MapInfo = RPGGlobal.trans2MapInfo(bytes);
 			m_rpgInfo.mapInfo = mapInfo;
 			
-			var root:String = StringUtil.format(RPGGlobal.MapRoot, mapInfo.mapID);
+			var root:String = PathUtil.combinPath(m_root, mapInfo.mapID);
 			
 			DisposeUtil.free(m_loader);
 			

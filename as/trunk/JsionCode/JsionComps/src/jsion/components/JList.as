@@ -102,6 +102,8 @@ package jsion.components
 			
 			item.removeEventListener(MouseEvent.CLICK, __itemClickHandler);
 			
+			if(m_selectedItem == item) selectedItem = null;
+			
 			invalidate();
 		}
 		
@@ -113,6 +115,8 @@ package jsion.components
 			JVBox(view).removeChildAt(index);
 			
 			if(item) item.removeEventListener(MouseEvent.CLICK, __itemClickHandler);
+			
+			if(m_selectedItem == item) selectedItem = null;
 			
 			invalidate();
 		}

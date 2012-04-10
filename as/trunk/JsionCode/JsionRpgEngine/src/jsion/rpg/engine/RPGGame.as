@@ -4,6 +4,7 @@ package jsion.rpg.engine
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
+	import jsion.Constant;
 	import jsion.IDispose;
 	import jsion.rpg.engine.datas.MapInfo;
 	import jsion.rpg.engine.datas.RPGInfo;
@@ -30,9 +31,27 @@ package jsion.rpg.engine
 		public function setMap(info:RPGInfo):void
 		{
 			m_rpgInfo = info;
+			
 			m_needRepaint = true;
+			
 			DisposeUtil.free(m_map);
 			m_map = new RPGMap(info, m_cameraRect.width, m_cameraRect.height);
+		}
+		
+		public function setCameraSize(w:int, h:int):void
+		{
+			m_cameraRect.width = w;
+			m_cameraRect.height = h;
+			
+			m_needRepaint = true;
+			
+			var bmd:BitmapData = m_bitmapData;
+			
+			m_bitmapData = new BitmapData(w, h, true, 0);
+			
+			//if(bmd) m_bitmapData.copyPixels(bmd, bmd.rect, Constant.ZeroPoint);
+			
+			if(m_map) m_map.setCameraSize(w, h);
 		}
 		
 		public function get bitmapData():BitmapData
