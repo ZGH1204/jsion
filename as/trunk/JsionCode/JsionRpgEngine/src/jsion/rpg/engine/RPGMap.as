@@ -198,6 +198,9 @@ package jsion.rpg.engine
 			m_buffer = new BitmapData(m_bufferWidth, m_bufferHeight, true, 0);
 			
 			if(bmd) m_buffer.copyPixels(bmd, bmd.rect, Constant.ZeroPoint);
+			
+			m_startTileX = int(screenX / m_mapInfo.tileWidth);
+			m_startTileY = int(screenY / m_mapInfo.tileHeight);
 		}
 		
 //		/**
