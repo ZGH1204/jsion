@@ -7,11 +7,16 @@ namespace BattleServer
 {
     public class BaseBattleEmitter
     {
-        protected List<BaseBattle> m_battles;
+        protected volatile List<BaseBattle> m_battles;
 
-        public virtual void SetBattles(List<BaseBattle> battles)
+        public BaseBattleEmitter()
         {
-            m_battles = battles;
+            m_battles = new List<BaseBattle>(500);
+        }
+
+        public virtual void AddBattle(BaseBattle battle)
+        {
+            m_battles.Add(battle);
         }
 
         public virtual void Emitte(long tick)
