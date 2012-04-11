@@ -17,17 +17,18 @@ namespace BattleServer
 
         private static bool m_running = false;
 
-        private static List<BaseBattle> m_battles = new List<BaseBattle>(500);
-
         private static Thread m_thread = new Thread(new ThreadStart(BattleThread));
 
         private static BaseBattleEmitter m_emitter;
 
+        public static void AddBattle(BaseBattle battle)
+        {
+            m_emitter.AddBattle(battle);
+        }
+
         public static void SetEmitter(BaseBattleEmitter emitter)
         {
             m_emitter = emitter;
-
-            m_emitter.SetBattles(m_battles);
         }
 
         public static void Start()
