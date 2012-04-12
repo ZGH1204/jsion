@@ -108,51 +108,58 @@ package jsion.utils
 				throw new ArgumentError("dis1和dis2都不能为null.");
 				return false;
 			}
-
-			var container:DisplayObjectContainer = getContainerByUnion(dis1, dis2);
-			
-			if(container == null) return false;
 			
 			if(dis1.parent == dis2.parent)
 			{
 				return dis1.parent.getChildIndex(dis1) < dis2.parent.getChildIndex(dis2);
 			}
-			else if(dis1.parent.contains(dis2.parent))
+
+			var container:DisplayObjectContainer = getContainerByUnion(dis1, dis2);
+			
+			if(container == null) return false;
+			
+			if(dis1 == container)
 			{
-				return dis1.parent.getChildIndex(dis1) < dis1.parent.getChildIndex(dis2.parent);
+				container = dis1.parent;
 			}
-			else if(dis2.parent.contains(dis1.parent))
+			else if(dis2 == container)
 			{
-				return dis2.parent.getChildIndex(dis1) < dis2.parent.getChildIndex(dis1.parent);
+				container = dis2.parent;
 			}
-			else
+//			else if(dis1.parent.contains(dis2.parent))
+//			{
+//				return dis1.parent.getChildIndex(dis1) < dis1.parent.getChildIndex(dis2.parent);
+//			}
+//			else if(dis2.parent.contains(dis1.parent))
+//			{
+//				return dis2.parent.getChildIndex(dis1) < dis2.parent.getChildIndex(dis1.parent);
+//			}
+			
+			
+			var disList:Array = [null, null];
+			
+			for(var i:int = 0; i < container.numChildren; i++)
 			{
-				var disList:Array = [null, null];
+				var child:DisplayObjectContainer = container.getChildAt(i) as DisplayObjectContainer;
 				
-				for(var i:int = 0; i < container.numChildren; i++)
+				if(child == null) continue;
+
+				if(child.contains(dis1))
 				{
-					var child:DisplayObjectContainer = container.getChildAt(i) as DisplayObjectContainer;
-					
-					if(child == null) continue;
-	
-					if(child.contains(dis1))
-					{
-						disList[0] = child;
-					}
-					else if(child.contains(dis2))
-					{
-						disList[1] = child;
-					}
-	
-					if(disList[0] != null && disList[1] != null) break;
+					disList[0] = child;
 				}
-	
-				dis1 = disList[0] as DisplayObject;
-				dis2 = disList[1] as DisplayObject;
-				
-				return container.getChildIndex(dis1) < container.getChildIndex(dis2);
+				else if(child.contains(dis2))
+				{
+					disList[1] = child;
+				}
+
+				if(disList[0] != null && disList[1] != null) break;
 			}
 
+			dis1 = disList[0] as DisplayObject;
+			dis2 = disList[1] as DisplayObject;
+			
+			return container.getChildIndex(dis1) < container.getChildIndex(dis2);
 		}
 
 		/**
