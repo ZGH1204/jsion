@@ -120,11 +120,11 @@ package jsion.utils
 			
 			if(dis1 == container)
 			{
-				container = dis1.parent;
+				return true;
 			}
 			else if(dis2 == container)
 			{
-				container = dis2.parent;
+				return false;
 			}
 //			else if(dis1.parent.contains(dis2.parent))
 //			{
