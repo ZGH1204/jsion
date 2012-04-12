@@ -213,15 +213,18 @@ package jsion.utils
 			
 			var index:int = 0;
 			
+			var parent:DisplayObjectContainer = dis.parent
+			
 			while(true)
 			{
-				if(dis.parent is Stage)
+				if(parent is Stage)
 				{
 					return index;
 				}
 				else
 				{
 					index += 1;
+					parent = parent.parent;
 				}
 			}
 			
