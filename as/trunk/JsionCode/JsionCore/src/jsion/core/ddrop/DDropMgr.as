@@ -446,7 +446,7 @@ package jsion.core.ddrop
 				{
 					var obj:IDragDrop = _dragingGroup.get(i);
 					
-					if(obj) obj.groupDragCallback(_dragger, _transData);
+					if(obj) obj.groupDropCallback(_dragger, _transData);
 				}
 			}
 			
