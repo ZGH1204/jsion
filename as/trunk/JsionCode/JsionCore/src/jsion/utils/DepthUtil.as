@@ -165,19 +165,67 @@ package jsion.utils
 		static private function getContainerByUnion(dis1:DisplayObject, dis2:DisplayObject):DisplayObjectContainer
 		{
 			if(dis1 == null || dis2 == null) return null;
+			
+			var dis1Depth:int = getDepth(dis1);
+			var dis2Depth:int = getDepth(dis2);
 
-			var parent:DisplayObjectContainer = dis1.parent;
-
-			while(parent != null)
+			
+			var parent:DisplayObjectContainer;
+			
+			if(dis1Depth > dis2Depth)
 			{
-				if(parent.contains(dis2))
+				parent = dis1.parent;
+				
+				while(parent != null)
 				{
-					return parent;
+					if(parent.contains(dis2))
+					{
+						return parent;
+					}
+					parent = parent.parent;
 				}
-				parent = parent.parent;
+			}
+			else
+			{
+				parent = dis2.parent;
+				
+				while(parent != null)
+				{
+					if(parent.contains(dis1))
+					{
+						return parent;
+					}
+					parent = parent.parent;
+				}
 			}
 
 			return null;
+		}
+		
+		/**
+		 * 获取显示对象相对于舞台的显示列表层级 在舞台上时层级为0 未显示的为-1
+		 * @param dis 要显示层级的显示对象
+		 * @return 以舞台为基础从0开始的层级数 即舞台为0
+		 */		
+		static public function getDepth(dis:DisplayObject):int
+		{
+			if(dis.parent == null) return -1;
+			
+			var index:int = 0;
+			
+			while(true)
+			{
+				if(dis.parent is Stage)
+				{
+					return index;
+				}
+				else
+				{
+					index += 1;
+				}
+			}
+			
+			return index;
 		}
 
 		/**
