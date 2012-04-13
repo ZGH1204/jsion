@@ -21,6 +21,8 @@ package jsion.tool
 	{
 		public static var dragDropCompress:IFlexDisplayObject;
 		
+		public static var xmlFormater:IFlexDisplayObject;
+		
 		private static var m_dispatcher:EventDispatcher = new EventDispatcher();
 		
 		private static var m_stage:Stage;
