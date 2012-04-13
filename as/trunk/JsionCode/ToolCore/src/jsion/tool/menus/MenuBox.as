@@ -17,6 +17,7 @@ package jsion.tool.menus
 	import jsion.tool.mgrs.FileMgr;
 	import jsion.tool.piccuter.PicCuterFrame;
 	import jsion.tool.pngpacker.PackerFrame;
+	import jsion.tool.xmlformats.XmlFormatPane;
 	import jsion.utils.ObjectUtil;
 	
 	import mx.managers.PopUpManager;
@@ -51,6 +52,10 @@ package jsion.tool.menus
 			item.addActionListener(onCompressHandler);
 			tool.append(item);
 			
+			item = new JMenuItem("XML格式化");
+			item.addActionListener(onXmlFormatHandler);
+			tool.append(item);
+			
 			item = new JMenuItem("切割图片");
 			item.addActionListener(onCutPicHandler);
 			tool.append(item);
@@ -76,6 +81,11 @@ package jsion.tool.menus
 		private function onCompressHandler(e:AWEvent):void
 		{
 			ToolGlobal.dragDropCompress = PopUpManager.createPopUp(ToolGlobal.windowedApp, CompressPane, true);
+		}
+		
+		private function onXmlFormatHandler(e:AWEvent):void
+		{
+			ToolGlobal.dragDropCompress = PopUpManager.createPopUp(ToolGlobal.windowedApp, XmlFormatPane, true);
 		}
 		
 		private function onCutPicHandler(e:AWEvent):void

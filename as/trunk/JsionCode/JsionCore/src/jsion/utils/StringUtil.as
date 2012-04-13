@@ -237,6 +237,25 @@ package jsion.utils
 			return true;
 		}
 		
+		private static const reg:RegExp = /[^\x00-\xff]{1,}/g;
+		public static function getRealLength(str:String):int
+		{
+			var len:int = 0;
+			
+			if(isNotNullOrEmpty(str))
+			{
+				len = str.length;
+				
+				var temp:int = str.match(reg).join("").length;
+				
+				len -= temp;
+				
+				len  = len + temp * 2;
+			}
+			
+			return len;
+		}
+		
 		/**
 		 * 指示指定的对象是否为 String 对象字符串
 		 * @param value 要判断的对象
