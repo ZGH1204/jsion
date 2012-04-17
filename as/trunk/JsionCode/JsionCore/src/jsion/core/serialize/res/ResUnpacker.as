@@ -24,6 +24,21 @@ package jsion.core.serialize.res
 			parseBytes(bytes);
 		}
 		
+		public function get frameRate():int
+		{
+			return m_frameRate;
+		}
+		
+		public function get width():int
+		{
+			return m_width;
+		}
+		
+		public function get height():int
+		{
+			return m_height;
+		}
+		
 		public function getTotalFrame(action:int, dir:int):int
 		{
 			var dirMap:HashMap = m_actions.get(action);

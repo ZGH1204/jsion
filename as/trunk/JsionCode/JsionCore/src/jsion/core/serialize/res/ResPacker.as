@@ -25,6 +25,16 @@ package jsion.core.serialize.res
 			m_frameRate = 30;
 		}
 		
+		public function get width():int
+		{
+			return m_width;
+		}
+		
+		public function get height():int
+		{
+			return m_height;
+		}
+		
 		public function setFrameRate(rate:int):void
 		{
 			m_frameRate = rate;
@@ -52,7 +62,7 @@ package jsion.core.serialize.res
 			
 			if(ArrayUtil.containsValue(list, bmd)) return;
 			
-			if(m_width < 0 || m_width < 0)
+			if(m_width < 0 || m_height < 0)
 			{
 				m_width = bmd.width;
 				m_height = bmd.height;
@@ -115,7 +125,7 @@ package jsion.core.serialize.res
 		{
 			var indexColors:Array = [];//索引颜色列表,写入文件.
 			var actionsBytesMap:HashMap = new HashMap();//动作字节流,逐个写入文件.
-			var bytes:ByteArray = new ByteArray();
+			
 			var replaceColors:HashMap = new HashMap();
 			var imgs:Array = getAllImage();
 			
