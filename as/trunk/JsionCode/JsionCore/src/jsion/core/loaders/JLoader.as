@@ -222,6 +222,9 @@ package jsion.core.loaders
 		public var tag:Object;
 		
 		/** @private */
+		protected var _errorMsg:String;
+		
+		/** @private */
 		protected var _url:String;
 		/** @private */
 		protected var _urlKey:String;
@@ -485,6 +488,15 @@ package jsion.core.loaders
 		public function get root():String
 		{
 			return _root;
+		}
+		
+		/**
+		 * 加载失败时的错误信息
+		 * @return 错误信息
+		 */		
+		public function get errorMsg():String
+		{
+			return _errorMsg;
 		}
 		
 		/**
@@ -1056,9 +1068,11 @@ package jsion.core.loaders
 				removeLoadEvent(e.currentTarget as EventDispatcher);
 				removeBytesTotalEvent(e.currentTarget as EventDispatcher);
 				
+				_errorMsg = e.toString();
+				
 				if(_callback != null) _callback(this);
 				
-				dispatchEvent(new JLoaderEvent(JLoaderEvent.Error, e.text));
+				dispatchEvent(new JLoaderEvent(JLoaderEvent.Error, _errorMsg));
 				
 				LoaderMonitor.completeLoad(this);
 			}
@@ -1078,9 +1092,11 @@ package jsion.core.loaders
 			removeLoadEvent(e.currentTarget as EventDispatcher);
 			removeBytesTotalEvent(e.currentTarget as EventDispatcher);
 			
+			_errorMsg = e.toString();
+			
 			if(_callback != null) _callback(this);
 			
-			dispatchEvent(new JLoaderEvent(JLoaderEvent.Error, e.text));
+			dispatchEvent(new JLoaderEvent(JLoaderEvent.Error, _errorMsg));
 			
 			LoaderMonitor.completeLoad(this);
 		}
