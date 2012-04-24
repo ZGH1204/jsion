@@ -158,6 +158,11 @@ namespace Net
 
             Socket = socket;
 
+            if (socket.RemoteEndPoint == null)
+            {
+                throw new Exception("RemoteEndPoint is null!");
+            }
+
             IP = socket.RemoteEndPoint.ToString().Split(':')[0];
             Port = int.Parse(socket.RemoteEndPoint.ToString().Split(':')[1]);
 
