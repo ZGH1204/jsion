@@ -14,6 +14,8 @@ namespace WCFClient
 
             client.SayHello("dfdfdf");
             client.SayHello("Jsion");
+
+            //WCFClient.ServiceReference2.WebServiceClient
         }
     }
 }
