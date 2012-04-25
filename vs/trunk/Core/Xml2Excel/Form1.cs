@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using Xml2Excel.Core;
+using MSExcel = Microsoft.Office.Interop.Excel;
 
 namespace Xml2Excel
 {
@@ -52,8 +53,10 @@ namespace Xml2Excel
 
                 foreach (XmlNode node in root.ChildNodes)
                 {
-                    foreach (XmlNode item in node.ChildNodes)
+                    if (node.ChildNodes.Count != 0)
                     {
+                        XmlNode item = node.ChildNodes[0];
+
                         TemplateStruct t = new TemplateStruct();
 
                         t.NodeName = item.LocalName;
@@ -64,11 +67,21 @@ namespace Xml2Excel
                             t.Attributes.Add(att.LocalName);
                         }
 
-                        break;
+                        list.Add(t);
                     }
                 }
 
 
+
+                MSExcel.Application excel = new MSExcel.Application();
+
+                MSExcel.Workbook wbook = excel.Workbooks.Add(true);
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    MSExcel.Worksheet ws = (MSExcel.Worksheet)wbook.Sheets[i + 1];
+                    ws.Select();
+                }
             }
         }
     }
