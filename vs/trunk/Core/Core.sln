@@ -29,6 +29,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFDemo", "WCFDemo\WCFDemo.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFClient", "WCFClient\WCFClient.csproj", "{89874697-6784-4DF7-8931-2E353AA30296}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{379D9C5C-CD61-460B-8C03-7823CB67BA1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xml2Excel", "Xml2Excel\Xml2Excel.csproj", "{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -252,8 +256,26 @@ Global
 		{89874697-6784-4DF7-8931-2E353AA30296}.集中生成|Mixed Platforms.Build.0 = Release|x86
 		{89874697-6784-4DF7-8931-2E353AA30296}.集中生成|x86.ActiveCfg = Release|x86
 		{89874697-6784-4DF7-8931-2E353AA30296}.集中生成|x86.Build.0 = Release|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.Debug|x86.ActiveCfg = Debug|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.Debug|x86.Build.0 = Debug|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.Release|Any CPU.ActiveCfg = Release|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.Release|Mixed Platforms.Build.0 = Release|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.Release|x86.ActiveCfg = Release|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.Release|x86.Build.0 = Release|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.集中生成|Any CPU.ActiveCfg = Release|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.集中生成|Mixed Platforms.ActiveCfg = Release|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.集中生成|Mixed Platforms.Build.0 = Release|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.集中生成|x86.ActiveCfg = Release|x86
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6}.集中生成|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4EFDADF4-009D-43F0-A4E2-B53DEB781BE6} = {379D9C5C-CD61-460B-8C03-7823CB67BA1C}
 	EndGlobalSection
 EndGlobal
