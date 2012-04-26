@@ -6,6 +6,8 @@ package jsion.tool.xmlformats
 	
 	public class XmlNode implements IDispose
 	{
+		private static const SpliteCount:int = 4;
+		
 		public var xml:XML;
 		
 		public var xmlList:XMLList;
@@ -66,9 +68,9 @@ package jsion.tool.xmlformats
 							rlt = Math.max(rlt, len);
 						}
 						
-						if((rlt % 4) > 0)
+						if((rlt % SpliteCount) > 0)
 						{
-							rlt = (rlt / 4 + 1) * 4;
+							rlt = (rlt / SpliteCount + 1) * SpliteCount;
 						}
 						
 						//node.attributeLens[i] = rlt;
@@ -213,7 +215,7 @@ package jsion.tool.xmlformats
 				
 				for each(var node:XmlNode in children)
 				{
-					str = str + node.getString(len + 4);
+					str = str + node.getString(len + SpliteCount);
 				}
 				
 				str = str + getSpaces(len) + "</" + xml.localName() + ">\r\n";
