@@ -11,50 +11,50 @@ package jsion.stage3d
 		 * 属性寄存器0(共8个)
 		 * 这些寄存器引用作为顶点着色器输入的VertexBuffer的顶点属性数据
 		 */		
-		public static const PropRegister0:String = "va0";
+		public static const VertexPropRegister0:String = "va0";
 		
 		/**
 		 * 属性寄存器1(共8个)
 		 * 这些寄存器引用作为顶点着色器输入的VertexBuffer的顶点属性数据
 		 */		
-		public static const PropRegister1:String = "va1";
+		public static const VertexPropRegister1:String = "va1";
 		
 		/**
 		 * 属性寄存器2(共8个)
 		 * 这些寄存器引用作为顶点着色器输入的VertexBuffer的顶点属性数据
 		 */		
-		public static const PropRegister2:String = "va2";
+		public static const VertexPropRegister2:String = "va2";
 		
 		/**
 		 * 属性寄存器3(共8个)
 		 * 这些寄存器引用作为顶点着色器输入的VertexBuffer的顶点属性数据
 		 */		
-		public static const PropRegister3:String = "va3";
+		public static const VertexPropRegister3:String = "va3";
 		
 		/**
 		 * 属性寄存器4(共8个)
 		 * 这些寄存器引用作为顶点着色器输入的VertexBuffer的顶点属性数据
 		 */		
-		public static const PropRegister4:String = "va4";
+		public static const VertexPropRegister4:String = "va4";
 		
 		
 		/**
 		 * 属性寄存器5(共8个)
 		 * 这些寄存器引用作为顶点着色器输入的VertexBuffer的顶点属性数据
 		 */		
-		public static const PropRegister5:String = "va5";
+		public static const VertexPropRegister5:String = "va5";
 		
 		/**
 		 * 属性寄存器6(共8个)
 		 * 这些寄存器引用作为顶点着色器输入的VertexBuffer的顶点属性数据
 		 */		
-		public static const PropRegister6:String = "va6";
+		public static const VertexPropRegister6:String = "va6";
 		
 		/**
 		 * 属性寄存器7(共8个)
 		 * 这些寄存器引用作为顶点着色器输入的VertexBuffer的顶点属性数据
 		 */		
-		public static const PropRegister7:String = "va7";
+		public static const VertexPropRegister7:String = "va7";
 		
 		/**
 		 * 顶点着色器常量寄存器0(共有128个)
