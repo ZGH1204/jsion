@@ -2,28 +2,40 @@ package jsion.gpu2d
 {
 	import com.adobe.utils.AGALMiniAssembler;
 	
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.display.Stage3D;
 	import flash.display3D.Context3D;
 	import flash.display3D.Context3DBlendFactor;
 	import flash.display3D.Context3DProgramType;
+	import flash.display3D.Context3DTextureFormat;
 	import flash.display3D.Context3DVertexBufferFormat;
 	import flash.display3D.IndexBuffer3D;
 	import flash.display3D.Program3D;
 	import flash.display3D.VertexBuffer3D;
+	import flash.display3D.textures.Texture;
 	import flash.events.Event;
 	import flash.geom.ColorTransform;
+	import flash.geom.Matrix;
 	import flash.geom.Matrix3D;
+	import flash.utils.Dictionary;
 	
 	import jsion.IDispose;
 	
 	public class GPUView2D extends Sprite implements IDispose
 	{
+		public var textures:Array = [];
+		public var obj2ds:Array = [];
+		
+		protected var m_nowTextureId:int = 0;
+		
+		protected var m_cameraX:Number = 0;
+		protected var m_cameraY:Number = 0;
 		protected var m_viewWidth:Number;
 		protected var m_viewHeight:Number;
 		
-		protected var m_stage3d:Stage3D;
-		protected var m_context3d:Context3D;
+		protected var m_stage3D:Stage3D;
+		protected var m_context3D:Context3D;
 		protected var m_cameraMatrix:Matrix3D;
 		
 		protected var m_vertexData:Vector.<Number>;
@@ -35,6 +47,7 @@ package jsion.gpu2d
 		protected var m_vertexCode:String;
 		protected var m_vertexAGAL:AGALMiniAssembler;
 		
+		protected var m_textureList:Dictionary;
 		protected var m_programList:Array;
 		
 		public function GPUView2D(vwidth:Number, vheight:Number)
@@ -64,10 +77,9 @@ package jsion.gpu2d
 		protected function initialize():void
 		{
 			m_programList = [];
+			m_textureList = new Dictionary();
 			
 			m_cameraMatrix = new Matrix3D;
-			m_cameraMatrix.appendScale(2 / m_viewWidth, 2 / m_viewHeight, 1);
-			m_cameraMatrix.appendTranslation( -1, 1, 0);
 			
 			m_vertexData = Vector.<Number>([
 				0, 0,  0,
@@ -91,38 +103,46 @@ package jsion.gpu2d
 			m_vertexAGAL.assemble(Context3DProgramType.VERTEX, m_vertexCode);
 			
 			
-			m_stage3d = stage.stage3Ds[0];
-			m_stage3d.addEventListener(Event.CONTEXT3D_CREATE, __context3DCreateHandler);
-			m_stage3d.requestContext3D();
+			m_stage3D = stage.stage3Ds[0];
+			m_stage3D.addEventListener(Event.CONTEXT3D_CREATE, __context3DCreateHandler);
+			m_stage3D.requestContext3D();
 		}
 		
 		private function __context3DCreateHandler(e:Event):void
 		{
-			m_stage3d.x = x;
-			m_stage3d.y = y;
+			m_stage3D.x = x;
+			m_stage3D.y = y;
 			
-			m_context3d = m_stage3d.context3D;
-			m_context3d.configureBackBuffer(m_viewWidth, m_viewHeight, 0, false);
-			m_context3d.setBlendFactors(Context3DBlendFactor.ONE, Context3DBlendFactor.ONE_MINUS_DESTINATION_ALPHA);
+			m_context3D = m_stage3D.context3D;
+			m_context3D.enableErrorChecking = true;
+			m_context3D.configureBackBuffer(m_viewWidth, m_viewHeight, 0, false);
+			m_context3D.setBlendFactors(Context3DBlendFactor.ONE, Context3DBlendFactor.ONE_MINUS_SOURCE_ALPHA);
 			
-			m_vertexBuffer = m_context3d.createVertexBuffer(m_vertexData.length / 3, 3);
+			m_vertexBuffer = m_context3D.createVertexBuffer(m_vertexData.length / 3, 3);
 			m_vertexBuffer.uploadFromVector(m_vertexData, 0, m_vertexData.length / 3);
 			
-			m_indexBuffer = m_context3d.createIndexBuffer(m_indexData.length);
+			m_indexBuffer = m_context3D.createIndexBuffer(m_indexData.length);
 			m_indexBuffer.uploadFromVector(m_indexData, 0, m_indexData.length);
 			
 			
 			//将顶点定义放在va0
-			m_context3d.setVertexBufferAt(0, m_vertexBuffer, 0, Context3DVertexBufferFormat.FLOAT_3);
+			m_context3D.setVertexBufferAt(0, m_vertexBuffer, 0, Context3DVertexBufferFormat.FLOAT_3);
+			
+			updateCameraMatrix();
 			
 			//将摄像机矩阵放在vc8
-			m_context3d.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 8, m_cameraMatrix, true);
+			//m_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 8, m_cameraMatrix, true);
 			
-			trace("当前渲染模式:", m_context3d.driverInfo);
+			trace("当前渲染模式:", m_context3D.driverInfo);
 			
 			start();
 			
 			dispatchEvent(e.clone());
+		}
+		
+		public function add(obj:GPUObj2D):void
+		{
+			obj2ds.push(obj);
 		}
 		
 		public function getOrCreateProgram(colorTransform:ColorTransform):Program3D
@@ -155,12 +175,94 @@ package jsion.gpu2d
 				var fsa:AGALMiniAssembler = new AGALMiniAssembler(false);
 				fsa.assemble(Context3DProgramType.FRAGMENT, code);
 				
-				program = m_context3d.createProgram();
+				program = m_context3D.createProgram();
 				program.upload(m_vertexAGAL.agalcode, fsa.agalcode);
 				m_programList[id] = program;
 			}
 			
 			return program;
+		}
+		
+		public function getTexture(bmd:BitmapData):UVTexture
+		{
+			if(m_textureList[bmd] == null)
+			{
+				var i:int = 0;
+				var w:int = 2048;
+				var h:int = 2048;
+				
+				for (i = 0; i < 12; i++ )
+				{
+					var pow:int = Math.pow(2, i);
+					
+					if (pow >= bmd.width)
+					{
+						w = pow;
+						break;
+					}
+				}
+				
+				for (i = 0; i < 12; i++ )
+				{
+					pow = Math.pow(2, i);
+					
+					if (pow >= bmd.height)
+					{
+						h = pow;
+						break;
+					}
+				}
+				
+				var temp:BitmapData = new BitmapData(w, h, true, 0);
+				temp.draw(bmd, new Matrix(w / bmd.width, 0, 0, h / bmd.height), null, null, null, true);
+				
+				var texture:Texture = m_context3D.createTexture(w, h, Context3DTextureFormat.BGRA, false);
+				texture.uploadFromBitmapData(temp);
+				textures[m_nowTextureId] = texture;
+				temp.dispose();
+				
+				var uvtexture:UVTexture = new UVTexture;
+				uvtexture.textureIndex = m_nowTextureId;
+				uvtexture.uvBuffer = m_context3D.createVertexBuffer(4, 2);
+				uvtexture.uvBuffer.uploadFromVector(Vector.<Number>([0, 0,  1, 0,  0, 1,  1,1]), 0, 4);
+				m_nowTextureId++;
+				
+				m_textureList[bmd] = uvtexture;
+			}
+			
+			return m_textureList[bmd];
+		}
+		
+		public function setCameraXY(cX:Number, cY:Number):void
+		{
+			m_cameraX = cX;
+			m_cameraY = cY;
+			
+			updateCameraMatrix();
+		}
+		
+		public function setCameraWH(w:Number, h:Number):void
+		{
+			m_viewWidth = w;
+			m_viewHeight = h;
+			
+			m_context3D.configureBackBuffer(m_viewWidth, m_viewHeight, 0, false);
+			
+			updateCameraMatrix();
+		}
+		
+		private function updateCameraMatrix():void
+		{
+			var tmpX:Number, tmpY:Number;
+			tmpX = -1 - 2 / m_viewWidth * m_cameraX;
+			tmpY = 1 + 2 / m_viewHeight * m_cameraY;
+			
+			m_cameraMatrix.identity();
+			m_cameraMatrix.appendScale(2 / m_viewWidth, 2 / m_viewHeight, 1);
+			m_cameraMatrix.appendTranslation(tmpX, tmpY, 0);
+			
+			//将摄像机矩阵放在vc8
+			m_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 8, m_cameraMatrix, true);
 		}
 		
 		public function start():void
@@ -180,23 +282,79 @@ package jsion.gpu2d
 		
 		public function render():void
 		{
-			m_context3d.clear(1, 1, 1, 0);
+			m_context3D.clear(1, 1, 1, 0);
 			
-			m_context3d.present();
+			for each(var obj2d:GPUObj2D in obj2ds)
+			{
+				renderObj2D(obj2d);
+			}
+			
+			m_context3D.present();
+		}
+		
+		protected function renderObj2D(obj2d:GPUObj2D):void
+		{
+			if(obj2d.change) obj2d.recompose();
+			
+			obj2d.wMatrix.rawData = obj2d.vMatrix.rawData;
+			
+			if(obj2d.parent) obj2d.wMatrix.append(obj2d.parent.wMatrix);
+			
+			obj2d.update();
+			
+			if(obj2d.texture)
+			{
+				m_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 0, obj2d.selfMatrix, true);
+				m_context3D.setProgramConstantsFromMatrix(Context3DProgramType.VERTEX, 4, obj2d.wMatrix, true);
+				
+				m_context3D.setTextureAt(0, textures[obj2d.texture.textureIndex]);
+				m_context3D.setVertexBufferAt(1, obj2d.texture.uvBuffer, 0, Context3DVertexBufferFormat.FLOAT_2);
+				m_context3D.drawTriangles(m_indexBuffer);
+			}
+			
+			for each(var ob:GPUObj2D in obj2d.children)
+			{
+				renderObj2D(ob);
+			}
 		}
 		
 		override public function set x(value:Number):void
 		{
 			super.x = value;
 			
-			if(m_stage3d) m_stage3d.x = value;
+			if(m_stage3D) m_stage3D.x = value;
 		}
 		
 		override public function set y(value:Number):void
 		{
 			super.y = value;
 			
-			if(m_stage3d) m_stage3d.y = value;
+			if(m_stage3D) m_stage3D.y = value;
+		}
+		
+		public function get cameraX():Number
+		{
+			return m_cameraX;
+		}
+		
+		public function get cameraY():Number
+		{
+			return m_cameraY;
+		}
+		
+		public function get context3D():Context3D
+		{
+			return m_context3D;
+		}
+		
+		public function set context3D(value:Context3D):void
+		{
+			m_context3D = value;
+		}
+		
+		public function sortByY():void 
+		{
+			if(obj2ds) obj2ds.sortOn("y", Array.NUMERIC);
 		}
 		
 		public function dispose():void
@@ -204,13 +362,13 @@ package jsion.gpu2d
 			removeEventListener(Event.ADDED_TO_STAGE, __addToStageHandler);
 			removeEventListener(Event.ENTER_FRAME, __enterFrameRenderHandler);
 			
-			if(m_stage3d) m_stage3d.removeEventListener(Event.CONTEXT3D_CREATE, __context3DCreateHandler);
+			if(m_stage3D) m_stage3D.removeEventListener(Event.CONTEXT3D_CREATE, __context3DCreateHandler);
 			
-			if(m_context3d) m_context3d.dispose();
+			if(m_context3D) m_context3D.dispose();
 			
 			
-			m_context3d = null;
-			m_stage3d = null;
+			m_context3D = null;
+			m_stage3D = null;
 		}
 	}
 }
