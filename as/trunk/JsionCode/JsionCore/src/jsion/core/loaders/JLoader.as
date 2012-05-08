@@ -931,7 +931,7 @@ package jsion.core.loaders
 			
 			if(_status == LoaderGlobal.StatusFinished || _isComplete)
 			{
-				if(_callback != null) _callback(this);
+				onCompleted();
 				
 				dispatchEvent(new JLoaderEvent(JLoaderEvent.Complete));
 				
@@ -1070,7 +1070,7 @@ package jsion.core.loaders
 				
 				_errorMsg = e.toString();
 				
-				if(_callback != null) _callback(this);
+				onErrored();
 				
 				dispatchEvent(new JLoaderEvent(JLoaderEvent.Error, _errorMsg));
 				
@@ -1094,7 +1094,7 @@ package jsion.core.loaders
 			
 			_errorMsg = e.toString();
 			
-			if(_callback != null) _callback(this);
+			onErrored();
 			
 			dispatchEvent(new JLoaderEvent(JLoaderEvent.Error, _errorMsg));
 			
@@ -1143,11 +1143,21 @@ package jsion.core.loaders
 		
 		private function fireCompleteEvent():void
 		{
-			if(_callback != null) _callback(this);
+			onCompleted();
 			
 			dispatchEvent(new JLoaderEvent(JLoaderEvent.Complete));
 			
 			LoaderMonitor.completeLoad(this);
+		}
+		
+		protected function onCompleted():void
+		{
+			if(_callback != null) _callback(this);
+		}
+		
+		protected function onErrored():void
+		{
+			if(_callback != null) _callback(this);
 		}
 		
 		/**
