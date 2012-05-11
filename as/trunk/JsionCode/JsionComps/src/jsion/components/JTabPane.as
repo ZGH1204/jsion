@@ -185,6 +185,8 @@ package jsion.components
 				
 				m_group.selected = m_tabBtns[m_currentIndex];
 				
+				m_group.selected.bring2Top();
+				
 				var tab:ITab = m_tabs[m_currentIndex] as ITab;
 				
 				var content:DisplayObject;
