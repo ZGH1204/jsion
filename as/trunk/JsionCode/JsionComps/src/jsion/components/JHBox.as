@@ -6,6 +6,7 @@ package jsion.components
 	import jsion.comps.CompGlobal;
 	import jsion.comps.Component;
 	import jsion.comps.events.UIEvent;
+	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 	
 	[Event(name="resize", type="jsion.comps.events.UIEvent")]
@@ -21,10 +22,13 @@ package jsion.components
 		
 		private var m_align:String;
 		
+		private var m_list:Array;
+		
 		public function JHBox(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_spacing = 0;
 			m_align = TOP;
+			m_list = [];
 			super(container, xPos, yPos);
 		}
 		
@@ -65,6 +69,12 @@ package jsion.components
 			if(child)
 			{
 				child.addEventListener(UIEvent.RESIZE, __resizeHandler);
+				
+				if(m_list)
+				{
+					ArrayUtil.remove(m_list, child);
+					ArrayUtil.push(m_list, child);
+				}
 			}
 			
 			return super.addChild(child);
@@ -77,6 +87,8 @@ package jsion.components
 			if(child)
 			{
 				child.addEventListener(UIEvent.RESIZE, __resizeHandler);
+				
+				if(m_list) ArrayUtil.insert(m_list, child, index);
 			}
 			
 			return super.addChildAt(child, index);
@@ -89,6 +101,8 @@ package jsion.components
 			if(child)
 			{
 				child.removeEventListener(UIEvent.RESIZE, __resizeHandler);
+				
+				if(m_list) ArrayUtil.remove(m_list, child);
 			}
 			
 			return super.removeChild(child);
@@ -103,9 +117,23 @@ package jsion.components
 			if(child)
 			{
 				child.removeEventListener(UIEvent.RESIZE, __resizeHandler);
+				
+				if(m_list) ArrayUtil.remove(m_list, child);
 			}
 			
 			return child;
+		}
+		
+		override public function setChildIndex(child:DisplayObject, index:int):void
+		{
+			if(child)
+			{
+				if(m_list) ArrayUtil.remove(m_list, child);
+				
+				if(m_list) ArrayUtil.insert(m_list, child, index);
+			}
+			
+			super.setChildIndex(child, index);
 		}
 		
 		private function __resizeHandler(e:UIEvent):void
@@ -121,9 +149,9 @@ package jsion.components
 			
 			var child:DisplayObject;
 			
-			for(var i:int = 0; i < numChildren; i++)
+			for(var i:int = 0; i < m_list.length; i++)
 			{
-				child = getChildAt(i);
+				child = m_list[i];
 				
 				safeDrawAtOnceByDisplay(child);
 				
@@ -134,9 +162,9 @@ package jsion.components
 				maxHeight = Math.max(child.height, maxHeight);
 			}
 			
-			for(var j:int = 0; j < numChildren; j++)
+			for(var j:int = 0; j < m_list.length; j++)
 			{
-				child = getChildAt(j);
+				child = m_list[i];
 				
 				if(m_align == BOTTOM)
 				{
@@ -162,6 +190,8 @@ package jsion.components
 		override public function dispose():void
 		{
 			DisposeUtil.freeChildren(this);
+
+			m_list = null;
 			
 			super.dispose();
 		}

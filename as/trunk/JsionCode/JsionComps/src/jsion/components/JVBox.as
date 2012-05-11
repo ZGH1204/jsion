@@ -6,6 +6,7 @@ package jsion.components
 	import jsion.comps.CompGlobal;
 	import jsion.comps.Component;
 	import jsion.comps.events.UIEvent;
+	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 	
 	[Event(name="resize", type="jsion.comps.events.UIEvent")]
@@ -19,10 +20,13 @@ package jsion.components
 		
 		private var m_align:String;
 		
+		private var m_list:Array;
+		
 		public function JVBox(container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_spacing = 0;
 			m_align = LEFT;
+			m_list = [];
 			super(container, xPos, yPos);
 		}
 		
@@ -63,6 +67,12 @@ package jsion.components
 			if(child)
 			{
 				child.addEventListener(UIEvent.RESIZE, __resizeHandler);
+				
+				if(m_list)
+				{
+					ArrayUtil.remove(m_list, child);
+					ArrayUtil.push(m_list, child);
+				}
 			}
 			
 			return super.addChild(child);
@@ -75,6 +85,8 @@ package jsion.components
 			if(child)
 			{
 				child.addEventListener(UIEvent.RESIZE, __resizeHandler);
+				
+				if(m_list) ArrayUtil.insert(m_list, child, index);
 			}
 			
 			return super.addChildAt(child, index);
@@ -87,6 +99,8 @@ package jsion.components
 			if(child)
 			{
 				child.removeEventListener(UIEvent.RESIZE, __resizeHandler);
+				
+				if(m_list) ArrayUtil.remove(m_list, child);
 			}
 			
 			return super.removeChild(child);
@@ -101,9 +115,23 @@ package jsion.components
 			if(child)
 			{
 				child.removeEventListener(UIEvent.RESIZE, __resizeHandler);
+				
+				if(m_list) ArrayUtil.remove(m_list, child);
 			}
 			
 			return child;
+		}
+		
+		override public function setChildIndex(child:DisplayObject, index:int):void
+		{
+			if(child)
+			{
+				if(m_list) ArrayUtil.remove(m_list, child);
+				
+				if(m_list) ArrayUtil.insert(m_list, child, index);
+			}
+			
+			super.setChildIndex(child, index);
 		}
 		
 		private function __resizeHandler(e:UIEvent):void
@@ -114,44 +142,46 @@ package jsion.components
 		override public function draw():void
 		{
 			var yPos:int = 0;
-			var maxWidth:Number;
+			var maxWidth:Number = 1;
 			var child:DisplayObject;
-			
-			for(var i:int = 0; i < numChildren; i++)
+			if(m_list)
 			{
-				child = getChildAt(i);
+				for(var i:int = 0; i < m_list.length; i++)
+				{
+					child = m_list[i];
+					
+					safeDrawAtOnceByDisplay(child);
+					
+					child.y = yPos + m_spacing * i;
+					
+					yPos += child.height;
+					
+					maxWidth = Math.max(child.width, maxWidth);
+				}
 				
-				safeDrawAtOnceByDisplay(child);
+				for(var j:int = 0; j < m_list.length; j++)
+				{
+					child = m_list[i];
+					
+					if(m_align == RIGHT)
+					{
+						child.x = maxWidth - child.width;
+					}
+					else if(m_align == CENTER)
+					{
+						child.x = maxWidth - child.width;
+						child.x /= 2;
+					}
+					else
+					{
+						child.x = 0;
+					}
+				}
 				
-				child.y = yPos + m_spacing * i;
-				
-				yPos += child.height;
-				
-				maxWidth = Math.max(child.width, maxWidth);
+				m_width = maxWidth;
+				m_height = originalHeight;
+				dispatchEvent(new UIEvent(UIEvent.RESIZE));
 			}
-			
-			for(var j:int = 0; j < numChildren; j++)
-			{
-				child = getChildAt(j);
-				
-				if(m_align == RIGHT)
-				{
-					child.x = maxWidth - child.width;
-				}
-				else if(m_align == CENTER)
-				{
-					child.x = maxWidth - child.width;
-					child.x /= 2;
-				}
-				else
-				{
-					child.x = 0;
-				}
-			}
-			
-			m_width = maxWidth;
-			m_height = originalHeight;
-			dispatchEvent(new UIEvent(UIEvent.RESIZE));
 			
 			super.draw();
 		}
