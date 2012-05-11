@@ -257,6 +257,20 @@ package jsion.utils
 		}
 		
 		/**
+		 * 设置TextField的真实最大字符数,汉字为2个字符.
+		 * @param textfield
+		 * @param max
+		 * @param input
+		 */		
+		public static function checkTextFieldLength(textfield:TextField, max:uint, input:String = null):void
+		{
+			var ulen1:uint = textfield.text ? textfield.text.match(reg).join("").length : 0;
+			var ulen2:uint = input ? input.match(reg).join("").length : 0;
+			
+			textfield.maxChars = max > ulen1 + ulen2 ? max - ulen1 - ulen2 : (max > ulen2 ? max - ulen2 : max /2);
+		}
+		
+		/**
 		 * 指示指定的对象是否为 String 对象字符串
 		 * @param value 要判断的对象
 		 * @return true 表示是字符串<br />
