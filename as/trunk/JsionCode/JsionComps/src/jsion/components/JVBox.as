@@ -161,7 +161,7 @@ package jsion.components
 				
 				for(var j:int = 0; j < m_list.length; j++)
 				{
-					child = m_list[i];
+					child = m_list[j];
 					
 					if(m_align == RIGHT)
 					{
