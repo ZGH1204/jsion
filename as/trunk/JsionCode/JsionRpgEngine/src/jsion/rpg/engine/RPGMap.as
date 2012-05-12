@@ -244,10 +244,10 @@ package jsion.rpg.engine
 		/**
 		 * 镜头中心点坐标
 		 */		
-		public function set center(pos:Point):void
+		public function set center(value:Point):void
 		{
-			m_center.x = pos.x;
-			m_center.y = pos.y;
+			m_center.x = value.x;
+			m_center.y = value.y;
 			
 			var tmpX:int = cameraX;
 			var tmpY:int = cameraY;
