@@ -48,7 +48,6 @@ package jsion.core.actions
 		
 		/**
 		 * 添加Action对象
-		 * @param a
 		 */		
 		public function act(a:Action):void
 		{
@@ -136,6 +135,9 @@ package jsion.core.actions
 			}
 		}
 		
+		/**
+		 * 释放资源
+		 */		
 		public function dispose():void
 		{
 			JUtil.removeEnterFrame(__enterFrameHandler);

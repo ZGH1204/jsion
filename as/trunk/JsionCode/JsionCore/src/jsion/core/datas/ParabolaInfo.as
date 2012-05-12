@@ -11,6 +11,19 @@ package jsion.core.datas
 	 */	
 	public class ParabolaInfo
 	{
-		public var a:Number = 0, b:Number = 0, c:Number = 0;
+		/**
+		 * 二次项系数
+		 */		
+		public var a:Number = 0;
+		
+		/**
+		 * 一次项系数
+		 */		
+		public var b:Number = 0;
+		
+		/**
+		 * 常数
+		 */		
+		public var c:Number = 0;
 	}
 }

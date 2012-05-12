@@ -2,6 +2,15 @@ package jsion.core.cryptor
 {
 	import flash.utils.ByteArray;
 	
+	/**
+	 * 文本压缩加密实现
+	 * @author Jsion
+	 * @langversion 3.0
+	 * @playerversion Flash 9
+	 * @playerversion AIR 1.1
+	 * @productversion JUtils 1
+	 * 
+	 */	
 	public class TextCryptor implements ICryption
 	{
 		public function encry(bytes:ByteArray):ByteArray

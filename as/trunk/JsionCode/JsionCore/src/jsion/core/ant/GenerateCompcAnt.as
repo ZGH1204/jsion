@@ -56,6 +56,15 @@ package jsion.core.ant
 			"                <include name=\"**/*.swc\" />\n" +
 			"            </fileset>\n";
 		
+		/**
+		 * 生成编译SWC的Ant脚本
+		 * @param antName 脚本名称
+		 * @param targetRootDir 桌面目录
+		 * @param projectRootDir 项目根目录
+		 * @param flexSDKDir FlexSDK目录
+		 * @param refDir 引用目录
+		 * @param outDir 输出目录
+		 */		
 		public function GenerateCompcAnt(antName:String, targetRootDir:String, projectRootDir:String, flexSDKDir:String, refDir:String, outDir:String)
 		{
 			this.antName = antName;
@@ -71,11 +80,17 @@ package jsion.core.ant
 			otherSourceList = [];
 		}
 		
+		/**
+		 * 增加引用目录
+		 */		
 		public function addReference(dir:String):void
 		{
 			if(referencesDir.indexOf(dir) == -1) referencesDir.push(dir);
 		}
 		
+		/**
+		 * 清除引用列表
+		 */		
 		public function clearReference():void
 		{
 			referencesDir = new Vector.<String>();
@@ -118,6 +133,9 @@ package jsion.core.ant
 			otherSourceList.push(otherSources);
 		}
 		
+		/**
+		 * 清除所有要生成的库信息
+		 */		
 		public function clearLib():void
 		{
 			libsList = new Vector.<String>();
@@ -249,11 +267,17 @@ package jsion.core.ant
 			return callStr;
 		}
 		
+		/**
+		 * 设置Ant脚本名称
+		 */		
 		public function setAntName(name:String):void
 		{
 			antName = name;
 		}
 		
+		/**
+		 * 生成Ant脚本
+		 */		
 		public function generateAntScript():String
 		{
 			if(libsList.length == 0) return "";
@@ -274,6 +298,9 @@ package jsion.core.ant
 			return antScript;
 		}
 		
+		/**
+		 * 重置生成器
+		 */		
 		public function reset():void
 		{
 			clearReference();

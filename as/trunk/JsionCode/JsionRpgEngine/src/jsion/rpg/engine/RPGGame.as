@@ -8,6 +8,9 @@ package jsion.rpg.engine
 	import jsion.IDispose;
 	import jsion.rpg.engine.datas.MapInfo;
 	import jsion.rpg.engine.datas.RPGInfo;
+	import jsion.rpg.engine.objects.RPGObject;
+	import jsion.rpg.engine.renders.Render2D;
+	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 	
 	public class RPGGame implements IDispose
@@ -21,21 +24,51 @@ package jsion.rpg.engine
 		
 		protected var m_needRepaint:Boolean;
 		
+		
+		
+		protected var m_render:Render2D;
+		
+		protected var m_objects:Array;
+		
 		public function RPGGame(w:int, h:int)
 		{
 			m_cameraRect = new Rectangle(0, 0, w, h);
 			
 			m_bitmapData = new BitmapData(w, h, true, 0);
+			
+			m_objects = [];
+			
+			m_render = new Render2D();
+			
+			updateRenders();
+		}
+		
+		public function addObject(obj:RPGObject):void
+		{
+			if(obj)
+			{
+				ArrayUtil.push(m_objects, obj);
+				
+				obj.game = this;
+				obj.render = m_render;
+			}
+		}
+		
+		public function removeObject(obj:RPGObject):void
+		{
+			ArrayUtil.remove(m_objects, obj);
 		}
 		
 		public function setMap(info:RPGInfo):void
 		{
 			m_rpgInfo = info;
 			
-			m_needRepaint = true;
-			
 			DisposeUtil.free(m_map);
 			m_map = new RPGMap(info, m_cameraRect.width, m_cameraRect.height);
+			
+			needRepaint();
+			
+			updateRenders();
 		}
 		
 		public function setCameraSize(w:int, h:int):void
@@ -43,7 +76,7 @@ package jsion.rpg.engine
 			m_cameraRect.width = w;
 			m_cameraRect.height = h;
 			
-			m_needRepaint = true;
+			needRepaint();
 			
 			var bmd:BitmapData = m_bitmapData;
 			
@@ -52,6 +85,14 @@ package jsion.rpg.engine
 			if(bmd) m_bitmapData.copyPixels(bmd, bmd.rect, Constant.ZeroPoint);
 			
 			if(m_map) m_map.setCameraSize(w, h);
+			
+			updateRenders();
+		}
+		
+		public function updateRenders():void
+		{
+			m_render.map = m_map;
+			m_render.buffer = m_bitmapData;
 		}
 		
 		public function get bitmapData():BitmapData
@@ -61,19 +102,50 @@ package jsion.rpg.engine
 		
 		public function render():void
 		{
+			sortZOrder(m_objects);
+			
 			if(m_needRepaint)
 			{
-				if(m_map) m_map.render(m_bitmapData);
+				m_map.render(m_bitmapData);
 				m_needRepaint = false;
+				
+				renderObjects(m_objects);
+				
+				//trace("RPGObject.renderMe();");
 			}
-			else
+			else if(m_map)
 			{
-				if(m_map) m_map.renderLoadComplete(m_bitmapData);
+				m_map.renderLoadComplete(m_bitmapData);
+				
+				clearObjects(m_objects);
+				
+				renderObjects(m_objects);
+				
 				//trace("RPGObject.clearMe();");
+				
+				//trace("RPGObject.renderMe();");
 			}
-			
-			
-			//trace("RPGObject.renderMe();");
+		}
+		
+		protected function sortZOrder(list:Array):void
+		{
+			list.sortOn("zOrder", Array.NUMERIC);
+		}
+		
+		protected function clearObjects(list:Array):void
+		{
+			for each(var obj:RPGObject in list)
+			{
+				obj.clearMe();
+			}
+		}
+		
+		protected function renderObjects(list:Array):void
+		{
+			for each(var obj:RPGObject in list)
+			{
+				obj.renderMe();
+			}
 		}
 		
 		public function get worldMap():RPGMap
@@ -88,8 +160,13 @@ package jsion.rpg.engine
 		
 		public function set centerPoint(pos:Point):void
 		{
-			m_needRepaint = true;
+			needRepaint();
 			m_map.center = pos;
+		}
+		
+		protected function needRepaint():void
+		{
+			m_needRepaint = m_map != null;
 		}
 		
 		public function dispose():void
