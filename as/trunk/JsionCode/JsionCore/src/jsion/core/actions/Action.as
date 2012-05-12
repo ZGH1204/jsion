@@ -81,7 +81,7 @@ package jsion.core.actions
 		}
 		
 		/**
-		 * 释放Action
+		 * 释放资源
 		 */		
 		public function dispose():void
 		{

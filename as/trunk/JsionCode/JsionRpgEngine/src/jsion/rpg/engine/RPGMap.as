@@ -203,13 +203,13 @@ package jsion.rpg.engine
 			m_startTileY = int(screenY / m_mapInfo.tileHeight);
 		}
 		
-//		/**
-//		 * 缓冲区
-//		 */		
-//		public function get buffer():BitmapData
-//		{
-//			return m_buffer;
-//		}
+		/**
+		 * 缓冲区
+		 */		
+		public function get buffer():BitmapData
+		{
+			return m_buffer;
+		}
 		
 		/**
 		 * 缓冲区宽度
@@ -358,6 +358,17 @@ package jsion.rpg.engine
 		public function get endY():int
 		{
 			return originY + m_areaTileY * m_mapInfo.tileHeight;
+		}
+		
+		/**
+		 * 世界地图的坐标转换为屏幕位置坐标
+		 */		
+		public function world2Screen(x:Number, y:Number):Point
+		{
+			m_tempPoint.x = screenX - x;
+			m_tempPoint.y = screenY - y;
+			
+			return m_tempPoint;
 		}
 		
 		public function render(bitmapData:BitmapData):void
