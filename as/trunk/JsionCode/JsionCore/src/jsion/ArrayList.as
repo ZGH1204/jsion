@@ -8,8 +8,7 @@ package jsion{
  * ArrayList, a List implemented based on Array
  * 
  * 
- * @author firdosh
- * @author iiley
+ * @author jsion
  */
 public class ArrayList
 {
