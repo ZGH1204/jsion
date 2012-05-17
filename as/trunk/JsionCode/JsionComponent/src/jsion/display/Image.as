@@ -70,12 +70,12 @@ package jsion.display
 		
 		override public function get scale9Grid():Rectangle
 		{
-			throw new Error("九宫格范围请访问scale9Insets属性");
+			throw new Error("九宫格范围请使用scale9Insets属性");
 		}
 		
 		override public function set scale9Grid(innerRectangle:Rectangle):void
 		{
-			throw new Error("九宫格范围请访问scale9Insets属性");
+			throw new Error("九宫格范围请使用scale9Insets属性");
 		}
 		
 		public function get scale9Insets():Insets
@@ -138,11 +138,94 @@ package jsion.display
 			
 			if(m_scale9Insets != null)
 			{
-				if(m_changeProperties.containsKey(SOURCE) || 
-					m_changeProperties.containsKey(SCALE9INSETS) ||
-					m_changeProperties.containsKey(SCALETYPE) || 
-					m_changeProperties.containsKey(WIDTH) || 
-					m_changeProperties.containsKey(HEIGHT))
+				var changeSource:Boolean = m_changeProperties.containsKey(SOURCE);
+				var changeSize:Boolean = m_changeProperties.containsKey(WIDTH) || m_changeProperties.containsKey(HEIGHT);
+				var change9Insets:Boolean = m_changeProperties.containsKey(SCALE9INSETS);
+				var changeType:Boolean = m_changeProperties.containsKey(SCALETYPE);
+				
+				var needCreateBMD:Boolean;
+				
+				if(m_bmp1.bitmapData == null || change9Insets)
+				{
+					m_bmp1.bitmapData = new BitmapData(m_scale9Insets.left, m_scale9Insets.top, true, 0);
+				}
+				
+				if(m_bmp3.bitmapData == null || change9Insets)
+				{
+					m_bmp3.bitmapData = new BitmapData(m_scale9Insets.right, m_scale9Insets.top, true, 0);
+				}
+				
+				if(m_bmp7.bitmapData == null || change9Insets)
+				{
+					m_bmp7.bitmapData = new BitmapData(m_scale9Insets.left, m_scale9Insets.bottom, true, 0);
+				}
+				
+				if(m_bmp9.bitmapData == null || change9Insets)
+				{
+					m_bmp9.bitmapData = new BitmapData(m_scale9Insets.right, m_scale9Insets.bottom, true, 0);
+				}
+				
+				
+				if(m_scaleType == SCALE)
+				{
+					needCreateBMD = change9Insets || changeSource || changeType;
+					
+					if(m_bmp2.bitmapData == null || needCreateBMD)
+					{
+						m_bmp2.bitmapData = new BitmapData(m_source.width - m_scale9Insets.left - m_scale9Insets.right, m_scale9Insets.top, true, 0);
+					}
+					
+					if(m_bmp4.bitmapData == null || needCreateBMD)
+					{
+						m_bmp4.bitmapData = new BitmapData(m_scale9Insets.left, m_source.height - m_scale9Insets.top - m_scale9Insets.bottom, true, 0);
+					}
+					
+					if(m_bmp5.bitmapData == null || needCreateBMD)
+					{
+						m_bmp5.bitmapData = new BitmapData(m_source.width - m_scale9Insets.left - m_scale9Insets.right, m_source.height - m_scale9Insets.top - m_scale9Insets.bottom, true, 0);
+					}
+					
+					if(m_bmp6.bitmapData == null || needCreateBMD)
+					{
+						m_bmp6.bitmapData = new BitmapData(m_scale9Insets.right, m_source.height - m_scale9Insets.top - m_scale9Insets.bottom, true, 0);
+					}
+					
+					if(m_bmp8.bitmapData == null || needCreateBMD)
+					{
+						m_bmp8.bitmapData = new BitmapData(m_source.width - m_scale9Insets.left - m_scale9Insets.right, m_scale9Insets.bottom, true, 0);
+					}
+				}
+				else
+				{
+					needCreateBMD = change9Insets || changeSize || changeType;
+					
+					if(m_bmp2.bitmapData == null || needCreateBMD)
+					{
+						m_bmp2.bitmapData = new BitmapData(m_width - m_scale9Insets.left - m_scale9Insets.right, m_scale9Insets.top, true, 0);
+					}
+					
+					if(m_bmp4.bitmapData == null || needCreateBMD)
+					{
+						m_bmp4.bitmapData = new BitmapData(m_scale9Insets.left, m_height - m_scale9Insets.top - m_scale9Insets.bottom, true, 0);
+					}
+					
+					if(m_bmp5.bitmapData == null || needCreateBMD)
+					{
+						m_bmp5.bitmapData = new BitmapData(m_width - m_scale9Insets.left - m_scale9Insets.right, m_height - m_scale9Insets.top - m_scale9Insets.bottom, true, 0);
+					}
+					
+					if(m_bmp6.bitmapData == null || needCreateBMD)
+					{
+						m_bmp6.bitmapData = new BitmapData(m_scale9Insets.right, m_height - m_scale9Insets.top - m_scale9Insets.bottom, true, 0);
+					}
+					
+					if(m_bmp8.bitmapData == null || needCreateBMD)
+					{
+						m_bmp8.bitmapData = new BitmapData(m_width - m_scale9Insets.left - m_scale9Insets.right, m_scale9Insets.bottom, true, 0);
+					}
+				}
+				
+				if(changeSource || change9Insets || changeSize || changeType)
 				{
 					if(m_scaleType == SCALE)
 					{
@@ -156,11 +239,21 @@ package jsion.display
 			}
 			else
 			{
-				drawScaleBitmap();
+				drawNoScaleBmp();
 			}
 		}
 		
 		private function drawScaleBitmap():void
+		{
+			
+		}
+		
+		private function drawTileBitmap():void
+		{
+			
+		}
+		
+		private function drawNoScaleBmp():void
 		{
 			if(m_bmp5.bitmapData != m_source)
 			{
@@ -178,7 +271,7 @@ package jsion.display
 				disposeBitmapData(m_bmp2);
 				disposeBitmapData(m_bmp3);
 				disposeBitmapData(m_bmp4);
-				disposeBitmapData(m_bmp5);
+				//disposeBitmapData(m_bmp5);
 				disposeBitmapData(m_bmp6);
 				disposeBitmapData(m_bmp7);
 				disposeBitmapData(m_bmp8);
@@ -193,16 +286,6 @@ package jsion.display
 				m_bmp5.width = m_width;
 				m_bmp5.height = m_height;
 			}
-		}
-		
-		private function drawTileBitmap():void
-		{
-			
-		}
-		
-		private function drawNoScaleBmp():void
-		{
-			
 		}
 		
 		private function disposeBitmapData(bmp:Bitmap):void
