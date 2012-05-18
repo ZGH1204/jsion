@@ -12,7 +12,7 @@ package jsion.core.loaders
 	 * @productversion JUtils 1
 	 * 
 	 */	
-	public class XmlLoader extends BinaryLoader
+	public class XmlLoader extends TextLoader
 	{
 		public function XmlLoader(url:String, cfg:Object = null)
 		{
@@ -24,7 +24,9 @@ package jsion.core.loaders
 		{
 			var bytes:ByteArray = decrypt(data as ByteArray);
 			bytes.position = 0;
-			_content = new XML(bytes);
+			var str:String = bytes.readUTFBytes(bytes.bytesAvailable);
+			
+			_content = new XML(str);
 		}
 	}
 }
