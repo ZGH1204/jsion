@@ -9,9 +9,11 @@ package jsion.comps
 	import flash.text.TextFormat;
 	
 	import jsion.IntDimension;
-	import jsion.IntRectangle;
-	import jsion.utils.StringUtil;
-
+	
+	/**
+	 * 组件工具
+	 * @author Jsion
+	 */
 	public class CompUtil
 	{
 		private static var TEXT_FIELD_EXT:TextField = new TextField();
@@ -45,6 +47,14 @@ package jsion.comps
 			return false;
 		}
 		
+		/**
+		 * 根据字符串样式计算字符串长度
+		 * @param tf
+		 * @param str
+		 * @param includeGutters
+		 * @param textField
+		 * 
+		 */		
 		public static function computeStringSize(tf:TextFormat, str:String, includeGutters:Boolean = true, textField:TextField = null):IntDimension
 		{
 			if(textField)
@@ -69,7 +79,18 @@ package jsion.comps
 			}
 		}
 		
-		public static function layoutPosition(width:int, height:int, hAlign:String, hGap:int, vAlign:String, vGap:int, rect:IntRectangle):void
+		/**
+		 * 根据对齐方式计算布局位置
+		 * @param width 范围宽度
+		 * @param height 范围高度
+		 * @param hAlign 水平对齐方式
+		 * @param hGap 水平间隙
+		 * @param vAlign 垂直对齐方式
+		 * @param vGap 垂直间隙
+		 * @param rect 对象范围 其中x、y位置属性用于存储计算结果
+		 * 
+		 */		
+		public static function layoutPosition(width:int, height:int, hAlign:String, hGap:int, vAlign:String, vGap:int, rect:Rectangle):void
 		{
 			switch(hAlign)
 			{

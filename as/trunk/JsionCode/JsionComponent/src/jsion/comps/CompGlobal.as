@@ -2,6 +2,10 @@ package jsion.comps
 {
 	import flash.geom.Point;
 
+	/**
+	 * 组件全局变量
+	 * @author Jsion
+	 */	
 	public class CompGlobal
 	{
 		public static const FONT:String = "font";

@@ -18,8 +18,21 @@ package jsion.comps
 	import jsion.utils.DepthUtil;
 	import jsion.utils.DisposeUtil;
 	
+	/**
+	 * 鼠标弹起时分派
+	 * @eventType jsion.events.ReleaseEvent
+	 */	
 	[Event(name="release", type="jsion.events.ReleaseEvent")]
+	
+	/**
+	 * 鼠标在对象外面弹起时分派
+	 * @eventType jsion.events.ReleaseEvent
+	 */	
 	[Event(name="releaseOutSide", type="jsion.events.ReleaseEvent")]
+	/**
+	 * 显示对象基类
+	 * @author Jsion
+	 */	
 	public class JsionSprite extends Sprite implements IDispose
 	{
 		/**
@@ -98,7 +111,11 @@ package jsion.comps
 		
 		
 		
-		
+		/**
+		 * 移除所有对本对象的监听
+		 * @see #addEventListener()
+		 * @see #removeEventListener()
+		 */		
 		public function removeAllEventListeners():void
 		{
 			if(m_listeners == null) return;
@@ -118,6 +135,13 @@ package jsion.comps
 			}
 		}
 		
+		/**
+		 * 移除所有子对象
+		 * @see #addChild()
+		 * @see #addChildAt()
+		 * @see #removeChild()
+		 * @see #removeChildAt()
+		 */		
 		public function removeChildren():void
 		{
 			if(m_children == null) return;
@@ -130,6 +154,13 @@ package jsion.comps
 			}
 		}
 		
+		/**
+		 * 移除并释放所有子对象
+		 * @see #addChild()
+		 * @see #addChildAt()
+		 * @see #removeChild()
+		 * @see #removeChildAt()
+		 */		
 		public function removeAndFreeChildren():void
 		{
 			if(m_children == null) return;
@@ -139,18 +170,36 @@ package jsion.comps
 			DisposeUtil.free(list);
 		}
 		
+		/**
+		 * 提到最上层
+		 * @see #bring2Bottom()
+		 */		
 		public function bring2Top():void
 		{
 			DepthUtil.bringToTop(this);
 		}
 		
+		/**
+		 * 放到最底层
+		 * @see #bring2Top()
+		 */		
 		public function bring2Bottom():void
 		{
 			DepthUtil.bringToBottom(this);
 		}
 		
 		//==========================================		保存事件监听信息			==========================================
-		
+		/**
+		 * 重写添加事件监听 保存监听信息
+		 * 使用 EventDispatcher 对象注册事件侦听器对象，以使侦听器能够接收事件通知。
+		 * @param type 事件的类型
+		 * @param listener 处理事件的侦听器函数。此函数必须接受 Event 对象作为其唯一的参数，并且不能返回任何结果，如以下示例所示： function(evt:Event):void
+		 * @param useCapture 确定侦听器是运行于捕获阶段、目标阶段还是冒泡阶段。如果将 useCapture 设置为 true，则侦听器只在捕获阶段处理事件，而不在目标或冒泡阶段处理事件。 如果 useCapture 为 false，则侦听器只在目标或冒泡阶段处理事件。 若要在所有三个阶段都侦听事件，请调用两次 addEventListener，一次将 useCapture 设置为 true，第二次再将 useCapture 设置为 false。
+		 * @param priority 事件侦听器的优先级。 优先级由一个带符号的 32 位整数指定。 数字越大，优先级越高。 优先级为 n 的所有侦听器会在优先级为 n -1 的侦听器之前得到处理。 如果两个或更多个侦听器共享相同的优先级，则按照它们的添加顺序进行处理。 默认优先级为 0。
+		 * @param useWeakReference 确定对侦听器的引用是强引用，还是弱引用。 强引用（默认值）可防止您的侦听器被当作垃圾回收。 弱引用则没有此作用。
+		 * @see #removeEventListener()
+		 * 
+		 */		
 		override public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
 		{
 			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
@@ -178,6 +227,14 @@ package jsion.comps
 			}
 		}
 		
+		/**
+		 * 重写移除事件监听 删除对应的监听信息
+		 * @param type 事件的类型。 
+		 * @param listener 要删除的侦听器对象。 
+		 * @param useCapture 指出是否为捕获阶段或目标阶段和冒泡阶段注册了侦听器。 如果为捕获阶段以及目标和冒泡阶段注册了侦听器，则需要对 removeEventListener() 进行两次调用才能将这两个侦听器删除，一次调用将 useCapture() 设置为 true，另一次调用将 useCapture() 设置为 false。 
+		 * @see #addEventListener()
+		 * 
+		 */		
 		override public function removeEventListener(type:String, listener:Function, useCapture:Boolean=false):void
 		{
 			super.removeEventListener(type, listener, useCapture);
@@ -203,6 +260,14 @@ package jsion.comps
 		
 		//==========================================		保存子显示对象		==========================================
 		
+		/**
+		 * 将一个 DisplayObject 子实例添加到该 DisplayObjectContainer 实例中。 子项将被添加到该 DisplayObjectContainer 实例中其它所有子项的前（上）面。 （要将某子项添加到特定索引位置，请使用 addChildAt() 方法。） 如果添加一个已将其它显示对象容器作为父项的子对象，则会从其它显示对象容器的子列表中删除该对象。
+		 * @param child 要作为该 DisplayObjectContainer 实例的子项添加的 DisplayObject 实例。
+		 * @return 在 child 参数中传递的 DisplayObject 实例。
+		 * @see #addChildAt()
+		 * @see #removeChild()
+		 * @see #removeChildAt()
+		 */		
 		override public function addChild(child:DisplayObject):DisplayObject
 		{
 			if(child == null) return null;
@@ -214,6 +279,15 @@ package jsion.comps
 			return child;
 		}
 		
+		/**
+		 * 将一个 DisplayObject 子实例添加到该 DisplayObjectContainer 实例中。 该子项将被添加到指定的索引位置。 索引为 0 表示该 DisplayObjectContainer 对象的显示列表的后（底）部。
+		 * @param child 要作为该 DisplayObjectContainer 实例的子项添加的 DisplayObject 实例。
+		 * @param index 添加该子项的索引位置。 如果指定当前占用的索引位置，则该位置以及所有更高位置上的子对象会在子级列表中上移一个位置。
+		 * @see #addChild()
+		 * @see #removeChild()
+		 * @see #removeChildAt()
+		 * 
+		 */		
 		override public function addChildAt(child:DisplayObject, index:int):DisplayObject
 		{
 			if(child == null) return null;
@@ -225,6 +299,14 @@ package jsion.comps
 			return child;
 		}
 		
+		/**
+		 * 从 DisplayObjectContainer 实例的子列表中删除指定的 child DisplayObject 实例。 将已删除子项的 parent 属性设置为 null；如果没有对该子项的任何其它引用，则将该对象作为垃圾回收。 DisplayObjectContainer 中该子项之上的任何显示对象的索引位置都减去 1。 垃圾回收器是 Flash Player 用来重新分配未使用的内存空间的进程。 当在某处变量或对象不再被主动地引用或存储时，垃圾回收器将清理其过去占用的内存空间，并且如果不存在对该变量或对象的任何其它引用，则擦除此内存空间。
+		 * @param child 要删除的 DisplayObject 实例。
+		 * @return 在 child 参数中传递的 DisplayObject 实例。
+		 * @see #addChild()
+		 * @see #addChildAt()
+		 * @see #removeChildAt()
+		 */		
 		override public function removeChild(child:DisplayObject):DisplayObject
 		{
 			if(child == null) return null;
@@ -236,6 +318,14 @@ package jsion.comps
 			return child;
 		}
 		
+		/**
+		 * 从 DisplayObjectContainer 的子列表中指定的 index 位置删除子 DisplayObject。 将已删除子项的 parent 属性设置为 null；如果没有对该子项的任何其它引用，则将该对象作为垃圾回收。 DisplayObjectContainer 中该子项之上的任何显示对象的索引位置都减去 1。 垃圾回收器是 Flash Player 用来重新分配未使用的内存空间的进程。 当在某处变量或对象不再被主动地引用或存储时，垃圾回收器将清理其过去占用的内存空间，并且如果不存在对该变量或对象的任何其它引用，则擦除此内存空间。
+		 * @param index 要删除的 DisplayObject 的子索引。
+		 * @return 已删除的 DisplayObject 实例。
+		 * @see #addChild()
+		 * @see #addChildAt()
+		 * @see #removeChild()
+		 */		
 		override public function removeChildAt(index:int):DisplayObject
 		{
 			if(index < 0 || index >= numChildren) return null;
@@ -255,11 +345,15 @@ package jsion.comps
 		
 		//==========================================		是否启用本对象的鼠标事件		 ==========================================
 		
+		/**
+		 * 是否启用本对象
+		 */		
 		public function get enabled():Boolean
 		{
 			return m_enabled;
 		}
 		
+		/** @private */		
 		public function set enabled(value:Boolean):void
 		{
 			if(m_enabled != value)
@@ -333,7 +427,7 @@ package jsion.comps
 		 * @param dist The distance of the shadow.
 		 * @param knockout Whether or not to create a knocked out shadow.
 		 */
-		protected function getShadow(dist:Number, knockout:Boolean = false):DropShadowFilter
+		public function getShadow(dist:Number, knockout:Boolean = false):DropShadowFilter
 		{
 			return new DropShadowFilter(dist, 45, 0x000000, 1, dist, dist, .3, 1, knockout);
 		}
@@ -345,26 +439,37 @@ package jsion.comps
 		
 		//==================================================		update state model			==================================================
 		
+		/**
+		 * 状态
+		 */		
 		public function get model():StateModel
 		{
 			return m_model;
 		}
 		
+		/** @private */		
 		public function set model(value:StateModel):void
 		{
 			m_model = value;
 		}
 		
+		/**
+		 * 是否允许鼠标经过状态
+		 */		
 		public function get rolloverEnabled():Boolean
 		{
 			return m_rolloverEnabled;
 		}
 		
+		/** @private */
 		public function set rolloverEnabled(value:Boolean):void
 		{
 			m_rolloverEnabled = value;
 		}
 		
+		/**
+		 * 检测鼠标是否碰撞到本对象
+		 */		
 		public function hitTestMouse():Boolean
 		{
 			if(stage)
@@ -438,11 +543,15 @@ package jsion.comps
 		
 		//==============================================		忽略透明像素			==============================================
 		
+		/**
+		 * 是否启用忽略透明像素碰撞
+		 */		
 		public function get ignoreTransparents():Boolean
 		{
 			return m_ignoreTransparents;
 		}
 		
+		/** @private */
 		public function set ignoreTransparents(value:Boolean):void
 		{
 			if(m_ignoreTransparents != value)
@@ -471,17 +580,21 @@ package jsion.comps
 			}
 		}
 		
+		/**
+		 * 忽略透明像素阀值(0-255)
+		 */		
 		public function get threshold():int
 		{
 			return m_threshold;
 		}
 		
+		/** @private */
 		public function set threshold(value:int):void
 		{
 			m_threshold = Math.min(value, 255);
 		}
 		
-		protected function activateMouseTrap():void
+		private function activateMouseTrap():void
 		{
 			addEventListener(MouseEvent.ROLL_OVER, __captureMouseEvent, false, int.MAX_VALUE);
 			addEventListener(MouseEvent.MOUSE_OVER, __captureMouseEvent, false, int.MAX_VALUE);
@@ -490,7 +603,7 @@ package jsion.comps
 			addEventListener(MouseEvent.MOUSE_MOVE, __captureMouseEvent, false, int.MAX_VALUE);
 		}
 		
-		protected function deactivateMouseTrap():void
+		private function deactivateMouseTrap():void
 		{
 			removeEventListener(MouseEvent.ROLL_OVER, __captureMouseEvent);
 			removeEventListener(MouseEvent.MOUSE_OVER, __captureMouseEvent);
@@ -573,7 +686,7 @@ package jsion.comps
 			}
 		}
 		
-		protected function bitmapHitTest():Boolean
+		private function bitmapHitTest():Boolean
 		{
 			if(m_bitmapForHit == null) drawBitmapHit();
 			
@@ -583,7 +696,7 @@ package jsion.comps
 			return m_bitmapForHit.bitmapData.hitTest(CompGlobal.ZeroPoint, m_threshold, m_mousePoint);
 		}
 		
-		protected function drawBitmapHit():void
+		private function drawBitmapHit():void
 		{
 			if(m_bitmapForHit)
 			{
@@ -609,7 +722,9 @@ package jsion.comps
 		
 		
 		
-		
+		/**
+		 * 释放资源
+		 */		
 		public function dispose():void
 		{
 			removeEventListener(MouseEvent.MOUSE_DOWN, __spriteMouseDownListener);

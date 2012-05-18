@@ -4,6 +4,7 @@ package jsion.display
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.PixelSnapping;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import jsion.Insets;
@@ -16,7 +17,14 @@ package jsion.display
 		public static const SCALE9INSETS:String = "scale9Insets";
 		public static const SCALETYPE:String = "scaleType";
 		
+		/**
+		 * 拉伸缩放类型
+		 */		
 		public static const SCALE:String = "scale";
+		
+		/**
+		 * 平铺绽放类型
+		 */		
 		public static const TILE:String = "tile";
 		
 		private var m_source:BitmapData;
@@ -47,11 +55,15 @@ package jsion.display
 			mouseChildren = false;
 		}
 		
+		/**
+		 * 图片的 BitmapData 对象数据
+		 */		
 		public function get source():BitmapData
 		{
 			return m_source;
 		}
 		
+		/** @private */
 		public function set source(value:BitmapData):void
 		{
 			if(m_source != value)
@@ -68,21 +80,29 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 请使用scale9Insets属性
+		 */		
 		override public function get scale9Grid():Rectangle
 		{
 			throw new Error("九宫格范围请使用scale9Insets属性");
 		}
 		
+		/** @private */
 		override public function set scale9Grid(innerRectangle:Rectangle):void
 		{
 			throw new Error("九宫格范围请使用scale9Insets属性");
 		}
 		
+		/**
+		 * 九宫格四边距
+		 */		
 		public function get scale9Insets():Insets
 		{
 			return m_scale9Insets;
 		}
 		
+		/** @private */
 		public function set scale9Insets(value:Insets):void
 		{
 			m_scale9Insets = value;
@@ -90,11 +110,15 @@ package jsion.display
 			onPropertiesChanged(SCALE9INSETS);
 		}
 		
+		/**
+		 * 设置绽放值
+		 */		
 		public function get scaleType():String
 		{
 			return m_scaleType;
 		}
 		
+		/** @private */
 		public function set scaleType(value:String):void
 		{
 			if(m_scaleType != value && (value == SCALE || value == TILE))
@@ -105,11 +129,9 @@ package jsion.display
 			}
 		}
 		
-		override protected function addChildren():void
+		override protected function initialize():void
 		{
-			//super.addChildren();
-			
-			if(m_bmp1) return;
+			super.initialize();
 			
 			m_bmp1 = new Bitmap(null, PixelSnapping.AUTO, true);
 			m_bmp2 = new Bitmap(null, PixelSnapping.AUTO, true);
@@ -120,6 +142,11 @@ package jsion.display
 			m_bmp7 = new Bitmap(null, PixelSnapping.AUTO, true);
 			m_bmp8 = new Bitmap(null, PixelSnapping.AUTO, true);
 			m_bmp9 = new Bitmap(null, PixelSnapping.AUTO, true);
+		}
+		
+		override protected function addChildren():void
+		{
+			super.addChildren();
 			
 			addChild(m_bmp1);
 			addChild(m_bmp2);
@@ -144,6 +171,10 @@ package jsion.display
 				var changeType:Boolean = m_changeProperties.containsKey(SCALETYPE);
 				
 				var needCreateBMD:Boolean;
+				var needUpdateBMD:Boolean;
+				
+				var tempPoint:Point = new Point();
+				var tempRect:Rectangle = new Rectangle();
 				
 				if(m_bmp1.bitmapData == null || change9Insets)
 				{
@@ -165,10 +196,60 @@ package jsion.display
 					m_bmp9.bitmapData = new BitmapData(m_scale9Insets.right, m_scale9Insets.bottom, true, 0);
 				}
 				
+				m_bmp1.width = m_bmp1.bitmapData.width;
+				m_bmp1.height = m_bmp1.bitmapData.height;
+				m_bmp3.width = m_bmp3.bitmapData.width;
+				m_bmp3.height = m_bmp3.bitmapData.height;
+				m_bmp7.width = m_bmp7.bitmapData.width;
+				m_bmp7.height = m_bmp7.bitmapData.height;
+				m_bmp9.width = m_bmp9.bitmapData.width;
+				m_bmp9.height = m_bmp9.bitmapData.height;
+				
+				needUpdateBMD = change9Insets || changeSource;
+				
+				if(needUpdateBMD)
+				{
+					tempPoint.x = 0;
+					tempPoint.y = 0;
+					
+					tempRect.x = 0;
+					tempRect.y = 0;
+					tempRect.width = m_scale9Insets.left;
+					tempRect.height = m_scale9Insets.top;
+					
+					m_bmp1.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+					
+					
+					tempRect.x = m_source.width - m_scale9Insets.right;
+					tempRect.y = 0;
+					tempRect.width = m_scale9Insets.right;
+					tempRect.height = m_scale9Insets.top;
+					
+					m_bmp3.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+					
+					
+					tempRect.x = 0;
+					tempRect.y = m_source.height - m_scale9Insets.bottom;
+					tempRect.width = m_scale9Insets.left;
+					tempRect.height = m_scale9Insets.bottom;
+					
+					m_bmp7.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+					
+					
+					tempRect.x = m_source.width - m_scale9Insets.right;
+					tempRect.y = m_source.height - m_scale9Insets.bottom;
+					tempRect.width = m_scale9Insets.right;
+					tempRect.height = m_scale9Insets.bottom;
+					
+					m_bmp9.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+				}
+				
 				
 				if(m_scaleType == SCALE)
 				{
 					needCreateBMD = change9Insets || changeSource || changeType;
+					
+					needUpdateBMD = needCreateBMD;
 					
 					if(m_bmp2.bitmapData == null || needCreateBMD)
 					{
@@ -194,10 +275,77 @@ package jsion.display
 					{
 						m_bmp8.bitmapData = new BitmapData(m_source.width - m_scale9Insets.left - m_scale9Insets.right, m_scale9Insets.bottom, true, 0);
 					}
+					
+					if(needUpdateBMD)
+					{
+						tempPoint.x = 0;
+						tempPoint.y = 0;
+						
+						//上部中间区域
+						tempRect.x = m_scale9Insets.left;
+						tempRect.y = 0;
+						tempRect.width = m_source.width - m_scale9Insets.left - m_scale9Insets.right;
+						tempRect.height = m_scale9Insets.top;
+						
+						m_bmp2.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+						
+						
+						//左边中间区域
+						tempRect.x = 0;
+						tempRect.y = m_scale9Insets.top;
+						tempRect.width = m_scale9Insets.left;
+						tempRect.height = m_source.height - m_scale9Insets.top - m_scale9Insets.bottom;
+						
+						m_bmp4.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+						
+						
+						//中部中间区域
+						tempRect.x = m_scale9Insets.left;
+						tempRect.y = m_scale9Insets.top;
+						tempRect.width = m_source.width - m_scale9Insets.left - m_scale9Insets.right;
+						tempRect.height = m_source.height - m_scale9Insets.top - m_scale9Insets.bottom;
+						
+						m_bmp5.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+						
+						
+						//右部中间区域
+						tempRect.x = m_source.width - m_scale9Insets.right;
+						tempRect.y = m_scale9Insets.top;
+						tempRect.width = m_scale9Insets.right;
+						tempRect.height = m_source.height - m_scale9Insets.top - m_scale9Insets.bottom;
+						
+						m_bmp6.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+						
+						
+						//底部中间区域
+						tempRect.x = m_scale9Insets.left;
+						tempRect.y = m_source.height - m_scale9Insets.bottom;
+						tempRect.width = m_source.width - m_scale9Insets.left - m_scale9Insets.right;
+						tempRect.height = m_scale9Insets.bottom;
+						
+						m_bmp8.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+					}
+					
+					m_bmp2.width = m_width - m_scale9Insets.left - m_scale9Insets.right;
+					m_bmp2.height = m_scale9Insets.top;
+					
+					m_bmp4.width = m_scale9Insets.left;
+					m_bmp4.height = m_height - m_scale9Insets.top - m_scale9Insets.bottom;
+					
+					m_bmp5.width = m_width - m_scale9Insets.left - m_scale9Insets.right;
+					m_bmp5.height = m_height - m_scale9Insets.top - m_scale9Insets.bottom;
+					
+					m_bmp6.width = m_scale9Insets.right;
+					m_bmp6.height = m_height - m_scale9Insets.top - m_scale9Insets.bottom;
+					
+					m_bmp8.width = m_width - m_scale9Insets.left - m_scale9Insets.right;
+					m_bmp8.height = m_scale9Insets.bottom;
 				}
 				else
 				{
 					needCreateBMD = change9Insets || changeSize || changeType;
+					
+					needUpdateBMD = changeSource || needCreateBMD;
 					
 					if(m_bmp2.bitmapData == null || needCreateBMD)
 					{
@@ -223,68 +371,172 @@ package jsion.display
 					{
 						m_bmp8.bitmapData = new BitmapData(m_width - m_scale9Insets.left - m_scale9Insets.right, m_scale9Insets.bottom, true, 0);
 					}
+					
+					if(needUpdateBMD)
+					{
+						//上部中间区域
+						tempRect.x = m_scale9Insets.left;
+						tempRect.y = 0;
+						tempRect.width = m_source.width - m_scale9Insets.left - m_scale9Insets.right;
+						tempRect.height = m_scale9Insets.top;
+						
+						tempPoint.x = 0;
+						tempPoint.y = 0;
+						
+						while(tempPoint.x < m_bmp2.bitmapData.width)
+						{
+							m_bmp2.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+							
+							tempPoint.x += tempRect.width;
+						}
+						
+						//左边中间区域
+						tempRect.x = 0;
+						tempRect.y = m_scale9Insets.top;
+						tempRect.width = m_scale9Insets.left;
+						tempRect.height = m_source.height - m_scale9Insets.top - m_scale9Insets.bottom;
+						
+						tempPoint.x = 0;
+						tempPoint.y = 0;
+						
+						while(tempPoint.y < m_bmp4.bitmapData.height)
+						{
+							m_bmp4.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+							
+							tempPoint.y += tempRect.height;
+						}
+						
+						//中部中间区域
+						tempRect.x = m_scale9Insets.left;
+						tempRect.y = m_scale9Insets.top;
+						tempRect.width = m_source.width - m_scale9Insets.left - m_scale9Insets.right;
+						tempRect.height = m_source.height - m_scale9Insets.top - m_scale9Insets.bottom;
+						
+						tempPoint.x = 0;
+						tempPoint.y = 0;
+						
+						while(tempPoint.y < m_bmp5.bitmapData.height)
+						{
+							while(tempPoint.x < m_bmp5.bitmapData.width)
+							{
+								m_bmp5.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+								
+								tempPoint.x += tempRect.width;
+							}
+							
+							tempPoint.x = 0;
+							tempPoint.y += tempRect.height;
+						}
+						
+						//右部中间区域
+						tempRect.x = m_source.width - m_scale9Insets.right;
+						tempRect.y = m_scale9Insets.top;
+						tempRect.width = m_scale9Insets.right;
+						tempRect.height = m_source.height - m_scale9Insets.top - m_scale9Insets.bottom;
+						
+						tempPoint.x = 0;
+						tempPoint.y = 0;
+						
+						while(tempPoint.y < m_bmp6.bitmapData.height)
+						{
+							m_bmp6.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+							
+							tempPoint.y += tempRect.height;
+						}
+						
+						//底部中间区域
+						tempRect.x = m_scale9Insets.left;
+						tempRect.y = m_source.height - m_scale9Insets.bottom;
+						tempRect.width = m_source.width - m_scale9Insets.left - m_scale9Insets.right;
+						tempRect.height = m_scale9Insets.bottom;
+						
+						tempPoint.x = 0;
+						tempPoint.y = 0;
+						
+						while(tempPoint.x < m_bmp8.bitmapData.width)
+						{
+							m_bmp8.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+							
+							tempPoint.x += tempRect.width;
+						}
+					}
+					
+					m_bmp2.width = m_bmp2.bitmapData.width;
+					m_bmp2.height = m_bmp2.bitmapData.height;
+					
+					m_bmp4.width = m_bmp4.bitmapData.width;
+					m_bmp4.height = m_bmp4.bitmapData.height;
+					
+					m_bmp5.width = m_bmp5.bitmapData.width;
+					m_bmp5.height = m_bmp5.bitmapData.height;
+					
+					m_bmp6.width = m_bmp6.bitmapData.width;
+					m_bmp6.height = m_bmp6.bitmapData.height;
+					
+					m_bmp8.width = m_bmp8.bitmapData.width;
+					m_bmp8.height = m_bmp8.bitmapData.height;
 				}
 				
-				if(changeSource || change9Insets || changeSize || changeType)
-				{
-					if(m_scaleType == SCALE)
-					{
-						drawScaleBitmap();
-					}
-					else
-					{
-						drawTileBitmap();
-					}
-				}
+				m_bmp1.x = 0;
+				m_bmp1.y = 0;
+				
+				m_bmp3.x = m_width - m_scale9Insets.right;
+				m_bmp3.y = 0;
+				
+				m_bmp7.x = 0;
+				m_bmp7.y = m_height - m_scale9Insets.bottom;
+				
+				m_bmp9.x = m_width - m_scale9Insets.right;
+				m_bmp9.y = m_height - m_scale9Insets.bottom;
+				
+				m_bmp2.x = m_scale9Insets.left;
+				m_bmp2.y = 0;
+				
+				m_bmp4.x = 0;
+				m_bmp4.y = m_scale9Insets.top;
+				
+				m_bmp5.x = m_scale9Insets.left;
+				m_bmp5.y = m_scale9Insets.top;
+				
+				m_bmp6.x = m_width - m_scale9Insets.right;
+				m_bmp6.y = m_scale9Insets.top;
+				
+				m_bmp8.x = m_scale9Insets.left;
+				m_bmp8.y = m_height - m_scale9Insets.bottom;
 			}
 			else
 			{
-				drawNoScaleBmp();
-			}
-		}
-		
-		private function drawScaleBitmap():void
-		{
-			
-		}
-		
-		private function drawTileBitmap():void
-		{
-			
-		}
-		
-		private function drawNoScaleBmp():void
-		{
-			if(m_bmp5.bitmapData != m_source)
-			{
-				m_bmp1.x = m_bmp1.y = 0;
-				m_bmp2.x = m_bmp2.y = 0;
-				m_bmp3.x = m_bmp3.y = 0;
-				m_bmp4.x = m_bmp4.y = 0;
-				m_bmp5.x = m_bmp5.y = 0;
-				m_bmp6.x = m_bmp6.y = 0;
-				m_bmp7.x = m_bmp7.y = 0;
-				m_bmp8.x = m_bmp8.y = 0;
-				m_bmp9.x = m_bmp9.y = 0;
+				if(m_bmp5.bitmapData != m_source)
+				{
+					m_bmp1.x = m_bmp1.y = 0;
+					m_bmp2.x = m_bmp2.y = 0;
+					m_bmp3.x = m_bmp3.y = 0;
+					m_bmp4.x = m_bmp4.y = 0;
+					m_bmp5.x = m_bmp5.y = 0;
+					m_bmp6.x = m_bmp6.y = 0;
+					m_bmp7.x = m_bmp7.y = 0;
+					m_bmp8.x = m_bmp8.y = 0;
+					m_bmp9.x = m_bmp9.y = 0;
+					
+					disposeBitmapData(m_bmp1);
+					disposeBitmapData(m_bmp2);
+					disposeBitmapData(m_bmp3);
+					disposeBitmapData(m_bmp4);
+					//disposeBitmapData(m_bmp5);
+					disposeBitmapData(m_bmp6);
+					disposeBitmapData(m_bmp7);
+					disposeBitmapData(m_bmp8);
+					disposeBitmapData(m_bmp9);
+					
+					m_bmp5.bitmapData = m_source;
+				}
 				
-				disposeBitmapData(m_bmp1);
-				disposeBitmapData(m_bmp2);
-				disposeBitmapData(m_bmp3);
-				disposeBitmapData(m_bmp4);
-				//disposeBitmapData(m_bmp5);
-				disposeBitmapData(m_bmp6);
-				disposeBitmapData(m_bmp7);
-				disposeBitmapData(m_bmp8);
-				disposeBitmapData(m_bmp9);
-				
-				m_bmp5.bitmapData = m_source;
-			}
-			
-			if(m_changeProperties.containsKey(WIDTH) || 
-				m_changeProperties.containsKey(HEIGHT))
-			{
-				m_bmp5.width = m_width;
-				m_bmp5.height = m_height;
+				if(m_changeProperties.containsKey(WIDTH) || 
+					m_changeProperties.containsKey(HEIGHT))
+				{
+					m_bmp5.width = m_width;
+					m_bmp5.height = m_height;
+				}
 			}
 		}
 		
@@ -295,8 +547,41 @@ package jsion.display
 			bmp.bitmapData = null;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function dispose():void
 		{
+			DisposeUtil.free(m_bmp1);
+			m_bmp1 = null;
+			
+			DisposeUtil.free(m_bmp2);
+			m_bmp2 = null;
+			
+			DisposeUtil.free(m_bmp3);
+			m_bmp3 = null;
+			
+			DisposeUtil.free(m_bmp4);
+			m_bmp4 = null;
+			
+			DisposeUtil.free(m_bmp5);
+			m_bmp5 = null;
+			
+			DisposeUtil.free(m_bmp6);
+			m_bmp6 = null;
+			
+			DisposeUtil.free(m_bmp7);
+			m_bmp7 = null;
+			
+			DisposeUtil.free(m_bmp8);
+			m_bmp8 = null;
+			
+			DisposeUtil.free(m_bmp9);
+			m_bmp9 = null;
+			
+			m_source = null;
+			m_scale9Insets = null;
+			
 			super.dispose();
 		}
 	}
