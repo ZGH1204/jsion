@@ -1,0 +1,27 @@
+tracer {
+	fontSize: 14;
+}
+info{
+	color: #FFFFFF;
+	fontSize: 14;
+	fontWeight: bold;
+	display: block;
+}
+debug{
+	color: #00AA00;
+	fontSize: 14;
+	fontWeight: bold;
+	display: block;
+}
+warn{
+	color: #FFFF00;
+	fontSize: 14;
+	fontWeight: bold;
+	display: block;
+}
+error{
+	color: #FF0000;
+	fontSize: 14;
+	fontWeight: bold;
+	display: block;
+}
