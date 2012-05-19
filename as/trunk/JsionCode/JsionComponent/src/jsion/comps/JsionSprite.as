@@ -48,7 +48,7 @@ package jsion.comps
 		/**
 		 * 添加到本显示对象上的所有子显示对象列表
 		 */		
-		private var m_children:HashMap;
+		private var m_children:Array;
 		
 		/**
 		 * 是否启用本对象的鼠标事件
@@ -90,7 +90,7 @@ package jsion.comps
 			
 			m_enabled = true;
 			
-			m_children = new HashMap();
+			m_children = [];
 			
 			m_listeners = new HashMap();
 			
@@ -109,7 +109,14 @@ package jsion.comps
 			addEventListener(ReleaseEvent.RELEASE, __releaseHandler);
 		}
 		
-		
+		/**
+		 * 所有的子显示对象列表
+		 * 请不要对此属性进行任何添加或删除
+		 */		
+		public function get children():Array
+		{
+			return m_children;
+		}
 		
 		/**
 		 * 移除所有对本对象的监听
@@ -146,9 +153,7 @@ package jsion.comps
 		{
 			if(m_children == null) return;
 			
-			var list:Array = m_children.getValues();
-			
-			for each(var obj:DisplayObject in list)
+			for each(var obj:DisplayObject in m_children)
 			{
 				removeChild(obj);
 			}
@@ -165,9 +170,7 @@ package jsion.comps
 		{
 			if(m_children == null) return;
 			
-			var list:Array = m_children.getValues();
-			
-			DisposeUtil.free(list);
+			DisposeUtil.free(m_children);
 		}
 		
 		/**
@@ -274,7 +277,7 @@ package jsion.comps
 			
 			super.addChild(child);
 			
-			m_children.put(child, child);
+			ArrayUtil.push(m_children, child);
 			
 			return child;
 		}
@@ -294,7 +297,7 @@ package jsion.comps
 			
 			super.addChildAt(child, index);
 			
-			m_children.put(child, child);
+			ArrayUtil.push(m_children, child);
 			
 			return child;
 		}
@@ -313,7 +316,7 @@ package jsion.comps
 			
 			super.removeChild(child);
 			
-			m_children.remove(child);
+			ArrayUtil.remove(m_children, child);
 			
 			return child;
 		}
@@ -332,7 +335,7 @@ package jsion.comps
 			
 			var child:DisplayObject = super.removeChildAt(index);
 			
-			m_children.remove(child);
+			ArrayUtil.remove(m_children, child);
 			
 			return child;
 		}

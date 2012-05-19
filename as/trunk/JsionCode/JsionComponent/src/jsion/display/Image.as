@@ -8,6 +8,7 @@ package jsion.display
 	import flash.geom.Rectangle;
 	
 	import jsion.Insets;
+	import jsion.comps.CompGlobal;
 	import jsion.comps.Component;
 	import jsion.utils.DisposeUtil;
 	
@@ -25,12 +26,12 @@ package jsion.display
 		/**
 		 * 拉伸缩放类型
 		 */		
-		public static const SCALE:String = "scale";
+		public static const SCALE:String = CompGlobal.SCALE;
 		
 		/**
 		 * 平铺绽放类型
 		 */		
-		public static const TILE:String = "tile";
+		public static const TILE:String = CompGlobal.TILE;
 		
 		private var m_source:BitmapData;
 		
