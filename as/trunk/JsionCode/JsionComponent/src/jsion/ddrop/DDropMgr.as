@@ -1,4 +1,4 @@
-package jsion.core.ddrop
+package jsion.ddrop
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;

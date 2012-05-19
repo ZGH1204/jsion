@@ -2,6 +2,7 @@ package jsion
 {
 	import flash.display.Stage;
 	
+	import jsion.core.ddrop.DDropMgr;
 	import jsion.core.modules.ModuleMgr;
 	import jsion.utils.BrowserUtil;
 
@@ -23,13 +24,15 @@ package jsion
 	 */	
 	public function JsionCoreSetup(stage:Stage, config:XML):void
 	{
-		Policy.loadPolicyFile(config.Policys..policy);
-		
 		StageRef.setup(stage);
 		
-		Cache.setup(config);
+		DDropMgr.setup(stage);
 		
-		BrowserUtil.setup(stage.root);
+		BrowserUtil.setup(stage);
+		
+		Policy.loadPolicyFile(config.Policys..policy);
+		
+		Cache.setup(config);
 		
 		ModuleMgr.setup(config);
 	}

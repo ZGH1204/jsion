@@ -3,7 +3,6 @@ package jsion.comps
 	import jsion.HashMap;
 	import jsion.events.DisplayEvent;
 	import jsion.utils.DisposeUtil;
-	import jsion.utils.StringUtil;
 
 	/**
 	 * 所有组件的基类
