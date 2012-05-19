@@ -11,6 +11,11 @@ package jsion.display
 	import jsion.comps.Component;
 	import jsion.utils.DisposeUtil;
 	
+	/**
+	 * 图片显示对象
+	 * 支持九宫格缩放
+	 * @author Jsion
+	 */	
 	public class Image extends Component
 	{
 		public static const SOURCE:String = "source";
@@ -129,6 +134,9 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * @inheritDOC
+		 */		
 		override protected function initialize():void
 		{
 			super.initialize();
@@ -144,6 +152,9 @@ package jsion.display
 			m_bmp9 = new Bitmap(null, PixelSnapping.AUTO, true);
 		}
 		
+		/**
+		 * @inheritDOC
+		 */		
 		override protected function addChildren():void
 		{
 			super.addChildren();
@@ -159,6 +170,9 @@ package jsion.display
 			addChild(m_bmp9);
 		}
 		
+		/**
+		 * @inheritDOC
+		 */		
 		override protected function onProppertiesUpdate():void
 		{
 			if(m_source == null) return;

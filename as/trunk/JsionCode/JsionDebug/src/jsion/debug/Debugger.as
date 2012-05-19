@@ -72,7 +72,7 @@ package jsion.debug
 			m_textField.type = TextFieldType.DYNAMIC;
 			m_textField.background = true;
 			m_textField.backgroundColor = 0x00;//00AA;
-			m_textField.alpha = 0.5;
+			m_textField.alpha = 0.7;
 			m_textField.width = m_width;
 			m_textField.height = m_height;
 			m_textField.multiline = true;

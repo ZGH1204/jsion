@@ -10,6 +10,11 @@ package jsion.display
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.StringUtil;
 	
+	/**
+	 * 文本标签
+	 * 支持CSS+Html显示
+	 * @author Jsion
+	 */	
 	public class Label extends Component
 	{
 		public static const TEXT:String = "text";
@@ -37,6 +42,9 @@ package jsion.display
 			m_text = "";
 		}
 		
+		/**
+		 * @inheritDOC
+		 */		
 		override protected function initialize():void
 		{
 			super.initialize();
@@ -48,16 +56,26 @@ package jsion.display
 			m_embedFonts = m_textField.embedFonts;
 		}
 		
+		/**
+		 * @inheritDOC
+		 */		
 		override protected function addChildren():void
 		{
+			super.addChildren();
+			
 			addChild(m_textField);
 		}
 		
+		/**
+		 * 要显示的文本对象 支持带xml标签的文本
+		 * 其中xml标签可在styleSheet属性对象内定义CSS样式
+		 */		
 		public function get text():String
 		{
 			return m_text;
 		}
 		
+		/** @private */
 		public function set text(value:String):void
 		{
 			if(m_text != value && StringUtil.isNotNullOrEmpty(value))
@@ -68,11 +86,15 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 是否启用Html模式显示
+		 */		
 		public function get html():Boolean
 		{
 			return m_html;
 		}
 		
+		/** @private */
 		public function set html(value:Boolean):void
 		{
 			if(m_html != value)
@@ -83,11 +105,15 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 获取或设置textFormat中字体是否为嵌入字体
+		 */		
 		public function get embedFonts():Boolean
 		{
 			return m_embedFonts;
 		}
 		
+		/** @private */
 		public function set embedFonts(value:Boolean):void
 		{
 			if(m_embedFonts != value)
@@ -98,11 +124,15 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 获取或设置描述字符格式的设置信息。
+		 */		
 		public function get textFormat():TextFormat
 		{
 			return m_textFormat;
 		}
 		
+		/** @private */
 		public function set textFormat(value:TextFormat):void
 		{
 			m_textFormat = value;
@@ -110,11 +140,15 @@ package jsion.display
 			onPropertiesChanged(TEXTFORMAT);
 		}
 		
+		/**
+		 * CSS样式表
+		 */		
 		public function get styleSheet():StyleSheet
 		{
 			return m_styleSheet;
 		}
 		
+		/** @private */
 		public function set styleSheet(value:StyleSheet):void
 		{
 			m_styleSheet = value;
@@ -122,6 +156,9 @@ package jsion.display
 			onPropertiesChanged(STYLESHEET);
 		}
 		
+		/**
+		 * @inheritDOC
+		 */		
 		override protected function onProppertiesUpdate():void
 		{
 			super.onProppertiesUpdate();
@@ -157,6 +194,9 @@ package jsion.display
 			m_height = m_textField.height;
 		}
 		
+		/**
+		 * @inheritDOC
+		 */		
 		override public function dispose():void
 		{
 			m_textField = null;
