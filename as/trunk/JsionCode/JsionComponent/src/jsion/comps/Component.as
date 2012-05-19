@@ -78,6 +78,9 @@ package jsion.comps
 			}
 		}
 		
+		/**
+		 * 初始化组件
+		 */		
 		protected function initialize():void
 		{
 		}
@@ -157,7 +160,7 @@ package jsion.comps
 		}
 		
 		/**
-		 * 释放资源
+		 * @inheritDOC
 		 */		
 		override public function dispose():void
 		{
