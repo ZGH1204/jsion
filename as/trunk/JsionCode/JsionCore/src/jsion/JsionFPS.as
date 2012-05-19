@@ -10,6 +10,10 @@ package jsion
 	import flash.text.TextFieldType;
 	import flash.utils.getTimer;
 	
+	/**
+	 * 显示FPS和其他相关环境信息
+	 * @author Jsion
+	 */	
 	public class JsionFPS extends Sprite
 	{
 		static private  var instance:JsionFPS;
