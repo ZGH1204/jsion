@@ -9,7 +9,10 @@ package
 	import flash.text.TextFormat;
 	
 	import jsion.JsionFPS;
+	import jsion.debug.DEBUG;
+	import jsion.debug.Debugger;
 	import jsion.display.Label;
+	import jsion.utils.ObjectUtil;
 	
 	[SWF(width="1000", height="650", frameRate="30")]
 	public class ComponentApp extends Sprite
@@ -53,9 +56,11 @@ package
 			
 			var label:Label = new Label();
 			label.x = 200;
+			label.beginChanges();
 			label.text = "<jsion>第一行</jsion><jsion>第二行</jsion>sdfsdfsdfsdfsdfsdf ";
 			label.styleSheet = m_style;
 			label.textFormat = tft;
+			label.commitChanges();
 			addChild(label);
 			
 			
@@ -63,11 +68,35 @@ package
 			tf.y = 300;
 			tf.width = 800;
 			var tmp:String;
-			tf.text = "width:" + label.width + "           height:" + label.height + "\r";
+			tf.text = "width:" + label.width + "           height:" + label.height + "\n";
 			
 			addChild(tf);
 			
-			addChild(new JsionFPS);
+			stage.addChild(new JsionFPS);
+			
+			
+			var t:Template = new Template();
+			
+			t.tid = 2;
+			t.tname = "sdfsdf";
+			t.lv=20;
+			t.sex = 1;
+			t.nick = "5454";
+			
+			DEBUG.setup(stage, 300);
+			
+			DEBUG.loadCSS("debug.css");
+			
+			DEBUG.info("sdlfjasdlfhaslkjdhfklshadfkhjsdlfjasdlfhaslkjdhfklshadfkhjsdlfjasdlfhaslkjdhfklshadfkhj");
+			DEBUG.debug("654sdf654sd65fsd65f456s4df654sdf654sd65f4s65df4s6d54f6s5d4f");
+			DEBUG.warn("sdf654g897h98rtyu7i987k.65h4j.3g1jk654hj697yh31fgh3210hj2gjhk1321h.+");
+			DEBUG.error("错误提示错误提示错误提示错误提示错误提示错误提示错误提示错误提示错误提示错误提示错误提示错误提示错误提示");
+			
+			DEBUG.info("sdlfjasdlfhaslkjdhfklshadfkhjsdlfjasdlfhaslkjdhfklshadfkhjsdlfjasdlfhaslkjdhfklshadfkhj");
+			DEBUG.debug("654sdf654sd65fsd65f456s4df654sdf654sd65f4s65df4s6d54f6s5d4f");
+			DEBUG.warn("sdf654g897h98rtyu7i987k.65h4j.3g1jk654hj697yh31fgh3210hj2gjhk1321h.+");
+			DEBUG.error("错误提示错误提示错误提示错误提示错误提示错误提示错误提示错误提示错误提示错误提示错误提示错误提示错误提示");
+			DEBUG.info(t);
 		}
 	}
 }
