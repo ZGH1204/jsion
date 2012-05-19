@@ -13,11 +13,14 @@ package jsion.display
 	public class Label extends Component
 	{
 		public static const TEXT:String = "text";
+		public static const HTML:String = "html";
 		public static const EMBEDFONTS:String = "embedFonts";
 		public static const TEXTFORMAT:String = "textFormat";
 		public static const STYLESHEET:String = "styleSheet";
 		
 		private var m_text:String;
+		
+		private var m_html:Boolean;
 		
 		private var m_embedFonts:Boolean;
 		
@@ -62,6 +65,21 @@ package jsion.display
 				m_text = value;
 				
 				onPropertiesChanged(TEXT);
+			}
+		}
+		
+		public function get html():Boolean
+		{
+			return m_html;
+		}
+		
+		public function set html(value:Boolean):void
+		{
+			if(m_html != value)
+			{
+				m_html = value;
+				
+				onPropertiesChanged(HTML);
 			}
 		}
 		
@@ -118,17 +136,21 @@ package jsion.display
 				
 				m_textField.styleSheet = m_styleSheet;
 				
-				m_textField.htmlText = m_text;
+				if(m_html) m_textField.htmlText = m_text;
+				else m_textField.text = m_text;
 			}
 			else if(m_changeProperties.containsKey(STYLESHEET))
 			{
 				m_textField.styleSheet = m_styleSheet;
 				
-				m_textField.htmlText = m_text;
+				if(m_html) m_textField.htmlText = m_text;
+				else m_textField.text = m_text;
 			}
-			else if(m_changeProperties.containsKey(TEXT))
+			else if(m_changeProperties.containsKey(TEXT) || 
+					 m_changeProperties.containsKey(HTML))
 			{
-				m_textField.htmlText = m_text;
+				if(m_html) m_textField.htmlText = m_text;
+				else m_textField.text = m_text;
 			}
 			
 			m_width = m_textField.width;
