@@ -2,6 +2,10 @@ package jsion.debug
 {
 	import flash.display.Stage;
 
+	/**
+	 * 信息调试器代理(全局静态)
+	 * @author Jsion
+	 */	
 	public class DEBUG
 	{
 		private static var m_debugger:Debugger;

@@ -15,7 +15,11 @@ package jsion.debug
 	import jsion.utils.ObjectUtil;
 	import jsion.utils.StringUtil;
 	
-	public class Debugger extends Sprite
+	/**
+	 * 调试信息记录/显示类
+	 * @author Jsion
+	 */	
+	internal class Debugger extends Sprite
 	{
 		public static const TRACER_TAG:String = "tracer";
 		public static const INFO_TAG:String = "info";
