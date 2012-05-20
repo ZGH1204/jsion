@@ -562,9 +562,13 @@ package jsion.display
 		
 		private function disposeBitmapData(bmp:Bitmap):void
 		{
+			if(bmp == null) return;
+			
 			var bmd:BitmapData = bmp.bitmapData;
 			DisposeUtil.free(bmd);
 			bmp.bitmapData = null;
+			
+			if(bmp.parent) bmp.parent.removeChild(bmp);
 		}
 		
 		/**
