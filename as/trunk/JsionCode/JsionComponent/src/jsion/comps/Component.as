@@ -38,6 +38,7 @@ package jsion.comps
 			m_changeProperties = new HashMap();
 			
 			initialize();
+			initEvents();
 		}
 		
 		/**
@@ -82,6 +83,13 @@ package jsion.comps
 		 * 初始化组件
 		 */		
 		protected function initialize():void
+		{
+		}
+		
+		/**
+		 * 初始化事件监听
+		 */		
+		protected function initEvents():void
 		{
 		}
 		
@@ -150,6 +158,7 @@ package jsion.comps
 		 */		
 		protected function onProppertiesUpdate():void
 		{
+			redrawBitmapHit();
 		}
 		
 		/**

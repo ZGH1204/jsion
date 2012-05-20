@@ -270,6 +270,8 @@ package jsion.display
 		 */		
 		override protected function onProppertiesUpdate():void
 		{
+			super.onProppertiesUpdate();
+			
 			var i:int;
 			var pos:int = 0;
 			var child:DisplayObject;
