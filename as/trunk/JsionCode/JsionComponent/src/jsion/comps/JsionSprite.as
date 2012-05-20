@@ -13,6 +13,7 @@ package jsion.comps
 	
 	import jsion.HashMap;
 	import jsion.IDispose;
+	import jsion.ListenerModel;
 	import jsion.events.ReleaseEvent;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DepthUtil;
@@ -136,8 +137,6 @@ package jsion.comps
 				for each(var fn:Function in model.listener)
 				{
 					removeEventListener(model.type, fn, model.useCapture);
-					
-					DisposeUtil.free(model);
 				}
 			}
 		}
@@ -252,7 +251,7 @@ package jsion.comps
 				{
 					ArrayUtil.remove(model.listener, listener);
 					
-					if(model.listener.length == 0) m_listeners.remove(str);
+					if(model.listener.length == 0) DisposeUtil.free(m_listeners.remove(str));
 				}
 			}
 		}
@@ -561,8 +560,7 @@ package jsion.comps
 			{
 				m_ignoreTransparents = value;
 				
-				DisposeUtil.free(m_bitmapForHit);
-				m_bitmapForHit = null;
+				redrawBitmapHit();
 				
 				if(m_ignoreTransparents)
 				{
@@ -701,12 +699,12 @@ package jsion.comps
 		
 		private function drawBitmapHit():void
 		{
-			if(m_bitmapForHit)
-			{
-				DisposeUtil.free(m_bitmapForHit);
-			}
+			DisposeUtil.free(m_bitmapForHit);
+			m_bitmapForHit = null;
 			
 			var b:Rectangle = getBounds(this);
+			
+			if(b.width <= 0 || b.height <= 0) return;
 			
 			var bmd:BitmapData = new BitmapData(b.width, b.height, true, 0);
 			var mx:Matrix = new Matrix();
@@ -718,6 +716,12 @@ package jsion.comps
 			addChild(m_bitmapForHit);
 			m_bitmapForHit.x = b.left;
 			m_bitmapForHit.y = b.top;
+		}
+		
+		protected function redrawBitmapHit():void
+		{
+			DisposeUtil.free(m_bitmapForHit);
+			m_bitmapForHit = null;
 		}
 		
 		//==============================================		忽略透明像素			==============================================
@@ -761,21 +765,3 @@ package jsion.comps
 		}
 	}
 }
-import jsion.IDispose;
-import jsion.utils.ArrayUtil;
-
-class ListenerModel implements IDispose
-{
-	public var type:String;
-	
-	public var listener:Array;
-	
-	public var useCapture:Boolean;
-	
-	public function dispose():void
-	{
-		ArrayUtil.removeAll(listener);
-		listener = null;
-	}
-}
-

@@ -118,6 +118,8 @@ package jsion.utils
 		 */		
 		public static function remove(array:Array, obj:*):int
 		{
+			if(array == null) return 0;
+			
 			var index:int = array.indexOf(obj);
 			
 			if(index == -1) return 0;

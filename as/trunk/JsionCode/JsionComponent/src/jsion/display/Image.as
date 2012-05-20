@@ -176,6 +176,8 @@ package jsion.display
 		 */		
 		override protected function onProppertiesUpdate():void
 		{
+			super.onProppertiesUpdate();
+			
 			if(m_source == null) return;
 			
 			if(m_scale9Insets != null)
@@ -567,31 +569,14 @@ package jsion.display
 		 */		
 		override public function dispose():void
 		{
-			DisposeUtil.free(m_bmp1);
 			m_bmp1 = null;
-			
-			DisposeUtil.free(m_bmp2);
 			m_bmp2 = null;
-			
-			DisposeUtil.free(m_bmp3);
 			m_bmp3 = null;
-			
-			DisposeUtil.free(m_bmp4);
 			m_bmp4 = null;
-			
-			DisposeUtil.free(m_bmp5);
 			m_bmp5 = null;
-			
-			DisposeUtil.free(m_bmp6);
 			m_bmp6 = null;
-			
-			DisposeUtil.free(m_bmp7);
 			m_bmp7 = null;
-			
-			DisposeUtil.free(m_bmp8);
 			m_bmp8 = null;
-			
-			DisposeUtil.free(m_bmp9);
 			m_bmp9 = null;
 			
 			m_source = null;
