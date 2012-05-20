@@ -45,8 +45,8 @@ package jsion
 			
 			m_fixStr += "<os>OS: " + Capabilities.os + "  " + Capabilities.language + "</os>";
 			m_fixStr += "<audio>Audio: " + Capabilities.hasAudio + "</audio>";
-			m_fixStr += "<player>Player: " + Capabilities.playerType + "</player>";
 			m_fixStr += "<debug>Debug: " + Capabilities.isDebugger + "</debug>";
+			m_fixStr += "<player>Player: " + Capabilities.playerType + "</player>";
 			
 			var css:String = "";
 			
@@ -69,6 +69,10 @@ package jsion
 			m_textField.backgroundColor = 0x0;//0xFF8040;
 			m_textField.alpha = 0.5;
 			addChild(m_textField);
+			
+			tfTimer = getTimer();
+			
+			m_textField.htmlText = getString();
 			
 			mouseChildren = mouseEnabled = false;
 			
