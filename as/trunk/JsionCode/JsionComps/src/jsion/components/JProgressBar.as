@@ -2,6 +2,7 @@ package jsion.components
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.geom.Rectangle;
 	
 	import jsion.comps.CompGlobal;
 	import jsion.comps.Component;
@@ -112,6 +113,21 @@ package jsion.components
 			}
 		}
 		
+		public function get progressType():String
+		{
+			return m_progressType;
+		}
+		
+		public function set progressType(value:String):void
+		{
+			if(m_progressType != value && (value == SCALE || value == MASK))
+			{
+				m_progressType = value;
+				
+				invalidate();
+			}
+		}
+		
 		override public function draw():void
 		{
 			if(m_background == null)
@@ -132,8 +148,8 @@ package jsion.components
 			
 			if(m_background)
 			{
-				if(width <= 0) width = m_background.width;
-				if(height <= 0) height = m_background.height;
+				if(width <= 0) m_width = m_background.width;
+				if(height <= 0) m_height = m_background.height;
 				
 				if(m_orientation == VERTICAL)
 				{
@@ -151,14 +167,32 @@ package jsion.components
 				
 				if(m_orientation == VERTICAL)
 				{
-					m_bar.height = realHeight * tmp;
+					if(m_progressType == SCALE)
+					{
+						m_bar.height = realHeight * tmp;
+						m_bar.y = realHeight - m_bar.height;
+					}
+					else
+					{
+						m_bar.scaleY = 1;
+						m_bar.scrollRect = new Rectangle(0, 0, m_bar.width, realHeight * tmp);
+						m_bar.y = realHeight - m_bar.scrollRect.height;
+					}
 					
 					m_bar.x = (realWidth - m_bar.width) / 2;
-					m_bar.y = realHeight - m_bar.height;
 				}
 				else
 				{
-					m_bar.width = realWidth * tmp;
+					if(m_progressType == SCALE)
+					{
+						m_bar.width = realWidth * tmp;
+					}
+					else
+					{
+						m_bar.scaleX = 1;
+						m_bar.scrollRect = new Rectangle(0, 0, realWidth * tmp, m_bar.height);
+					}
+					
 					m_bar.x = 0;
 					m_bar.y = (realHeight - m_bar.height) / 2;
 				}
