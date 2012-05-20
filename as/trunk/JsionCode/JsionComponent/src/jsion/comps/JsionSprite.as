@@ -148,7 +148,7 @@ package jsion.comps
 		 * @see #removeChild()
 		 * @see #removeChildAt()
 		 */		
-		public function removeChildren():void
+		public function removeDisplayChildren():void
 		{
 			if(m_children == null) return;
 			
