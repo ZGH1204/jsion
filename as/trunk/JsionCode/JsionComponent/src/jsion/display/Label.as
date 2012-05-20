@@ -13,6 +13,7 @@ package jsion.display
 	/**
 	 * 文本标签
 	 * 支持CSS+Html显示
+	 * 默认禁用鼠标事件
 	 * @author Jsion
 	 */	
 	public class Label extends Component
@@ -40,6 +41,9 @@ package jsion.display
 			super();
 			
 			m_text = "";
+			
+			mouseEnabled = false;
+			mouseChildren = false;
 		}
 		
 		/**
