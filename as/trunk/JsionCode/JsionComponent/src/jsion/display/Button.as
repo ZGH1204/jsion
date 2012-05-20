@@ -10,6 +10,7 @@ package jsion.display
 	public class Button extends Component
 	{
 		public static const STATEIMAGE:String = "stateImage";
+		public static const STATEFILTER:String = "stateFilter";
 		
 		private var m_imageLayer:Sprite;
 		
@@ -20,9 +21,14 @@ package jsion.display
 		private var m_downImage:DisplayObject;
 		private var m_disableImage:DisplayObject;
 		
-		private var m_stateChange:Boolean;
+		private var m_upFilters:Array;
+		private var m_overFilters:Array;
+		private var m_downFilters:Array;
+		private var m_disableFilters:Array;
 		
 		private var m_freeBMD:Boolean;
+		
+		protected var m_stateChange:Boolean;
 		
 		public function Button()
 		{
@@ -67,6 +73,12 @@ package jsion.display
 				DisposeUtil.free(m_upImage, m_freeBMD);
 				
 				m_upImage = value;
+				
+				if(m_upImage)
+				{
+					if(m_width <= 0) m_width = m_upImage.width;
+					if(m_height <= 0) m_height = m_upImage.height;
+				}
 				
 				onPropertiesChanged(STATEIMAGE);
 			}
@@ -140,6 +152,11 @@ package jsion.display
 			if(m_changeProperties.containsKey(STATEIMAGE) || m_stateChange)
 			{
 				updateCurrentStateImage();
+			}
+			
+			if(m_changeProperties.containsKey(STATEFILTER) || m_stateChange)
+			{
+				updateCurrentStateFilters();
 				
 				m_stateChange = false;
 			}
@@ -181,7 +198,35 @@ package jsion.display
 				m_curImage = image;
 			}
 			
-			if(m_curImage) m_imageLayer.addChild(m_curImage);
+			if(m_curImage)
+			{
+				m_curImage.width = m_width;
+				m_curImage.height = m_height;
+				
+				m_imageLayer.addChild(m_curImage);
+			}
+		}
+		
+		protected function updateCurrentStateFilters():void
+		{
+			var filters:Array;
+			
+			filters = m_upFilters;
+			
+			if(model.enabled == false)
+			{
+				filters = m_disableFilters;
+			}
+			else if(model.pressed)
+			{
+				filters = m_downFilters;
+			}
+			else if(model.rollOver)
+			{
+				filters = m_overFilters;
+			}
+			
+			m_imageLayer.filters = filters;
 		}
 		
 		override protected function addChildren():void
