@@ -78,8 +78,8 @@ package jsion.display
 				
 				if(m_source)
 				{
-					m_width = m_source.width;
-					m_height = m_source.height;
+					if(m_width <= 0) m_width = m_source.width;
+					if(m_height <= 0) m_height = m_source.height;
 				}
 				
 				onPropertiesChanged(SOURCE);
@@ -546,6 +546,9 @@ package jsion.display
 					disposeBitmapData(m_bmp9);
 					
 					m_bmp5.bitmapData = m_source;
+					
+					m_bmp5.width = m_width;
+					m_bmp5.height = m_height;
 				}
 				
 				if(m_changeProperties.containsKey(WIDTH) || 
