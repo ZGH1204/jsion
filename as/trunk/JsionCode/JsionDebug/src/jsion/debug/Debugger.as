@@ -10,10 +10,7 @@ package jsion.debug
 	import flash.text.StyleSheet;
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
-	
-	import jsion.utils.ArrayUtil;
-	import jsion.utils.ObjectUtil;
-	import jsion.utils.StringUtil;
+	import flash.utils.describeType;
 	
 	/**
 	 * 调试信息记录/显示类
@@ -153,14 +150,14 @@ package jsion.debug
 			{
 				args.unshift(obj);
 				
-				str = StringUtil.format.apply(null, args);
+				str = format.apply(null, args);
 			}
 			else
 			{
 				str = getObjectStr(obj);
 			}
 			
-			t(StringUtil.format("<{0}>[Info]" + str + "</{0}>", INFO_TAG));
+			t(format("<{0}>[Info]" + str + "</{0}>", INFO_TAG));
 		}
 		
 		public function debug(obj:*, ...args):void
@@ -170,14 +167,14 @@ package jsion.debug
 			{
 				args.unshift(obj);
 				
-				str = StringUtil.format.apply(null, args);
+				str = format.apply(null, args);
 			}
 			else
 			{
 				str = getObjectStr(obj);
 			}
 			
-			t(StringUtil.format("<{0}>[Debug]" + str + "</{0}>", DEBUG_TAG));
+			t(format("<{0}>[Debug]" + str + "</{0}>", DEBUG_TAG));
 		}
 		
 		public function warn(obj:*, ...args):void
@@ -187,14 +184,14 @@ package jsion.debug
 			{
 				args.unshift(obj);
 				
-				str = StringUtil.format.apply(null, args);
+				str = format.apply(null, args);
 			}
 			else
 			{
 				str = getObjectStr(obj);
 			}
 			
-			t(StringUtil.format("<{0}>[Warn]" + str + "</{0}>", WARN_TAG));
+			t(format("<{0}>[Warn]" + str + "</{0}>", WARN_TAG));
 		}
 		
 		public function error(obj:*, ...args):void
@@ -204,19 +201,19 @@ package jsion.debug
 			{
 				args.unshift(obj);
 				
-				str = StringUtil.format.apply(null, args);
+				str = format.apply(null, args);
 			}
 			else
 			{
 				str = getObjectStr(obj);
 			}
 			
-			t(StringUtil.format("<{0}>[Error]" + str + "</{0}>", ERROR_TAG));
+			t(format("<{0}>[Error]" + str + "</{0}>", ERROR_TAG));
 		}
 		
 		public function clear():void
 		{
-			ArrayUtil.removeAll(m_list);
+			removeAll(m_list);
 			
 			updateHtmlText();
 		}
@@ -226,7 +223,7 @@ package jsion.debug
 			if(obj is String) return obj;
 			
 			var key:String, str:String = String(obj);
-			var list:Array = ObjectUtil.getPropertyName(obj);
+			var list:Array = getPropertyName(obj);
 			
 			str += "Properties:[\n";
 			
@@ -289,8 +286,87 @@ package jsion.debug
 				htmlText += str;
 			}
 			
-			m_textField.text = StringUtil.format("<0>" + htmlText + "</0>", TRACER_TAG);
+			m_textField.text = format("<0>" + htmlText + "</0>", TRACER_TAG);
 			m_textField.scrollV = m_textField.maxScrollV;
+		}
+		
+		/**
+		 * 移除数组中的所有对象
+		 * @param array 数组对象
+		 * 
+		 */		
+		public static function removeAll(array:Array):void
+		{
+			if(array == null || array.length == 0) return;
+			
+			array.splice(0);
+		}
+		
+		
+		/**
+		 * 返回指定对象的所有可读写属性名称列表(动态属性无法获取)
+		 * @param obj 要获取属性列表的对象
+		 * @return 属性名称列表
+		 * 
+		 */		
+		public static function getPropertyName(obj:Object):Array
+		{
+			var describe:XML = describeType(obj);
+			
+			var accessorList:XMLList = describe..accessor;
+			var variableList:XMLList = describe..variable;
+			
+			var rlt:Array = [];
+			
+			var i:int = 0;
+			
+			for(i = 0; i < accessorList.length(); i++)
+			{
+				if(accessorList[i].@access == "readwrite")
+				{
+					rlt.push(accessorList[i].@name.toXMLString());
+				}
+			}
+			
+			for(i = 0; i < variableList.length(); i++)
+			{
+				rlt.push(variableList[i].@name.toXMLString());
+			}
+			
+			return rlt;
+		}
+		
+		/**
+		 * 将指定字符串中的格式项替换为指定数组中相应对象的字符串表示形式
+		 * @param value 复合格式字符串
+		 * @param args 一个字符串数组,其中包含零个或多个要替换的字符串.
+		 * @return 格式化后的新字符串
+		 * 
+		 */		
+		public function format(value:String,...args):String
+		{
+			if(isNullOrEmpty(value)) return "";
+			
+			if(args == null || args.length <= 0) return value;
+			
+			for(var i:int = 0; i < args.length; i++)
+			{
+				value = value.split("{" + i.toString() + "}").join(args[i]);
+			}
+			
+			return value;
+		}
+		
+		/**
+		 * 指示指定的字符串是 null 还是 "" 字符串
+		 * @param value 要测试的字符串
+		 * @return true表示字符串为 null 或 Constant.Empty 字符串<br />
+		 * false表示字符串不为 null 或 Constant.Empty 字符串
+		 * 
+		 */		
+		public function isNullOrEmpty(value:String):Boolean
+		{
+			return value == null || value == "";
 		}
 	}
 }
