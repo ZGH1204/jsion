@@ -161,6 +161,12 @@ package jsion.display
 				
 				m_stateChange = false;
 			}
+			
+			if((m_changeProperties.containsKey(WIDTH) || m_changeProperties.containsKey(HEIGHT)) && m_curImage)
+			{
+				m_curImage.width = m_width;
+				m_curImage.height = m_height;
+			}
 		}
 		
 		protected function updateCurrentStateImage():void
