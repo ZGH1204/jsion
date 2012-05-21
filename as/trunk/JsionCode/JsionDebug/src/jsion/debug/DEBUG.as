@@ -10,11 +10,12 @@ package jsion.debug
 	{
 		private static var m_debugger:Debugger;
 		
-		public static function setup(stage:Stage, w:int):void
+		public static function setup(stage:Stage, w:int, maxRecord:int = 200):void
 		{
 			if(m_debugger) return;
 			
 			m_debugger = new Debugger(w, stage.stageHeight);
+			m_debugger.maxRecord = maxRecord;
 			m_debugger.x = stage.stageWidth;
 			
 			stage.addChild(m_debugger);
