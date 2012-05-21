@@ -161,6 +161,19 @@ package jsion.display
 		}
 		
 		/**
+		 * 解析CSS样式文本 会覆盖掉已定义样式的对应属性
+		 * @param cssText CSS样式文本
+		 */		
+		public function parseCSS(cssText:String):void
+		{
+			if(m_styleSheet == null) m_styleSheet = new StyleSheet();
+			
+			m_styleSheet.parseCSS(cssText);
+			
+			styleSheet = m_styleSheet;
+		}
+		
+		/**
 		 * @inheritDOC
 		 */		
 		override protected function onProppertiesUpdate():void
