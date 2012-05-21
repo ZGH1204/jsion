@@ -15,6 +15,7 @@ package jsion.display
 		private var m_imageLayer:Sprite;
 		
 		private var m_curImage:DisplayObject;
+		private var m_curFilters:Array;
 		
 		private var m_upImage:DisplayObject;
 		private var m_overImage:DisplayObject;
@@ -210,23 +211,34 @@ package jsion.display
 		protected function updateCurrentStateFilters():void
 		{
 			var filters:Array;
+			var tmpFilters:Array;
 			
 			filters = m_upFilters;
 			
 			if(model.enabled == false)
 			{
-				filters = m_disableFilters;
+				tmpFilters = m_disableFilters;
 			}
 			else if(model.pressed)
 			{
-				filters = m_downFilters;
+				tmpFilters = m_downFilters;
 			}
 			else if(model.rollOver)
 			{
-				filters = m_overFilters;
+				tmpFilters = m_overFilters;
 			}
 			
-			m_imageLayer.filters = filters;
+			if(tmpFilters != null)
+			{
+				filters = tmpFilters;
+			}
+			
+			if(filters != m_curFilters)
+			{
+				m_curFilters = filters;
+			}
+			
+			m_imageLayer.filters = m_curFilters;
 		}
 		
 		override protected function addChildren():void
