@@ -2,6 +2,7 @@ package jsion.components
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.text.TextField;
 	
 	import jsion.IntRectangle;
 	import jsion.comps.CompGlobal;
@@ -138,6 +139,7 @@ package jsion.components
 				}
 			}
 			
+			m_label.x = m_label.y = 0;
 			m_label.text = m_title;
 			
 			m_label.drawAtOnce();
@@ -148,8 +150,8 @@ package jsion.components
 			var vGap:Number = getNumber(VGAP);
 			
 			var rect:IntRectangle = new IntRectangle();
-			rect.width = m_label.realWidth;
-			rect.height = m_label.realHeight;
+			rect.width = m_label.textField.width;//.realWidth;
+			rect.height = m_label.textField.height//.realHeight;
 			CompUtil.layoutPosition(realWidth, realHeight, hAlign, hGap, vAlign, vGap, rect);
 			
 			m_label.move(rect.x, rect.y);

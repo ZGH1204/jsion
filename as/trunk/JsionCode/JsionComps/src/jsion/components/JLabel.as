@@ -2,6 +2,7 @@ package jsion.components
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.text.StyleSheet;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	
@@ -56,9 +57,15 @@ package jsion.components
 		
 		private var m_tf:TextField;
 		
+		private var m_html:Boolean;
+		
+		private var m_style:StyleSheet;
+		
 		public function JLabel(text:String = "", container:DisplayObjectContainer=null, xPos:Number=0, yPos:Number=0)
 		{
 			m_text = text;
+			
+			m_html = false;
 			
 			super(container, xPos, yPos);
 		}
@@ -79,8 +86,8 @@ package jsion.components
 		
 		override protected function addChildren():void
 		{
-			width = 20;
-			height = 18;
+//			width = 20;
+//			height = 18;
 			m_tf = new TextField();
 			m_tf.width = width;
 			m_tf.height = height;
@@ -108,7 +115,7 @@ package jsion.components
 				}
 			}
 			
-			m_tf.text = m_text;
+			if(m_tf.styleSheet != null) m_tf.styleSheet = null;
 			
 			var font:ASFont = getFont(FONT);
 			if(font) font.apply(m_tf);
@@ -116,11 +123,20 @@ package jsion.components
 			var color:ASColor = getColor(COLOR);
 			if(color) m_tf.textColor = color.getRGB();
 			
+			if(m_html)
+			{
+				m_tf.htmlText = m_text;
+			}
+			else
+			{
+				m_tf.text = m_text;
+			}
+			
 			if(getBoolean(AUTO_SIZE))
 			{
 				m_tf.autoSize = TextFieldAutoSize.LEFT;
-				if(width <= 0) width = m_tf.width;
-				if(height <= 0) height = m_tf.height;
+				if(width <= 0 || width < m_tf.width) width = m_tf.width;
+				if(height <= 0 || height < m_tf.height) height = m_tf.height;
 			}
 			else
 			{
@@ -136,6 +152,7 @@ package jsion.components
 				m_tf.filters = list;
 			}
 			
+			if(m_style != null) m_tf.styleSheet = m_style;
 			
 			var hAlign:String = getString(HALIGN);
 			var vAlign:String = getString(VALIGN);
@@ -160,6 +177,8 @@ package jsion.components
 				m_tf.height = realHeight - vGap;
 			}
 			
+			m_tf.x = m_tf.y = 0;
+			
 			var rect:IntRectangle = new IntRectangle();
 			rect.width = m_tf.width;
 			rect.height = m_tf.height;
@@ -180,6 +199,21 @@ package jsion.components
 			super.draw();
 		}
 		
+		public function get html():Boolean
+		{
+			return m_html;
+		}
+		
+		public function set html(value:Boolean):void
+		{
+			if(m_html != value)
+			{
+				m_html = value;
+				
+				invalidate();
+			}
+		}
+
 		public function get text():String
 		{
 			return m_text;
@@ -197,17 +231,48 @@ package jsion.components
 			}
 		}
 		
+		public function get style():StyleSheet
+		{
+			return m_style;
+		}
+		
+		public function set style(value:StyleSheet):void
+		{
+			m_style = value;
+			
+			invalidate();
+		}
+
 		public function get textField():TextField
 		{
 			return m_tf;
 		}
 		
+		public function parseCSS(cssText:String):void
+		{
+			if(m_style == null)
+			{
+				m_style = new StyleSheet();
+			}
+			
+			
+			m_style..parseCSS(cssText);
+			
+			invalidate();
+		}
+		
 		override public function dispose():void
 		{
+			if(m_tf) m_tf.styleSheet = null;
+			
 			DisposeUtil.free(m_tf);
 			m_tf = null;
 			
+			m_style = null;
+			
 			super.dispose();
 		}
+
+
 	}
 }

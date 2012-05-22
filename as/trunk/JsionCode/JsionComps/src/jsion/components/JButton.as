@@ -242,6 +242,7 @@ package jsion.components
 		
 		private function updateLabelAndPos():void
 		{
+			m_label.x = m_label.y = 0;
 			m_label.drawAtOnce();
 			m_label.move(0, 0);
 
