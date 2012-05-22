@@ -73,6 +73,18 @@ package jsion.comps
 		
 		public function removeAllChildren():void
 		{
+			var list:Array = m_children.getValues();
+			
+			m_children.removeAll();
+			
+			for each(var child:DisplayObject in list)
+			{
+				if(child && child.parent) child.parent.removeChild(child);
+			}
+		}
+		
+		public function removeAndFreeChildren():void
+		{
 			if(m_children == null) return;
 			
 			var list:Array = m_children.getValues();
@@ -417,9 +429,10 @@ package jsion.comps
 			removeEventListener(Event.ENTER_FRAME, __invalidate);
 			
 			removeAllEventListeners();
+			DisposeUtil.free(m_listeners);
 			m_listeners = null;
 			
-			removeAllChildren();
+			DisposeUtil.free(m_children);
 			m_children = null;
 			
 			pressedTarget = null;
