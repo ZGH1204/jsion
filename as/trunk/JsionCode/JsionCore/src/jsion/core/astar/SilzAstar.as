@@ -14,7 +14,7 @@
 		import flash.utils.getTimer;
 		
 		/**
-		 * A*寻路
+		 * AStar寻路
 		 * @author sliz
 		 */
 		public class SilzAstar{
