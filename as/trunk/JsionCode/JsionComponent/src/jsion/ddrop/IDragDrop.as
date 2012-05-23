@@ -6,6 +6,11 @@ package jsion.ddrop
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
+	/**
+	 * 拖拽接口
+	 * @author Jsion
+	 * 
+	 */	
 	public interface IDragDrop extends IEventDispatcher
 	{
 		function get x():Number;
