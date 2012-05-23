@@ -1,5 +1,10 @@
 package jsion
 {
+	/**
+	 * 队列接口
+	 * @author Jsion
+	 * 
+	 */	
 	public interface IQueue extends IList
 	{
 		/**

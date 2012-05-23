@@ -3,7 +3,7 @@ package jsion.core.compress
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	
-	import jsion.HashMap;
+//	import jsion.HashMap;
 
 	public class PNGUncompress
 	{
