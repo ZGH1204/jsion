@@ -31,11 +31,14 @@ package jsion.display
 		 */		
 		public static const OFFSET:String = "offset";
 		
-		private var m_imageLayer:Sprite;
+		/** @private */
+		protected var m_imageLayer:Sprite;
 		
+		/** @private */
+		protected var m_curImage:DisplayObject;
 		
-		private var m_curImage:DisplayObject;
-		private var m_curFilters:Array;
+		/** @private */
+		protected var m_curFilters:Array;
 		
 		
 		private var m_upImage:DisplayObject;
@@ -44,12 +47,18 @@ package jsion.display
 		private var m_disableImage:DisplayObject;
 		
 		
-		private var m_offsetX:Number = 0;
-		private var m_offsetY:Number = 0;
-		private var m_overOffsetX:Number = 0;
-		private var m_overOffsetY:Number = 0;
-		private var m_downOffsetX:Number = 0;
-		private var m_downOffsetY:Number = 0;
+		/** @private */
+		protected var m_offsetX:Number = 0;
+		/** @private */
+		protected var m_offsetY:Number = 0;
+		/** @private */
+		protected var m_overOffsetX:Number = 0;
+		/** @private */
+		protected var m_overOffsetY:Number = 0;
+		/** @private */
+		protected var m_downOffsetX:Number = 0;
+		/** @private */
+		protected var m_downOffsetY:Number = 0;
 		
 		
 		private var m_upFilters:Array;
@@ -58,9 +67,10 @@ package jsion.display
 		private var m_disableFilters:Array;
 		
 		
-		private var m_freeBMD:Boolean;
+		/** @private */
+		protected var m_freeBMD:Boolean;
 		
-		
+		/** @private */
 		protected var m_stateChange:Boolean;
 		
 		public function Button()

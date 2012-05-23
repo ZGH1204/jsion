@@ -1,3 +1,6 @@
+/**
+ * 显示对象包
+ */
 package jsion.display
 {
 	import flash.text.StyleSheet;
