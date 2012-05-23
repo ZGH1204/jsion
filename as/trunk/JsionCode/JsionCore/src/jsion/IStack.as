@@ -1,5 +1,10 @@
 package jsion
 {
+	/**
+	 * 栈接口
+	 * @author Jsion
+	 * 
+	 */	
 	public interface IStack extends IList
 	{
 		/**

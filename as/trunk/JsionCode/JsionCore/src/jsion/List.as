@@ -7,12 +7,15 @@ package jsion
 	 */	
 	public class List implements IList, IDispose
 	{
-		public static const CASEINSENSITIVE		:int=1;
-		public static const DESCENDING 			:int=2;
-		public static const UNIQUESORT 			:int=4;
-		public static const RETURNINDEXEDARRAY 	:int=8;	
-		public static const NUMERIC  	  		  	:int=16;	
+//		public static const CASEINSENSITIVE		:int=1;
+//		public static const DESCENDING 			:int=2;
+//		public static const UNIQUESORT 			:int=4;
+//		public static const RETURNINDEXEDARRAY 	:int=8;
+//		public static const NUMERIC  	  		  	:int=16;
 		
+		/**
+		 * @private
+		 */		
 		protected var _elements:Array;
 		
 		public function List()
@@ -20,11 +23,25 @@ package jsion
 			_elements = [];
 		}
 		
+		/**
+		 * 获取指定索引位置的对象
+		 * @param index 要获取的索引位置
+		 * @return 
+		 * 
+		 */		
 		public function get(index:int):*
 		{
+			if(index >= _elements.length) return null;
+			
 			return _elements[index];
 		}
 		
+		/**
+		 * 将指定对象插入到指定的索引位置
+		 * @param element 要插入的对象
+		 * @param index 要插入的索引位置
+		 * 
+		 */		
 		public function add(element:*, index:int = -1):void
 		{
 			if(index < 0)
@@ -33,6 +50,12 @@ package jsion
 				_elements.splice(index, 0, element);
 		}
 		
+		/**
+		 * 将指定列表内的对象从指定索引位置开始依次插入
+		 * @param eList 要插入的对象列表
+		 * @param startIndex 要插入的起始索引位置
+		 * 
+		 */		
 		public function addAll(eList:Array, startIndex:int = -1):void
 		{
 			if(eList == null || eList.length == 0) return;
@@ -53,6 +76,12 @@ package jsion
 			}
 		}
 		
+		/**
+		 * 将指定列表内的对象从指定索引位置开始依次插入
+		 * @param lst 要插入的对象列表
+		 * @param startIndex 要插入的起始索引位置
+		 * 
+		 */		
 		public function addList(lst:IList, startIndex:int = -1):void
 		{
 			addAll(lst.toArray(), startIndex);
@@ -262,6 +291,9 @@ package jsion
 			}
 		}
 		
+		/**
+		 * 释放资源
+		 */		
 		public function dispose():void
 		{
 			if(_elements)
@@ -271,6 +303,9 @@ package jsion
 			}
 		}
 		
+		/**
+		 * 对象的字符串形式
+		 */		
 		public function toString():String{
 			return "List : " + _elements.toString();
 		}

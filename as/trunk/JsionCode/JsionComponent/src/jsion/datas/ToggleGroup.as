@@ -4,6 +4,11 @@ package jsion.datas
 	import jsion.display.ToggleButton;
 	import jsion.utils.ArrayUtil;
 	
+	/**
+	 * ToggleButton编组
+	 * @author Jsion
+	 * 
+	 */	
 	public class ToggleGroup implements IDispose
 	{
 		private var m_list:Array;
@@ -19,11 +24,17 @@ package jsion.datas
 			m_autoSelected = true;
 		}
 		
+		/**
+		 * 获取或设置是否自动选中
+		 */		
 		public function get autoSelected():Boolean
 		{
 			return m_autoSelected;
 		}
 		
+		/**
+		 * @private
+		 */		
 		public function set autoSelected(value:Boolean):void
 		{
 			if(m_autoSelected != value)
@@ -37,11 +48,17 @@ package jsion.datas
 			}
 		}
 		
+		/**
+		 * 获取或设置选中对象
+		 */		
 		public function get selected():ToggleButton
 		{
 			return m_selected;
 		}
 		
+		/**
+		 * @private
+		 */		
 		public function set selected(value:ToggleButton):void
 		{
 			if(m_selected != value)
@@ -54,6 +71,11 @@ package jsion.datas
 			}
 		}
 		
+		/**
+		 * 将指定对象加入编组
+		 * @param btn 要加入的对象
+		 * 
+		 */		
 		public function add(btn:ToggleButton):void
 		{
 			if(btn == null) return;
@@ -71,6 +93,11 @@ package jsion.datas
 			}
 		}
 		
+		/**
+		 * 将指定的对象从编组中移除
+		 * @param btn 要移除的对象
+		 * 
+		 */		
 		public function remove(btn:ToggleButton):void
 		{
 			if(btn == null) return;
@@ -88,10 +115,15 @@ package jsion.datas
 			ArrayUtil.remove(m_list, btn);
 		}
 		
+		/**
+		 * 释放资源
+		 */		
 		public function dispose():void
 		{
 			ArrayUtil.removeAll(m_list);
 			m_list = null;
+			
+			m_selected = null;
 		}
 	}
 }
