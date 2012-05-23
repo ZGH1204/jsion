@@ -15,6 +15,7 @@ package jsion.display
 	/**
 	 * 图片显示对象
 	 * 支持九宫格缩放
+	 * 默认禁用鼠标事件
 	 * @author Jsion
 	 */	
 	public class Image extends Component
@@ -78,8 +79,8 @@ package jsion.display
 				
 				if(m_source)
 				{
-					if(m_width <= 0) m_width = m_source.width;
-					if(m_height <= 0) m_height = m_source.height;
+					if(manualWidth == false) m_width = m_source.width;
+					if(manualHeight == false) m_height = m_source.height;
 				}
 				
 				onPropertiesChanged(SOURCE);
@@ -88,6 +89,7 @@ package jsion.display
 		
 		/**
 		 * 请使用scale9Insets属性
+		 * @throws Error 废弃了旧的九宫格设置方式 改用 scale9Insets 属性
 		 */		
 		override public function get scale9Grid():Rectangle
 		{
@@ -118,6 +120,7 @@ package jsion.display
 		
 		/**
 		 * 设置绽放值
+		 * @default jsion.display.Image.SCALE
 		 */		
 		public function get scaleType():String
 		{

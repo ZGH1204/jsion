@@ -169,6 +169,24 @@ package jsion.display
 		}
 		
 		/**
+		 * 不支持设置宽度
+		 * @throws Error 不支持设置宽度。
+		 */		
+		override public function set width(value:Number):void
+		{
+			throw new Error("Box 对象不支持设置宽度属性。");
+		}
+		
+		/**
+		 * 不支持设置高度
+		 * @throws Error 不支持设置高度。
+		 */		
+		override public function set height(value:Number):void
+		{
+			throw new Error("Box 对象不支持设置高度属性。");
+		}
+		
+		/**
 		 * 按排列顺序获取对应的子显示对象
 		 * @param index 从零开始听排列顺序索引
 		 */		

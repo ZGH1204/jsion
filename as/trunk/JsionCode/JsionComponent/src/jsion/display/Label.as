@@ -47,7 +47,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @inheritDOC
+		 * @inheritDoc
 		 */		
 		override protected function initialize():void
 		{
@@ -61,7 +61,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @inheritDOC
+		 * @inheritDoc
 		 */		
 		override protected function addChildren():void
 		{
@@ -174,7 +174,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @inheritDOC
+		 * @inheritDoc
 		 */		
 		override protected function onProppertiesUpdate():void
 		{
@@ -212,7 +212,25 @@ package jsion.display
 		}
 		
 		/**
-		 * @inheritDOC
+		 * 不支持设置宽度
+		 * @throws Error 不支持设置宽度。
+		 */		
+		override public function set width(value:Number):void
+		{
+			throw new Error("Label 对象不支持设置宽度属性。");
+		}
+		
+		/**
+		 * 不支持设置高度
+		 * @throws Error 不支持设置高度。
+		 */		
+		override public function set height(value:Number):void
+		{
+			throw new Error("Label 对象不支持设置高度属性。");
+		}
+		
+		/**
+		 * @inheritDoc
 		 */		
 		override public function dispose():void
 		{
