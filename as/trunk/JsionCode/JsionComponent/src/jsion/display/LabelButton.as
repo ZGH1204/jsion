@@ -20,7 +20,7 @@ package jsion.display
 	{
 		public static const LABELALIGN:String = "labelAlign";
 		public static const LABELFILTERS:String = "labelFilters";
-		public static const LABELOFFSET:String = "labelOffset";
+//		public static const LABELOFFSET:String = "labelOffset";
 		
 		/**
 		 * 水平左边对齐，用于 hAlign 属性。
@@ -55,28 +55,38 @@ package jsion.display
 		
 		private var m_text:String;
 		private var m_textColor:uint;
-		private var m_label:Label;
-		private var m_labelChange:Boolean;
 		
-		private var m_hAlign:String;
-		private var m_hOffset:int;
-		private var m_vAlign:String;
-		private var m_vOffset:int;
+		/** @private */
+		protected var m_label:Label;
+		/** @private */
+		protected var m_labelChange:Boolean;
+		
+		/** @private */
+		protected var m_hAlign:String;
+		/** @private */
+		protected var m_hOffset:int;
+		/** @private */
+		protected var m_vAlign:String;
+		/** @private */
+		protected var m_vOffset:int;
+		
+		/** @private */
+		protected var m_labelCurFilters:Array;
 		
 		private var m_labelUpFilters:Array;
 		private var m_labelOverFilters:Array;
 		private var m_labelDownFilters:Array;
 		private var m_labelDisableFilters:Array;
-		private var m_labelCurFilters:Array;
 		
-		private var m_labelOffsetX:Number = 0;
-		private var m_labelOffsetY:Number = 0;
-		private var m_labelOverOffsetX:Number = 0;
-		private var m_labelOverOffsetY:Number = 0;
-		private var m_labelDownOffsetX:Number = 0;
-		private var m_labelDownOffsetY:Number = 0;
+//		private var m_labelOffsetX:Number = 0;
+//		private var m_labelOffsetY:Number = 0;
+//		private var m_labelOverOffsetX:Number = 0;
+//		private var m_labelOverOffsetY:Number = 0;
+//		private var m_labelDownOffsetX:Number = 0;
+//		private var m_labelDownOffsetY:Number = 0;
 		
-		private var m_rect:Rectangle;
+		/** @private */
+		protected var m_rect:Rectangle;
 		
 		public function LabelButton()
 		{
@@ -133,6 +143,8 @@ package jsion.display
 		 */		
 		override protected function onProppertiesUpdate():void
 		{
+			updateLabel();
+			
 			if(StringUtil.isNullOrEmpty(m_text) == false || m_labelChange)
 			{
 				validateSize();
@@ -141,7 +153,8 @@ package jsion.display
 			if(m_labelChange || m_stateChange || 
 				m_changeProperties.containsKey(LABELALIGN) || 
 				m_changeProperties.containsKey(WIDTH) || 
-				m_changeProperties.containsKey(HEIGHT))
+				m_changeProperties.containsKey(HEIGHT) || 
+				m_changeProperties.containsKey(OFFSET))
 			{
 				updateLabelPos();
 			}
@@ -152,6 +165,16 @@ package jsion.display
 			}
 			
 			super.onProppertiesUpdate();
+		}
+		
+		/**
+		 * 更新要显示的文本字符串到 Label 对象上
+		 */		
+		protected function updateLabel():void
+		{
+			m_label.textColor = m_textColor;
+			
+			m_label.text = m_text;
 		}
 		
 		/**
@@ -188,18 +211,18 @@ package jsion.display
 			
 			if(model.pressed)
 			{
-				m_rect.x += m_labelDownOffsetX;
-				m_rect.y += m_labelDownOffsetY;
+				m_rect.x += m_downOffsetX;
+				m_rect.y += m_downOffsetY;
 			}
 			else if(model.rollOver)
 			{
-				m_rect.x += m_labelOverOffsetX;
-				m_rect.y += m_labelOverOffsetY;
+				m_rect.x += m_overOffsetX;
+				m_rect.y += m_overOffsetY;
 			}
 			else
 			{
-				m_rect.x += m_labelOffsetX;
-				m_rect.y += m_labelOffsetY;
+				m_rect.x += m_offsetX;
+				m_rect.y += m_offsetY;
 			}
 			
 			m_label.x = m_rect.x;
@@ -259,8 +282,6 @@ package jsion.display
 			{
 				m_text = value;
 				
-				m_label.text = m_text;
-				
 				m_labelChange = true;
 				
 				invalidate();
@@ -281,8 +302,6 @@ package jsion.display
 			if(m_textColor != value)
 			{
 				m_textColor = value;
-				
-				m_label.textColor = value;
 				
 				m_labelChange = true;
 				
@@ -555,120 +574,120 @@ package jsion.display
 			}
 		}
 		
-		/**
-		 * 按钮文本的x坐标偏移量
-		 */		
-		public function get labelOffsetX():Number
-		{
-			return m_labelOffsetX;
-		}
+//		/**
+//		 * 按钮文本的x坐标偏移量
+//		 */		
+//		public function get labelOffsetX():Number
+//		{
+//			return m_labelOffsetX;
+//		}
+//		
+//		/** @private */
+//		public function set labelOffsetX(value:Number):void
+//		{
+//			if(m_labelOffsetX != value)
+//			{
+//				m_labelOffsetX = value;
+//				
+//				onPropertiesChanged(LABELOFFSET);
+//			}
+//		}
+//		
+//		/**
+//		 * 按钮文本的y坐标偏移量
+//		 */		
+//		public function get labelOffsetY():Number
+//		{
+//			return m_labelOffsetY;
+//		}
+//		
+//		/** @private */
+//		public function set labelOffsetY(value:Number):void
+//		{
+//			if(m_labelOffsetY != value)
+//			{
+//				m_labelOffsetY = value;
+//				
+//				onPropertiesChanged(LABELOFFSET);
+//			}
+//		}
+//
+//		/**
+//		 * 按钮鼠标经过时文本的x坐标偏移量
+//		 */		
+//		public function get labelOverOffsetX():Number
+//		{
+//			return m_labelOverOffsetX;
+//		}
+//		
+//		/** @private */
+//		public function set labelOverOffsetX(value:Number):void
+//		{
+//			if(m_labelOverOffsetX != value)
+//			{
+//				m_labelOverOffsetX = value;
+//				
+//				onPropertiesChanged(LABELOFFSET);
+//			}
+//		}
+//		
+//		/**
+//		 * 按钮鼠标经过时文本的y坐标偏移量
+//		 */		
+//		public function get labelOverOffsetY():Number
+//		{
+//			return m_labelOverOffsetY;
+//		}
+//		
+//		/** @private */
+//		public function set labelOverOffsetY(value:Number):void
+//		{
+//			if(m_labelOverOffsetY != value)
+//			{
+//				m_labelOverOffsetY = value;
+//				
+//				onPropertiesChanged(LABELOFFSET);
+//			}
+//		}
+//		
+//		/**
+//		 * 按钮按下经过时文本的x坐标偏移量
+//		 */		
+//		public function get labelDownOffsetX():Number
+//		{
+//			return m_labelDownOffsetX;
+//		}
+//		
+//		/** @private */
+//		public function set labelDownOffsetX(value:Number):void
+//		{
+//			if(m_labelDownOffsetX != value)
+//			{
+//				m_labelDownOffsetX = value;
+//				
+//				onPropertiesChanged(LABELOFFSET);
+//			}
+//		}
+//		
+//		/**
+//		 * 按钮按下经过时文本的y坐标偏移量
+//		 */		
+//		public function get labelDownOffsetY():Number
+//		{
+//			return m_labelDownOffsetY;
+//		}
+//		
+//		/** @private */
+//		public function set labelDownOffsetY(value:Number):void
+//		{
+//			if(m_labelDownOffsetY != value)
+//			{
+//				m_labelDownOffsetY = value;
+//				
+//				onPropertiesChanged(LABELOFFSET);
+//			}
+//		}
 		
-		/** @private */
-		public function set labelOffsetX(value:Number):void
-		{
-			if(m_labelOffsetX != value)
-			{
-				m_labelOffsetX = value;
-				
-				onPropertiesChanged(LABELOFFSET);
-			}
-		}
-		
-		/**
-		 * 按钮鼠标经过时文本的x坐标偏移量
-		 */		
-		public function get labelOverOffsetX():Number
-		{
-			return m_labelOverOffsetX;
-		}
-		
-		/** @private */
-		public function set labelOverOffsetX(value:Number):void
-		{
-			if(m_labelOverOffsetX != value)
-			{
-				m_labelOverOffsetX = value;
-				
-				onPropertiesChanged(LABELOFFSET);
-			}
-		}
-		
-		/**
-		 * 按钮鼠标经过时文本的y坐标偏移量
-		 */		
-		public function get labelOverOffsetY():Number
-		{
-			return m_labelOverOffsetY;
-		}
-		
-		/** @private */
-		public function set labelOverOffsetY(value:Number):void
-		{
-			if(m_labelOverOffsetY != value)
-			{
-				m_labelOverOffsetY = value;
-				
-				onPropertiesChanged(LABELOFFSET);
-			}
-		}
-		
-		/**
-		 * 按钮按下经过时文本的x坐标偏移量
-		 */		
-		public function get labelDownOffsetX():Number
-		{
-			return m_labelDownOffsetX;
-		}
-		
-		/** @private */
-		public function set labelDownOffsetX(value:Number):void
-		{
-			if(m_labelDownOffsetX != value)
-			{
-				m_labelDownOffsetX = value;
-				
-				onPropertiesChanged(LABELOFFSET);
-			}
-		}
-		
-		/**
-		 * 按钮按下经过时文本的y坐标偏移量
-		 */		
-		public function get labelDownOffsetY():Number
-		{
-			return m_labelDownOffsetY;
-		}
-		
-		/** @private */
-		public function set labelDownOffsetY(value:Number):void
-		{
-			if(m_labelDownOffsetY != value)
-			{
-				m_labelDownOffsetY = value;
-				
-				onPropertiesChanged(LABELOFFSET);
-			}
-		}
-		
-		/**
-		 * 按钮文本的y坐标偏移量
-		 */		
-		public function get labelOffsetY():Number
-		{
-			return m_labelOffsetY;
-		}
-		
-		/** @private */
-		public function set labelOffsetY(value:Number):void
-		{
-			if(m_labelOffsetY != value)
-			{
-				m_labelOffsetY = value;
-				
-				onPropertiesChanged(LABELOFFSET);
-			}
-		}
-
 		
 		/**
 		 * @inheritDoc
