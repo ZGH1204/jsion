@@ -1,5 +1,10 @@
 package jsion
 {
+	/**
+	 * 列表
+	 * @author Jsion
+	 * 
+	 */	
 	public class List implements IList, IDispose
 	{
 		public static const CASEINSENSITIVE		:int=1;

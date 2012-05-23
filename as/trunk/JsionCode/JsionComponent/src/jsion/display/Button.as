@@ -8,10 +8,9 @@ package jsion.display
 	import jsion.utils.DisposeUtil;
 	
 	/**
-	 * 图片按钮。此类为按钮基类,不支持显示文字;
+	 * 图片按钮。支持滤镜。此类为按钮基类,不支持显示文字;
 	 * 需要显示文字可以使用 jsion.display.LabelButton 类。
-	 * 使用 jsion.display.Image  可支持九宫格缩放。
-	 * 支持滤镜。
+	 * 使用 jsion.display.Image 可支持九宫格缩放。
 	 * @see jsion.display.Image
 	 * @author Jsion
 	 * 

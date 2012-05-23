@@ -1,5 +1,10 @@
 package jsion
 {
+	/**
+	 * 列表接口
+	 * @author Jsion
+	 * 
+	 */	
 	public interface IList
 	{
 		/**
