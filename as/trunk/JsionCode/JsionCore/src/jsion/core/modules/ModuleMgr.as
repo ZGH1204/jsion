@@ -3,7 +3,6 @@ package jsion.core.modules
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.utils.Dictionary;
-	import flash.utils.getQualifiedClassName;
 	
 	import jsion.Cache;
 	import jsion.core.cryptor.ICryption;
@@ -21,8 +20,6 @@ package jsion.core.modules
 	import jsion.utils.DictionaryUtil;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.JUtil;
-	import jsion.utils.NameUtil;
-	import jsion.utils.PathUtil;
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
 

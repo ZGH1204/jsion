@@ -9,6 +9,13 @@ package jsion.display
 	import jsion.comps.Component;
 	import jsion.utils.StringUtil;
 
+	/**
+	 * 支持文字显示的图片按钮。支持滤镜。
+	 * 使用 jsion.display.Image 可支持九宫格缩放。
+	 * @see jsion.display.Image
+	 * @author Jsion
+	 * 
+	 */	
 	public class LabelButton extends Button
 	{
 		public static const LABELALIGN:String = "labelAlign";
