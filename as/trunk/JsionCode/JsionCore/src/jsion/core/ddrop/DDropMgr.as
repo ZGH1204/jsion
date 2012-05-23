@@ -21,7 +21,7 @@ package jsion.core.ddrop
 	//import jsion.utils.*;
 
 	/**
-	 * 拖拽管理
+	 * 拖拽管理 使用前请执行DDropMgr.setup(Stage)方法初始化一次
 	 * @author Jsion
 	 * 
 	 */	

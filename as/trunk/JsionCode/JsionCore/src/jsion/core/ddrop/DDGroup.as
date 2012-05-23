@@ -1,7 +1,12 @@
 package jsion.core.ddrop
 {
 	import jsion.List;
-
+	
+	/**
+	 * 拖拽组信息
+	 * @author Jsion
+	 * 
+	 */	
 	internal class DDGroup extends List
 	{
 		private var _group:String;
