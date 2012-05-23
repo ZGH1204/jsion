@@ -203,15 +203,21 @@ package jsion.comps
 			}
 		}
 		
+		/**
+		 * 派发 StateEvent.STATE_CHANGED 事件
+		 */		
 		protected function fireStateChanged():void
 		{
 			dispatchEvent(new StateEvent(StateEvent.STATE_CHANGED));
 		}
 		
-		protected function fireSelectionChanged():void
-		{
-			dispatchEvent(new StateEvent(StateEvent.SELECTION_CHANGED));
-		}
+//		/**
+//		 * 派发 StateEvent.SELECTION_CHANGED 事件
+//		 */		
+//		protected function fireSelectionChanged():void
+//		{
+//			dispatchEvent(new StateEvent(StateEvent.SELECTION_CHANGED));
+//		}
 		
 		public function dispose():void
 		{

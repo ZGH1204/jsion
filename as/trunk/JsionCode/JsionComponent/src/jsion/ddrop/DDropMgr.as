@@ -77,6 +77,7 @@ package jsion.ddrop
 		 * @param dragger 要注册的对象
 		 * @param group 拖拽分组
 		 * @param isClickDrag true表示鼠标点击后拖动,false表示鼠标按下后拖动.
+		 * @throws Error 未初始化拖拽管理器
 		 */		
 		public static function registeDrag(dragger:IDragDrop, group:String = null):void
 		{

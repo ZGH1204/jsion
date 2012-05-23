@@ -49,10 +49,10 @@ package jsion.comps
 		
 		/**
 		 * 根据字符串样式计算字符串长度
-		 * @param tf
-		 * @param str
-		 * @param includeGutters
-		 * @param textField
+		 * @param tf TextFormat对象。字符显示样式信息
+		 * @param str 要计算长度的字符串
+		 * @param includeGutters 指示是否只取文本的宽高
+		 * @param textField 附加的TextField对象用于获取相关设置信息
 		 * 
 		 */		
 		public static function computeStringSize(tf:TextFormat, str:String, includeGutters:Boolean = true, textField:TextField = null):IntDimension
@@ -88,7 +88,8 @@ package jsion.comps
 		 * @param vAlign 垂直对齐方式
 		 * @param vGap 垂直间隙
 		 * @param rect 对象范围 其中x、y位置属性用于存储计算结果
-		 * 
+		 * @throws Error 水平对齐方式错误。
+		 * @throws Error 垂直对齐方式错误。
 		 */		
 		public static function layoutPosition(width:int, height:int, hAlign:String, hGap:int, vAlign:String, vGap:int, rect:Rectangle):void
 		{

@@ -26,7 +26,13 @@ package jsion.comps
 		protected var m_changeProperties:HashMap;
 		
 		/** @private */
+		protected var m_manualWidth:Boolean;
+		
+		/** @private */
 		protected var m_width:int;
+		
+		/** @private */
+		protected var m_manualHeight:Boolean;
 		
 		/** @private */
 		protected var m_height:int;
@@ -58,6 +64,8 @@ package jsion.comps
 				
 				onPropertiesChanged(WIDTH);
 			}
+			
+			m_manualWidth = true;
 		}
 		
 		/**
@@ -77,6 +85,24 @@ package jsion.comps
 				
 				onPropertiesChanged(HEIGHT);
 			}
+			
+			m_manualHeight = true;
+		}
+		
+		/**
+		 * 指示当前对象是否手动指定了宽度
+		 */		
+		public function get manualWidth():Boolean
+		{
+			return m_manualWidth;
+		}
+		
+		/**
+		 * 指示当前对象是否手动指定了高度
+		 */		
+		public function get manualHeight():Boolean
+		{
+			return m_manualHeight;
 		}
 		
 		/**
