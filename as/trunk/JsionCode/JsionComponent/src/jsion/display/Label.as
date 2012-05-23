@@ -7,7 +7,6 @@ package jsion.display
 	import flash.text.TextFormat;
 	
 	import jsion.comps.Component;
-	import jsion.utils.DisposeUtil;
 	import jsion.utils.StringUtil;
 	
 	/**
@@ -19,6 +18,7 @@ package jsion.display
 	public class Label extends Component
 	{
 		public static const TEXT:String = "text";
+		public static const TEXTCOLOR:String = "textColor";
 		public static const HTML:String = "html";
 		public static const EMBEDFONTS:String = "embedFonts";
 		public static const TEXTFORMAT:String = "textFormat";
@@ -36,14 +36,11 @@ package jsion.display
 		
 		private var m_textField:TextField;
 		
+		private var m_textColor:uint;
+		
 		public function Label()
 		{
 			super();
-			
-			m_text = "";
-			
-			mouseEnabled = false;
-			mouseChildren = false;
 		}
 		
 		/**
@@ -52,6 +49,12 @@ package jsion.display
 		override protected function initialize():void
 		{
 			super.initialize();
+			
+			m_text = "";
+			m_textColor = 0;
+			
+			mouseEnabled = false;
+			mouseChildren = false;
 			
 			m_textField = new TextField();
 			m_textField.type = TextFieldType.DYNAMIC;
@@ -87,6 +90,26 @@ package jsion.display
 				m_text = value;
 				
 				onPropertiesChanged(TEXT);
+			}
+		}
+		
+		/**
+		 * 设置文本颜色
+		 * CSS样式会覆盖此设置
+		 */		
+		public function get textColor():uint
+		{
+			return m_textColor;
+		}
+		
+		/** @private */
+		public function set textColor(value:uint):void
+		{
+			if(m_textColor != value)
+			{
+				m_textColor = value;
+				
+				onPropertiesChanged(TEXTCOLOR);
 			}
 		}
 		
@@ -145,7 +168,8 @@ package jsion.display
 		}
 		
 		/**
-		 * CSS样式表
+		 * CSS样式表。
+		 * 当使用CSS样式时无论是否开启 Html 属性都会替换掉所有标签并使用已定义的样式显示。
 		 */		
 		public function get styleSheet():StyleSheet
 		{
@@ -161,16 +185,19 @@ package jsion.display
 		}
 		
 		/**
-		 * 解析CSS样式文本 会覆盖掉已定义样式的对应属性
+		 * 解析CSS样式文本 会覆盖掉已定义样式的对应属性。
+		 * 当使用CSS样式时无论是否开启 Html 属性都会替换掉所有标签并使用已定义的样式显示。
 		 * @param cssText CSS样式文本
 		 */		
-		public function parseCSS(cssText:String):void
+		public function parseCSS(cssText:String):StyleSheet
 		{
 			if(m_styleSheet == null) m_styleSheet = new StyleSheet();
 			
 			m_styleSheet.parseCSS(cssText);
 			
 			styleSheet = m_styleSheet;
+			
+			return m_styleSheet;
 		}
 		
 		/**
@@ -180,32 +207,25 @@ package jsion.display
 		{
 			super.onProppertiesUpdate();
 			
+			m_textField.text = "";
+			m_textField.textColor = m_textColor;
 			m_textField.embedFonts = m_embedFonts;
 			
 			if(m_changeProperties.containsKey(TEXTFORMAT))
 			{
-				if(m_styleSheet != null) m_textField.styleSheet = null;
+				m_textField.styleSheet = null;
 				
 				m_textField.defaultTextFormat = m_textFormat;
 				
 				m_textField.styleSheet = m_styleSheet;
-				
-				if(m_html) m_textField.htmlText = m_text;
-				else m_textField.text = m_text;
 			}
 			else if(m_changeProperties.containsKey(STYLESHEET))
 			{
 				m_textField.styleSheet = m_styleSheet;
-				
-				if(m_html) m_textField.htmlText = m_text;
-				else m_textField.text = m_text;
 			}
-			else if(m_changeProperties.containsKey(TEXT) || 
-					 m_changeProperties.containsKey(HTML))
-			{
-				if(m_html) m_textField.htmlText = m_text;
-				else m_textField.text = m_text;
-			}
+			
+			if(m_html) m_textField.htmlText = m_text;
+			else m_textField.text = m_text;
 			
 			m_width = m_textField.width;
 			m_height = m_textField.height;

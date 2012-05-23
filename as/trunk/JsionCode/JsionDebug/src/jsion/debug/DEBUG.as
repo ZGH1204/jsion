@@ -8,17 +8,21 @@ package jsion.debug
 	 */	
 	public class DEBUG
 	{
+		private static var m_bar:DebugBar;
 		private static var m_debugger:Debugger;
 		
-		public static function setup(stage:Stage, w:int, maxRecord:int = 200):void
+		public static function setup(stage:Stage, w:int):void
 		{
 			if(m_debugger) return;
 			
-			m_debugger = new Debugger(w, stage.stageHeight);
-			m_debugger.maxRecord = maxRecord;
-			m_debugger.x = stage.stageWidth;
+			m_bar = new DebugBar(stage.stageWidth, 40, stage);
+			m_bar.y = stage.stageHeight;
+			stage.addChild(m_bar);
 			
-			stage.addChild(m_debugger);
+			m_bar.add(new JsionFPS());
+			
+			m_debugger = m_bar.add(new Debugger(w, stage.stageHeight)) as Debugger;
+			
 		}
 		
 		public static function loadCSS(path:String):void

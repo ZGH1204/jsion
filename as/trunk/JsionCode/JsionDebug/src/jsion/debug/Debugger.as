@@ -1,7 +1,9 @@
 package jsion.debug
 {
 	import flash.display.Bitmap;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.URLLoader;
@@ -16,7 +18,7 @@ package jsion.debug
 	 * 调试信息记录/显示类
 	 * @author Jsion
 	 */	
-	internal class Debugger extends Sprite
+	internal class Debugger extends DebugView
 	{
 		public static const TRACER_TAG:String = "tracer";
 		public static const INFO_TAG:String = "info";
@@ -71,29 +73,6 @@ package jsion.debug
 			m_maxRecord = 200;
 			m_loadState = UNLOAD;
 			
-			m_showOrHideBmp = new m_arrowCLS();
-			m_showOrHideBmp.scaleX = -1;
-			m_showOrHideBmp.x = m_showOrHideBmp.width;
-			
-			m_style = new StyleSheet();
-			
-			m_showOrHideBtn = new Sprite();
-			m_showOrHideBtn.buttonMode = true;
-			m_showOrHideBtn.addChild(m_showOrHideBmp);
-			m_showOrHideBtn.x = -m_showOrHideBtn.width;
-			m_showOrHideBtn.alpha = 0.7;
-			addChild(m_showOrHideBtn);
-			
-			m_cleanBmp = new m_cleanCLS();
-			
-			m_clearBtn = new Sprite();
-			m_clearBtn.addChild(m_cleanBmp);
-			m_clearBtn.buttonMode = true;
-			m_clearBtn.x = -m_clearBtn.width;
-			m_clearBtn.y = m_showOrHideBtn.y + m_showOrHideBtn.height + 2;
-			m_clearBtn.alpha = 0.7;
-			addChild(m_clearBtn);
-			
 			m_textField = new TextField();
 			m_textField.type = TextFieldType.DYNAMIC;
 			m_textField.background = true;
@@ -105,6 +84,31 @@ package jsion.debug
 			m_textField.wordWrap = true;
 			m_textField.styleSheet = m_style;
 			addChild(m_textField);
+			
+			m_showOrHideBmp = new m_arrowCLS();
+			m_showOrHideBmp.scaleX = -1;
+			m_showOrHideBmp.x = m_showOrHideBmp.width;
+			
+			m_style = new StyleSheet();
+			
+			m_showOrHideBtn = new Sprite();
+			m_showOrHideBtn.buttonMode = true;
+			m_showOrHideBtn.addChild(m_showOrHideBmp);
+//			m_showOrHideBtn.x = -m_showOrHideBtn.width;
+			m_showOrHideBtn.alpha = 0.7;
+//			addChild(m_showOrHideBtn);
+			
+			m_cleanBmp = new m_cleanCLS();
+			
+			m_clearBtn = new Sprite();
+			m_clearBtn.addChild(m_cleanBmp);
+			m_clearBtn.buttonMode = true;
+//			m_clearBtn.x = -m_clearBtn.width;
+//			m_clearBtn.y = m_showOrHideBtn.y + m_showOrHideBtn.height + 2;
+			m_clearBtn.alpha = 0.7;
+			m_clearBtn.x = m_width - m_clearBtn.width - 3;
+			m_clearBtn.y = 0 + 3;
+			addChild(m_clearBtn);
 			
 			
 			
@@ -368,7 +372,7 @@ package jsion.debug
 				htmlText += str;
 			}
 			
-			m_textField.text = format("<0>" + htmlText + "</0>", TRACER_TAG);
+			m_textField.htmlText = format("<0>" + htmlText + "</0>", TRACER_TAG);
 			m_textField.scrollV = m_textField.maxScrollV;
 		}
 		
@@ -449,6 +453,19 @@ package jsion.debug
 		public function isNullOrEmpty(value:String):Boolean
 		{
 			return value == null || value == "";
+		}
+		
+		
+		
+		override public function get btnList():Array
+		{
+			return [m_showOrHideBtn];
+		}
+		
+		override public function addTo(parent:Stage):void
+		{
+			x = parent.stageWidth;
+			parent.addChild(this);
 		}
 	}
 }

@@ -27,40 +27,70 @@ package jsion.display
 		 */		
 		public static const STATEFILTERS:String = "stateFilters";
 		
+		/**
+		 * 状态显示对象偏移变量
+		 */		
+		public static const OFFSET:String = "offset";
+		
 		private var m_imageLayer:Sprite;
+		
 		
 		private var m_curImage:DisplayObject;
 		private var m_curFilters:Array;
+		
 		
 		private var m_upImage:DisplayObject;
 		private var m_overImage:DisplayObject;
 		private var m_downImage:DisplayObject;
 		private var m_disableImage:DisplayObject;
 		
+		
+		private var m_offsetX:Number = 0;
+		private var m_offsetY:Number = 0;
+		private var m_overOffsetX:Number = 0;
+		private var m_overOffsetY:Number = 0;
+		private var m_downOffsetX:Number = 0;
+		private var m_downOffsetY:Number = 0;
+		
+		
 		private var m_upFilters:Array;
 		private var m_overFilters:Array;
 		private var m_downFilters:Array;
 		private var m_disableFilters:Array;
 		
+		
 		private var m_freeBMD:Boolean;
+		
 		
 		protected var m_stateChange:Boolean;
 		
 		public function Button()
 		{
 			super();
-			
-			m_freeBMD = false;
-			m_stateChange = false;
 		}
 		
 		override protected function initialize():void
 		{
 			super.initialize();
 			
+			buttonMode = true;
+			
+			m_freeBMD = false;
+			m_stateChange = false;
+			
 			m_imageLayer = new Sprite();
 			m_imageLayer.mouseEnabled = false;
 			m_imageLayer.mouseChildren = false;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		override protected function addChildren():void
+		{
+			super.addChildren();
+			
+			addChild(m_imageLayer);
 		}
 		
 		override protected function initEvents():void
@@ -106,7 +136,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 按钮经过时的显示对象资源
+		 * 按钮鼠标经过时的显示对象资源
 		 */		
 		public function get overImage():DisplayObject
 		{
@@ -168,6 +198,9 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 按钮弹起时的滤镜对象
+		 */		
 		public function get upFilters():Array
 		{
 			return m_upFilters;
@@ -184,6 +217,9 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 按钮鼠标经过时的滤镜对象
+		 */		
 		public function get overFilters():Array
 		{
 			return m_overFilters;
@@ -200,6 +236,9 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 按钮按下时的滤镜对象
+		 */		
 		public function get downFilters():Array
 		{
 			return m_downFilters;
@@ -216,6 +255,9 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 按钮禁用时的滤镜对象
+		 */		
 		public function get disableFilters():Array
 		{
 			return m_disableFilters;
@@ -229,6 +271,120 @@ package jsion.display
 				m_disableFilters = value;
 				
 				onPropertiesChanged(STATEFILTERS);
+			}
+		}
+		
+		/**
+		 * 按钮状态显示对象x坐标偏移量
+		 */
+		public function get offsetX():Number
+		{
+			return m_offsetX;
+		}
+		
+		/** @private */
+		public function set offsetX(value:Number):void
+		{
+			if(m_offsetX != value)
+			{
+				m_offsetX = value;
+				
+				onPropertiesChanged(OFFSET);
+			}
+		}
+		
+		/**
+		 * 按钮状态显示对象y坐标偏移量
+		 */
+		public function get offsetY():Number
+		{
+			return m_offsetY;
+		}
+		
+		/** @private */
+		public function set offsetY(value:Number):void
+		{
+			if(m_offsetY != value)
+			{
+				m_offsetY = value;
+				
+				onPropertiesChanged(OFFSET);
+			}
+		}
+		
+		/**
+		 * 按钮鼠标经过时状态显示对象x坐标偏移量
+		 */
+		public function get overOffsetX():Number
+		{
+			return m_overOffsetX;
+		}
+		
+		/** @private */
+		public function set overOffsetX(value:Number):void
+		{
+			if(m_overOffsetX != value)
+			{
+				m_overOffsetX = value;
+				
+				onPropertiesChanged(OFFSET);
+			}
+		}
+		
+		/**
+		 * 按钮鼠标经过时状态显示对象y坐标偏移量
+		 */
+		public function get overOffsetY():Number
+		{
+			return m_overOffsetY;
+		}
+		
+		/** @private */
+		public function set overOffsetY(value:Number):void
+		{
+			if(m_overOffsetY != value)
+			{
+				m_overOffsetY = value;
+				
+				onPropertiesChanged(OFFSET);
+			}
+		}
+		
+		/**
+		 * 按钮按下时状态显示对象x坐标偏移量
+		 */
+		public function get downOffsetX():Number
+		{
+			return m_downOffsetX;
+		}
+		
+		/** @private */
+		public function set downOffsetX(value:Number):void
+		{
+			if(m_downOffsetX != value)
+			{
+				m_downOffsetX = value;
+				
+				onPropertiesChanged(OFFSET);
+			}
+		}
+		
+		/**
+		 * 按钮按下时状态显示对象y坐标偏移量
+		 */
+		public function get downOffsetY():Number
+		{
+			return m_downOffsetY;
+		}
+		
+		/** @private */
+		public function set downOffsetY(value:Number):void
+		{
+			if(m_downOffsetY != value)
+			{
+				m_downOffsetY = value;
+				
+				onPropertiesChanged(OFFSET);
 			}
 		}
 
@@ -270,6 +426,8 @@ package jsion.display
 				m_curImage.width = m_width;
 				m_curImage.height = m_height;
 			}
+			
+			if(m_curImage) updateImagePos();
 		}
 		
 		/**
@@ -356,14 +514,26 @@ package jsion.display
 			m_imageLayer.filters = m_curFilters;
 		}
 		
-		/**
-		 * @inheritDoc
-		 */		
-		override protected function addChildren():void
+		protected function updateImagePos():void
 		{
-			super.addChildren();
+			m_curImage.x = 0;
+			m_curImage.y = 0;
 			
-			addChild(m_imageLayer);
+			if(model.pressed)
+			{
+				m_curImage.x += m_downOffsetX;
+				m_curImage.y += m_downOffsetY;
+			}
+			else if(model.rollOver)
+			{
+				m_curImage.x += m_overOffsetX;
+				m_curImage.y += m_overOffsetY;
+			}
+			else
+			{
+				m_curImage.x += m_offsetX;
+				m_curImage.y += m_offsetY;
+			}
 		}
 		
 		/**
@@ -385,6 +555,11 @@ package jsion.display
 			
 			m_curImage = null;
 			m_imageLayer = null;
+			m_curFilters = null;
+			m_upFilters = null;
+			m_overFilters = null;
+			m_downFilters = null;
+			m_disableFilters = null;
 			
 			super.dispose();
 		}

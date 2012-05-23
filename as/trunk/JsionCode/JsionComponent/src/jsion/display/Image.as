@@ -55,11 +55,47 @@ package jsion.display
 		public function Image()
 		{
 			super();
+		}
+		
+		/**
+		 * @inheritDOC
+		 */		
+		override protected function initialize():void
+		{
+			super.initialize();
 			
 			m_scaleType = SCALE;
 			
 			mouseEnabled = false;
 			mouseChildren = false;
+			
+			m_bmp1 = new Bitmap(null, PixelSnapping.AUTO, true);
+			m_bmp2 = new Bitmap(null, PixelSnapping.AUTO, true);
+			m_bmp3 = new Bitmap(null, PixelSnapping.AUTO, true);
+			m_bmp4 = new Bitmap(null, PixelSnapping.AUTO, true);
+			m_bmp5 = new Bitmap(null, PixelSnapping.AUTO, true);
+			m_bmp6 = new Bitmap(null, PixelSnapping.AUTO, true);
+			m_bmp7 = new Bitmap(null, PixelSnapping.AUTO, true);
+			m_bmp8 = new Bitmap(null, PixelSnapping.AUTO, true);
+			m_bmp9 = new Bitmap(null, PixelSnapping.AUTO, true);
+		}
+		
+		/**
+		 * @inheritDOC
+		 */		
+		override protected function addChildren():void
+		{
+			super.addChildren();
+			
+			addChild(m_bmp1);
+			addChild(m_bmp2);
+			addChild(m_bmp3);
+			addChild(m_bmp4);
+			addChild(m_bmp5);
+			addChild(m_bmp6);
+			addChild(m_bmp7);
+			addChild(m_bmp8);
+			addChild(m_bmp9);
 		}
 		
 		/**
@@ -136,42 +172,6 @@ package jsion.display
 				
 				onPropertiesChanged(SCALETYPE);
 			}
-		}
-		
-		/**
-		 * @inheritDOC
-		 */		
-		override protected function initialize():void
-		{
-			super.initialize();
-			
-			m_bmp1 = new Bitmap(null, PixelSnapping.AUTO, true);
-			m_bmp2 = new Bitmap(null, PixelSnapping.AUTO, true);
-			m_bmp3 = new Bitmap(null, PixelSnapping.AUTO, true);
-			m_bmp4 = new Bitmap(null, PixelSnapping.AUTO, true);
-			m_bmp5 = new Bitmap(null, PixelSnapping.AUTO, true);
-			m_bmp6 = new Bitmap(null, PixelSnapping.AUTO, true);
-			m_bmp7 = new Bitmap(null, PixelSnapping.AUTO, true);
-			m_bmp8 = new Bitmap(null, PixelSnapping.AUTO, true);
-			m_bmp9 = new Bitmap(null, PixelSnapping.AUTO, true);
-		}
-		
-		/**
-		 * @inheritDOC
-		 */		
-		override protected function addChildren():void
-		{
-			super.addChildren();
-			
-			addChild(m_bmp1);
-			addChild(m_bmp2);
-			addChild(m_bmp3);
-			addChild(m_bmp4);
-			addChild(m_bmp5);
-			addChild(m_bmp6);
-			addChild(m_bmp7);
-			addChild(m_bmp8);
-			addChild(m_bmp9);
 		}
 		
 		/**

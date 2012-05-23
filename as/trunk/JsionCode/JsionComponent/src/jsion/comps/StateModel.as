@@ -32,6 +32,7 @@ package jsion.comps
 			m_armed = false;
 			m_pressed = false;
 //			m_selected = false;
+			m_listeners = new HashMap();
 		}
 		
 		
