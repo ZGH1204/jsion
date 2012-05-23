@@ -65,6 +65,11 @@ package jsion.display
 		public function Box()
 		{
 			super();
+		}
+		
+		override protected function initialize():void
+		{
+			super.initialize();
 			
 			m_type = HORIZONTAL;
 			
