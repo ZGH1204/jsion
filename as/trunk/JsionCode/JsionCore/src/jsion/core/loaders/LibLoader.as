@@ -148,6 +148,9 @@ package jsion.core.loaders
 			
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function dispose():void
 		{
 			JUtil.removeEnterFrame(__loadCompletedAsyncHandler);

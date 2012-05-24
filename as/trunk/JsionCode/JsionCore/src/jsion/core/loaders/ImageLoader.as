@@ -95,6 +95,9 @@ package jsion.core.loaders
 			_imgLoader.unload();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function dispose():void
 		{
 			super.dispose();

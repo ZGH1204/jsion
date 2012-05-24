@@ -240,6 +240,9 @@ package jsion.core.loaders
 			
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function dispose():void
 		{
 			removeLoadEvent(stream);
