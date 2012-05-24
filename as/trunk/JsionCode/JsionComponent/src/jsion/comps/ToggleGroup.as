@@ -1,4 +1,4 @@
-package jsion.datas
+package jsion.comps
 {
 	import jsion.IDispose;
 	import jsion.display.ToggleButton;
