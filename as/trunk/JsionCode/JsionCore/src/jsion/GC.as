@@ -13,6 +13,10 @@ package jsion
 	 */	
 	public class GC
 	{
+		/**
+		 * 强制内存回收资源
+		 * 通过 new LocalConnection().connect("hack") hack方式回收
+		 */		
 		public static function collect():void
 		{
 			try

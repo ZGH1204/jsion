@@ -4,9 +4,16 @@ package jsion.core.serialize.res
 	import flash.utils.ByteArray;
 	
 	import jsion.HashMap;
+	import jsion.IDispose;
 	import jsion.utils.ArrayUtil;
+	import jsion.utils.DisposeUtil;
 
-	public class ResPacker
+	/**
+	 * 资源打包
+	 * @author Jsion
+	 * 
+	 */	
+	public class ResPacker implements IDispose
 	{
 		private var m_actionMap:HashMap;
 		
@@ -25,21 +32,37 @@ package jsion.core.serialize.res
 			m_frameRate = 30;
 		}
 		
+		/**
+		 * 资源宽度
+		 */		
 		public function get width():int
 		{
 			return m_width;
 		}
 		
+		/**
+		 * 资源高度
+		 */		
 		public function get height():int
 		{
 			return m_height;
 		}
 		
+		/**
+		 * 设置帧频
+		 */		
 		public function setFrameRate(rate:int):void
 		{
 			m_frameRate = rate;
 		}
 		
+		/**
+		 * 添加图片资源
+		 * @param bmd 图片资源
+		 * @param action 动作类型
+		 * @param dir 动作方向
+		 * 
+		 */		
 		public function addImage(bmd:BitmapData, action:int, dir:int):void
 		{
 			if(bmd == null) return;
@@ -121,6 +144,9 @@ package jsion.core.serialize.res
 			return imgs;
 		}
 		
+		/**
+		 * 打包资源
+		 */		
 		public function pack():ByteArray
 		{
 			var indexColors:Array = [];//索引颜色列表,写入文件.
@@ -227,6 +253,16 @@ package jsion.core.serialize.res
 			bytes.compress();
 			
 			return bytes;
+		}
+		
+		/**
+		 * 释放资源
+		 * 
+		 */		
+		public function dispose():void
+		{
+			DisposeUtil.free(m_actionMap);
+			m_actionMap = null;
 		}
 	}
 }

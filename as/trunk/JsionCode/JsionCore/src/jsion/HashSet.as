@@ -162,6 +162,9 @@ package jsion
 			return arr;
 		}
 		
+		/**
+		 * 释放资源
+		 */		
 		public function dispose():void
 		{
 			removeAll();

@@ -253,14 +253,58 @@ package jsion
 			return _elements.slice(startIndex, Math.min(startIndex + length, count));
 		}
 		
+		/**
+		 * 对列表内的对象进行排序 使用Array.sort()方法
+		 * @param compare 一个用来确定数组元素排序顺序的比较函数。比较函数应该用两个参数进行比较。 给定元素 A 和 B，compareFunction 的结果可以具有负值、0 或正值： 
+		 * <ul>
+		 * 		<li>若返回值为负，则表示 A 在排序后的序列中出现在 B 之前。</li>
+		 * 		<li>若返回值为 0，则表示 A 和 B 具有相同的排序顺序。</li>
+		 * 		<li>若返回值为正，则表示 A 在排序后的序列中出现在 B 之后。</li>
+		 * </ul>
+		 * @param options 一个或多个数字或定义的常量，相互之间由 |（按位 OR）运算符隔开，它们将排序的行为从默认行为更改为其它行为。 此参数是可选的。 下面是 sortOptions 可接受的值：
+		 * <ul>
+		 * <li>1 或 Array.CASEINSENSITIVE</li>
+		 * <li>2 或 Array.DESCENDING</li>
+		 * <li>4 或 Array.UNIQUESORT</li>
+		 * <li>8 或 Array.RETURNINDEXEDARRAY</li>
+		 * <li>16 或 Array.NUMERIC</li>
+		 * </ul>
+		 * @return 返回值取决于您是否传递任何参数，如以下列表中所述：
+		 * <ul>
+		 * <li>如果为 ...args 参数的 sortOptions 变量指定值 4 或 Array.UNIQUESORT，并且所排序的两个或更多个元素具有相同的排序字段，则 Flash 返回值 0 并且不修改数组。</li>
+		 * <li>如果为 ...args 参数的 sortOptions 变量指定值 8 或 Array.RETURNINDEXEDARRAY，则 Flash 返回排序后的索引数值数组以反映排序结果，并且不修改数组。 </li>
+		 * <li>否则，Flash 不返回任何内容并修改该数组以反映排序顺序。</li>
+		 * </ul>
+		 */		
 		public function sort(compare:Object, options:int):Array{
 			return _elements.sort(compare, options);
 		}
 		
+		/**
+		 * 根据列表中的对象的一个或多个字段对列表中的对象进行排序 使用Array.sortOn()方法
+		 * @param key 一个字符串，它标识要用作排序值的字段，或一个数组，其中的第一个元素表示主排序字段，第二个元素表示第二排序字段，依此类推。 
+		 * @param options 所定义常量的一个或多个数字或名称，相互之间由 bitwise OR (|) 运算符隔开，它们可以更改排序行为。 options 参数可接受以下值：
+		 * <ul>
+		 * 	<li>Array.CASEINSENSITIVE 或 1</li>
+		 * 	<li>Array.DESCENDING 或 2</li>
+		 * 	<li>Array.UNIQUESORT 或 4</li>
+		 * 	<li>Array.RETURNINDEXEDARRAY 或 8</li>
+		 * 	<li>Array.NUMERIC 或 16</li>
+		 * </ul>
+		 * @return 返回值取决于您是否传递任何参数：
+		 * <ul>
+		 * 	<li>如果您为 options 参数指定值 4 或 Array.UNIQUESORT，并且要排序的两个或多个元素具有相同的排序字段，则返回值 0 并且不修改数组。 </li>
+		 * 	<li>如果为 options 参数指定值 8 或 Array.RETURNINDEXEDARRAY，则返回反映排序结果的数组并且不修改数组。</li>
+		 * 	<li>否则，不返回任何结果并修改该数组以反映排序顺序。</li>
+		 * </ul>
+		 */		
 		public function sortOn(key:Object, options:int):Array{
 			return _elements.sortOn(key, options);
 		}
 		
+		/**
+		 * 克隆对象
+		 */		
 		public function clone():List{
 			var cloned:List = new List();
 			for (var i:int=0; i<_elements.length; i++){

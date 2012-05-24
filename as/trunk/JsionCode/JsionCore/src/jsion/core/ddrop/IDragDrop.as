@@ -13,18 +13,42 @@ package jsion.core.ddrop
 	 */	
 	public interface IDragDrop extends IEventDispatcher
 	{
+		/**
+		 * DisplayObject.x属性
+		 */
 		function get x():Number;
+		/** @private */
 		function set x(value:Number):void;
 		
+		/**
+		 * DisplayObject.y属性
+		 */
 		function get y():Number;
+		/** @private */
 		function set y(value:Number):void;
 		
+		/**
+		 * DisplayObject.width属性
+		 */
 		function get width():Number;
+		/**
+		 * DisplayObject.height属性
+		 */
 		function get height():Number;
 		
+		/**
+		 * DisplayObject.contains方法
+		 */
 		function contains(child:DisplayObject):Boolean;
 		
+		/**
+		 * DisplayObject.localToGlobal方法
+		 */
 		function localToGlobal(point:Point):Point;
+		
+		/**
+		 * DisplayObject.globalToLocal方法
+		 */
 		function globalToLocal(point:Point):Point;
 		
 		/**

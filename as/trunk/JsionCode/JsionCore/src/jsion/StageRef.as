@@ -179,7 +179,7 @@ package jsion
 		
 		/**
 		 * 添加指定显示对象到舞台
-		 * @param child
+		 * @param child 要添加的显示对象
 		 */		
 		public static function addChild(child:DisplayObject):DisplayObject
 		{
@@ -187,35 +187,63 @@ package jsion
 		}
 		
 		/**
-		 * 将指定显示对象添加到舞台上，并设置为指定索引深度。
-		 * @param child
-		 * @param index
+		 * 将指定显示对象添加到舞台上，并设置为指定索引深度位置。
+		 * @param child 要添加的显示对象
+		 * @param index 要添加到的索引深度
 		 */		
 		public static function addChildAt(child:DisplayObject, index:int):DisplayObject
 		{
 			return _stage.addChildAt(child, index);
 		}
 		
+		/**
+		 * 移除舞台的子显示对象
+		 * @param child 要移除的显示对象
+		 */		
 		public static function removeChild(child:DisplayObject):DisplayObject
 		{
 			return _stage.removeChild(child);
 		}
 		
+		/**
+		 * 移除舞台上指定索引深度位置的子显示对象
+		 * @param index 要移除的索引深度
+		 * @return 移除的子显示对象
+		 * 
+		 */		
 		public static function removeChildAt(index:int):DisplayObject
 		{
 			return _stage.removeChildAt(index);
 		}
 		
+		/**
+		 * 获取舞台中子显示对象的索引深度位置
+		 * @param child 要获取索引尝试的子显示对象
+		 * @return 索引深度
+		 * 
+		 */		
 		public static function getChildIndex(child:DisplayObject):int
 		{
 			return _stage.getChildIndex(child);
 		}
 		
+		/**
+		 * 获取指定索引深度位置的子显示对象
+		 * @param index
+		 * @return 
+		 * 
+		 */		
 		public static function getChildAt(index:int):DisplayObject
 		{
 			return _stage.getChildAt(index);
 		}
 		
+		/**
+		 * 设置舞台上指定的子显示对象的索引深度位置
+		 * @param child 要设置索引深度位置的子显示对象
+		 * @param index 要设置到的索引尝试位置
+		 * 
+		 */		
 		public static function setChildAt(child:DisplayObject, index:int):void
 		{
 			_stage.setChildIndex(child, index);

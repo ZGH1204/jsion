@@ -1,5 +1,10 @@
 package jsion.core
 {
+	/**
+	 * 全局静态常量类
+	 * @author Jsion
+	 * 
+	 */	
 	public class Global
 	{
 		/**

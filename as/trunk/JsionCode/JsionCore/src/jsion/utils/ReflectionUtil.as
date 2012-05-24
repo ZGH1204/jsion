@@ -79,6 +79,9 @@ package jsion.utils
 			return cList;
 		}
 		
+		/**
+		 * 解析继承的接口列表
+		 */		
 		public static function parseTypeWithInterface(describeTypeXml:XML):Type
 		{
 			var type:Type = new Type();
@@ -94,6 +97,9 @@ package jsion.utils
 			return type;
 		}
 		
+		/**
+		 * 解析元数据标签
+		 */		
 		public static function parseTypeWithMetaData(describeTypeXml:XML):Type
 		{
 			var type:Type = new Type();

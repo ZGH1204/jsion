@@ -1,5 +1,10 @@
 package jsion.core.messages
 {
+	/**
+	 * 消息类
+	 * @author Jsion
+	 * 
+	 */	
 	public class Msg
 	{
 		/**

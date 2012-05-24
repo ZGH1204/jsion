@@ -9,6 +9,11 @@ package jsion.core.sounds
 	import jsion.utils.DictionaryUtil;
 	import jsion.utils.StringUtil;
 
+	/**
+	 * 声音、音效管理类
+	 * @author Jsion
+	 * 
+	 */	
 	public class SoundMgr
 	{
 		private static var list:Dictionary = new Dictionary();
@@ -28,6 +33,12 @@ package jsion.core.sounds
 			return numPlaying;
 		}
 		
+		/**
+		 * 设置声音配置
+		 * @param volumn 音量
+		 * @param mute 是否启用多声道播放
+		 * 
+		 */		
 		public static function setConfig(volumn:int, mute:Boolean):void
 		{
 			if(volumn > 100) volumn = 100;
@@ -239,12 +250,29 @@ package jsion.core.sounds
 	}
 }
 
+/**
+ * 声音、音效播放模型
+ * @author Jsion
+ * 
+ */
 class SoundMode
 {
 	import flash.media.SoundChannel;
 	
+	/**
+	 * 声音、音效ID
+	 */	
 	public var id:String;
+	/**
+	 * 声音、音效播放组
+	 */	
 	public var group:String;
+	/**
+	 * 播放声音、音效的声道
+	 */	
 	public var sc:SoundChannel;
+	/**
+	 * 暂停位置
+	 */	
 	public var pausePosition:Number = 0;
 }

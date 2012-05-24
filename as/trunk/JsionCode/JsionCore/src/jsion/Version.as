@@ -27,11 +27,20 @@ package jsion
 			_revision = revision;
 		}
 		
+		/**
+		 * 克隆对象
+		 */		
 		public function clone():Object
 		{
 			return new Version(_major, _minor, _build, _revision);
 		}
 		
+		/**
+		 * 与指定对象比较是否相等
+		 * @param o 要比较的对象
+		 * @return true表示相等 false表示不相等
+		 * 
+		 */		
 		public function equals(version:Object):int
 		{
 			var v:Version = version as Version;
@@ -107,6 +116,9 @@ package jsion
 			return new Version(int(list[0]), int(list[1]), int(list[2]), int(list[3]));
 		}
 		
+		/**
+		 * 对象的字符串形式
+		 */		
 		public function toString():String
 		{
 			return [_major, _minor, _build, _revision].join(".");

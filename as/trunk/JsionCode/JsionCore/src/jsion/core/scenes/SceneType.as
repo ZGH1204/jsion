@@ -1,5 +1,10 @@
 package jsion.core.scenes
 {
+	/**
+	 * 场景类型
+	 * @author Jsion
+	 * 
+	 */	
 	public class SceneType
 	{
 		/**

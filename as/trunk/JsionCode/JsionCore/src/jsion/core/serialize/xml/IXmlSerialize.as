@@ -15,7 +15,7 @@ package jsion.core.serialize.xml
 		 * 序列化指定对象为Xml
 		 * @param nodeName Xml节点名称
 		 * @param obj 要序列化的对象
-		 * @return 序列化的Xml对象
+		 * @return 序列化后的Xml对象
 		 * 
 		 */		
 		function encode(nodeName:String, obj:Object):XML;

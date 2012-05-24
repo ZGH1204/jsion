@@ -7,6 +7,11 @@ package jsion.core.serialize.res
 	import jsion.HashMap;
 	import jsion.utils.ArrayUtil;
 
+	/**
+	 * 图片资源序列化工具
+	 * @author Jsion
+	 * 
+	 */	
 	internal class ResSerializeUtil
 	{
 		/**

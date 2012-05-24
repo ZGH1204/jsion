@@ -11,6 +11,9 @@ package jsion.core.serialize.xml
 			transfer = new XmlPropertyTransfer();
 		}
 		
+		/**
+		 * @copy jsion.core.serialize.xml.IXmlSerialize#encode()
+		 */		
 		public function encode(nodeName:String, obj:Object):XML
 		{
 			var rlt:String = "<" + nodeName + " ";
@@ -29,6 +32,9 @@ package jsion.core.serialize.xml
 			return new XML(rlt);
 		}
 		
+		/**
+		 * @copy jsion.core.serialize.xml.IXmlSerialize#decode()
+		 */		
 		public function decode(obj:Object, xml:XML):void
 		{
 			var attributes:XMLList = xml.attributes();

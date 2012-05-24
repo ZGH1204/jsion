@@ -1,5 +1,10 @@
 package jsion.utils
 {
+	/**
+	 * 整数工具
+	 * @author Jsion
+	 * 
+	 */	
 	internal class IntHelper
 	{
 		/**

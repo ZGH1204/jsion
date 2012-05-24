@@ -2,10 +2,21 @@ package jsion.utils
 {
 	import flash.events.Event;
 
+	/**
+	 * 延迟执行 使用ENTER_FRAME事件
+	 * @author Jsion
+	 * 
+	 */	
 	public class DelayUtil
 	{
 		private static var list:Array = [];
 		
+		/**
+		 * 延迟执行指定函数
+		 * @param fn 要延迟执行的无参数函数
+		 * @param delay 延迟帧数
+		 * 
+		 */		
 		public static function setDelayApply(fn:Function, delay:int = 5):void
 		{
 			if(fn == null) return;
@@ -24,6 +35,11 @@ package jsion.utils
 			list.push(obj);
 		}
 		
+		/**
+		 * 移除延迟执行函数
+		 * @param fn 要移除的函数
+		 * 
+		 */		
 		public static function removeDelayApply(fn:Function):void
 		{
 			for(var i:int = 0; i < list.length; i++)
@@ -60,6 +76,11 @@ package jsion.utils
 }
 import jsion.IDispose;
 
+/**
+ * 延迟信息
+ * @author Jsion
+ * 
+ */
 class DelayInfo implements IDispose
 {
 	public var fn:Function;
