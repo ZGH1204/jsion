@@ -4,7 +4,7 @@ package jsion.display
 	import flash.events.MouseEvent;
 	
 	import jsion.comps.CompUtil;
-	import jsion.datas.ToggleGroup;
+	import jsion.comps.ToggleGroup;
 	import jsion.events.StateEvent;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.StringUtil;
