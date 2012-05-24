@@ -206,7 +206,7 @@ package jsion.debug
 			{
 				for(var i:int = 0; i < args.length; i++)
 				{
-					if(args[i] is String) continue;
+					if(args[i] is String || args[i] is Number) continue;
 					
 					args[i] = getObjectStr(args[i])
 				}
@@ -230,7 +230,7 @@ package jsion.debug
 			{
 				for(var i:int = 0; i < args.length; i++)
 				{
-					if(args[i] is String) continue;
+					if(args[i] is String || args[i] is Number) continue;
 					
 					args[i] = getObjectStr(args[i])
 				}
@@ -254,7 +254,7 @@ package jsion.debug
 			{
 				for(var i:int = 0; i < args.length; i++)
 				{
-					if(args[i] is String) continue;
+					if(args[i] is String || args[i] is Number) continue;
 					
 					args[i] = getObjectStr(args[i])
 				}
@@ -278,7 +278,7 @@ package jsion.debug
 			{
 				for(var i:int = 0; i < args.length; i++)
 				{
-					if(args[i] is String) continue;
+					if(args[i] is String || args[i] is Number) continue;
 					
 					args[i] = getObjectStr(args[i])
 				}
@@ -347,6 +347,8 @@ package jsion.debug
 			var cssText:String = m_loader.data as String;
 			
 			m_style.parseCSS(cssText);
+			m_textField.styleSheet = null;
+			m_textField.styleSheet = m_style;
 			
 			updateHtmlText();
 		}
@@ -367,12 +369,14 @@ package jsion.debug
 		{
 			var htmlText:String = "";
 			
+			m_textField.text = "";
+			
 			for each(var str:String in m_list)
 			{
 				htmlText += str;
 			}
 			
-			m_textField.htmlText = format("<0>" + htmlText + "</0>", TRACER_TAG);
+			m_textField.htmlText = format("<{0}>" + htmlText + "</{0}>", TRACER_TAG);
 			m_textField.scrollV = m_textField.maxScrollV;
 		}
 		
