@@ -25,6 +25,21 @@ namespace CenterServer
             Validated = false;
         }
 
+        public override void SendTcp(GamePacket pkg)
+        {
+            if (Validated) base.SendTcp(pkg);
+        }
+
+        public override void HandlePacket(int code, GamePacket packet)
+        {
+            if (Validated) base.HandlePacket(code, packet);
+        }
+
+        public override void HandlePacket(GamePacket packet)
+        {
+            if (Validated) base.HandlePacket(packet);
+        }
+
         //protected override void Initialize()
         //{
         //    m_handlers = new PacketHandlers(this);
