@@ -13,6 +13,17 @@ package jsion.display
 	public class Box extends Component
 	{
 		/**
+		 * @copy jsion.comps.Component#WIDTH
+		 */		
+		public static const WIDTH:String = Component.WIDTH;
+		
+		/**
+		 * @copy jsion.comps.Component#HEIGHT
+		 */		
+		public static const HEIGHT:String = Component.HEIGHT;
+		
+		
+		/**
 		 * 水平左边对齐，当type等于VERTICAL时有效。
 		 */		
 		public static const LEFT:String = CompGlobal.LEFT;
@@ -67,6 +78,9 @@ package jsion.display
 			super();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function initialize():void
 		{
 			super.initialize();
