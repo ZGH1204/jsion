@@ -11,12 +11,12 @@ package jsion.comps
 	public class Component extends JsionSprite
 	{
 		/**
-		 * 宽度属性改变标识
+		 * 宽度属性变更
 		 */		
 		public static const WIDTH:String = "width";
 		
 		/**
-		 * 宽度属性改变标识
+		 * 高度属性变更
 		 */		
 		public static const HEIGHT:String = "height";
 		

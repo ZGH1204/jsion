@@ -18,46 +18,132 @@ package jsion.display
 	 */	
 	public class ToggleButton extends LabelButton
 	{
-		private var m_selectedUpImage:DisplayObject;
-		private var m_selectedOverImage:DisplayObject;
-		private var m_selectedDownImage:DisplayObject;
-		private var m_selectedDisableImage:DisplayObject;
+		/**
+		 * @copy jsion.display.LabelButton#WIDTH
+		 */		
+		public static const WIDTH:String = LabelButton.WIDTH;
+		
+		/**
+		 * @copy jsion.display.LabelButton#HEIGHT
+		 */		
+		public static const HEIGHT:String = LabelButton.HEIGHT;
+		
+		/**
+		 * @copy jsion.display.LabelButton#STATEIMAGE
+		 */		
+		public static const STATEIMAGE:String = LabelButton.STATEIMAGE;
+		/**
+		 * @copy jsion.display.LabelButton#STATEFILTERS
+		 */		
+		public static const STATEFILTERS:String = LabelButton.STATEFILTERS;
+		
+		/**
+		 * @copy jsion.display.LabelButton#OFFSET
+		 */		
+		public static const OFFSET:String = LabelButton.OFFSET;
+		
+		/**
+		 * @copy jsion.display.LabelButton#LEFT
+		 */		
+		public static const LEFT:String = LabelButton.LEFT;
+		
+		/**
+		 * @copy jsion.display.LabelButton#RIGHT
+		 */		
+		public static const RIGHT:String = LabelButton.RIGHT;
+		
+		/**
+		 * @copy jsion.display.LabelButton#CENTER
+		 */		
+		public static const CENTER:String = LabelButton.CENTER;
+		
+		/**
+		 * @copy jsion.display.LabelButton#TOP
+		 */		
+		public static const TOP:String = LabelButton.TOP;
+		
+		/**
+		 * @copy jsion.display.LabelButton#BOTTOM
+		 */		
+		public static const BOTTOM:String = LabelButton.BOTTOM;
+		
+		/**
+		 * @copy jsion.display.LabelButton#MIDDLE
+		 */		
+		public static const MIDDLE:String = LabelButton.MIDDLE;
+		
+		/**
+		 * @copy jsion.display.LabelButton#LABELALIGN
+		 */		
+		public static const LABELALIGN:String = LabelButton.LABELALIGN;
+		
+		/**
+		 * @copy jsion.display.LabelButton#LABELFILTERS
+		 */		
+		public static const LABELFILTERS:String = LabelButton.LABELFILTERS;
 		
 		
-		private var m_selectedOffsetX:Number = 0;
-		private var m_selectedOffsetY:Number = 0;
-		private var m_selectedOverOffsetX:Number = 0;
-		private var m_selectedOverOffsetY:Number = 0;
-		private var m_selectedDownOffsetX:Number = 0;
-		private var m_selectedDownOffsetY:Number = 0;
+		/** @private */
+		protected var m_selectedUpImage:DisplayObject;
+		/** @private */
+		protected var m_selectedOverImage:DisplayObject;
+		/** @private */
+		protected var m_selectedDownImage:DisplayObject;
+		/** @private */
+		protected var m_selectedDisableImage:DisplayObject;
 		
 		
-		private var m_selectedUpFilters:Array;
-		private var m_selectedOverFilters:Array;
-		private var m_selectedDownFilters:Array;
-		private var m_selectedDisableFilters:Array;
+		/** @private */
+		protected var m_selectedOffsetX:int = 0;
+		/** @private */
+		protected var m_selectedOffsetY:int = 0;
+		/** @private */
+		protected var m_selectedOverOffsetX:int = 0;
+		/** @private */
+		protected var m_selectedOverOffsetY:int = 0;
+		/** @private */
+		protected var m_selectedDownOffsetX:int = 0;
+		/** @private */
+		protected var m_selectedDownOffsetY:int = 0;
+		
+		
+		/** @private */
+		protected var m_selectedUpFilters:Array;
+		/** @private */
+		protected var m_selectedOverFilters:Array;
+		/** @private */
+		protected var m_selectedDownFilters:Array;
+		/** @private */
+		protected var m_selectedDisableFilters:Array;
 		
 		
 		
-//		private var m_selectedLabelOffsetX:Number = 0;
-//		private var m_selectedLabelOffsetY:Number = 0;
-//		private var m_selectedLabelOverOffsetX:Number = 0;
-//		private var m_selectedLabelOverOffsetY:Number = 0;
-//		private var m_selectedLabelDownOffsetX:Number = 0;
-//		private var m_selectedLabelDownOffsetY:Number = 0;
+//		private var m_selectedLabelOffsetX:int = 0;
+//		private var m_selectedLabelOffsetY:int = 0;
+//		private var m_selectedLabelOverOffsetX:int = 0;
+//		private var m_selectedLabelOverOffsetY:int = 0;
+//		private var m_selectedLabelDownOffsetX:int = 0;
+//		private var m_selectedLabelDownOffsetY:int = 0;
 		
 		
-		private var m_selectedLabelUpFilters:Array;
-		private var m_selectedLabelOverFilters:Array;
-		private var m_selectedLabelDownFilters:Array;
-		private var m_selectedLabelDisableFilters:Array;
+		/** @private */
+		protected var m_selectedLabelUpFilters:Array;
+		/** @private */
+		protected var m_selectedLabelOverFilters:Array;
+		/** @private */
+		protected var m_selectedLabelDownFilters:Array;
+		/** @private */
+		protected var m_selectedLabelDisableFilters:Array;
 		
 		
-		private var m_selectedText:String;
-		private var m_selectedTextColor:uint;
+		/** @private */
+		protected var m_selectedText:String;
+		/** @private */
+		protected var m_selectedTextColor:uint;
 		
 		
-		private var m_group:ToggleGroup;
+		/** @private */
+		protected var m_group:ToggleGroup;
 		
 		
 		public function ToggleButton()
@@ -127,46 +213,48 @@ package jsion.display
 		{
 			if(model.selected)
 			{
-				var image:DisplayObject;
-				
-				var tmpImage:DisplayObject;
-				
-				image = m_selectedUpImage;
-				
-				if(model.enabled == false)
+				if(m_changeProperties.containsKey(STATEIMAGE) || m_stateChange)
 				{
-					tmpImage = m_selectedDisableImage;
-				}
-				else if(model.pressed)
-				{
-					tmpImage = m_selectedDownImage;
-				}
-				else if(model.rollOver)
-				{
-					tmpImage = m_selectedOverImage;
-				}
-				
-				if(tmpImage != null)
-				{
-					image = tmpImage;
-				}
-				
-				if(image != m_curImage)
-				{
-					if(m_curImage && m_curImage.parent)
+					var image:DisplayObject;
+					
+					var tmpImage:DisplayObject;
+					
+					image = m_selectedUpImage;
+					
+					if(model.enabled == false)
 					{
-						m_curImage.parent.removeChild(m_curImage);
+						tmpImage = m_selectedDisableImage;
+					}
+					else if(model.pressed)
+					{
+						tmpImage = m_selectedDownImage;
+					}
+					else if(model.rollOver)
+					{
+						tmpImage = m_selectedOverImage;
 					}
 					
-					m_curImage = image;
-				}
-				
-				if(m_curImage)
-				{
-					m_curImage.width = m_width;
-					m_curImage.height = m_height;
+					if(tmpImage != null)
+					{
+						image = tmpImage;
+					}
 					
-					m_imageLayer.addChild(m_curImage);
+					if(image != m_curImage)
+					{
+						if(m_curImage && m_curImage.parent)
+						{
+							m_curImage.parent.removeChild(m_curImage);
+						}
+						
+						m_curImage = image;
+					}
+					
+					if(m_curImage)
+					{
+						m_imageLayer.addChild(m_curImage);
+					}
+					
+					updateImageSize();
 				}
 			}
 			else
@@ -182,35 +270,38 @@ package jsion.display
 		{
 			if(model.selected)
 			{
-				var filters:Array;
-				var tmpFilters:Array;
-				
-				filters = m_selectedUpFilters;
-				
-				if(model.enabled == false)
+				if(m_changeProperties.containsKey(STATEFILTERS) || m_stateChange)
 				{
-					tmpFilters = m_selectedDisableFilters;
+					var filters:Array;
+					var tmpFilters:Array;
+					
+					filters = m_selectedUpFilters;
+					
+					if(model.enabled == false)
+					{
+						tmpFilters = m_selectedDisableFilters;
+					}
+					else if(model.pressed)
+					{
+						tmpFilters = m_selectedDownFilters;
+					}
+					else if(model.rollOver)
+					{
+						tmpFilters = m_selectedOverFilters;
+					}
+					
+					if(tmpFilters != null)
+					{
+						filters = tmpFilters;
+					}
+					
+					if(filters != m_curFilters)
+					{
+						m_curFilters = filters;
+					}
+					
+					m_imageLayer.filters = m_curFilters;
 				}
-				else if(model.pressed)
-				{
-					tmpFilters = m_selectedDownFilters;
-				}
-				else if(model.rollOver)
-				{
-					tmpFilters = m_selectedOverFilters;
-				}
-				
-				if(tmpFilters != null)
-				{
-					filters = tmpFilters;
-				}
-				
-				if(filters != m_curFilters)
-				{
-					m_curFilters = filters;
-				}
-				
-				m_imageLayer.filters = m_curFilters;
 			}
 			else
 			{
@@ -223,41 +314,44 @@ package jsion.display
 		 */
 		override protected function updateLabelFilters():void
 		{
-			if(model.selected)
+			if(m_changeProperties.containsKey(LABELFILTERS) || m_stateChange)
 			{
-				var filters:Array;
-				var tmpFilters:Array;
-				
-				filters = m_selectedLabelUpFilters;
-				
-				if(model.enabled == false)
+				if(model.selected)
 				{
-					tmpFilters = m_selectedLabelDisableFilters;
+					var filters:Array;
+					var tmpFilters:Array;
+					
+					filters = m_selectedLabelUpFilters;
+					
+					if(model.enabled == false)
+					{
+						tmpFilters = m_selectedLabelDisableFilters;
+					}
+					else if(model.pressed)
+					{
+						tmpFilters = m_selectedLabelDownFilters;
+					}
+					else if(model.rollOver)
+					{
+						tmpFilters = m_selectedLabelOverFilters;
+					}
+					
+					if(tmpFilters != null)
+					{
+						filters = tmpFilters;
+					}
+					
+					if(filters != m_labelCurFilters)
+					{
+						m_labelCurFilters = filters;
+					}
+					
+					m_label.filters = m_labelCurFilters;
 				}
-				else if(model.pressed)
+				else
 				{
-					tmpFilters = m_selectedLabelDownFilters;
+					super.updateLabelFilters();
 				}
-				else if(model.rollOver)
-				{
-					tmpFilters = m_selectedLabelOverFilters;
-				}
-				
-				if(tmpFilters != null)
-				{
-					filters = tmpFilters;
-				}
-				
-				if(filters != m_labelCurFilters)
-				{
-					m_labelCurFilters = filters;
-				}
-				
-				m_label.filters = m_labelCurFilters;
-			}
-			else
-			{
-				super.updateLabelFilters();
 			}
 		}
 		
@@ -266,37 +360,44 @@ package jsion.display
 		 */
 		override protected function updateLabelPos():void
 		{
-			if(model.selected)
+			if(m_labelChange || m_stateChange || 
+				m_changeProperties.containsKey(LABELALIGN) || 
+				m_changeProperties.containsKey(WIDTH) || 
+				m_changeProperties.containsKey(HEIGHT) || 
+				m_changeProperties.containsKey(OFFSET))
 			{
-				m_label.x = m_label.y = 0;
-				
-				m_rect.width = m_label.width;
-				m_rect.height = m_label.height;
-				
-				CompUtil.layoutPosition(width, height, m_hAlign, m_hOffset, m_vAlign, m_vOffset, m_rect);
-				
-				if(model.pressed)
+				if(model.selected)
 				{
-					m_rect.x += m_selectedDownOffsetX;
-					m_rect.y += m_selectedDownOffsetY;
-				}
-				else if(model.rollOver)
-				{
-					m_rect.x += m_selectedOverOffsetX;
-					m_rect.y += m_selectedOverOffsetY;
+					m_label.x = m_label.y = 0;
+					
+					m_rect.width = m_label.width;
+					m_rect.height = m_label.height;
+					
+					CompUtil.layoutPosition(width, height, m_hAlign, m_hOffset, m_vAlign, m_vOffset, m_rect);
+					
+					if(model.pressed)
+					{
+						m_rect.x += m_selectedDownOffsetX;
+						m_rect.y += m_selectedDownOffsetY;
+					}
+					else if(model.rollOver)
+					{
+						m_rect.x += m_selectedOverOffsetX;
+						m_rect.y += m_selectedOverOffsetY;
+					}
+					else
+					{
+						m_rect.x += m_selectedOffsetX;
+						m_rect.y += m_selectedOffsetY;
+					}
+					
+					m_label.x = m_rect.x;
+					m_label.y = m_rect.y;
 				}
 				else
 				{
-					m_rect.x += m_selectedOffsetX;
-					m_rect.y += m_selectedOffsetY;
+					super.updateLabelPos();
 				}
-				
-				m_label.x = m_rect.x;
-				m_label.y = m_rect.y;
-			}
-			else
-			{
-				super.updateLabelPos();
 			}
 		}
 		
@@ -307,23 +408,26 @@ package jsion.display
 		{
 			if(model.selected)
 			{
-				m_curImage.x = 0;
-				m_curImage.y = 0;
-				
-				if(model.pressed)
+				if(m_stateChange)
 				{
-					m_curImage.x += m_selectedDownOffsetX;
-					m_curImage.y += m_selectedDownOffsetY;
-				}
-				else if(model.rollOver)
-				{
-					m_curImage.x += m_selectedOverOffsetX;
-					m_curImage.y += m_selectedOverOffsetY;
-				}
-				else
-				{
-					m_curImage.x += m_selectedOffsetX;
-					m_curImage.y += m_selectedOffsetY;
+					m_imageLayer.x = 0;
+					m_imageLayer.y = 0;
+					
+					if(model.pressed)
+					{
+						m_imageLayer.x += m_selectedDownOffsetX;
+						m_imageLayer.y += m_selectedDownOffsetY;
+					}
+					else if(model.rollOver)
+					{
+						m_imageLayer.x += m_selectedOverOffsetX;
+						m_imageLayer.y += m_selectedOverOffsetY;
+					}
+					else
+					{
+						m_imageLayer.x += m_selectedOffsetX;
+						m_imageLayer.y += m_selectedOffsetY;
+					}
 				}
 			}
 			else
@@ -483,13 +587,13 @@ package jsion.display
 		/**
 		 * 当按钮为选中状态，按钮状态显示对象x坐标偏移量
 		 */
-		public function get selectedOffsetX():Number
+		public function get selectedOffsetX():int
 		{
 			return m_selectedOffsetX;
 		}
 		
 		/** @private */
-		public function set selectedOffsetX(value:Number):void
+		public function set selectedOffsetX(value:int):void
 		{
 			if(m_selectedOffsetX != value)
 			{
@@ -502,13 +606,13 @@ package jsion.display
 		/**
 		 * 当按钮为选中状态，按钮状态显示对象y坐标偏移量
 		 */
-		public function get selectedOffsetY():Number
+		public function get selectedOffsetY():int
 		{
 			return m_selectedOffsetY;
 		}
 		
 		/** @private */
-		public function set selectedOffsetY(value:Number):void
+		public function set selectedOffsetY(value:int):void
 		{
 			if(m_selectedOffsetY != value)
 			{
@@ -521,13 +625,13 @@ package jsion.display
 		/**
 		 * 当按钮为选中状态，鼠标经过状态显示对象x坐标偏移量
 		 */
-		public function get selectedOverOffsetX():Number
+		public function get selectedOverOffsetX():int
 		{
 			return m_selectedOverOffsetX;
 		}
 		
 		/** @private */
-		public function set selectedOverOffsetX(value:Number):void
+		public function set selectedOverOffsetX(value:int):void
 		{
 			if(m_selectedOverOffsetX != value)
 			{
@@ -540,13 +644,13 @@ package jsion.display
 		/**
 		 * 当按钮为选中状态，鼠标经过状态显示对象y坐标偏移量
 		 */
-		public function get selectedOverOffsetY():Number
+		public function get selectedOverOffsetY():int
 		{
 			return m_selectedOverOffsetY;
 		}
 		
 		/** @private */
-		public function set selectedOverOffsetY(value:Number):void
+		public function set selectedOverOffsetY(value:int):void
 		{
 			if(m_selectedOverOffsetY != value)
 			{
@@ -559,13 +663,13 @@ package jsion.display
 		/**
 		 * 当按钮为选中状态，鼠标按下状态显示对象x坐标偏移量
 		 */
-		public function get selectedDownOffsetX():Number
+		public function get selectedDownOffsetX():int
 		{
 			return m_selectedDownOffsetX;
 		}
 		
 		/** @private */
-		public function set selectedDownOffsetX(value:Number):void
+		public function set selectedDownOffsetX(value:int):void
 		{
 			if(m_selectedOverOffsetY != value)
 			{
@@ -578,13 +682,13 @@ package jsion.display
 		/**
 		 * 当按钮为选中状态，鼠标按下状态显示对象y坐标偏移量
 		 */
-		public function get selectedDownOffsetY():Number
+		public function get selectedDownOffsetY():int
 		{
 			return m_selectedDownOffsetY;
 		}
 		
 		/** @private */
-		public function set selectedDownOffsetY(value:Number):void
+		public function set selectedDownOffsetY(value:int):void
 		{
 			if(m_selectedDownOffsetY != value)
 			{
@@ -684,13 +788,13 @@ package jsion.display
 //		/**
 //		 * 当按钮为选中状态，文本的x坐标偏移量
 //		 */
-//		public function get selectedLabelOffsetX():Number
+//		public function get selectedLabelOffsetX():int
 //		{
 //			return m_selectedLabelOffsetX;
 //		}
 //		
 //		/** @private */
-//		public function set selectedLabelOffsetX(value:Number):void
+//		public function set selectedLabelOffsetX(value:int):void
 //		{
 //			if(m_selectedLabelOffsetX != value)
 //			{
@@ -703,13 +807,13 @@ package jsion.display
 //		/**
 //		 * 当按钮为选中状态，文本的y坐标偏移量
 //		 */
-//		public function get selectedLabelOffsetY():Number
+//		public function get selectedLabelOffsetY():int
 //		{
 //			return m_selectedLabelOffsetY;
 //		}
 //		
 //		/** @private */
-//		public function set selectedLabelOffsetY(value:Number):void
+//		public function set selectedLabelOffsetY(value:int):void
 //		{
 //			if(m_selectedLabelOffsetY != value)
 //			{
@@ -722,13 +826,13 @@ package jsion.display
 //		/**
 //		 * 当按钮为选中状态，鼠标经过时文本的x坐标偏移量
 //		 */
-//		public function get selectedLabelOverOffsetX():Number
+//		public function get selectedLabelOverOffsetX():int
 //		{
 //			return m_selectedLabelOverOffsetX;
 //		}
 //		
 //		/** @private */
-//		public function set selectedLabelOverOffsetX(value:Number):void
+//		public function set selectedLabelOverOffsetX(value:int):void
 //		{
 //			if(m_selectedLabelOverOffsetX != value)
 //			{
@@ -741,13 +845,13 @@ package jsion.display
 //		/**
 //		 * 当按钮为选中状态，鼠标经过时文本的y坐标偏移量
 //		 */
-//		public function get selectedLabelOverOffsetY():Number
+//		public function get selectedLabelOverOffsetY():int
 //		{
 //			return m_selectedLabelOverOffsetY;
 //		}
 //		
 //		/** @private */
-//		public function set selectedLabelOverOffsetY(value:Number):void
+//		public function set selectedLabelOverOffsetY(value:int):void
 //		{
 //			if(m_selectedLabelOverOffsetY != value)
 //			{
@@ -760,13 +864,13 @@ package jsion.display
 //		/**
 //		 * 当按钮为选中状态，鼠标按下时文本的x坐标偏移量
 //		 */
-//		public function get selectedLabelDownOffsetX():Number
+//		public function get selectedLabelDownOffsetX():int
 //		{
 //			return m_selectedLabelDownOffsetX;
 //		}
 //		
 //		/** @private */
-//		public function set selectedLabelDownOffsetX(value:Number):void
+//		public function set selectedLabelDownOffsetX(value:int):void
 //		{
 //			if(m_selectedLabelDownOffsetX != value)
 //			{
@@ -779,13 +883,13 @@ package jsion.display
 //		/**
 //		 * 当按钮为选中状态，鼠标经过时文本的y坐标偏移量
 //		 */
-//		public function get selectedLabelDownOffsetY():Number
+//		public function get selectedLabelDownOffsetY():int
 //		{
 //			return m_selectedLabelDownOffsetY;
 //		}
 //		
 //		/** @private */
-//		public function set selectedLabelDownOffsetY(value:Number):void
+//		public function set selectedLabelDownOffsetY(value:int):void
 //		{
 //			if(m_selectedLabelDownOffsetY != value)
 //			{
