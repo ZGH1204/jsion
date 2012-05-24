@@ -7,6 +7,7 @@ package
 	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
 	
+	import jsion.comps.ToggleGroup;
 	import jsion.debug.DEBUG;
 	import jsion.display.CheckBox;
 	import jsion.display.LabelButton;
@@ -71,8 +72,11 @@ package
 		
 		private function testToggleButton():void
 		{
-			var toggleBtn:ToggleButton = new ToggleButton();
+			var group:ToggleGroup = new ToggleGroup();
 			
+			var toggleBtn:ToggleButton;
+			
+			toggleBtn = new ToggleButton();
 			toggleBtn.beginChanges();
 			toggleBtn.x = 80;
 			toggleBtn.y = 100;
@@ -98,6 +102,82 @@ package
 			toggleBtn.labelOverFilters = [new BlurFilter(2, 2, 1)];
 			toggleBtn.selectedLabelOverFilters = [new BlurFilter(2, 2, 1)];
 			toggleBtn.commitChanges();
+			
+			group.add(toggleBtn);
+			
+			addChild(toggleBtn);
+			
+			
+			
+			
+			
+			
+			
+			toggleBtn = new ToggleButton();
+			toggleBtn.beginChanges();
+			toggleBtn.x = 80;
+			toggleBtn.y = 160;
+			
+			toggleBtn.upImage = new m_cls();
+			toggleBtn.overFilters = [new BlurFilter(2, 2, 1)];
+			//			toggleBtn.overOffsetX = 1;
+			//			toggleBtn.overOffsetY = 1;
+			//			toggleBtn.downOffsetX = 1;
+			//			toggleBtn.downOffsetY = 1;
+			
+			toggleBtn.selectedUpImage = new m_cls2();
+			toggleBtn.selectedOverFilters = [new BlurFilter(2, 2, 1)];
+			//			toggleBtn.selectedOverOffsetX = 1;
+			//			toggleBtn.selectedOverOffsetY = 1;
+			//			toggleBtn.selectedDownOffsetX = 1;
+			//			toggleBtn.selectedDownOffsetY = 1;
+			
+			toggleBtn.parseCSS("j{display: inline; color: #FFFFFF;} s{display: inline; color: #FFFF00;}");
+			toggleBtn.label = "To<j>gg</j><s>le</s>";
+			toggleBtn.labelColor = 0xFF8040;
+			toggleBtn.selectedLabelColor = 0x01;
+			toggleBtn.labelOverFilters = [new BlurFilter(2, 2, 1)];
+			toggleBtn.selectedLabelOverFilters = [new BlurFilter(2, 2, 1)];
+			toggleBtn.commitChanges();
+			
+			group.add(toggleBtn);
+			
+			addChild(toggleBtn);
+			
+			
+			
+			
+			
+			
+			
+			toggleBtn = new ToggleButton();
+			toggleBtn.beginChanges();
+			toggleBtn.x = 80;
+			toggleBtn.y = 220;
+			
+			toggleBtn.upImage = new m_cls();
+			toggleBtn.overFilters = [new BlurFilter(2, 2, 1)];
+			//			toggleBtn.overOffsetX = 1;
+			//			toggleBtn.overOffsetY = 1;
+			//			toggleBtn.downOffsetX = 1;
+			//			toggleBtn.downOffsetY = 1;
+			
+			toggleBtn.selectedUpImage = new m_cls2();
+			toggleBtn.selectedOverFilters = [new BlurFilter(2, 2, 1)];
+			//			toggleBtn.selectedOverOffsetX = 1;
+			//			toggleBtn.selectedOverOffsetY = 1;
+			//			toggleBtn.selectedDownOffsetX = 1;
+			//			toggleBtn.selectedDownOffsetY = 1;
+			
+			toggleBtn.parseCSS("j{display: inline; color: #FFFFFF;} s{display: inline; color: #FFFF00;}");
+			toggleBtn.label = "To<j>gg</j><s>le</s>";
+			toggleBtn.labelColor = 0xFF8040;
+			toggleBtn.selectedLabelColor = 0x01;
+			toggleBtn.labelOverFilters = [new BlurFilter(2, 2, 1)];
+			toggleBtn.selectedLabelOverFilters = [new BlurFilter(2, 2, 1)];
+			toggleBtn.commitChanges();
+			
+			group.add(toggleBtn);
 			
 			addChild(toggleBtn);
 		}
