@@ -9,7 +9,7 @@ package jsion.comps
 	public class CompGlobal
 	{
 		/**
-		 * 坐标(0, 0)点
+		 * (0, 0)坐标点
 		 */		
 		public static const ZeroPoint:Point = new Point();
 		
@@ -28,16 +28,34 @@ package jsion.comps
 //		
 //		public static const HGAP:String = "hGap";
 		
+		/**
+		 * 其值为："left"
+		 */		
 		public static const LEFT:String = "left";
 		
+		/**
+		 * 其值为："right"
+		 */		
 		public static const RIGHT:String = "right";
 		
+		/**
+		 * 其值为："center"
+		 */		
 		public static const CENTER:String = "center";
 		
+		/**
+		 * 其值为："top"
+		 */		
 		public static const TOP:String = "top";
 		
+		/**
+		 * 其值为："bottom"
+		 */		
 		public static const BOTTOM:String = "bottom";
 		
+		/**
+		 * 其值为："middle"
+		 */		
 		public static const MIDDLE:String = "middle";
 		
 		
@@ -54,9 +72,14 @@ package jsion.comps
 //		public static const OFFSET_X:String = "offsetX";
 //		public static const OFFSET_Y:String = "offsetY";
 		
-		
+		/**
+		 * 其值为："scale"
+		 */		
 		public static const SCALE:String = "scale";
 		
+		/**
+		 * 其值为："tile"
+		 */		
 		public static const TILE:String = "tile";
 		
 	}

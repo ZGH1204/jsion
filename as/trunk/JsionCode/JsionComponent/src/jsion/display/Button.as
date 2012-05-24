@@ -18,6 +18,16 @@ package jsion.display
 	public class Button extends Component
 	{
 		/**
+		 * @copy jsion.comps.Component#WIDTH
+		 */		
+		public static const WIDTH:String = Component.WIDTH;
+		
+		/**
+		 * @copy jsion.comps.Component#HEIGHT
+		 */		
+		public static const HEIGHT:String = Component.HEIGHT;
+		
+		/**
 		 * 状态显示对象资源变更
 		 */		
 		public static const STATEIMAGE:String = "stateImage";
@@ -41,30 +51,38 @@ package jsion.display
 		protected var m_curFilters:Array;
 		
 		
-		private var m_upImage:DisplayObject;
-		private var m_overImage:DisplayObject;
-		private var m_downImage:DisplayObject;
-		private var m_disableImage:DisplayObject;
+		/** @private */
+		protected var m_upImage:DisplayObject;
+		/** @private */
+		protected var m_overImage:DisplayObject;
+		/** @private */
+		protected var m_downImage:DisplayObject;
+		/** @private */
+		protected var m_disableImage:DisplayObject;
 		
 		
 		/** @private */
-		protected var m_offsetX:Number = 0;
+		protected var m_offsetX:int = 0;
 		/** @private */
-		protected var m_offsetY:Number = 0;
+		protected var m_offsetY:int = 0;
 		/** @private */
-		protected var m_overOffsetX:Number = 0;
+		protected var m_overOffsetX:int = 0;
 		/** @private */
-		protected var m_overOffsetY:Number = 0;
+		protected var m_overOffsetY:int = 0;
 		/** @private */
-		protected var m_downOffsetX:Number = 0;
+		protected var m_downOffsetX:int = 0;
 		/** @private */
-		protected var m_downOffsetY:Number = 0;
+		protected var m_downOffsetY:int = 0;
 		
 		
-		private var m_upFilters:Array;
-		private var m_overFilters:Array;
-		private var m_downFilters:Array;
-		private var m_disableFilters:Array;
+		/** @private */
+		protected var m_upFilters:Array;
+		/** @private */
+		protected var m_overFilters:Array;
+		/** @private */
+		protected var m_downFilters:Array;
+		/** @private */
+		protected var m_disableFilters:Array;
 		
 		
 		/** @private */
@@ -102,6 +120,9 @@ package jsion.display
 			addChild(m_imageLayer);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function initEvents():void
 		{
 			super.initEvents();
@@ -286,13 +307,13 @@ package jsion.display
 		/**
 		 * 按钮状态显示对象x坐标偏移量
 		 */
-		public function get offsetX():Number
+		public function get offsetX():int
 		{
 			return m_offsetX;
 		}
 		
 		/** @private */
-		public function set offsetX(value:Number):void
+		public function set offsetX(value:int):void
 		{
 			if(m_offsetX != value)
 			{
@@ -305,13 +326,13 @@ package jsion.display
 		/**
 		 * 按钮状态显示对象y坐标偏移量
 		 */
-		public function get offsetY():Number
+		public function get offsetY():int
 		{
 			return m_offsetY;
 		}
 		
 		/** @private */
-		public function set offsetY(value:Number):void
+		public function set offsetY(value:int):void
 		{
 			if(m_offsetY != value)
 			{
@@ -324,13 +345,13 @@ package jsion.display
 		/**
 		 * 按钮鼠标经过时状态显示对象x坐标偏移量
 		 */
-		public function get overOffsetX():Number
+		public function get overOffsetX():int
 		{
 			return m_overOffsetX;
 		}
 		
 		/** @private */
-		public function set overOffsetX(value:Number):void
+		public function set overOffsetX(value:int):void
 		{
 			if(m_overOffsetX != value)
 			{
@@ -343,13 +364,13 @@ package jsion.display
 		/**
 		 * 按钮鼠标经过时状态显示对象y坐标偏移量
 		 */
-		public function get overOffsetY():Number
+		public function get overOffsetY():int
 		{
 			return m_overOffsetY;
 		}
 		
 		/** @private */
-		public function set overOffsetY(value:Number):void
+		public function set overOffsetY(value:int):void
 		{
 			if(m_overOffsetY != value)
 			{
@@ -362,13 +383,13 @@ package jsion.display
 		/**
 		 * 按钮按下时状态显示对象x坐标偏移量
 		 */
-		public function get downOffsetX():Number
+		public function get downOffsetX():int
 		{
 			return m_downOffsetX;
 		}
 		
 		/** @private */
-		public function set downOffsetX(value:Number):void
+		public function set downOffsetX(value:int):void
 		{
 			if(m_downOffsetX != value)
 			{
@@ -381,13 +402,13 @@ package jsion.display
 		/**
 		 * 按钮按下时状态显示对象y坐标偏移量
 		 */
-		public function get downOffsetY():Number
+		public function get downOffsetY():int
 		{
 			return m_downOffsetY;
 		}
 		
 		/** @private */
-		public function set downOffsetY(value:Number):void
+		public function set downOffsetY(value:int):void
 		{
 			if(m_downOffsetY != value)
 			{
@@ -418,25 +439,15 @@ package jsion.display
 		{
 			super.onProppertiesUpdate();
 			
-			if(m_changeProperties.containsKey(STATEIMAGE) || m_stateChange)
-			{
-				updateCurrentStateImage();
-			}
+			updateCurrentStateImage();
 			
-			if(m_changeProperties.containsKey(STATEFILTERS) || m_stateChange)
-			{
-				updateCurrentStateFilters();
-				
-				m_stateChange = false;
-			}
+			updateCurrentStateFilters();
 			
-			if((m_changeProperties.containsKey(WIDTH) || m_changeProperties.containsKey(HEIGHT)) && m_curImage)
-			{
-				m_curImage.width = m_width;
-				m_curImage.height = m_height;
-			}
+			updateImageSize();
 			
-			if(m_curImage) updateImagePos();
+			updateImagePos();
+			
+			m_stateChange = false;
 		}
 		
 		/**
@@ -444,46 +455,48 @@ package jsion.display
 		 */		
 		protected function updateCurrentStateImage():void
 		{
-			var image:DisplayObject;
-			
-			var tmpImage:DisplayObject;
-			
-			image = m_upImage;
-			
-			if(model.enabled == false)
+			if(m_changeProperties.containsKey(STATEIMAGE) || m_stateChange)
 			{
-				tmpImage = m_disableImage;
-			}
-			else if(model.pressed)
-			{
-				tmpImage = m_downImage;
-			}
-			else if(model.rollOver)
-			{
-				tmpImage = m_overImage;
-			}
-			
-			if(tmpImage != null)
-			{
-				image = tmpImage;
-			}
-			
-			if(image != m_curImage)
-			{
-				if(m_curImage && m_curImage.parent)
+				var image:DisplayObject;
+				
+				var tmpImage:DisplayObject;
+				
+				image = m_upImage;
+				
+				if(model.enabled == false)
 				{
-					m_curImage.parent.removeChild(m_curImage);
+					tmpImage = m_disableImage;
+				}
+				else if(model.pressed)
+				{
+					tmpImage = m_downImage;
+				}
+				else if(model.rollOver)
+				{
+					tmpImage = m_overImage;
 				}
 				
-				m_curImage = image;
-			}
-			
-			if(m_curImage)
-			{
-				m_curImage.width = m_width;
-				m_curImage.height = m_height;
+				if(tmpImage != null)
+				{
+					image = tmpImage;
+				}
 				
-				m_imageLayer.addChild(m_curImage);
+				if(image != m_curImage)
+				{
+					if(m_curImage && m_curImage.parent)
+					{
+						m_curImage.parent.removeChild(m_curImage);
+					}
+					
+					m_curImage = image;
+				}
+				
+				if(m_curImage)
+				{
+					m_imageLayer.addChild(m_curImage);
+				}
+				
+				updateImageSize();
 			}
 		}
 		
@@ -492,56 +505,80 @@ package jsion.display
 		 */		
 		protected function updateCurrentStateFilters():void
 		{
-			var filters:Array;
-			var tmpFilters:Array;
-			
-			filters = m_upFilters;
-			
-			if(model.enabled == false)
+			if(m_changeProperties.containsKey(STATEFILTERS) || m_stateChange)
 			{
-				tmpFilters = m_disableFilters;
+				var filters:Array;
+				var tmpFilters:Array;
+				
+				filters = m_upFilters;
+				
+				if(model.enabled == false)
+				{
+					tmpFilters = m_disableFilters;
+				}
+				else if(model.pressed)
+				{
+					tmpFilters = m_downFilters;
+				}
+				else if(model.rollOver)
+				{
+					tmpFilters = m_overFilters;
+				}
+				
+				if(tmpFilters != null)
+				{
+					filters = tmpFilters;
+				}
+				
+				if(filters != m_curFilters)
+				{
+					m_curFilters = filters;
+				}
+				
+				m_imageLayer.filters = m_curFilters;
 			}
-			else if(model.pressed)
-			{
-				tmpFilters = m_downFilters;
-			}
-			else if(model.rollOver)
-			{
-				tmpFilters = m_overFilters;
-			}
-			
-			if(tmpFilters != null)
-			{
-				filters = tmpFilters;
-			}
-			
-			if(filters != m_curFilters)
-			{
-				m_curFilters = filters;
-			}
-			
-			m_imageLayer.filters = m_curFilters;
 		}
 		
+		/**
+		 * 更新当前状态显示对象的大小
+		 */		
+		protected function updateImageSize():void
+		{
+			if((m_stateChange || 
+				m_changeProperties.containsKey(STATEIMAGE) || 
+				m_changeProperties.containsKey(WIDTH) || 
+				m_changeProperties.containsKey(HEIGHT)) && m_curImage)
+			{
+				m_curImage.width = m_width;
+				m_curImage.height = m_height;
+			}
+		}
+		
+		/**
+		 * 更新当前状态显示对象的位置
+		 */		
 		protected function updateImagePos():void
 		{
-			m_curImage.x = 0;
-			m_curImage.y = 0;
-			
-			if(model.pressed)
+			if(m_stateChange)
 			{
-				m_curImage.x += m_downOffsetX;
-				m_curImage.y += m_downOffsetY;
-			}
-			else if(model.rollOver)
-			{
-				m_curImage.x += m_overOffsetX;
-				m_curImage.y += m_overOffsetY;
-			}
-			else
-			{
-				m_curImage.x += m_offsetX;
-				m_curImage.y += m_offsetY;
+				m_imageLayer.x = 0;
+				m_imageLayer.y = 0;
+				
+				if(model.pressed)
+				{
+					m_imageLayer.x += m_downOffsetX;
+					m_imageLayer.y += m_downOffsetY;
+				}
+				else if(model.rollOver)
+				{
+					m_imageLayer.x += m_overOffsetX;
+					m_imageLayer.y += m_overOffsetY;
+				}
+				else
+				{
+					m_imageLayer.x += m_offsetX;
+					m_imageLayer.y += m_offsetY;
+				}
 			}
 		}
 		

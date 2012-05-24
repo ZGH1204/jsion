@@ -18,39 +18,80 @@ package jsion.display
 	 */	
 	public class LabelButton extends Button
 	{
-		public static const LABELALIGN:String = "labelAlign";
-		public static const LABELFILTERS:String = "labelFilters";
-//		public static const LABELOFFSET:String = "labelOffset";
+		/**
+		 * @copy jsion.display.Button#WIDTH
+		 */		
+		public static const WIDTH:String = Button.WIDTH;
+		
+		/**
+		 * @copy jsion.display.Button#HEIGHT
+		 */		
+		public static const HEIGHT:String = Button.HEIGHT;
+		
+		/**
+		 * @copy jsion.display.Button#STATEIMAGE
+		 */		
+		public static const STATEIMAGE:String = Button.STATEIMAGE;
+		/**
+		 * @copy jsion.display.Button#STATEFILTERS
+		 */		
+		public static const STATEFILTERS:String = Button.STATEFILTERS;
+		
+		/**
+		 * @copy jsion.display.Button#OFFSET
+		 */		
+		public static const OFFSET:String = Button.OFFSET;
 		
 		/**
 		 * 水平左边对齐，用于 hAlign 属性。
+		 * @see jsion.comps.CompGlobal#LEFT
 		 */		
 		public static const LEFT:String = CompGlobal.LEFT;
 		
 		/**
 		 * 水平右边对齐，用于 hAlign 属性。
+		 * @see jsion.comps.CompGlobal#RIGHT
 		 */		
 		public static const RIGHT:String = CompGlobal.RIGHT;
 		
 		/**
 		 * 水平居中对齐，用于 hAlign 属性。
+		 * @see jsion.comps.CompGlobal#CENTER
 		 */		
 		public static const CENTER:String = CompGlobal.CENTER;
 		
 		/**
 		 * 垂直顶边对齐，用于 vAlign 属性。
+		 * @see jsion.comps.CompGlobal#TOP
 		 */		
 		public static const TOP:String = CompGlobal.TOP;
 		
 		/**
 		 * 垂直底边对齐，用于 vAlign 属性。
+		 * @see jsion.comps.CompGlobal#BOTTOM
 		 */		
 		public static const BOTTOM:String = CompGlobal.BOTTOM;
 		
 		/**
 		 * 垂直居中对齐，用于 vAlign 属性。
+		 * @see jsion.comps.CompGlobal#MIDDLE
 		 */		
 		public static const MIDDLE:String = CompGlobal.MIDDLE;
+		
+		/**
+		 * 文本对齐方式变更
+		 */		
+		public static const LABELALIGN:String = "labelAlign";
+		
+		/**
+		 * 文本滤镜变更
+		 */		
+		public static const LABELFILTERS:String = "labelFilters";
+		
+//		/**
+//		 * 文本偏移变更
+//		 */		
+//		public static const LABELOFFSET:String = "labelOffset";
 		
 		
 		private var m_text:String;
@@ -78,12 +119,12 @@ package jsion.display
 		private var m_labelDownFilters:Array;
 		private var m_labelDisableFilters:Array;
 		
-//		private var m_labelOffsetX:Number = 0;
-//		private var m_labelOffsetY:Number = 0;
-//		private var m_labelOverOffsetX:Number = 0;
-//		private var m_labelOverOffsetY:Number = 0;
-//		private var m_labelDownOffsetX:Number = 0;
-//		private var m_labelDownOffsetY:Number = 0;
+//		private var m_labelOffsetX:int = 0;
+//		private var m_labelOffsetY:int = 0;
+//		private var m_labelOverOffsetX:int = 0;
+//		private var m_labelOverOffsetY:int = 0;
+//		private var m_labelDownOffsetX:int = 0;
+//		private var m_labelDownOffsetY:int = 0;
 		
 		/** @private */
 		protected var m_rect:Rectangle;
@@ -145,24 +186,11 @@ package jsion.display
 		{
 			updateLabel();
 			
-			if(StringUtil.isNullOrEmpty(m_text) == false || m_labelChange)
-			{
-				validateSize();
-			}
+			validateSize();
 			
-			if(m_labelChange || m_stateChange || 
-				m_changeProperties.containsKey(LABELALIGN) || 
-				m_changeProperties.containsKey(WIDTH) || 
-				m_changeProperties.containsKey(HEIGHT) || 
-				m_changeProperties.containsKey(OFFSET))
-			{
-				updateLabelPos();
-			}
+			updateLabelPos();
 			
-			if(m_changeProperties.containsKey(LABELFILTERS) || m_stateChange)
-			{
-				updateLabelFilters();
-			}
+			updateLabelFilters();
 			
 			super.onProppertiesUpdate();
 		}
@@ -182,18 +210,21 @@ package jsion.display
 		 */		
 		protected function validateSize():void
 		{
-			if(m_width < m_label.width)
+			if(StringUtil.isNullOrEmpty(m_text) == false || m_labelChange)
 			{
-				m_width = m_label.width;
+				if(m_width < m_label.width)
+				{
+					m_width = m_label.width;
+					
+					m_changeProperties.put(Component.WIDTH, true);
+				}
 				
-				m_changeProperties.put(Component.WIDTH, true);
-			}
-			
-			if(m_height < m_label.height)
-			{
-				m_height = m_label.height;
-				
-				m_changeProperties.put(Component.HEIGHT, true);
+				if(m_height < m_label.height)
+				{
+					m_height = m_label.height;
+					
+					m_changeProperties.put(Component.HEIGHT, true);
+				}
 			}
 		}
 		
@@ -202,31 +233,38 @@ package jsion.display
 		 */		
 		protected function updateLabelPos():void
 		{
-			m_label.x = m_label.y = 0;
-			
-			m_rect.width = m_label.width;
-			m_rect.height = m_label.height;
-			
-			CompUtil.layoutPosition(width, height, m_hAlign, m_hOffset, m_vAlign, m_vOffset, m_rect);
-			
-			if(model.pressed)
+			if(m_labelChange || m_stateChange || 
+				m_changeProperties.containsKey(LABELALIGN) || 
+				m_changeProperties.containsKey(WIDTH) || 
+				m_changeProperties.containsKey(HEIGHT) || 
+				m_changeProperties.containsKey(OFFSET))
 			{
-				m_rect.x += m_downOffsetX;
-				m_rect.y += m_downOffsetY;
+				m_label.x = m_label.y = 0;
+				
+				m_rect.width = m_label.width;
+				m_rect.height = m_label.height;
+				
+				CompUtil.layoutPosition(width, height, m_hAlign, m_hOffset, m_vAlign, m_vOffset, m_rect);
+				
+				if(model.pressed)
+				{
+					m_rect.x += m_downOffsetX;
+					m_rect.y += m_downOffsetY;
+				}
+				else if(model.rollOver)
+				{
+					m_rect.x += m_overOffsetX;
+					m_rect.y += m_overOffsetY;
+				}
+				else
+				{
+					m_rect.x += m_offsetX;
+					m_rect.y += m_offsetY;
+				}
+				
+				m_label.x = m_rect.x;
+				m_label.y = m_rect.y;
 			}
-			else if(model.rollOver)
-			{
-				m_rect.x += m_overOffsetX;
-				m_rect.y += m_overOffsetY;
-			}
-			else
-			{
-				m_rect.x += m_offsetX;
-				m_rect.y += m_offsetY;
-			}
-			
-			m_label.x = m_rect.x;
-			m_label.y = m_rect.y;
 		}
 		
 		/**
@@ -234,35 +272,38 @@ package jsion.display
 		 */		
 		protected function updateLabelFilters():void
 		{
-			var filters:Array;
-			var tmpFilters:Array;
-			
-			filters = m_labelUpFilters;
-			
-			if(model.enabled == false)
+			if(m_changeProperties.containsKey(LABELFILTERS) || m_stateChange)
 			{
-				tmpFilters = m_labelDisableFilters;
+				var filters:Array;
+				var tmpFilters:Array;
+				
+				filters = m_labelUpFilters;
+				
+				if(model.enabled == false)
+				{
+					tmpFilters = m_labelDisableFilters;
+				}
+				else if(model.pressed)
+				{
+					tmpFilters = m_labelDownFilters;
+				}
+				else if(model.rollOver)
+				{
+					tmpFilters = m_labelOverFilters;
+				}
+				
+				if(tmpFilters != null)
+				{
+					filters = tmpFilters;
+				}
+				
+				if(filters != m_labelCurFilters)
+				{
+					m_labelCurFilters = filters;
+				}
+				
+				m_label.filters = m_labelCurFilters;
 			}
-			else if(model.pressed)
-			{
-				tmpFilters = m_labelDownFilters;
-			}
-			else if(model.rollOver)
-			{
-				tmpFilters = m_labelOverFilters;
-			}
-			
-			if(tmpFilters != null)
-			{
-				filters = tmpFilters;
-			}
-			
-			if(filters != m_labelCurFilters)
-			{
-				m_labelCurFilters = filters;
-			}
-			
-			m_label.filters = m_labelCurFilters;
 		}
 		
 		//==========================	Label组件属性	==========================
@@ -405,7 +446,7 @@ package jsion.display
 		//==========================	Label组件属性	==========================
 
 		/**
-		 * 获取或设置水平偏移量
+		 * 获取或设置文本水平偏移量
 		 */		
 		public function get hOffset():int
 		{
@@ -424,7 +465,7 @@ package jsion.display
 		}
 
 		/**
-		 * 获取或设置水平对齐方式
+		 * 获取或设置文本水平对齐方式
 		 * @default jsion.display.LabelButton.CENTER
 		 * @see jsion.display.LabelButton#vAlign
 		 * @throws Error 水平对齐方式错误。
@@ -452,7 +493,7 @@ package jsion.display
 		}
 
 		/**
-		 * 获取或设置垂直偏移量
+		 * 获取或设置文本垂直偏移量
 		 */		
 		public function get vOffset():int
 		{
@@ -471,7 +512,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 获取或设置垂直对齐方式
+		 * 获取或设置文本垂直对齐方式
 		 * @default jsion.display.LabelButton.MIDDLE
 		 * @see jsion.display.LabelButton#hAlign
 		 * @throws Error 垂直对齐方式错误。
@@ -577,13 +618,13 @@ package jsion.display
 //		/**
 //		 * 按钮文本的x坐标偏移量
 //		 */		
-//		public function get labelOffsetX():Number
+//		public function get labelOffsetX():int
 //		{
 //			return m_labelOffsetX;
 //		}
 //		
 //		/** @private */
-//		public function set labelOffsetX(value:Number):void
+//		public function set labelOffsetX(value:int):void
 //		{
 //			if(m_labelOffsetX != value)
 //			{
@@ -596,13 +637,13 @@ package jsion.display
 //		/**
 //		 * 按钮文本的y坐标偏移量
 //		 */		
-//		public function get labelOffsetY():Number
+//		public function get labelOffsetY():int
 //		{
 //			return m_labelOffsetY;
 //		}
 //		
 //		/** @private */
-//		public function set labelOffsetY(value:Number):void
+//		public function set labelOffsetY(value:int):void
 //		{
 //			if(m_labelOffsetY != value)
 //			{
@@ -615,13 +656,13 @@ package jsion.display
 //		/**
 //		 * 按钮鼠标经过时文本的x坐标偏移量
 //		 */		
-//		public function get labelOverOffsetX():Number
+//		public function get labelOverOffsetX():int
 //		{
 //			return m_labelOverOffsetX;
 //		}
 //		
 //		/** @private */
-//		public function set labelOverOffsetX(value:Number):void
+//		public function set labelOverOffsetX(value:int):void
 //		{
 //			if(m_labelOverOffsetX != value)
 //			{
@@ -634,13 +675,13 @@ package jsion.display
 //		/**
 //		 * 按钮鼠标经过时文本的y坐标偏移量
 //		 */		
-//		public function get labelOverOffsetY():Number
+//		public function get labelOverOffsetY():int
 //		{
 //			return m_labelOverOffsetY;
 //		}
 //		
 //		/** @private */
-//		public function set labelOverOffsetY(value:Number):void
+//		public function set labelOverOffsetY(value:int):void
 //		{
 //			if(m_labelOverOffsetY != value)
 //			{
@@ -653,13 +694,13 @@ package jsion.display
 //		/**
 //		 * 按钮按下经过时文本的x坐标偏移量
 //		 */		
-//		public function get labelDownOffsetX():Number
+//		public function get labelDownOffsetX():int
 //		{
 //			return m_labelDownOffsetX;
 //		}
 //		
 //		/** @private */
-//		public function set labelDownOffsetX(value:Number):void
+//		public function set labelDownOffsetX(value:int):void
 //		{
 //			if(m_labelDownOffsetX != value)
 //			{
@@ -672,13 +713,13 @@ package jsion.display
 //		/**
 //		 * 按钮按下经过时文本的y坐标偏移量
 //		 */		
-//		public function get labelDownOffsetY():Number
+//		public function get labelDownOffsetY():int
 //		{
 //			return m_labelDownOffsetY;
 //		}
 //		
 //		/** @private */
-//		public function set labelDownOffsetY(value:Number):void
+//		public function set labelDownOffsetY(value:int):void
 //		{
 //			if(m_labelDownOffsetY != value)
 //			{

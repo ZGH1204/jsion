@@ -88,10 +88,11 @@ package jsion.comps
 		 * @param vAlign 垂直对齐方式
 		 * @param vGap 垂直间隙
 		 * @param rect 对象范围 其中x、y位置属性用于存储计算结果
+		 * @param fix 坐标位置是否取整
 		 * @throws Error 水平对齐方式错误。
 		 * @throws Error 垂直对齐方式错误。
 		 */		
-		public static function layoutPosition(width:int, height:int, hAlign:String, hGap:int, vAlign:String, vGap:int, rect:Rectangle):void
+		public static function layoutPosition(width:int, height:int, hAlign:String, hGap:int, vAlign:String, vGap:int, rect:Rectangle, fix:Boolean = true):void
 		{
 			switch(hAlign)
 			{
@@ -128,6 +129,12 @@ package jsion.comps
 				default:
 					throw new Error("垂直对齐方式错误!");
 					break;
+			}
+			
+			if(fix)
+			{
+				rect.x = int(rect.x);
+				rect.y = int(rect.y);
 			}
 		}
 	}
