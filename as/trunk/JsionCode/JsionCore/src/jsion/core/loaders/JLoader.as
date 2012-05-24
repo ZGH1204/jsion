@@ -1174,7 +1174,7 @@ package jsion.core.loaders
 		}
 		
 		/**
-		 * 释放内在资源
+		 * 释放资源
 		 * 
 		 */		
 		public function dispose():void

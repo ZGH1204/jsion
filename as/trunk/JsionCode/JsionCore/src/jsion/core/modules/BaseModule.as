@@ -44,6 +44,9 @@ package jsion.core.modules
 		}
 		
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function dispose():void
 		{
 			stop();

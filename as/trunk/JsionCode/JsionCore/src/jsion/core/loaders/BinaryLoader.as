@@ -120,6 +120,9 @@ package jsion.core.loaders
 			_content = decrypt(data as ByteArray)
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function dispose():void
 		{
 			super.dispose();

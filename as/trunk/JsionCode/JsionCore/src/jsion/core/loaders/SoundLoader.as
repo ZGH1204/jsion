@@ -124,6 +124,9 @@ package jsion.core.loaders
 			super.onCompleteHandler(e);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function dispose():void
 		{
 			removeLoadEvent(_sound);
