@@ -20,11 +20,39 @@ package jsion.display
 	 */	
 	public class Label extends Component
 	{
+		/**
+		 * @copy jsion.comps.Component#WIDTH
+		 */		
+		public static const WIDTH:String = Component.WIDTH;
+		
+		/**
+		 * @copy jsion.comps.Component#HEIGHT
+		 */		
+		public static const HEIGHT:String = Component.HEIGHT;
+		
+		/**
+		 * 文本字符串变更
+		 */		
 		public static const TEXT:String = "text";
+		/**
+		 * 文本公共颜色变更
+		 */		
 		public static const TEXTCOLOR:String = "textColor";
+		/**
+		 * Html模式变更
+		 */		
 		public static const HTML:String = "html";
+		/**
+		 * 是否启用嵌入字体变更
+		 */		
 		public static const EMBEDFONTS:String = "embedFonts";
+		/**
+		 * 文本字符样式变更
+		 */		
 		public static const TEXTFORMAT:String = "textFormat";
+		/**
+		 * CSS样式变更
+		 */		
 		public static const STYLESHEET:String = "styleSheet";
 		
 		private var m_text:String;
