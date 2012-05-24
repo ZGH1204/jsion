@@ -80,6 +80,7 @@ package jsion.comps
 		{
 			if(btn == null) return;
 			
+			btn.group = this;
 			ArrayUtil.push(m_list, btn);
 			
 			if(m_selected == null && m_autoSelected)
