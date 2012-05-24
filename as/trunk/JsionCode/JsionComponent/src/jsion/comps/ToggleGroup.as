@@ -5,7 +5,7 @@ package jsion.comps
 	import jsion.utils.ArrayUtil;
 	
 	/**
-	 * ToggleButton编组
+	 * ToggleButton编组。支持多选。
 	 * @author Jsion
 	 * 
 	 */	
@@ -13,15 +13,35 @@ package jsion.comps
 	{
 		private var m_list:Array;
 		
+		private var m_selectedList:Array;
+		
 		private var m_selected:ToggleButton;
 		
 		private var m_autoSelected:Boolean;
 		
-		public function ToggleGroup()
+		private var m_multiple:Boolean;
+		
+		public function ToggleGroup(multiple:Boolean = false)
 		{
+			m_multiple = multiple
+			
 			m_list = [];
 			
+			if(m_multiple) m_selectedList = [];
+			
 			m_autoSelected = true;
+		}
+		
+		/**
+		 * 是否允许多选。
+		 * <ul>
+		 * <li>当允许多选时，autoSelected 自动选中属性无效，selected 选中对象无效 selectedList生效;</li>
+		 * <li>当不允许多选时，autoSelected 自动选中属性有效，selected 选中对象生效 selectedList无效;</li>
+		 * </ul>
+		 */		
+		public function get multiple():Boolean
+		{
+			return m_multiple;
 		}
 		
 		/**
@@ -49,10 +69,12 @@ package jsion.comps
 		}
 		
 		/**
-		 * 获取或设置选中对象
+		 * 获取或设置选中对象。
+		 * 当允许多选时，返回 null，请使用 selectedList 属性获取所有选中对象，setMultipleSelected() 方法设置选中/取消选中对象。
 		 */		
 		public function get selected():ToggleButton
 		{
+			if(m_multiple) return null;
 			return m_selected;
 		}
 		
@@ -61,6 +83,8 @@ package jsion.comps
 		 */		
 		public function set selected(value:ToggleButton):void
 		{
+			if(m_multiple) return;
+			
 			if(m_selected != value)
 			{
 				if(m_selected) m_selected.selected = false;
@@ -72,38 +96,73 @@ package jsion.comps
 		}
 		
 		/**
-		 * 将指定对象加入编组
-		 * @param btn 要加入的对象
-		 * 
+		 * 当允许多选时获取当前所有选中/取消选中的对象，否则为 null 。
 		 */		
-		public function add(btn:ToggleButton):void
+		public function get selectedList():Array
 		{
-			if(btn == null) return;
-			
-			btn.group = this;
-			ArrayUtil.push(m_list, btn);
-			
-			if(m_selected == null && m_autoSelected)
+			return m_selectedList;
+		}
+		
+		/**
+		 * 当允许多选时使用此方法设置选中对象，否则使用 selected 属性。
+		 */		
+		public function setMultipleSelected(button:ToggleButton):void
+		{
+			if(m_multiple)
 			{
-				m_selected = btn;
-				m_selected.selected = true;
-			}
-			else
-			{
-				btn.selected = false;
+				if(button.selected)
+				{
+					button.selected = false;
+					ArrayUtil.remove(m_selectedList, button);
+				}
+				else
+				{
+					button.selected = true;
+					ArrayUtil.push(m_selectedList, button);
+				}
 			}
 		}
 		
 		/**
-		 * 将指定的对象从编组中移除
+		 * 将指定的ToggleButton对象加入编组
+		 * @param btn 要加入的ToggleButton对象
+		 * 
+		 */		
+		public function add(button:ToggleButton):void
+		{
+			if(button == null) return;
+			
+			button.group = this;
+			ArrayUtil.push(m_list, button);
+			
+			if(m_multiple)
+			{
+				if(button.selected) ArrayUtil.push(m_selectedList, button);
+			}
+			else
+			{
+				if(m_selected == null && m_autoSelected)
+				{
+					m_selected = button;
+					m_selected.selected = true;
+				}
+				else
+				{
+					button.selected = false;
+				}
+			}
+		}
+		
+		/**
+		 * 将指定的对象从编组中移除。当不允许多选时，如果移除的对象为当前选中对象则根据 autoSelected 属性设置选中第一个对象。
 		 * @param btn 要移除的对象
 		 * 
 		 */		
-		public function remove(btn:ToggleButton):void
+		public function remove(button:ToggleButton):void
 		{
-			if(btn == null) return;
+			if(button == null) return;
 			
-			if(m_selected == btn)
+			if(m_selected == button)
 			{
 				m_selected = null;
 				
@@ -113,7 +172,9 @@ package jsion.comps
 				}
 			}
 			
-			ArrayUtil.remove(m_list, btn);
+			ArrayUtil.remove(m_list, button);
+			
+			ArrayUtil.remove(m_selectedList, button);
 		}
 		
 		/**
@@ -123,6 +184,9 @@ package jsion.comps
 		{
 			ArrayUtil.removeAll(m_list);
 			m_list = null;
+			
+			ArrayUtil.removeAll(m_selectedList);
+			m_selectedList = null;
 			
 			m_selected = null;
 		}

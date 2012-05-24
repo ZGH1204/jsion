@@ -167,7 +167,14 @@ package jsion.display
 		{
 			if(m_group)
 			{
-				m_group.selected = this;
+				if(m_group.multiple)
+				{
+					m_group.setMultipleSelected(this);
+				}
+				else
+				{
+					m_group.selected = this;
+				}
 			}
 			else
 			{
