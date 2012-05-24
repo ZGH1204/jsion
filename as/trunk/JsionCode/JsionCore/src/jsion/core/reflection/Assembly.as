@@ -6,6 +6,11 @@ package jsion.core.reflection
 	
 	import jsion.utils.*;
 
+	/**
+	 * 类库程序集
+	 * @author Jsion
+	 * 
+	 */	
 	public class Assembly extends EventDispatcher
 	{
 		public var clsList:Array;

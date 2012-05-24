@@ -9,6 +9,11 @@ package jsion.core.messages
 	import jsion.utils.JUtil;
 	import jsion.utils.StringUtil;
 
+	/**
+	 * 消息接收者基类
+	 * @author Jsion
+	 * 
+	 */	
 	public class MsgReceiver implements IMsgReceiver, IDispose
 	{
 		private var m_id:String;
@@ -73,7 +78,8 @@ package jsion.core.messages
 		
 		
 		/**
-		 * 接收者ID
+		 * @copy jsion.core.messages.IMsgReceiver#id
+		 * @see 
 		 */		
 		public function get id():String
 		{
@@ -81,9 +87,8 @@ package jsion.core.messages
 		}
 		
 		/**
-		 * 注册当前接收者处理指定消息的函数
-		 * @param msg 消息标识
-		 * @param handlerFn 以 Msg 对象为参数的处理函数
+		 * @copy jsion.core.messages.IMsgReceiver#registeHandler()
+		 * @see jsion.core.messages.IMsgReceiver#registeHandler()
 		 */		
 		public function registeHandler(msg:uint, handlerFn:Function):void
 		{
@@ -91,8 +96,8 @@ package jsion.core.messages
 		}
 		
 		/**
-		 * 移除当前接收者已注册的消息处理函数
-		 * @param msg 消息标识
+		 * @copy jsion.core.messages.IMsgReceiver#removeHandler()
+		 * @see jsion.core.messages.IMsgReceiver#removeHandler()
 		 */		
 		public function removeHandler(msg:uint):Function
 		{
@@ -100,9 +105,8 @@ package jsion.core.messages
 		}
 		
 		/**
-		 * 注册指定全局消息在当前接收者中的处理函数
-		 * @param msg 消息标识
-		 * @param handlerFn 以 Msg 对象为参数的处理函数
+		 * @copy jsion.core.messages.IMsgReceiver#registeReceive()
+		 * @see jsion.core.messages.IMsgReceiver#registeReceive()
 		 */		
 		public function registeReceive(msg:uint, handlerFn:Function):void
 		{
@@ -115,8 +119,8 @@ package jsion.core.messages
 		}
 		
 		/**
-		 * 移除全局消息处理函数
-		 * @param msg 消息标识
+		 * @copy jsion.core.messages.IMsgReceiver#removeReceive()
+		 * @see jsion.core.messages.IMsgReceiver#removeReceive()
 		 */		
 		public function removeReceive(msg:uint):Function
 		{
@@ -133,8 +137,8 @@ package jsion.core.messages
 		}
 		
 		/**
-		 * 同步接收并处理消息
-		 * @param msg
+		 * @copy jsion.core.messages.IMsgReceiver#receiveSync()
+		 * @see jsion.core.messages.IMsgReceiver#receiveSync()
 		 */		
 		public function receiveSync(msg:Msg):*
 		{
@@ -142,13 +146,15 @@ package jsion.core.messages
 			{
 				var handler:Function = m_handlers[msg.msg] as Function;
 				
-				if(handler != null) handler(msg);
+				if(handler != null) return handler(msg);
 			}
+			
+			return null;
 		}
 		
 		/**
-		 * 异步接收消息，并在下帧时处理消息。
-		 * @param msg
+		 * @copy jsion.core.messages.IMsgReceiver#receiveAsync()
+		 * @see jsion.core.messages.IMsgReceiver#receiveAsync()
 		 */		
 		public function receiveAsync(msg:Msg):void
 		{
@@ -283,7 +289,9 @@ package jsion.core.messages
 		
 		
 		
-		
+		/**
+		 * 释放资源
+		 */		
 		public function dispose():void
 		{
 			MsgMonitor.removeReceiver(id);

@@ -2,6 +2,11 @@ package jsion.core.messages
 {
 	import flash.utils.Dictionary;
 
+	/**
+	 * 消息监视器 全局类
+	 * @author Jsion
+	 * 
+	 */	
 	public class MsgMonitor
 	{
 		private static var monitor:MsgMonitorImp = new MsgMonitorImp();

@@ -6,11 +6,14 @@ package jsion
 	 * 弱引用类,value值为弱引用.
 	 * @author Jsion
 	 */
-	public class WeakReference
+	public class WeakReference implements IDispose
 	{
 		
 		private var weakDic:Dictionary;
 		
+		/**
+		 * @private
+		 */		
 		public function set value(v:*):void
 		{
 			if(v == null)
@@ -24,6 +27,9 @@ package jsion
 			}
 		}
 		
+		/**
+		 * 获取或设置要弱引用的对象
+		 */		
 		public function get value():*
 		{
 			if(weakDic)
@@ -42,6 +48,14 @@ package jsion
 		public function clear():void
 		{
 			weakDic = null;
+		}
+		
+		/**
+		 * 释放资源
+		 */		
+		public function dispose():void
+		{
+			clear();
 		}
 	}
 }

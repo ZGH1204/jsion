@@ -14,11 +14,20 @@ package jsion.utils
 		{
 		}
 		
+		/**
+		 * 初始化
+		 */		
 		public static function setup(root:DisplayObject):void
 		{
 			_parameters = root.root.loaderInfo.parameters;
 		}
 		
+		/**
+		 * 获取指定Key对应的值
+		 * @param key 要获取值的Key
+		 * @return 获取到的值
+		 * 
+		 */		
 		public static function getVal(key:String):*
 		{
 			if(_parameters) return _parameters[key];

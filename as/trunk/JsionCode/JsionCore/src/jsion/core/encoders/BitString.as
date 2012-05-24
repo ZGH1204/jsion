@@ -31,7 +31,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package jsion.core.encoders
 {
-	public class BitString
+	/**
+	 * JPGEncoder使用的类
+	 * @private
+	 * @author Jsion
+	 * 
+	 */	
+	internal class BitString
 	{
 		public var len:int = 0;
 		public var val:int = 0;

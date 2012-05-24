@@ -26,6 +26,10 @@ package jsion.utils
 			return Math.random() * (max - min) + min;
 		}
 		
+		/**
+		 * 随机生成指定个数的中文字符
+		 * @param len 要生成的个数
+		 */		
 		public static function randomChineses(len:int):String
 		{
 			var rlt:String = "";
@@ -39,6 +43,9 @@ package jsion.utils
 			return rlt;
 		}
 		
+		/**
+		 * 随机生成一个中文字符
+		 */		
 		public static function randomChinese():String
 		{
 			var byteArr:ByteArray = new ByteArray();

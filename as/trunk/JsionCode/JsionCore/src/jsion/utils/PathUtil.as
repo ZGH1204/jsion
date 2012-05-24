@@ -1,7 +1,18 @@
 package jsion.utils
 {
+	/**
+	 * 路径工具
+	 * @author Jsion
+	 * 
+	 */	
 	public class PathUtil
 	{
+		/**
+		 * 合并一个或多个路径值 自动处理路径分隔符
+		 * @param args 路径值列表
+		 * @return 合并后的路径
+		 * 
+		 */		
 		public static function combinPath(...args):String
 		{
 			var path:String = "";

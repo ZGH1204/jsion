@@ -1,5 +1,10 @@
 package jsion.core.modules
 {
+	/**
+	 * 模块加载目标应用程序域
+	 * @author Jsion
+	 * 
+	 */	
 	public class ModuleTarget
 	{
 		/**

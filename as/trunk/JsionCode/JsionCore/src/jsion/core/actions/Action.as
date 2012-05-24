@@ -2,6 +2,11 @@ package jsion.core.actions
 {
 	import jsion.IDispose;
 
+	/**
+	 * 动作基类
+	 * @author Jsion
+	 * 
+	 */	
 	public class Action implements IDispose
 	{
 		/** @private */

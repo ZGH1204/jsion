@@ -3,8 +3,20 @@ package jsion.core.serialize.xml
 	import jsion.Constant;
 	import jsion.utils.*;
 
+	/**
+	 * Xml属性转换
+	 * @author Jsion
+	 * 
+	 */	
 	public class XmlPropertyTransfer
 	{
+		/**
+		 * 生成指定对象属性的Xml属性
+		 * @param name 对象属性名
+		 * @param value 对象属性值
+		 * @return Xml属性字符串
+		 * 
+		 */		
 		public function encodingProperty(name:String, value:Object):String
 		{
 			var val:String;
@@ -17,6 +29,13 @@ package jsion.core.serialize.xml
 			return StringUtil.escapeString(name) + "=\"" + val + "\" ";
 		}
 		
+		/**
+		 * 生成指定对象属性的Xml子节点
+		 * @param name 对象属性名
+		 * @param value 对象属性值
+		 * @return Xml子节点字符串
+		 * 
+		 */		
 		public function encodingChildNode(name:String, value:Object):String
 		{
 			var val:String;
@@ -29,6 +48,14 @@ package jsion.core.serialize.xml
 			return "<" + StringUtil.escapeString(name) + ">" + val + "</" + StringUtil.escapeString(name) + ">";
 		}
 		
+		/**
+		 * 解析并设置属性值到指定对象上
+		 * @param obj 要设置属性的对象
+		 * @param tmp 包含属性值的对象
+		 * @param n 属性名称
+		 * @param t 属性类型
+		 * 
+		 */		
 		public function decodingProperty(obj:Object, tmp:Object, n:String, t:String):void
 		{
 			if(tmp.hasOwnProperty(n))

@@ -14,11 +14,17 @@ package jsion.core
 			super(info);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function startup():void
 		{
 			
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function stop():void
 		{
 			

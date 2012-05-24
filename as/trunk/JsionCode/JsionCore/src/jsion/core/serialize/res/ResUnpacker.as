@@ -4,8 +4,15 @@ package jsion.core.serialize.res
 	import flash.utils.ByteArray;
 	
 	import jsion.HashMap;
+	import jsion.IDispose;
+	import jsion.utils.DisposeUtil;
 
-	public class ResUnpacker
+	/**
+	 * 资源解包
+	 * @author Jsion
+	 * 
+	 */	
+	public class ResUnpacker implements IDispose
 	{
 		private var m_indexColors:Array;
 		
@@ -24,21 +31,37 @@ package jsion.core.serialize.res
 			parseBytes(bytes);
 		}
 		
+		/**
+		 * 资源帧频
+		 */		
 		public function get frameRate():int
 		{
 			return m_frameRate;
 		}
 		
+		/**
+		 * @copy jsion.core.serialize.res.ResPacker#width
+		 */		
 		public function get width():int
 		{
 			return m_width;
 		}
 		
+		/**
+		 * @copy jsion.core.serialize.res.ResPacker#height
+		 */		
 		public function get height():int
 		{
 			return m_height;
 		}
 		
+		/**
+		 * 获取指定动作和方向的总帧数
+		 * @param action 动作类型
+		 * @param dir 动作方向
+		 * @return 总帧数
+		 * 
+		 */		
 		public function getTotalFrame(action:int, dir:int):int
 		{
 			var dirMap:HashMap = m_actions.get(action);
@@ -52,6 +75,13 @@ package jsion.core.serialize.res
 			return list.length;
 		}
 		
+		/**
+		 * 获取指定动作和方向的图片资源列表
+		 * @param action 动作类型
+		 * @param dir 动作方向
+		 * @return 图片资源列表
+		 * 
+		 */		
 		public function getBitmapDataList(action:int, dir:int):Array
 		{
 			var dirMap:HashMap = m_actions.get(action);
@@ -65,6 +95,14 @@ package jsion.core.serialize.res
 			return list;
 		}
 		
+		/**
+		 * 获取指定动作、方向和帧索引的图片资源
+		 * @param action 动作类型
+		 * @param dir 动作方向
+		 * @param frame 要获取的帧索引
+		 * @return 图片资源 BitmapData 对象
+		 * 
+		 */		
 		public function getBitmapData(action:int, dir:int, frame:uint):BitmapData
 		{
 			var dirMap:HashMap = m_actions.get(action);
@@ -129,6 +167,18 @@ package jsion.core.serialize.res
 					}
 				}
 			}
+		}
+		
+		/**
+		 * 释放资源
+		 * 
+		 */		
+		public function dispose():void
+		{
+			DisposeUtil.free(m_actions);
+			m_actions = null;
+			
+			m_indexColors = null;
 		}
 	}
 }

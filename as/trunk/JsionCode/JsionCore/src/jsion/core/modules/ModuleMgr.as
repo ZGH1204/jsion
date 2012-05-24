@@ -23,6 +23,11 @@ package jsion.core.modules
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
 
+	/**
+	 * 模块管理类
+	 * @author Jsion
+	 * 
+	 */	
 	public class ModuleMgr
 	{
 		private static var Module_Cryptor:ICryption = new ModuleCrytor();
@@ -613,7 +618,11 @@ package jsion.core.modules
 	}
 }
 
-
+/**
+ * 模块加载信息类
+ * @author Jsion
+ * 
+ */
 class ModuleLoadInfo
 {
 	import flash.system.ApplicationDomain;
@@ -623,25 +632,58 @@ class ModuleLoadInfo
 	import jsion.core.modules.ModuleInfo;
 	import jsion.core.reflection.Assembly;
 	
+	/**
+	 * 模块ID
+	 */	
 	public var id:String;
 	
+	/**
+	 * 模块启动类
+	 */	
 	public var cls:String;
 	
+	/**
+	 * 模块信息对象
+	 */	
 	public var moduleInfo:ModuleInfo;
 	
+	/**
+	 * 是否已加载
+	 */	
 	public var loaded:Boolean;
 	
+	/**
+	 * 是否出错
+	 */	
 	public var errored:Boolean;
 	
+	/**
+	 * 模块启动类对象
+	 */	
 	public var module:BaseModule;
 	
+	/**
+	 * 模块所在应用程序域
+	 */	
 	public var domain:ApplicationDomain;
 	
+	/**
+	 * 模块程序集
+	 */	
 	public var assembly:Assembly;
 	
+	/**
+	 * 是否正在加载
+	 */	
 	public var loading:Boolean;
 	
+	/**
+	 * 模块加载器
+	 */	
 	public var loader:ILoader;
 	
+	/**
+	 * 模块加载完成的回调函数列表
+	 */	
 	public var callback:Array = [];
 }

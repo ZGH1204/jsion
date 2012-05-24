@@ -238,6 +238,12 @@ package jsion.utils
 		}
 		
 		private static const reg:RegExp = /[^\x00-\xff]{1,}/g;
+		/**
+		 * 获取字符串的真实长度 一个中文字符的长度为2。
+		 * @param str 要获取真实长度的字符串
+		 * @return 字符串真实长度
+		 * 
+		 */		
 		public static function getRealLength(str:String):int
 		{
 			var len:int = 0;

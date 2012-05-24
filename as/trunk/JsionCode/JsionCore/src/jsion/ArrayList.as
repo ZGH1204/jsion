@@ -69,6 +69,9 @@ public class ArrayList
 		}
 	}	
 	
+	/**
+	 * Get the object by index.
+	 */	
 	public function get(i:int):*{
 		return _elements[i];
 	}
@@ -91,6 +94,9 @@ public class ArrayList
 		}
 	}
 	
+	/**
+	 * Append the objects to the ArrayList
+	 */	
 	public function appendAll(arr:Array, index:int=-1):void{
 		if(arr == null || arr.length <= 0){
 			return;
@@ -106,6 +112,9 @@ public class ArrayList
 		}
 	}
 	
+	/**
+	 * Replace the new object at index
+	 */	
 	public function replaceAt(index:int, obj:*):*{
 		if(index<0 || index>= size()){
 			return null;
@@ -117,6 +126,9 @@ public class ArrayList
 		}
 	}
 	
+	/**
+	 * Remove and return the object at index
+	 */	
 	public function removeAt(index:int):*{
 		if(index<0 || index>= size()){
 			return null;
@@ -127,6 +139,10 @@ public class ArrayList
 			return obj;
 		}
 	}
+	
+	/**
+	 * Remove the object.
+	 */	
 	public function remove(obj:*):*{
 		var i:int = indexOf(obj);
 		if(i>=0){
@@ -152,7 +168,9 @@ public class ArrayList
 			return _elements.splice(fromIndex, toIndex-fromIndex+1);
 		}
 	}
-	
+	/**
+	 * Get the object's index with ArrayList
+	 */	
 	public function indexOf(obj:*):int{
 		for(var i:int = 0; i<_elements.length; i++){
 			if(_elements[i] === obj){
@@ -161,11 +179,17 @@ public class ArrayList
 		}
 		return -1;
 	}
-		
+	
+	/**
+	 * Append the objects start with index
+	 */	
 	public function appendList(list : List, index : int =-1) : void {
 		appendAll(list.toArray(), index);
 	}
 
+	/**
+	 * Get and remove the last object with ArrayList
+	 */	
 	public function pop():* {
 		if(size() > 0){
 			return _elements.pop();
@@ -174,6 +198,9 @@ public class ArrayList
 		}
 	}
 
+	/**
+	 * Get and remove the first object with ArrayList
+	 */	
 	public function shift():* {
 		if(size() > 0){
 			return _elements.shift();
@@ -182,6 +209,9 @@ public class ArrayList
 		}
 	}
 	
+	/**
+	 * Get last object's index with ArrayList
+	 */	
 	public function lastIndexOf(obj:*):int{
 		for(var i:int = _elements.length-1; i>=0; i--){
 			if(_elements[i] === obj){
@@ -191,30 +221,53 @@ public class ArrayList
 		return -1;
 	}
 	
+	/**
+	 * Get this ArrayList has the object.
+	 */	
 	public function contains(obj:*):Boolean{
 		return indexOf(obj) >=0;
 	}
 	
+	/**
+	 * Get first object with ArrayList
+	 */	
 	public function first():*{
 		return _elements[0];
 	}
 	
+	/**
+	 * Get last object with ArrayList
+	 */	
 	public function last():*{
 		return _elements[_elements.length-1];
 	}
 	
+	/**
+	 * Get element count
+	 */	
 	public function size():int{
 		return _elements.length;
 	}
 	
+	/**
+	 * The same to replaceAt()
+	 * @see #replaceAt()
+	 */	
 	public function setElementAt(index:int, element:*):void{
 		replaceAt(index, element);
 	}
 	
+	/**
+	 * The same to size()
+	 * @see #size()
+	 */	
 	public function getSize():int{
 		return size();
 	}
 	
+	/**
+	 * Clear all objects
+	 */	
 	public function clear():void{
 		if(!isEmpty()){
 			_elements.splice(0);
@@ -222,6 +275,9 @@ public class ArrayList
 		}
 	}
 	
+	/**
+	 * Clone this object
+	 */	
 	public function clone():ArrayList{
 		var cloned:ArrayList=new ArrayList();
 		for (var i:int=0; i<_elements.length; i++){
@@ -230,6 +286,9 @@ public class ArrayList
 		return cloned;
 	}
 	
+	/**
+	 * Get is empty
+	 */	
 	public function isEmpty():Boolean{
 		if(_elements.length>0)
 			return false;
@@ -237,6 +296,9 @@ public class ArrayList
 			return true;
 	}
 	
+	/**
+	 * Trans to Array object
+	 */	
 	public function toArray():Array{
 		return _elements.concat();
 	}
@@ -250,14 +312,25 @@ public class ArrayList
 		return _elements.slice(startIndex, Math.min(startIndex+length, size()));
 	}
 	
+	/**
+	 * Sort by compare function, same to Array.sort()
+	 * @see Array#sort()
+	 */	
 	public function sort(compare:Object, options:int):Array{
 		return _elements.sort(compare, options);
 	}
 	
+	/**
+	 * Sort by properties, same to Array.sortOn()
+	 * @see Array#sortOn()
+	 */	
 	public function sortOn(key:Object, options:int):Array{
 		return _elements.sortOn(key, options);
 	}
 	
+	/**
+	 * Get the object by String
+	 */	
 	public function toString():String{
 		return "ArrayList : " + _elements.toString();
 	}

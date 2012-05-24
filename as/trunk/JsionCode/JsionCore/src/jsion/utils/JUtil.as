@@ -47,6 +47,7 @@ package jsion.utils
 		private static const _eventList:HashMap = new HashMap();
 		
 		/**
+		 * 添加监听ENTER_FRAME事件。
 		 * 全局帧频刷新事件, 保证所有处理都在同一帧, 避免异步问题。
 		 * @param listener 处理事件的侦听器函数。
 		 * @param useCapture 此参数适用于 SWF 内容所使用的 ActionScript 3.0 显示列表体系结构中的显示对象。确定侦听器是运行于捕获阶段还是目标阶段和冒泡阶段。如果将 useCapture 设置为 true，则侦听器只在捕获阶段处理事件，而不在目标或冒泡阶段处理事件。如果 useCapture 为 false，则侦听器只在目标或冒泡阶段处理事件。要在所有三个阶段都侦听事件，请调用 addEventListener 两次：一次将 useCapture 设置为 true，一次将 useCapture 设置为 false。
@@ -59,11 +60,23 @@ package jsion.utils
 			sprite.addEventListener(Event.ENTER_FRAME, listener, useCapture, priority, useWeakReference);
 		}
 		
+		/**
+		 * 移除监听ENTER_FRAME事件。
+		 * @param listener 处理事件的侦听器函数。
+		 * @param useCapture 此参数适用于 SWF 内容所使用的 ActionScript 3.0 显示列表体系结构中的显示对象。确定侦听器是运行于捕获阶段还是目标阶段和冒泡阶段。如果将 useCapture 设置为 true，则侦听器只在捕获阶段处理事件，而不在目标或冒泡阶段处理事件。如果 useCapture 为 false，则侦听器只在目标或冒泡阶段处理事件。要在所有三个阶段都侦听事件，请调用 addEventListener 两次：一次将 useCapture 设置为 true，一次将 useCapture 设置为 false。
+		 * 
+		 */		
 		public static function removeEnterFrame(listener:Function, useCapture:Boolean = false):void
 		{
 			sprite.removeEventListener(Event.ENTER_FRAME, listener, useCapture);
 		}
 		
+		/**
+		 * 延迟到下一帧派发事件
+		 * @param obj 事件派发对象
+		 * @param e 要派发的事件对象
+		 * 
+		 */		
 		public static function dispatchEventNextFrame(obj:EventDispatcher, e:Event):void
 		{
 			if(_eventList.size == 0)
@@ -126,6 +139,14 @@ package jsion.utils
 			return ext;
 		}
 		
+		/**
+		 * 根据字符串样式计算字符串长度
+		 * @param tf TextFormat对象。字符显示样式信息
+		 * @param str 要计算长度的字符串
+		 * @param includeGutters 指示是否只取文本的宽高
+		 * @param textField 附加的TextField对象用于获取相关设置信息
+		 * 
+		 */		
 		public static function computeStringSize(tf:TextFormat, str:String, includeGutters:Boolean = true, textField:TextField = null):IntDimension
 		{
 			if(textField)
@@ -175,6 +196,12 @@ package jsion.utils
 			return false;
 		}
 		
+		/**
+		 * 检查指定对象是否为抽象类
+		 * 根据类名是否以"Abstract"开头判断
+		 * @param obj 要检查的对象
+		 * 
+		 */		
 		public static function checkAbstract(obj:Object):void
 		{
 			var str:String = NameUtil.getUnqualifiedClassName(obj);

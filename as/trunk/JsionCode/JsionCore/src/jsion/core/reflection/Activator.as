@@ -2,6 +2,11 @@ package jsion.core.reflection
 {
 	import jsion.utils.*;
 
+	/**
+	 * 反射支持类
+	 * @author Jsion
+	 * 
+	 */	
 	public class Activator
 	{
 		public static function createInstance(type:Type):Object

@@ -4,6 +4,11 @@ package jsion.core.lang
 	
 	import jsion.utils.*;
 
+	/**
+	 * 本地语言包支持类
+	 * @author Jsion
+	 * 
+	 */	
 	public class Local
 	{
 		private static var languages:Dictionary = new Dictionary();

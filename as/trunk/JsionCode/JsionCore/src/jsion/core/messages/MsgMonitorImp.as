@@ -8,6 +8,11 @@ package jsion.core.messages
 	import jsion.utils.DictionaryUtil;
 	import jsion.utils.DisposeUtil;
 
+	/**
+	 * 消息监视器实现类
+	 * @author Jsion
+	 * 
+	 */	
 	public class MsgMonitorImp implements IDispose
 	{
 		private var msgReceiverList:Dictionary = new Dictionary();
@@ -242,6 +247,9 @@ package jsion.core.messages
 			return m;
 		}
 		
+		/**
+		 * 释放资源
+		 */		
 		public function dispose():void
 		{
 			for each(var list:Array in msgReceiverList)

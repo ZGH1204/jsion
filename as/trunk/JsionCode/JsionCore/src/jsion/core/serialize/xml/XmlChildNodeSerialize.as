@@ -3,7 +3,11 @@ package jsion.core.serialize.xml
 	import flash.utils.*;
 	
 	import jsion.utils.*;
-	
+	/**
+	 * XML序列化属性为Xml子节点(describeType方式)
+	 * @author Jsion
+	 * 
+	 */	
 	public class XmlChildNodeSerialize implements IXmlSerialize
 	{
 		private var transfer:XmlPropertyTransfer;
@@ -13,6 +17,9 @@ package jsion.core.serialize.xml
 			transfer = new XmlPropertyTransfer();
 		}
 		
+		/**
+		 * @copy jsion.core.serialize.xml.IXmlSerialize#encode()
+		 */		
 		public function encode(nodeName:String, obj:Object):XML
 		{
 			var rlt:String = "<" + nodeName + ">";
@@ -32,6 +39,9 @@ package jsion.core.serialize.xml
 			return xml;
 		}
 		
+		/**
+		 * @copy jsion.core.serialize.xml.IXmlSerialize#decode()
+		 */		
 		public function decode(obj:Object, xml:XML):void
 		{
 			var children:XMLList = xml.children();

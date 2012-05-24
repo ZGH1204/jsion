@@ -45,6 +45,9 @@ package jsion.core.ddrop
 		
 		private static var _stage:Stage;
 		
+		/**
+		 * 使用舞台对象进行初始化
+		 */		
 		public static function setup(stage:Stage):void
 		{
 			if(_stage == stage) return;

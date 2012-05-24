@@ -26,6 +26,9 @@ package jsion.core.scenes
 		private static var m_current:BaseScene;
 		private static var m_currentType:String;
 		
+		/**
+		 * 当前场景类型
+		 */		
 		public static function get currentType():String
 		{
 			return m_currentType;

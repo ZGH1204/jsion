@@ -13,6 +13,10 @@ package jsion.core.cryptor
 	 */	
 	public class TextCryptor implements ICryption
 	{
+		/**
+		 * @copy jsion.core.cryptor.ICryption#encry()
+		 * @see jsion.core.cryptor.ICryption#encry()
+		 */		
 		public function encry(bytes:ByteArray):ByteArray
 		{
 			var rlt:ByteArray = new ByteArray();
@@ -28,6 +32,10 @@ package jsion.core.cryptor
 			return rlt;
 		}
 		
+		/**
+		 * @copy jsion.core.cryptor.ICryption#decry()
+		 * @see jsion.core.cryptor.ICryption#decry()
+		 */		
 		public function decry(bytes:ByteArray):ByteArray
 		{
 			var rlt:ByteArray = new ByteArray();
