@@ -169,7 +169,7 @@ package jsion.comps
 		 */		
 		protected function isChanged(propName:String):Boolean
 		{
-			return isChanged(propName);
+			return m_changeProperties.containsKey(propName);
 		}
 		
 		/**

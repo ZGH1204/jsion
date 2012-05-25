@@ -124,6 +124,22 @@ package jsion.display
 		}
 		
 		/**
+		 * @inheritDoc
+		 */		
+		override public function set width(value:Number):void
+		{
+			super.width = value + (value % 2);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		override public function set height(value:Number):void
+		{
+			super.height = value + (value % 2);
+		}
+		
+		/**
 		 * 请使用scale9Insets属性
 		 * @throws Error 废弃了旧的九宫格设置方式 改用 scale9Insets 属性
 		 */		
@@ -198,32 +214,75 @@ package jsion.display
 				
 				if(m_bmp1.bitmapData == null || change9Insets)
 				{
-					m_bmp1.bitmapData = new BitmapData(m_scale9Insets.left, m_scale9Insets.top, true, 0);
+					if(m_scale9Insets.left != 0 && m_scale9Insets.top != 0)
+					{
+						m_bmp1.bitmapData = new BitmapData(m_scale9Insets.left, m_scale9Insets.top, true, 0);
+					}
+					else
+					{
+						m_bmp1.bitmapData = null;
+					}
 				}
 				
 				if(m_bmp3.bitmapData == null || change9Insets)
 				{
-					m_bmp3.bitmapData = new BitmapData(m_scale9Insets.right, m_scale9Insets.top, true, 0);
+					if(m_scale9Insets.right != 0 && m_scale9Insets.top != 0)
+					{
+						m_bmp3.bitmapData = new BitmapData(m_scale9Insets.right, m_scale9Insets.top, true, 0);
+					}
+					else
+					{
+						m_bmp3.bitmapData = null;
+					}
 				}
 				
 				if(m_bmp7.bitmapData == null || change9Insets)
 				{
-					m_bmp7.bitmapData = new BitmapData(m_scale9Insets.left, m_scale9Insets.bottom, true, 0);
+					if(m_scale9Insets.left != 0 && m_scale9Insets.bottom != 0)
+					{
+						m_bmp7.bitmapData = new BitmapData(m_scale9Insets.left, m_scale9Insets.bottom, true, 0);
+					}
+					else
+					{
+						m_bmp7.bitmapData = null;
+					}
 				}
 				
 				if(m_bmp9.bitmapData == null || change9Insets)
 				{
-					m_bmp9.bitmapData = new BitmapData(m_scale9Insets.right, m_scale9Insets.bottom, true, 0);
+					if(m_scale9Insets.right != 0 && m_scale9Insets.bottom != 0)
+					{
+						m_bmp9.bitmapData = new BitmapData(m_scale9Insets.right, m_scale9Insets.bottom, true, 0);
+					}
+					else
+					{
+						m_bmp9.bitmapData = null;
+					}
 				}
 				
-				m_bmp1.width = m_bmp1.bitmapData.width;
-				m_bmp1.height = m_bmp1.bitmapData.height;
-				m_bmp3.width = m_bmp3.bitmapData.width;
-				m_bmp3.height = m_bmp3.bitmapData.height;
-				m_bmp7.width = m_bmp7.bitmapData.width;
-				m_bmp7.height = m_bmp7.bitmapData.height;
-				m_bmp9.width = m_bmp9.bitmapData.width;
-				m_bmp9.height = m_bmp9.bitmapData.height;
+				if(m_bmp1.bitmapData)
+				{
+					m_bmp1.width = m_bmp1.bitmapData.width;
+					m_bmp1.height = m_bmp1.bitmapData.height;
+				}
+				
+				if(m_bmp3.bitmapData)
+				{
+					m_bmp3.width = m_bmp3.bitmapData.width;
+					m_bmp3.height = m_bmp3.bitmapData.height;
+				}
+				
+				if(m_bmp7.bitmapData)
+				{
+					m_bmp7.width = m_bmp7.bitmapData.width;
+					m_bmp7.height = m_bmp7.bitmapData.height;
+				}
+				
+				if(m_bmp9.bitmapData)
+				{
+					m_bmp9.width = m_bmp9.bitmapData.width;
+					m_bmp9.height = m_bmp9.bitmapData.height;
+				}
 				
 				needUpdateBMD = change9Insets || changeSource;
 				
@@ -232,36 +291,48 @@ package jsion.display
 					tempPoint.x = 0;
 					tempPoint.y = 0;
 					
-					tempRect.x = 0;
-					tempRect.y = 0;
-					tempRect.width = m_scale9Insets.left;
-					tempRect.height = m_scale9Insets.top;
-					
-					m_bmp1.bitmapData.copyPixels(m_source, tempRect, tempPoint);
-					
-					
-					tempRect.x = m_source.width - m_scale9Insets.right;
-					tempRect.y = 0;
-					tempRect.width = m_scale9Insets.right;
-					tempRect.height = m_scale9Insets.top;
-					
-					m_bmp3.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+					if(m_bmp1.bitmapData)
+					{
+						tempRect.x = 0;
+						tempRect.y = 0;
+						tempRect.width = m_scale9Insets.left;
+						tempRect.height = m_scale9Insets.top;
+						
+						m_bmp1.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+					}
 					
 					
-					tempRect.x = 0;
-					tempRect.y = m_source.height - m_scale9Insets.bottom;
-					tempRect.width = m_scale9Insets.left;
-					tempRect.height = m_scale9Insets.bottom;
+					if(m_bmp3.bitmapData)
+					{
+						tempRect.x = m_source.width - m_scale9Insets.right;
+						tempRect.y = 0;
+						tempRect.width = m_scale9Insets.right;
+						tempRect.height = m_scale9Insets.top;
+						
+						m_bmp3.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+					}
 					
-					m_bmp7.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+					
+					if(m_bmp7.bitmapData)
+					{
+						tempRect.x = 0;
+						tempRect.y = m_source.height - m_scale9Insets.bottom;
+						tempRect.width = m_scale9Insets.left;
+						tempRect.height = m_scale9Insets.bottom;
+						
+						m_bmp7.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+					}
 					
 					
-					tempRect.x = m_source.width - m_scale9Insets.right;
-					tempRect.y = m_source.height - m_scale9Insets.bottom;
-					tempRect.width = m_scale9Insets.right;
-					tempRect.height = m_scale9Insets.bottom;
-					
-					m_bmp9.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+					if(m_bmp9.bitmapData)
+					{
+						tempRect.x = m_source.width - m_scale9Insets.right;
+						tempRect.y = m_source.height - m_scale9Insets.bottom;
+						tempRect.width = m_scale9Insets.right;
+						tempRect.height = m_scale9Insets.bottom;
+						
+						m_bmp9.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+					}
 				}
 				
 				
@@ -273,12 +344,26 @@ package jsion.display
 					
 					if(m_bmp2.bitmapData == null || needCreateBMD)
 					{
-						m_bmp2.bitmapData = new BitmapData(m_source.width - m_scale9Insets.left - m_scale9Insets.right, m_scale9Insets.top, true, 0);
+						if(m_scale9Insets.top != 0)
+						{
+							m_bmp2.bitmapData = new BitmapData(m_source.width - m_scale9Insets.left - m_scale9Insets.right, m_scale9Insets.top, true, 0);
+						}
+						else
+						{
+							m_bmp2.bitmapData = null;
+						}
 					}
 					
 					if(m_bmp4.bitmapData == null || needCreateBMD)
 					{
-						m_bmp4.bitmapData = new BitmapData(m_scale9Insets.left, m_source.height - m_scale9Insets.top - m_scale9Insets.bottom, true, 0);
+						if(m_scale9Insets.left != 0)
+						{
+							m_bmp4.bitmapData = new BitmapData(m_scale9Insets.left, m_source.height - m_scale9Insets.top - m_scale9Insets.bottom, true, 0);
+						}
+						else
+						{
+							m_bmp4.bitmapData = null;
+						}
 					}
 					
 					if(m_bmp5.bitmapData == null || needCreateBMD)
@@ -288,12 +373,26 @@ package jsion.display
 					
 					if(m_bmp6.bitmapData == null || needCreateBMD)
 					{
-						m_bmp6.bitmapData = new BitmapData(m_scale9Insets.right, m_source.height - m_scale9Insets.top - m_scale9Insets.bottom, true, 0);
+						if(m_scale9Insets.right != 0)
+						{
+							m_bmp6.bitmapData = new BitmapData(m_scale9Insets.right, m_source.height - m_scale9Insets.top - m_scale9Insets.bottom, true, 0);
+						}
+						else
+						{
+							m_bmp6.bitmapData = null;
+						}
 					}
 					
 					if(m_bmp8.bitmapData == null || needCreateBMD)
 					{
-						m_bmp8.bitmapData = new BitmapData(m_source.width - m_scale9Insets.left - m_scale9Insets.right, m_scale9Insets.bottom, true, 0);
+						if(m_scale9Insets.bottom != 0)
+						{
+							m_bmp8.bitmapData = new BitmapData(m_source.width - m_scale9Insets.left - m_scale9Insets.right, m_scale9Insets.bottom, true, 0);
+						}
+						else
+						{
+							m_bmp8.bitmapData = null;
+						}
 					}
 					
 					if(needUpdateBMD)
@@ -301,65 +400,95 @@ package jsion.display
 						tempPoint.x = 0;
 						tempPoint.y = 0;
 						
-						//上部中间区域
-						tempRect.x = m_scale9Insets.left;
-						tempRect.y = 0;
-						tempRect.width = m_source.width - m_scale9Insets.left - m_scale9Insets.right;
-						tempRect.height = m_scale9Insets.top;
-						
-						m_bmp2.bitmapData.copyPixels(m_source, tempRect, tempPoint);
-						
-						
-						//左边中间区域
-						tempRect.x = 0;
-						tempRect.y = m_scale9Insets.top;
-						tempRect.width = m_scale9Insets.left;
-						tempRect.height = m_source.height - m_scale9Insets.top - m_scale9Insets.bottom;
-						
-						m_bmp4.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+						if(m_bmp2.bitmapData)
+						{
+							//上部中间区域
+							tempRect.x = m_scale9Insets.left;
+							tempRect.y = 0;
+							tempRect.width = m_source.width - m_scale9Insets.left - m_scale9Insets.right;
+							tempRect.height = m_scale9Insets.top;
+							
+							m_bmp2.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+						}
 						
 						
-						//中部中间区域
-						tempRect.x = m_scale9Insets.left;
-						tempRect.y = m_scale9Insets.top;
-						tempRect.width = m_source.width - m_scale9Insets.left - m_scale9Insets.right;
-						tempRect.height = m_source.height - m_scale9Insets.top - m_scale9Insets.bottom;
-						
-						m_bmp5.bitmapData.copyPixels(m_source, tempRect, tempPoint);
-						
-						
-						//右部中间区域
-						tempRect.x = m_source.width - m_scale9Insets.right;
-						tempRect.y = m_scale9Insets.top;
-						tempRect.width = m_scale9Insets.right;
-						tempRect.height = m_source.height - m_scale9Insets.top - m_scale9Insets.bottom;
-						
-						m_bmp6.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+						if(m_bmp4.bitmapData)
+						{
+							//左边中间区域
+							tempRect.x = 0;
+							tempRect.y = m_scale9Insets.top;
+							tempRect.width = m_scale9Insets.left;
+							tempRect.height = m_source.height - m_scale9Insets.top - m_scale9Insets.bottom;
+							
+							m_bmp4.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+						}
 						
 						
-						//底部中间区域
-						tempRect.x = m_scale9Insets.left;
-						tempRect.y = m_source.height - m_scale9Insets.bottom;
-						tempRect.width = m_source.width - m_scale9Insets.left - m_scale9Insets.right;
-						tempRect.height = m_scale9Insets.bottom;
+						if(m_bmp5.bitmapData)
+						{
+							//中部中间区域
+							tempRect.x = m_scale9Insets.left;
+							tempRect.y = m_scale9Insets.top;
+							tempRect.width = m_source.width - m_scale9Insets.left - m_scale9Insets.right;
+							tempRect.height = m_source.height - m_scale9Insets.top - m_scale9Insets.bottom;
+							
+							m_bmp5.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+						}
 						
-						m_bmp8.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+						
+						if(m_bmp6.bitmapData)
+						{
+							//右部中间区域
+							tempRect.x = m_source.width - m_scale9Insets.right;
+							tempRect.y = m_scale9Insets.top;
+							tempRect.width = m_scale9Insets.right;
+							tempRect.height = m_source.height - m_scale9Insets.top - m_scale9Insets.bottom;
+							
+							m_bmp6.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+						}
+						
+						
+						if(m_bmp8.bitmapData)
+						{
+							//底部中间区域
+							tempRect.x = m_scale9Insets.left;
+							tempRect.y = m_source.height - m_scale9Insets.bottom;
+							tempRect.width = m_source.width - m_scale9Insets.left - m_scale9Insets.right;
+							tempRect.height = m_scale9Insets.bottom;
+							
+							m_bmp8.bitmapData.copyPixels(m_source, tempRect, tempPoint);
+						}
 					}
 					
-					m_bmp2.width = m_width - m_scale9Insets.left - m_scale9Insets.right;
-					m_bmp2.height = m_scale9Insets.top;
+					if(m_bmp2.bitmapData)
+					{
+						m_bmp2.width = m_width - m_scale9Insets.left - m_scale9Insets.right;
+						m_bmp2.height = m_scale9Insets.top;
+					}
 					
-					m_bmp4.width = m_scale9Insets.left;
-					m_bmp4.height = m_height - m_scale9Insets.top - m_scale9Insets.bottom;
+					if(m_bmp4.bitmapData)
+					{
+						m_bmp4.width = m_scale9Insets.left;
+						m_bmp4.height = m_height - m_scale9Insets.top - m_scale9Insets.bottom;
+					}
 					
-					m_bmp5.width = m_width - m_scale9Insets.left - m_scale9Insets.right;
-					m_bmp5.height = m_height - m_scale9Insets.top - m_scale9Insets.bottom;
+					if(m_bmp5.bitmapData)
+					{
+						m_bmp5.width = m_width - m_scale9Insets.left - m_scale9Insets.right;
+						m_bmp5.height = m_height - m_scale9Insets.top - m_scale9Insets.bottom;
+					}
 					
-					m_bmp6.width = m_scale9Insets.right;
-					m_bmp6.height = m_height - m_scale9Insets.top - m_scale9Insets.bottom;
+					if(m_bmp6.bitmapData)
+					{
+						m_bmp6.width = m_scale9Insets.right;
+						m_bmp6.height = m_height - m_scale9Insets.top - m_scale9Insets.bottom;
+					}
 					
-					m_bmp8.width = m_width - m_scale9Insets.left - m_scale9Insets.right;
-					m_bmp8.height = m_scale9Insets.bottom;
+					if(m_bmp8.bitmapData)
+					{
+						m_bmp8.width = m_width - m_scale9Insets.left - m_scale9Insets.right;
+						m_bmp8.height = m_scale9Insets.bottom;
+					}
 				}
 				else
 				{
@@ -369,12 +498,26 @@ package jsion.display
 					
 					if(m_bmp2.bitmapData == null || needCreateBMD)
 					{
-						m_bmp2.bitmapData = new BitmapData(m_width - m_scale9Insets.left - m_scale9Insets.right, m_scale9Insets.top, true, 0);
+						if(m_scale9Insets.top != 0)
+						{
+							m_bmp2.bitmapData = new BitmapData(m_width - m_scale9Insets.left - m_scale9Insets.right, m_scale9Insets.top, true, 0);
+						}
+						else
+						{
+							m_bmp2.bitmapData = null;
+						}
 					}
 					
 					if(m_bmp4.bitmapData == null || needCreateBMD)
 					{
-						m_bmp4.bitmapData = new BitmapData(m_scale9Insets.left, m_height - m_scale9Insets.top - m_scale9Insets.bottom, true, 0);
+						if(m_scale9Insets.left != 0)
+						{
+							m_bmp4.bitmapData = new BitmapData(m_scale9Insets.left, m_height - m_scale9Insets.top - m_scale9Insets.bottom, true, 0);
+						}
+						else
+						{
+							m_bmp4.bitmapData = null;
+						}
 					}
 					
 					if(m_bmp5.bitmapData == null || needCreateBMD)
@@ -384,12 +527,26 @@ package jsion.display
 					
 					if(m_bmp6.bitmapData == null || needCreateBMD)
 					{
-						m_bmp6.bitmapData = new BitmapData(m_scale9Insets.right, m_height - m_scale9Insets.top - m_scale9Insets.bottom, true, 0);
+						if(m_scale9Insets.right != 0)
+						{
+							m_bmp6.bitmapData = new BitmapData(m_scale9Insets.right, m_height - m_scale9Insets.top - m_scale9Insets.bottom, true, 0);
+						}
+						else
+						{
+							m_bmp6.bitmapData = null;
+						}
 					}
 					
 					if(m_bmp8.bitmapData == null || needCreateBMD)
 					{
-						m_bmp8.bitmapData = new BitmapData(m_width - m_scale9Insets.left - m_scale9Insets.right, m_scale9Insets.bottom, true, 0);
+						if(m_scale9Insets.bottom != 0)
+						{
+							m_bmp8.bitmapData = new BitmapData(m_width - m_scale9Insets.left - m_scale9Insets.right, m_scale9Insets.bottom, true, 0);
+						}
+						else
+						{
+							m_bmp8.bitmapData = null;
+						}
 					}
 					
 					if(needUpdateBMD)
