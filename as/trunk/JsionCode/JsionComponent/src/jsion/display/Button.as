@@ -60,6 +60,10 @@ package jsion.display
 		/** @private */
 		protected var m_disableImage:DisplayObject;
 		
+		/** @private */
+		protected var m_minWidth:int;
+		/** @private */
+		protected var m_minHeight:int;
 		
 		/** @private */
 		protected var m_offsetX:int = 0;
@@ -142,9 +146,7 @@ package jsion.display
 		 */		
 		public function get minWidth():int
 		{
-			if(m_upImage && m_upImage is Image) return Image(m_upImage).minWidth;
-			
-			return 0;
+			return m_minWidth;
 		}
 		
 		/**
@@ -152,9 +154,7 @@ package jsion.display
 		 */		
 		public function get minHeight():int
 		{
-			if(m_upImage && m_upImage is Image) return Image(m_upImage).minHeight;
-			
-			return 0;
+			return m_minHeight;
 		}
 		
 		/**
@@ -179,6 +179,17 @@ package jsion.display
 				{
 					if(manualWidth == false) m_width = m_upImage.width;
 					if(manualHeight == false) m_height = m_upImage.height;
+					
+					if(m_upImage is Image)
+					{
+						m_minWidth = Image(m_upImage).minWidth;
+						m_minHeight = Image(m_upImage).minHeight;
+					}
+					else
+					{
+						m_minWidth = 0;
+						m_minHeight = 0;
+					}
 				}
 				
 				onPropertiesChanged(STATEIMAGE);
