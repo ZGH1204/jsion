@@ -242,7 +242,7 @@ package jsion.display
 			m_textField.textColor = m_textColor;
 			m_textField.embedFonts = m_embedFonts;
 			
-			if(m_changeProperties.containsKey(TEXTFORMAT))
+			if(isChanged(TEXTFORMAT))
 			{
 				m_textField.styleSheet = null;
 				
@@ -250,7 +250,7 @@ package jsion.display
 				
 				m_textField.styleSheet = m_styleSheet;
 			}
-			else if(m_changeProperties.containsKey(STYLESHEET))
+			else if(isChanged(STYLESHEET))
 			{
 				m_textField.styleSheet = m_styleSheet;
 			}

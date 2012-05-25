@@ -455,7 +455,7 @@ package jsion.display
 		 */		
 		protected function updateCurrentStateImage():void
 		{
-			if(m_changeProperties.containsKey(STATEIMAGE) || m_stateChange)
+			if(isChanged(STATEIMAGE) || m_stateChange)
 			{
 				var image:DisplayObject;
 				
@@ -505,7 +505,7 @@ package jsion.display
 		 */		
 		protected function updateCurrentStateFilters():void
 		{
-			if(m_changeProperties.containsKey(STATEFILTERS) || m_stateChange)
+			if(isChanged(STATEFILTERS) || m_stateChange)
 			{
 				var filters:Array;
 				var tmpFilters:Array;
@@ -545,9 +545,9 @@ package jsion.display
 		protected function updateImageSize():void
 		{
 			if((m_stateChange || 
-				m_changeProperties.containsKey(STATEIMAGE) || 
-				m_changeProperties.containsKey(WIDTH) || 
-				m_changeProperties.containsKey(HEIGHT)) && m_curImage)
+				isChanged(STATEIMAGE) || 
+				isChanged(WIDTH) || 
+				isChanged(HEIGHT)) && m_curImage)
 			{
 				m_curImage.width = m_width;
 				m_curImage.height = m_height;

@@ -131,7 +131,7 @@ package jsion.display
 		{
 			//super.updateCurrentStateImage();
 			
-			if(m_changeProperties.containsKey(STATEIMAGE) || m_stateChange)
+			if(isChanged(STATEIMAGE) || m_stateChange)
 			{
 				var image:DisplayObject;
 				
@@ -209,11 +209,11 @@ package jsion.display
 			//refreshSize();
 			
 			if(m_stateChange || 
-				m_changeProperties.containsKey(IMAGEDIRANDALIGN) || 
-				m_changeProperties.containsKey(STATEIMAGE) || 
-				m_changeProperties.containsKey(WIDTH) || 
-				m_changeProperties.containsKey(HEIGHT) || 
-				m_changeProperties.containsKey(OFFSET))
+				isChanged(IMAGEDIRANDALIGN) || 
+				isChanged(STATEIMAGE) || 
+				isChanged(WIDTH) || 
+				isChanged(HEIGHT) || 
+				isChanged(OFFSET))
 			{
 				m_rect.width = m_imageWidth;
 				m_rect.height = m_imageHeight;
@@ -284,11 +284,11 @@ package jsion.display
 			refreshSize();
 			
 			if(m_labelChange || m_stateChange || 
-				m_changeProperties.containsKey(LABELALIGN) || 
-				m_changeProperties.containsKey(WIDTH) || 
-				m_changeProperties.containsKey(HEIGHT) || 
-				m_changeProperties.containsKey(OFFSET) ||
-				m_changeProperties.containsKey(IMAGEDIRANDALIGN))
+				isChanged(LABELALIGN) || 
+				isChanged(WIDTH) || 
+				isChanged(HEIGHT) || 
+				isChanged(OFFSET) ||
+				isChanged(IMAGEDIRANDALIGN))
 			{
 				m_rect.width = m_label.width;
 				m_rect.height = m_label.height;

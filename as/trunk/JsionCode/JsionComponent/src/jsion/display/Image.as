@@ -185,10 +185,10 @@ package jsion.display
 			
 			if(m_scale9Insets != null)
 			{
-				var changeSource:Boolean = m_changeProperties.containsKey(SOURCE);
-				var changeSize:Boolean = m_changeProperties.containsKey(WIDTH) || m_changeProperties.containsKey(HEIGHT);
-				var change9Insets:Boolean = m_changeProperties.containsKey(SCALE9INSETS);
-				var changeType:Boolean = m_changeProperties.containsKey(SCALETYPE);
+				var changeSource:Boolean = isChanged(SOURCE);
+				var changeSize:Boolean = isChanged(WIDTH) || isChanged(HEIGHT);
+				var change9Insets:Boolean = isChanged(SCALE9INSETS);
+				var changeType:Boolean = isChanged(SCALETYPE);
 				
 				var needCreateBMD:Boolean;
 				var needUpdateBMD:Boolean;
@@ -554,8 +554,8 @@ package jsion.display
 					m_bmp5.height = m_height;
 				}
 				
-				if(m_changeProperties.containsKey(WIDTH) || 
-					m_changeProperties.containsKey(HEIGHT))
+				if(isChanged(WIDTH) || 
+					isChanged(HEIGHT))
 				{
 					m_bmp5.width = m_width;
 					m_bmp5.height = m_height;
