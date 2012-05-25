@@ -151,11 +151,6 @@ package jsion.display
 		 */		
 		public function get minWidth():int
 		{
-			if(m_scale9Insets)
-			{
-				return m_scale9Insets.left + m_scale9Insets.right + 1;
-			}
-			
 			return m_minWidth;
 		}
 		
@@ -164,11 +159,6 @@ package jsion.display
 		 */		
 		public function get minHeight():int
 		{
-			if(m_scale9Insets)
-			{
-				return m_scale9Insets.top + m_scale9Insets.bottom + 1;
-			}
-			
 			return m_minHeight;
 		}
 		
