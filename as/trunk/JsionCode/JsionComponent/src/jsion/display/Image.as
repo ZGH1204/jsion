@@ -128,6 +128,10 @@ package jsion.display
 		 */		
 		override public function set width(value:Number):void
 		{
+			if(m_scale9Insets && value < (m_scale9Insets.left + m_scale9Insets.right))
+			{
+				value = m_scale9Insets.left + m_scale9Insets.right + 1;
+			}
 			super.width = value + (value % 2);
 		}
 		
@@ -136,7 +140,34 @@ package jsion.display
 		 */		
 		override public function set height(value:Number):void
 		{
+			if(m_scale9Insets && value < (m_scale9Insets.top + m_scale9Insets.bottom))
+			{
+				value = m_scale9Insets.top + m_scale9Insets.bottom + 1;
+			}
+			
 			super.height = value + (value % 2);
+		}
+		
+		/**
+		 * 最小宽度
+		 */		
+		public function get minWidth():int
+		{
+			if(m_scale9Insets)
+				return m_scale9Insets.left + m_scale9Insets.right + 1;
+			
+			return 0;
+		}
+		
+		/**
+		 * 最小高度
+		 */		
+		public function get minHeight():int
+		{
+			if(m_scale9Insets)
+				return m_scale9Insets.top + m_scale9Insets.bottom + 1;
+			
+			return 0;
 		}
 		
 		/**
@@ -166,6 +197,16 @@ package jsion.display
 		public function set scale9Insets(value:Insets):void
 		{
 			m_scale9Insets = value;
+			
+			if(m_width < (m_scale9Insets.left + m_scale9Insets.right))
+			{
+				m_width = m_scale9Insets.left + m_scale9Insets.right + 1;
+			}
+			
+			if(m_height < (m_scale9Insets.top + m_scale9Insets.bottom))
+			{
+				m_height = m_scale9Insets.top + m_scale9Insets.bottom + 1;
+			}
 			
 			onPropertiesChanged(SCALE9INSETS);
 		}
