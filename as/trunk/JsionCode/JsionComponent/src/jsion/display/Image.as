@@ -40,6 +40,9 @@ package jsion.display
 		
 		private var m_scaleType:String;
 		
+		private var m_minWidth:int;
+		private var m_minHeight:int;
+		
 		
 		private var m_bmp1:Bitmap;
 		private var m_bmp2:Bitmap;
@@ -153,7 +156,7 @@ package jsion.display
 				return m_scale9Insets.left + m_scale9Insets.right + 1;
 			}
 			
-			return 0;
+			return m_minWidth;
 		}
 		
 		/**
@@ -166,7 +169,7 @@ package jsion.display
 				return m_scale9Insets.top + m_scale9Insets.bottom + 1;
 			}
 			
-			return 0;
+			return m_minHeight;
 		}
 		
 		/**
@@ -197,15 +200,20 @@ package jsion.display
 		{
 			m_scale9Insets = value;
 			
-			if(m_width < (m_scale9Insets.left + m_scale9Insets.right))
+			if(m_scale9Insets)
 			{
-				m_width = m_scale9Insets.left + m_scale9Insets.right + 1;
+				m_minWidth = m_scale9Insets.left + m_scale9Insets.right + 1;
+				m_minHeight = m_scale9Insets.top + m_scale9Insets.bottom + 1;
+			}
+			else
+			{
+				m_minWidth = 0;
+				m_minHeight = 0;
 			}
 			
-			if(m_height < (m_scale9Insets.top + m_scale9Insets.bottom))
-			{
-				m_height = m_scale9Insets.top + m_scale9Insets.bottom + 1;
-			}
+			if(m_width <= m_minWidth) m_width = m_minWidth;
+			
+			if(m_height <= m_minHeight) m_height = m_minHeight;
 			
 			onPropertiesChanged(SCALE9INSETS);
 		}
