@@ -1,5 +1,7 @@
 package
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -7,10 +9,13 @@ package
 	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
 	
+	import jsion.Insets;
 	import jsion.comps.ToggleGroup;
 	import jsion.debug.DEBUG;
 	import jsion.display.CheckBox;
+	import jsion.display.Image;
 	import jsion.display.LabelButton;
+	import jsion.display.ScrollBar;
 	import jsion.display.ToggleButton;
 	
 	[SWF(width="1000", height="650", frameRate="30")]
@@ -26,6 +31,23 @@ package
 		[Embed(source="checkbox2.png")]
 		private var m_checkCls2:Class;
 		
+		
+		[Embed(source="ScrollUpUpImage.jpg")]
+		private var m_scrollUpBtnUpAssetCLS:Class;
+		[Embed(source="ScrollUpOverImage.jpg")]
+		private var m_scrollUpBtnOverAssetCLS:Class;
+		
+		[Embed(source="ScrollDownUpImage.jpg")]
+		private var m_scrollDownBtnUpAssetCLS:Class;
+		[Embed(source="ScrollDownOverImage.jpg")]
+		private var m_scrollDownBtnOverAssetCLS:Class;
+		
+		[Embed(source="ScrollBarImage.jpg")]
+		private var m_scrollBarUpAssetCLS:Class;
+		
+		[Embed(source="ScrollBackgroundImage.jpg")]
+		private var m_backgroundAssetCLS:Class;
+		
 		public function ComponentApp()
 		{
 			stage.align = StageAlign.TOP_LEFT;
@@ -38,6 +60,8 @@ package
 //			testToggleButton();
 //			
 //			testCheckBox();
+			
+			testScrollBar();
 		}
 		
 		private function initHelper():void
@@ -45,6 +69,29 @@ package
 			DEBUG.setup(stage, 300);
 			
 			DEBUG.loadCSS("debug.css");
+		}
+		
+		private function testScrollBar():void
+		{
+			var scroll:ScrollBar = new ScrollBar();
+			
+			scroll.beginChanges();
+			scroll.x = 200;
+			scroll.y = 100;
+			scroll.height = 46;
+//			scroll.background = Bitmap(new m_backgroundAssetCLS()).bitmapData;
+			scroll.UpOrLeftBtnUpAsset = new m_scrollUpBtnUpAssetCLS();
+			scroll.UpOrLeftBtnOverAsset = new m_scrollUpBtnOverAssetCLS();
+			scroll.DownOrRightBtnUpAsset = new m_scrollDownBtnUpAssetCLS();
+			scroll.DownOrRightBtnOverAsset = new m_scrollDownBtnOverAssetCLS();
+			var bmd:BitmapData = Bitmap(new m_scrollBarUpAssetCLS()).bitmapData;
+			var img:Image = new Image();
+			img.source = bmd;
+			img.scale9Insets = new Insets(5, 0, 5, 0);
+			scroll.BarUpAsset = img;
+			scroll.commitChanges();
+			
+			addChild(scroll);
 		}
 		
 		private function testCheckBox():void
