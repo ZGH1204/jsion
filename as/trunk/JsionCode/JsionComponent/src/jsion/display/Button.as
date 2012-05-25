@@ -138,6 +138,26 @@ package jsion.display
 		}
 		
 		/**
+		 * 最小宽度
+		 */		
+		public function get minWidth():int
+		{
+			if(m_upImage && m_upImage is Image) return Image(m_upImage).minWidth;
+			
+			return 0;
+		}
+		
+		/**
+		 * 最小高度
+		 */		
+		public function get minHeight():int
+		{
+			if(m_upImage && m_upImage is Image) return Image(m_upImage).minHeight;
+			
+			return 0;
+		}
+		
+		/**
 		 * 按钮弹起时的显示对象资源
 		 * 如果宽度和高度未设置时会根据此显示对象的宽高来设置对应的值
 		 */		

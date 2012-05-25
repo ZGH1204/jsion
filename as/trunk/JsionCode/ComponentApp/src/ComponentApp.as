@@ -78,7 +78,7 @@ package
 			scroll.beginChanges();
 			scroll.x = 200;
 			scroll.y = 100;
-			scroll.height = 46;
+			scroll.height = 44;
 //			scroll.background = Bitmap(new m_backgroundAssetCLS()).bitmapData;
 			scroll.UpOrLeftBtnUpAsset = new m_scrollUpBtnUpAssetCLS();
 			scroll.UpOrLeftBtnOverAsset = new m_scrollUpBtnOverAssetCLS();

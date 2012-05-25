@@ -90,9 +90,9 @@ package jsion.display
 			super.addChildren();
 			
 			addChild(m_background);
-			addChild(m_bar);
 			addChild(m_upOrLeftBtn);
 			addChild(m_downOrRightBtn);
+			addChild(m_bar);
 			
 			if(m_thumb && m_bar) m_bar.addChild(m_thumb);
 		}
@@ -158,13 +158,15 @@ package jsion.display
 				
 				var temp:int = m_height - m_upOrLeftBtn.height - m_downOrRightBtn.height;
 				
-				if(temp <= 0)
+				if(temp <= m_bar.minHeight)
 				{
-					m_bar.height = 0;
+					m_bar.height = m_bar.minHeight;
+					//m_bar.visible = false;
 				}
 				else
 				{
 					m_bar.height = temp;
+					//m_bar.visible = true;
 				}
 			}
 		}
