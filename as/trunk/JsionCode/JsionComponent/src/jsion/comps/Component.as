@@ -165,6 +165,14 @@ package jsion.comps
 		}
 		
 		/**
+		 * 指示指定属性是否变更
+		 */		
+		protected function isChanged(propName:String):Boolean
+		{
+			return isChanged(propName);
+		}
+		
+		/**
 		 * 属性变更时调用
 		 */		
 		protected function onPropertiesChanged(propName:String = null):void

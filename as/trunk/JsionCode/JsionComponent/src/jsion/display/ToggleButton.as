@@ -220,7 +220,7 @@ package jsion.display
 		{
 			if(model.selected)
 			{
-				if(m_changeProperties.containsKey(STATEIMAGE) || m_stateChange)
+				if(isChanged(STATEIMAGE) || m_stateChange)
 				{
 					var image:DisplayObject;
 					
@@ -277,7 +277,7 @@ package jsion.display
 		{
 			if(model.selected)
 			{
-				if(m_changeProperties.containsKey(STATEFILTERS) || m_stateChange)
+				if(isChanged(STATEFILTERS) || m_stateChange)
 				{
 					var filters:Array;
 					var tmpFilters:Array;
@@ -321,7 +321,7 @@ package jsion.display
 		 */
 		override protected function updateLabelFilters():void
 		{
-			if(m_changeProperties.containsKey(LABELFILTERS) || m_stateChange)
+			if(isChanged(LABELFILTERS) || m_stateChange)
 			{
 				if(model.selected)
 				{
@@ -368,10 +368,10 @@ package jsion.display
 		override protected function updateLabelPos():void
 		{
 			if(m_labelChange || m_stateChange || 
-				m_changeProperties.containsKey(LABELALIGN) || 
-				m_changeProperties.containsKey(WIDTH) || 
-				m_changeProperties.containsKey(HEIGHT) || 
-				m_changeProperties.containsKey(OFFSET))
+				isChanged(LABELALIGN) || 
+				isChanged(WIDTH) || 
+				isChanged(HEIGHT) || 
+				isChanged(OFFSET))
 			{
 				if(model.selected)
 				{

@@ -234,10 +234,10 @@ package jsion.display
 		protected function updateLabelPos():void
 		{
 			if(m_labelChange || m_stateChange || 
-				m_changeProperties.containsKey(LABELALIGN) || 
-				m_changeProperties.containsKey(WIDTH) || 
-				m_changeProperties.containsKey(HEIGHT) || 
-				m_changeProperties.containsKey(OFFSET))
+				isChanged(LABELALIGN) || 
+				isChanged(WIDTH) || 
+				isChanged(HEIGHT) || 
+				isChanged(OFFSET))
 			{
 				m_label.x = m_label.y = 0;
 				
@@ -272,7 +272,7 @@ package jsion.display
 		 */		
 		protected function updateLabelFilters():void
 		{
-			if(m_changeProperties.containsKey(LABELFILTERS) || m_stateChange)
+			if(isChanged(LABELFILTERS) || m_stateChange)
 			{
 				var filters:Array;
 				var tmpFilters:Array;
