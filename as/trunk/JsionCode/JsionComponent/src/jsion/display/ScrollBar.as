@@ -85,6 +85,9 @@ package jsion.display
 			m_bar = new Button();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function addChildren():void
 		{
 			super.addChildren();
@@ -97,6 +100,9 @@ package jsion.display
 			if(m_thumb && m_bar) m_bar.addChild(m_thumb);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function onProppertiesUpdate():void
 		{
 			super.onProppertiesUpdate();
