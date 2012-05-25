@@ -128,10 +128,8 @@ package jsion.display
 		 */		
 		override public function set width(value:Number):void
 		{
-			if(m_scale9Insets && value < (m_scale9Insets.left + m_scale9Insets.right))
-			{
-				value = m_scale9Insets.left + m_scale9Insets.right + 1;
-			}
+			if(value <= minWidth) value = minWidth;
+			
 			super.width = value + (value % 2);
 		}
 		
@@ -140,10 +138,7 @@ package jsion.display
 		 */		
 		override public function set height(value:Number):void
 		{
-			if(m_scale9Insets && value < (m_scale9Insets.top + m_scale9Insets.bottom))
-			{
-				value = m_scale9Insets.top + m_scale9Insets.bottom + 1;
-			}
+			if(value <= minHeight) value = minHeight;
 			
 			super.height = value + (value % 2);
 		}
