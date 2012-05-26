@@ -55,6 +55,8 @@ package
 			
 			initHelper();
 			
+			testImage();
+			
 //			testLabelButton();
 //			
 //			testToggleButton();
@@ -73,23 +75,53 @@ package
 		
 		private function testScrollBar():void
 		{
+			var bmp:Bitmap = new m_scrollBarUpAssetCLS();
+			
+			var img:Image = new Image();
+			
+			img.beginChanges();
+			img.source = bmp.bitmapData;
+			img.scale9Insets = new Insets(5, 0, 5, 0);
+			img.commitChanges();
+			
+			
 			var scroll:ScrollBar = new ScrollBar();
 			
 			scroll.beginChanges();
 			scroll.x = 200;
 			scroll.y = 100;
-			scroll.height = 44;
-//			scroll.background = Bitmap(new m_backgroundAssetCLS()).bitmapData;
+			scroll.height = 404;
+			scroll.background = Bitmap(new m_backgroundAssetCLS()).bitmapData;
 			scroll.UpOrLeftBtnUpAsset = new m_scrollUpBtnUpAssetCLS();
 			scroll.UpOrLeftBtnOverAsset = new m_scrollUpBtnOverAssetCLS();
 			scroll.DownOrRightBtnUpAsset = new m_scrollDownBtnUpAssetCLS();
 			scroll.DownOrRightBtnOverAsset = new m_scrollDownBtnOverAssetCLS();
-			var bmd:BitmapData = Bitmap(new m_scrollBarUpAssetCLS()).bitmapData;
-			var img:Image = new Image();
-			img.source = bmd;
-			img.scale9Insets = new Insets(5, 0, 5, 0);
 			scroll.BarUpAsset = img;
+			scroll.viewSize = 1000;
 			scroll.commitChanges();
+			
+//			var img:Image = new Image();
+//			
+//			img.beginChanges();
+//			img.source = bmp.bitmapData;
+//			img.scale9Insets = new Insets(0, 5, 0, 5);
+//			img.commitChanges();
+//			
+//			
+//			var scroll:ScrollBar = new ScrollBar(1);
+//			
+//			scroll.beginChanges();
+//			scroll.x = 200;
+//			scroll.y = 100;
+//			scroll.width = 404;
+//			scroll.background = Bitmap(new m_backgroundAssetCLS()).bitmapData;
+//			scroll.UpOrLeftBtnUpAsset = new m_scrollUpBtnUpAssetCLS();
+//			scroll.UpOrLeftBtnOverAsset = new m_scrollUpBtnOverAssetCLS();
+//			scroll.DownOrRightBtnUpAsset = new m_scrollDownBtnUpAssetCLS();
+//			scroll.DownOrRightBtnOverAsset = new m_scrollDownBtnOverAssetCLS();
+//			scroll.BarUpAsset = img;
+//			scroll.viewSize = 1000;
+//			scroll.commitChanges();
 			
 			addChild(scroll);
 		}
@@ -256,6 +288,24 @@ package
 			labelBtn.commitChanges();
 			
 			addChild(labelBtn);
+		}
+		
+		private function testImage():void
+		{
+			var img:Image = new Image();
+			
+			var bmp:Bitmap = new m_cls();
+			
+			img.beginChanges();
+			img.x = 230;
+			img.y = 100;
+			img.source = bmp.bitmapData;
+			img.scale9Insets = new Insets(15, 15, 15, 15);
+			img.width = 200;
+			img.height = 200;
+			img.commitChanges();
+			
+			addChild(img);
 		}
 	}
 }
