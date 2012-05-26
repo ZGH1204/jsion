@@ -3,8 +3,12 @@ package jsion.display
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	import jsion.comps.Component;
+	import jsion.events.ReleaseEvent;
 	import jsion.utils.DisposeUtil;
 	
 	public class ScrollBar extends Component
@@ -14,6 +18,7 @@ package jsion.display
 		public static const DOWNORRIGHTBTNCHANGE:String = "downOrRightBtnChange";
 		public static const BARCHANGE:String = "barChange";
 		public static const THUMBCHANGE:String = "thumbChange";
+		public static const SCROLLDATA:String = "scrollData";
 		
 		/**
 		 * 水平滚动条
@@ -36,7 +41,17 @@ package jsion.display
 		
 		private var m_scrollType:int;
 		
+		private var m_minPos:int;
+		private var m_maxPos:int;
 		private var m_maxSize:int;
+		private var m_maxBarSize:int;
+		
+		private var m_startPoint:Point;
+		private var m_startGlobalPoint:Point;
+		
+		private var m_scrollValue:int;
+		//private var m_visableSize:int;
+		private var m_viewSize:int;
 		
 		public function ScrollBar(type:int = VERTICAL)
 		{
@@ -44,6 +59,8 @@ package jsion.display
 			
 			m_freeBMD = false;
 			m_scrollType = type;
+			m_startPoint = new Point();
+			m_startGlobalPoint = new Point();
 		}
 		
 		/**
@@ -85,6 +102,58 @@ package jsion.display
 			m_bar = new Button();
 		}
 		
+		override protected function initEvents():void
+		{
+			super.initEvents();
+			
+			m_bar.addEventListener(MouseEvent.MOUSE_DOWN, __barMouseDownHandler);
+			m_bar.addEventListener(ReleaseEvent.RELEASE, __barReleaseHandler);
+		}
+		
+		private function __barMouseDownHandler(e:MouseEvent):void
+		{
+			m_startPoint.x = m_bar.x;
+			m_startPoint.y = m_bar.y;
+			m_startGlobalPoint.x = stage.mouseX;
+			m_startGlobalPoint.y = stage.mouseY;
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveHandler);
+		}
+		
+		protected function __barReleaseHandler(e:Event):void
+		{
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveHandler);
+		}
+		
+		protected function __mouseMoveHandler(e:MouseEvent):void
+		{
+			if(m_scrollType == VERTICAL)
+			{
+				m_bar.y = m_startPoint.y + stage.mouseY - m_startGlobalPoint.y;
+				
+				if(m_bar.y < m_minPos)
+				{
+					m_bar.y = m_minPos;
+				}
+				else if(m_bar.y > m_maxPos)
+				{
+					m_bar.y = m_maxPos;
+				}
+			}
+			else
+			{
+				m_bar.x = m_startPoint.x + stage.mouseX - m_startGlobalPoint.x;
+				
+				if(m_bar.x < m_minPos)
+				{
+					m_bar.x = m_minPos;
+				}
+				else if(m_bar.x > m_maxPos)
+				{
+					m_bar.x = m_maxPos;
+				}
+			}
+		}
+		
 		/**
 		 * @inheritDoc
 		 */		
@@ -110,6 +179,8 @@ package jsion.display
 			updateUIPos();
 			
 			updateUISize();
+			
+			updateUIData();
 		}
 		
 		private function updateUIPos():void
@@ -117,7 +188,9 @@ package jsion.display
 			if(isChanged(BACKGROUNDCHANGE) || 
 			   isChanged(UPORLEFTBTNCHANGE) || 
 			   isChanged(DOWNORRIGHTBTNCHANGE) || 
-			   isChanged(BARCHANGE))
+			   isChanged(BARCHANGE) || 
+			   isChanged(WIDTH) || 
+			   isChanged(HEIGHT))
 			{
 				if(m_scrollType == VERTICAL)
 				{
@@ -138,41 +211,129 @@ package jsion.display
 					
 					m_bar.x = (m_maxSize - m_bar.width) / 2;
 					m_bar.y = m_upOrLeftBtn.y + m_upOrLeftBtn.height;
-					
-					
-					if(m_thumb)
-					{
-						m_thumb.x = (m_bar.width - m_thumb.width) / 2;
-						m_thumb.y = (m_bar.height - m_thumb.height) / 2;
-					}
 				}
 				else
 				{
 					m_maxSize = Math.max(m_background.height, m_upOrLeftBtn.height, m_downOrRightBtn.height, m_bar.height);
+					
+					m_background.x = 0;
+					m_background.y = (m_maxSize - m_background.height) / 2;
+					
+					m_upOrLeftBtn.x = 0;
+					m_upOrLeftBtn.y = (m_maxSize - m_upOrLeftBtn.height) / 2;
+					
+					m_downOrRightBtn.x = m_width - m_downOrRightBtn.width;
+					m_downOrRightBtn.y = (m_maxSize - m_downOrRightBtn.height) / 2;
+					if(m_downOrRightBtn.x < (m_upOrLeftBtn.x + m_upOrLeftBtn.width))
+					{
+						m_downOrRightBtn.x = m_upOrLeftBtn.x + m_upOrLeftBtn.width;
+					}
+					
+					m_bar.x = m_upOrLeftBtn.x + m_upOrLeftBtn.width;
+					m_bar.y = (m_maxSize - m_bar.height) / 2;
+				}
+				
+				if(m_thumb)
+				{
+					m_thumb.x = (m_bar.width - m_thumb.width) / 2;
+					m_thumb.y = (m_bar.height - m_thumb.height) / 2;
 				}
 			}
 		}
 		
 		private function updateUISize():void
 		{
+			var temp:int;
+			
 			if(isChanged(BACKGROUNDCHANGE) || 
 				isChanged(UPORLEFTBTNCHANGE) || 
 				isChanged(DOWNORRIGHTBTNCHANGE) || 
-				isChanged(BARCHANGE))
+				isChanged(BARCHANGE) || 
+				isChanged(WIDTH) || 
+				isChanged(HEIGHT) || 
+				isChanged(SCROLLDATA))
 			{
-				m_background.height = m_height;
-				
-				var temp:int = m_height - m_upOrLeftBtn.height - m_downOrRightBtn.height;
-				
-				if(temp <= m_bar.minHeight)
+				if(m_scrollType == VERTICAL)
 				{
-					m_bar.height = m_bar.minHeight;
-					//m_bar.visible = false;
+					m_background.height = m_height;
+					
+					temp = m_height - m_upOrLeftBtn.height - m_downOrRightBtn.height;
+					
+					if(temp < m_bar.minHeight)
+					{
+						m_bar.height = m_bar.minHeight;
+						//m_bar.enabled = false;
+						m_bar.visible = false;
+					}
+					else
+					{
+						if(m_viewSize > m_height)
+						{
+							m_bar.height = temp * m_height / m_viewSize;
+							//m_bar.enabled = true;
+							m_bar.visible = true;
+						}
+						else
+						{
+							m_bar.height = temp;
+							//m_bar.enabled = true;
+							m_bar.visible = false;
+						}
+					}
 				}
 				else
 				{
-					m_bar.height = temp;
-					//m_bar.visible = true;
+					
+					m_background.width = m_width;
+					
+					temp = m_width - m_upOrLeftBtn.width - m_downOrRightBtn.width;
+					
+					if(temp < m_bar.minWidth)
+					{
+						m_bar.width = m_bar.minWidth;
+						m_bar.enabled = false;
+						//m_bar.visible = false;
+					}
+					else
+					{
+						if(m_viewSize > m_width)
+						{
+							m_bar.width = temp * m_width / m_viewSize;
+							m_bar.enabled = true;
+							//m_bar.visible = true;
+						}
+						else
+						{
+							m_bar.width = temp;
+							m_bar.enabled = true;
+							//m_bar.visible = true;
+						}
+					}
+				}
+			}
+		}
+		
+		private function updateUIData():void
+		{
+			if(isChanged(UPORLEFTBTNCHANGE) || 
+				isChanged(DOWNORRIGHTBTNCHANGE) || 
+				isChanged(BARCHANGE) || 
+				isChanged(WIDTH) || 
+				isChanged(HEIGHT))
+			{
+				if(m_scrollType == VERTICAL)
+				{
+					m_maxBarSize = m_maxSize - m_upOrLeftBtn.height - m_downOrRightBtn.height;
+					
+					m_minPos = m_upOrLeftBtn.y + m_upOrLeftBtn.height;
+					m_maxPos = m_downOrRightBtn.y - m_bar.height;
+				}
+				else
+				{
+					m_maxBarSize = m_maxSize - m_upOrLeftBtn.width - m_downOrRightBtn.width;
+					
+					m_minPos = m_upOrLeftBtn.x + m_upOrLeftBtn.width;
+					m_maxPos = m_downOrRightBtn.x - m_bar.width;
 				}
 			}
 		}
@@ -844,5 +1005,50 @@ package jsion.display
 			m_upOrLeftBtn.freeBMD = value;
 			m_downOrRightBtn.freeBMD = value;
 		}
+
+		public function get scrollValue():int
+		{
+			return m_scrollValue;
+		}
+
+		public function set scrollValue(value:int):void
+		{
+			if(m_scrollValue != value)
+			{
+				m_scrollValue = value;
+			}
+		}
+
+//		public function get visableSize():int
+//		{
+//			return m_visableSize;
+//		}
+//
+//		public function set visableSize(value:int):void
+//		{
+//			if(m_visableSize != value)
+//			{
+//				m_visableSize = value;
+//				
+//				onPropertiesChanged(SCROLLDATA);
+//			}
+//		}
+
+		public function get viewSize():int
+		{
+			return m_viewSize;
+		}
+
+		public function set viewSize(value:int):void
+		{
+			if(m_viewSize != value)
+			{
+				m_viewSize = value;
+				
+				onPropertiesChanged(SCROLLDATA);
+			}
+		}
+
+
 	}
 }
