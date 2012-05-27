@@ -55,8 +55,8 @@ package
 			
 			initHelper();
 			
-			testImage();
-			
+//			testImage();
+//			
 //			testLabelButton();
 //			
 //			testToggleButton();
@@ -97,6 +97,7 @@ package
 			scroll.DownOrRightBtnOverAsset = new m_scrollDownBtnOverAssetCLS();
 			scroll.BarUpAsset = img;
 			scroll.viewSize = 1000;
+			scroll.scrollValueOffset = -15;
 			scroll.commitChanges();
 			
 			
