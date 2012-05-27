@@ -20,6 +20,7 @@ package jsion.display
 		public static const BARCHANGE:String = "barChange";
 		public static const THUMBCHANGE:String = "thumbChange";
 		public static const SCROLLDATA:String = "scrollData";
+		public static const SCROLLVALUEOFFSET:String = "scrollValueOffset";
 		
 		/**
 		 * 水平滚动条
@@ -54,10 +55,10 @@ package jsion.display
 		//private var m_visableSize:int;
 		private var m_viewSize:int;
 		
-		private var m_scrollValueOffset:Number;
-		private var m_maxScrollValue:Number;
+		private var m_scrollValueOffset:int;
+		private var m_maxScrollValue:int;
 		
-		private var m_wheelStep:Number;
+		private var m_wheelStep:int;
 		
 		public function ScrollBar(type:int = VERTICAL)
 		{
@@ -190,13 +191,26 @@ package jsion.display
 		
 		protected function calcScrollValue():void
 		{
+			var temp:int;
+			
 			if(m_scrollType == VERTICAL)
 			{
-				scrollValue = (m_bar.y - m_minPos) / m_maxBarRect * m_maxScrollValue + m_scrollValueOffset;
+				temp = (m_bar.y - m_minPos) / m_maxBarRect * m_maxScrollValue + m_scrollValueOffset;
+				
 			}
 			else
 			{
-				scrollValue = (m_bar.x - m_minPos) / m_maxBarRect * m_maxScrollValue + m_scrollValueOffset;
+				temp = (m_bar.x - m_minPos) / m_maxBarRect * m_maxScrollValue + m_scrollValueOffset;
+			}
+			
+			temp = Math.max(temp, m_scrollValueOffset);
+			temp = Math.min(temp, m_maxScrollValue);
+			
+			if(m_scrollValue != temp)
+			{
+				m_scrollValue = temp;
+				trace(m_scrollValue);
+				dispatchEvent(new DisplayEvent(DisplayEvent.CHANGED, m_scrollValue));
 			}
 		}
 		
@@ -397,6 +411,13 @@ package jsion.display
 				}
 				
 				m_maxBarRect = m_maxPos - m_minPos;
+			}
+			
+			if(isChanged(SCROLLVALUEOFFSET))
+			{
+				calcScrollValue();
+				
+				positionBar();
 			}
 		}
 		
@@ -1075,12 +1096,14 @@ package jsion.display
 
 		public function set scrollValue(value:int):void
 		{
+			value = Math.max(value, m_scrollValueOffset);
+			value = Math.min(value, m_maxScrollValue);
+			
 			if(m_scrollValue != value)
 			{
-				value = Math.max(value, m_scrollValueOffset);
-				value = Math.min(value, m_maxScrollValue);
-				
 				m_scrollValue = value;
+				
+				positionBar();
 				trace(m_scrollValue);
 				dispatchEvent(new DisplayEvent(DisplayEvent.CHANGED, m_scrollValue));
 			}
@@ -1116,6 +1139,19 @@ package jsion.display
 			}
 		}
 
+		public function get scrollValueOffset():int
+		{
+			return m_scrollValueOffset;
+		}
 
+		public function set scrollValueOffset(value:int):void
+		{
+			if(m_scrollValueOffset != value)
+			{
+				m_scrollValueOffset = value;
+				
+				onPropertiesChanged(SCROLLVALUEOFFSET);
+			}
+		}
 	}
 }
