@@ -190,6 +190,19 @@ package jsion.comps
 			DepthUtil.bringToBottom(this);
 		}
 		
+		/**
+		 * 防止对事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
+		 */		
+		public function stopPropagation():void
+		{
+			addEventListener(MouseEvent.CLICK, __mouseClickHandler);
+		}
+		
+		private function __mouseClickHandler(e:MouseEvent):void
+		{
+			e.stopPropagation();
+		}
+		
 		//==========================================		保存事件监听信息			==========================================
 		/**
 		 * 重写添加事件监听 保存监听信息

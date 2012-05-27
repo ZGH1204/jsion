@@ -8,6 +8,7 @@ package jsion.display
 	import flash.geom.Point;
 	
 	import jsion.comps.Component;
+	import jsion.events.DisplayEvent;
 	import jsion.events.ReleaseEvent;
 	import jsion.utils.DisposeUtil;
 	
@@ -44,7 +45,7 @@ package jsion.display
 		private var m_minPos:int;
 		private var m_maxPos:int;
 		private var m_maxSize:int;
-		private var m_maxBarSize:int;
+		private var m_maxBarRect:int;
 		
 		private var m_startPoint:Point;
 		private var m_startGlobalPoint:Point;
@@ -52,6 +53,11 @@ package jsion.display
 		private var m_scrollValue:int;
 		//private var m_visableSize:int;
 		private var m_viewSize:int;
+		
+		private var m_scrollValueOffset:Number;
+		private var m_maxScrollValue:Number;
+		
+		private var m_wheelStep:Number;
 		
 		public function ScrollBar(type:int = VERTICAL)
 		{
@@ -100,14 +106,40 @@ package jsion.display
 			m_upOrLeftBtn = new Button();
 			m_downOrRightBtn = new Button();
 			m_bar = new Button();
+			
+			m_scrollValueOffset = 0;
+			m_maxScrollValue = 0;
+			m_wheelStep = 5;
+			//stopPropagation();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function initEvents():void
 		{
 			super.initEvents();
 			
+			addEventListener(MouseEvent.MOUSE_WHEEL, __mouseWheelHandler);
+			
 			m_bar.addEventListener(MouseEvent.MOUSE_DOWN, __barMouseDownHandler);
 			m_bar.addEventListener(ReleaseEvent.RELEASE, __barReleaseHandler);
+		}
+		
+		private function __mouseWheelHandler(e:MouseEvent):void
+		{
+			e.stopPropagation();
+			
+			if(e.delta > 0)
+			{
+				scrollValue = m_scrollValue - m_wheelStep;
+			}
+			else
+			{
+				scrollValue = m_scrollValue + m_wheelStep;
+			}
+			
+			positionBar();
 		}
 		
 		private function __barMouseDownHandler(e:MouseEvent):void
@@ -151,6 +183,35 @@ package jsion.display
 				{
 					m_bar.x = m_maxPos;
 				}
+			}
+			
+			calcScrollValue();
+		}
+		
+		protected function calcScrollValue():void
+		{
+			if(m_scrollType == VERTICAL)
+			{
+				scrollValue = (m_bar.y - m_minPos) / m_maxBarRect * m_maxScrollValue + m_scrollValueOffset;
+			}
+			else
+			{
+				scrollValue = (m_bar.x - m_minPos) / m_maxBarRect * m_maxScrollValue + m_scrollValueOffset;
+			}
+		}
+		
+		/**
+		 * 更新 拖动条 的位置
+		 */		
+		protected function positionBar():void
+		{
+			if(m_scrollType == VERTICAL)
+			{
+				m_bar.y = (m_scrollValue - m_scrollValueOffset) * m_maxBarRect / m_maxScrollValue + m_minPos;
+			}
+			else
+			{
+				m_bar.x = (m_scrollValue - m_scrollValueOffset) * m_maxBarRect / m_maxScrollValue + m_minPos;
 			}
 		}
 		
@@ -319,22 +380,23 @@ package jsion.display
 				isChanged(DOWNORRIGHTBTNCHANGE) || 
 				isChanged(BARCHANGE) || 
 				isChanged(WIDTH) || 
-				isChanged(HEIGHT))
+				isChanged(HEIGHT) || 
+				isChanged(SCROLLDATA))
 			{
 				if(m_scrollType == VERTICAL)
 				{
-					m_maxBarSize = m_maxSize - m_upOrLeftBtn.height - m_downOrRightBtn.height;
-					
 					m_minPos = m_upOrLeftBtn.y + m_upOrLeftBtn.height;
 					m_maxPos = m_downOrRightBtn.y - m_bar.height;
+					m_maxScrollValue = m_viewSize - m_height;
 				}
 				else
 				{
-					m_maxBarSize = m_maxSize - m_upOrLeftBtn.width - m_downOrRightBtn.width;
-					
 					m_minPos = m_upOrLeftBtn.x + m_upOrLeftBtn.width;
 					m_maxPos = m_downOrRightBtn.x - m_bar.width;
+					m_maxScrollValue = m_viewSize - m_width;
 				}
+				
+				m_maxBarRect = m_maxPos - m_minPos;
 			}
 		}
 		
@@ -1015,7 +1077,12 @@ package jsion.display
 		{
 			if(m_scrollValue != value)
 			{
+				value = Math.max(value, m_scrollValueOffset);
+				value = Math.min(value, m_maxScrollValue);
+				
 				m_scrollValue = value;
+				trace(m_scrollValue);
+				dispatchEvent(new DisplayEvent(DisplayEvent.CHANGED, m_scrollValue));
 			}
 		}
 
