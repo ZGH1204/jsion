@@ -5,6 +5,7 @@ package jsion.events
 	public class DisplayEvent extends Event
 	{
 		public static const PROPERTIES_CHANGED:String = "propertiesChanged";
+		public static const CHANGED:String = "changed";
 		
 		public var data:*;
 		

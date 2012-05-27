@@ -77,43 +77,20 @@ package
 		{
 			var bmp:Bitmap = new m_scrollBarUpAssetCLS();
 			
-			var img:Image = new Image();
-			
-			img.beginChanges();
-			img.source = bmp.bitmapData;
-			img.scale9Insets = new Insets(5, 0, 5, 0);
-			img.commitChanges();
-			
-			
-			var scroll:ScrollBar = new ScrollBar();
-			
-			scroll.beginChanges();
-			scroll.x = 200;
-			scroll.y = 100;
-			scroll.height = 404;
-			scroll.background = Bitmap(new m_backgroundAssetCLS()).bitmapData;
-			scroll.UpOrLeftBtnUpAsset = new m_scrollUpBtnUpAssetCLS();
-			scroll.UpOrLeftBtnOverAsset = new m_scrollUpBtnOverAssetCLS();
-			scroll.DownOrRightBtnUpAsset = new m_scrollDownBtnUpAssetCLS();
-			scroll.DownOrRightBtnOverAsset = new m_scrollDownBtnOverAssetCLS();
-			scroll.BarUpAsset = img;
-			scroll.viewSize = 1000;
-			scroll.commitChanges();
-			
 //			var img:Image = new Image();
 //			
 //			img.beginChanges();
 //			img.source = bmp.bitmapData;
-//			img.scale9Insets = new Insets(0, 5, 0, 5);
+//			img.scale9Insets = new Insets(5, 0, 5, 0);
 //			img.commitChanges();
 //			
 //			
-//			var scroll:ScrollBar = new ScrollBar(1);
+//			var scroll:ScrollBar = new ScrollBar();
 //			
 //			scroll.beginChanges();
 //			scroll.x = 200;
 //			scroll.y = 100;
-//			scroll.width = 404;
+//			scroll.height = 200;
 //			scroll.background = Bitmap(new m_backgroundAssetCLS()).bitmapData;
 //			scroll.UpOrLeftBtnUpAsset = new m_scrollUpBtnUpAssetCLS();
 //			scroll.UpOrLeftBtnOverAsset = new m_scrollUpBtnOverAssetCLS();
@@ -122,6 +99,29 @@ package
 //			scroll.BarUpAsset = img;
 //			scroll.viewSize = 1000;
 //			scroll.commitChanges();
+			
+			var img:Image = new Image();
+			
+			img.beginChanges();
+			img.source = bmp.bitmapData;
+			img.scale9Insets = new Insets(0, 5, 0, 5);
+			img.commitChanges();
+			
+			
+			var scroll:ScrollBar = new ScrollBar(1);
+			
+			scroll.beginChanges();
+			scroll.x = 200;
+			scroll.y = 100;
+			scroll.width = 200;
+			scroll.background = Bitmap(new m_backgroundAssetCLS()).bitmapData;
+			scroll.UpOrLeftBtnUpAsset = new m_scrollUpBtnUpAssetCLS();
+			scroll.UpOrLeftBtnOverAsset = new m_scrollUpBtnOverAssetCLS();
+			scroll.DownOrRightBtnUpAsset = new m_scrollDownBtnUpAssetCLS();
+			scroll.DownOrRightBtnOverAsset = new m_scrollDownBtnOverAssetCLS();
+			scroll.BarUpAsset = img;
+			scroll.viewSize = 1000;
+			scroll.commitChanges();
 			
 			addChild(scroll);
 		}
