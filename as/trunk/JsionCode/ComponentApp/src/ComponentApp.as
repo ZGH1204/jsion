@@ -77,6 +77,10 @@ package
 		{
 			var bmp:Bitmap = new m_scrollBarUpAssetCLS();
 			
+			
+			
+			
+			
 			var img:Image = new Image();
 			
 			img.beginChanges();

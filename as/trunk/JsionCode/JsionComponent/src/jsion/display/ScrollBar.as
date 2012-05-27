@@ -38,27 +38,56 @@ package jsion.display
 		private var m_bar:Button;
 		private var m_thumb:DisplayObject;
 		
-		/** @private */
-		protected var m_freeBMD:Boolean;
+		private var m_freeBMD:Boolean;
 		
 		private var m_scrollType:int;
 		
+		/**
+		 * 拖动条的最小坐标
+		 */		
 		private var m_minPos:int;
+		/**
+		 * 拖动条的最大坐标
+		 */		
 		private var m_maxPos:int;
-		private var m_maxSize:int;
+		
+		/**
+		 * 拖动条的最大拖动范围长度
+		 */		
 		private var m_maxBarRect:int;
 		
+		/**
+		 * 鼠标按下时拖动条的起始位置
+		 */		
 		private var m_startPoint:Point;
+		/**
+		 * 鼠标按下时拖动条的舞台鼠标位置
+		 */		
 		private var m_startGlobalPoint:Point;
 		
+		/**
+		 * 滚动值
+		 */		
 		private var m_scrollValue:int;
-		//private var m_visableSize:int;
+		/**
+		 * 要滚动的全长度
+		 */		
 		private var m_viewSize:int;
 		
+		/**
+		 * 滚动值的偏移量
+		 */		
 		private var m_scrollValueOffset:int;
+		/**
+		 * 最大滚动值
+		 */		
 		private var m_maxScrollValue:int;
 		
+		private var m_scrollStep:int;
 		private var m_wheelStep:int;
+		
+		private var m_curFrame:int;
+		private var m_delayFrame:int;
 		
 		public function ScrollBar(type:int = VERTICAL)
 		{
@@ -108,9 +137,13 @@ package jsion.display
 			m_downOrRightBtn = new Button();
 			m_bar = new Button();
 			
+			m_background.mouseEnabled = true;
+			
 			m_scrollValueOffset = 0;
 			m_maxScrollValue = 0;
+			m_scrollStep = 5;
 			m_wheelStep = 5;
+			m_delayFrame = 20;
 			//stopPropagation();
 		}
 		
@@ -125,6 +158,83 @@ package jsion.display
 			
 			m_bar.addEventListener(MouseEvent.MOUSE_DOWN, __barMouseDownHandler);
 			m_bar.addEventListener(ReleaseEvent.RELEASE, __barReleaseHandler);
+			
+			m_upOrLeftBtn.addEventListener(MouseEvent.MOUSE_DOWN, __upOrLeftMouseDownHandler);
+			m_upOrLeftBtn.addEventListener(ReleaseEvent.RELEASE, __btnReleaseHandler);
+			
+			m_downOrRightBtn.addEventListener(MouseEvent.MOUSE_DOWN, __downOrRightMouseDownHandler);
+			m_downOrRightBtn.addEventListener(ReleaseEvent.RELEASE, __btnReleaseHandler);
+			
+			m_background.addEventListener(MouseEvent.CLICK, __bgClickHandler);
+		}
+		
+		private function __bgClickHandler(e:MouseEvent):void
+		{
+			if(m_scrollType == VERTICAL)
+			{
+				if(e.localY < m_bar.y)
+				{
+					scrollValue = m_scrollValue - m_height;
+				}
+				else
+				{
+					scrollValue = m_scrollValue + m_height;
+				}
+			}
+			else
+			{
+				if(e.localX < m_bar.x)
+				{
+					scrollValue = m_scrollValue - m_width;
+				}
+				else
+				{
+					scrollValue = m_scrollValue + m_width;
+				}
+			}
+		}
+		
+		private function __upOrLeftMouseDownHandler(e:MouseEvent):void
+		{
+			scrollValue = m_scrollValue - m_scrollStep;
+			m_curFrame = 0;
+			addEventListener(Event.ENTER_FRAME, __upOrLeftEnterFrameHandler);
+		}
+		
+		private function __downOrRightMouseDownHandler(e:MouseEvent):void
+		{
+			scrollValue = m_scrollValue + m_scrollStep;
+			m_curFrame = 0;
+			addEventListener(Event.ENTER_FRAME, __downOrRightEnterFrameHandler);
+		}
+		
+		private function __btnReleaseHandler(e:Event):void
+		{
+			m_curFrame = 0;
+			removeEventListener(Event.ENTER_FRAME, __upOrLeftEnterFrameHandler);
+			removeEventListener(Event.ENTER_FRAME, __downOrRightEnterFrameHandler);
+		}
+		
+		protected function __upOrLeftEnterFrameHandler(e:Event):void
+		{
+			if(m_curFrame < m_delayFrame)
+			{
+				m_curFrame++;
+				return;
+			}
+			
+			scrollValue = m_scrollValue - m_scrollStep;
+		}
+		
+		private function __downOrRightEnterFrameHandler(e:Event):void
+		{
+			if(m_curFrame < m_delayFrame)
+			{
+				m_curFrame++;
+				return;
+			}
+			
+			scrollValue = m_scrollValue + m_scrollStep;
 		}
 		
 		private function __mouseWheelHandler(e:MouseEvent):void
@@ -139,8 +249,6 @@ package jsion.display
 			{
 				scrollValue = m_scrollValue + m_wheelStep;
 			}
-			
-			positionBar();
 		}
 		
 		private function __barMouseDownHandler(e:MouseEvent):void
@@ -196,7 +304,6 @@ package jsion.display
 			if(m_scrollType == VERTICAL)
 			{
 				temp = (m_bar.y - m_minPos) / m_maxBarRect * m_maxScrollValue + m_scrollValueOffset;
-				
 			}
 			else
 			{
@@ -204,12 +311,12 @@ package jsion.display
 			}
 			
 			temp = Math.max(temp, m_scrollValueOffset);
-			temp = Math.min(temp, m_maxScrollValue);
+			temp = Math.min(temp, m_maxScrollValue + m_scrollValueOffset);
 			
 			if(m_scrollValue != temp)
 			{
 				m_scrollValue = temp;
-				trace(m_scrollValue);
+				
 				dispatchEvent(new DisplayEvent(DisplayEvent.CHANGED, m_scrollValue));
 			}
 		}
@@ -267,45 +374,47 @@ package jsion.display
 			   isChanged(WIDTH) || 
 			   isChanged(HEIGHT))
 			{
+				var maxSize:int;
+				
 				if(m_scrollType == VERTICAL)
 				{
-					m_maxSize = Math.max(m_background.width, m_upOrLeftBtn.width, m_downOrRightBtn.width, m_bar.width);
+					maxSize = Math.max(m_background.width, m_upOrLeftBtn.width, m_downOrRightBtn.width, m_bar.width);
 					
-					m_background.x = (m_maxSize - m_background.width) / 2;
+					m_background.x = (maxSize - m_background.width) / 2;
 					m_background.y = 0;
 					
-					m_upOrLeftBtn.x = (m_maxSize - m_upOrLeftBtn.width) / 2;
+					m_upOrLeftBtn.x = (maxSize - m_upOrLeftBtn.width) / 2;
 					m_upOrLeftBtn.y = 0;
 					
-					m_downOrRightBtn.x = (m_maxSize - m_downOrRightBtn.width) / 2;
+					m_downOrRightBtn.x = (maxSize - m_downOrRightBtn.width) / 2;
 					m_downOrRightBtn.y = m_height - m_downOrRightBtn.height;
 					if(m_downOrRightBtn.y < (m_upOrLeftBtn.y + m_upOrLeftBtn.height))
 					{
 						m_downOrRightBtn.y = m_upOrLeftBtn.y + m_upOrLeftBtn.height;
 					}
 					
-					m_bar.x = (m_maxSize - m_bar.width) / 2;
+					m_bar.x = (maxSize - m_bar.width) / 2;
 					m_bar.y = m_upOrLeftBtn.y + m_upOrLeftBtn.height;
 				}
 				else
 				{
-					m_maxSize = Math.max(m_background.height, m_upOrLeftBtn.height, m_downOrRightBtn.height, m_bar.height);
+					maxSize = Math.max(m_background.height, m_upOrLeftBtn.height, m_downOrRightBtn.height, m_bar.height);
 					
 					m_background.x = 0;
-					m_background.y = (m_maxSize - m_background.height) / 2;
+					m_background.y = (maxSize - m_background.height) / 2;
 					
 					m_upOrLeftBtn.x = 0;
-					m_upOrLeftBtn.y = (m_maxSize - m_upOrLeftBtn.height) / 2;
+					m_upOrLeftBtn.y = (maxSize - m_upOrLeftBtn.height) / 2;
 					
 					m_downOrRightBtn.x = m_width - m_downOrRightBtn.width;
-					m_downOrRightBtn.y = (m_maxSize - m_downOrRightBtn.height) / 2;
+					m_downOrRightBtn.y = (maxSize - m_downOrRightBtn.height) / 2;
 					if(m_downOrRightBtn.x < (m_upOrLeftBtn.x + m_upOrLeftBtn.width))
 					{
 						m_downOrRightBtn.x = m_upOrLeftBtn.x + m_upOrLeftBtn.width;
 					}
 					
 					m_bar.x = m_upOrLeftBtn.x + m_upOrLeftBtn.width;
-					m_bar.y = (m_maxSize - m_bar.height) / 2;
+					m_bar.y = (maxSize - m_bar.height) / 2;
 				}
 				
 				if(m_thumb)
@@ -390,13 +499,13 @@ package jsion.display
 		
 		private function updateUIData():void
 		{
-			if(isChanged(UPORLEFTBTNCHANGE) || 
-				isChanged(DOWNORRIGHTBTNCHANGE) || 
-				isChanged(BARCHANGE) || 
-				isChanged(WIDTH) || 
-				isChanged(HEIGHT) || 
-				isChanged(SCROLLDATA))
-			{
+//			if(isChanged(UPORLEFTBTNCHANGE) || 
+//				isChanged(DOWNORRIGHTBTNCHANGE) || 
+//				isChanged(BARCHANGE) || 
+//				isChanged(WIDTH) || 
+//				isChanged(HEIGHT) || 
+//				isChanged(SCROLLDATA))
+//			{
 				if(m_scrollType == VERTICAL)
 				{
 					m_minPos = m_upOrLeftBtn.y + m_upOrLeftBtn.height;
@@ -411,7 +520,7 @@ package jsion.display
 				}
 				
 				m_maxBarRect = m_maxPos - m_minPos;
-			}
+//			}
 			
 			if(isChanged(SCROLLVALUEOFFSET))
 			{
@@ -426,6 +535,26 @@ package jsion.display
 		 */		
 		override public function dispose():void
 		{
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveHandler);
+			
+			DisposeUtil.free(m_background);
+			m_background = null;
+			
+			DisposeUtil.free(m_upOrLeftBtn);
+			m_upOrLeftBtn = null;
+			
+			DisposeUtil.free(m_downOrRightBtn);
+			m_downOrRightBtn = null;
+			
+			DisposeUtil.free(m_bar);
+			m_bar = null;
+			
+			DisposeUtil.free(m_thumb, m_freeBMD);
+			m_thumb = null;
+			
+			m_startPoint = null;
+			m_startGlobalPoint = null;
+			
 			super.dispose();
 		}
 
@@ -446,6 +575,7 @@ package jsion.display
 			return m_background.source;
 		}
 		
+		/** @private */
 		public function set background(value:BitmapData):void
 		{
 			if(m_background.source != value)
@@ -470,6 +600,7 @@ package jsion.display
 			return m_upOrLeftBtn.upImage;
 		}
 		
+		/** @private */
 		public function set UpOrLeftBtnUpAsset(value:DisplayObject):void
 		{
 			if(m_upOrLeftBtn.upImage != value)
@@ -485,6 +616,7 @@ package jsion.display
 			return m_upOrLeftBtn.overImage;
 		}
 		
+		/** @private */
 		public function set UpOrLeftBtnOverAsset(value:DisplayObject):void
 		{
 			if(m_upOrLeftBtn.overImage != value)
@@ -500,6 +632,7 @@ package jsion.display
 			return m_upOrLeftBtn.downImage;
 		}
 		
+		/** @private */
 		public function set UpOrLeftBtnDownAsset(value:DisplayObject):void
 		{
 			if(m_upOrLeftBtn.downImage != value)
@@ -515,6 +648,7 @@ package jsion.display
 			return m_upOrLeftBtn.disableImage;
 		}
 		
+		/** @private */
 		public function set UpOrLeftBtnDisableAsset(value:DisplayObject):void
 		{
 			if(m_upOrLeftBtn.disableImage != value)
@@ -530,6 +664,7 @@ package jsion.display
 			return m_upOrLeftBtn.upFilters;
 		}
 		
+		/** @private */
 		public function set UpOrLeftBtnUpFilters(value:Array):void
 		{
 			if(m_upOrLeftBtn.upFilters != value)
@@ -543,6 +678,7 @@ package jsion.display
 			return m_upOrLeftBtn.overFilters;
 		}
 		
+		/** @private */
 		public function set UpOrLeftBtnOverFilters(value:Array):void
 		{
 			if(m_upOrLeftBtn.overFilters != value)
@@ -556,6 +692,7 @@ package jsion.display
 			return m_upOrLeftBtn.downFilters;
 		}
 		
+		/** @private */
 		public function set UpOrLeftBtnDownFilters(value:Array):void
 		{
 			if(m_upOrLeftBtn.downFilters != value)
@@ -569,6 +706,7 @@ package jsion.display
 			return m_upOrLeftBtn.disableFilters;
 		}
 		
+		/** @private */
 		public function set UpOrLeftBtnDisableFilters(value:Array):void
 		{
 			if(m_upOrLeftBtn.disableFilters != value)
@@ -582,6 +720,7 @@ package jsion.display
 			return m_upOrLeftBtn.offsetX;
 		}
 		
+		/** @private */
 		public function set UpOrLeftBtnImageOffsetX(value:int):void
 		{
 			if(m_upOrLeftBtn.offsetX != value)
@@ -595,6 +734,7 @@ package jsion.display
 			return m_upOrLeftBtn.offsetY;
 		}
 		
+		/** @private */
 		public function set UpOrLeftBtnImageOffsetY(value:int):void
 		{
 			if(m_upOrLeftBtn.offsetY != value)
@@ -608,6 +748,7 @@ package jsion.display
 			return m_upOrLeftBtn.overOffsetX;
 		}
 		
+		/** @private */
 		public function set UpOrLeftBtnImageOverOffsetX(value:int):void
 		{
 			if(m_upOrLeftBtn.overOffsetX != value)
@@ -621,6 +762,7 @@ package jsion.display
 			return m_upOrLeftBtn.overOffsetY;
 		}
 		
+		/** @private */
 		public function set UpOrLeftBtnImageOverOffsetY(value:int):void
 		{
 			if(m_upOrLeftBtn.overOffsetY != value)
@@ -634,6 +776,7 @@ package jsion.display
 			return m_upOrLeftBtn.downOffsetX;
 		}
 		
+		/** @private */
 		public function set UpOrLeftBtnImageDownOffsetX(value:int):void
 		{
 			if(m_upOrLeftBtn.downOffsetX != value)
@@ -647,6 +790,7 @@ package jsion.display
 			return m_upOrLeftBtn.downOffsetY;
 		}
 		
+		/** @private */
 		public function set UpOrLeftBtnImageDownOffsetY(value:int):void
 		{
 			if(m_upOrLeftBtn.downOffsetY != value)
@@ -669,6 +813,7 @@ package jsion.display
 			return m_downOrRightBtn.upImage;
 		}
 		
+		/** @private */
 		public function set DownOrRightBtnUpAsset(value:DisplayObject):void
 		{
 			if(m_downOrRightBtn.upImage != value)
@@ -684,6 +829,7 @@ package jsion.display
 			return m_downOrRightBtn.overImage;
 		}
 		
+		/** @private */
 		public function set DownOrRightBtnOverAsset(value:DisplayObject):void
 		{
 			if(m_downOrRightBtn.overImage != value)
@@ -699,6 +845,7 @@ package jsion.display
 			return m_downOrRightBtn.downImage;
 		}
 		
+		/** @private */
 		public function set DownOrRightBtnDownAsset(value:DisplayObject):void
 		{
 			if(m_downOrRightBtn.downImage != value)
@@ -714,6 +861,7 @@ package jsion.display
 			return m_downOrRightBtn.disableImage;
 		}
 		
+		/** @private */
 		public function set DownOrRightBtnDisableAsset(value:DisplayObject):void
 		{
 			if(m_downOrRightBtn.disableImage != value)
@@ -729,6 +877,7 @@ package jsion.display
 			return m_downOrRightBtn.upFilters;
 		}
 		
+		/** @private */
 		public function set DownOrRightBtnUpFilters(value:Array):void
 		{
 			if(m_downOrRightBtn.upFilters != value)
@@ -742,6 +891,7 @@ package jsion.display
 			return m_downOrRightBtn.overFilters;
 		}
 		
+		/** @private */
 		public function set DownOrRightBtnOverFilters(value:Array):void
 		{
 			if(m_downOrRightBtn.overFilters != value)
@@ -755,6 +905,7 @@ package jsion.display
 			return m_downOrRightBtn.downFilters;
 		}
 		
+		/** @private */
 		public function set DownOrRightBtnDownFilters(value:Array):void
 		{
 			if(m_downOrRightBtn.downFilters != value)
@@ -768,6 +919,7 @@ package jsion.display
 			return m_downOrRightBtn.disableFilters;
 		}
 		
+		/** @private */
 		public function set DownOrRightBtnDisableFilters(value:Array):void
 		{
 			if(m_downOrRightBtn.disableFilters != value)
@@ -781,6 +933,7 @@ package jsion.display
 			return m_downOrRightBtn.offsetX;
 		}
 		
+		/** @private */
 		public function set DownOrRightBtnImageOffsetX(value:int):void
 		{
 			if(m_downOrRightBtn.offsetX != value)
@@ -794,6 +947,7 @@ package jsion.display
 			return m_downOrRightBtn.offsetY;
 		}
 		
+		/** @private */
 		public function set DownOrRightBtnImageOffsetY(value:int):void
 		{
 			if(m_downOrRightBtn.offsetY != value)
@@ -807,6 +961,7 @@ package jsion.display
 			return m_downOrRightBtn.overOffsetX;
 		}
 		
+		/** @private */
 		public function set DownOrRightBtnImageOverOffsetX(value:int):void
 		{
 			if(m_downOrRightBtn.overOffsetX != value)
@@ -820,6 +975,7 @@ package jsion.display
 			return m_downOrRightBtn.overOffsetY;
 		}
 		
+		/** @private */
 		public function set DownOrRightBtnImageOverOffsetY(value:int):void
 		{
 			if(m_downOrRightBtn.overOffsetY != value)
@@ -833,6 +989,7 @@ package jsion.display
 			return m_downOrRightBtn.downOffsetX;
 		}
 		
+		/** @private */
 		public function set DownOrRightBtnImageDownOffsetX(value:int):void
 		{
 			if(m_downOrRightBtn.downOffsetX != value)
@@ -846,6 +1003,7 @@ package jsion.display
 			return m_downOrRightBtn.downOffsetY;
 		}
 		
+		/** @private */
 		public function set DownOrRightBtnImageDownOffsetY(value:int):void
 		{
 			if(m_downOrRightBtn.downOffsetY != value)
@@ -868,6 +1026,7 @@ package jsion.display
 			return m_bar.upImage;
 		}
 		
+		/** @private */
 		public function set BarUpAsset(value:DisplayObject):void
 		{
 			if(m_bar.upImage != value)
@@ -883,6 +1042,7 @@ package jsion.display
 			return m_bar.overImage;
 		}
 		
+		/** @private */
 		public function set BarOverAsset(value:DisplayObject):void
 		{
 			if(m_bar.overImage != value)
@@ -898,6 +1058,7 @@ package jsion.display
 			return m_bar.downImage;
 		}
 		
+		/** @private */
 		public function set BarDownAsset(value:DisplayObject):void
 		{
 			if(m_bar.downImage != value)
@@ -913,6 +1074,7 @@ package jsion.display
 			return m_bar.disableImage;
 		}
 		
+		/** @private */
 		public function set BarDisableAsset(value:DisplayObject):void
 		{
 			if(m_bar.disableImage != value)
@@ -928,6 +1090,7 @@ package jsion.display
 			return m_bar.upFilters;
 		}
 		
+		/** @private */
 		public function set BarUpFilters(value:Array):void
 		{
 			if(m_bar.upFilters != value)
@@ -941,6 +1104,7 @@ package jsion.display
 			return m_bar.overFilters;
 		}
 		
+		/** @private */
 		public function set BarOverFilters(value:Array):void
 		{
 			if(m_bar.overFilters != value)
@@ -954,6 +1118,7 @@ package jsion.display
 			return m_bar.downFilters;
 		}
 		
+		/** @private */
 		public function set BarDownFilters(value:Array):void
 		{
 			if(m_bar.downFilters != value)
@@ -967,6 +1132,7 @@ package jsion.display
 			return m_bar.disableFilters;
 		}
 		
+		/** @private */
 		public function set BarDisableFilters(value:Array):void
 		{
 			if(m_bar.disableFilters != value)
@@ -980,6 +1146,7 @@ package jsion.display
 			return m_bar.offsetX;
 		}
 		
+		/** @private */
 		public function set BarImageOffsetX(value:int):void
 		{
 			if(m_bar.offsetX != value)
@@ -993,6 +1160,7 @@ package jsion.display
 			return m_bar.offsetY;
 		}
 		
+		/** @private */
 		public function set BarImageOffsetY(value:int):void
 		{
 			if(m_bar.offsetY != value)
@@ -1006,6 +1174,7 @@ package jsion.display
 			return m_bar.overOffsetX;
 		}
 		
+		/** @private */
 		public function set BarImageOverOffsetX(value:int):void
 		{
 			if(m_bar.overOffsetX != value)
@@ -1019,6 +1188,7 @@ package jsion.display
 			return m_bar.overOffsetY;
 		}
 		
+		/** @private */
 		public function set BarImageOverOffsetY(value:int):void
 		{
 			if(m_bar.overOffsetY != value)
@@ -1032,6 +1202,7 @@ package jsion.display
 			return m_bar.downOffsetX;
 		}
 		
+		/** @private */
 		public function set BarImageDownOffsetX(value:int):void
 		{
 			if(m_bar.downOffsetX != value)
@@ -1045,6 +1216,7 @@ package jsion.display
 			return m_bar.downOffsetY;
 		}
 		
+		/** @private */
 		public function set BarImageDownOffsetY(value:int):void
 		{
 			if(m_bar.downOffsetY != value)
@@ -1062,7 +1234,8 @@ package jsion.display
 		{
 			return m_thumb;
 		}
-
+		
+		/** @private */
 		public function set thumb(value:DisplayObject):void
 		{
 			if(m_thumb != value)
@@ -1079,7 +1252,8 @@ package jsion.display
 		{
 			return m_freeBMD;
 		}
-
+		
+		/** @private */
 		public function set freeBMD(value:Boolean):void
 		{
 			m_freeBMD = value;
@@ -1093,42 +1267,29 @@ package jsion.display
 		{
 			return m_scrollValue;
 		}
-
+		
+		/** @private */
 		public function set scrollValue(value:int):void
 		{
 			value = Math.max(value, m_scrollValueOffset);
-			value = Math.min(value, m_maxScrollValue);
+			value = Math.min(value, m_maxScrollValue + m_scrollValueOffset);
 			
 			if(m_scrollValue != value)
 			{
 				m_scrollValue = value;
 				
 				positionBar();
-				trace(m_scrollValue);
+				
 				dispatchEvent(new DisplayEvent(DisplayEvent.CHANGED, m_scrollValue));
 			}
 		}
-
-//		public function get visableSize():int
-//		{
-//			return m_visableSize;
-//		}
-//
-//		public function set visableSize(value:int):void
-//		{
-//			if(m_visableSize != value)
-//			{
-//				m_visableSize = value;
-//				
-//				onPropertiesChanged(SCROLLDATA);
-//			}
-//		}
 
 		public function get viewSize():int
 		{
 			return m_viewSize;
 		}
-
+		
+		/** @private */
 		public function set viewSize(value:int):void
 		{
 			if(m_viewSize != value)
@@ -1143,7 +1304,8 @@ package jsion.display
 		{
 			return m_scrollValueOffset;
 		}
-
+		
+		/** @private */
 		public function set scrollValueOffset(value:int):void
 		{
 			if(m_scrollValueOffset != value)
@@ -1152,6 +1314,48 @@ package jsion.display
 				
 				onPropertiesChanged(SCROLLVALUEOFFSET);
 			}
+		}
+
+		/**
+		 * 每次鼠标滚轮滚动的滚动值
+		 */
+		public function get wheelStep():int
+		{
+			return m_wheelStep;
+		}
+
+		/** @private */
+		public function set wheelStep(value:int):void
+		{
+			m_wheelStep = value;
+		}
+
+		/**
+		 * 点击按钮时的滚动值
+		 */		
+		public function get scrollStep():int
+		{
+			return m_scrollStep;
+		}
+		
+		/** @private */
+		public function set scrollStep(value:int):void
+		{
+			m_scrollStep = value;
+		}
+
+		/**
+		 * 长按按钮的延迟帧数 超过延迟帧时以 scrollStep 的值不停更新滚动值 scrollValue。
+		 */		
+		public function get delayFrame():int
+		{
+			return m_delayFrame;
+		}
+		
+		/** @private */
+		public function set delayFrame(value:int):void
+		{
+			m_delayFrame = value;
 		}
 	}
 }
