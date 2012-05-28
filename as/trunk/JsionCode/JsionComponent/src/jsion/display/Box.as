@@ -73,8 +73,10 @@ package jsion.display
 		
 		private var m_maxValue:int;
 		
-		public function Box()
+		public function Box(type:int = VERTICAL)
 		{
+			m_type = type;
+			
 			super();
 		}
 		
@@ -85,9 +87,14 @@ package jsion.display
 		{
 			super.initialize();
 			
-			m_type = HORIZONTAL;
-			
-			m_align = TOP;
+			if(m_type == HORIZONTAL)
+			{
+				m_align = TOP;
+			}
+			else
+			{
+				m_align = LEFT;
+			}
 			
 			m_changed = false;
 		}

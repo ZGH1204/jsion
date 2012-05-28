@@ -15,6 +15,7 @@ package
 	import jsion.display.CheckBox;
 	import jsion.display.Image;
 	import jsion.display.LabelButton;
+	import jsion.display.List;
 	import jsion.display.ScrollBar;
 	import jsion.display.ScrollPanel;
 	import jsion.display.ToggleButton;
@@ -65,8 +66,10 @@ package
 //			testCheckBox();
 //			
 //			testScrollBar();
-			
-			testScrollPanel();
+//			
+//			testScrollPanel();
+//			
+//			testList();
 		}
 		
 		private function initHelper():void
@@ -74,6 +77,76 @@ package
 			DEBUG.setup(stage, 300);
 			
 			DEBUG.loadCSS("debug.css");
+		}
+		
+		private function testList():void
+		{
+			var bmp:Bitmap = new m_scrollBarUpAssetCLS();
+			
+			
+			var img:Image = new Image();
+			
+			img.beginChanges();
+			img.source = bmp.bitmapData;
+			img.scale9Insets = new Insets(5, 0, 5, 0);
+			img.commitChanges();
+			
+			var group:ToggleGroup = new ToggleGroup();
+			
+			
+			var list:List = new List();
+			
+			list.beginChanges();
+			list.x = 430;
+			list.y = 100;
+			list.scrollBarBackground = Bitmap(new m_backgroundAssetCLS()).bitmapData;
+			list.UpOrLeftBtnUpAsset = new m_scrollUpBtnUpAssetCLS();
+			list.UpOrLeftBtnOverAsset = new m_scrollUpBtnOverAssetCLS();
+			list.DownOrRightBtnUpAsset = new m_scrollDownBtnUpAssetCLS();
+			list.DownOrRightBtnOverAsset = new m_scrollDownBtnOverAssetCLS();
+			list.BarUpAsset = img;
+			list.width = 100;
+			list.height = 300;
+			list.itemGap = -5;
+			for(var i:int = 0; i < 100; i++)
+			{
+				var toggleBtn:ToggleButton;
+				
+				toggleBtn = new ToggleButton();
+				toggleBtn.beginChanges();
+				
+				toggleBtn.upImage = new m_cls();
+				toggleBtn.overFilters = [new BlurFilter(2, 2, 1)];
+//				toggleBtn.overOffsetX = 1;
+//				toggleBtn.overOffsetY = 1;
+//				toggleBtn.downOffsetX = 1;
+//				toggleBtn.downOffsetY = 1;
+				
+				toggleBtn.selectedUpImage = new m_cls2();
+				toggleBtn.selectedOverFilters = [new BlurFilter(2, 2, 1)];
+//				toggleBtn.selectedOverOffsetX = 1;
+//				toggleBtn.selectedOverOffsetY = 1;
+//				toggleBtn.selectedDownOffsetX = 1;
+//				toggleBtn.selectedDownOffsetY = 1;
+				
+				toggleBtn.parseCSS("j{display: inline; color: #FFFFFF;} s{display: inline; color: #FFFF00;}");
+				toggleBtn.label = "To<j>gg</j><s>le" + (i + 1).toString() + "</s>";
+				toggleBtn.labelColor = 0xFF8040;
+				toggleBtn.selectedLabelColor = 0x01;
+				toggleBtn.labelOverFilters = [new BlurFilter(2, 2, 1)];
+				toggleBtn.selectedLabelOverFilters = [new BlurFilter(2, 2, 1)];
+				
+				toggleBtn.width = 85;
+				
+				toggleBtn.commitChanges();
+				
+				list.addItem(toggleBtn);
+				
+				group.addItem(toggleBtn);
+			}
+			list.commitChanges();
+			
+			addChild(list);
 		}
 		
 		private function testScrollPanel():void
@@ -247,7 +320,7 @@ package
 			toggleBtn.selectedLabelOverFilters = [new BlurFilter(2, 2, 1)];
 			toggleBtn.commitChanges();
 			
-			group.add(toggleBtn);
+			group.addItem(toggleBtn);
 			
 			addChild(toggleBtn);
 			
@@ -284,7 +357,7 @@ package
 			toggleBtn.selectedLabelOverFilters = [new BlurFilter(2, 2, 1)];
 			toggleBtn.commitChanges();
 			
-			group.add(toggleBtn);
+			group.addItem(toggleBtn);
 			
 			addChild(toggleBtn);
 			
@@ -321,7 +394,7 @@ package
 			toggleBtn.selectedLabelOverFilters = [new BlurFilter(2, 2, 1)];
 			toggleBtn.commitChanges();
 			
-			group.add(toggleBtn);
+			group.addItem(toggleBtn);
 			
 			addChild(toggleBtn);
 		}
