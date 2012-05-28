@@ -20,6 +20,7 @@ package jsion.display
 	public class ScrollBar extends Component
 	{
 		public static const BACKGROUNDCHANGE:String = "backgroundChange";
+		public static const BUTTONGAP:String = "btnGap";
 		public static const UPORLEFTBTNCHANGE:String = "upOrLeftBtnChange";
 		public static const DOWNORRIGHTBTNCHANGE:String = "downOrRightBtnChange";
 		public static const BARCHANGE:String = "barChange";
@@ -103,10 +104,18 @@ package jsion.display
 		 * 	<li>ScrollBar.HORIZONTAL 水平滚动条类型</li>
 		 * 	<li>ScrollBar.VERTICAL   垂直滚动条类型</li>
 		 * </ul>
+		 * 默认ScrollBar.VERTICAL。
+		 * @throws Error 滚动类型错误 必需是 ScrollBar.HORIZONTAL 或 ScrollBar.VERTICAL 之一。
 		 */		
 		public function ScrollBar(type:int = VERTICAL)
 		{
 			super();
+			
+			if(type != VERTICAL && type != HORIZONTAL)
+			{
+				throw new Error("滚动类型错误");
+				return;
+			}
 			
 			m_freeBMD = false;
 			m_scrollType = type;
@@ -389,50 +398,49 @@ package jsion.display
 			   isChanged(UPORLEFTBTNCHANGE) || 
 			   isChanged(DOWNORRIGHTBTNCHANGE) || 
 			   isChanged(BARCHANGE) || 
+			   isChanged(BUTTONGAP) || 
 			   isChanged(WIDTH) || 
 			   isChanged(HEIGHT))
 			{
-				var maxSize:int;
-				
 				if(m_scrollType == VERTICAL)
 				{
-					maxSize = Math.max(m_background.width, m_upOrLeftBtn.width, m_downOrRightBtn.width, m_bar.width);
+					m_width = Math.max(m_background.width, m_upOrLeftBtn.width, m_downOrRightBtn.width, m_bar.width);
 					
-					m_background.x = (maxSize - m_background.width) / 2;
+					m_background.x = (m_width - m_background.width) / 2;
 					m_background.y = 0;
 					
-					m_upOrLeftBtn.x = (maxSize - m_upOrLeftBtn.width) / 2;
+					m_upOrLeftBtn.x = (m_width - m_upOrLeftBtn.width) / 2;
 					m_upOrLeftBtn.y = m_btnGap;
 					
-					m_downOrRightBtn.x = (maxSize - m_downOrRightBtn.width) / 2;
+					m_downOrRightBtn.x = (m_width - m_downOrRightBtn.width) / 2;
 					m_downOrRightBtn.y = m_height - m_downOrRightBtn.height - m_btnGap;
 					if(m_downOrRightBtn.y < (m_upOrLeftBtn.y + m_upOrLeftBtn.height))
 					{
 						m_downOrRightBtn.y = m_upOrLeftBtn.y + m_upOrLeftBtn.height;
 					}
 					
-					m_bar.x = (maxSize - m_bar.width) / 2;
+					m_bar.x = (m_width - m_bar.width) / 2;
 					m_bar.y = m_upOrLeftBtn.y + m_upOrLeftBtn.height;
 				}
 				else
 				{
-					maxSize = Math.max(m_background.height, m_upOrLeftBtn.height, m_downOrRightBtn.height, m_bar.height);
+					m_height = Math.max(m_background.height, m_upOrLeftBtn.height, m_downOrRightBtn.height, m_bar.height);
 					
 					m_background.x = 0;
-					m_background.y = (maxSize - m_background.height) / 2;
+					m_background.y = (m_height - m_background.height) / 2;
 					
 					m_upOrLeftBtn.x = m_btnGap;
-					m_upOrLeftBtn.y = (maxSize - m_upOrLeftBtn.height) / 2;
+					m_upOrLeftBtn.y = (m_height - m_upOrLeftBtn.height) / 2;
 					
 					m_downOrRightBtn.x = m_width - m_downOrRightBtn.width - m_btnGap;
-					m_downOrRightBtn.y = (maxSize - m_downOrRightBtn.height) / 2;
+					m_downOrRightBtn.y = (m_height - m_downOrRightBtn.height) / 2;
 					if(m_downOrRightBtn.x < (m_upOrLeftBtn.x + m_upOrLeftBtn.width))
 					{
 						m_downOrRightBtn.x = m_upOrLeftBtn.x + m_upOrLeftBtn.width;
 					}
 					
 					m_bar.x = m_upOrLeftBtn.x + m_upOrLeftBtn.width;
-					m_bar.y = (maxSize - m_bar.height) / 2;
+					m_bar.y = (m_height - m_bar.height) / 2;
 				}
 				
 				if(m_thumb)
@@ -466,6 +474,8 @@ package jsion.display
 						m_bar.height = m_bar.minHeight;
 						//m_bar.enabled = false;
 						m_bar.visible = false;
+						m_upOrLeftBtn.enabled = false;
+						m_downOrRightBtn.enabled = false;
 					}
 					else
 					{
@@ -474,12 +484,16 @@ package jsion.display
 							m_bar.height = temp * m_height / m_viewSize;
 							//m_bar.enabled = true;
 							m_bar.visible = true;
+							m_upOrLeftBtn.enabled = true;
+							m_downOrRightBtn.enabled = true;
 						}
 						else
 						{
 							m_bar.height = temp;
 							//m_bar.enabled = true;
 							m_bar.visible = false;
+							m_upOrLeftBtn.enabled = false;
+							m_downOrRightBtn.enabled = false;
 						}
 					}
 				}
@@ -546,34 +560,6 @@ package jsion.display
 				
 				positionBar();
 			}
-		}
-		
-		/**
-		 * @inheritDoc
-		 */		
-		override public function dispose():void
-		{
-			stage.removeEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveHandler);
-			
-			DisposeUtil.free(m_background);
-			m_background = null;
-			
-			DisposeUtil.free(m_upOrLeftBtn);
-			m_upOrLeftBtn = null;
-			
-			DisposeUtil.free(m_downOrRightBtn);
-			m_downOrRightBtn = null;
-			
-			DisposeUtil.free(m_bar);
-			m_bar = null;
-			
-			DisposeUtil.free(m_thumb, m_freeBMD);
-			m_thumb = null;
-			
-			m_startPoint = null;
-			m_startGlobalPoint = null;
-			
-			super.dispose();
 		}
 
 		/**
@@ -1579,8 +1565,36 @@ package jsion.display
 			{
 				m_btnGap = value;
 				
-				onPropertiesChanged(UPORLEFTBTNCHANGE);
+				onPropertiesChanged(BUTTONGAP);
 			}
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		override public function dispose():void
+		{
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveHandler);
+			
+			DisposeUtil.free(m_background);
+			m_background = null;
+			
+			DisposeUtil.free(m_upOrLeftBtn);
+			m_upOrLeftBtn = null;
+			
+			DisposeUtil.free(m_downOrRightBtn);
+			m_downOrRightBtn = null;
+			
+			DisposeUtil.free(m_bar);
+			m_bar = null;
+			
+			DisposeUtil.free(m_thumb, m_freeBMD);
+			m_thumb = null;
+			
+			m_startPoint = null;
+			m_startGlobalPoint = null;
+			
+			super.dispose();
 		}
 	}
 }
