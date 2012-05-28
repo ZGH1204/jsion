@@ -16,6 +16,7 @@ package
 	import jsion.display.Image;
 	import jsion.display.LabelButton;
 	import jsion.display.ScrollBar;
+	import jsion.display.ScrollPanel;
 	import jsion.display.ToggleButton;
 	
 	[SWF(width="1000", height="650", frameRate="30")]
@@ -62,8 +63,10 @@ package
 //			testToggleButton();
 //			
 //			testCheckBox();
+//			
+//			testScrollBar();
 			
-			testScrollBar();
+			testScrollPanel();
 		}
 		
 		private function initHelper():void
@@ -71,6 +74,61 @@ package
 			DEBUG.setup(stage, 300);
 			
 			DEBUG.loadCSS("debug.css");
+		}
+		
+		private function testScrollPanel():void
+		{
+			var bmp:Bitmap = new m_scrollBarUpAssetCLS();
+			
+			
+			
+			var sprite:Sprite = new Sprite();
+			sprite.graphics.clear();
+			
+			sprite.graphics.beginFill(0x336699);
+			sprite.graphics.drawRect(0, 0, 100, 50);
+			sprite.graphics.endFill();
+			
+			sprite.graphics.beginFill(0x4080FF);
+			sprite.graphics.drawRect(0, 50, 100, 100);
+			sprite.graphics.endFill();
+			
+			sprite.graphics.beginFill(0xFF8040);
+			sprite.graphics.drawRect(0, 150, 100, 200);
+			sprite.graphics.endFill();
+			
+			sprite.graphics.beginFill(0);
+			sprite.graphics.drawRect(0, 350, 100, 50);
+			sprite.graphics.endFill();
+			
+			
+			
+			var img:Image = new Image();
+			
+			img.beginChanges();
+			img.source = bmp.bitmapData;
+			img.scale9Insets = new Insets(5, 0, 5, 0);
+			img.commitChanges();
+			
+			var scroll:ScrollPanel = new ScrollPanel();
+			
+			scroll.beginChanges();
+			scroll.x = 300;
+			scroll.y = 100;
+			scroll.scrollBarBackground = Bitmap(new m_backgroundAssetCLS()).bitmapData;
+			scroll.UpOrLeftBtnUpAsset = new m_scrollUpBtnUpAssetCLS();
+			scroll.UpOrLeftBtnOverAsset = new m_scrollUpBtnOverAssetCLS();
+			scroll.DownOrRightBtnUpAsset = new m_scrollDownBtnUpAssetCLS();
+			scroll.DownOrRightBtnOverAsset = new m_scrollDownBtnOverAssetCLS();
+			scroll.BarUpAsset = img;
+			scroll.width = 100;
+			scroll.height = 100;
+			scroll.scrollView = sprite;
+			scroll.scrollPos = ScrollPanel.OUTSIDE;
+			scroll.commitChanges();
+			
+			
+			addChild(scroll);
 		}
 		
 		private function testScrollBar():void
