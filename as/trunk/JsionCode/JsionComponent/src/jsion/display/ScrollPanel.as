@@ -37,13 +37,13 @@ package jsion.display
 		public static const OUTSIDE:int = 2;
 		
 		
-		private var m_scrollView:DisplayObject;
+		protected var m_scrollView:DisplayObject;
 		
-		private var m_scrollBar:ScrollBar;
+		protected var m_scrollBar:ScrollBar;
 		
 		private var m_freeBMD:Boolean;
 		
-		private var m_scrollType:int;
+		protected var m_scrollType:int;
 		
 		private var m_scrollPos:int;
 		

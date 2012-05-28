@@ -582,6 +582,9 @@ package jsion.display
 			{
 				m_curImage.width = m_width;
 				m_curImage.height = m_height;
+				
+				m_width = m_curImage.width;
+				m_height = m_curImage.height;
 			}
 		}
 		

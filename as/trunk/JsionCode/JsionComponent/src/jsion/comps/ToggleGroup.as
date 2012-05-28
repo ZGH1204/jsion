@@ -128,7 +128,7 @@ package jsion.comps
 		 * @param btn 要加入的ToggleButton对象
 		 * 
 		 */		
-		public function add(button:ToggleButton):void
+		public function addItem(button:ToggleButton):void
 		{
 			if(button == null) return;
 			
