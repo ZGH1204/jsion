@@ -17,7 +17,6 @@ package jsion.comps
 	/**
 	 * ToggleButton编组。支持多选。
 	 * @author Jsion
-	 * 
 	 */	
 	public class ToggleGroup extends JsionEventDispatcher
 	{

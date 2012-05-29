@@ -13,10 +13,13 @@ package jsion.display
 	import jsion.utils.DisposeUtil;
 	
 	/**
+	 * 滚动值发生变更时派发
+	 */	
+	[Event(name="changed", type="jsion.events.DisplayEvent")]
+	/**
 	 * 滚动条 支持水平滚动条和垂直滚动条
 	 * @author Jsion
-	 * 
-	 */	
+	 */
 	public class ScrollBar extends Component
 	{
 		public static const BACKGROUNDCHANGE:String = "backgroundChange";
