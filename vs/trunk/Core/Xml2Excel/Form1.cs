@@ -321,7 +321,7 @@ namespace Xml2Excel
 
 
                 string path = str.Substring(0, str.LastIndexOf("\\"));
-                string filename = str.Substring(str.LastIndexOf("\\") + 1).Replace(".xlsx", "") + "_Generate.xml";
+                string filename = str.Substring(str.LastIndexOf("\\") + 1).Replace(".xlsx", "") + ".xml";
                 path = Path.Combine(path, filename);
 
 
