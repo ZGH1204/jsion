@@ -584,7 +584,7 @@ namespace Xml2Excel
 
                     if (string.IsNullOrEmpty(r2.Value2))
                     {
-                        propType = "System.String";
+                        propType = "string";
                     }
                     else
                     {
@@ -603,7 +603,12 @@ namespace Xml2Excel
                     }
 
                     tci.ASPropList.Add(string.Format("public var {0}:{1};", prop, CSharp2AS(propType)));
-                    tci.CSPropList.Add(string.Format("public {1} {0} {2} get; set; {3}", prop, CSharp2CSharp(propType), "{", "}"));
+
+                    if (prop != "TemplateID" && prop != "TemplateName")
+                    {
+                        tci.CSPropList.Add(string.Format("public {1} {0} {2} get; set; {3}", prop, CSharp2CSharp(propType), "{", "}"));
+                    }
+
                     tci.SummaryList.Add(propSummary);
                 }
             }
