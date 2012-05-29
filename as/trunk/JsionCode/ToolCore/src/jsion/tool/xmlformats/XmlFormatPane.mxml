@@ -107,9 +107,11 @@
 			{
 				// TODO Auto-generated method stub
 				
-				PopUpManager.removePopUp(ToolGlobal.xmlFormater);
+				PopUpManager.removePopUp(this);
 				
-				ToolGlobal.xmlFormater = null;
+//				PopUpManager.removePopUp(ToolGlobal.xmlFormater);
+//				
+//				ToolGlobal.xmlFormater = null;
 				
 				//removeEventListener(Event.ENTER_FRAME, __enterFrameHandler);
 			}
