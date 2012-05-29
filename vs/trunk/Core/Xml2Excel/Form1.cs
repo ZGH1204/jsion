@@ -658,6 +658,11 @@ namespace Xml2Excel
         {
             string rlt = "";
 
+            if (str.EndsWith("[]"))
+            {
+                return "String";
+            }
+
             switch (str.ToLower())
             {
                 case "int":
