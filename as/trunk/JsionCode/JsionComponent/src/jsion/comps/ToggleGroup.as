@@ -27,6 +27,8 @@ package jsion.comps
 		
 		private var m_selected:ToggleButton;
 		
+		private var m_selectedIndex:int;
+		
 		private var m_autoSelected:Boolean;
 		
 		private var m_multiple:Boolean;
@@ -88,9 +90,7 @@ package jsion.comps
 			return m_selected;
 		}
 		
-		/**
-		 * @private
-		 */		
+		/** @private */
 		public function set selected(value:ToggleButton):void
 		{
 			if(m_multiple) return;
@@ -102,6 +102,8 @@ package jsion.comps
 				m_selected = value;
 				
 				if(m_selected) m_selected.selected = true;
+				
+				m_selectedIndex = m_list.indexOf(m_selected);
 			}
 			
 			if(m_multiple)
@@ -112,6 +114,33 @@ package jsion.comps
 			{
 				dispatchEvent(new DisplayEvent(DisplayEvent.SELECT_CHANGED, m_selected));
 			}
+		}
+		
+		/**
+		 * 获取或设置选中对象的子索引位置。
+		 * 当允许多选时，返回 -1，请使用 selectedList 属性获取所有选中对象，setMultipleSelected() 方法设置选中/取消选中对象。
+		 */		
+		public function get selectedIndex():int
+		{
+			if(m_multiple) return -1;
+			return m_selectedIndex;
+		}
+		
+		/** @private */
+		public function set selectedIndex(value:int):void
+		{
+			if(m_multiple) return;
+			
+			if(value < 0 || value >= m_list.length)
+			{
+				selected = null;
+				
+				return;
+			}
+			
+			var toggleBtn:ToggleButton = m_list[value];
+			
+			selected = toggleBtn;
 		}
 		
 		/**
