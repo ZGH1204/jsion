@@ -14,7 +14,7 @@ namespace Xml2Excel.Core
         /// 0左大括号
         /// 1右大括号
         /// </summary>
-        private const string ASCode = "package {2}\r\n{0}\r\n    public class {3} : Template\r\n    {0}\r\n{4}\r\n    {1}\r\n{1}";
+        private const string ASCode = "package {2}\r\n{0}\r\n    public class {3} extends TemplateInfo\r\n    {0}\r\n{4}\r\n    {1}\r\n{1}";
 
 
 
@@ -25,7 +25,7 @@ namespace Xml2Excel.Core
         /// 0左大括号
         /// 1右大括号
         /// </summary>
-        private const string CSCode = "using System;\r\nusing System.Collections.Generic;\r\nusing System.Text;\r\n\r\nnamespace {2}\r\n{0}\r\n    public class {3}\r\n    {0}\r\n{4}\r\n    {1}\r\n{1}";
+        private const string CSCode = "using System;\r\nusing System.Collections.Generic;\r\nusing System.Text;\r\n\r\nnamespace {2}\r\n{0}\r\n    public class {3} : Template\r\n    {0}\r\n{4}\r\n    {1}\r\n{1}";
 
         public string ClassName;
 

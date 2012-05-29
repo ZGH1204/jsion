@@ -602,14 +602,14 @@ namespace Xml2Excel
                         propSummary = r3.Value2;
                     }
 
-                    tci.ASPropList.Add(string.Format("public var {0}:{1};", prop, CSharp2AS(propType)));
-
                     if (prop != "TemplateID" && prop != "TemplateName")
                     {
-                        tci.CSPropList.Add(string.Format("public {1} {0} {2} get; set; {3}", prop, CSharp2CSharp(propType), "{", "}"));
-                    }
+                        tci.ASPropList.Add(string.Format("public var {0}:{1};", prop, CSharp2AS(propType)));
 
-                    tci.SummaryList.Add(propSummary);
+                        tci.CSPropList.Add(string.Format("public {1} {0} {2} get; set; {3}", prop, CSharp2CSharp(propType), "{", "}"));
+
+                        tci.SummaryList.Add(propSummary);
+                    }
                 }
             }
 
