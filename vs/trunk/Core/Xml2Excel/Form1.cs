@@ -20,7 +20,7 @@ namespace Xml2Excel
         private const int StructRow = 2;
         private const int StructCol = 1;
         private const int FreezeRow = 3;
-        private const int FreezeCol = 2;
+        private const int FreezeCol = 3;
         private const int ExcelDataStart = 3;
 
         private static string[] zimu = new string[] { "", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
