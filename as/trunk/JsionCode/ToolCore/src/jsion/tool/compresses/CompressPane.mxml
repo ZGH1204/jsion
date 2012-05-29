@@ -41,9 +41,11 @@
 			{
 				// TODO Auto-generated method stub
 				
-				PopUpManager.removePopUp(ToolGlobal.dragDropCompress);
+				PopUpManager.removePopUp(this);
 				
-				ToolGlobal.dragDropCompress = null;
+//				PopUpManager.removePopUp(ToolGlobal.dragDropCompress);
+//				
+//				ToolGlobal.dragDropCompress = null;
 				
 				ToolGlobal.windowedApp.removeEventListener(ResizeEvent.RESIZE, __resizeHandler);
 			}

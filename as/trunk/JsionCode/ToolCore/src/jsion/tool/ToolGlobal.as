@@ -19,9 +19,9 @@ package jsion.tool
 
 	public class ToolGlobal
 	{
-		public static var dragDropCompress:IFlexDisplayObject;
-		
-		public static var xmlFormater:IFlexDisplayObject;
+//		public static var dragDropCompress:IFlexDisplayObject;
+//		
+//		public static var xmlFormater:IFlexDisplayObject;
 		
 		private static var m_dispatcher:EventDispatcher = new EventDispatcher();
 		

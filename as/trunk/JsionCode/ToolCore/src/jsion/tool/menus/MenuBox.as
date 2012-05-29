@@ -80,12 +80,14 @@ package jsion.tool.menus
 		
 		private function onCompressHandler(e:AWEvent):void
 		{
-			ToolGlobal.dragDropCompress = PopUpManager.createPopUp(ToolGlobal.windowedApp, CompressPane, true);
+			//ToolGlobal.dragDropCompress = PopUpManager.createPopUp(ToolGlobal.windowedApp, CompressPane, true);
+			PopUpManager.createPopUp(ToolGlobal.windowedApp, CompressPane, true);
 		}
 		
 		private function onXmlFormatHandler(e:AWEvent):void
 		{
-			ToolGlobal.dragDropCompress = PopUpManager.createPopUp(ToolGlobal.windowedApp, XmlFormatPane, true);
+			//ToolGlobal.xmlFormater = PopUpManager.createPopUp(ToolGlobal.windowedApp, XmlFormatPane, true);
+			PopUpManager.createPopUp(ToolGlobal.windowedApp, XmlFormatPane, true);
 		}
 		
 		private function onCutPicHandler(e:AWEvent):void
