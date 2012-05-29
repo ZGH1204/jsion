@@ -176,7 +176,7 @@ package jsion.display
 			m_contentRect = new Rectangle();
 			m_contentPane = new Sprite();
 			m_contentPane.mouseEnabled = false;
-			m_contentPane.scrollRect = m_viewRect;
+			m_contentPane.scrollRect = m_contentRect;
 			
 			m_viewRect = new Rectangle();
 			scrollRect = m_viewRect;
@@ -310,9 +310,6 @@ package jsion.display
 		{
 			if(isChanged(WIDTH) || isChanged(HEIGHT) || isChanged(BGGAP))
 			{
-				m_viewRect.x = -m_backgroundHGap;
-				m_viewRect.y = -m_backgroundVGap;
-				
 				graphics.clear();
 				graphics.beginFill(0, 0);
 				
@@ -353,6 +350,9 @@ package jsion.display
 				m_contentRect.width = m_width;
 				m_contentRect.height = m_height;
 				m_contentPane.scrollRect = m_contentRect;
+				
+				m_viewRect.x = -m_backgroundHGap;
+				m_viewRect.y = -m_backgroundVGap;
 				
 				scrollRect = m_viewRect;
 				
