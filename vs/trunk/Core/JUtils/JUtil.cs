@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 
 namespace JUtils
 {
@@ -248,6 +249,26 @@ namespace JUtils
             }
 
             return ip;
+        }
+
+
+        public static List<Type> GetExcelSerializedClassType(Assembly ass)
+        {
+            List<Type> types = new List<Type>();
+
+            Type[] tList = ass.GetTypes();
+
+            foreach (Type type in tList)
+            {
+                ExcelSerializedAttribute attribute = (ExcelSerializedAttribute)type.GetCustomAttributes(typeof(ExcelSerializedAttribute), true).FirstOrDefault();
+
+                if (attribute != null)
+                {
+                    types.Add(type);
+                }
+            }
+
+            return types;
         }
     }
 }
