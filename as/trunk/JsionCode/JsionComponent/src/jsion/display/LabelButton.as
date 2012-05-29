@@ -158,7 +158,7 @@ package jsion.display
 		{
 			super.addChildren();
 			
-			addChild(m_label);
+			super.addChild(m_label);
 		}
 		
 		/**

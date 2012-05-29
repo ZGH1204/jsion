@@ -10,6 +10,11 @@ package jsion.display
 	import jsion.events.DisplayEvent;
 	import jsion.utils.DisposeUtil;
 
+	/**
+	 * 下拉列表。需要设置下拉列表的样式。
+	 * @author Jsion
+	 * 
+	 */	
 	public class ComboBox extends LabelButton
 	{
 		public static const LISTVIEW:String = "listView";
@@ -22,13 +27,14 @@ package jsion.display
 		
 		private var m_listHeight:int;
 		
-		private var m_selected:ToggleButton;
-		
 		public function ComboBox()
 		{
 			super();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function beginChanges():void
 		{
 			m_listView.beginChanges();
@@ -36,6 +42,9 @@ package jsion.display
 			super.beginChanges();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function commitChanges():void
 		{
 			m_listView.commitChanges();
@@ -43,6 +52,9 @@ package jsion.display
 			super.commitChanges();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override protected function initialize():void
 		{
 			super.initialize();
@@ -58,6 +70,9 @@ package jsion.display
 			stopPropagation();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override protected function initEvents():void
 		{
 			super.initEvents();
@@ -78,8 +93,6 @@ package jsion.display
 			{
 				label = "";
 			}
-			
-			m_selected = m_group.selected;
 			
 			m_listView.visible = false;
 		}
@@ -111,6 +124,9 @@ package jsion.display
 			m_listView.visible = false;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override protected function addChildren():void
 		{
 			super.addChildren();
@@ -118,6 +134,9 @@ package jsion.display
 			//addChild(m_listView);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override protected function onProppertiesUpdate():void
 		{
 			super.onProppertiesUpdate();
@@ -1096,6 +1115,7 @@ package jsion.display
 			return m_listView.btnGap;
 		}
 		
+		/** @private */
 		public function set btnGap(value:int):void
 		{
 			if(m_listView.btnGap != value)
@@ -1106,6 +1126,9 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function dispose():void
 		{
 			if(stage) stage.addEventListener(MouseEvent.CLICK, __stageClickHandler);
@@ -1119,11 +1142,15 @@ package jsion.display
 			super.dispose();
 		}
 
+		/**
+		 * 下拉列表宽度
+		 */		
 		public function get listWidth():int
 		{
 			return m_listWidth;
 		}
-
+		
+		/** @private */
 		public function set listWidth(value:int):void
 		{
 			if(m_listWidth != value)
@@ -1134,11 +1161,15 @@ package jsion.display
 			}
 		}
 
+		/**
+		 * 下拉列表高度
+		 */		
 		public function get listHeight():int
 		{
 			return m_listHeight;
 		}
-
+		
+		/** @private */
 		public function set listHeight(value:int):void
 		{
 			if(m_listHeight != value)
@@ -1206,6 +1237,34 @@ package jsion.display
 				
 				onPropertiesChanged(LISTSIZE);
 			}
+		}
+		
+		/**
+		 * 当前选择的对象
+		 */
+		public function get selected():ToggleButton
+		{
+			return m_group.selected;
+		}
+		
+		/** @private */
+		public function set selected(value:ToggleButton):void
+		{
+			m_group.selected = value;
+		}
+		
+		/**
+		 * 获取或设置选中对象的子索引位置。
+		 */		
+		public function get selectedIndex():int
+		{
+			return m_group.selectedIndex;
+		}
+		
+		/** @private */
+		public function set selectedIndex(value:int):void
+		{
+			m_group.selectedIndex = value;
 		}
 	}
 }
