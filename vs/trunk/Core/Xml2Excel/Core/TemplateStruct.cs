@@ -9,6 +9,10 @@ namespace Xml2Excel.Core
     {
         public string NodeName { get; set; }
 
+        public string NodeType { get; set; }
+
         public List<string> Attributes { get; set; }
+
+        public List<string> Types { get; set; }
     }
 }

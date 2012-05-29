@@ -250,25 +250,5 @@ namespace JUtils
 
             return ip;
         }
-
-
-        public static List<Type> GetExcelSerializedClassType(Assembly ass)
-        {
-            List<Type> types = new List<Type>();
-
-            Type[] tList = ass.GetTypes();
-
-            foreach (Type type in tList)
-            {
-                ExcelSerializedAttribute attribute = (ExcelSerializedAttribute)type.GetCustomAttributes(typeof(ExcelSerializedAttribute), true).FirstOrDefault();
-
-                if (attribute != null)
-                {
-                    types.Add(type);
-                }
-            }
-
-            return types;
-        }
     }
 }

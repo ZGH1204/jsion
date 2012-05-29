@@ -17,11 +17,17 @@ namespace Xml2Excel
     {
         private const int ExcelMaxRow = 1048576;
         private const int ExcelMaxCol = 16384;
-        private const int StructRow = 2;
+        private const int SummaryRow = 1;
+        private const int PackageRow = 2;
+        private const int PackageCol = 1;
+        private const int NamespaceRow = 2;
+        private const int NamespaceCol = 2;
+        private const int TypeRow = 4;
+        private const int StructRow = 5;
         private const int StructCol = 1;
-        private const int FreezeRow = 3;
+        private const int FreezeRow = 6;
         private const int FreezeCol = 3;
-        private const int ExcelDataStart = 3;
+        private const int ExcelDataStart = 6;
 
         private static string[] zimu = new string[] { "", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
@@ -42,6 +48,11 @@ namespace Xml2Excel
             string fileName = ((System.Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
         }
 
+
+
+
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -50,7 +61,7 @@ namespace Xml2Excel
             ofd.Filter = "Xml files (*.xml)|*.xml";
             ofd.FilterIndex = 1;
 
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (ofd.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 string str = ofd.FileName;
 
@@ -260,19 +271,22 @@ namespace Xml2Excel
 
 
 
+
+
+
         private void button2_Click(object sender, EventArgs e)
         {
-             OpenFileDialog ofd = new OpenFileDialog();
+            OpenFileDialog ofd = new OpenFileDialog();
 
             ofd.Title = "选择文件";
-            ofd.Filter = "Xml files (*.xlsx)|*.xlsx";
+            ofd.Filter = "Excel files (*.xlsx)|*.xlsx";
             ofd.FilterIndex = 1;
 
             List<string> temp, temp2;
             Dictionary<string, TemplateStruct> list;
             Dictionary<string, List<TemplateValue>> dic;
 
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (ofd.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 string str = ofd.FileName;
 
@@ -355,6 +369,7 @@ namespace Xml2Excel
 
                 ts.NodeName = sheet.Name;
                 ts.Attributes = new List<string>();
+                ts.Types = new List<string>();
 
                 list[ts.NodeName] = ts;
 
@@ -368,6 +383,17 @@ namespace Xml2Excel
                     }
 
                     ts.Attributes.Add(r.Value2);
+
+                    MSExcel.Range r2 = sheet.get_Range(getCell(TypeRow, j + StructCol));
+
+                    if (string.IsNullOrEmpty(r.Value2))
+                    {
+                        ts.Types.Add("System.String");
+                    }
+                    else
+                    {
+                        ts.Types.Add(r2.Value2);
+                    }
                 }
             }
 
@@ -426,6 +452,239 @@ namespace Xml2Excel
             }
 
             return dic;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, TemplateClassInfo> list;
+
+            OpenFileDialog ofd = new OpenFileDialog();
+
+            ofd.Title = "选择文件";
+            ofd.Filter = "Excel files (*.xlsx)|*.xlsx";
+            ofd.FilterIndex = 1;
+
+            if (ofd.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+            {
+                string str = ofd.FileName;
+
+                MSExcel.Application excel = new MSExcel.Application();
+
+                MSExcel.Workbook wbook = excel.Workbooks.Open(str);
+
+                list = GetClassList(wbook);
+
+                wbook.Close(false);
+
+                excel.Quit();
+
+                FolderBrowserDialog fbd = new FolderBrowserDialog();
+
+                if (fbd.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                {
+                    string root = fbd.SelectedPath;
+
+                    TemplateClassInfo[] classes = list.Values.ToArray();
+
+                    foreach (TemplateClassInfo info in classes)
+                    {
+                        WriteCodeFile(info.GetASCode(), info.ClassName, root, "as");
+
+                        WriteCodeFile(info.GetCSCode(), info.ClassName, root, "cs");
+                    }
+
+                    MessageBox.Show("代码生成成功");
+                }
+                else
+                {
+                    MessageBox.Show("你取消了代码生成");
+                }
+            }
+        }
+
+        private void WriteCodeFile(string code, string className, string root, string ext)
+        {
+            string dir = Path.Combine(root, ext);
+            Directory.CreateDirectory(dir);
+
+            string path = Path.Combine(dir, className + "." + ext);
+            File.Delete(path);
+
+            FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
+            byte[] bytes = Encoding.UTF8.GetBytes(code);
+            fs.Write(bytes, 0, bytes.Length);
+            fs.Close();
+        }
+
+        private Dictionary<string, TemplateClassInfo> GetClassList(MSExcel.Workbook wbook)
+        {
+            Dictionary<string, TemplateClassInfo> list = new Dictionary<string, TemplateClassInfo>();
+
+            int count = wbook.Worksheets.Count;
+
+            string prop, propType, propSummary;
+
+            for (int i = 0; i < count; i++)
+            {
+                MSExcel.Worksheet sheet = wbook.Worksheets[i + 1];
+
+                TemplateClassInfo tci = new TemplateClassInfo();
+
+                tci.ClassName = sheet.Name;
+
+                MSExcel.Range rang = sheet.get_Range(getCell(PackageRow, PackageCol));
+                if (string.IsNullOrEmpty(rang.Value2))
+                {
+                    tci.ASPackage = "";
+                }
+                else
+                {
+                    tci.ASPackage = rang.Value2;
+                }
+
+                rang = sheet.get_Range(getCell(NamespaceRow, NamespaceCol));
+                if (string.IsNullOrEmpty(rang.Value2))
+                {
+                    tci.CSNamespace = "";
+                }
+                else
+                {
+                    tci.CSNamespace = rang.Value2;
+                }
+
+                list[tci.ClassName] = tci;
+
+                for (int j = 0; j < ExcelMaxCol; j++)
+                {
+                    MSExcel.Range r = sheet.get_Range(getCell(StructRow, j + StructCol));
+
+                    if (string.IsNullOrEmpty(r.Value2))
+                    {
+                        break;
+                    }
+
+                    prop = r.Value2;
+
+                    MSExcel.Range r2 = sheet.get_Range(getCell(TypeRow, j + StructCol));
+
+                    if (string.IsNullOrEmpty(r2.Value2))
+                    {
+                        propType = "System.String";
+                    }
+                    else
+                    {
+                        propType = r2.Value2;
+                    }
+
+                    MSExcel.Range r3 = sheet.get_Range(getCell(SummaryRow, j + StructCol));
+
+                    if (string.IsNullOrEmpty(r3.Value2))
+                    {
+                        propSummary = "";
+                    }
+                    else
+                    {
+                        propSummary = r3.Value2;
+                    }
+
+                    tci.ASPropList.Add(string.Format("public var {0}:{1};", prop, CSharp2AS(propType)));
+                    tci.CSPropList.Add(string.Format("public {1} {0} {2} get; set; {3}", prop, CSharp2CSharp(propType), "{", "}"));
+                    tci.SummaryList.Add(propSummary);
+                }
+            }
+
+            return list;
+        }
+
+        static string CSharp2CSharp(string str)
+        {
+            string rlt = "";
+
+            switch (str.ToLower())
+            {
+                case "int":
+                    rlt = "int";
+                    break;
+                case "string":
+                    rlt = "string";
+                    break;
+                case "bool":
+                    rlt = "bool";
+                    break;
+                case "float":
+                    rlt = "float";
+                    break;
+                case "double":
+                    rlt = "double";
+                    break;
+                case "decimal":
+                    rlt = "decimal";
+                    break;
+                case "long":
+                    rlt = "long";
+                    break;
+                case "uint":
+                    rlt = "uint";
+                    break;
+                default:
+                    rlt = str;
+                    break;
+            }
+
+            return rlt;
+        }
+
+        static string CSharp2AS(string str)
+        {
+            string rlt = "";
+
+            switch (str.ToLower())
+            {
+                case "int":
+                    rlt = "int";
+                    break;
+                case "string":
+                    rlt = "String";
+                    break;
+                case "bool":
+                    rlt = "Boolean";
+                    break;
+                case "float":
+                    rlt = "Number";
+                    break;
+                case "double":
+                    rlt = "Number";
+                    break;
+                case "decimal":
+                    rlt = "Number";
+                    break;
+                case "long":
+                    rlt = "Number";
+                    break;
+                case "uint":
+                    rlt = "uint";
+                    break;
+                default:
+                    rlt = "int";
+                    break;
+            }
+
+            return rlt;
         }
     }
 }
