@@ -2,11 +2,13 @@ package jsion.display
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	
 	import jsion.comps.Component;
 	import jsion.events.DisplayEvent;
+	import jsion.utils.DepthUtil;
 	import jsion.utils.DisposeUtil;
 	
 	/**
@@ -21,6 +23,10 @@ package jsion.display
 		public static const SCROLLBAR:String = "scrollBar";
 		
 		public static const SCROLLVIEW:String = "scrollView";
+		
+		public static const BACKGROUND:String = "background";
+		
+		public static const BGGAP:String = "bgGap";
 		
 		/**
 		 * 水平滚动
@@ -49,6 +55,16 @@ package jsion.display
 		
 		private var m_viewRect:Rectangle;
 		
+		private var m_contentRect:Rectangle;
+		
+		private var m_background:DisplayObject;
+		
+		private var m_backgroundHGap:int;
+		
+		private var m_backgroundVGap:int;
+		
+		private var m_contentPane:Sprite;
+		
 		public function ScrollPanel(scrollType:int = VERTICAL)
 		{
 			m_scrollType = scrollType;
@@ -76,6 +92,79 @@ package jsion.display
 		}
 		
 		/**
+		 * 不支持此方法，要添加显示对象请使用 addToContent() 方法。
+		 */
+		override public function addChild(child:DisplayObject):DisplayObject
+		{
+			throw new Error("不支持此方法，要添加显示对象请使用 addToContent() 方法。");
+		}
+		
+		/**
+		 * 不支持此方法，要添加显示对象请使用 addToContentAt() 方法。
+		 */
+		override public function addChildAt(child:DisplayObject, index:int):DisplayObject
+		{
+			throw new Error("不支持此方法，要添加显示对象请使用 addToContentAt() 方法。");
+		}
+		
+		/**
+		 * 不支持此方法，要添加显示对象请使用 removeFromContent() 方法。
+		 */
+		override public function removeChild(child:DisplayObject):DisplayObject
+		{
+			throw new Error("不支持此方法，要添加显示对象请使用 removeFromContent() 方法。");
+		}
+		
+		/**
+		 * 不支持此方法，要添加显示对象请使用 removeFromContentAt() 方法。
+		 */
+		override public function removeChildAt(index:int):DisplayObject
+		{
+			throw new Error("不支持此方法，要添加显示对象请使用 removeFromContentAt() 方法。");
+		}
+		
+		/**
+		 * 将一个 DisplayObject 子实例添加到该 DisplayObjectContainer 实例中。
+		 * 子项将被添加到该 DisplayObjectContainer 实例中其他所有子项的前（上）面。
+		 * （要将某子项添加到特定索引位置，请使用 addChildAt() 方法。） 
+		 * 如果添加一个已将其它显示对象容器作为父项的子对象，则会从其它显示对象容器的子列表中删除该对象。
+		 * @param child 要作为该 DisplayObjectContainer 实例的子项添加的 DisplayObject 实例。
+		 */		
+		public function addToContent(child:DisplayObject):void
+		{
+			m_contentPane.addChild(child);
+		}
+		
+		/**
+		 * 将一个 DisplayObject 子实例添加到 ContentPane 实例中。 该子项将被添加到指定的索引位置。 索引为 0 表示该 ContentPane 对象的显示列表的后（底）部。
+		 * @param child 要作为 ContentPane 实例的子项添加的 DisplayObject 实例。
+		 * @param index 添加该子项的索引位置。 如果指定当前占用的索引位置，则该位置以及所有更高位置上的子对象会在子级列表中上移一个位置。
+		 */		
+		public function addToContentAt(child:DisplayObject, index:int):void
+		{
+			m_contentPane.addChildAt(child, index);
+		}
+		
+		/**
+		 * 从 ContentPane 实例的子列表中删除指定的 child DisplayObject 实例。 将已删除子项的 parent 属性设置为 null；如果没有对该子项的任何其它引用，则将该对象作为垃圾回收。 ContentPane 中该子项之上的任何显示对象的索引位置都减去 1。 垃圾回收器是 Flash Player 用来重新分配未使用的内存空间的进程。 当在某处变量或对象不再被主动地引用或存储时，垃圾回收器将清理其过去占用的内存空间，并且如果不存在对该变量或对象的任何其它引用，则擦除此内存空间。
+		 * @param child 要删除的 DisplayObject 实例。
+		 */		
+		public function removeFromContent(child:DisplayObject):void
+		{
+			m_contentPane.removeChild(child);
+		}
+		
+		/**
+		 * 从 ContentPane 的子列表中指定的 index 位置删除子 DisplayObject。将已删除子项的 parent 属性设置为 null；如果没有对该子项的任何其他引用，则将该对象作为垃圾回收。ContentPane 中该子项之上的任何显示对象的索引位置都减去 1。 
+		 * <p>垃圾回收器重新分配未使用的内存空间。当在某处变量或对象不再被主动地引用或存储时，如果不存在对该变量或对象的任何其它引用，则垃圾回收器将清理并擦除其过去占用的内存空间。</p>
+		 * @param index 要删除的 DisplayObject 的子索引。
+		 */		
+		public function removeFromContentAt(index:int):DisplayObject
+		{
+			return m_contentPane.removeChildAt(index);
+		}
+		
+		/**
 		 * @inheritDoc
 		 */
 		override protected function initialize():void
@@ -83,6 +172,11 @@ package jsion.display
 			super.initialize();
 			
 			m_scrollPos = INSIDE;
+			
+			m_contentRect = new Rectangle();
+			m_contentPane = new Sprite();
+			m_contentPane.mouseEnabled = false;
+			m_contentPane.scrollRect = m_viewRect;
 			
 			m_viewRect = new Rectangle();
 			scrollRect = m_viewRect;
@@ -97,9 +191,13 @@ package jsion.display
 		{
 			super.addChildren();
 			
-			addChild(m_scrollView);
+			super.addChild(m_background);
 			
-			addChild(m_scrollBar);
+			super.addChild(m_contentPane);
+			
+			m_contentPane.addChild(m_scrollView);
+			
+			super.addChild(m_scrollBar);
 		}
 		
 		/**
@@ -141,6 +239,13 @@ package jsion.display
 					m_scrollView.x = -scrollValue;
 				}
 			}
+		}
+		
+		override protected function apply():void
+		{
+			super.apply();
+			
+			m_scrollBar.bring2Top();
 		}
 		
 		/**
@@ -203,10 +308,10 @@ package jsion.display
 		
 		private function updateViewRectangle():void
 		{
-			if(isChanged(WIDTH) || isChanged(HEIGHT))
+			if(isChanged(WIDTH) || isChanged(HEIGHT) || isChanged(BGGAP))
 			{
-				m_viewRect.x = 0;
-				m_viewRect.y = 0;
+				m_viewRect.x = -m_backgroundHGap;
+				m_viewRect.y = -m_backgroundVGap;
 				
 				graphics.clear();
 				graphics.beginFill(0, 0);
@@ -215,35 +320,49 @@ package jsion.display
 				{
 					if(m_scrollPos == INSIDE)
 					{
-						m_viewRect.width = m_width;
-						graphics.drawRect(0, 0, m_width, m_height);
+						m_viewRect.width = m_width + 2 * m_backgroundHGap;
+						graphics.drawRect(0, 0, m_width + 2 * m_backgroundHGap, m_height + 2 * m_backgroundVGap);
 					}
 					else
 					{
-						m_viewRect.width = m_width + m_scrollBar.width;
-						graphics.drawRect(0, 0, m_width + m_scrollBar.width, m_height);
+						m_viewRect.width = m_width + 2 * m_backgroundHGap + m_scrollBar.width;
+						graphics.drawRect(0, 0, m_width + 2 * m_backgroundHGap + m_scrollBar.width, m_height + 2 * m_backgroundVGap);
 					}
-					m_viewRect.height = m_height;
+					m_viewRect.height = m_height + 2 * m_backgroundVGap;
 				}
 				else
 				{
-					m_viewRect.width = m_width;
+					m_viewRect.width = m_width + 2 * m_backgroundHGap;
 					
 					if(m_scrollPos == INSIDE)
 					{
-						m_viewRect.height = m_height;
-						graphics.drawRect(0, 0, m_width, m_height);
+						m_viewRect.height = m_height + 2 * m_backgroundVGap;
+						graphics.drawRect(0, 0, m_width + 2 * m_backgroundHGap, m_height + 2 * m_backgroundVGap);
 					}
 					else
 					{
-						m_viewRect.height = m_height + m_scrollBar.height;
-						graphics.drawRect(0, 0, m_width, m_height + m_scrollBar.height);
+						m_viewRect.height = m_height + 2 * m_backgroundVGap + m_scrollBar.height;
+						graphics.drawRect(0, 0, m_width + 2 * m_backgroundHGap, m_height + 2 * m_backgroundVGap + m_scrollBar.height);
 					}
 				}
 				
 				graphics.endFill();
 				
+				m_contentRect.x = 0;
+				m_contentRect.y = 0;
+				m_contentRect.width = m_width;
+				m_contentRect.height = m_height;
+				m_contentPane.scrollRect = m_contentRect;
+				
 				scrollRect = m_viewRect;
+				
+				if(m_background)
+				{
+					m_background.x = m_viewRect.x;
+					m_background.y = m_viewRect.y;
+					m_background.width = m_viewRect.width;
+					m_background.height = m_viewRect.height;
+				}
 			}
 		}
 		
@@ -1272,6 +1391,63 @@ package jsion.display
 			m_viewRect = null;
 			
 			super.dispose();
+		}
+
+		/**
+		 * 滚动面板背景图片
+		 */		
+		public function get background():DisplayObject
+		{
+			return m_background;
+		}
+		
+		/** @private */
+		public function set background(value:DisplayObject):void
+		{
+			if(m_background != value)
+			{
+				m_background = value;
+				
+				onPropertiesChanged(BACKGROUND);
+			}
+		}
+
+		/**
+		 * 背景显示对象横向间隙
+		 */		
+		public function get backgroundHGap():int
+		{
+			return m_backgroundHGap;
+		}
+		
+		/** @private */
+		public function set backgroundHGap(value:int):void
+		{
+			if(m_backgroundHGap != value)
+			{
+				m_backgroundHGap = value;
+				
+				onPropertiesChanged(BGGAP);
+			}
+		}
+		
+		/**
+		 * 背景显示对象纵向间隙
+		 */		
+		public function get backgroundVGap():int
+		{
+			return m_backgroundVGap;
+		}
+		
+		/** @private */
+		public function set backgroundVGap(value:int):void
+		{
+			if(m_backgroundVGap != value)
+			{
+				m_backgroundVGap = value;
+				
+				onPropertiesChanged(BGGAP);
+			}
 		}
 	}
 }

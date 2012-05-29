@@ -309,6 +309,14 @@ package jsion.display
 		//==========================	Label组件属性	==========================
 		
 		/**
+		 * @copy jsion.display.Label#realText
+		 */		
+		public function get text():String
+		{
+			return m_label.realText;
+		}
+		
+		/**
 		 * @copy jsion.display.Label#text
 		 */		
 		public function get label():String

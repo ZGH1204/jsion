@@ -13,6 +13,7 @@ package
 	import jsion.comps.ToggleGroup;
 	import jsion.debug.DEBUG;
 	import jsion.display.CheckBox;
+	import jsion.display.ComboBox;
 	import jsion.display.Image;
 	import jsion.display.LabelButton;
 	import jsion.display.List;
@@ -70,6 +71,8 @@ package
 //			testScrollPanel();
 //			
 //			testList();
+			
+			testComboBox();
 		}
 		
 		private function initHelper():void
@@ -77,6 +80,83 @@ package
 			DEBUG.setup(stage, 300);
 			
 			DEBUG.loadCSS("debug.css");
+		}
+		
+		private function testComboBox():void
+		{
+			var bmp:Bitmap = new m_scrollBarUpAssetCLS();
+			
+			
+			var img:Image = new Image();
+			
+			img.beginChanges();
+			img.source = bmp.bitmapData;
+			img.scale9Insets = new Insets(5, 0, 5, 0);
+			img.commitChanges();
+			
+			var img2:Image = new Image();
+			
+			img2.beginChanges();
+			img2.source = Bitmap(new m_cls()).bitmapData;
+			img2.scale9Insets = new Insets(10, 10, 10, 10);
+			img2.commitChanges();
+			
+			var cssTest:String = "j{display: inline; color: #FFFFFF;} s{display: inline; color: #FFFF00;}";
+			
+			var combo:ComboBox = new ComboBox();
+			
+			combo.beginChanges();
+			combo.upImage = new m_cls();
+			combo.scrollBarBackground = Bitmap(new m_backgroundAssetCLS()).bitmapData;
+			combo.UpOrLeftBtnUpAsset = new m_scrollUpBtnUpAssetCLS();
+			combo.UpOrLeftBtnOverAsset = new m_scrollUpBtnOverAssetCLS();
+			combo.DownOrRightBtnUpAsset = new m_scrollDownBtnUpAssetCLS();
+			combo.DownOrRightBtnOverAsset = new m_scrollDownBtnOverAssetCLS();
+			combo.BarUpAsset = img;
+			combo.listItemGap = -5;
+			combo.listWidth = 80;
+			combo.parseCSS(cssTest);
+			combo.listBackground = img2;
+			combo.listBackgroundHGap = 10;
+			combo.listBackgroundVGap = 10;
+			combo.overFilters = [new ColorMatrixFilter([1, 0, 0, 0, 25,   0, 1, 0, 0, 25,   0, 0, 1, 0, 25,   0, 0, 0, 1, 0])];
+			for(var i:int = 0; i < 100; i++)
+			{
+				var toggleBtn:ToggleButton;
+				
+				toggleBtn = new ToggleButton();
+				toggleBtn.beginChanges();
+				
+				toggleBtn.upImage = new m_cls();
+				toggleBtn.overFilters = [new BlurFilter(2, 2, 1)];
+//				toggleBtn.overOffsetX = 1;
+//				toggleBtn.overOffsetY = 1;
+//				toggleBtn.downOffsetX = 1;
+//				toggleBtn.downOffsetY = 1;
+				
+				toggleBtn.selectedUpImage = new m_cls2();
+				toggleBtn.selectedOverFilters = [new BlurFilter(2, 2, 1)];
+//				toggleBtn.selectedOverOffsetX = 1;
+//				toggleBtn.selectedOverOffsetY = 1;
+//				toggleBtn.selectedDownOffsetX = 1;
+//				toggleBtn.selectedDownOffsetY = 1;
+				
+				toggleBtn.parseCSS(cssTest);
+				toggleBtn.label = "To<j>gg</j><s>le" + (i + 1).toString() + "</s>";
+				toggleBtn.labelColor = 0xFF8040;
+				toggleBtn.selectedLabelColor = 0x01;
+				toggleBtn.labelOverFilters = [new BlurFilter(2, 2, 1)];
+				toggleBtn.selectedLabelOverFilters = [new BlurFilter(2, 2, 1)];
+				
+				//toggleBtn.width = 85;
+				
+				toggleBtn.commitChanges();
+				
+				combo.addItem(toggleBtn);
+			}
+			combo.commitChanges();
+			
+			addChild(combo);
 		}
 		
 		private function testList():void
@@ -337,17 +417,17 @@ package
 			
 			toggleBtn.upImage = new m_cls();
 			toggleBtn.overFilters = [new BlurFilter(2, 2, 1)];
-			//			toggleBtn.overOffsetX = 1;
-			//			toggleBtn.overOffsetY = 1;
-			//			toggleBtn.downOffsetX = 1;
-			//			toggleBtn.downOffsetY = 1;
+//			toggleBtn.overOffsetX = 1;
+//			toggleBtn.overOffsetY = 1;
+//			toggleBtn.downOffsetX = 1;
+//			toggleBtn.downOffsetY = 1;
 			
 			toggleBtn.selectedUpImage = new m_cls2();
 			toggleBtn.selectedOverFilters = [new BlurFilter(2, 2, 1)];
-			//			toggleBtn.selectedOverOffsetX = 1;
-			//			toggleBtn.selectedOverOffsetY = 1;
-			//			toggleBtn.selectedDownOffsetX = 1;
-			//			toggleBtn.selectedDownOffsetY = 1;
+//			toggleBtn.selectedOverOffsetX = 1;
+//			toggleBtn.selectedOverOffsetY = 1;
+//			toggleBtn.selectedDownOffsetX = 1;
+//			toggleBtn.selectedDownOffsetY = 1;
 			
 			toggleBtn.parseCSS("j{display: inline; color: #FFFFFF;} s{display: inline; color: #FFFF00;}");
 			toggleBtn.label = "To<j>gg</j><s>le</s>";
@@ -374,17 +454,17 @@ package
 			
 			toggleBtn.upImage = new m_cls();
 			toggleBtn.overFilters = [new BlurFilter(2, 2, 1)];
-			//			toggleBtn.overOffsetX = 1;
-			//			toggleBtn.overOffsetY = 1;
-			//			toggleBtn.downOffsetX = 1;
-			//			toggleBtn.downOffsetY = 1;
+//			toggleBtn.overOffsetX = 1;
+//			toggleBtn.overOffsetY = 1;
+//			toggleBtn.downOffsetX = 1;
+//			toggleBtn.downOffsetY = 1;
 			
 			toggleBtn.selectedUpImage = new m_cls2();
 			toggleBtn.selectedOverFilters = [new BlurFilter(2, 2, 1)];
-			//			toggleBtn.selectedOverOffsetX = 1;
-			//			toggleBtn.selectedOverOffsetY = 1;
-			//			toggleBtn.selectedDownOffsetX = 1;
-			//			toggleBtn.selectedDownOffsetY = 1;
+//			toggleBtn.selectedOverOffsetX = 1;
+//			toggleBtn.selectedOverOffsetY = 1;
+//			toggleBtn.selectedDownOffsetX = 1;
+//			toggleBtn.selectedDownOffsetY = 1;
 			
 			toggleBtn.parseCSS("j{display: inline; color: #FFFFFF;} s{display: inline; color: #FFFF00;}");
 			toggleBtn.label = "To<j>gg</j><s>le</s>";
