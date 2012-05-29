@@ -2,14 +2,24 @@ package jsion.comps
 {
 	import jsion.IDispose;
 	import jsion.display.ToggleButton;
+	import jsion.events.DisplayEvent;
 	import jsion.utils.ArrayUtil;
 	
+	/**
+	 * 当允许多选并且选择对象变更时派发，事件数据为当前已选择对象。
+	 */	
+	[Event(name="selectChanged", type="jsion.events.DisplayEvent")]
+	
+	/**
+	 * 当允许多选并且任一对象状态变更时派发，事件数据为已选择对象列表。
+	 */	
+	[Event(name="multipleSelectChanged", type="jsion.events.DisplayEvent")]
 	/**
 	 * ToggleButton编组。支持多选。
 	 * @author Jsion
 	 * 
 	 */	
-	public class ToggleGroup implements IDispose
+	public class ToggleGroup extends JsionEventDispatcher
 	{
 		private var m_list:Array;
 		
@@ -93,6 +103,15 @@ package jsion.comps
 				
 				if(m_selected) m_selected.selected = true;
 			}
+			
+			if(m_multiple)
+			{
+				dispatchEvent(new DisplayEvent(DisplayEvent.MULTIPLE_SELECTE_CHANGED, m_selectedList));
+			}
+			else
+			{
+				dispatchEvent(new DisplayEvent(DisplayEvent.SELECT_CHANGED, m_selected));
+			}
 		}
 		
 		/**
@@ -143,8 +162,7 @@ package jsion.comps
 			{
 				if(m_selected == null && m_autoSelected)
 				{
-					m_selected = button;
-					m_selected.selected = true;
+					selected = button;
 				}
 				else
 				{
@@ -164,7 +182,7 @@ package jsion.comps
 			
 			if(m_selected == button)
 			{
-				m_selected = null;
+				selected = null;
 				
 				if(m_autoSelected && m_list.length > 0)
 				{
@@ -180,7 +198,7 @@ package jsion.comps
 		/**
 		 * 释放资源
 		 */		
-		public function dispose():void
+		override public function dispose():void
 		{
 			ArrayUtil.removeAll(m_list);
 			m_list = null;
@@ -189,6 +207,8 @@ package jsion.comps
 			m_selectedList = null;
 			
 			m_selected = null;
+			
+			super.dispose();
 		}
 	}
 }

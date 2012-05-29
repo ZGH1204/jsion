@@ -1,6 +1,7 @@
 package jsion.display
 {
 	import flash.display.DisplayObject;
+	import flash.display.Sprite;
 	
 	import jsion.utils.ArrayUtil;
 
@@ -11,7 +12,14 @@ package jsion.display
 	 */	
 	public class List extends ScrollPanel
 	{
+		/**
+		 * 添加列表项
+		 */		
 		public static const ADDITEM:String = "addItem";
+		/**
+		 * 移除列表项
+		 */		
+		public static const REMOVEITEM:String = "addItem";
 		
 		private var m_list:Array;
 		
@@ -24,6 +32,9 @@ package jsion.display
 			super(scrollType);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function beginChanges():void
 		{
 			m_container.beginChanges();
@@ -31,6 +42,9 @@ package jsion.display
 			super.beginChanges();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
 		override public function commitChanges():void
 		{
 			m_container.commitChanges();
@@ -54,19 +68,9 @@ package jsion.display
 		/**
 		 * @inheritDoc
 		 */		
-		override protected function addChildren():void
-		{
-			super.addChildren();
-			
-			addChild(m_container);
-		}
-		
-		/**
-		 * @inheritDoc
-		 */		
 		override protected function onProppertiesUpdate():void
 		{
-			if(isChanged(ADDITEM) || isChanged(SCROLLVIEW))
+			if(isChanged(ADDITEM) || isChanged(REMOVEITEM) || isChanged(SCROLLVIEW))
 			{
 				m_container.beginChanges();
 				
@@ -109,6 +113,38 @@ package jsion.display
 		}
 		
 		/**
+		 * 不支持此方法，请使用 addItem() 方法。
+		 */		
+		override public function addToContent(child:DisplayObject):void
+		{
+			throw new Error("不支持此方法，请使用 addItem() 方法。");
+		}
+		
+		/**
+		 * 不支持此方法，请使用 addItemAt() 方法。
+		 */		
+		override public function addToContentAt(child:DisplayObject, index:int):void
+		{
+			throw new Error("不支持此方法，请使用 addItemAt() 方法。");
+		}
+		
+		/**
+		 * 不支持此方法，请使用 removeItem() 方法。
+		 */		
+		override public function removeFromContent(child:DisplayObject):void
+		{
+			throw new Error("不支持此方法，请使用 removeItem() 方法。");
+		}
+		
+		/**
+		 * 不支持此方法，请使用 removeItemAt() 方法。
+		 */		
+		override public function removeFromContentAt(index:int):DisplayObject
+		{
+			throw new Error("不支持此方法，请使用 removeItemAt() 方法。");
+		}
+		
+		/**
 		 * 添加显示列表项
 		 */		
 		public function addItem(item:DisplayObject):void
@@ -116,6 +152,53 @@ package jsion.display
 			ArrayUtil.push(m_list, item);
 			
 			onPropertiesChanged(ADDITEM);
+		}
+		
+		/**
+		 * 添加显示列表项到指定索引位置
+		 */		
+		public function addItemAt(item:DisplayObject, index:int):void
+		{
+			ArrayUtil.insert(m_list, item, index);
+			
+			onPropertiesChanged(ADDITEM);
+		}
+		
+		/**
+		 * 移除显示列表项
+		 */		
+		public function removeItem(item:DisplayObject):void
+		{
+			ArrayUtil.remove(m_list, item);
+			
+			if(item && item.parent)
+			{
+				item.parent.removeChild(item);
+			}
+			
+			onPropertiesChanged(REMOVEITEM);
+		}
+		
+		/**
+		 * 移除指定索引位置的显示列表项
+		 * @param index 要移除的显示列表项的索引位置
+		 */		
+		public function removeItemAt(index:int):DisplayObject
+		{
+			if(index < 0 || index >= m_list.length) return null;
+			
+			var item:DisplayObject = m_list[index];
+			
+			ArrayUtil.remove(m_list, item);
+			
+			if(item && item.parent)
+			{
+				item.parent.removeChild(item);
+			}
+			
+			onPropertiesChanged(REMOVEITEM);
+			
+			return item;
 		}
 		
 		/**
@@ -141,9 +224,7 @@ package jsion.display
 			return m_itemGap;
 		}
 
-		/**
-		 * @private
-		 */		
+		/** @private */
 		public function set itemGap(value:int):void
 		{
 			if(m_itemGap != value)

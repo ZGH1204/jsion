@@ -125,6 +125,14 @@ package jsion.display
 		}
 		
 		/**
+		 * 获取无标签的真实文本
+		 */		
+		public function get realText():String
+		{
+			return m_textField.text;
+		}
+		
+		/**
 		 * 设置文本颜色
 		 * CSS样式会覆盖此设置
 		 */		

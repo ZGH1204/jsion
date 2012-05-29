@@ -747,18 +747,18 @@ package jsion.comps
 		 */		
 		public function dispose():void
 		{
-			removeEventListener(MouseEvent.MOUSE_DOWN, __spriteMouseDownListener);
-			removeEventListener(Event.REMOVED_FROM_STAGE, __stageRemovedFrom);
 			if(stage) stage.removeEventListener(MouseEvent.MOUSE_UP, __stageMouseUpListener, false);
-			removeEventListener(MouseEvent.MOUSE_OVER, __rollOverHandler);
-			removeEventListener(MouseEvent.MOUSE_UP, __mouseUpHandler);
-			removeEventListener(MouseEvent.ROLL_OUT, __rollOutHandler);
-			removeEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
-			removeEventListener(ReleaseEvent.RELEASE, __releaseHandler);
-			removeEventListener(Event.ENTER_FRAME, __trackMouseWhileInBounds);
-			removeEventListener(MouseEvent.MOUSE_UP, __upHandler);
+//			removeEventListener(MouseEvent.MOUSE_DOWN, __spriteMouseDownListener);
+//			removeEventListener(Event.REMOVED_FROM_STAGE, __stageRemovedFrom);
+//			removeEventListener(MouseEvent.MOUSE_OVER, __rollOverHandler);
+//			removeEventListener(MouseEvent.MOUSE_UP, __mouseUpHandler);
+//			removeEventListener(MouseEvent.ROLL_OUT, __rollOutHandler);
+//			removeEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
+//			removeEventListener(ReleaseEvent.RELEASE, __releaseHandler);
+//			removeEventListener(Event.ENTER_FRAME, __trackMouseWhileInBounds);
+//			removeEventListener(MouseEvent.MOUSE_UP, __upHandler);
 			
-			deactivateMouseTrap();
+//			deactivateMouseTrap();
 			
 			removeAllEventListeners();
 			DisposeUtil.free(m_listeners);

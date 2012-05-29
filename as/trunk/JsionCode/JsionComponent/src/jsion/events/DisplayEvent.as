@@ -6,6 +6,8 @@ package jsion.events
 	{
 		public static const PROPERTIES_CHANGED:String = "propertiesChanged";
 		public static const CHANGED:String = "changed";
+		public static const MULTIPLE_SELECTE_CHANGED:String = "multipleSelectChanged";
+		public static const SELECT_CHANGED:String = "selectChanged";
 		
 		public var data:*;
 		
