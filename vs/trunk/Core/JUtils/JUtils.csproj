@@ -61,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CryptUtil.cs" />
-    <Compile Include="ExcelSerializedAttribute.cs" />
     <Compile Include="Marshal.cs" />
     <Compile Include="RandomChinese.cs" />
     <Compile Include="ResourceUtil.cs" />
