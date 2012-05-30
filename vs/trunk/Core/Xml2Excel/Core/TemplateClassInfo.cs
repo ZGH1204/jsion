@@ -7,6 +7,7 @@ namespace Xml2Excel.Core
 {
     public class TemplateClassInfo
     {
+        private const string ASMetaString = "";
         private const string ASSummaryStart = "/**";
         private const string ASSummary = " * ";
         private const string ASSummaryEnd = " */";
@@ -18,6 +19,7 @@ namespace Xml2Excel.Core
 
 
 
+        private const string CSMetaString = "\r\n        [XmlAttribute]";
         private const string CSSummaryStart = "/// <summary>";
         private const string CSSummary = "/// ";
         private const string CSSummaryEnd = "/// </summary>";
@@ -39,12 +41,12 @@ namespace Xml2Excel.Core
 
         public string GetASCode()
         {
-            return CombinCode(ASPackage, ASCode, ASPropList, SummaryList, ASSummaryStart, ASSummary, ASSummaryEnd);
+            return CombinCode(ASPackage, ASCode, ASPropList, ASMetaString, SummaryList, ASSummaryStart, ASSummary, ASSummaryEnd);
         }
 
         public string GetCSCode()
         {
-            return CombinCode(CSNamespace, CSCode, CSPropList, SummaryList, CSSummaryStart, CSSummary, CSSummaryEnd);
+            return CombinCode(CSNamespace, CSCode, CSPropList, CSMetaString, SummaryList, CSSummaryStart, CSSummary, CSSummaryEnd);
         }
 
         private void AppendASSummary(StringBuilder sb, string summary, string summaryStart, string summaryBody, string summaryEnd)
@@ -68,17 +70,19 @@ namespace Xml2Excel.Core
             sb.Append("\r\n        " + summaryEnd);
         }
 
-        private string CombinCode(string ns, string formatCode, List<string> propList, List<string> summary, string summaryStart, string summaryBody, string summaryEnd)
+        private string CombinCode(string ns, string formatCode, List<string> propList, string metaString, List<string> summary, string summaryStart, string summaryBody, string summaryEnd)
         {
             StringBuilder sb = new StringBuilder();
 
             AppendASSummary(sb, summary[0], summaryStart, summaryBody, summaryEnd);
-            sb.Append(string.Format("\r\n        [XmlAttribute]\r\n        {0}\r\n", propList[0]));
+            sb.Append(metaString);
+            sb.Append(string.Format("\r\n        {0}\r\n", propList[0]));
 
             for (int i = 1; i < ASPropList.Count; i++)
             {
                 AppendASSummary(sb, summary[i], summaryStart, summaryBody, summaryEnd);
-                sb.Append(string.Format("\r\n        [XmlAttribute]\r\n        {0}\r\n", propList[i]));
+                sb.Append(metaString);
+                sb.Append(string.Format("\r\n        {0}\r\n", propList[i]));
             }
 
             return string.Format(formatCode, "{", "}", ns, ClassName, sb.ToString());
