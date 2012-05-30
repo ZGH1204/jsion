@@ -456,13 +456,13 @@ package jsion.display
 		/**
 		 * 获取或设置文本水平偏移量
 		 */		
-		public function get hOffset():int
+		public function get labelHOffset():int
 		{
 			return m_hOffset;
 		}
 		
 		/** @private */
-		public function set hOffset(value:int):void
+		public function set labelHOffset(value:int):void
 		{
 			if(m_hOffset != value)
 			{
@@ -478,13 +478,13 @@ package jsion.display
 		 * @see jsion.display.LabelButton#vAlign
 		 * @throws Error 水平对齐方式错误。
 		 */		
-		public function get hAlign():String
+		public function get labelHAlign():String
 		{
 			return m_hAlign;
 		}
 		
 		/** @private */
-		public function set hAlign(value:String):void
+		public function set labelHAlign(value:String):void
 		{
 			if(m_hAlign != value)
 			{
@@ -503,13 +503,13 @@ package jsion.display
 		/**
 		 * 获取或设置文本垂直偏移量
 		 */		
-		public function get vOffset():int
+		public function get labelVOffset():int
 		{
 			return m_vOffset;
 		}
 		
 		/** @private */
-		public function set vOffset(value:int):void
+		public function set labelVOffset(value:int):void
 		{
 			if(m_vOffset != value)
 			{
@@ -525,13 +525,13 @@ package jsion.display
 		 * @see jsion.display.LabelButton#hAlign
 		 * @throws Error 垂直对齐方式错误。
 		 */		
-		public function get vAlign():String
+		public function get labelVAlign():String
 		{
 			return m_vAlign;
 		}
 		
 		/** @private */
-		public function set vAlign(value:String):void
+		public function set labelVAlign(value:String):void
 		{
 			if(m_vAlign != value)
 			{
