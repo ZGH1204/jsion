@@ -5,6 +5,7 @@ package
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.filters.BlurFilter;
 	import flash.filters.ColorMatrixFilter;
@@ -17,6 +18,7 @@ package
 	import jsion.display.Image;
 	import jsion.display.LabelButton;
 	import jsion.display.List;
+	import jsion.display.ProgressBar;
 	import jsion.display.ScrollBar;
 	import jsion.display.ScrollPanel;
 	import jsion.display.ToggleButton;
@@ -51,6 +53,18 @@ package
 		[Embed(source="ScrollBackgroundImage.jpg")]
 		private var m_backgroundAssetCLS:Class;
 		
+		[Embed(source="progressbg.png")]
+		private var m_progressBGCLS:Class;
+		
+		[Embed(source="progressbar.png")]
+		private var m_progressBarCLS:Class;
+		
+		[Embed(source="progressbg2.png")]
+		private var m_progressBGCLS2:Class;
+		
+		[Embed(source="progressbar2.png")]
+		private var m_progressBarCLS2:Class;
+		
 		public function ComponentApp()
 		{
 			stage.align = StageAlign.TOP_LEFT;
@@ -71,8 +85,10 @@ package
 //			testScrollPanel();
 //			
 //			testList();
+//			
+//			testComboBox();
 			
-			testComboBox();
+			testProgressBar();
 		}
 		
 		private function initHelper():void
@@ -80,6 +96,46 @@ package
 			DEBUG.setup(stage, 300);
 			
 			DEBUG.loadCSS("debug.css");
+		}
+		
+		private function testProgressBar():void
+		{
+			var progress:ProgressBar;
+			
+			progress = new ProgressBar();
+			progress.beginChanges();
+			progress.x = 580;
+			progress.y = 100;
+			progress.background = new m_progressBGCLS();
+			progress.progressBar = new m_progressBarCLS();
+			progress.commitChanges();
+			progress.addEventListener(Event.ENTER_FRAME, __progressEnterFrameHandler);
+			addChild(progress);
+			
+			
+			
+//			progress = new ProgressBar(ProgressBar.VERTICAL);
+//			progress.beginChanges();
+//			progress.x = 580;
+//			progress.y = 100;
+//			progress.background = new m_progressBGCLS2();
+//			progress.progressBar = new m_progressBarCLS2();
+//			progress.commitChanges();
+//			progress.addEventListener(Event.ENTER_FRAME, __progressEnterFrameHandler);
+//			addChild(progress);
+			
+		}
+		
+		private function __progressEnterFrameHandler(e:Event):void
+		{
+			var progress:ProgressBar = e.currentTarget as ProgressBar;
+			
+			if(progress.value >= progress.maxValue)
+			{
+				progress.removeEventListener(Event.ENTER_FRAME, __progressEnterFrameHandler);
+			}
+			
+			progress.value += 0.5;
 		}
 		
 		private function testComboBox():void
@@ -106,6 +162,8 @@ package
 			var combo:ComboBox = new ComboBox();
 			
 			combo.beginChanges();
+			combo.x = 500;
+			combo.y = 100;
 			combo.upImage = new m_cls();
 			combo.scrollBarBackground = Bitmap(new m_backgroundAssetCLS()).bitmapData;
 			combo.UpOrLeftBtnUpAsset = new m_scrollUpBtnUpAssetCLS();
