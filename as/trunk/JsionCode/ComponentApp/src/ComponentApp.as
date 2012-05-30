@@ -21,6 +21,7 @@ package
 	import jsion.display.ProgressBar;
 	import jsion.display.ScrollBar;
 	import jsion.display.ScrollPanel;
+	import jsion.display.Slider;
 	import jsion.display.ToggleButton;
 	
 	[SWF(width="1000", height="650", frameRate="30")]
@@ -65,6 +66,9 @@ package
 		[Embed(source="progressbar2.png")]
 		private var m_progressBarCLS2:Class;
 		
+		[Embed(source="sliderbar.png")]
+		private var m_sliderBarCLS:Class;
+		
 		public function ComponentApp()
 		{
 			stage.align = StageAlign.TOP_LEFT;
@@ -87,8 +91,10 @@ package
 //			testList();
 //			
 //			testComboBox();
+//			
+//			testProgressBar();
 			
-			testProgressBar();
+			testSliderBar();
 		}
 		
 		private function initHelper():void
@@ -96,6 +102,22 @@ package
 			DEBUG.setup(stage, 300);
 			
 			DEBUG.loadCSS("debug.css");
+		}
+		
+		private function testSliderBar():void
+		{
+			var slider:Slider;
+			
+			slider = new Slider();
+			slider.beginChanges();
+			slider.x = 700;
+			slider.y = 100;
+			slider.barOffsetX = 5;
+			slider.barOffsetY = -1
+			slider.background = new m_progressBGCLS();
+			slider.upImage = new m_sliderBarCLS();
+			slider.commitChanges();
+			addChild(slider);
 		}
 		
 		private function testProgressBar():void
