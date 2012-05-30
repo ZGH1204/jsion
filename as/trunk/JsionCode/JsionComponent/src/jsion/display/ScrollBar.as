@@ -285,11 +285,13 @@ package jsion.display
 			m_startGlobalPoint.x = stage.mouseX;
 			m_startGlobalPoint.y = stage.mouseY;
 			stage.addEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveHandler);
+			stage.addEventListener(Event.DEACTIVATE, __deactivateHandler);
 		}
 		
 		private function __barReleaseHandler(e:Event):void
 		{
 			stage.removeEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveHandler);
+			stage.removeEventListener(Event.DEACTIVATE, __deactivateHandler);
 		}
 		
 		private function __mouseMoveHandler(e:MouseEvent):void
@@ -322,6 +324,11 @@ package jsion.display
 			}
 			
 			calcScrollValue();
+		}
+		
+		private function __deactivateHandler(e:Event):void
+		{
+			__barReleaseHandler(null);
 		}
 		
 		/**
@@ -1577,7 +1584,11 @@ package jsion.display
 		 */		
 		override public function dispose():void
 		{
-			stage.removeEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveHandler);
+			if(stage)
+			{
+				stage.removeEventListener(MouseEvent.MOUSE_MOVE, __mouseMoveHandler);
+				stage.removeEventListener(Event.DEACTIVATE, __deactivateHandler);
+			}
 			
 			DisposeUtil.free(m_background);
 			m_background = null;

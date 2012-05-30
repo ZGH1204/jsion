@@ -61,13 +61,13 @@ package jsion.display
 			
 			m_listView = new List();
 			m_listView.visible = false;
-			m_listView.stopPropagation();
+			m_listView.stopAllMouseEventPropagation();
 			
 			m_group = new ToggleGroup();
 			
 			html = true;
 			
-			stopPropagation();
+			stopClickPropagation();
 		}
 		
 		/**
@@ -109,10 +109,10 @@ package jsion.display
 			{
 				m_listView.visible = true;
 				
-				var pos:Point = localToGlobal(new Point(x, y));
-				m_listView.x = pos.x;
-				m_listView.y = pos.y + m_height;
-				stage.addChild(m_listView);
+//				var pos:Point = localToGlobal(new Point(x, y));
+//				m_listView.x = pos.x;
+//				m_listView.y = pos.y + m_height;
+//				stage.addChild(m_listView);
 				stage.addEventListener(MouseEvent.CLICK, __stageClickHandler);
 			}
 		}
@@ -131,7 +131,7 @@ package jsion.display
 		{
 			super.addChildren();
 			
-			//addChild(m_listView);
+			addChild(m_listView);
 		}
 		
 		/**

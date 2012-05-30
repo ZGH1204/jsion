@@ -191,14 +191,96 @@ package jsion.comps
 		}
 		
 		/**
-		 * 防止对事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
+		 * 防止对点击事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
 		 */		
-		public function stopPropagation():void
+		public function stopClickPropagation():void
 		{
-			addEventListener(MouseEvent.CLICK, __mouseClickHandler);
+			addEventListener(MouseEvent.CLICK, __mouseEventStopPropagationHandler);
 		}
 		
-		private function __mouseClickHandler(e:MouseEvent):void
+		/**
+		 * 防止对鼠标经过事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
+		 */		
+		public function stopMouseOverPropagation():void
+		{
+			addEventListener(MouseEvent.MOUSE_OVER, __mouseEventStopPropagationHandler);
+		}
+		
+		/**
+		 * 防止对鼠标移出事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
+		 */		
+		public function stopMouseOutPropagation():void
+		{
+			addEventListener(MouseEvent.MOUSE_OUT, __mouseEventStopPropagationHandler);
+		}
+		
+		/**
+		 * 防止对鼠标按下事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
+		 */		
+		public function stopMouseDownPropagation():void
+		{
+			addEventListener(MouseEvent.MOUSE_DOWN, __mouseEventStopPropagationHandler);
+		}
+		
+		/**
+		 * 防止对鼠标弹起事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
+		 */		
+		public function stopMouseUpPropagation():void
+		{
+			addEventListener(MouseEvent.MOUSE_UP, __mouseEventStopPropagationHandler);
+		}
+		
+		/**
+		 * 防止对鼠标经过事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
+		 */		
+		public function stopRollOverPropagation():void
+		{
+			addEventListener(MouseEvent.ROLL_OVER, __mouseEventStopPropagationHandler);
+		}
+		
+		/**
+		 * 防止对鼠标移出事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
+		 */		
+		public function stopRollOutPropagation():void
+		{
+			addEventListener(MouseEvent.ROLL_OUT, __mouseEventStopPropagationHandler);
+		}
+		
+		/**
+		 * 防止对鼠标释放事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
+		 */		
+		public function stopReleasePropagation():void
+		{
+			addEventListener(ReleaseEvent.RELEASE, __releaseEventStopPropagationHandler);
+		}
+		
+		/**
+		 * 防止对鼠标在外部释放事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
+		 */		
+		public function stopReleaseOutSidePropagation():void
+		{
+			addEventListener(ReleaseEvent.RELEASE_OUT_SIDE, __releaseEventStopPropagationHandler);
+		}
+		
+		public function stopAllMouseEventPropagation():void
+		{
+			stopClickPropagation();
+			stopMouseOverPropagation();
+			stopMouseOutPropagation();
+			stopMouseDownPropagation();
+			stopMouseUpPropagation();
+			stopRollOverPropagation();
+			stopRollOutPropagation();
+			stopReleasePropagation();
+			stopReleaseOutSidePropagation();
+		}
+		
+		private function __mouseEventStopPropagationHandler(e:MouseEvent):void
+		{
+			e.stopPropagation();
+		}
+		
+		private function __releaseEventStopPropagationHandler(e:ReleaseEvent):void
 		{
 			e.stopPropagation();
 		}

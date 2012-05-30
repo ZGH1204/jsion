@@ -77,6 +77,10 @@ package jsion.display
 		
 		private var m_value:Number;
 		
+		
+		private var m_freeBMD:Boolean;
+		
+		
 		public function ProgressBar(orientation:int = HORIZONTAL, progressType:int = MASK)
 		{
 			m_orientation = orientation;
@@ -101,9 +105,11 @@ package jsion.display
 			
 			super.initialize();
 			
+			m_value = 0;
 			m_minValue = 0;
 			m_maxValue = 100;
-			m_value = 0;
+			
+			m_freeBMD = false;
 		}
 		
 		override protected function addChildren():void
@@ -209,7 +215,7 @@ package jsion.display
 		{
 			if(m_background != value)
 			{
-				DisposeUtil.free(m_background);
+				DisposeUtil.free(m_background, m_freeBMD);
 				
 				m_background = value;
 				
@@ -233,7 +239,7 @@ package jsion.display
 		{
 			if(m_progressBar != value)
 			{
-				DisposeUtil.free(m_progressBar);
+				DisposeUtil.free(m_progressBar, m_freeBMD);
 				
 				m_progressBar = value;
 				
@@ -372,6 +378,16 @@ package jsion.display
 				
 				onPropertiesChanged(PROGRESSDATA);
 			}
+		}
+
+		public function get freeBMD():Boolean
+		{
+			return m_freeBMD;
+		}
+
+		public function set freeBMD(value:Boolean):void
+		{
+			m_freeBMD = value;
 		}
 	}
 }
