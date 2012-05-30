@@ -4,10 +4,17 @@ package jsion.display
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import jsion.comps.Component;
+	import jsion.events.DisplayEvent;
 	import jsion.events.ReleaseEvent;
 	import jsion.utils.DisposeUtil;
+	
+	/**
+	 * 滑动值发生变更时派发
+	 */	
+	[Event(name="changed", type="jsion.events.DisplayEvent")]
 	
 	public class Slider extends Component
 	{
@@ -19,6 +26,17 @@ package jsion.display
 		
 		public static const BAROFFSET:String = "barOffset";
 		
+		
+		public static const FILLER:String = "filler";
+		
+		public static const FILLEROFFSET:String = "fillerOffset";
+		
+		public static const FILLERWIDTH:String = "fillerWidth";
+		
+		public static const FILLERHEIGHT:String = "fillerHeight";
+		
+		public static const FILLERTYPE:String = "fillerType";
+		
 		/**
 		 * 横向滑动条
 		 */		
@@ -28,6 +46,16 @@ package jsion.display
 		 * 纵向滑动条
 		 */		
 		public static const VERTICAL:int = 2;
+		
+		/**
+		 * 遮罩模式
+		 */		
+		public static const MASK:int = 1;
+		
+		/**
+		 * 缩放模式
+		 */		
+		public static const SCALE:int = 2;
 		
 		
 		private var m_orientation:int;
@@ -43,11 +71,11 @@ package jsion.display
 		private var m_barOffsetY:int;
 		
 		
-		private var m_minValue:Number;
+		private var m_minValue:int;
 		
-		private var m_maxValue:Number;
+		private var m_maxValue:int;
 		
-		private var m_value:Number;
+		private var m_value:int;
 		
 		
 		private var m_freeBMD:Boolean;
@@ -65,6 +93,23 @@ package jsion.display
 		private var m_minPos:int;
 		private var m_maxPos:int;
 		
+		
+		
+		private var m_filler:DisplayObject;
+		
+		private var m_fillerOffsetX:int;
+		
+		private var m_fillerOffsetY:int;
+		
+		private var m_fillerWidth:int;
+		
+		private var m_fillerHeight:int;
+		
+		private var m_manualFillerWidth:Boolean;
+		
+		private var m_manualFillerHeight:Boolean;
+		
+		private var m_fillerType:int;
 		
 		public function Slider(orientation:int = HORIZONTAL)
 		{
@@ -95,9 +140,11 @@ package jsion.display
 			m_minValue = 0;
 			m_maxValue = 100;
 			
+			m_fillerType = MASK;
+			
 			m_sliderBar = new Button();
 			
-			m_sliderBar.alpha = 0.8;
+			//m_sliderBar.alpha = 0.8;
 			
 			m_startPoint = new Point();
 			
@@ -136,32 +183,51 @@ package jsion.display
 		
 		private function __mouseMoveHandler(e:MouseEvent):void
 		{
+			var temp:Number, tempValue:int;
+			
 			if(m_orientation == HORIZONTAL)
 			{
-				barPosX = m_startPoint.x + stage.mouseX - m_startGlobalPoint.x;
+				temp = m_startPoint.x + stage.mouseX - m_startGlobalPoint.x;
 				
-				if(barPosX < m_minPos)
+				if(temp < m_minPos)
 				{
-					barPosX = m_minPos;
+					temp = m_minPos;
 				}
-				else if(barPosX > m_maxPos)
+				else if(temp > m_maxPos)
 				{
-					barPosX = m_maxPos;
+					temp = m_maxPos;
 				}
+				
+				barPosX = temp;
+				
+				tempValue = (barPosX - m_minPos) / (m_maxPos - m_minPos) * (m_maxValue - m_minValue) + m_minValue;
 			}
 			else
 			{
-				barPosY = m_startPoint.y + stage.mouseY - m_startGlobalPoint.y;
+				temp = m_startPoint.y + stage.mouseY - m_startGlobalPoint.y;
 				
-				if(barPosY < m_minPos)
+				if(temp < m_minPos)
 				{
-					barPosY = m_minPos;
+					temp = m_minPos;
 				}
-				else if(barPosY > m_maxPos)
+				else if(temp > m_maxPos)
 				{
-					barPosY = m_maxPos;
+					temp = m_maxPos;
 				}
+				
+				barPosY = temp;
+				
+				tempValue = (barPosY - m_minPos) / (m_maxPos - m_minPos) * (m_maxValue - m_minValue) + m_minValue;
 			}
+			
+			if(m_value != tempValue)
+			{
+				m_value = tempValue;
+				
+				dispatchEvent(new DisplayEvent(DisplayEvent.CHANGED, m_value));
+			}
+			
+			refreshFiller();
 		}
 		
 		override protected function addChildren():void
@@ -169,6 +235,8 @@ package jsion.display
 			super.addChildren();
 			
 			if(m_background) addChild(m_background);
+			
+			if(m_filler) addChild(m_filler);
 			
 			addChild(m_sliderBar);
 		}
@@ -190,6 +258,15 @@ package jsion.display
 				{
 					m_background.width = m_width;
 					m_background.height = m_height;
+				}
+			}
+			
+			if(isChanged(FILLER) || isChanged(FILLERWIDTH) || isChanged(FILLERHEIGHT))
+			{
+				if(m_filler)
+				{
+					m_filler.width = m_fillerWidth;
+					m_filler.height = m_fillerHeight;
 				}
 			}
 		}
@@ -219,6 +296,40 @@ package jsion.display
 			
 			barPosX = posX;
 			barPosY = posY;
+			
+			refreshFiller();
+		}
+		
+		private function refreshFiller():void
+		{
+			if(m_filler)
+			{
+				m_filler.x = m_fillerOffsetX;
+				m_filler.y = m_fillerOffsetY;
+				
+				var rect:Rectangle = new Rectangle();
+				
+				if(m_orientation == HORIZONTAL)
+				{
+					rect.width = barPosX;
+					rect.height = m_fillerHeight;
+				}
+				else
+				{
+					rect.width = m_fillerWidth;
+					rect.height = barPosX;
+				}
+				
+				if(m_fillerType == MASK)
+				{
+					m_filler.scrollRect = rect;
+				}
+				else
+				{
+					m_filler.width = rect.width;
+					m_filler.height = rect.height;
+				}
+			}
 		}
 		
 		protected function get barPosX():Number
@@ -299,12 +410,12 @@ package jsion.display
 			}
 		}
 
-		public function get minValue():Number
+		public function get minValue():int
 		{
 			return m_minValue;
 		}
 
-		public function set minValue(value:Number):void
+		public function set minValue(value:int):void
 		{
 			if(m_minValue != value)
 			{
@@ -316,12 +427,12 @@ package jsion.display
 			}
 		}
 
-		public function get maxValue():Number
+		public function get maxValue():int
 		{
 			return m_maxValue;
 		}
 
-		public function set maxValue(value:Number):void
+		public function set maxValue(value:int):void
 		{
 			if(m_maxValue != value)
 			{
@@ -333,16 +444,18 @@ package jsion.display
 			}
 		}
 
-		public function get value():Number
+		public function get value():int
 		{
 			return m_value;
 		}
 
-		public function set value(value:Number):void
+		public function set value(value:int):void
 		{
 			if(m_value != value && value >= m_minValue && value <= m_maxValue)
 			{
 				m_value = value;
+				
+				dispatchEvent(new DisplayEvent(DisplayEvent.CHANGED, m_value));
 				
 				onPropertiesChanged(SLIDERDATA);
 			}
@@ -628,5 +741,107 @@ package jsion.display
 			m_sliderBar.freeBMD = value;
 		}
 
+		public function get filler():DisplayObject
+		{
+			return m_filler;
+		}
+
+		public function set filler(value:DisplayObject):void
+		{
+			if(m_filler != value)
+			{
+				DisposeUtil.free(m_filler, m_freeBMD);
+				
+				m_filler = value;
+				
+				if(m_filler)
+				{
+					if(m_manualFillerWidth == false) m_fillerWidth = m_filler.width;
+					
+					if(m_manualFillerHeight == false) m_fillerHeight = m_filler.height;
+				}
+				
+				onPropertiesChanged(FILLER);
+			}
+		}
+
+		public function get fillerOffsetX():int
+		{
+			return m_fillerOffsetX;
+		}
+
+		public function set fillerOffsetX(value:int):void
+		{
+			if(m_fillerOffsetX != value)
+			{
+				m_fillerOffsetX = value;
+				
+				onPropertiesChanged(FILLEROFFSET);
+			}
+		}
+
+		public function get fillerOffsetY():int
+		{
+			return m_fillerOffsetY;
+		}
+
+		public function set fillerOffsetY(value:int):void
+		{
+			if(m_fillerOffsetY != value)
+			{
+				m_fillerOffsetY = value;
+				
+				onPropertiesChanged(FILLEROFFSET);
+			}
+		}
+
+		public function get fillerWidth():int
+		{
+			return m_fillerWidth;
+		}
+
+		public function set fillerWidth(value:int):void
+		{
+			if(m_fillerWidth != value)
+			{
+				m_fillerWidth = value;
+				
+				m_manualFillerWidth = true;
+				
+				onPropertiesChanged(FILLERWIDTH);
+			}
+		}
+
+		public function get fillerHeight():int
+		{
+			return m_fillerHeight;
+		}
+
+		public function set fillerHeight(value:int):void
+		{
+			if(m_fillerHeight != value)
+			{
+				m_fillerHeight = value;
+				
+				m_manualFillerHeight = true;
+				
+				onPropertiesChanged(FILLERHEIGHT);
+			}
+		}
+
+		public function get fillerType():int
+		{
+			return m_fillerType;
+		}
+
+		public function set fillerType(value:int):void
+		{
+			if(m_fillerType != value && (value == MASK || value == SCALE))
+			{
+				m_fillerType = value;
+				
+				onPropertiesChanged(FILLERTYPE);
+			}
+		}
 	}
 }

@@ -23,6 +23,7 @@ package
 	import jsion.display.ScrollPanel;
 	import jsion.display.Slider;
 	import jsion.display.ToggleButton;
+	import jsion.events.DisplayEvent;
 	
 	[SWF(width="1000", height="650", frameRate="30")]
 	public class ComponentApp extends Sprite
@@ -116,8 +117,16 @@ package
 			slider.barOffsetY = -1
 			slider.background = new m_progressBGCLS();
 			slider.upImage = new m_sliderBarCLS();
+			slider.filler = new m_progressBarCLS();
+			slider.value = 50;
 			slider.commitChanges();
+			slider.addEventListener(DisplayEvent.CHANGED, __sliderValueChangedHandler);
 			addChild(slider);
+		}
+		
+		private function __sliderValueChangedHandler(e:DisplayEvent):void
+		{
+			trace(e.currentTarget.value);
 		}
 		
 		private function testProgressBar():void
