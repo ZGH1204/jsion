@@ -122,6 +122,21 @@ package
 			slider.commitChanges();
 			slider.addEventListener(DisplayEvent.CHANGED, __sliderValueChangedHandler);
 			addChild(slider);
+			
+			
+//			slider = new Slider(Slider.VERTICAL);
+//			slider.beginChanges();
+//			slider.x = 700;
+//			slider.y = 100;
+//			slider.barOffsetX = 0;
+//			slider.barOffsetY = 5;
+//			slider.background = new m_progressBGCLS2();
+//			slider.upImage = new m_sliderBarCLS();
+//			slider.filler = new m_progressBarCLS2();
+//			slider.value = 50;
+//			slider.commitChanges();
+//			slider.addEventListener(DisplayEvent.CHANGED, __sliderValueChangedHandler);
+//			addChild(slider);
 		}
 		
 		private function __sliderValueChangedHandler(e:DisplayEvent):void

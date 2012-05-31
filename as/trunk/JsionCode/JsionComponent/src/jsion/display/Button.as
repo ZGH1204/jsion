@@ -450,7 +450,7 @@ package jsion.display
 		}
 
 		/**
-		 * 指示如果按钮状态显示对象为Bitmap,被释放时是否释放 bitmapData 对象。
+		 * 指示如果按钮状态显示对象为Bitmap,被释放时是否释放 bitmapData 对象。默认为 false 。
 		 */		
 		public function get freeBMD():Boolean
 		{
