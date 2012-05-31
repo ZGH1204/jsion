@@ -426,5 +426,16 @@ package jsion.display
 		{
 			m_freeBMD = value;
 		}
+		
+		override public function dispose():void
+		{
+			DisposeUtil.free(m_background, m_freeBMD);
+			m_background = null;
+			
+			DisposeUtil.free(m_progressBar, m_freeBMD);
+			m_progressBar = null;
+			
+			super.dispose();
+		}
 	}
 }
