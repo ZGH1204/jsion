@@ -15,7 +15,11 @@ package jsion.display
 	 * 滑动值发生变更时派发
 	 */	
 	[Event(name="changed", type="jsion.events.DisplayEvent")]
-	
+	/**
+	 * 滑动条
+	 * @author Jsion
+	 * 
+	 */	
 	public class Slider extends Component
 	{
 		public static const BACKGROUND:String = "background";
@@ -77,6 +81,8 @@ package jsion.display
 		
 		private var m_value:int;
 		
+		private var m_wheelStep:int;
+		
 		
 		private var m_freeBMD:Boolean;
 		
@@ -118,6 +124,9 @@ package jsion.display
 			super();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function beginChanges():void
 		{
 			m_sliderBar.beginChanges();
@@ -125,6 +134,9 @@ package jsion.display
 			super.beginChanges();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function commitChanges():void
 		{
 			m_sliderBar.commitChanges();
@@ -132,6 +144,9 @@ package jsion.display
 			super.commitChanges();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function initialize():void
 		{
 			super.initialize();
@@ -139,11 +154,12 @@ package jsion.display
 			m_value = 0;
 			m_minValue = 0;
 			m_maxValue = 100;
+			m_wheelStep = 1;
 			
 			m_fillerType = MASK;
 			
 			m_sliderBar = new Button();
-			
+			m_sliderBar.stopClickPropagation();
 			//m_sliderBar.alpha = 0.8;
 			
 			m_startPoint = new Point();
@@ -151,12 +167,29 @@ package jsion.display
 			m_startGlobalPoint = new Point();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function initEvents():void
 		{
 			super.initEvents();
 			
+			addEventListener(MouseEvent.CLICK, __clickHandler);
+			addEventListener(MouseEvent.MOUSE_WHEEL, __mouseWheelHandler);
 			m_sliderBar.addEventListener(MouseEvent.MOUSE_DOWN, __barMouseDownHandler);
 			m_sliderBar.addEventListener(ReleaseEvent.RELEASE, __barReleaseHandler);
+		}
+		
+		private function __mouseWheelHandler(e:MouseEvent):void
+		{
+			if(e.delta > 0)
+			{
+				value = m_value + m_wheelStep;
+			}
+			else
+			{
+				value = m_value - m_wheelStep;
+			}
 		}
 		
 		private function __barMouseDownHandler(e:MouseEvent):void
@@ -181,9 +214,25 @@ package jsion.display
 			__barReleaseHandler(null);
 		}
 		
+		private function __clickHandler(e:MouseEvent):void
+		{
+			if(m_orientation == HORIZONTAL)
+			{
+				barPosX = e.localX;
+			}
+			else
+			{
+				barPosY = e.localY;
+			}
+			
+			calcSliderValue();
+			
+			refreshFiller();
+		}
+		
 		private function __mouseMoveHandler(e:MouseEvent):void
 		{
-			var temp:Number, tempValue:int;
+			var temp:Number;
 			
 			if(m_orientation == HORIZONTAL)
 			{
@@ -199,8 +248,6 @@ package jsion.display
 				}
 				
 				barPosX = temp;
-				
-				tempValue = (barPosX - m_minPos) / (m_maxPos - m_minPos) * (m_maxValue - m_minValue) + m_minValue;
 			}
 			else
 			{
@@ -216,20 +263,16 @@ package jsion.display
 				}
 				
 				barPosY = temp;
-				
-				tempValue = (barPosY - m_minPos) / (m_maxPos - m_minPos) * (m_maxValue - m_minValue) + m_minValue;
 			}
 			
-			if(m_value != tempValue)
-			{
-				m_value = tempValue;
-				
-				dispatchEvent(new DisplayEvent(DisplayEvent.CHANGED, m_value));
-			}
+			calcSliderValue();
 			
 			refreshFiller();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function addChildren():void
 		{
 			super.addChildren();
@@ -241,6 +284,9 @@ package jsion.display
 			addChild(m_sliderBar);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function onProppertiesUpdate():void
 		{
 			super.onProppertiesUpdate();
@@ -291,13 +337,34 @@ package jsion.display
 				m_maxPos = m_height - m_barOffsetY;
 				
 				posX = m_width / 2 + m_barOffsetX;
-				posY = temp * (m_height - m_barOffsetY * 2) + m_barOffsetY;
+				posY = (1 - temp) * (m_height - m_barOffsetY * 2) + m_barOffsetY;
 			}
 			
 			barPosX = posX;
 			barPosY = posY;
 			
 			refreshFiller();
+		}
+		
+		private function calcSliderValue():void
+		{
+			var tempValue:int;
+			
+			if(m_orientation == HORIZONTAL)
+			{
+				tempValue = (barPosX - m_minPos) / (m_maxPos - m_minPos) * (m_maxValue - m_minValue) + m_minValue;
+			}
+			else
+			{
+				tempValue = (m_maxPos - barPosY) / (m_maxPos - m_minPos) * (m_maxValue - m_minValue) + m_minValue;
+			}
+			
+			if(m_value != tempValue)
+			{
+				m_value = tempValue;
+				
+				dispatchEvent(new DisplayEvent(DisplayEvent.CHANGED, m_value));
+			}
 		}
 		
 		private function refreshFiller():void
@@ -316,8 +383,9 @@ package jsion.display
 				}
 				else
 				{
+					m_filler.y += barPosY - m_barOffsetY;
 					rect.width = m_fillerWidth;
-					rect.height = barPosX;
+					rect.height = m_fillerHeight - barPosY;
 				}
 				
 				if(m_fillerType == MASK)
@@ -332,36 +400,51 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 设置拖动块的中心点x坐标所在的位置
+		 */		
 		protected function get barPosX():Number
 		{
 			return m_sliderBar.x + m_sliderBar.width / 2;
 		}
 		
+		/** @private */
 		protected function set barPosX(value:Number):void
 		{
 			m_sliderBar.x = value - m_sliderBar.width / 2;
 		}
 		
+		/**
+		 * 设置拖动块的中心点y坐标所在的位置
+		 */		
 		protected function get barPosY():Number
 		{
 			return m_sliderBar.y + m_sliderBar.height / 2;
 		}
 		
+		/** @private */
 		protected function set barPosY(value:Number):void
 		{
 			m_sliderBar.y = value - m_sliderBar.height / 2;
 		}
 		
+		/**
+		 * 滑动条类型
+		 */		
 		public function get orientation():int
 		{
 			return m_orientation;
 		}
 		
+		/**
+		 * 滑动块x坐标偏移量
+		 */		
 		public function get barOffsetX():int
 		{
 			return m_barOffsetX;
 		}
 		
+		/** @private */
 		public function set barOffsetX(value:int):void
 		{
 			if(m_barOffsetX != value)
@@ -372,11 +455,15 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 滑动块y坐标偏移量
+		 */		
 		public function get barOffsetY():int
 		{
 			return m_barOffsetY;
 		}
 		
+		/** @private */
 		public function set barOffsetY(value:int):void
 		{
 			if(m_barOffsetY != value)
@@ -387,11 +474,15 @@ package jsion.display
 			}
 		}
 
+		/**
+		 * 滑动条背景对象 如果没设置宽度或高度 未设置的值将被重置
+		 */		
 		public function get background():DisplayObject
 		{
 			return m_background;
 		}
-
+		
+		/** @private */
 		public function set background(value:DisplayObject):void
 		{
 			if(m_background != value)
@@ -410,11 +501,15 @@ package jsion.display
 			}
 		}
 
+		/**
+		 * 滑动数据的最小值
+		 */		
 		public function get minValue():int
 		{
 			return m_minValue;
 		}
-
+		
+		/** @private */
 		public function set minValue(value:int):void
 		{
 			if(m_minValue != value)
@@ -427,11 +522,15 @@ package jsion.display
 			}
 		}
 
+		/**
+		 * 滑动数据的最大值
+		 */		
 		public function get maxValue():int
 		{
 			return m_maxValue;
 		}
-
+		
+		/** @private */
 		public function set maxValue(value:int):void
 		{
 			if(m_maxValue != value)
@@ -444,11 +543,15 @@ package jsion.display
 			}
 		}
 
+		/**
+		 * 滑动数据的当前值
+		 */		
 		public function get value():int
 		{
 			return m_value;
 		}
-
+		
+		/** @private */
 		public function set value(value:int):void
 		{
 			if(m_value != value && value >= m_minValue && value <= m_maxValue)
@@ -463,8 +566,7 @@ package jsion.display
 		
 		
 		/**
-		 * 按钮弹起时的显示对象资源
-		 * 如果宽度和高度未设置时会根据此显示对象的宽高来设置对应的值
+		 * @copy jsion.display.Button#upImage
 		 */		
 		public function get upImage():DisplayObject
 		{
@@ -483,7 +585,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 按钮鼠标经过时的显示对象资源
+		 * @copy jsion.display.Button#overImage
 		 */		
 		public function get overImage():DisplayObject
 		{
@@ -502,7 +604,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 按钮按下时的显示对象资源
+		 * @copy jsion.display.Button#downImage
 		 */		
 		public function get downImage():DisplayObject
 		{
@@ -521,7 +623,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 按钮禁用时的显示对象资源
+		 * @copy jsion.display.Button#disableImage
 		 */		
 		public function get disableImage():DisplayObject
 		{
@@ -540,7 +642,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 按钮弹起时的滤镜对象
+		 * @copy jsion.display.Button#upFilters
 		 */		
 		public function get upFilters():Array
 		{
@@ -559,7 +661,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 按钮鼠标经过时的滤镜对象
+		 * @copy jsion.display.Button#overFilters
 		 */		
 		public function get overFilters():Array
 		{
@@ -578,7 +680,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 按钮按下时的滤镜对象
+		 * @copy jsion.display.Button#downFilters
 		 */		
 		public function get downFilters():Array
 		{
@@ -597,7 +699,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 按钮禁用时的滤镜对象
+		 * @copy jsion.display.Button#disableFilters
 		 */		
 		public function get disableFilters():Array
 		{
@@ -616,7 +718,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 按钮状态显示对象x坐标偏移量
+		 * @copy jsion.display.Button#offsetX
 		 */
 		public function get offsetX():int
 		{
@@ -635,7 +737,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 按钮状态显示对象y坐标偏移量
+		 * @copy jsion.display.Button#offsetY
 		 */
 		public function get offsetY():int
 		{
@@ -654,7 +756,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 按钮鼠标经过时状态显示对象x坐标偏移量
+		 * @copy jsion.display.Button#overOffsetX
 		 */
 		public function get overOffsetX():int
 		{
@@ -673,7 +775,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 按钮鼠标经过时状态显示对象y坐标偏移量
+		 * @copy jsion.display.Button#overOffsetY
 		 */
 		public function get overOffsetY():int
 		{
@@ -692,7 +794,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 按钮按下时状态显示对象x坐标偏移量
+		 * @copy jsion.display.Button#downOffsetX
 		 */
 		public function get downOffsetX():int
 		{
@@ -711,7 +813,7 @@ package jsion.display
 		}
 		
 		/**
-		 * 按钮按下时状态显示对象y坐标偏移量
+		 * @copy jsion.display.Button#downOffsetY
 		 */
 		public function get downOffsetY():int
 		{
@@ -729,11 +831,15 @@ package jsion.display
 			}
 		}
 
+		/**
+		 * 指示当背景或filler显示对象为Bitmap,被释放时是否释放 bitmapData 对象。默认为 false 。
+		 */		
 		public function get freeBMD():Boolean
 		{
 			return m_freeBMD;
 		}
-
+		
+		/** @private */
 		public function set freeBMD(value:Boolean):void
 		{
 			m_freeBMD = value;
@@ -741,11 +847,15 @@ package jsion.display
 			m_sliderBar.freeBMD = value;
 		}
 
+		/**
+		 * 滑动填充显示对象。如果未设置 fillerWidth 和 fillerHeight 属性则将设置这两个属性值。
+		 */		
 		public function get filler():DisplayObject
 		{
 			return m_filler;
 		}
-
+		
+		/** @private */
 		public function set filler(value:DisplayObject):void
 		{
 			if(m_filler != value)
@@ -765,11 +875,15 @@ package jsion.display
 			}
 		}
 
+		/**
+		 * 填充显示对象的x坐标偏移量
+		 */		
 		public function get fillerOffsetX():int
 		{
 			return m_fillerOffsetX;
 		}
-
+		
+		/** @private */
 		public function set fillerOffsetX(value:int):void
 		{
 			if(m_fillerOffsetX != value)
@@ -779,12 +893,16 @@ package jsion.display
 				onPropertiesChanged(FILLEROFFSET);
 			}
 		}
-
+		
+		/**
+		 * 填充显示对象的y坐标偏移量
+		 */		
 		public function get fillerOffsetY():int
 		{
 			return m_fillerOffsetY;
 		}
-
+		
+		/** @private */
 		public function set fillerOffsetY(value:int):void
 		{
 			if(m_fillerOffsetY != value)
@@ -794,12 +912,16 @@ package jsion.display
 				onPropertiesChanged(FILLEROFFSET);
 			}
 		}
-
+		
+		/**
+		 * 填充显示对象的宽度
+		 */		
 		public function get fillerWidth():int
 		{
 			return m_fillerWidth;
 		}
-
+		
+		/** @private */
 		public function set fillerWidth(value:int):void
 		{
 			if(m_fillerWidth != value)
@@ -811,12 +933,16 @@ package jsion.display
 				onPropertiesChanged(FILLERWIDTH);
 			}
 		}
-
+		
+		/**
+		 * 填充显示对象的高度
+		 */		
 		public function get fillerHeight():int
 		{
 			return m_fillerHeight;
 		}
-
+		
+		/** @private */
 		public function set fillerHeight(value:int):void
 		{
 			if(m_fillerHeight != value)
@@ -829,11 +955,15 @@ package jsion.display
 			}
 		}
 
+		/**
+		 * 填充显示对象的遮盖类型
+		 */		
 		public function get fillerType():int
 		{
 			return m_fillerType;
 		}
-
+		
+		/** @private */
 		public function set fillerType(value:int):void
 		{
 			if(m_fillerType != value && (value == MASK || value == SCALE))
@@ -843,5 +973,20 @@ package jsion.display
 				onPropertiesChanged(FILLERTYPE);
 			}
 		}
+
+		/**
+		 * 每次鼠标滚轮滚动时滑动值改变的增量
+		 */		
+		public function get wheelStep():int
+		{
+			return m_wheelStep;
+		}
+		
+		/** @private */
+		public function set wheelStep(value:int):void
+		{
+			m_wheelStep = value;
+		}
+
 	}
 }

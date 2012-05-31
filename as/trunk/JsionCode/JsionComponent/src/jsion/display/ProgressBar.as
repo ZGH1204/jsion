@@ -89,6 +89,9 @@ package jsion.display
 			super();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function initialize():void
 		{
 			if(m_orientation != HORIZONTAL && m_orientation != VERTICAL)
@@ -112,6 +115,9 @@ package jsion.display
 			m_freeBMD = false;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function addChildren():void
 		{
 			super.addChildren();
@@ -121,6 +127,9 @@ package jsion.display
 			if(m_progressBar) addChild(m_progressBar);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function onProppertiesUpdate():void
 		{
 			super.onProppertiesUpdate();
@@ -206,11 +215,15 @@ package jsion.display
 			return m_progressType;
 		}
 		
+		/**
+		 * 进度条的背景显示对象。如果 width 或 height 属性未设置将设置这两个属性值。
+		 */		
 		public function get background():DisplayObject
 		{
 			return m_background;
 		}
-
+		
+		/** @private */
 		public function set background(value:DisplayObject):void
 		{
 			if(m_background != value)
@@ -229,12 +242,16 @@ package jsion.display
 				onPropertiesChanged(BACKGROUND);
 			}
 		}
-
+		
+		/**
+		 * 进度显示对象。如果 barWidth 或 barHeight 未设置则将设置这两个属性值。
+		 */		
 		public function get progressBar():DisplayObject
 		{
 			return m_progressBar;
 		}
-
+		
+		/** @private */
 		public function set progressBar(value:DisplayObject):void
 		{
 			if(m_progressBar != value)
@@ -253,11 +270,15 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 进度显示对象的宽度
+		 */		
 		public function get barWidth():int
 		{
 			return m_barWidth;
 		}
 		
+		/** @private */
 		public function set barWidth(value:int):void
 		{
 			if(m_barWidth != value)
@@ -270,11 +291,15 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 进度显示对象的高度
+		 */		
 		public function get barHeight():int
 		{
 			return m_barHeight;
 		}
 		
+		/** @private */
 		public function set barHeight(value:int):void
 		{
 			if(m_barHeight != value)
@@ -287,11 +312,15 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 进度显示对象的x坐标偏移量
+		 */		
 		public function get barOffsetX():int
 		{
 			return m_barOffsetX;
 		}
 		
+		/** @private */
 		public function set barOffsetX(value:int):void
 		{
 			if(m_barOffsetX != value)
@@ -302,11 +331,15 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 进度显示对象的y坐标偏移量
+		 */		
 		public function get barOffsetY():int
 		{
 			return m_barOffsetY;
 		}
 		
+		/** @private */
 		public function set barOffsetY(value:int):void
 		{
 			if(m_barOffsetY != value)
@@ -380,11 +413,15 @@ package jsion.display
 			}
 		}
 
+		/**
+		 * 指示设置的显示对象为Bitmap,被释放时是否释放 bitmapData 对象。默认为 false 。
+		 */		
 		public function get freeBMD():Boolean
 		{
 			return m_freeBMD;
 		}
-
+		
+		/** @private */
 		public function set freeBMD(value:Boolean):void
 		{
 			m_freeBMD = value;

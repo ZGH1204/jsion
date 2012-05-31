@@ -247,6 +247,14 @@ package jsion.comps
 		}
 		
 		/**
+		 * 防止对鼠标滚轮事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
+		 */		
+		public function stopMouseWheelPropagation():void
+		{
+			addEventListener(MouseEvent.MOUSE_WHEEL, __mouseEventStopPropagationHandler);
+		}
+		
+		/**
 		 * 防止对鼠标释放事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
 		 */		
 		public function stopReleasePropagation():void
@@ -262,6 +270,9 @@ package jsion.comps
 			addEventListener(ReleaseEvent.RELEASE_OUT_SIDE, __releaseEventStopPropagationHandler);
 		}
 		
+		/**
+		 * 防止对除鼠标滚动外的所有鼠标事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
+		 */		
 		public function stopAllMouseEventPropagation():void
 		{
 			stopClickPropagation();
