@@ -988,5 +988,17 @@ package jsion.display
 			m_wheelStep = value;
 		}
 
+		override public function dispose():void
+		{
+			DisposeUtil.free(m_background, m_freeBMD);
+			m_background = null;
+			
+			DisposeUtil.free(m_filler, m_freeBMD);
+			m_filler = null;
+			
+			m_sliderBar = null;
+			
+			super.dispose();
+		}
 	}
 }
