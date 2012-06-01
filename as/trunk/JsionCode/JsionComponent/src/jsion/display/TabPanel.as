@@ -8,6 +8,11 @@ package jsion.display
 	import jsion.comps.ToggleGroup;
 	import jsion.utils.ArrayUtil;
 	
+	/**
+	 * 标签面板组
+	 * @author Jsion
+	 * 
+	 */	
 	public class TabPanel extends Component
 	{
 		public static const ADDTAB:String = "addTab";
@@ -83,11 +88,21 @@ package jsion.display
 		{
 			m_tabPosType = tabPosType;
 			
-			m_tabAlign = LEFT;
+			if(m_tabPosType == UP || m_tabPosType == DOWN)
+			{
+				m_tabAlign = LEFT;
+			}
+			else
+			{
+				m_tabAlign = TOP;
+			}
 			
 			super();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function initialize():void
 		{
 			super.initialize();
@@ -103,6 +118,9 @@ package jsion.display
 			m_paneContainer = new Sprite();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function addChildren():void
 		{
 			super.addChildren();
@@ -112,6 +130,12 @@ package jsion.display
 			addChild(m_btnContainer);
 		}
 		
+		/**
+		 * 添加标签和面板
+		 * @param button 标签按钮
+		 * @param paneClass 面板类
+		 * 
+		 */		
 		public function addTab(button:ToggleButton, paneClass:Class):void
 		{
 			if(ArrayUtil.containsValue(m_buttons, button) || 
@@ -132,6 +156,9 @@ package jsion.display
 			
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function onProppertiesUpdate():void
 		{
 			super.onProppertiesUpdate();
@@ -256,5 +283,112 @@ package jsion.display
 				}
 			}
 		}
+
+		/**
+		 * 标签按钮的方位类型
+		 */		
+		public function get tabPosType():String
+		{
+			return m_tabPosType;
+		}
+
+		/**
+		 * 指示如果显示对象为Bitmap,被释放时是否释放 bitmapData 对象。默认为 false 。
+		 */		
+		public function get freeBMD():Boolean
+		{
+			return m_freeBMD;
+		}
+		
+		/** @private */
+		public function set freeBMD(value:Boolean):void
+		{
+			m_freeBMD = value;
+		}
+
+		/**
+		 * 标签按钮的间距
+		 */		
+		public function get tabGap():int
+		{
+			return m_tabGap;
+		}
+		
+		/** @private */
+		public function set tabGap(value:int):void
+		{
+			if(m_tabGap != value)
+			{
+				m_tabGap = value;
+				
+				onPropertiesChanged(TABGAP);
+			}
+		}
+		
+		/**
+		 * 标签按钮的对齐方式，受 tabPosType 属性影响。
+		 * 可能的值有：
+		 * <ul>
+		 * 	<li>TabPanel.LEFT</li>
+		 * 	<li>TabPanel.RIGHT</li>
+		 * 	<li>TabPanel.CENTER</li>
+		 * 	<li>TabPanel.TOP</li>
+		 * 	<li>TabPanel.BOTTOM</li>
+		 * 	<li>TabPanel.MIDDLE</li>
+		 * </ul>
+		 * <p>如果 tabPosType 属性为 UP 或 DOWN 时，此属性可能的值为：TabPanel.LEFT、TabPanel.RIGHT、TabPanel.CENTER</p>
+		 * <p>如果 tabPosType 属性为 LEFT 或 RIGHT 时，此属性可能的值为：TabPanel.TOP、TabPanel.BOTTOM、TabPanel.MIDDLE</p>
+		 */
+		public function get tabAlign():String
+		{
+			return m_tabAlign;
+		}
+		
+		/** @private */
+		public function set tabAlign(value:String):void
+		{
+			if(m_tabAlign != value)
+			{
+				if(m_tabPosType == UP || m_tabPosType == DOWN)
+				{
+					if(value == LEFT || value == RIGHT || value == CENTER)
+					{
+						m_tabAlign = value;
+						
+						onPropertiesChanged(TABALIGN);
+					}
+				}
+				else
+				{
+					if(value == TOP || value == BOTTOM || value == MIDDLE)
+					{
+						m_tabAlign = value;
+						
+						onPropertiesChanged(TABALIGN);
+					}
+				}
+			}
+		}
+
+		/**
+		 * 标签按钮的整体偏移量
+		 */		
+		public function get tabOffset():int
+		{
+			return m_tabOffset;
+		}
+		
+		/** @private */
+		public function set tabOffset(value:int):void
+		{
+			if(m_tabOffset != value)
+			{
+				m_tabOffset = value;
+				
+				onPropertiesChanged(TABOFFSET);
+			}
+		}
+
+
 	}
-}
+} 
