@@ -49,24 +49,34 @@ package jsion.display
 		public static const RIGHT:String = ToggleButton.RIGHT;
 		
 		/**
-		 * 水平居中对齐，用于 hAlign、imageDir、imageAlign 属性。
+		 * 水平居中对齐，用于 hAlign、imageAlign 属性。
 		 */		
 		public static const CENTER:String = ToggleButton.CENTER;
 		
 		/**
-		 * 垂直顶边对齐，用于 vAlign、imageDir、imageAlign 属性。
+		 * 垂直顶边对齐，用于 vAlign、imageAlign 属性。
 		 */		
 		public static const TOP:String = ToggleButton.TOP;
 		
 		/**
-		 * 垂直底边对齐，用于 vAlign、imageDir、imageAlign 属性。
+		 * 垂直底边对齐，用于 vAlign、imageAlign 属性。
 		 */		
 		public static const BOTTOM:String = ToggleButton.BOTTOM;
 		
 		/**
-		 * 垂直居中对齐，用于 vAlign、imageDir、imageAlign 属性。
+		 * 垂直居中对齐，用于 vAlign、imageAlign 属性。
 		 */		
 		public static const MIDDLE:String = ToggleButton.MIDDLE;
+		
+		/**
+		 * 上方向，用于 imageDir 属性。
+		 */		
+		public static const UP:String = CompGlobal.UP;
+		
+		/**
+		 * 下方向，用于 imageDir 属性。
+		 */		
+		public static const DOWN:String = CompGlobal.DOWN;
 		
 		/**
 		 * 文本对齐方式变更
@@ -303,13 +313,13 @@ package jsion.display
 				{
 					CompUtil.layoutPosition(m_width - m_imageWidth, m_height, m_hAlign, m_hOffset, m_vAlign, m_vOffset, m_rect);
 				}
-				else if(m_imageDir == TOP)
+				else if(m_imageDir == UP)
 				{
 					CompUtil.layoutPosition(m_width, m_height - m_imageHeight, m_hAlign, m_hOffset, m_vAlign, m_vOffset, m_rect);
 					
 					m_rect.y += m_imageHeight;
 				}
-				else if(m_imageDir == BOTTOM)
+				else if(m_imageDir == DOWN)
 				{
 					CompUtil.layoutPosition(m_width, m_height - m_imageHeight, m_hAlign, m_hOffset, m_vAlign, m_vOffset, m_rect);
 				}
@@ -409,7 +419,7 @@ package jsion.display
 		/** @private */
 		public function set imageDir(value:String):void
 		{
-			if(m_imageDir != value && (value == LEFT || value == RIGHT || value == TOP || value == BOTTOM))
+			if(m_imageDir != value && (value == LEFT || value == RIGHT || value == UP || value == DOWN))
 			{
 				m_imageDir = value;
 				
@@ -452,14 +462,24 @@ package jsion.display
 		/** @private */
 		public function set imageAlign(value:String):void
 		{
-			if(m_imageAlign != value && 
-				(value == LEFT || value == RIGHT || 
-					value == CENTER || value == TOP || 
-					value == BOTTOM || value == MIDDLE))
+			if(m_imageAlign != value)
 			{
-				m_imageAlign = value;
-				
-				onPropertiesChanged(IMAGEDIRANDALIGN);
+				if((m_imageDir == UP || m_imageDir == DOWN) && (value == LEFT || value == RIGHT || value == CENTER))
+				{
+					m_imageAlign = value;
+					
+					onPropertiesChanged(IMAGEDIRANDALIGN);
+				}
+				else if((m_imageDir == LEFT || m_imageDir == RIGHT) && (value == TOP || value == BOTTOM || value == MIDDLE))
+				{
+					m_imageAlign = value;
+					
+					onPropertiesChanged(IMAGEDIRANDALIGN);
+				}
+				else
+				{
+					throw new Error("状态显示对象的对齐方式设置错误。");
+				}
 			}
 		}
 		

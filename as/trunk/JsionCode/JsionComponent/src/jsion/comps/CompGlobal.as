@@ -58,14 +58,20 @@ package jsion.comps
 		 */		
 		public static const MIDDLE:String = "middle";
 		
+		/**
+		 * 其值为："up"
+		 */		
+		public static const UP:String = "up";
+		
+		/**
+		 * 其值为："down"
+		 */		
+		public static const DOWN:String = "down";
+		
 		
 //		public static const VALIGN:String = "vAlign";
 //		
 //		public static const VGAP:String = "vGap";
-		
-//		public static const UP:String = "up";
-//		
-//		public static const DOWN:String = "down";
 		
 //		public static const OFFSET:String = "offset";
 //		
