@@ -120,6 +120,13 @@ package jsion.comps
 		}
 		
 		/**
+		 * 初始化后预留接口，供开发者开发UI界面。
+		 */		
+		protected function configUI():void
+		{
+		}
+		
+		/**
 		 * 开始批量变更
 		 */		
 		public function beginChanges():void
