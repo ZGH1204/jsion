@@ -154,32 +154,37 @@ package jsion.display
 		
 		
 		/**
-		 * @copy jsion.display.List#addItem()
+		 * 添加下拉列表显示项
+		 * @param child 要加入下拉列表的子显示对象
 		 */		
-		public function addItem(child:ToggleButton):void
+		public function addItem(item:ToggleButton):void
 		{
-			m_listView.addItem(child);
-			m_group.addItem(child);
+			m_listView.addItem(item);
+			m_group.addItem(item);
 		}
 		
 		/**
-		 * @copy jsion.display.List#addItemAt()
+		 * 添加下拉列表显示项到指定索引位置
+		 * @param child 要加入下拉列表的子显示对象
+		 * @param index 要加入的子显示对象的索引位置
 		 */		
-		public function addItemAt(child:ToggleButton, index:int):void
+		public function addItemAt(item:ToggleButton, index:int):void
 		{
-			m_listView.addItemAt(child, index);
+			m_listView.addItemAt(item, index);
 		}
 		
 		/**
-		 * @copy jsion.display.List#removeItem()
+		 * 移除下拉列表显示项
+		 * @param child 要移除的子显示对象
 		 */		
-		public function removeItem(child:ToggleButton):void
+		public function removeItem(item:ToggleButton):void
 		{
-			m_listView.removeItem(child);
+			m_listView.removeItem(item);
 		}
 		
 		/**
-		 * @copy jsion.display.List#removeItemAt()
+		 * 移除指定索引位置的下拉列表显示项
+		 * @param index 要移除的下拉列表显示项的索引位置
 		 */		
 		public function removeItemAt(index:int):ToggleButton
 		{
