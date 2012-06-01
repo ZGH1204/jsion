@@ -1,5 +1,10 @@
 package jsion.utils
 {
+	/**
+	 * 缩放工具
+	 * @author Jsion
+	 * 
+	 */	
 	public class ScaleUtil
 	{
 		/**
