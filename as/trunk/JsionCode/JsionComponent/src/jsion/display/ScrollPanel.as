@@ -93,6 +93,7 @@ package jsion.display
 		
 		/**
 		 * 不支持此方法，要添加显示对象请使用 addToContent() 方法。
+		 * @param child 不支持
 		 */
 		override public function addChild(child:DisplayObject):DisplayObject
 		{
@@ -101,6 +102,8 @@ package jsion.display
 		
 		/**
 		 * 不支持此方法，要添加显示对象请使用 addToContentAt() 方法。
+		 * @param child 不支持
+		 * @param index 不支持
 		 */
 		override public function addChildAt(child:DisplayObject, index:int):DisplayObject
 		{
@@ -109,6 +112,7 @@ package jsion.display
 		
 		/**
 		 * 不支持此方法，要添加显示对象请使用 removeFromContent() 方法。
+		 * @param child 不支持
 		 */
 		override public function removeChild(child:DisplayObject):DisplayObject
 		{
@@ -117,6 +121,7 @@ package jsion.display
 		
 		/**
 		 * 不支持此方法，要添加显示对象请使用 removeFromContentAt() 方法。
+		 * @param index 不支持
 		 */
 		override public function removeChildAt(index:int):DisplayObject
 		{

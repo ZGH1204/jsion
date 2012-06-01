@@ -152,6 +152,8 @@ package jsion.comps
 		
 		/**
 		 * 当允许多选时使用此方法设置选中对象，否则使用 selected 属性。
+		 * @param button 要选中或取消选中的ToggleButton对象
+		 * 
 		 */		
 		public function setMultipleSelected(button:ToggleButton):void
 		{
@@ -201,7 +203,7 @@ package jsion.comps
 		
 		/**
 		 * 将指定的对象从编组中移除。当不允许多选时，如果移除的对象为当前选中对象则根据 autoSelected 属性设置选中第一个对象。
-		 * @param btn 要移除的对象
+		 * @param btn 要移除的ToggleButton对象
 		 * 
 		 */		
 		public function remove(button:ToggleButton):void
