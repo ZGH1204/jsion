@@ -156,26 +156,26 @@ package jsion.display
 		/**
 		 * @copy jsion.display.List#addItem()
 		 */		
-		public function addItem(item:ToggleButton):void
+		public function addItem(child:ToggleButton):void
 		{
-			m_listView.addItem(item);
-			m_group.addItem(item);
+			m_listView.addItem(child);
+			m_group.addItem(child);
 		}
 		
 		/**
 		 * @copy jsion.display.List#addItemAt()
 		 */		
-		public function addItemAt(item:ToggleButton, index:int):void
+		public function addItemAt(child:ToggleButton, index:int):void
 		{
-			m_listView.addItemAt(item, index);
+			m_listView.addItemAt(child, index);
 		}
 		
 		/**
 		 * @copy jsion.display.List#removeItem()
 		 */		
-		public function removeItem(item:ToggleButton):void
+		public function removeItem(child:ToggleButton):void
 		{
-			m_listView.removeItem(item);
+			m_listView.removeItem(child);
 		}
 		
 		/**
