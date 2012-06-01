@@ -22,6 +22,7 @@ package
 	import jsion.display.ScrollBar;
 	import jsion.display.ScrollPanel;
 	import jsion.display.Slider;
+	import jsion.display.TabPanel;
 	import jsion.display.ToggleButton;
 	import jsion.events.DisplayEvent;
 	
@@ -94,8 +95,10 @@ package
 //			testComboBox();
 //			
 //			testProgressBar();
+//			
+//			testSliderBar();
 			
-			testSliderBar();
+			testTabPanel();
 		}
 		
 		private function initHelper():void
@@ -103,6 +106,152 @@ package
 			DEBUG.setup(stage, 300);
 			
 			DEBUG.loadCSS("debug.css");
+		}
+		
+		private function testTabPanel():void
+		{
+			// TODO Auto Generated method stub
+			var tab:TabPanel;
+			
+			tab = new TabPanel();
+			tab.beginChanges();
+			tab.x = 150;
+			tab.y = 30;
+			tab.tabGap = -8;
+			tab.tabOffset = -5;
+			//tab.paneAutoFree = true;
+			for(var i:int = 0; i < 5; i++)
+			{
+				var toggleBtn:ToggleButton = new ToggleButton();
+				toggleBtn.beginChanges();
+				toggleBtn.x = 80;
+				toggleBtn.y = 100;
+				
+				toggleBtn.upImage = new m_cls();
+				toggleBtn.overFilters = [new BlurFilter(2, 2, 1)];
+				
+				toggleBtn.selectedUpImage = new m_cls2();
+				toggleBtn.selectedOverFilters = [new BlurFilter(2, 2, 1)];
+				
+				toggleBtn.parseCSS("j{display: inline; color: #FFFFFF;} s{display: inline; color: #FFFF00;}");
+				toggleBtn.label = "To<j>gg</j><s>le" + i + "</s>";
+				toggleBtn.labelColor = 0xFF8040;
+				toggleBtn.selectedLabelColor = 0x01;
+				toggleBtn.labelOverFilters = [new BlurFilter(2, 2, 1)];
+				toggleBtn.selectedLabelOverFilters = [new BlurFilter(2, 2, 1)];
+				toggleBtn.commitChanges();
+				
+				tab.addTab(toggleBtn, TestPanel);
+			}
+			tab.commitChanges();
+			
+//			tab = new TabPanel(TabPanel.DOWN);
+//			tab.beginChanges();
+//			tab.x = 150;
+//			tab.y = 30;
+//			tab.tabGap = -8;
+//			tab.tabOffset = -5;
+//			//tab.paneAutoFree = true;
+//			tab.width = 700;
+//			tab.height = 541;
+//			for(var i:int = 0; i < 5; i++)
+//			{
+//				var toggleBtn:ToggleButton = new ToggleButton();
+//				toggleBtn.beginChanges();
+//				toggleBtn.x = 80;
+//				toggleBtn.y = 100;
+//				
+//				toggleBtn.upImage = new m_cls();
+//				toggleBtn.overFilters = [new BlurFilter(2, 2, 1)];
+//				
+//				toggleBtn.selectedUpImage = new m_cls2();
+//				toggleBtn.selectedOverFilters = [new BlurFilter(2, 2, 1)];
+//				
+//				toggleBtn.parseCSS("j{display: inline; color: #FFFFFF;} s{display: inline; color: #FFFF00;}");
+//				toggleBtn.label = "To<j>gg</j><s>le" + i + "</s>";
+//				toggleBtn.labelColor = 0xFF8040;
+//				toggleBtn.selectedLabelColor = 0x01;
+//				toggleBtn.labelOverFilters = [new BlurFilter(2, 2, 1)];
+//				toggleBtn.selectedLabelOverFilters = [new BlurFilter(2, 2, 1)];
+//				toggleBtn.commitChanges();
+//				
+//				tab.addTab(toggleBtn, TestPanel);
+//			}
+//			tab.commitChanges();
+			
+//			tab = new TabPanel(TabPanel.LEFT);
+//			tab.beginChanges();
+//			tab.x = 150;
+//			tab.y = 30;
+//			tab.tabAlign = TabPanel.BOTTOM;
+//			//tab.tabGap = 0;
+//			tab.tabOffset = -3;
+//			tab.paneOffset = -3;
+//			//tab.paneAutoFree = true;
+//			tab.width = 765;
+//			tab.height = 500;
+//			for(var i:int = 0; i < 5; i++)
+//			{
+//				var toggleBtn:ToggleButton = new ToggleButton();
+//				toggleBtn.beginChanges();
+//				toggleBtn.x = 80;
+//				toggleBtn.y = 100;
+//				
+//				toggleBtn.upImage = new m_cls();
+//				toggleBtn.overFilters = [new BlurFilter(2, 2, 1)];
+//				
+//				toggleBtn.selectedUpImage = new m_cls2();
+//				toggleBtn.selectedOverFilters = [new BlurFilter(2, 2, 1)];
+//				
+//				toggleBtn.parseCSS("j{display: inline; color: #FFFFFF;} s{display: inline; color: #FFFF00;}");
+//				toggleBtn.label = "To<j>gg</j><s>le" + i + "</s>";
+//				toggleBtn.labelColor = 0xFF8040;
+//				toggleBtn.selectedLabelColor = 0x01;
+//				toggleBtn.labelOverFilters = [new BlurFilter(2, 2, 1)];
+//				toggleBtn.selectedLabelOverFilters = [new BlurFilter(2, 2, 1)];
+//				toggleBtn.commitChanges();
+//				
+//				tab.addTab(toggleBtn, TestPanel);
+//			}
+//			tab.commitChanges();
+			
+//			tab = new TabPanel(TabPanel.RIGHT);
+//			tab.beginChanges();
+//			tab.x = 150;
+//			tab.y = 30;
+//			tab.tabAlign = TabPanel.BOTTOM;
+//			//tab.tabGap = 0;
+//			tab.tabOffset = -3;
+//			tab.paneOffset = 3;
+//			//tab.paneAutoFree = true;
+//			tab.width = 765;
+//			tab.height = 500;
+//			for(var i:int = 0; i < 5; i++)
+//			{
+//				var toggleBtn:ToggleButton = new ToggleButton();
+//				toggleBtn.beginChanges();
+//				toggleBtn.x = 80;
+//				toggleBtn.y = 100;
+//				
+//				toggleBtn.upImage = new m_cls();
+//				toggleBtn.overFilters = [new BlurFilter(2, 2, 1)];
+//				
+//				toggleBtn.selectedUpImage = new m_cls2();
+//				toggleBtn.selectedOverFilters = [new BlurFilter(2, 2, 1)];
+//				
+//				toggleBtn.parseCSS("j{display: inline; color: #FFFFFF;} s{display: inline; color: #FFFF00;}");
+//				toggleBtn.label = "To<j>gg</j><s>le" + i + "</s>";
+//				toggleBtn.labelColor = 0xFF8040;
+//				toggleBtn.selectedLabelColor = 0x01;
+//				toggleBtn.labelOverFilters = [new BlurFilter(2, 2, 1)];
+//				toggleBtn.selectedLabelOverFilters = [new BlurFilter(2, 2, 1)];
+//				toggleBtn.commitChanges();
+//				
+//				tab.addTab(toggleBtn, TestPanel);
+//			}
+//			tab.commitChanges();
+			
+			addChild(tab);
 		}
 		
 		private function testSliderBar():void

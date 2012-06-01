@@ -1,17 +1,22 @@
 package jsion.display
 {
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
 	import jsion.comps.CompGlobal;
 	import jsion.comps.Component;
 	import jsion.comps.ToggleGroup;
+	import jsion.events.DisplayEvent;
 	import jsion.utils.ArrayUtil;
+	import jsion.utils.DisposeUtil;
 	
 	/**
-	 * 标签面板组
+	 * 标签面板组。
+	 * 当标签按钮在上面，靠左对齐时，可以不设置宽度和高度；其他的都需要设置其宽度和高度。
+	 * 支持 jsion.display.ITabPanel 回调接口。
+	 * @see jsion.display.ITabPanel
 	 * @author Jsion
-	 * 
 	 */	
 	public class TabPanel extends Component
 	{
@@ -20,6 +25,7 @@ package jsion.display
 		public static const TABALIGN:String = "tabAlign";
 		public static const TABOFFSET:String = "tabOffset";
 		public static const TABPOSTYPE:String = "tabPosType";
+		public static const PANEOFFSET:String = "paneOffset";
 		
 		
 		/**
@@ -84,6 +90,14 @@ package jsion.display
 		
 		private var m_tabOffset:int;
 		
+		private var m_paneOffset:int;
+		
+		private var m_curPane:DisplayObject;
+		
+		private var m_autoFreePane:Boolean;
+		
+		private var m_selectedIndex:int;
+		
 		public function TabPanel(tabPosType:String = "up")
 		{
 			m_tabPosType = tabPosType;
@@ -111,11 +125,98 @@ package jsion.display
 			m_buttons = [];
 			m_paneClasses = [];
 			
+			m_selectedIndex = -1;
+			
+			m_autoFreePane = false;
+			
 			m_group = new ToggleGroup();
 			
 			m_btnContainer = new Sprite();
 			
 			m_paneContainer = new Sprite();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		override protected function initEvents():void
+		{
+			super.initEvents();
+			
+			m_group.addEventListener(DisplayEvent.SELECT_CHANGED, __tabSelectedChangeHandler);
+		}
+		
+		private function __tabSelectedChangeHandler(e:DisplayEvent):void
+		{
+			if(m_selectedIndex == m_group.selectedIndex) return;
+			
+			var btn:ToggleButton = m_group.selected;
+			
+			m_selectedIndex = m_group.selectedIndex;
+			
+			if(m_panels[m_selectedIndex] == null)
+			{
+				m_panels[m_selectedIndex] = new m_paneClasses[index]();
+			}
+			
+			if(m_curPane)
+			{
+				if(m_curPane is ITabPanel) ITabPanel(m_curPane).hidePanel();
+				
+				if(m_autoFreePane)
+				{
+					var index:int = m_panels.indexOf(m_curPane);
+					
+					if(index < m_panels.length && index >= 0)
+					{
+						m_panels[index] = null;
+					}
+					
+					DisposeUtil.free(m_curPane);
+				}
+				else
+				{
+					if(m_curPane.parent) m_curPane.parent.removeChild(m_curPane);
+				}
+			}
+			
+			m_curPane = m_panels[m_selectedIndex] as DisplayObject;
+			
+			if(m_curPane)
+			{
+				if(m_curPane is ITabPanel) ITabPanel(m_curPane).showPanel();
+				
+				m_paneContainer.addChild(m_curPane);
+			}
+		}
+		
+		/**
+		 * 通过标签按钮的索引位置设置活动面板。
+		 * @param index 要设置为活动面板的标签按钮的索引位置
+		 */		
+		public function setActive(index:int):void
+		{
+			m_group.selectedIndex = index;
+		}
+		
+		/**
+		 * 添加标签和面板
+		 * @param button 标签按钮 ToggleButton 对象。
+		 * @param paneClass 面板类，可以实现 ITabPanel 接口以使用面板显示回调。
+		 * @see jsion.display.ITabPanel
+		 */		
+		public function addTab(button:ToggleButton, paneClass:Class):void
+		{
+			if(ArrayUtil.containsValue(m_buttons, button) || 
+				button == null || 
+				paneClass == null) return;
+			
+			m_buttons.push(button);
+			m_paneClasses.push(paneClass);
+			m_panels.push(null);
+			m_group.addItem(button);
+			
+			onPropertiesChanged(ADDTAB);
 		}
 		
 		/**
@@ -128,32 +229,6 @@ package jsion.display
 			addChild(m_paneContainer);
 			
 			addChild(m_btnContainer);
-		}
-		
-		/**
-		 * 添加标签和面板
-		 * @param button 标签按钮
-		 * @param paneClass 面板类
-		 * 
-		 */		
-		public function addTab(button:ToggleButton, paneClass:Class):void
-		{
-			if(ArrayUtil.containsValue(m_buttons, button) || 
-				button == null || 
-				paneClass == null) return;
-			
-			m_group.addItem(button);
-			m_buttons.push(button);
-			m_paneClasses.push(paneClass);
-			
-			button.addEventListener(MouseEvent.CLICK, __buttonClickHandler);
-			
-			onPropertiesChanged(ADDTAB);
-		}
-		
-		private function __buttonClickHandler(e:MouseEvent):void
-		{
-			
 		}
 		
 		/**
@@ -259,28 +334,25 @@ package jsion.display
 		
 		private function updateTabAndPanePos():void
 		{
-			if(isChanged(TABPOSTYPE))
+			if(m_tabPosType == UP)
 			{
-				if(m_tabPosType == UP)
-				{
-					m_btnContainer.y = 0;
-					m_paneContainer.y = m_btnContainer.y + m_btnContainer.height;
-				}
-				else if(m_tabPosType == DOWN)
-				{
-					m_paneContainer.y = 0;
-					m_btnContainer.y = m_height - m_btnContainer.height;
-				}
-				else if(m_tabPosType == LEFT)
-				{
-					m_btnContainer.x = 0;
-					m_paneContainer.x = m_btnContainer.x + m_btnContainer.width;
-				}
-				else
-				{
-					m_paneContainer.x = 0;
-					m_btnContainer.x = m_width - m_btnContainer.width;
-				}
+				m_btnContainer.y = 0;
+				m_paneContainer.y = m_btnContainer.y + m_btnContainer.height + m_paneOffset;
+			}
+			else if(m_tabPosType == DOWN)
+			{
+				m_paneContainer.y = m_paneOffset;
+				m_btnContainer.y = m_height - m_btnContainer.height;
+			}
+			else if(m_tabPosType == LEFT)
+			{
+				m_btnContainer.x = 0;
+				m_paneContainer.x = m_btnContainer.x + m_btnContainer.width + m_paneOffset;
+			}
+			else
+			{
+				m_paneContainer.x = m_paneOffset;
+				m_btnContainer.x = m_width - m_btnContainer.width;
 			}
 		}
 
@@ -290,6 +362,14 @@ package jsion.display
 		public function get tabPosType():String
 		{
 			return m_tabPosType;
+		}
+		
+		/**
+		 * 当前活动标签的索引位置
+		 */		
+		public function get selectedIndex():int
+		{
+			return m_selectedIndex;
 		}
 
 		/**
@@ -389,6 +469,82 @@ package jsion.display
 			}
 		}
 
+		/**
+		 * 指示是否在切换到其他面板时释放上一个面板。
+		 */		
+		public function get autoFreePanel():Boolean
+		{
+			return m_autoFreePane;
+		}
+		
+		/** @private */
+		public function set autoFreePanel(value:Boolean):void
+		{
+			m_autoFreePane = value;
+			
+			if(m_autoFreePane)
+			{
+				var temp:DisplayObject;
+				
+				for(var i:int = 0; i < m_panels.length; i++)
+				{
+					if(m_selectedIndex == i) continue;
+					
+					temp = m_panels[i];
+					DisposeUtil.free(temp, m_freeBMD);
+					m_panels[i] = null;
+				}
+			}
+		}
 
+		/**
+		 * 设置面板相对于标签按钮的偏移量
+		 */		
+		public function get paneOffset():int
+		{
+			return m_paneOffset;
+		}
+		
+		/** @private */
+		public function set paneOffset(value:int):void
+		{
+			if(m_paneOffset != value)
+			{
+				m_paneOffset = value;
+				
+				onPropertiesChanged(PANEOFFSET);
+			}
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		override public function dispose():void
+		{
+			DisposeUtil.free(m_group);
+			m_group = null;
+			
+			for each(var obj:Object in m_panels)
+			{
+				DisposeUtil.free(obj, m_freeBMD);
+			}
+			
+			ArrayUtil.removeAll(m_panels);
+			m_panels = null;
+			
+			ArrayUtil.removeAll(m_paneClasses);
+			m_paneClasses = null;
+			
+			DisposeUtil.free(m_buttons);
+			m_buttons = null;
+			
+			DisposeUtil.free(m_btnContainer);
+			m_btnContainer = null;
+			
+			DisposeUtil.free(m_paneContainer);
+			m_paneContainer = null;
+			
+			super.dispose();
+		}
 	}
 } 
