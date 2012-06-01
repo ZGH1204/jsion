@@ -19,26 +19,26 @@ package jsion.display
 	public class LabelButton extends Button
 	{
 		/**
-		 * @copy jsion.display.Button#WIDTH
+		 * 宽度属性变更
 		 */		
 		public static const WIDTH:String = Button.WIDTH;
 		
 		/**
-		 * @copy jsion.display.Button#HEIGHT
+		 * 高度属性变更
 		 */		
 		public static const HEIGHT:String = Button.HEIGHT;
 		
 		/**
-		 * @copy jsion.display.Button#STATEIMAGE
+		 * 状态显示对象资源变更
 		 */		
 		public static const STATEIMAGE:String = Button.STATEIMAGE;
 		/**
-		 * @copy jsion.display.Button#STATEFILTERS
+		 * 状态显示对象滤镜变更
 		 */		
 		public static const STATEFILTERS:String = Button.STATEFILTERS;
 		
 		/**
-		 * @copy jsion.display.Button#OFFSET
+		 * 状态显示对象偏移变量
 		 */		
 		public static const OFFSET:String = Button.OFFSET;
 		
@@ -309,7 +309,7 @@ package jsion.display
 		//==========================	Label组件属性	==========================
 		
 		/**
-		 * @copy jsion.display.Label#realText
+		 * 获取无标签的真实文本
 		 */		
 		public function get text():String
 		{
@@ -317,7 +317,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Label#text
+		 * 要显示的文本对象 支持带xml标签的文本
+		 * 其中xml标签可在styleSheet属性对象内定义CSS样式
 		 */		
 		public function get label():String
 		{
@@ -338,7 +339,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Label#textColor
+		 * 设置文本颜色
+		 * CSS样式会覆盖此设置
 		 */		
 		public function get labelColor():uint
 		{
@@ -359,7 +361,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Label#html
+		 * 是否启用Html模式显示
 		 */		
 		public function get html():Boolean
 		{
@@ -380,7 +382,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Label#embedFonts
+		 * 获取或设置textFormat中字体是否为嵌入字体
 		 */		
 		public function get embedFonts():Boolean
 		{
@@ -401,7 +403,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Label#textFormat
+		 * 获取或设置描述字符格式的设置信息。
 		 */		
 		public function get textFormat():TextFormat
 		{
@@ -419,7 +421,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Label#styleSheet
+		 * CSS样式表。
+		 * 当使用CSS样式时无论是否开启 Html 属性都会替换掉所有标签并使用已定义的样式显示。
 		 */		
 		public function get styleSheet():StyleSheet
 		{
@@ -437,7 +440,9 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Label#parseCSS()
+		 * 解析CSS样式文本 会覆盖掉已定义样式的对应属性。
+		 * 当使用CSS样式时无论是否开启 Html 属性都会替换掉所有标签并使用已定义的样式显示。
+		 * @param cssText CSS样式文本
 		 */		
 		public function parseCSS(cssText:String):StyleSheet
 		{

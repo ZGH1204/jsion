@@ -15,26 +15,26 @@ package jsion.display
 	public class CheckBox extends ToggleButton
 	{
 		/**
-		 * @copy jsion.display.ToggleButton#WIDTH
+		 * 宽度属性变更
 		 */		
 		public static const WIDTH:String = ToggleButton.WIDTH;
 		
 		/**
-		 * @copy jsion.display.ToggleButton#HEIGHT
+		 * 高度属性变更
 		 */		
 		public static const HEIGHT:String = ToggleButton.HEIGHT;
 		
 		/**
-		 * @copy jsion.display.ToggleButton#STATEIMAGE
+		 * 状态显示对象资源变更
 		 */		
 		public static const STATEIMAGE:String = ToggleButton.STATEIMAGE;
 		/**
-		 * @copy jsion.display.ToggleButton#STATEFILTERS
+		 * 状态显示对象滤镜变更
 		 */		
 		public static const STATEFILTERS:String = ToggleButton.STATEFILTERS;
 		
 		/**
-		 * @copy jsion.display.ToggleButton#OFFSET
+		 * 状态显示对象偏移变量
 		 */		
 		public static const OFFSET:String = ToggleButton.OFFSET;
 		
@@ -69,12 +69,12 @@ package jsion.display
 		public static const MIDDLE:String = ToggleButton.MIDDLE;
 		
 		/**
-		 * @copy jsion.display.ToggleButton#LABELALIGN
+		 * 文本对齐方式变更
 		 */		
 		public static const LABELALIGN:String = ToggleButton.LABELALIGN;
 		
 		/**
-		 * @copy jsion.display.ToggleButton#LABELFILTERS
+		 * 文本滤镜变更
 		 */		
 		public static const LABELFILTERS:String = ToggleButton.LABELFILTERS;
 		

@@ -1435,7 +1435,7 @@ package jsion.display
 		}
 
 		/**
-		 * @copy jsion.display.Button#freeBMD
+		 * 指示如果按钮状态显示对象为Bitmap,被释放时是否释放 bitmapData 对象。默认为 false 。
 		 * @see jsion.display.Button#freeBMD
 		 */		
 		public function get freeBMD():Boolean

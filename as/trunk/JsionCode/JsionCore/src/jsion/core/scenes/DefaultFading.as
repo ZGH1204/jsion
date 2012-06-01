@@ -17,7 +17,8 @@ package jsion.core.scenes
 		}
 		
 		/**
-		 * @copy jsion.core.scenes.IFading#setFading()
+		 * 开始场景过渡
+		 * @param callback 过渡完成的回调函数
 		 */		
 		public function setFading(callback:Function):void
 		{
