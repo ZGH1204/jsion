@@ -110,7 +110,7 @@ package jsion.display
 		 * 默认ScrollBar.VERTICAL。
 		 * @throws Error 滚动类型错误 必需是 ScrollBar.HORIZONTAL 或 ScrollBar.VERTICAL 之一。
 		 */		
-		public function ScrollBar(type:int = VERTICAL)
+		public function ScrollBar(type:int = 2)
 		{
 			super();
 			

@@ -73,7 +73,7 @@ package jsion.display
 		
 		private var m_maxValue:int;
 		
-		public function Box(type:int = VERTICAL)
+		public function Box(type:int = 2)
 		{
 			m_type = type;
 			
