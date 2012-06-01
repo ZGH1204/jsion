@@ -114,6 +114,8 @@ package jsion.display
 		
 		/**
 		 * 不支持此方法，请使用 addItem() 方法。
+		 * @param child 不支持
+		 * 
 		 */		
 		override public function addToContent(child:DisplayObject):void
 		{
@@ -122,6 +124,8 @@ package jsion.display
 		
 		/**
 		 * 不支持此方法，请使用 addItemAt() 方法。
+		 * @param child 不支持
+		 * @param index 不支持
 		 */		
 		override public function addToContentAt(child:DisplayObject, index:int):void
 		{
@@ -130,6 +134,7 @@ package jsion.display
 		
 		/**
 		 * 不支持此方法，请使用 removeItem() 方法。
+		 * @param child 不支持
 		 */		
 		override public function removeFromContent(child:DisplayObject):void
 		{
@@ -138,6 +143,7 @@ package jsion.display
 		
 		/**
 		 * 不支持此方法，请使用 removeItemAt() 方法。
+		 * @param index 不支持
 		 */		
 		override public function removeFromContentAt(index:int):DisplayObject
 		{
@@ -146,6 +152,7 @@ package jsion.display
 		
 		/**
 		 * 添加显示列表项
+		 * @param child 要加入列表的子显示对象
 		 */		
 		public function addItem(item:DisplayObject):void
 		{
@@ -156,6 +163,8 @@ package jsion.display
 		
 		/**
 		 * 添加显示列表项到指定索引位置
+		 * @param child 要加入列表的子显示对象
+		 * @param index 要加入的子显示对象的索引位置
 		 */		
 		public function addItemAt(item:DisplayObject, index:int):void
 		{
@@ -166,6 +175,7 @@ package jsion.display
 		
 		/**
 		 * 移除显示列表项
+		 * @param child 要移除的子显示对象
 		 */		
 		public function removeItem(item:DisplayObject):void
 		{
