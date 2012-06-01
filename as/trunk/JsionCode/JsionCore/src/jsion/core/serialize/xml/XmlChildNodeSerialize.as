@@ -18,7 +18,10 @@ package jsion.core.serialize.xml
 		}
 		
 		/**
-		 * @copy jsion.core.serialize.xml.IXmlSerialize#encode()
+		 * 序列化指定对象为Xml
+		 * @param nodeName Xml节点名称
+		 * @param obj 要序列化的对象
+		 * @return 序列化后的Xml对象
 		 */		
 		public function encode(nodeName:String, obj:Object):XML
 		{
@@ -40,7 +43,9 @@ package jsion.core.serialize.xml
 		}
 		
 		/**
-		 * @copy jsion.core.serialize.xml.IXmlSerialize#decode()
+		 * 反序列化Xml到指定对象
+		 * @param obj 反序列化到的目标对象
+		 * @param xml 要反序列化的Xml
 		 */		
 		public function decode(obj:Object, xml:XML):void
 		{

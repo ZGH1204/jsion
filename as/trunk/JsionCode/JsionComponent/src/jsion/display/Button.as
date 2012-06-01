@@ -18,12 +18,12 @@ package jsion.display
 	public class Button extends Component
 	{
 		/**
-		 * @copy jsion.comps.Component#WIDTH
+		 * 宽度属性变更
 		 */		
 		public static const WIDTH:String = Component.WIDTH;
 		
 		/**
-		 * @copy jsion.comps.Component#HEIGHT
+		 * 高度属性变更
 		 */		
 		public static const HEIGHT:String = Component.HEIGHT;
 		

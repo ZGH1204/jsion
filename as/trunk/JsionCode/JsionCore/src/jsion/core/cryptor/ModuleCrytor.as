@@ -14,7 +14,9 @@ package jsion.core.cryptor
 	public class ModuleCrytor implements ICryption
 	{
 		/**
-		 * @copy jsion.core.cryptor.ICryption#encry()
+		 * 加密
+		 * @param bytes 要加密的原始数据
+		 * @return 加密后的新数据，不修改原始数据。
 		 * @see jsion.core.cryptor.ICryption#encry()
 		 */		
 		public function encry(bytes:ByteArray):ByteArray
@@ -44,7 +46,9 @@ package jsion.core.cryptor
 		}
 		
 		/**
-		 * @copy jsion.core.cryptor.ICryption#decry()
+		 * 解密
+		 * @param bytes 要解密的加密数据
+		 * @return 解密后的新数据，不修改加密数据。
 		 * @see jsion.core.cryptor.ICryption#decry()
 		 */		
 		public function decry(bytes:ByteArray):ByteArray

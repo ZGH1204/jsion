@@ -566,7 +566,8 @@ package jsion.display
 		
 		
 		/**
-		 * @copy jsion.display.Button#upImage
+		 * 按钮弹起时的显示对象资源
+		 * 如果宽度和高度未设置时会根据此显示对象的宽高来设置对应的值
 		 */		
 		public function get upImage():DisplayObject
 		{
@@ -585,7 +586,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Button#overImage
+		 * 按钮鼠标经过时的显示对象资源
 		 */		
 		public function get overImage():DisplayObject
 		{
@@ -604,7 +605,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Button#downImage
+		 * 按钮按下时的显示对象资源
 		 */		
 		public function get downImage():DisplayObject
 		{
@@ -623,7 +624,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Button#disableImage
+		 * 按钮禁用时的显示对象资源
 		 */		
 		public function get disableImage():DisplayObject
 		{
@@ -642,7 +643,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Button#upFilters
+		 * 按钮弹起时的滤镜对象
 		 */		
 		public function get upFilters():Array
 		{
@@ -661,7 +662,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Button#overFilters
+		 * 按钮鼠标经过时的滤镜对象
 		 */		
 		public function get overFilters():Array
 		{
@@ -680,7 +681,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Button#downFilters
+		 * 按钮按下时的滤镜对象
 		 */		
 		public function get downFilters():Array
 		{
@@ -699,7 +700,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Button#disableFilters
+		 * 按钮禁用时的滤镜对象
 		 */		
 		public function get disableFilters():Array
 		{
@@ -718,7 +719,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Button#offsetX
+		 * 按钮状态显示对象x坐标偏移量
 		 */
 		public function get offsetX():int
 		{
@@ -737,7 +738,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Button#offsetY
+		 * 按钮状态显示对象y坐标偏移量
 		 */
 		public function get offsetY():int
 		{
@@ -756,7 +757,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Button#overOffsetX
+		 * 按钮鼠标经过时状态显示对象x坐标偏移量
 		 */
 		public function get overOffsetX():int
 		{
@@ -775,7 +776,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Button#overOffsetY
+		 * 按钮鼠标经过时状态显示对象y坐标偏移量
 		 */
 		public function get overOffsetY():int
 		{
@@ -794,7 +795,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Button#downOffsetX
+		 * 按钮按下时状态显示对象x坐标偏移量
 		 */
 		public function get downOffsetX():int
 		{
@@ -813,7 +814,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.Button#downOffsetY
+		 * 按钮按下时状态显示对象y坐标偏移量
 		 */
 		public function get downOffsetY():int
 		{

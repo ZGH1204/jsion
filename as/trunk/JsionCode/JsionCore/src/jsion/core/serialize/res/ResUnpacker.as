@@ -40,7 +40,7 @@ package jsion.core.serialize.res
 		}
 		
 		/**
-		 * @copy jsion.core.serialize.res.ResPacker#width
+		 * 资源宽度
 		 */		
 		public function get width():int
 		{
@@ -48,7 +48,7 @@ package jsion.core.serialize.res
 		}
 		
 		/**
-		 * @copy jsion.core.serialize.res.ResPacker#height
+		 * 资源高度
 		 */		
 		public function get height():int
 		{

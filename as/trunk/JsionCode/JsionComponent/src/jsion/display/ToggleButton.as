@@ -19,66 +19,72 @@ package jsion.display
 	public class ToggleButton extends LabelButton
 	{
 		/**
-		 * @copy jsion.display.LabelButton#WIDTH
+		 * 宽度属性变更
 		 */		
 		public static const WIDTH:String = LabelButton.WIDTH;
 		
 		/**
-		 * @copy jsion.display.LabelButton#HEIGHT
+		 * 高度属性变更
 		 */		
 		public static const HEIGHT:String = LabelButton.HEIGHT;
 		
 		/**
-		 * @copy jsion.display.LabelButton#STATEIMAGE
+		 * 状态显示对象资源变更
 		 */		
 		public static const STATEIMAGE:String = LabelButton.STATEIMAGE;
 		/**
-		 * @copy jsion.display.LabelButton#STATEFILTERS
+		 * 状态显示对象滤镜变更
 		 */		
 		public static const STATEFILTERS:String = LabelButton.STATEFILTERS;
 		
 		/**
-		 * @copy jsion.display.LabelButton#OFFSET
+		 * 状态显示对象偏移变量
 		 */		
 		public static const OFFSET:String = LabelButton.OFFSET;
 		
 		/**
-		 * @copy jsion.display.LabelButton#LEFT
+		 * 水平左边对齐，用于 hAlign 属性。
+		 * @see jsion.comps.CompGlobal#LEFT
 		 */		
 		public static const LEFT:String = LabelButton.LEFT;
 		
 		/**
-		 * @copy jsion.display.LabelButton#RIGHT
+		 * 水平右边对齐，用于 hAlign 属性。
+		 * @see jsion.comps.CompGlobal#RIGHT
 		 */		
 		public static const RIGHT:String = LabelButton.RIGHT;
 		
 		/**
-		 * @copy jsion.display.LabelButton#CENTER
+		 * 水平居中对齐，用于 hAlign 属性。
+		 * @see jsion.comps.CompGlobal#CENTER
 		 */		
 		public static const CENTER:String = LabelButton.CENTER;
 		
 		/**
-		 * @copy jsion.display.LabelButton#TOP
+		 * 垂直顶边对齐，用于 vAlign 属性。
+		 * @see jsion.comps.CompGlobal#TOP
 		 */		
 		public static const TOP:String = LabelButton.TOP;
 		
 		/**
-		 * @copy jsion.display.LabelButton#BOTTOM
+		 * 垂直底边对齐，用于 vAlign 属性。
+		 * @see jsion.comps.CompGlobal#BOTTOM
 		 */		
 		public static const BOTTOM:String = LabelButton.BOTTOM;
 		
 		/**
-		 * @copy jsion.display.LabelButton#MIDDLE
+		 * 垂直居中对齐，用于 vAlign 属性。
+		 * @see jsion.comps.CompGlobal#MIDDLE
 		 */		
 		public static const MIDDLE:String = LabelButton.MIDDLE;
 		
 		/**
-		 * @copy jsion.display.LabelButton#LABELALIGN
+		 * 文本对齐方式变更
 		 */		
 		public static const LABELALIGN:String = LabelButton.LABELALIGN;
 		
 		/**
-		 * @copy jsion.display.LabelButton#LABELFILTERS
+		 * 文本滤镜变更
 		 */		
 		public static const LABELFILTERS:String = LabelButton.LABELFILTERS;
 		
@@ -988,7 +994,7 @@ package jsion.display
 		}
 
 		/**
-		 * 当按钮为选中状态 @copy jsion.display.Label#text
+		 * 当按钮为选中状态要显示的文本 支持带xml标签的文本 其中xml标签可在styleSheet属性对象内定义CSS样式
 		 */		
 		public function get selectedText():String
 		{

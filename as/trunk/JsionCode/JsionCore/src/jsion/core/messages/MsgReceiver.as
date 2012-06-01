@@ -78,7 +78,7 @@ package jsion.core.messages
 		
 		
 		/**
-		 * @copy jsion.core.messages.IMsgReceiver#id
+		 * 接收者ID
 		 * @see 
 		 */		
 		public function get id():String
@@ -87,7 +87,9 @@ package jsion.core.messages
 		}
 		
 		/**
-		 * @copy jsion.core.messages.IMsgReceiver#registeHandler()
+		 * 注册当前接收者处理指定消息的函数
+		 * @param msg 消息标识
+		 * @param handlerFn 以 Msg 对象为参数的处理函数
 		 * @see jsion.core.messages.IMsgReceiver#registeHandler()
 		 */		
 		public function registeHandler(msg:uint, handlerFn:Function):void
@@ -96,7 +98,7 @@ package jsion.core.messages
 		}
 		
 		/**
-		 * @copy jsion.core.messages.IMsgReceiver#removeHandler()
+		 * 移除当前接收者已注册的消息处理函数
 		 * @see jsion.core.messages.IMsgReceiver#removeHandler()
 		 */		
 		public function removeHandler(msg:uint):Function
@@ -105,7 +107,9 @@ package jsion.core.messages
 		}
 		
 		/**
-		 * @copy jsion.core.messages.IMsgReceiver#registeReceive()
+		 * 注册指定全局消息在当前接收者中的处理函数
+		 * @param msg 消息标识
+		 * @param handlerFn 以 Msg 对象为参数的处理函数
 		 * @see jsion.core.messages.IMsgReceiver#registeReceive()
 		 */		
 		public function registeReceive(msg:uint, handlerFn:Function):void
@@ -119,7 +123,7 @@ package jsion.core.messages
 		}
 		
 		/**
-		 * @copy jsion.core.messages.IMsgReceiver#removeReceive()
+		 * 移除全局消息处理函数
 		 * @see jsion.core.messages.IMsgReceiver#removeReceive()
 		 */		
 		public function removeReceive(msg:uint):Function
@@ -137,7 +141,9 @@ package jsion.core.messages
 		}
 		
 		/**
-		 * @copy jsion.core.messages.IMsgReceiver#receiveSync()
+		 * 同步接收消息
+		 * @param msg 消息对象
+		 * @return 消息附加返回对象
 		 * @see jsion.core.messages.IMsgReceiver#receiveSync()
 		 */		
 		public function receiveSync(msg:Msg):*
@@ -153,7 +159,8 @@ package jsion.core.messages
 		}
 		
 		/**
-		 * @copy jsion.core.messages.IMsgReceiver#receiveAsync()
+		 * 异步接收消息，并在下帧时处理消息。
+		 * @param msg 消息对象
 		 * @see jsion.core.messages.IMsgReceiver#receiveAsync()
 		 */		
 		public function receiveAsync(msg:Msg):void

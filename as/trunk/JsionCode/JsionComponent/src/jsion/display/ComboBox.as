@@ -194,7 +194,7 @@ package jsion.display
 		
 		
 		/**
-		 * @copy jsion.display.List#itemGap
+		 * 列表项之间的间隔
 		 */		
 		public function get listItemGap():int
 		{
@@ -216,7 +216,7 @@ package jsion.display
 		
 		
 		/**
-		 * @copy jsion.display.List#scrollBarBackground
+		 * 滚动条背景图片的 BitmapData 对象
 		 */		
 		public function get scrollBarBackground():BitmapData
 		{
@@ -235,7 +235,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#UpOrLeftBtnUpAsset
+		 * 向上或向左按钮弹起时的显示对象资源
+		 * @see jsion.display.Button#upImage
 		 */		
 		public function get UpOrLeftBtnUpAsset():DisplayObject
 		{
@@ -254,7 +255,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#UpOrLeftBtnOverAsset
+		 * 向上或向左按钮鼠标经过时的显示对象资源
+		 * @see jsion.display.Button#overImage
 		 */		
 		public function get UpOrLeftBtnOverAsset():DisplayObject
 		{
@@ -273,7 +275,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#UpOrLeftBtnDownAsset
+		 * 向上或向左按钮鼠标按下时的显示对象资源
+		 * @see jsion.display.Button#downImage
 		 */		
 		public function get UpOrLeftBtnDownAsset():DisplayObject
 		{
@@ -292,7 +295,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#UpOrLeftBtnDisableAsset
+		 * 向上或向左按钮禁用时的显示对象资源
+		 * @see jsion.display.Button#disableImage
 		 */		
 		public function get UpOrLeftBtnDisableAsset():DisplayObject
 		{
@@ -311,7 +315,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#UpOrLeftBtnUpFilters
+		 * 向上或向左按钮弹起时的显示对象滤镜
+		 * @see jsion.display.Button#upFilters
 		 */		
 		public function get UpOrLeftBtnUpFilters():Array
 		{
@@ -328,7 +333,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#UpOrLeftBtnOverFilters
+		 * 向上或向左按钮鼠标经过时的显示对象滤镜
+		 * @see jsion.display.Button#overFilters
 		 */		
 		public function get UpOrLeftBtnOverFilters():Array
 		{
@@ -345,7 +351,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#UpOrLeftBtnDownFilters
+		 * 向上或向左按钮鼠标按下时的显示对象滤镜
+		 * @see jsion.display.Button#downFilters
 		 */		
 		public function get UpOrLeftBtnDownFilters():Array
 		{
@@ -362,7 +369,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#UpOrLeftBtnDisableFilters
+		 * 向上或向左按钮禁用时的显示对象滤镜
+		 * @see jsion.display.Button#disableFilters
 		 */		
 		public function get UpOrLeftBtnDisableFilters():Array
 		{
@@ -379,7 +387,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#UpOrLeftBtnImageOffsetX
+		 * 向上或向左按钮弹起时的显示对象x坐标偏移量
+		 * @see jsion.display.Button#offsetX
 		 */		
 		public function get UpOrLeftBtnImageOffsetX():int
 		{
@@ -396,7 +405,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#UpOrLeftBtnImageOffsetY
+		 * 向上或向左按钮弹起时的显示对象y坐标偏移量
+		 * @see jsion.display.Button#offsetY
 		 */		
 		public function get UpOrLeftBtnImageOffsetY():int
 		{
@@ -413,7 +423,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#UpOrLeftBtnImageOverOffsetX
+		 * 向上或向左按钮鼠标经过时的显示对象x坐标偏移量
+		 * @see jsion.display.Button#overOffsetX
 		 */		
 		public function get UpOrLeftBtnImageOverOffsetX():int
 		{
@@ -430,7 +441,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#UpOrLeftBtnImageOverOffsetY
+		 * 向上或向左按钮鼠标经过时的显示对象y坐标偏移量
+		 * @see jsion.display.Button#overOffsetY
 		 */		
 		public function get UpOrLeftBtnImageOverOffsetY():int
 		{
@@ -447,7 +459,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#UpOrLeftBtnImageDownOffsetX
+		 * 向上或向左按钮鼠标按下时的显示对象x坐标偏移量
+		 * @see jsion.display.Button#downOffsetX
 		 */		
 		public function get UpOrLeftBtnImageDownOffsetX():int
 		{
@@ -464,7 +477,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#UpOrLeftBtnImageDownOffsetY
+		 * 向上或向左按钮鼠标按下时的显示对象y坐标偏移量
+		 * @see jsion.display.Button#downOffsetY
 		 */		
 		public function get UpOrLeftBtnImageDownOffsetY():int
 		{
@@ -490,7 +504,8 @@ package jsion.display
 		
 		
 		/**
-		 * @copy jsion.display.List#DownOrRightBtnUpAsset
+		 * 向下或向右按钮弹起时的显示对象资源
+		 * @see jsion.display.Button#upImage
 		 */		
 		public function get DownOrRightBtnUpAsset():DisplayObject
 		{
@@ -509,7 +524,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#DownOrRightBtnOverAsset
+		 * 向下或向右按钮鼠标经过时的显示对象资源
+		 * @see jsion.display.Button#overImage
 		 */		
 		public function get DownOrRightBtnOverAsset():DisplayObject
 		{
@@ -528,7 +544,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#DownOrRightBtnDownAsset
+		 * 向下或向右按钮鼠标按下时的显示对象资源
+		 * @see jsion.display.Button#downImage
 		 */		
 		public function get DownOrRightBtnDownAsset():DisplayObject
 		{
@@ -547,7 +564,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#DownOrRightBtnDisableAsset
+		 * 向下或向右按钮禁用时的显示对象资源
+		 * @see jsion.display.Button#disableImage
 		 */		
 		public function get DownOrRightBtnDisableAsset():DisplayObject
 		{
@@ -566,7 +584,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#DownOrRightBtnUpFilters
+		 * 向下或向右按钮弹起时的显示对象滤镜
+		 * @see jsion.display.Button#upFilters
 		 */		
 		public function get DownOrRightBtnUpFilters():Array
 		{
@@ -583,7 +602,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#DownOrRightBtnOverFilters
+		 * 向下或向右按钮鼠标经过时的显示对象滤镜
+		 * @see jsion.display.Button#overFilters
 		 */		
 		public function get DownOrRightBtnOverFilters():Array
 		{
@@ -600,7 +620,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#DownOrRightBtnDownFilters
+		 * 向下或向右按钮鼠标按下时的显示对象滤镜
+		 * @see jsion.display.Button#downFilters
 		 */		
 		public function get DownOrRightBtnDownFilters():Array
 		{
@@ -617,7 +638,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#DownOrRightBtnDisableFilters
+		 * 向下或向右按钮禁用时的显示对象滤镜
+		 * @see jsion.display.Button#disableFilters
 		 */		
 		public function get DownOrRightBtnDisableFilters():Array
 		{
@@ -634,7 +656,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#DownOrRightBtnImageOffsetX
+		 * 向下或向右按钮弹起时的显示对象x坐标偏移量
+		 * @see jsion.display.Button#offsetX
 		 */		
 		public function get DownOrRightBtnImageOffsetX():int
 		{
@@ -651,7 +674,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#DownOrRightBtnImageOffsetY
+		 * 向下或向右按钮弹起时的显示对象y坐标偏移量
+		 * @see jsion.display.Button#offsetY
 		 */		
 		public function get DownOrRightBtnImageOffsetY():int
 		{
@@ -668,7 +692,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#DownOrRightBtnImageOverOffsetX
+		 * 向下或向右按钮鼠标经过时的显示对象x坐标偏移量
+		 * @see jsion.display.Button#overOffsetX
 		 */		
 		public function get DownOrRightBtnImageOverOffsetX():int
 		{
@@ -685,7 +710,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#DownOrRightBtnImageOverOffsetY
+		 * 向下或向右按钮鼠标经过时的显示对象y坐标偏移量
+		 * @see jsion.display.Button#overOffsetY
 		 */		
 		public function get DownOrRightBtnImageOverOffsetY():int
 		{
@@ -702,7 +728,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#DownOrRightBtnImageDownOffsetX
+		 * 向下或向右按钮鼠标按下时的显示对象x坐标偏移量
+		 * @see jsion.display.Button#downOffsetX
 		 */		
 		public function get DownOrRightBtnImageDownOffsetX():int
 		{
@@ -719,7 +746,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#DownOrRightBtnImageDownOffsetY
+		 * 向下或向右按钮鼠标按下时的显示对象y坐标偏移量
+		 * @see jsion.display.Button#downOffsetY
 		 */		
 		public function get DownOrRightBtnImageDownOffsetY():int
 		{
@@ -744,7 +772,8 @@ package jsion.display
 		
 		
 		/**
-		 * @copy jsion.display.List#BarUpAsset
+		 * 拖动条弹起时的显示对象资源
+		 * @see jsion.display.Button#upImage
 		 */		
 		public function get BarUpAsset():DisplayObject
 		{
@@ -763,7 +792,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#BarOverAsset
+		 * 拖动条鼠标经过时的显示对象资源
+		 * @see jsion.display.Button#overImage
 		 */		
 		public function get BarOverAsset():DisplayObject
 		{
@@ -782,7 +812,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#BarDownAsset
+		 * 拖动条鼠标按下时的显示对象资源
+		 * @see jsion.display.Button#downImage
 		 */		
 		public function get BarDownAsset():DisplayObject
 		{
@@ -801,7 +832,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#BarDisableAsset
+		 * 拖动条禁用时的显示对象资源
+		 * @see jsion.display.Button#disableImage
 		 */		
 		public function get BarDisableAsset():DisplayObject
 		{
@@ -820,7 +852,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#BarUpFilters
+		 * 拖动条弹起时的显示对象滤镜
+		 * @see jsion.display.Button#upFilters
 		 */		
 		public function get BarUpFilters():Array
 		{
@@ -837,7 +870,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#BarOverFilters
+		 * 拖动条鼠标经过时的显示对象滤镜
+		 * @see jsion.display.Button#overFilters
 		 */		
 		public function get BarOverFilters():Array
 		{
@@ -854,7 +888,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#BarDownFilters
+		 * 拖动条鼠标按下时的显示对象滤镜
+		 * @see jsion.display.Button#downFilters
 		 */		
 		public function get BarDownFilters():Array
 		{
@@ -871,7 +906,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#BarDisableFilters
+		 * 拖动条禁用时的显示对象滤镜
+		 * @see jsion.display.Button#disableFilters
 		 */		
 		public function get BarDisableFilters():Array
 		{
@@ -888,7 +924,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#BarImageOffsetX
+		 * 拖动条弹起时的显示对象x坐标偏移量
+		 * @see jsion.display.Button#offsetX
 		 */		
 		public function get BarImageOffsetX():int
 		{
@@ -905,7 +942,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#BarImageOffsetY
+		 * 拖动条弹起时的显示对象y坐标偏移量
+		 * @see jsion.display.Button#offsetY
 		 */		
 		public function get BarImageOffsetY():int
 		{
@@ -922,7 +960,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#BarImageOverOffsetX
+		 * 拖动条鼠标经过时的显示对象x坐标偏移量
+		 * @see jsion.display.Button#overOffsetX
 		 */		
 		public function get BarImageOverOffsetX():int
 		{
@@ -939,7 +978,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#BarImageOverOffsetY
+		 * 拖动条鼠标经过时的显示对象y坐标偏移量
+		 * @see jsion.display.Button#overOffsetY
 		 */		
 		public function get BarImageOverOffsetY():int
 		{
@@ -956,7 +996,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#BarImageDownOffsetX
+		 * 拖动条鼠标按下时的显示对象x坐标偏移量
+		 * @see jsion.display.Button#downOffsetX
 		 */		
 		public function get BarImageDownOffsetX():int
 		{
@@ -973,7 +1014,8 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#BarImageDownOffsetY
+		 * 拖动条鼠标按下时的显示对象y坐标偏移量
+		 * @see jsion.display.Button#downOffsetY
 		 */		
 		public function get BarImageDownOffsetY():int
 		{
@@ -994,7 +1036,7 @@ package jsion.display
 		
 		
 		/**
-		 * @copy jsion.display.List#thumb
+		 * 拖动条中间的修饰的显示对象
 		 */		
 		public function get thumb():DisplayObject
 		{
@@ -1019,7 +1061,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#scrollValue
+		 * 滚动值
 		 */		
 		public function get scrollValue():int
 		{
@@ -1033,7 +1075,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#viewSize
+		 * 要滚动的全长度
 		 */		
 		public function get viewSize():int
 		{
@@ -1052,7 +1094,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#scrollValueOffset
+		 * 滚动值的最终偏移量
 		 */		
 		public function get scrollValueOffset():int
 		{
@@ -1071,7 +1113,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#wheelStep
+		 * 每次鼠标滚轮滚动的滚动值
 		 */		
 		public function get wheelStep():int
 		{
@@ -1085,7 +1127,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#scrollStep
+		 * 点击按钮时的滚动值
 		 */		
 		public function get scrollStep():int
 		{
@@ -1099,7 +1141,7 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#delayFrame
+		 * 长按按钮的延迟帧数 超过延迟帧时以 scrollStep 的值不停更新滚动值 scrollValue。
 		 */		
 		public function get delayFrame():int
 		{
@@ -1113,7 +1155,11 @@ package jsion.display
 		}
 		
 		/**
-		 * @copy jsion.display.List#btnGap
+		 * 根据滚动条类型获取或设置按钮与四边的间隙
+		 * <ul>
+		 * 	<li>水平滚动条时，获取或设置按钮与左、右两边的间隙</li>
+		 * 	<li>垂直滚动条时，获取或设置按钮与上、下两边的间隙</li>
+		 * </ul>
 		 */		
 		public function get btnGap():int
 		{
