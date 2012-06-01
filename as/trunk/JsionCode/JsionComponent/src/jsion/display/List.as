@@ -27,7 +27,7 @@ package jsion.display
 		
 		private var m_itemGap:int;
 		
-		public function List(scrollType:int=VERTICAL)
+		public function List(scrollType:int = 2)
 		{
 			super(scrollType);
 		}

@@ -65,7 +65,7 @@ package jsion.display
 		
 		private var m_contentPane:Sprite;
 		
-		public function ScrollPanel(scrollType:int = VERTICAL)
+		public function ScrollPanel(scrollType:int = 2)
 		{
 			m_scrollType = scrollType;
 			super();
