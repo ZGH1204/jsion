@@ -66,9 +66,9 @@ package jsion.display
 		/** @private */
 		protected var m_dragger:TitleDragger;
 		
-		public function TitleWindow()
+		public function TitleWindow(modal:Boolean = true)
 		{
-			super();
+			super(modal);
 		}
 		
 		/**
