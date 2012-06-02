@@ -7,13 +7,13 @@ package
 	public class TestPanel extends Sprite implements ITabPanel
 	{
 		private var m_color:uint;
-		public function TestPanel()
+		public function TestPanel(w:int = 700, h:int = 500)
 		{
 			m_color = Math.random() * 0xFFFFFF;
 			
 			graphics.clear();
 			graphics.beginFill(m_color);
-			graphics.drawRect(0, 0, 700, 500);
+			graphics.drawRect(0, 0, w, h);
 			graphics.endFill();
 		}
 		
