@@ -25,6 +25,11 @@ package jsion.display
 		
 		public static const CONTENTOFFSET:String = "contentOffset";
 		
+		public static var MODALWIDTH:int = 2000;
+		public static var MODALHEIGHT:int = 2000;
+		public static var MODALALPH:Number = 0.5;
+		public static var MODALCOLOR:uint = 0XCCCCCC;
+		
 		
 		/**
 		 * 水平左边对齐
@@ -74,8 +79,15 @@ package jsion.display
 		/** @private */
 		protected var m_contentOffsetY:int;
 		
-		public function Window()
+		/** @private */
+		protected var m_modal:Boolean;
+		/** @private */
+		protected var m_modalColor:uint;
+		
+		public function Window(modal:Boolean = false)
 		{
+			m_modal = modal;
+			
 			super();
 		}
 		
@@ -92,6 +104,14 @@ package jsion.display
 			m_closeButton = new Button();
 			
 			m_content = new Sprite();
+			
+			if(m_modal)
+			{
+				graphics.clear();
+				graphics.beginFill(MODALCOLOR, MODALALPH);
+				graphics.drawRect(-MODALWIDTH, -MODALHEIGHT, MODALWIDTH * 3, MODALHEIGHT * 3);
+				graphics.endFill();
+			}
 		}
 		
 		/**
