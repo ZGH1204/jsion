@@ -120,11 +120,11 @@ package
 		
 		private function initHelper():void
 		{
+			SetupComps(stage);
+			
 			DEBUG.setup(stage, 300);
 			
 			DEBUG.loadCSS("debug.css");
-			
-			SetupComps(stage);
 		}
 		
 		private function testTitleWindow():void
@@ -140,8 +140,6 @@ package
 			var win:TitleWindow = new TitleWindow();
 			
 			win.beginChanges();
-			win.x = 200;
-			win.y = 100;
 			win.titleParseCSS("j{display: inline; color: #FFFFFF;} s{display: inline; color: #FFFF00;}");
 			win.titleText = "<j>窗口</j><s>标题</s>";
 			win.titleVOffset = -3;
@@ -154,12 +152,12 @@ package
 			win.background = bgImg;
 			win.width = 600;
 			win.height = 400;
-			win.contentOffsetX = 50;
-			win.contentOffsetY = 50;
-			win.addToContent(new TestPanel(500, 320));
+			win.contentOffsetX = 40;
+			win.contentOffsetY = 42;
+			win.addToContent(new TestPanel(520, 320));
 			win.commitChanges();
 			
-			addChild(win);
+			win.show();
 		}
 		
 		private function testWindow():void
@@ -174,8 +172,6 @@ package
 			var win:Window = new Window();
 			
 			win.beginChanges();
-			win.x = 200;
-			win.y = 100;
 			win.closeUpImage = new m_winCloseCLS();
 			win.closeHOffset = -3;
 			win.closeVOffset = -2;
@@ -184,7 +180,7 @@ package
 			win.height = 400;
 			win.commitChanges();
 			
-			addChild(win);
+			win.show();
 		}
 		
 		private function testTabPanel():void

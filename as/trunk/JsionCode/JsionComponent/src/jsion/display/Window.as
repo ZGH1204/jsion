@@ -8,6 +8,7 @@ package jsion.display
 	import jsion.comps.CompGlobal;
 	import jsion.comps.CompUtil;
 	import jsion.comps.Component;
+	import jsion.comps.UIMgr;
 	import jsion.utils.DisposeUtil;
 	
 	/**
@@ -131,22 +132,46 @@ package jsion.display
 			close();
 		}
 		
+		/**
+		 * 将显示对象添加到面板容器上。
+		 * @param child 要添加到容器上的显示对象
+		 */		
 		public function addToContent(child:DisplayObject):void
 		{
 			m_content.addChild(child);
 		}
 		
+		/**
+		 * 显示当前窗体。
+		 * @param center 是否舞台居中
+		 * 
+		 */		
+		public function show(center:Boolean = true):void
+		{
+			if(parent == null) onShowing();
+			
+			UIMgr.addUI(this, center);
+		}
+		
+		/**
+		 * 关闭当前窗体。
+		 */		
 		public function close():void
 		{
-			onClosed();
+			if(parent) onClosed();
 			
 			DisposeUtil.free(this);
 		}
 		
-		protected function onClosed():void
-		{
-			
-		}
+		/**
+		 * 窗体显示前，如果未被添加到舞台上时将被调用。
+		 */		
+		protected function onShowing():void { }
+		
+		/**
+		 * 窗体关闭前，如果未从舞台上移除时将被调用。
+		 */		
+		protected function onClosed():void { }
 		
 		/**
 		 * @inheritDoc

@@ -39,7 +39,7 @@ package jsion.display
 		
 		public function get reviseInStage():Boolean
 		{
-			return false;
+			return true;
 		}
 		
 		public function get freeDragingIcon():Boolean
