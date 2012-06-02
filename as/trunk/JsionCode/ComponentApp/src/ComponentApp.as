@@ -11,6 +11,7 @@ package
 	import flash.filters.ColorMatrixFilter;
 	
 	import jsion.Insets;
+	import jsion.SetupComps;
 	import jsion.comps.ToggleGroup;
 	import jsion.debug.DEBUG;
 	import jsion.display.CheckBox;
@@ -23,7 +24,9 @@ package
 	import jsion.display.ScrollPanel;
 	import jsion.display.Slider;
 	import jsion.display.TabPanel;
+	import jsion.display.TitleWindow;
 	import jsion.display.ToggleButton;
+	import jsion.display.Window;
 	import jsion.events.DisplayEvent;
 	
 	[SWF(width="1000", height="650", frameRate="30")]
@@ -71,6 +74,16 @@ package
 		[Embed(source="sliderbar.png")]
 		private var m_sliderBarCLS:Class;
 		
+		
+		[Embed(source="titlebg.png")]
+		private var m_titleBGCLS:Class;
+		
+		[Embed(source="windowbg.png")]
+		private var m_windowBGCLS:Class;
+		
+		[Embed(source="winCloseBtn.png")]
+		private var m_winCloseCLS:Class;
+		
 		public function ComponentApp()
 		{
 			stage.align = StageAlign.TOP_LEFT;
@@ -97,8 +110,12 @@ package
 //			testProgressBar();
 //			
 //			testSliderBar();
+//			
+//			testTabPanel();
+//			
+//			testWindow();
 			
-			testTabPanel();
+			testTitleWindow();
 		}
 		
 		private function initHelper():void
@@ -106,6 +123,68 @@ package
 			DEBUG.setup(stage, 300);
 			
 			DEBUG.loadCSS("debug.css");
+			
+			SetupComps(stage);
+		}
+		
+		private function testTitleWindow():void
+		{
+			// TODO Auto Generated method stub
+			
+			var bgImg:Image = new Image();
+			bgImg.beginChanges();
+			bgImg.source = Bitmap(new m_windowBGCLS()).bitmapData;
+			bgImg.scale9Insets = new Insets(110, 110, 90, 90);
+			bgImg.commitChanges();
+			
+			var win:TitleWindow = new TitleWindow();
+			
+			win.beginChanges();
+			win.x = 200;
+			win.y = 100;
+			win.titleParseCSS("j{display: inline; color: #FFFFFF;} s{display: inline; color: #FFFF00;}");
+			win.titleText = "<j>窗口</j><s>标题</s>";
+			win.titleVOffset = -3;
+			win.titleBackground = new m_titleBGCLS();
+			win.titleBarVOffset = -20;
+			win.closeUpImage = new m_winCloseCLS();
+			win.closeOverFilters = [new BlurFilter()];
+			win.closeHOffset = -3;
+			win.closeVOffset = -2;
+			win.background = bgImg;
+			win.width = 600;
+			win.height = 400;
+			win.contentOffsetX = 50;
+			win.contentOffsetY = 50;
+			win.addToContent(new TestPanel(500, 320));
+			win.commitChanges();
+			
+			addChild(win);
+		}
+		
+		private function testWindow():void
+		{
+			// TODO Auto Generated method stub
+			var bgImg:Image = new Image();
+			bgImg.beginChanges();
+			bgImg.source = Bitmap(new m_windowBGCLS()).bitmapData;
+			bgImg.scale9Insets = new Insets(110, 110, 90, 90);
+			bgImg.commitChanges();
+			
+			var win:Window = new Window();
+			
+			win.beginChanges();
+			win.x = 200;
+			win.y = 100;
+			win.closeUpImage = new m_winCloseCLS();
+			win.closeHOffset = -3;
+			win.closeVOffset = -2;
+			win.background = bgImg;
+			win.width = 600;
+			win.height = 400;
+			win.commitChanges();
+			
+			addChild(win);
 		}
 		
 		private function testTabPanel():void
