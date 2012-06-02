@@ -8,6 +8,11 @@ package jsion.display
 	import jsion.comps.CompUtil;
 	import jsion.utils.StringUtil;
 
+	/**
+	 * 带标题的窗体
+	 * @author Jsion
+	 * 
+	 */	
 	public class TitleWindow extends Window
 	{
 		public static const TITLEBARALIGN:String = "titleBarAlign";
