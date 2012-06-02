@@ -116,10 +116,6 @@ package
 //			testWindow();
 			
 			testTitleWindow();
-			
-			testTitleWindow();
-			
-			testTitleWindow();
 		}
 		
 		private function initHelper():void
