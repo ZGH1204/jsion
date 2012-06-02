@@ -10,6 +10,11 @@ package jsion.display
 	import jsion.comps.Component;
 	import jsion.utils.DisposeUtil;
 	
+	/**
+	 * 无标题窗体
+	 * @author Jsion
+	 * 
+	 */	
 	public class Window extends Component
 	{
 		public static const BACKGROUND:String = "background";
