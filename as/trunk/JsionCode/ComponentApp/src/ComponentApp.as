@@ -116,6 +116,10 @@ package
 //			testWindow();
 			
 			testTitleWindow();
+			
+			testTitleWindow();
+			
+			testTitleWindow();
 		}
 		
 		private function initHelper():void
@@ -135,6 +139,7 @@ package
 			bgImg.beginChanges();
 			bgImg.source = Bitmap(new m_windowBGCLS()).bitmapData;
 			bgImg.scale9Insets = new Insets(110, 110, 90, 90);
+			bgImg.freeSource = true;
 			bgImg.commitChanges();
 			
 			var win:TitleWindow = new TitleWindow();

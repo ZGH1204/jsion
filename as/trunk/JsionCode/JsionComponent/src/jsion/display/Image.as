@@ -35,6 +35,7 @@ package jsion.display
 		public static const TILE:String = CompGlobal.TILE;
 		
 		private var m_source:BitmapData;
+		private var m_freeSource:Boolean;
 		
 		private var m_scale9Insets:Insets;
 		
@@ -69,6 +70,7 @@ package jsion.display
 			
 			m_scaleType = SCALE;
 			
+			m_freeSource = false;
 			mouseEnabled = false;
 			mouseChildren = false;
 			
@@ -226,6 +228,20 @@ package jsion.display
 				
 				onPropertiesChanged(SCALETYPE);
 			}
+		}
+		
+		/**
+		 * 指示是否释放 source 属性对象。默认 false 。
+		 */		
+		public function get freeSource():Boolean
+		{
+			return m_freeSource;
+		}
+		
+		/** @private */
+		public function set freeSource(value:Boolean):void
+		{
+			m_freeSource = value;
 		}
 		
 		/**
@@ -784,6 +800,7 @@ package jsion.display
 			m_bmp8 = null;
 			m_bmp9 = null;
 			
+			if(m_freeSource) DisposeUtil.free(m_source);
 			m_source = null;
 			m_scale9Insets = null;
 			
