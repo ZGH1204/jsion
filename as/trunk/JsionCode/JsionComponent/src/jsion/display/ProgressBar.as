@@ -13,16 +13,44 @@ package jsion.display
 	 */	
 	public class ProgressBar extends Component
 	{
+		/**
+		 * 宽度属性变更
+		 */		
+		public static const WIDTH:String = Component.WIDTH;
+		
+		/**
+		 * 高度属性变更
+		 */		
+		public static const HEIGHT:String = Component.HEIGHT;
+		
+		/**
+		 * 背景显示对象发生变更
+		 */		
 		public static const BACKGROUND:String = "background";
 		
+		/**
+		 * 进度显示对象发生变更
+		 */		
 		public static const PROGRESSBAR:String = "progressBar";
 		
+		/**
+		 * 进度条数据发生变更
+		 */		
 		public static const PROGRESSDATA:String = "progressData";
 		
+		/**
+		 * 进度显示对象宽度发生变更
+		 */		
 		public static const BARWIDTH:String = "barWidth";
 		
+		/**
+		 * 进度显示对象高度发生变更
+		 */		
 		public static const BARHEIGHT:String = "barHeight";
 		
+		/**
+		 * 进度显示对象偏移量发生变更
+		 */		
 		public static const BAROFFSET:String = "barOffset";
 		
 		/**

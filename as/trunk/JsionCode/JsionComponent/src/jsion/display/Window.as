@@ -18,17 +18,46 @@ package jsion.display
 	 */	
 	public class Window extends Component
 	{
+		/**
+		 * 宽度属性变更
+		 */		
+		public static const WIDTH:String = Component.WIDTH;
+		/**
+		 * 高度属性变更
+		 */		
+		public static const HEIGHT:String = Component.HEIGHT;
+		/**
+		 * 窗体背景显示对象发生变更
+		 */		
 		public static const BACKGROUND:String = "background";
-		
+		/**
+		 * 关闭按钮对齐方式发生变更
+		 */		
 		public static const CLOSEALIGN:String = "closeAlign";
-		
+		/**
+		 * 关闭按钮发生变更
+		 */		
 		public static const CLOSECHANGE:String = "closeChange";
-		
+		/**
+		 * 内容容器的坐标偏移量发生变更
+		 */		
 		public static const CONTENTOFFSET:String = "contentOffset";
 		
+		/**
+		 * 模态窗体阴影的宽度值
+		 */		
 		public static var MODALWIDTH:int = 2000;
+		/**
+		 * 模态窗体阴影的高度值
+		 */		
 		public static var MODALHEIGHT:int = 2000;
+		/**
+		 * 模态窗体阴影的透明度
+		 */		
 		public static var MODALALPH:Number = 0.5;
+		/**
+		 * 模态窗体阴影的颜色
+		 */		
 		public static var MODALCOLOR:uint = 0XCCCCCC;
 		
 		
@@ -652,6 +681,44 @@ package jsion.display
 				m_closeButton.downOffsetY = value;
 				
 				onPropertiesChanged(CLOSECHANGE);
+			}
+		}
+		
+		/**
+		 * 内容容器的x坐标偏移量
+		 */		
+		public function get contentOffsetX():int
+		{
+			return m_contentOffsetX;
+		}
+		
+		/** @private */
+		public function set contentOffsetX(value:int):void
+		{
+			if(m_contentOffsetX != value)
+			{
+				m_contentOffsetX = value;
+				
+				onPropertiesChanged(CONTENTOFFSET);
+			}
+		}
+		
+		/**
+		 * 内容容器的y坐标偏移量
+		 */		
+		public function get contentOffsetY():int
+		{
+			return m_contentOffsetY;
+		}
+		
+		/** @private */
+		public function set contentOffsetY(value:int):void
+		{
+			if(m_contentOffsetY != value)
+			{
+				m_contentOffsetY = value;
+				
+				onPropertiesChanged(CONTENTOFFSET);
 			}
 		}
 		

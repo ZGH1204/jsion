@@ -22,24 +22,51 @@ package jsion.display
 	 */	
 	public class Slider extends Component
 	{
+		/**
+		 * 宽度属性变更
+		 */		
+		public static const WIDTH:String = Component.WIDTH;
+		/**
+		 * 高度属性变更
+		 */		
+		public static const HEIGHT:String = Component.HEIGHT;
+		/**
+		 * 背景显示对象发生变更
+		 */		
 		public static const BACKGROUND:String = "background";
-		
+		/**
+		 * 滑动块按钮发生变更
+		 */		
 		public static const SLIDERBAR:String = "sliderBar";
-		
+		/**
+		 * 滑动数据发生变更
+		 */		
 		public static const SLIDERDATA:String = "sliderData";
-		
+		/**
+		 * 滑动块偏移量发生变更
+		 */		
 		public static const BAROFFSET:String = "barOffset";
 		
-		
+		/**
+		 * 滑动填充显示对象发生变更
+		 */		
 		public static const FILLER:String = "filler";
-		
+		/**
+		 * 滑动填充显示对象偏移量发生变更
+		 */		
 		public static const FILLEROFFSET:String = "fillerOffset";
-		
+		/**
+		 * 滑动填充显示对象宽度发生变更
+		 */		
 		public static const FILLERWIDTH:String = "fillerWidth";
-		
+		/**
+		 * 滑动填充显示对象高度发生变更 
+		 */		
 		public static const FILLERHEIGHT:String = "fillerHeight";
-		
-		public static const FILLERTYPE:String = "fillerType";
+		/**
+		 * 滑动填充显示对象遮盖类型
+		 */		
+		public static const FILLERMASKTYPE:String = "fillerMaskType";
 		
 		/**
 		 * 横向滑动条
@@ -971,7 +998,7 @@ package jsion.display
 			{
 				m_fillerType = value;
 				
-				onPropertiesChanged(FILLERTYPE);
+				onPropertiesChanged(FILLERMASKTYPE);
 			}
 		}
 

@@ -18,14 +18,39 @@ package jsion.display
 	 */	
 	public class ScrollPanel extends Component
 	{
+		/**
+		 * 宽度属性变更
+		 */		
+		public static const WIDTH:String = Component.WIDTH;
+		
+		/**
+		 * 高度属性变更
+		 */		
+		public static const HEIGHT:String = Component.HEIGHT;
+		
+		/**
+		 * ScrollBar 位置发生变更
+		 */		
 		public static const SCROLLPOS:String = "scrollPos";
 		
+		/**
+		 * ScrollBar 对象发生变更
+		 */		
 		public static const SCROLLBAR:String = "scrollBar";
 		
+		/**
+		 * 要滚动的对象发生变更
+		 */		
 		public static const SCROLLVIEW:String = "scrollView";
 		
+		/**
+		 * 滚动面板背景发生变更
+		 */		
 		public static const BACKGROUND:String = "background";
 		
+		/**
+		 * 滚动范围与背景显示对象的间隙
+		 */		
 		public static const BGGAP:String = "bgGap";
 		
 		/**
@@ -38,8 +63,14 @@ package jsion.display
 		 */		
 		public static const VERTICAL:int = ScrollBar.VERTICAL;
 		
+		/**
+		 * 滚动条包含在宽度和高度范围内
+		 */		
 		public static const INSIDE:int = 1;
 		
+		/**
+		 * 滚动条不包含在宽度和高度范围内
+		 */		
 		public static const OUTSIDE:int = 2;
 		
 		
@@ -68,6 +99,7 @@ package jsion.display
 		public function ScrollPanel(scrollType:int = 2)
 		{
 			m_scrollType = scrollType;
+			
 			super();
 		}
 		
@@ -330,6 +362,7 @@ package jsion.display
 						m_viewRect.width = m_width + 2 * m_backgroundHGap + m_scrollBar.width;
 						graphics.drawRect(0, 0, m_width + 2 * m_backgroundHGap + m_scrollBar.width, m_height + 2 * m_backgroundVGap);
 					}
+					
 					m_viewRect.height = m_height + 2 * m_backgroundVGap;
 				}
 				else
@@ -403,7 +436,8 @@ package jsion.display
 		 * 	<li>ScrollPanel.INSIDE 包含在设置的宽度内</li>
 		 * 	<li>ScrollPanel.OUTSIDE 包含在设置的宽度外</li>
 		 * </ul>
-		 * 默认ScrollPanel.INSIDE。
+		 * <p>默认ScrollPanel.INSIDE。</p>
+		 * <p>当指定为 ScrollPanel.OUTSIDE 时，宽度和高度值不包含 ScrollBar 对象。</p>
 		 */		
 		public function get scrollPos():int
 		{

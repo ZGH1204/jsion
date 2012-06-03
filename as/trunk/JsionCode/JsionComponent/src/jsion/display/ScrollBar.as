@@ -22,13 +22,46 @@ package jsion.display
 	 */
 	public class ScrollBar extends Component
 	{
-		public static const BACKGROUNDCHANGE:String = "backgroundChange";
+		/**
+		 * 宽度属性变更
+		 */		
+		public static const WIDTH:String = Component.WIDTH;
+		/**
+		 * 高度属性变更
+		 */		
+		public static const HEIGHT:String = Component.HEIGHT;
+		/**
+		 * 背景显示对象发生变更
+		 */		
+		public static const BACKGROUND:String = "background";
+		/**
+		 * 滚动按钮与方向相邻边的间隙发生变更
+		 */		
 		public static const BUTTONGAP:String = "btnGap";
+		
+		/**
+		 * 向上或向左滚动按钮对象发生变更
+		 */		
 		public static const UPORLEFTBTNCHANGE:String = "upOrLeftBtnChange";
+		/**
+		 * 向下或向右滚动按钮对象发生变更
+		 */		
 		public static const DOWNORRIGHTBTNCHANGE:String = "downOrRightBtnChange";
+		/**
+		 * 滚动块按钮对象发生变更
+		 */		
 		public static const BARCHANGE:String = "barChange";
+		/**
+		 * 滚动块上的修饰块发生变更
+		 */		
 		public static const THUMBCHANGE:String = "thumbChange";
+		/**
+		 * 滚动数据发生变更
+		 */		
 		public static const SCROLLDATA:String = "scrollData";
+		/**
+		 * 滚动值偏移量发生变更
+		 */		
 		public static const SCROLLVALUEOFFSET:String = "scrollValueOffset";
 		
 		/**
@@ -404,7 +437,7 @@ package jsion.display
 		
 		private function updateUIPos():void
 		{
-			if(isChanged(BACKGROUNDCHANGE) || 
+			if(isChanged(BACKGROUND) || 
 			   isChanged(UPORLEFTBTNCHANGE) || 
 			   isChanged(DOWNORRIGHTBTNCHANGE) || 
 			   isChanged(BARCHANGE) || 
@@ -465,7 +498,7 @@ package jsion.display
 		{
 			var temp:int;
 			
-			if(isChanged(BACKGROUNDCHANGE) || 
+			if(isChanged(BACKGROUND) || 
 				isChanged(UPORLEFTBTNCHANGE) || 
 				isChanged(DOWNORRIGHTBTNCHANGE) || 
 				isChanged(BARCHANGE) || 
@@ -608,7 +641,7 @@ package jsion.display
 					if(manualWidth == false) m_width = m_background.width;
 				}
 				
-				onPropertiesChanged(BACKGROUNDCHANGE);
+				onPropertiesChanged(BACKGROUND);
 			}
 		}
 		
@@ -1558,7 +1591,7 @@ package jsion.display
 		}
 
 		/**
-		 * 根据滚动条类型获取或设置按钮与四边的间隙
+		 * 根据滚动条类型获取或设置按钮与四边的间隙，其中：
 		 * <ul>
 		 * 	<li>水平滚动条时，获取或设置按钮与左、右两边的间隙</li>
 		 * 	<li>垂直滚动条时，获取或设置按钮与上、下两边的间隙</li>

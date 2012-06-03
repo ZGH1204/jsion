@@ -15,8 +15,54 @@ package jsion.display
 	 */	
 	public class TitleWindow extends Window
 	{
-		public static const TITLEBARALIGN:String = "titleBarAlign";
+		/**
+		 * 宽度属性变更
+		 */		
+		public static const WIDTH:String = Window.WIDTH;
+		/**
+		 * 高度属性变更
+		 */		
+		public static const HEIGHT:String = Window.HEIGHT;
+		/**
+		 * 窗体背景显示对象发生变更
+		 */		
+		public static const BACKGROUND:String = Window.BACKGROUND;
+		/**
+		 * 关闭按钮对齐方式发生变更
+		 */		
+		public static const CLOSEALIGN:String = Window.CLOSEALIGN;
+		/**
+		 * 关闭按钮发生变更
+		 */		
+		public static const CLOSECHANGE:String = Window.CLOSECHANGE;
+		/**
+		 * 内容容器的坐标偏移量发生变更
+		 */		
+		public static const CONTENTOFFSET:String = Window.CONTENTOFFSET;
 		
+		/**
+		 * 模态窗体阴影的宽度值
+		 */		
+		public static var MODALWIDTH:int = Window.MODALWIDTH;
+		/**
+		 * 模态窗体阴影的高度值
+		 */		
+		public static var MODALHEIGHT:int = Window.MODALHEIGHT;
+		/**
+		 * 模态窗体阴影的透明度
+		 */		
+		public static var MODALALPH:Number = Window.MODALALPH;
+		/**
+		 * 模态窗体阴影的颜色
+		 */		
+		public static var MODALCOLOR:uint = Window.MODALCOLOR;
+		/**
+		 * 标题栏对齐方式
+		 */		
+		public static const TITLEBARALIGN:String = "titleBarAlign";
+		/**
+		 * 标题栏发生变更
+		 */		
 		public static const TITLEBARCHANGE:String = "titleBarChange";
 		
 		/**
@@ -254,44 +300,6 @@ package jsion.display
 				m_titleBarVAlign = value;
 				
 				onPropertiesChanged(TITLEBARALIGN);
-			}
-		}
-		
-		/**
-		 * 内容容器的x坐标偏移量
-		 */		
-		public function get contentOffsetX():int
-		{
-			return m_contentOffsetX;
-		}
-		
-		/** @private */
-		public function set contentOffsetX(value:int):void
-		{
-			if(m_contentOffsetX != value)
-			{
-				m_contentOffsetX = value;
-				
-				onPropertiesChanged(CONTENTOFFSET);
-			}
-		}
-		
-		/**
-		 * 内容容器的y坐标偏移量
-		 */		
-		public function get contentOffsetY():int
-		{
-			return m_contentOffsetY;
-		}
-		
-		/** @private */
-		public function set contentOffsetY(value:int):void
-		{
-			if(m_contentOffsetY != value)
-			{
-				m_contentOffsetY = value;
-				
-				onPropertiesChanged(CONTENTOFFSET);
 			}
 		}
 		

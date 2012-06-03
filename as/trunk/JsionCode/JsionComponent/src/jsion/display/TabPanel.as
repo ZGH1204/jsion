@@ -20,11 +20,37 @@ package jsion.display
 	 */	
 	public class TabPanel extends Component
 	{
+		/**
+		 * 宽度属性变更
+		 */		
+		public static const WIDTH:String = Component.WIDTH;
+		/**
+		 * 高度属性变更
+		 */		
+		public static const HEIGHT:String = Component.HEIGHT;
+		/**
+		 * 增加标签、面板。
+		 */		
 		public static const ADDTAB:String = "addTab";
+		/**
+		 * 标签按钮间隔发生变更
+		 */		
 		public static const TABGAP:String = "tabGap";
+		/**
+		 * 标签按钮对齐方式发生变更
+		 */		
 		public static const TABALIGN:String = "tabAlign";
+		/**
+		 * 标签按钮共同偏移量发生变更
+		 */		
 		public static const TABOFFSET:String = "tabOffset";
+		/**
+		 * 标签按钮显示方位发生变更
+		 */		
 		public static const TABPOSTYPE:String = "tabPosType";
+		/**
+		 * 面板相对于标签按钮的偏移量发生变更
+		 */		
 		public static const PANEOFFSET:String = "paneOffset";
 		
 		

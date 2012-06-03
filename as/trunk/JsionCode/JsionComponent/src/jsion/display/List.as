@@ -3,15 +3,41 @@ package jsion.display
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
+	import jsion.comps.Component;
 	import jsion.utils.ArrayUtil;
 
 	/**
-	 * 显示对象垂直排列列表，带滚动条。
+	 * 显示对象垂直排列列表，有垂直滚动条。
 	 * @author Jsion
 	 * 
 	 */	
 	public class List extends ScrollPanel
 	{
+		/**
+		 * 宽度属性变更
+		 */		
+		public static const WIDTH:String = Component.WIDTH;
+		
+		/**
+		 * 高度属性变更
+		 */		
+		public static const HEIGHT:String = Component.HEIGHT;
+		
+		/**
+		 * ScrollBar 对象发生变更
+		 */		
+		public static const SCROLLBAR:String = ScrollPanel.SCROLLBAR;
+		
+		/**
+		 * 滚动面板背景发生变更
+		 */		
+		public static const BACKGROUND:String = ScrollPanel.BACKGROUND;
+		
+		/**
+		 * 滚动范围与背景显示对象的间隙
+		 */		
+		public static const BGGAP:String = ScrollPanel.BGGAP;
+		
 		/**
 		 * 添加列表项
 		 */		
@@ -94,6 +120,22 @@ package jsion.display
 			}
 			
 			super.onProppertiesUpdate();
+		}
+		
+		/**
+		 * 不支持 scrollPos 属性。
+		 */		
+		override public function get scrollPos():int
+		{
+			throw new Error("不支持 scrollPos 属性。");
+		}
+		
+		/**
+		 * @private
+		 */		
+		override public function set scrollPos(value:int):void
+		{
+			throw new Error("不支持 scrollPos 属性。");
 		}
 		
 		/**
