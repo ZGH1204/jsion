@@ -4,6 +4,15 @@ package jsion.comps
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 
+	/**
+	 * UI管理器。
+	 * 分为三个UI层级：
+	 * 最下层为普通UI层；
+	 * 中间层为提示框层；
+	 * 最上层为消息提示层。
+	 * @author Jsion
+	 * 
+	 */	
 	public class UIMgr
 	{
 		private static var m_root:Sprite;
