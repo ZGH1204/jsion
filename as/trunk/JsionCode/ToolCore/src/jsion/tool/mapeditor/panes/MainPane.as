@@ -1,5 +1,6 @@
 package jsion.tool.mapeditor.panes
 {
+	import jsion.tool.mapeditor.MapDragger;
 	import jsion.tool.mapeditor.MapFrame;
 	import jsion.tool.mapeditor.MapShower;
 	import jsion.tool.mapeditor.datas.MapData;
@@ -11,6 +12,8 @@ package jsion.tool.mapeditor.panes
 	public class MainPane extends JPanel
 	{
 		private var m_frame:MapFrame;
+		
+		private var m_mapDragger:MapDragger;
 		
 		private var m_mapShower:MapShower;
 		
@@ -30,12 +33,17 @@ package jsion.tool.mapeditor.panes
 		{
 			trace("size:", width, height);
 			
+			if(width == 0 || height == 0) return;
+			
 			if(m_mapShower) m_mapShower.setCameraSize(width, height);
+			
+			if(m_mapDragger) m_mapDragger.drawRect(width, height);
 		}
 		
 		public function setMap(mapInfo:MapData):void
 		{
 			DisposeUtil.free(m_mapShower);
+			DisposeUtil.free(m_mapDragger);
 			
 			m_mapShower = new MapShower(1, 1);
 			
@@ -46,6 +54,11 @@ package jsion.tool.mapeditor.panes
 			m_mapShower.start();
 			
 			addChild(m_mapShower);
+			
+			
+			m_mapDragger = new MapDragger(m_mapShower);
+			
+			addChild(m_mapDragger);
 		}
 	}
 }
