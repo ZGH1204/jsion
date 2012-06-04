@@ -371,6 +371,29 @@ package jsion.rpg.engine
 			return m_tempPoint;
 		}
 		
+		/**
+		 * 屏幕位置坐标转换为世界地图的坐标
+		 */		
+		public function screen2World(x:Number, y:Number):Point
+		{
+			m_tempPoint.x = screenX + x;
+			m_tempPoint.y = screenY + y;
+			
+			return m_tempPoint;
+		}
+		/**
+		 * 屏幕位置坐标转换为区块坐标编号
+		 */		
+		public function screen2Tile(x:Number, y:Number):Point
+		{
+			screen2World(x, y);
+			
+			m_tempPoint.x = int(m_tempPoint.x / m_mapInfo.tileWidth);
+			m_tempPoint.y = int(m_tempPoint.y / m_mapInfo.tileHeight);
+			
+			return m_tempPoint;
+		}
+		
 		public function render(bitmapData:BitmapData):void
 		{
 			if(m_mapInfo.mapType == MapInfo.TileMap) refreshTileMapBuffer();
