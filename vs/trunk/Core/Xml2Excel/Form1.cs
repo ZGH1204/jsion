@@ -58,7 +58,7 @@ namespace Xml2Excel
             OpenFileDialog ofd = new OpenFileDialog();
 
             ofd.Title = "选择文件";
-            ofd.Filter = "Xml files (*.xml)|*.xml";
+            ofd.Filter = "Xml files (*.xml)|*.xml|Excel 97-2003(*.xls)|*.xls";
             ofd.FilterIndex = 1;
 
             if (ofd.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
@@ -279,7 +279,7 @@ namespace Xml2Excel
             OpenFileDialog ofd = new OpenFileDialog();
 
             ofd.Title = "选择文件";
-            ofd.Filter = "Excel files (*.xlsx)|*.xlsx";
+            ofd.Filter = "Excel files (*.xlsx)|*.xlsx|Excel 97-2003(*.xls)|*.xls";
             ofd.FilterIndex = 1;
 
             List<string> temp, temp2;
@@ -476,7 +476,7 @@ namespace Xml2Excel
             OpenFileDialog ofd = new OpenFileDialog();
 
             ofd.Title = "选择文件";
-            ofd.Filter = "Excel files (*.xlsx)|*.xlsx";
+            ofd.Filter = "Excel files (*.xlsx)|*.xlsx|Excel 97-2003(*.xls)|*.xls";
             ofd.FilterIndex = 1;
 
             if (ofd.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
