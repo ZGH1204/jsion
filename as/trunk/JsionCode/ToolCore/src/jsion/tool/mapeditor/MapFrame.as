@@ -8,6 +8,7 @@ package jsion.tool.mapeditor
 	import jsion.tool.mapeditor.panes.MainPane;
 	import jsion.tool.mapeditor.panes.RightPane;
 	import jsion.tool.mapeditor.panes.TopPane;
+	import jsion.tool.mapeditor.panes.materials.CoordViewer;
 	
 	import org.aswing.BorderLayout;
 	
@@ -54,6 +55,10 @@ package jsion.tool.mapeditor
 		public function setMap(mapInfo:MapData):void
 		{
 			m_mainPane.setMap(mapInfo);
+			
+			m_rightPane.append(m_mainPane.materialsTabbed);
+			
+			m_rightPane.append(m_mainPane.coordViewer);
 		}
 	}
 }

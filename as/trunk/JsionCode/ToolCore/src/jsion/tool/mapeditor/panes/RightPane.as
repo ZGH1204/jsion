@@ -1,9 +1,11 @@
 package jsion.tool.mapeditor.panes
 {
 	import jsion.tool.mapeditor.MapFrame;
+	import jsion.tool.mapeditor.panes.materials.CoordViewer;
 	
 	import org.aswing.JPanel;
 	import org.aswing.LayoutManager;
+	import org.aswing.SoftBoxLayout;
 	
 	public class RightPane extends JPanel
 	{
@@ -13,9 +15,9 @@ package jsion.tool.mapeditor.panes
 		{
 			m_frame = frame;
 			
-			super();
+			super(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
 			
-			setPreferredWidth(1);
+			setPreferredWidth(200);
 		}
 	}
 }
