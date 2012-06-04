@@ -16,7 +16,7 @@ package jsion.tool.mapeditor.panes
 			
 			super(new SoftBoxLayout(SoftBoxLayout.Y_AXIS));
 			
-			setPreferredWidth(170);
+			setPreferredWidth(1);
 //			setBackground(new ASColor(0x336699));
 //			setOpaque(true);
 		}
