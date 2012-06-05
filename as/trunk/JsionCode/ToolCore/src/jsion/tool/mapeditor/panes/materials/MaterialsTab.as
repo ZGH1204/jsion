@@ -9,11 +9,13 @@ package jsion.tool.mapeditor.panes.materials
 	
 	public class MaterialsTab extends JPanel
 	{
-		private var m_frame:MapFrame;
+		protected var m_frame:MapFrame;
 		
-		private var m_list:JList;
+		protected var m_list:JList;
 		
 		private var m_scrollPane:JScrollPane;
+		
+		public var tabbed:MaterialsTabbed;
 		
 		public function MaterialsTab(frame:MapFrame, layout:LayoutManager = null)
 		{
@@ -21,11 +23,17 @@ package jsion.tool.mapeditor.panes.materials
 			
 			super(layout);
 			
-			m_list = new JList(["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"]);
+			m_list = new JList();
 			m_list.setVisibleCellWidth(190);
 			m_list.setVisibleRowCount(10);
 			m_scrollPane = new JScrollPane(m_list);
 			append(m_scrollPane);
+			
+			refreshListData();
+		}
+		
+		public function refreshListData():void
+		{
 		}
 		
 		public function setListVisibleRowCount(count:int):void

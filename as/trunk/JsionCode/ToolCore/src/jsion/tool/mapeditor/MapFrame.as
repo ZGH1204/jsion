@@ -58,7 +58,21 @@ package jsion.tool.mapeditor
 			
 			m_rightPane.append(m_mainPane.materialsTabbed);
 			
-			m_rightPane.append(m_mainPane.coordViewer);
+			m_rightPane.append(m_mainPane.coordView);
+		}
+		
+		override public function closeReleased():void
+		{
+			if(m_mainPane) m_mainPane.dispose();
+			m_mainPane = null;
+			
+			m_topPane = null;
+			m_bottomPane = null;
+			
+			m_leftPane = null;
+			m_rightPane = null;
+			
+			super.closeReleased();
 		}
 	}
 }
