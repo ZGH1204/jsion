@@ -2,8 +2,11 @@ package jsion.display
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	import jsion.comps.Component;
+	import jsion.events.ReleaseEvent;
 	import jsion.events.StateEvent;
 	import jsion.utils.DisposeUtil;
 	
@@ -95,6 +98,40 @@ package jsion.display
 		/** @private */
 		protected var m_stateChange:Boolean;
 		
+		
+		
+		/** @private */
+		protected var m_mouseDowned:Boolean;
+		
+		/** @private */
+		protected var m_autoMouseDown:Boolean;
+		
+		/** @private */
+		protected var m_mouseDownCurFrame:int;
+		
+		/** @private */
+		protected var m_mouseDownDelayFrame:int;
+		
+		/** @private */
+		protected var m_mouseDownIntFrame:int;
+		
+		/** @private */
+		protected var m_mouseDownIntervalFrame:int;
+		
+		
+		
+		
+		/** @private */
+		protected var m_frozen:Boolean;
+		
+		/** @private */
+		protected var m_frozenFrames:int;
+		
+		/** @private */
+		protected var m_frozenCurFrame:int;
+		
+		
+		
 		public function Button()
 		{
 			super();
@@ -105,6 +142,15 @@ package jsion.display
 			super.initialize();
 			
 			buttonMode = true;
+			
+			m_mouseDowned = false;
+			m_autoMouseDown = false;
+			m_mouseDownDelayFrame = 30;
+			m_mouseDownIntervalFrame = 3;
+			
+			m_frozen = false;
+			m_frozenFrames = 90;
+			m_frozenCurFrame = 0;
 			
 			m_freeBMD = false;
 			m_stateChange = false;
@@ -461,6 +507,178 @@ package jsion.display
 		public function set freeBMD(value:Boolean):void
 		{
 			m_freeBMD = value;
+		}
+		
+		/**
+		 * 是否允许自动触发 MouseDown 事件
+		 */		
+		public function get autoMouseDown():Boolean
+		{
+			return m_autoMouseDown;
+		}
+		
+		/** @private */
+		public function set autoMouseDown(value:Boolean):void
+		{
+			if(m_autoMouseDown != value)
+			{
+				m_autoMouseDown = value;
+				
+				if(m_autoMouseDown)
+				{
+					addEventListener(MouseEvent.MOUSE_DOWN, __autoMouseDownHandler);
+					addEventListener(ReleaseEvent.RELEASE, __autoMouseDownReleaseHandler);
+				}
+				else
+				{
+					m_mouseDowned = false;
+					m_mouseDownCurFrame = 0;
+					
+					removeEventListener(MouseEvent.MOUSE_DOWN, __autoMouseDownHandler);
+					removeEventListener(ReleaseEvent.RELEASE, __autoMouseDownReleaseHandler);
+					removeEventListener(Event.ENTER_FRAME, __autoMouseDownEnterFrameHandler);
+				}
+			}
+		}
+		
+		/**
+		 * 当允许自动触发 MouseDown 事件时，触发的延迟帧数。
+		 */		
+		public function get mouseDownDelayFrame():int
+		{
+			return m_mouseDownDelayFrame;
+		}
+		
+		/** @private */
+		public function set mouseDownDelayFrame(value:int):void
+		{
+			m_mouseDownDelayFrame = value;
+		}
+		
+		/**
+		 * 当允许自动触发 MouseDown 事件时，触发的间隔帧数。
+		 */		
+		public function get mouseDownIntervalFrame():int
+		{
+			return m_mouseDownIntervalFrame;
+		}
+		
+		/** @private */
+		public function set mouseDownIntervalFrame(value:int):void
+		{
+			m_mouseDownIntervalFrame = value;
+		}
+		
+		private function __autoMouseDownHandler(e:MouseEvent):void
+		{
+			if(m_mouseDowned) return;
+			
+			m_mouseDowned = true;
+			
+			m_mouseDownCurFrame = 0;
+			
+			addEventListener(Event.ENTER_FRAME, __autoMouseDownEnterFrameHandler);
+		}
+		
+		private function __autoMouseDownReleaseHandler(e:MouseEvent):void
+		{
+			m_mouseDowned = false;
+			
+			m_mouseDownCurFrame = 0;
+			
+			removeEventListener(Event.ENTER_FRAME, __autoMouseDownEnterFrameHandler);
+		}
+		
+		private function __autoMouseDownEnterFrameHandler(e:Event):void
+		{
+			if(m_mouseDownCurFrame < m_mouseDownDelayFrame)
+			{
+				m_mouseDownCurFrame++;
+				return;
+			}
+			
+			if(m_mouseDownIntFrame < m_mouseDownIntervalFrame)
+			{
+				m_mouseDownIntFrame++;
+				return;
+			}
+			
+			m_mouseDownIntFrame = 0;
+			
+			dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, true, false, mouseX, mouseY));
+		}
+		
+		
+		/**
+		 * 是否启用点击冻结按钮，并在延迟帧数达到后释放冻结。
+		 */		
+		public function get frozen():Boolean
+		{
+			return m_frozen;
+		}
+		
+		/** @private */
+		public function set frozen(value:Boolean):void
+		{
+			if(m_frozen != value)
+			{
+				m_frozen = value;
+				
+				if(m_frozen)
+				{
+					addEventListener(MouseEvent.CLICK, __frozenClickHandler);
+				}
+				else
+				{
+					
+					enabled = true;
+					
+					m_frozenCurFrame = 0;
+					
+					removeEventListener(MouseEvent.CLICK, __frozenClickHandler);
+					
+					removeEventListener(Event.ENTER_FRAME, __frozenEnterFrameHandler);
+				}
+			}
+		}
+		
+		/**
+		 * 当启用点击冻结时，冻结的延迟帧数。
+		 */		
+		public function get frozenFrames():int
+		{
+			return m_frozenFrames;
+		}
+		
+		/** @private */
+		public function set frozenFrames(value:int):void
+		{
+			m_frozenFrames = value;
+		}
+		
+		private function __frozenClickHandler(e:MouseEvent):void
+		{
+			enabled = false;
+			
+			m_frozenCurFrame = 0;
+			
+			addEventListener(Event.ENTER_FRAME, __frozenEnterFrameHandler);
+		}
+		
+		private function __frozenEnterFrameHandler(e:Event):void
+		{
+			if(m_frozenCurFrame < m_frozenFrames)
+			{
+				m_frozenCurFrame++;
+				
+				return;
+			}
+			
+			enabled = true;
+			
+			m_frozenCurFrame = 0;
+			
+			removeEventListener(Event.ENTER_FRAME, __frozenEnterFrameHandler);
 		}
 		
 		/**
