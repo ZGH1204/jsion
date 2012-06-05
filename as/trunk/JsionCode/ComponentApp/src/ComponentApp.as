@@ -93,7 +93,7 @@ package
 			
 //			testImage();
 //			
-			testLabelButton();
+//			testLabelButton();
 //			
 //			testToggleButton();
 //			
@@ -114,8 +114,8 @@ package
 //			testTabPanel();
 //			
 //			testWindow();
-//			
-//			testTitleWindow();
+			
+			testTitleWindow();
 		}
 		
 		private function initHelper():void
