@@ -216,7 +216,6 @@ package jsion.display
 		}
 		
 		
-		
 		/**
 		 * 标题栏水平偏移量
 		 */
@@ -306,6 +305,44 @@ package jsion.display
 		//==================================	TitleBar 组件属性	==================================
 		
 		
+		
+		/**
+		 * 标题栏宽度
+		 */
+		public function get titleBarWidth():int
+		{
+			return m_titleBar.width;
+		}
+		
+		/** @private */
+		public function set titleBarWidth(value:int):void
+		{
+			if(m_titleBar.width != value)
+			{
+				m_titleBar.width = value;
+				
+				onPropertiesChanged(TITLEBARCHANGE);
+			}
+		}
+		
+		/**
+		 * 标题栏高度
+		 */
+		public function get titleBarHeight():int
+		{
+			return m_titleBar.height;
+		}
+		
+		/** @private */
+		public function set titleBarHeight(value:int):void
+		{
+			if(m_titleBar.height != value)
+			{
+				m_titleBar.height = value;
+				
+				onPropertiesChanged(TITLEBARCHANGE);
+			}
+		}
 		
 		/**
 		 * 标题栏背景资源显示对象
