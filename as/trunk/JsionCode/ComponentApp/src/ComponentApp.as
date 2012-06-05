@@ -93,7 +93,7 @@ package
 			
 //			testImage();
 //			
-//			testLabelButton();
+			testLabelButton();
 //			
 //			testToggleButton();
 //			
@@ -114,8 +114,8 @@ package
 //			testTabPanel();
 //			
 //			testWindow();
-			
-			testTitleWindow();
+//			
+//			testTitleWindow();
 		}
 		
 		private function initHelper():void
@@ -820,8 +820,12 @@ package
 			labelBtn.labelColor = 0xFF8040;
 			labelBtn.upImage = new m_cls();
 			labelBtn.freeBMD = true;
+			labelBtn.frozen = true;
+			labelBtn.autoMouseDown = true;
 //			labelBtn.overFilters = [new BlurFilter()];
 //			labelBtn.labelOverFilters = [new BlurFilter(2,2,1)];
+			labelBtn.disableFilters = [new ColorMatrixFilter([0.3, 0.59, 0.11, 0, 0,  0.3, 0.59, 0.11, 0, 0,  0.3, 0.59, 0.11, 0, 0,  0, 0, 0, 1, 0])];
+			labelBtn.labelDisableFilters = [new ColorMatrixFilter([0.3, 0.59, 0.11, 0, 0,  0.3, 0.59, 0.11, 0, 0,  0.3, 0.59, 0.11, 0, 0,  0, 0, 0, 1, 0])]
 //			labelBtn.labelOffsetX = -1;
 //			labelBtn.labelOffsetY = -1;
 //			labelBtn.overOffsetX = 1;
@@ -834,7 +838,14 @@ package
 //			labelBtn.labelDownOffsetY = 1;
 			labelBtn.commitChanges();
 			
+			labelBtn.addEventListener(MouseEvent.MOUSE_DOWN, __testAutoMouseDownHandler);
+			
 			addChild(labelBtn);
+		}
+		
+		private function __testAutoMouseDownHandler(e:MouseEvent):void
+		{
+			trace("mouseDown");
 		}
 		
 		private function testImage():void

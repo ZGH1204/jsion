@@ -449,7 +449,19 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 不支持此属性。
+		 */		
+		override public function get autoMouseDown():Boolean
+		{
+			throw new Error("不支持此属性。");
+		}
 		
+		/** @private */
+		override public function set autoMouseDown(value:Boolean):void
+		{
+			throw new Error("不支持此属性。");
+		}
 		
 		
 		/**
