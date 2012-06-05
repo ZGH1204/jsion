@@ -34,11 +34,9 @@ package jsion.rpg.engine
 		
 		protected var m_root:String;
 		
-		public function RPGEngine(w:int, h:int, root:String = "Maps")
+		public function RPGEngine(w:int, h:int)
 		{
 			super();
-			
-			setMapRoot(root);
 			
 			m_camera = new Rectangle(0, 0, w, h);
 			
@@ -140,10 +138,14 @@ package jsion.rpg.engine
 				m_rpgInfo.smallOrLoopBmd = Bitmap(loader.content).bitmapData.clone();
 				
 				m_game.setMap(m_rpgInfo);
+				
+				onSmallMapLoadComplete();
 			}
 			
 			hideLoading();
 		}
+		
+		protected function onSmallMapLoadComplete():void { }
 		
 		public function showLoading():void
 		{

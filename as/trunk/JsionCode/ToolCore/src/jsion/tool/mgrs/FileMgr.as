@@ -18,6 +18,59 @@ package jsion.tool.mgrs
 		}
 		
 		/**
+		 * 获取目录下的所有子目录，递归所有子目录。
+		 * @param dir 目录对象
+		 * @param result 结果集列表
+		 */		
+		public static function getAllChildDirs(dir:File, result:Array = null):Array
+		{
+			if(dir.isDirectory == false) return [];
+			
+			result ||= [];
+			
+			var list:Array = dir.getDirectoryListing();
+			
+			for each(var file:File in list)
+			{
+				if(file.isDirectory)
+				{
+					result.push(file);
+					getAllChildDirs(file, result);
+				}
+			}
+			
+			return result;
+		}
+		
+		/**
+		 * 获取目录下的所有文件，不包括目录，递归所有子目录下的文件。
+		 * @param dir 目录对象
+		 * @param result 结果集列表
+		 */		
+		public static function getAllChildFiles(dir:File, result:Array = null):Array
+		{
+			if(dir.isDirectory == false) return [];
+			
+			result ||= [];
+			
+			var list:Array = dir.getDirectoryListing();
+			
+			for each(var file:File in list)
+			{
+				if(file.isDirectory)
+				{
+					getAllChildFiles(file, result);
+				}
+				else
+				{
+					result.push(file);
+				}
+			}
+			
+			return result;
+		}
+		
+		/**
 		 * 浏览选择要打开的文件
 		 * @param callback 将所选文件的 File 对象作为参数回调此方法
 		 * @param typeFilter 过滤显示文件的FileFilter数组对象

@@ -10,7 +10,7 @@ package jsion.tool.mapeditor.panes.materials
 	{
 		private var m_frame:MapFrame;
 		
-		private var m_tab1:MaterialsTab;
+		private var m_npcTab:NPCTab;
 		
 		public function MaterialsTabbed(frame:MapFrame)
 		{
@@ -19,28 +19,21 @@ package jsion.tool.mapeditor.panes.materials
 			super();
 			
 			
-			m_tab1 = new MaterialsTab(m_frame);
-			append(m_tab1, "建筑");
-			
-			
-			addEventListener(ResizedEvent.RESIZED, __resizeHandler);
+			m_npcTab = new NPCTab(m_frame);
+			m_npcTab.tabbed = this;
+			append(m_npcTab, "动画素材");
 			
 			
 			setBorder(new TitledBorder(null, '素材列表', TitledBorder.TOP, TitledBorder.LEFT, 10));
 		}
-		
-		private function __resizeHandler(e:ResizedEvent):void
-		{
-			trace("MaterialsTabbed Size：", width, height);
-		}
-		
+
 		override public function setSizeWH(w:int, h:int):void
 		{
 			super.setSizeWH(w, h);
 			
 			var count:int = (h - 50) / 19;
 			
-			m_tab1.setListVisibleRowCount(count);
+			m_npcTab.setListVisibleRowCount(count);
 		}
 	}
 }
