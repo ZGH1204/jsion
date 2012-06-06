@@ -335,7 +335,7 @@ namespace Xml2Excel
 
 
                 string path = str.Substring(0, str.LastIndexOf("\\"));
-                string filename = str.Substring(str.LastIndexOf("\\") + 1).Replace(".xlsx", "") + ".xml";
+                string filename = str.Substring(str.LastIndexOf("\\") + 1).Replace(".xlsx", "").Replace(".xls", "") + ".xml";
                 path = Path.Combine(path, filename);
 
 
@@ -437,7 +437,22 @@ namespace Xml2Excel
                             break;
                         }
 
-                        tv.Props[attribute] = r.FormulaLocal;
+                        if (r.FormulaLocal.StartsWith("="))
+                        {
+                            int temp = Convert.ToInt32(r.Value2);
+                            if (r.Value2 > temp)
+                            {
+                                tv.Props[attribute] = Convert.ToString(r.Value2);
+                            }
+                            else
+                            {
+                                tv.Props[attribute] = temp.ToString();
+                            }
+                        }
+                        else
+                        {
+                            tv.Props[attribute] = r.FormulaLocal;
+                        }
                     }
 
                     start++;
