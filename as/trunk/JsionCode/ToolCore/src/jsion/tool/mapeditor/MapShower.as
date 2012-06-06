@@ -29,6 +29,14 @@ package jsion.tool.mapeditor
 			super(1, 1);
 		}
 		
+		override public function setMapID(id:int):void
+		{
+			//更新 mapRoot 属性
+			super.setMapID(id);
+			
+			materials.setMapRoot(mapRoot);
+		}
+		
 		override public function setCameraSize(w:int, h:int):void
 		{
 			super.setCameraSize(w, h);

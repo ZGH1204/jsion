@@ -61,6 +61,11 @@ package jsion.tool.mapeditor
 			m_rightPane.append(m_mainPane.coordView);
 		}
 		
+		public function get mainPane():MainPane
+		{
+			return m_mainPane;
+		}
+		
 		override public function closeReleased():void
 		{
 			if(m_mainPane) m_mainPane.dispose();
