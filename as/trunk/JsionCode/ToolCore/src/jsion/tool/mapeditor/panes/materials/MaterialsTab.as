@@ -17,6 +17,8 @@ package jsion.tool.mapeditor.panes.materials
 		
 		public var tabbed:MaterialsTabbed;
 		
+		protected var m_mapRoot:String;
+		
 		public function MaterialsTab(frame:MapFrame, layout:LayoutManager = null)
 		{
 			m_frame = frame;
@@ -28,6 +30,11 @@ package jsion.tool.mapeditor.panes.materials
 			m_list.setVisibleRowCount(10);
 			m_scrollPane = new JScrollPane(m_list);
 			append(m_scrollPane);
+		}
+		
+		public function setMapRoot(r:String):void
+		{
+			m_mapRoot = r;
 			
 			refreshListData();
 		}

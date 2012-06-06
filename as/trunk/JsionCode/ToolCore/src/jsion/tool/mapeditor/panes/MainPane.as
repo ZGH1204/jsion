@@ -30,9 +30,9 @@ package jsion.tool.mapeditor.panes
 		
 		private function __resizeHandler(e:ResizedEvent):void
 		{
-			trace("size:", width, height);
-			
 			if(width == 0 || height == 0) return;
+			
+			trace("size:", width, height);
 			
 			if(m_mapShower) m_mapShower.setCameraSize(width, height);
 		}
@@ -43,7 +43,7 @@ package jsion.tool.mapeditor.panes
 			
 			m_mapShower = new MapShower(m_frame);
 			
-			m_mapShower.setMapRoot(mapInfo.mapRoot);
+			m_mapShower.setRoot(mapInfo.mapRoot);
 			m_mapShower.setMapID(mapInfo.mapID);
 			
 			addChild(m_mapShower);
@@ -51,6 +51,11 @@ package jsion.tool.mapeditor.panes
 			addChild(m_mapShower.mapDragger);
 			
 			m_mapShower.start();
+		}
+		
+		public function get mapShower():MapShower
+		{
+			return m_mapShower;
 		}
 
 		public function get coordView():CoordViewer

@@ -12,6 +12,8 @@ package jsion.tool.mapeditor.panes.materials
 		
 		private var m_npcTab:NPCTab;
 		
+		private var m_mapRoot:String;
+		
 		public function MaterialsTabbed(frame:MapFrame)
 		{
 			m_frame = frame;
@@ -21,10 +23,17 @@ package jsion.tool.mapeditor.panes.materials
 			
 			m_npcTab = new NPCTab(m_frame);
 			m_npcTab.tabbed = this;
-			append(m_npcTab, "动画素材");
+			append(m_npcTab, "NPC");
 			
 			
 			setBorder(new TitledBorder(null, '素材列表', TitledBorder.TOP, TitledBorder.LEFT, 10));
+		}
+		
+		public function setMapRoot(r:String):void
+		{
+			m_mapRoot = r;
+			
+			m_npcTab.setMapRoot(r);
 		}
 
 		override public function setSizeWH(w:int, h:int):void

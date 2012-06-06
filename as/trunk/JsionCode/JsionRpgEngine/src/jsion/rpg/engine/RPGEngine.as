@@ -34,6 +34,10 @@ package jsion.rpg.engine
 		
 		protected var m_root:String;
 		
+		protected var m_mapID:int;
+		
+		protected var m_mapRoot:String;
+		
 		public function RPGEngine(w:int, h:int)
 		{
 			super();
@@ -56,6 +60,11 @@ package jsion.rpg.engine
 			addChild(m_waitingLayer);
 		}
 		
+		public function get mapRoot():String
+		{
+			return m_mapRoot;
+		}
+		
 		public function setCameraSize(w:int, h:int):void
 		{
 			m_camera.width = w;
@@ -71,13 +80,17 @@ package jsion.rpg.engine
 			return m_game;
 		}
 		
-		public function setMapRoot(root:String = "Maps"):void
+		public function setRoot(root:String = "Maps"):void
 		{
 			m_root = root;
 		}
 		
 		public function setMapID(id:int):void
 		{
+			m_mapID = id;
+			
+			m_mapRoot = PathUtil.combinPath(m_root, m_mapID);
+			
 			loadMapInfo(id);
 			
 			showLoading();
@@ -85,10 +98,8 @@ package jsion.rpg.engine
 		
 		private function loadMapInfo(id:int):void
 		{
-			var root:String = PathUtil.combinPath(m_root, id);
-			
 			DisposeUtil.free(m_mapLoader);
-			m_mapLoader = new BinaryLoader(id + ".map", { root: root });
+			m_mapLoader = new BinaryLoader(id + ".map", { root: m_mapRoot });
 			m_mapLoader.tag = id;
 			m_mapLoader.loadAsync(mapInfoLoadCallback);
 		}
