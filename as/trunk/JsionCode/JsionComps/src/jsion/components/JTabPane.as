@@ -363,13 +363,13 @@ package jsion.components
 				if(m_dir == BOTTOM)
 				{
 					m_btnBox.y = realHeight - m_btnBox.realHeight - m_offsetY;
-					m_paneContainer.x = m_offsetX;
+					m_paneContainer.x = 0;
 					m_paneContainer.y = 0;
 				}
 				else
 				{
 					m_btnBox.y = m_offsetY;
-					m_paneContainer.x = m_offsetX;
+					m_paneContainer.x = 0;
 					m_paneContainer.y = m_btnBox.y + m_btnBox.realHeight + m_padding;
 				}
 			}

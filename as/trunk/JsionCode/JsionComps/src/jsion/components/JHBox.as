@@ -126,12 +126,12 @@ package jsion.components
 		
 		override public function setChildIndex(child:DisplayObject, index:int):void
 		{
-			if(child)
-			{
-				if(m_list) ArrayUtil.remove(m_list, child);
-				
-				if(m_list) ArrayUtil.insert(m_list, child, index);
-			}
+//			if(child)
+//			{
+//				if(m_list) ArrayUtil.remove(m_list, child);
+//				
+//				if(m_list) ArrayUtil.insert(m_list, child, index);
+//			}
 			
 			super.setChildIndex(child, index);
 		}
