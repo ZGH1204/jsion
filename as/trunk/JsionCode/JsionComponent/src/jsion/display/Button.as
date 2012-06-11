@@ -184,6 +184,15 @@ package jsion.display
 		{
 			m_stateChange = true;
 			
+//			if(model.rollOver)
+//			{
+//				CursorMgr.over();
+//			}
+//			else
+//			{
+//				CursorMgr.normal();
+//			}
+			
 			invalidate();
 		}
 		

@@ -2,6 +2,7 @@ package jsion
 {
 	import flash.display.Stage;
 	
+	import jsion.comps.CursorMgr;
 	import jsion.comps.UIMgr;
 	import jsion.ddrop.DDropMgr;
 
@@ -10,5 +11,7 @@ package jsion
 		DDropMgr.setup(stage);
 		
 		UIMgr.setup(stage);
+//		
+//		CursorMgr.setup(stage);
 	}
 }

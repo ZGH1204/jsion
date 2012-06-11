@@ -12,6 +12,7 @@ package
 	
 	import jsion.Insets;
 	import jsion.SetupComps;
+	import jsion.comps.CursorMgr;
 	import jsion.comps.ToggleGroup;
 	import jsion.debug.DEBUG;
 	import jsion.display.CheckBox;
@@ -84,6 +85,9 @@ package
 		[Embed(source="winCloseBtn.png")]
 		private var m_winCloseCLS:Class;
 		
+		[Embed(source="cursor.png")]
+		private var m_cursorCLS:Class;
+		
 		public function ComponentApp()
 		{
 			stage.align = StageAlign.TOP_LEFT;
@@ -125,6 +129,9 @@ package
 			DEBUG.setup(stage, 300);
 			
 			DEBUG.loadCSS("debug.css");
+//			
+//			CursorMgr.setNormalCursor(new m_cursorCLS());
+//			CursorMgr.enabled();
 		}
 		
 		private function testTitleWindow():void
