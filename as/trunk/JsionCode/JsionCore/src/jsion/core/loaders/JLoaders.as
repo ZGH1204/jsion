@@ -964,7 +964,7 @@ package jsion.core.loaders
 			
 			if(_embedList)
 			{
-				if(_embedList.length == 0)
+				if(_embedList.length == 0 || _hasError)
 				{
 					if(_embedCallback != null) _embedCallback(this);
 					_embedCallback = null;
