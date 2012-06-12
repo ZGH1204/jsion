@@ -4,7 +4,7 @@ package jsion.comps
 	
 	import jsion.HashMap;
 	import jsion.IDispose;
-	import jsion.ListenerModel;
+	import jsion.core.events.ListenerModel;
 	import jsion.events.StateEvent;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;

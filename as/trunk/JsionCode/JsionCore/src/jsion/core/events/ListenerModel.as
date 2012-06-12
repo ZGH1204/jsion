@@ -1,4 +1,4 @@
-package jsion
+package jsion.core.events
 {
 	import jsion.IDispose;
 	import jsion.utils.ArrayUtil;

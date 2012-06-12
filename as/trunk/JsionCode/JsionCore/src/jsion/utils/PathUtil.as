@@ -21,6 +21,8 @@ package jsion.utils
 			else if(args.length == 1) return args[0];
 			else path = args.shift();
 			
+			if(path == null) path = "";
+			
 			var splitor:String;
 			
 			if(path.lastIndexOf("\\") != -1) splitor = "\\";
@@ -28,6 +30,8 @@ package jsion.utils
 			
 			for each(var arg:String in args)
 			{
+				if(StringUtil.isNullOrEmpty(arg)) continue;
+				
 				if(path.lastIndexOf("\\") == (path.length - 1) || path.lastIndexOf("/") == (path.length - 1))
 				{
 					if(arg.indexOf("\\") == 0 || arg.indexOf("/") == 0) path = path + arg.substr(1);
