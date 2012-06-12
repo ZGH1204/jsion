@@ -82,9 +82,12 @@ package jsion.core.loader
 		
 		override public function dispose():void
 		{
-			if(m_loader) m_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __embedInDomainHandler);
-			
-			m_loader = null;
+			if(m_loader)
+			{
+				m_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __embedInDomainHandler);
+				m_loader.close();
+				m_loader = null;
+			}
 			
 			super.dispose();
 		}

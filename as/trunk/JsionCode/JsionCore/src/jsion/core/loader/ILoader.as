@@ -1,6 +1,8 @@
 package jsion.core.loader
 {
-	public interface ILoader
+	import flash.events.IEventDispatcher;
+
+	public interface ILoader extends IEventDispatcher
 	{
 		function get root():String;
 		

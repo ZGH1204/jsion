@@ -1,6 +1,5 @@
 package jsion.core.loader
 {
-	import flash.events.ErrorEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
@@ -12,6 +11,7 @@ package jsion.core.loader
 	
 	import jsion.Cache;
 	import jsion.core.cryptor.ICryption;
+	import jsion.core.events.JsionEvent;
 	import jsion.core.events.JsionEventDispatcher;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.JUtil;
@@ -295,12 +295,12 @@ package jsion.core.loader
 		
 		private function fireCompleteEvent():void
 		{
-			dispatchEvent(new Event(Event.COMPLETE));
+			dispatchEvent(new JsionEvent(JsionEvent.COMPLETE));
 		}
 		
 		private function fireErrorEvent():void
 		{
-			dispatchEvent(new ErrorEvent(ErrorEvent.ERROR, false, false, m_errorMsg));
+			dispatchEvent(new JsionEvent(JsionEvent.ERROR));
 		}
 		
 		override public function dispose():void
