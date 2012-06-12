@@ -36,7 +36,7 @@ package jsion.core.loader
 			tryLoadNext();
 		}
 		
-		private static function tryLoadNext():void
+		public static function tryLoadNext():void
 		{
 			while(loadingList.length < MaxSyncLoad && loaderList.length > 0)
 			{
