@@ -78,8 +78,8 @@ package jsion.core.loader
 			if(m_loader)
 			{
 				m_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __embedInDomainHandler);
+				m_loader.close();
 				m_loader.unloadAndStop();
-				DisposeUtil.free(m_loader);
 				m_loader = null;
 			}
 			

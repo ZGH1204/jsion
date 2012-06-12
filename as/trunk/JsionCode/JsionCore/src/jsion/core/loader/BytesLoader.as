@@ -69,6 +69,7 @@ package jsion.core.loader
 		{
 			LoaderMgr.removeLoader(this);
 			
+			if(m_urlLoader) m_urlLoader.close();
 			removeLoadEvent(m_urlLoader);
 			m_urlLoader = null;
 			
