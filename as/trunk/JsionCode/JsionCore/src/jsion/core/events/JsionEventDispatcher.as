@@ -1,11 +1,10 @@
-package jsion.comps
+package jsion.core.events
 {
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	
 	import jsion.HashMap;
 	import jsion.IDispose;
-	import jsion.ListenerModel;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 	
