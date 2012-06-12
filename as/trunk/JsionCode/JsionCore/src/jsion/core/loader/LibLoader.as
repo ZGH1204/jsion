@@ -4,6 +4,9 @@ package jsion.core.loader
 	import flash.events.Event;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
+	import flash.utils.ByteArray;
+	
+	import jsion.Cache;
 
 	public class LibLoader extends BytesLoader
 	{
@@ -14,19 +17,31 @@ package jsion.core.loader
 			super(file, root, managed);
 		}
 		
-		override protected function onCompleted():void
+		override protected function onLoadCompleted():void
 		{
-			if(m_loader == null)
+			if(m_loader == null && m_status == LOADING)
 			{
-				m_data = m_loader;
+				var bytes:ByteArray = m_cryptor.decry(m_urlLoader.data as ByteArray);
+				
+				if(m_cache) Cache.cacheData(m_urlKey, bytes, m_cacheInMemory);
+				
+				loadInDomain(bytes);
+			}
+			else if(m_status == COMPLETE)
+			{
+				super.onLoadCompleted();
+			}
+		}
+		
+		private function loadInDomain(bytes:ByteArray):void
+		{
+			if(m_loader == null && m_status == LOADING)
+			{
+				m_data = bytes;
 				
 				m_loader = new Loader();
-				m_loader.loadBytes(m_urlLoader.data, new LoaderContext(false, ApplicationDomain.currentDomain));
+				m_loader.loadBytes(bytes, new LoaderContext(false, ApplicationDomain.currentDomain));
 				m_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, __embedInDomainHandler);
-			}
-			else
-			{
-				super.onCompleted();
 			}
 		}
 		
@@ -34,7 +49,35 @@ package jsion.core.loader
 		{
 			m_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __embedInDomainHandler);
 			
-			super.onCompleted();
+			if(m_loadFromCache)
+			{
+				onLoadCacheComplete();
+			}
+			else
+			{
+				super.onLoadCompleted();
+			}
+		}
+		
+		override protected function loadCache():void
+		{
+			if(m_loader == null && m_status == LOADING)
+			{
+				var bytes:ByteArray = Cache.loadData(m_urlKey, m_cacheInMemory) as ByteArray;
+				
+				loadInDomain(bytes);
+			}
+			else if(m_status == COMPLETE)
+			{
+				onLoadCacheComplete();
+			}
+		}
+		
+		override public function cancel():void
+		{
+			if(m_status == LOADING && m_loader) m_loader.unload();
+			
+			super.cancel();
 		}
 		
 		override public function dispose():void

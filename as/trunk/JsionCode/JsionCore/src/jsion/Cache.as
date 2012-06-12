@@ -94,6 +94,21 @@ package jsion
 		}
 		
 		/**
+		 * 指示是否存在指定的缓存项
+		 * @param key
+		 * @return 
+		 * 
+		 */		
+		public static function contains(key:String):Boolean
+		{
+			key = JUtil.path2Key(key);
+			
+			if(cacheMemory[key] || changes[key] || indexs.hasIndex(key)) return true;
+			
+			return false;
+		}
+		
+		/**
 		 * 加载缓存项
 		 * @param key 缓存键
 		 * @param cacheInMemory 是否缓存到内存

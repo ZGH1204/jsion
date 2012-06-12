@@ -1,8 +1,10 @@
 package jsion.core.loader
 {
-	import flash.events.ErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
+	import flash.utils.ByteArray;
+	
+	import jsion.Cache;
 
 	public class BytesLoader extends JsionLoader
 	{
@@ -19,21 +21,36 @@ package jsion.core.loader
 			
 			m_urlLoader = new URLLoader();
 			m_urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
-			
-			addEventListener(ErrorEvent.ERROR, __errorHandler);
-		}
-		
-		private function __errorHandler(e:ErrorEvent):void
-		{
-			LoaderMgr.ErrorHandler.error(this);
 		}
 		
 		override protected function load():void
 		{
-			super.load();
-			
 			listenLoadEvent(m_urlLoader);
 			m_urlLoader.load(m_request);
+			
+			super.load();
+		}
+		
+		override protected function onLoadCompleted():void
+		{
+			if(m_data == null && m_status == LOADING)
+			{
+				m_data = decrypt(m_urlLoader.data as ByteArray);
+				
+				if(m_cache) Cache.cacheData(m_urlKey, m_data, m_cacheInMemory);
+			}
+			
+			super.onLoadCompleted();
+		}
+		
+		override protected function loadCache():void
+		{
+			if(m_data == null && m_status == LOADING)
+			{
+				m_data = Cache.loadData(m_urlKey, m_cacheInMemory);
+			}
+			
+			onLoadCacheComplete();
 		}
 		
 		override public function cancel():void
@@ -41,17 +58,11 @@ package jsion.core.loader
 			if(m_status == LOADING)
 			{
 				removeLoadEvent(m_urlLoader);
+				
 				if(m_urlLoader) m_urlLoader.close();
 			}
 			
 			super.cancel();
-		}
-		
-		override protected function onCompleted():void
-		{
-			if(m_data == null) m_data = m_urlLoader.data;
-			
-			super.onCompleted();
 		}
 		
 		override public function dispose():void

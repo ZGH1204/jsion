@@ -6,7 +6,7 @@ package jsion.core.loader
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
 	
-	import jsion.core.reflection.Assembly;
+	import jsion.Cache;
 	import jsion.core.zip.ZipEntry;
 	import jsion.core.zip.ZipFile;
 	import jsion.utils.ReflectionUtil;
@@ -15,20 +15,32 @@ package jsion.core.loader
 	{
 		protected var m_loader:Loader;
 		
-		protected var m_assembly:Assembly;
-		
 		public function SwcLoader(file:String, root:String = "", managed:Boolean = true)
 		{
 			super(file, root, managed);
 		}
 		
-		override protected function onCompleted():void
+		override protected function onLoadCompleted():void
+		{
+			if(m_loader == null && m_status == LOADING)
+			{
+				var bytes:ByteArray = m_cryptor.decry(m_urlLoader.data as ByteArray);
+				
+				if(m_cache) Cache.cacheData(m_urlKey, bytes, m_cacheInMemory);
+
+				loadInDomain(bytes);
+			}
+			else if(m_status == COMPLETE)
+			{
+				super.onLoadCompleted();
+			}
+		}
+		
+		private function loadInDomain(bytes:ByteArray):void
 		{
 			if(m_loader == null)
 			{
-				var bytes:ByteArray = m_urlLoader.data as ByteArray;
-				
-				var oldPos:uint = bytes.position;
+				bytes.position = 0;
 				
 				var zip:ZipFile = new ZipFile(bytes);
 				
@@ -37,7 +49,10 @@ package jsion.core.loader
 				entry = zip.getEntry("catalog.xml");
 				var xmlBytes:ByteArray = zip.getInput(entry);
 				
-				m_assembly = ReflectionUtil.parseAssembly(new XML(xmlBytes));
+				m_data = ReflectionUtil.parseAssembly(new XML(xmlBytes));
+				
+				
+				
 				
 				entry = zip.getEntry("library.swf");
 				var libBytes:ByteArray = zip.getInput(entry);
@@ -45,12 +60,6 @@ package jsion.core.loader
 				m_loader = new Loader();
 				m_loader.loadBytes(libBytes, new LoaderContext(false, ApplicationDomain.currentDomain));
 				m_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, __embedInDomainHandler);
-				
-				m_data = m_assembly;
-			}
-			else
-			{
-				super.onCompleted();
 			}
 		}
 		
@@ -58,7 +67,35 @@ package jsion.core.loader
 		{
 			m_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __embedInDomainHandler);
 			
-			super.onCompleted();
+			if(m_loadFromCache)
+			{
+				onLoadCacheComplete();
+			}
+			else
+			{
+				super.onLoadCompleted();
+			}
+		}
+		
+		override protected function loadCache():void
+		{
+			if(m_loader == null && m_status == LOADING)
+			{
+				var bytes:ByteArray = Cache.loadData(m_urlKey, m_cacheInMemory) as ByteArray;
+				
+				loadInDomain(bytes);
+			}
+			else  if(m_status == COMPLETE)
+			{
+				onLoadCacheComplete();
+			}
+		}
+		
+		override public function cancel():void
+		{
+			if(m_status == LOADING && m_loader) m_loader.unload();
+			
+			super.cancel();
 		}
 		
 		override public function dispose():void
