@@ -1,6 +1,6 @@
 package jsion.core.loader
 {
-	import flash.net.URLLoaderDataFormat;
+	import flash.utils.ByteArray;
 
 	public class TextLoader extends BytesLoader
 	{
@@ -9,11 +9,16 @@ package jsion.core.loader
 			super(file, root, managed);
 		}
 		
-		override protected function initialize():void
+		override protected function onLoadCompleted():void
 		{
-			super.initialize();
+			if(m_data == null && m_status == LOADING)
+			{
+				var bytes:ByteArray = decrypt(m_urlLoader.data as ByteArray);
+				bytes.position = 0;
+				m_data = bytes.readUTFBytes(bytes.bytesAvailable);
+			}
 			
-			m_urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
+			super.onLoadCompleted();
 		}
 	}
 }

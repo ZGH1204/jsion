@@ -8,7 +8,10 @@ package jsion.core.loader
 	import flash.events.SecurityErrorEvent;
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
+	import flash.utils.ByteArray;
 	
+	import jsion.Cache;
+	import jsion.core.cryptor.ICryption;
 	import jsion.core.events.JsionEventDispatcher;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.JUtil;
@@ -50,6 +53,8 @@ package jsion.core.loader
 		
 		protected var m_callback:Function;
 		
+		protected var m_cryptor:ICryption;
+		
 		
 		
 		protected var m_maxTryTimes:int = 3;
@@ -59,6 +64,15 @@ package jsion.core.loader
 		
 		
 		protected var m_data:Object;
+		
+		
+		
+		protected var m_cache:Boolean;
+		
+		protected var m_cacheInMemory:Boolean;
+		
+		
+		protected var m_loadFromCache:Boolean;
 		
 		
 		
@@ -107,14 +121,21 @@ package jsion.core.loader
 			
 			if(m_status == ERROR)
 			{
-				onErrored();
+				onLoadErrored();
 				
 				return;
 			}
 			
 			if(m_status == COMPLETE)
 			{
-				onCompleted();
+				if(m_loadFromCache)
+				{
+					onLoadCacheComplete();
+				}
+				else
+				{
+					onLoadCompleted();
+				}
 				
 				return;
 			}
@@ -125,10 +146,23 @@ package jsion.core.loader
 			{
 				m_status = LOADING;
 				
-				load();
+				if(Cache.contains(m_urlKey))
+				{
+					m_loadFromCache = true;
+					
+					loadCache();
+				}
+				else
+				{
+					m_loadFromCache = false;
+					
+					load();
+				}
 			}
 			else
 			{
+				m_status = WAITING;
+				
 				LoaderMgr.putLoader(this);
 			}
 		}
@@ -137,14 +171,16 @@ package jsion.core.loader
 		{
 			if(m_status == LOADING)
 			{
-				LoaderMgr.removeLoader(this);
 				DisposeUtil.free(this);
 			}
 		}
 		
 		protected function load():void
 		{
-			
+		}
+		
+		protected function loadCache():void
+		{
 		}
 		
 		protected function listenLoadEvent(dispatcher:EventDispatcher):void
@@ -186,11 +222,7 @@ package jsion.core.loader
 		
 		private function __completeHandler(e:Event):void
 		{
-			m_status = COMPLETE;
-			
-			onCompleted();
-			
-			LoaderMgr.removeLoader(this);
+			onLoadCompleted();
 			
 			removeLoadEvent(e.currentTarget as EventDispatcher);
 		}
@@ -207,13 +239,9 @@ package jsion.core.loader
 			}
 			else
 			{
-				m_status = ERROR;
-				
 				m_errorMsg = errMsg;
 				
-				onErrored();
-				
-				LoaderMgr.removeLoader(this);
+				onLoadErrored();
 				
 				return false;
 			}
@@ -222,18 +250,47 @@ package jsion.core.loader
 		
 		
 		
-		protected function onCompleted():void
+		protected function decrypt(bytes:ByteArray):ByteArray
 		{
+			if(m_cryptor && bytes)
+			{
+				return m_cryptor.decry(bytes);
+			}
+			
+			return bytes;
+		}
+		
+		protected function onLoadCompleted():void
+		{
+			m_status = COMPLETE;
+			
 			if(m_callback != null) m_callback(this, true);
 			
 			fireCompleteEvent();
+			
+			LoaderMgr.removeLoader(this);
 		}
 		
-		protected function onErrored():void
+		protected function onLoadCacheComplete():void
 		{
+			m_status = COMPLETE;
+			
+			if(m_callback != null) m_callback(this, true);
+			
+			fireCompleteEvent();
+			
+			LoaderMgr.removeLoader(this);
+		}
+		
+		protected function onLoadErrored():void
+		{
+			m_status = ERROR;
+			
 			if(m_callback != null) m_callback(this, false);
 			
 			fireErrorEvent();
+			
+			LoaderMgr.removeLoader(this);
 		}
 		
 		private function fireCompleteEvent():void
@@ -248,6 +305,8 @@ package jsion.core.loader
 		
 		override public function dispose():void
 		{
+			LoaderMgr.removeLoader(this);
+			
 			m_request = null;
 			
 			m_callback = null;
@@ -304,6 +363,26 @@ package jsion.core.loader
 		public function get fullUrl():String
 		{
 			return m_fullUrl;
+		}
+		
+		public function get cache():Boolean
+		{
+			return m_cache;
+		}
+		
+		public function set cache(value:Boolean):void
+		{
+			m_cache = value;
+		}
+		
+		public function get cacheInMemory():Boolean
+		{
+			return m_cacheInMemory;
+		}
+		
+		public function set cacheInMemory(value:Boolean):void
+		{
+			m_cacheInMemory = value;
 		}
 	}
 }

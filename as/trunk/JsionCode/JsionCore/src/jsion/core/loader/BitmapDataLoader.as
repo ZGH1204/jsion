@@ -3,7 +3,9 @@ package jsion.core.loader
 	import flash.display.Bitmap;
 	import flash.display.Loader;
 	import flash.events.Event;
+	import flash.utils.ByteArray;
 	
+	import jsion.Cache;
 	import jsion.utils.DisposeUtil;
 
 	public class BitmapDataLoader extends BytesLoader
@@ -15,17 +17,19 @@ package jsion.core.loader
 			super(file, root, managed);
 		}
 		
-		override protected function onCompleted():void
+		override protected function onLoadCompleted():void
 		{
-			if(m_loader == null)
+			if(m_loader == null && m_status == LOADING)
 			{
-				m_loader = new Loader();
-				m_loader.loadBytes(m_urlLoader.data);
-				m_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, __embedInDomainHandler);
+				var bytes:ByteArray = m_cryptor.decry(m_urlLoader.data as ByteArray);
+				
+				if(m_cache) Cache.cacheData(m_urlKey, bytes, m_cacheInMemory);
+				
+				loadBitmap(bytes);
 			}
-			else
+			else if(m_status == COMPLETE)
 			{
-				super.onCompleted();
+				super.onLoadCompleted();
 			}
 		}
 		
@@ -35,7 +39,38 @@ package jsion.core.loader
 			
 			m_data = Bitmap(m_loader.content).bitmapData.clone();
 			
-			super.onCompleted();
+			if(m_loadFromCache)
+			{
+				onLoadCacheComplete();
+			}
+			else
+			{
+				super.onLoadCompleted();
+			}
+		}
+		
+		override protected function loadCache():void
+		{
+			if(m_loader == null && m_status == LOADING)
+			{
+				var bytes:ByteArray = Cache.loadData(m_urlKey, m_cacheInMemory);
+				
+				loadBitmap(bytes);
+			}
+			else if(m_status == COMPLETE)
+			{
+				onLoadCacheComplete();
+			}
+		}
+		
+		private function loadBitmap(bytes:ByteArray):void
+		{
+			if(m_loader == null && m_status == LOADING)
+			{
+				m_loader = new Loader();
+				m_loader.loadBytes(bytes);
+				m_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, __embedInDomainHandler);
+			}
 		}
 		
 		override public function dispose():void
