@@ -34,5 +34,40 @@ package jsion.utils
 			
 			return str;
 		}
+		
+		
+		
+		/**
+		 * 将整数转换为16进制字符串(大写)
+		 * @param num
+		 * @return 
+		 * @tiptext 将整数转换为16进制字符串(大写)
+		 */		
+		public static function toHexString(num:int):String
+		{
+			return num.toString(16).toUpperCase();
+		}
+		
+		/**
+		 * 将整数转换为8进制字符串
+		 * @param num
+		 * @return 
+		 * 
+		 */		
+		public static function toOctString(num:int):String
+		{
+			return num.toString(8);
+		}
+		
+		/**
+		 * 将数字转换为2进制字符串
+		 * @param num
+		 * @return 
+		 * 
+		 */		
+		public static function toBinString(num:Number):String
+		{
+			return num.toString(2);
+		}
 	}
 }
