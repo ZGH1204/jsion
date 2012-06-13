@@ -1,4 +1,4 @@
-package jsion.core.quadtree
+package jsion.rpg.quadtree
 {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
