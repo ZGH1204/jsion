@@ -8,7 +8,7 @@ package jsion.socket
 	import flash.events.SecurityErrorEvent;
 	import flash.net.Socket;
 	
-	import jsion.IDispose;
+//	import jsion.IDispose;
 	import jsion.socket.events.SocketEvent;
 	
 	/**
@@ -69,7 +69,7 @@ package jsion.socket
 	 * 数据包通信器
 	 * @author Jsion
 	 */	
-	public class PacketSocket extends EventDispatcher implements IDispose
+	public class PacketSocket extends EventDispatcher// implements IDispose
 	{
 		public static const UNCONNECTED:String = "unconnected";
 		public static const CONNECTING:String = "connecting";
