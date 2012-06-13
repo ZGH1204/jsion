@@ -1,7 +1,6 @@
 package
 {
 	import flash.display.Sprite;
-	import flash.system.ApplicationDomain;
 	
 	[SWF(width="1250", height="650", frameRate="30")]
 	public class CoreApp extends Sprite
