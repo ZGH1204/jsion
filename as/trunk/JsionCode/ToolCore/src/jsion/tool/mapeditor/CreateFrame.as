@@ -11,7 +11,6 @@ package jsion.tool.mapeditor
 	import flash.net.FileFilter;
 	import flash.utils.ByteArray;
 	
-	import jsion.core.encoders.JPGEncoder;
 	import jsion.core.loader.BitmapDataLoader;
 	import jsion.rpg.RPGGlobal;
 	import jsion.rpg.engine.datas.MapInfo;
@@ -26,6 +25,7 @@ package jsion.tool.mapeditor
 	
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
+	import mx.graphics.codec.JPEGEncoder;
 	
 	import org.aswing.ButtonGroup;
 	import org.aswing.JButton;
@@ -83,9 +83,13 @@ package jsion.tool.mapeditor
 		
 		private var m_createCallback:Function;
 		
+		private var m_jpgEncoder:JPEGEncoder;
+		
 		public function CreateFrame(modal:Boolean=false)
 		{
 			m_title = "创建地图";
+			
+			m_jpgEncoder = new JPEGEncoder(100);
 			
 			super(ToolGlobal.window, modal);
 			
@@ -434,7 +438,7 @@ package jsion.tool.mapeditor
 			
 			var bmd:BitmapData = Bitmap(m_loader.content).bitmapData;
 			
-			var bytes:ByteArray = JPGEncoder.encode(bmd);
+			var bytes:ByteArray = m_jpgEncoder.encode(bmd);
 			
 			var outFile:File = new File(m_outPathTxt.getText());
 			outFile = outFile.resolvePath(m_mapIDTxt.getText());
@@ -502,7 +506,7 @@ package jsion.tool.mapeditor
 			
 			smallBmd.draw(bmd, matrix);
 			
-			var bytes:ByteArray = JPGEncoder.encode(smallBmd);
+			var bytes:ByteArray = m_jpgEncoder.encode(smallBmd);
 			
 			if(smallMapFile.exists) smallMapFile.deleteFile();
 			
@@ -614,6 +618,8 @@ package jsion.tool.mapeditor
 			m_bitmapData = null;
 			
 			m_createCallback = null;
+			
+			m_jpgEncoder = null;
 			
 			super.dispose();
 		}
