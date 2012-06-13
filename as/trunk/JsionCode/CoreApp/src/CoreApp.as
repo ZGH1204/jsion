@@ -19,26 +19,26 @@ package
 		
 		private function callback():void
 		{
-			var cls:Class = ApplicationDomain.currentDomain.getDefinition("jsion.core.loader.LoaderQueue2") as Class;
-			
-			loaders = new cls();
-			
-			loaders.addFile("Resources.swc");
-			loaders.addFile("config.xml");
-			
-			loaders.setProgressCallback(progressCallback);
-			
-			loaders.start(loadCallback);
+//			var cls:Class = ApplicationDomain.currentDomain.getDefinition("jsion.core.loader.LoaderQueue2") as Class;
+//			
+//			loaders = new cls();
+//			
+//			loaders.addFile("Resources.swc");
+//			loaders.addFile("config.xml");
+//			
+//			loaders.setProgressCallback(progressCallback);
+//			
+//			loaders.start(loadCallback);
 		}
 		
-		private function loadCallback(queue:Object):void
-		{
-			trace("Loader queue load complete!");
-		}
-		
-		private function progressCallback(bytesLoaded:int, bytesTotal:int):void
-		{
-			trace("bytesLoaded：", bytesLoaded, "  bytesLoaded：", bytesTotal);
-		}
+//		private function loadCallback(queue:Object):void
+//		{
+//			trace("Loader queue load complete!");
+//		}
+//		
+//		private function progressCallback(bytesLoaded:int, bytesTotal:int):void
+//		{
+//			trace("bytesLoaded：", bytesLoaded, "  bytesLoaded：", bytesTotal);
+//		}
 	}
 }
