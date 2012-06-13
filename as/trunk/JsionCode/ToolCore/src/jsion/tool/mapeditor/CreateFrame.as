@@ -12,7 +12,7 @@ package jsion.tool.mapeditor
 	import flash.utils.ByteArray;
 	
 	import jsion.core.encoders.JPGEncoder;
-	import jsion.core.loaders.ImageLoader;
+	import jsion.core.loader.BitmapDataLoader;
 	import jsion.rpg.RPGGlobal;
 	import jsion.rpg.engine.datas.MapInfo;
 	import jsion.tool.BaseFrame;
@@ -27,8 +27,6 @@ package jsion.tool.mapeditor
 	import mx.controls.Alert;
 	import mx.events.CloseEvent;
 	
-	import org.aswing.AbstractButton;
-	import org.aswing.BorderLayout;
 	import org.aswing.ButtonGroup;
 	import org.aswing.JButton;
 	import org.aswing.JLabel;
@@ -75,7 +73,7 @@ package jsion.tool.mapeditor
 		
 		private var m_outPathBtn:JButton;
 		
-		private var m_imageLoader:ImageLoader;
+		private var m_imageLoader:BitmapDataLoader;
 		
 		private var m_bitmapData:BitmapData;
 		
@@ -309,20 +307,18 @@ package jsion.tool.mapeditor
 			m_okBtn.setEnabled(false);
 			
 			DisposeUtil.free(m_imageLoader);
-			m_imageLoader = new ImageLoader(file.nativePath);
+			m_imageLoader = new BitmapDataLoader(file.nativePath);
 			m_imageLoader.loadAsync(mapImageLoadCallback);
 		}
 		
-		private function mapImageLoadCallback(loader:ImageLoader):void
+		private function mapImageLoadCallback(loader:BitmapDataLoader):void
 		{
 			m_okBtn.setEnabled(true);
 			
-			var bmp:Bitmap = Bitmap(loader.content);
+			m_bitmapData = BitmapData(loader.data).clone();
 			
-			m_bitmapData = bmp.bitmapData.clone();
-			
-			if(m_mapWidthTxt) m_mapWidthTxt.setText(bmp.width.toString());
-			if(m_mapHeightTxt) m_mapHeightTxt.setText(bmp.height.toString());
+			if(m_mapWidthTxt) m_mapWidthTxt.setText(m_bitmapData.width.toString());
+			if(m_mapHeightTxt) m_mapHeightTxt.setText(m_bitmapData.height.toString());
 		}
 		
 		private function onOpenOutPathHandler(e:AWEvent):void
