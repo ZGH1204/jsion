@@ -91,7 +91,11 @@ package
 			for each(var xml:XML in policys)
 			{
 				var file:String = String(xml.@file);
-				Security.loadPolicyFile(file);
+				
+				if(file != null && file != "")
+				{
+					Security.loadPolicyFile(file);
+				}
 			}
 			
 			
