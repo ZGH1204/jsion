@@ -3,7 +3,6 @@ package jsion
 	import flash.display.Stage;
 	
 	import jsion.core.ddrop.DDropMgr;
-	import jsion.core.modules.ModuleMgr;
 	import jsion.utils.BrowserUtil;
 
 	/**
@@ -33,7 +32,5 @@ package jsion
 		Policy.loadPolicyFile(config.Policys..policy);
 		
 		Cache.setup(config);
-		
-		//ModuleMgr.setup(config);
 	}
 }
