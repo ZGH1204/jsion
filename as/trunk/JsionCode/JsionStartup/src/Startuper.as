@@ -78,7 +78,13 @@ package
 		{
 			m_configXml = new XML(m_configLoader.data);
 			
-			Policy.loadPolicyFile(m_configXml.Policys..policy);
+			var policys:XMLList = m_configXml.Policys..policy;
+			
+			for each(var xml:XML in policys)
+			{
+				var file:String = String(xml.@file);
+				Security.loadPolicyFile(file);
+			}
 			
 			var versionXL:XMLList = m_configXml.version;
 			
