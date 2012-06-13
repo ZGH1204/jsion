@@ -57,6 +57,12 @@ package
 			m_configLoader.load(new URLRequest(url));
 		}
 		
+		
+		
+		
+		
+		
+		
 		private function addConfigLoaderEvent():void
 		{
 			m_configLoader.addEventListener(Event.COMPLETE, __configCompleteHandler);
@@ -78,6 +84,9 @@ package
 		{
 			m_configXml = new XML(m_configLoader.data);
 			
+			
+			
+			
 			var policys:XMLList = m_configXml.Policys..policy;
 			
 			for each(var xml:XML in policys)
@@ -86,6 +95,10 @@ package
 				Security.loadPolicyFile(file);
 			}
 			
+			
+			
+			
+			
 			var versionXL:XMLList = m_configXml.version;
 			
 			for each(var verXML:XML in versionXL)
@@ -93,12 +106,13 @@ package
 				m_version = Math.max(m_version, int(verXML.@to));
 			}
 			
-			m_coreLoader = new Loader();
 			
+			
+			
+			m_coreLoader = new Loader();
 			addCoreLoaderEvent();
 			
 			var url:String = m_corePath + "?v=" + m_version.toString();
-			
 			m_coreLoader.load(new URLRequest(url), new LoaderContext(false, ApplicationDomain.currentDomain));
 		}
 		
@@ -111,6 +125,15 @@ package
 		{
 			throw new Error(e.text);
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		private function addCoreLoaderEvent():void
 		{
@@ -147,6 +170,14 @@ package
 			throw new Error(e.text);
 		}
 		
+		
+		
+		
+		
+		
+		
+		
+		
 		public function dispose():void
 		{
 			removeConfigLoaderEvent();
@@ -161,6 +192,9 @@ package
 			
 			m_configXml = null;
 		}
+		
+		
+		
 
 		public function get configXml():XML
 		{
@@ -171,7 +205,5 @@ package
 		{
 			return m_version;
 		}
-
-
 	}
 }
