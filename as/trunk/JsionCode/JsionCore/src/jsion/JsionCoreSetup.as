@@ -15,10 +15,6 @@ package jsion
 	 * 　　&lt;version from="0" to="1"&gt; <br />
 	 * 　　　　&lt;file value="*.png" /&gt; <br />
 	 * 　　&lt;/version&gt; <br />
-	 * 　　&lt;Startup id="JsionCore" cls="jsion.core.JsionCoreModule" url="..\..\JsionCore\bin\JsionCore.swc" crypted="false" /&gt; <br />
-	 * 　　&lt;Modules&gt; <br />
-	 * 　　　　&lt;Module id="JsionSocket" cls="jsion.core.JsionCoreModule" url="..\..\JsionSocket\bin\JsionSocket.swc" autoLoad="false" crypted="false" target="_self" /&gt; <br />
-	 * 　　&lt;/Modules&gt; <br />
 	 * &lt;/root&gt;
 	 */	
 	public function JsionCoreSetup(stage:Stage, config:XML):void
