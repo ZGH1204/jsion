@@ -8,7 +8,6 @@ package
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
-	import flash.net.URLVariables;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.system.Security;
@@ -191,6 +190,8 @@ package
 			m_callback = null;
 			
 			m_configXml = null;
+			
+			m_coreLoader = null;
 		}
 		
 		

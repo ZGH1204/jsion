@@ -28,6 +28,9 @@ package
 //			loaders.setProgressCallback(progressCallback);
 //			
 //			loaders.start(loadCallback);
+			
+			m_startuper.dispose();
+			m_startuper = null;
 		}
 		
 //		private function loadCallback(queue:Object):void
