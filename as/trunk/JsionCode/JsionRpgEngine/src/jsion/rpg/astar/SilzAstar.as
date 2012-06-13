@@ -1,4 +1,4 @@
-﻿package jsion.core.astar
+﻿package jsion.rpg.astar
 {
 		import flash.display.Bitmap;
 		import flash.display.BitmapData;
