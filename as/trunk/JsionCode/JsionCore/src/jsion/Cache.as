@@ -4,8 +4,10 @@ package jsion
 	import flash.net.SharedObjectFlushStatus;
 	import flash.utils.Dictionary;
 	
-	import jsion.utils.*;
-
+	import jsion.utils.CacheUtil;
+	import jsion.utils.DictionaryUtil;
+	import jsion.utils.StringUtil;
+	
 	/**
 	 * 缓存类，使用前确保已执行过Cache.setup()安装方法。<br /><br />
 	 * 
@@ -85,7 +87,7 @@ package jsion
 		{
 			if(indexs.cachable && _isSetup)
 			{
-				key = JUtil.path2Key(key);
+				key = CacheUtil.path2Key(key);
 				changes[key] = data;
 				_changed = true;
 			}
@@ -101,7 +103,7 @@ package jsion
 		 */		
 		public static function contains(key:String):Boolean
 		{
-			key = JUtil.path2Key(key);
+			key = CacheUtil.path2Key(key);
 			
 			if(cacheMemory[key] || changes[key] || indexs.hasIndex(key)) return true;
 			
@@ -117,7 +119,7 @@ package jsion
 		 */		
 		public static function loadData(key:String, cacheInMemory:Boolean = true):*
 		{
-			key = JUtil.path2Key(key);
+			key = CacheUtil.path2Key(key);
 			
 			var data:* = null;
 			
@@ -176,7 +178,7 @@ package jsion
 		 */		
 		public static function delCacheData(key:String):void
 		{
-			key = JUtil.path2Key(key);
+			key = CacheUtil.path2Key(key);
 			delete changes[key];
 			delete cacheMemory[key];
 			indexs.clearIndex(key);
@@ -190,7 +192,7 @@ package jsion
 		public static function loadInMemory(key:String):*
 		{
 			if(StringUtil.isNullOrEmpty(key)) return null;
-			key = JUtil.path2Key(key);
+			key = CacheUtil.path2Key(key);
 			return cacheMemory[key];
 		}
 		
@@ -203,7 +205,7 @@ package jsion
 		public static function cacheInMemory(key:String, data:*):void
 		{
 			if(StringUtil.isNullOrEmpty(key)) return;
-			key = JUtil.path2Key(key);
+			key = CacheUtil.path2Key(key);
 			cacheMemory[key] = data;
 		}
 		
@@ -225,7 +227,7 @@ package jsion
 			}
 			else
 			{
-				key = JUtil.path2Key(key);
+				key = CacheUtil.path2Key(key);
 				delete cacheMemory[key];
 			}
 		}
@@ -272,7 +274,7 @@ package jsion
 			{
 				var str:String = String(x.@value);
 				//str = StringUtil.replace(str, ".", "_");
-				str = JUtil.path2Key(str);
+				str = CacheUtil.path2Key(str);
 				str = StringUtil.replace(str, "*","\\w*");
 				regList.push(new RegExp(str + "$"));
 			}

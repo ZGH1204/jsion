@@ -13,8 +13,8 @@ package jsion.core.loader
 	import jsion.core.events.JsionEventDispatcher;
 	import jsion.core.reflection.Assembly;
 	import jsion.utils.ArrayUtil;
+	import jsion.utils.CacheUtil;
 	import jsion.utils.DisposeUtil;
-	import jsion.utils.JUtil;
 	import jsion.utils.StringUtil;
 	
 	
@@ -247,7 +247,7 @@ package jsion.core.loader
 		 */		
 		public function addFile(file:String, root:String = "", managed:Boolean = true):ILoader
 		{
-			var ext:String = JUtil.getExtension(file);
+			var ext:String = CacheUtil.getExtension(file);
 			var cls:Class = Extension_Loader_Class[ext];
 			
 			if(cls)
@@ -360,7 +360,7 @@ package jsion.core.loader
 		 */		
 		public function getLoader(file:String):ILoader
 		{
-			return m_completeList.get(JUtil.path2Key(file)) || m_errorList.get(JUtil.path2Key(file));
+			return m_completeList.get(CacheUtil.path2Key(file)) || m_errorList.get(CacheUtil.path2Key(file));
 		}
 		
 		/**

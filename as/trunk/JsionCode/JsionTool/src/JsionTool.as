@@ -5,6 +5,7 @@ import flash.filesystem.FileStream;
 import flash.system.Capabilities;
 import flash.utils.ByteArray;
 
+import jsion.GameCoreSetup;
 import jsion.JsionCoreSetup;
 import jsion.tool.MainWindow;
 import jsion.tool.ToolGlobal;
@@ -39,7 +40,9 @@ private function init(e:FlexEvent):void
 	
 	var configXml:XML = new XML(bytes);
 	
-	JsionCoreSetup(this.stage, configXml);
+	JsionCoreSetup(configXml);
+	
+	GameCoreSetup(this.stage);
 	
 	ToolGlobal.setup(this.stage, this, m_container, this.width, this.height);
 	
