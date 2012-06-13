@@ -13,8 +13,8 @@ package jsion.core.loader
 	import jsion.core.cryptor.ICryption;
 	import jsion.core.events.JsionEvent;
 	import jsion.core.events.JsionEventDispatcher;
+	import jsion.utils.CacheUtil;
 	import jsion.utils.DisposeUtil;
-	import jsion.utils.JUtil;
 	import jsion.utils.PathUtil;
 	
 	
@@ -169,7 +169,7 @@ package jsion.core.loader
 			m_file = file;
 			m_root = root;
 			
-			m_urlKey = JUtil.path2Key(m_file);
+			m_urlKey = CacheUtil.path2Key(m_file);
 			m_fullUrl = PathUtil.combinPath(m_root, m_file);
 			
 			m_status = INITIALIZE;

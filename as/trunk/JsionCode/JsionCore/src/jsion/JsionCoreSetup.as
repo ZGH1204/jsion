@@ -2,8 +2,6 @@ package jsion
 {
 	import flash.display.Stage;
 	
-	import jsion.utils.BrowserUtil;
-
 	/**
 	 * JsionCore类库的初始化函数  <br />
 	 * config 格式如下： <br />
@@ -16,12 +14,8 @@ package jsion
 	 * 　　&lt;/version&gt; <br />
 	 * &lt;/root&gt;
 	 */	
-	public function JsionCoreSetup(stage:Stage, config:XML):void
+	public function JsionCoreSetup(config:XML):void
 	{
-		StageRef.setup(stage);
-		
-		BrowserUtil.setup(stage);
-		
 		Policy.loadPolicyFile(config.Policys..policy);
 		
 		Cache.setup(config);
