@@ -1,5 +1,8 @@
 package jsion
 {
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
+
 	/**
 	 * 一个指示宽度和高度并提供相关计算方法的类
 	 * @author Jsion
@@ -118,12 +121,14 @@ package jsion
 		 * @param x 指定位置的x坐标
 		 * @param y 指定位置的y坐标
 		 */		
-		public function getBounds(x:int=0, y:int=0):IntRectangle
+		public function getBounds(x:int=0, y:int=0):Rectangle
 		{
-			var p:IntPoint = new IntPoint(x, y);
-			var r:IntRectangle = new IntRectangle();
-			r.setLocation(p);
-			r.setSize(this);
+			var p:Point = new Point(x, y);
+			var r:Rectangle = new Rectangle();
+			r.x = p.x;
+			r.y = p.y;
+			r.width = width;
+			r.height = height;
 			return r;
 		}
 		

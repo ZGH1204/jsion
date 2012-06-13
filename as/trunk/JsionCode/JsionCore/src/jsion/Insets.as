@@ -1,5 +1,7 @@
 package jsion
 {
+	import flash.geom.Rectangle;
+
 	/**
 	 * 一个指示上下左右四边距并提供相关计算方法的类
 	 * @author Jsion
@@ -73,9 +75,9 @@ package jsion
 		 * 通过一个指定的包含边距值的范围获取不包含边距值的范围
 		 * @param bounds 指定的包含边距值的范围
 		 */		
-		public function getInsideBounds(bounds:IntRectangle):IntRectangle
+		public function getInsideBounds(bounds:Rectangle):Rectangle
 		{
-			var r:IntRectangle = bounds.clone();
+			var r:Rectangle = bounds.clone();
 			r.x += left;
 			r.y += top;
 			r.width -= (left + right);
@@ -87,9 +89,9 @@ package jsion
 		 * 通过一个指定的不包含边距值的范围获取包含边距值的范围
 		 * @param bounds 指定的不包含边距值的范围
 		 */		
-		public function getOutsideBounds(bounds:IntRectangle):IntRectangle
+		public function getOutsideBounds(bounds:Rectangle):Rectangle
 		{
-			var r:IntRectangle = bounds.clone();
+			var r:Rectangle = bounds.clone();
 			r.x -= left;
 			r.y -= top;
 			r.width += (left + right);
@@ -101,9 +103,9 @@ package jsion
 		 * 通过一个指定的包含边距值的范围获取顶部不包含边距值的范围 高度为上边距 宽度为指定范围宽度减去左右边距
 		 * @param bounds 指定范围
 		 */		
-		public function getTopBounds(bounds:IntRectangle):IntRectangle
+		public function getTopBounds(bounds:Rectangle):Rectangle
 		{
-			var r:IntRectangle = bounds.clone();
+			var r:Rectangle = bounds.clone();
 			
 			r.x += left;
 			r.width -= (left + right);
@@ -116,9 +118,9 @@ package jsion
 		 * 通过一个指定的包含边距值的范围获取底部不包含边距值的范围 高度为底边距 宽度为指定范围宽度减去左右边距
 		 * @param bounds 指定范围
 		 */		
-		public function getBottomBounds(bounds:IntRectangle):IntRectangle
+		public function getBottomBounds(bounds:Rectangle):Rectangle
 		{
-			var r:IntRectangle = bounds.clone();
+			var r:Rectangle = bounds.clone();
 			
 			r.x += left;
 			r.y += (r.height - bottom);
@@ -132,9 +134,9 @@ package jsion
 		 * 通过一个指定的包含边距值的范围获取左边不包含边距值的范围 宽度为左边距 高度为指定范围高度减去上下边距
 		 * @param bounds 指定的包含边距值的范围
 		 */		
-		public function getLeftBounds(bounds:IntRectangle):IntRectangle
+		public function getLeftBounds(bounds:Rectangle):Rectangle
 		{
-			var r:IntRectangle = bounds.clone();
+			var r:Rectangle = bounds.clone();
 			
 			r.y += top;
 			r.width = left;
@@ -147,9 +149,9 @@ package jsion
 		 * 通过一个指定的包含边距值的范围获取右边不包含边距值的范围 宽度为右边距 高度为指定范围高度减去上下边距
 		 * @param bounds 指定的包含边距值的范围
 		 */		
-		public function getRightBounds(bounds:IntRectangle):IntRectangle
+		public function getRightBounds(bounds:Rectangle):Rectangle
 		{
-			var r:IntRectangle = bounds.clone();
+			var r:Rectangle = bounds.clone();
 			
 			r.x += (r.width - right);
 			r.y += top;
@@ -163,9 +165,9 @@ package jsion
 		 * 通过一个指定的包含边距值的范围获取左上角的范围
 		 * @param bounds 指定的包含边距值的范围
 		 */		
-		public function getLeftTopCornerBounds(bounds:IntRectangle):IntRectangle
+		public function getLeftTopCornerBounds(bounds:Rectangle):Rectangle
 		{
-			var r:IntRectangle = bounds.clone();
+			var r:Rectangle = bounds.clone();
 			
 			r.width = left;
 			r.height = top;
@@ -177,9 +179,9 @@ package jsion
 		 * 通过一个指定的包含边距值的范围获取右上角的范围
 		 * @param bounds 指定的包含边距值的范围
 		 */		
-		public function getRightTopCornerBounds(bounds:IntRectangle):IntRectangle
+		public function getRightTopCornerBounds(bounds:Rectangle):Rectangle
 		{
-			var r:IntRectangle = bounds.clone();
+			var r:Rectangle = bounds.clone();
 			
 			r.x += (r.width - right);
 			r.width = right;
@@ -192,9 +194,9 @@ package jsion
 		 * 通过一个指定的包含边距值的范围获取左下角的范围
 		 * @param bounds 指定的包含边距值的范围
 		 */		
-		public function getLeftBottomCornerBounds(bounds:IntRectangle):IntRectangle
+		public function getLeftBottomCornerBounds(bounds:Rectangle):Rectangle
 		{
-			var r:IntRectangle = bounds.clone();
+			var r:Rectangle = bounds.clone();
 			
 			r.y += (r.height - bottom);
 			r.width = left;
@@ -207,9 +209,9 @@ package jsion
 		 * 通过一个指定的包含边距值的范围获取右下角的范围
 		 * @param bounds 指定的包含边距值的范围
 		 */		
-		public function getRightBottomCornerBounds(bounds:IntRectangle):IntRectangle
+		public function getRightBottomCornerBounds(bounds:Rectangle):Rectangle
 		{
-			var r:IntRectangle = bounds.clone();
+			var r:Rectangle = bounds.clone();
 			
 			r.x += (r.width - right);
 			r.y += (r.height - bottom);

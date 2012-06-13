@@ -9,7 +9,7 @@ package jsion
 	 * @productversion JUtils 1
 	 * 
 	 */	
-	public class Version implements ICloneable, IComparable
+	public class Version
 	{
 		private var _major:int;
 		
@@ -36,10 +36,12 @@ package jsion
 		}
 		
 		/**
-		 * 与指定对象比较是否相等
-		 * @param o 要比较的对象
-		 * @return true表示相等 false表示不相等
-		 * 
+		 * 对象比较
+		 * @param obj 要比较的对象
+		 * @return 0表示比较的对象相同
+		 * <p>1表示大于比较对象</p>
+		 * <p>-1表示小于比较对象</p>
+		 * <p>int.MIN_VALUE表示比较的对象类型不同</p>
 		 */		
 		public function equals(version:Object):int
 		{
