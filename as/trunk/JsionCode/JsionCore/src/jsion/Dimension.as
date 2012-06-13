@@ -8,18 +8,18 @@ package jsion
 	 * @author Jsion
 	 * 
 	 */	
-	public class IntDimension
+	public class Dimension
 	{
 		/**
 		 * 宽度
 		 */		
-		public var width:int = 0;
+		public var width:Number = 0;
 		/**
 		 * 高度
 		 */		
-		public var height:int = 0;
+		public var height:Number = 0;
 		
-		public function IntDimension(width:int = 0, height:int = 0)
+		public function Dimension(width:Number = 0, height:Number = 0)
 		{
 			this.width = width;
 			this.height = height;
@@ -28,7 +28,7 @@ package jsion
 		/**
 		 * 设置宽度和高度
 		 */		
-		public function setSize(dim:IntDimension):void
+		public function setSize(dim:Dimension):void
 		{
 			this.width = dim.width;
 			this.height = dim.height;
@@ -37,7 +37,7 @@ package jsion
 		/**
 		 * 设置宽度和高度
 		 */		
-		public function setSizeWH(width:int, height:int):void
+		public function setSizeWH(width:Number, height:Number):void
 		{
 			this.width = width;
 			this.height = height;
@@ -45,9 +45,9 @@ package jsion
 		
 		/**
 		 * 增加宽度和高度
-		 * @param s 要增加的宽度和高度的 IntDimension 对象
+		 * @param s 要增加的宽度和高度的 Dimension 对象
 		 */		
-		public function increaseSize(s:IntDimension):IntDimension
+		public function increaseSize(s:Dimension):Dimension
 		{
 			width += s.width;
 			height += s.height;
@@ -56,9 +56,9 @@ package jsion
 		
 		/**
 		 * 减去宽度和高度
-		 * @param s 要减去的宽度和高度的 IntDimension 对象
+		 * @param s 要减去的宽度和高度的 Dimension 对象
 		 */		
-		public function decreaseSize(s:IntDimension):IntDimension
+		public function decreaseSize(s:Dimension):Dimension
 		{
 			width -= s.width;
 			height -= s.height;
@@ -70,7 +70,7 @@ package jsion
 		 * @param deltaW 要改变的宽度值
 		 * @param deltaH 要改变的高度值
 		 */		
-		public function change(deltaW:int, deltaH:int):IntDimension
+		public function change(deltaW:Number, deltaH:Number):Dimension
 		{
 			width += deltaW;
 			height += deltaH;
@@ -78,21 +78,21 @@ package jsion
 		}
 		
 		/**
-		 * 获取要改变的宽度和高度的 IntDimension 对象 并生成新的对象 不影响对象本身
+		 * 获取要改变的宽度和高度的 Dimension 对象 并生成新的对象 不影响对象本身
 		 * @param deltaW 要改变的宽度值
 		 * @param deltaH 要改变的高度值
 		 */		
-		public function changedSize(deltaW:int, deltaH:int):IntDimension
+		public function changedSize(deltaW:Number, deltaH:Number):Dimension
 		{
-			var s:IntDimension = new IntDimension(deltaW, deltaH);
+			var s:Dimension = new Dimension(deltaW, deltaH);
 			return s;
 		}
 		
 		/**
 		 * 联合宽度和高度 取最大的宽度和高度值
-		 * @param d 要联合的宽度和高度的 IntDimension 对象
+		 * @param d 要联合的宽度和高度的 Dimension 对象
 		 */		
-		public function combine(d:IntDimension):IntDimension
+		public function combine(d:Dimension):Dimension
 		{
 			this.width = Math.max(this.width, d.width);	
 			this.height = Math.max(this.height, d.height);
@@ -102,16 +102,16 @@ package jsion
 		/**
 		 * 克隆对象
 		 */		
-		public function clone():IntDimension
+		public function clone():Dimension
 		{
-			return new IntDimension(width,height);
+			return new Dimension(width,height);
 		}
 		
 		/**
-		 * 联合宽度和高度 取最大的宽度和高度值 并生成新的 IntDimension 对象 不影响对象本身
-		 * @param d 要联合的宽度和高度的 IntDimension 对象
+		 * 联合宽度和高度 取最大的宽度和高度值 并生成新的 Dimension 对象 不影响对象本身
+		 * @param d 要联合的宽度和高度的 Dimension 对象
 		 */		
-		public function combineSize(d:IntDimension):IntDimension
+		public function combineSize(d:Dimension):Dimension
 		{
 			return clone().combine(d);
 		}
@@ -121,7 +121,7 @@ package jsion
 		 * @param x 指定位置的x坐标
 		 * @param y 指定位置的y坐标
 		 */		
-		public function getBounds(x:int=0, y:int=0):Rectangle
+		public function getBounds(x:Number=0, y:Number=0):Rectangle
 		{
 			var p:Point = new Point(x, y);
 			var r:Rectangle = new Rectangle();
@@ -140,17 +140,17 @@ package jsion
 		 */		
 		public function equals(o:Object):Boolean
 		{
-			var d:IntDimension = o as IntDimension;
+			var d:Dimension = o as Dimension;
 			if(d == null) return false;
 			return width === d.width && height === d.height;
 		}
 		
 		/**
-		 * 获取一个 100000 x 100000 的 IntDimension 对象
+		 * 获取一个 100000 x 100000 的 Dimension 对象
 		 */		
-		public static function createBigDimension():IntDimension
+		public static function createBigDimension():Dimension
 		{
-			return new IntDimension(100000, 100000);
+			return new Dimension(100000, 100000);
 		}
 		
 		/**
@@ -158,7 +158,7 @@ package jsion
 		 */		
 		public function toString():String
 		{
-			return "IntDimension["+width+","+height+"]";
+			return "Dimension["+width+","+height+"]";
 		}
 	}
 }

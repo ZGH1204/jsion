@@ -8,7 +8,7 @@ package jsion.comps
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	
-	import jsion.IntDimension;
+	import jsion.Dimension;
 	
 	/**
 	 * 组件工具
@@ -55,7 +55,7 @@ package jsion.comps
 		 * @param textField 附加的TextField对象用于获取相关设置信息
 		 * 
 		 */		
-		public static function computeStringSize(tf:TextFormat, str:String, includeGutters:Boolean = true, textField:TextField = null):IntDimension
+		public static function computeStringSize(tf:TextFormat, str:String, includeGutters:Boolean = true, textField:TextField = null):Dimension
 		{
 			if(textField)
 			{
@@ -71,11 +71,11 @@ package jsion.comps
 			
 			if(includeGutters)
 			{
-				return new IntDimension(Math.ceil(TEXT_FIELD_EXT.width), Math.ceil(TEXT_FIELD_EXT.height));
+				return new Dimension(Math.ceil(TEXT_FIELD_EXT.width), Math.ceil(TEXT_FIELD_EXT.height));
 			}
 			else
 			{
-				return new IntDimension(Math.ceil(TEXT_FIELD_EXT.textWidth), Math.ceil(TEXT_FIELD_EXT.textHeight));
+				return new Dimension(Math.ceil(TEXT_FIELD_EXT.textWidth), Math.ceil(TEXT_FIELD_EXT.textHeight));
 			}
 		}
 		
