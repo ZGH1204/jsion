@@ -1,5 +1,10 @@
 package jsion.core.socket
 {
+	/**
+	 * 无加密操作
+	 * @author Jsion
+	 * 
+	 */	
 	public class NoneCryptor implements IPacketCryptor
 	{
 		public function NoneCryptor()

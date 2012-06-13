@@ -1,5 +1,10 @@
 package jsion.core.socket
 {
+	/**
+	 * 数据包配置类
+	 * @author Jsion
+	 * 
+	 */	
 	public class PacketFactory
 	{
 		private static var packetClass:Class = Packet;

@@ -1,5 +1,10 @@
 package jsion.core.socket
 {
+	/**
+	 * 数据包加密接口
+	 * @author Jsion
+	 * 
+	 */	
 	public interface IPacketCryptor
 	{
 		/**
