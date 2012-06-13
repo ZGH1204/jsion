@@ -6,8 +6,14 @@ package jsion.core.loader
 	
 	import jsion.Cache;
 
+	/**
+	 * 字节流加载器
+	 * @author Jsion
+	 * 
+	 */	
 	public class BytesLoader extends JsionLoader
 	{
+		/** @private */
 		protected var m_urlLoader:URLLoader;
 		
 		public function BytesLoader(file:String, root:String = "", managed:Boolean = true)
@@ -15,6 +21,9 @@ package jsion.core.loader
 			super(file, root, managed);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function initialize():void
 		{
 			super.initialize();
@@ -23,6 +32,9 @@ package jsion.core.loader
 			m_urlLoader.dataFormat = URLLoaderDataFormat.BINARY;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function load():void
 		{
 			listenLoadEvent(m_urlLoader);
@@ -31,6 +43,9 @@ package jsion.core.loader
 			super.load();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function onLoadCompleted():void
 		{
 			if(m_data == null && m_status == LOADING)
@@ -43,6 +58,9 @@ package jsion.core.loader
 			super.onLoadCompleted();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function loadCache():void
 		{
 			if(m_data == null && m_status == LOADING)
@@ -53,6 +71,32 @@ package jsion.core.loader
 			onLoadCacheComplete();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
+		override public function loadTotalBytes(callback:Function = null):void
+		{
+			super.loadTotalBytes(callback);
+			
+			if(m_totalBytes > 0) return;
+			
+			listenLoadTotalBytesEvent(m_urlLoader);
+			m_urlLoader.load(m_request);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		override protected function onLoadTotalBytesComplete():void
+		{
+			if(m_urlLoader) m_urlLoader.close();
+			
+			super.onLoadTotalBytesComplete();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function cancel():void
 		{
 			if(m_status == LOADING)
@@ -65,9 +109,15 @@ package jsion.core.loader
 			super.cancel();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function dispose():void
 		{
 			LoaderMgr.removeLoader(this);
+			
+			removeLoadEvent(m_urlLoader);
+			removeLoadTotalBytesEvent(m_urlLoader);
 			
 			if(m_urlLoader) m_urlLoader.close();
 			removeLoadEvent(m_urlLoader);

@@ -8,8 +8,14 @@ package jsion.core.loader
 	import jsion.Cache;
 	import jsion.utils.DisposeUtil;
 
+	/**
+	 * 图片资源加载器，图片资源被加载为 BitmapData 对象。
+	 * @author Jsion
+	 * 
+	 */	
 	public class BitmapDataLoader extends BytesLoader
 	{
+		/** @private */
 		protected var m_loader:Loader;
 		
 		public function BitmapDataLoader(file:String, root:String = "", managed:Boolean = true)
@@ -17,11 +23,14 @@ package jsion.core.loader
 			super(file, root, managed);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function onLoadCompleted():void
 		{
 			if(m_loader == null && m_status == LOADING)
 			{
-				var bytes:ByteArray = m_cryptor.decry(m_urlLoader.data as ByteArray);
+				var bytes:ByteArray = decrypt(m_urlLoader.data as ByteArray);
 				
 				if(m_cache) Cache.cacheData(m_urlKey, bytes, m_cacheInMemory);
 				
@@ -49,6 +58,9 @@ package jsion.core.loader
 			}
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function loadCache():void
 		{
 			if(m_loader == null && m_status == LOADING)
@@ -73,6 +85,9 @@ package jsion.core.loader
 			}
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function dispose():void
 		{
 			if(m_loader)

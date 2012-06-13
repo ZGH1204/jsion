@@ -1,38 +1,44 @@
 package
 {
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
 	import flash.display.Sprite;
-	import flash.events.ErrorEvent;
-	import flash.utils.ByteArray;
-	
-	import jsion.core.loader.BytesLoader;
-	import jsion.core.loader.SwcLoader;
-	import jsion.core.loader.LibLoader;
-	import jsion.utils.AppDomainUtil;
-	import jsion.utils.ByteArrayUtil;
-	import jsion.utils.JUtil;
+	import flash.system.ApplicationDomain;
 	
 	[SWF(width="1250", height="650", frameRate="30")]
 	public class CoreApp extends Sprite
 	{
+		private var m_startuper:Startuper;
+		
+		private var loaders:Object;
+		
 		public function CoreApp()
 		{
-			var loader:BytesLoader = new SwcLoader("Resources.swc");
+			m_startuper = new Startuper(stage);
 			
-			loader.loadAsync(callback);
+			m_startuper.startup("config.xml", "JsionCore.swf", callback);
 		}
 		
-		private function callback(loader:BytesLoader, completed:Boolean):void
+		private function callback():void
 		{
-			if(completed)
-			{
-				//trace(ByteArrayUtil.toHexDump("", loader.data as ByteArray, 0, int(loader.data.length)));
-				
-				trace("加载成功！");
-				
-				addChild(new Bitmap(AppDomainUtil.create("ButtonUpImgAsset", 0, 0) as BitmapData));
-			}
+			var cls:Class = ApplicationDomain.currentDomain.getDefinition("jsion.core.loader.LoaderQueue2") as Class;
+			
+			loaders = new cls();
+			
+			loaders.addFile("Resources.swc");
+			loaders.addFile("config.xml");
+			
+			loaders.setProgressCallback(progressCallback);
+			
+			loaders.start(loadCallback);
+		}
+		
+		private function loadCallback(queue:Object):void
+		{
+			trace("Loader queue load complete!");
+		}
+		
+		private function progressCallback(bytesLoaded:int, bytesTotal:int):void
+		{
+			trace("bytesLoaded：", bytesLoaded, "  bytesLoaded：", bytesTotal);
 		}
 	}
 }
