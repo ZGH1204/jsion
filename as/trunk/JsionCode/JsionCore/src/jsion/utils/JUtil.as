@@ -10,6 +10,7 @@ package jsion.utils
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
+	import flash.utils.getQualifiedClassName;
 	
 	import jsion.HashMap;
 	import jsion.utils.*;
@@ -195,17 +196,33 @@ package jsion.utils
 		}
 		
 		/**
-		 * 检查指定对象是否为抽象类
-		 * 根据类名是否以"Abstract"开头判断
-		 * @param obj 要检查的对象
-		 * 
-		 */		
-		public static function checkAbstract(obj:Object):void
+		 *  Returns the name of the specified object's class,
+		 *  such as <code>"Button"</code>
+		 *
+		 *  <p>This string does not include the package name.
+		 *  If you need the package name as well, call the
+		 *  <code>getQualifiedClassName()</code> method in the flash.utils package.
+		 *  It will return a string such as <code>"mx.controls::Button"</code>.</p>
+		 *  
+		 *  @langversion 3.0
+		 *  @playerversion Flash 9
+		 *  @playerversion AIR 1.1
+		 *  @productversion Flex 3
+		 */
+		public static function getUnqualifiedClassName(object:Object):String
 		{
-			var str:String = NameUtil.getUnqualifiedClassName(obj);
+			var name:String;
+			if (object is String)
+				name = object as String;
+			else
+				name = getQualifiedClassName(object);
 			
-			if(StringUtil.startWith(str, "Abstract"))
-				throw new Error(str + "类为抽象类,拒绝初始化.");
+			// If there is a package name, strip it off.
+			var index:int = name.indexOf("::");
+			if (index != -1)
+				name = name.substr(index + 2);
+			
+			return name;
 		}
 		
 		/**

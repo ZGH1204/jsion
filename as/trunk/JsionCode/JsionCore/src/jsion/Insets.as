@@ -225,10 +225,10 @@ package jsion
 		 * 通过一个指定的不包含边距值的大小获取包含边距值的大小
 		 * @param size 指定的不包含边距值的大小
 		 */		
-		public function getOutsideSize(size:IntDimension=null):IntDimension
+		public function getOutsideSize(size:Dimension=null):Dimension
 		{
-			if(size == null) size = new IntDimension();
-			var s:IntDimension = size.clone();
+			if(size == null) size = new Dimension();
+			var s:Dimension = size.clone();
 			s.width += (left + right);
 			s.height += (top + bottom);
 			return s;
@@ -238,10 +238,10 @@ package jsion
 		 * 通过一个指定的包含边距值的大小获取不包含边距值的大小
 		 * @param size 指定的包含边距值的大小
 		 */		
-		public function getInsideSize(size:IntDimension=null):IntDimension
+		public function getInsideSize(size:Dimension=null):Dimension
 		{
-			if(size == null) size = new IntDimension();
-			var s:IntDimension = size.clone();
+			if(size == null) size = new Dimension();
+			var s:Dimension = size.clone();
 			s.width -= (left + right);
 			s.height -= (top + bottom);
 			return s;
@@ -251,10 +251,10 @@ package jsion
 		 * 通过一个指定的包含边距值的大小获取顶部不包含边距值的大小 高度为上边距 宽度为指定的包含边距值的大小的宽度减去左右边距
 		 * @param size 指定的包含边距值的大小
 		 */
-		public function getTopSize(size:IntDimension=null):IntDimension
+		public function getTopSize(size:Dimension=null):Dimension
 		{
-			if(size == null) size = new IntDimension();
-			var s:IntDimension = size.clone();
+			if(size == null) size = new Dimension();
+			var s:Dimension = size.clone();
 			s.width -= (left + right);
 			s.height = top;
 			return s;
@@ -264,10 +264,10 @@ package jsion
 		 * 通过一个指定的包含边距值的大小获取底部不包含边距值的大小 高度为下边距 宽度为指定的包含边距值的大小的宽度减去左右边距
 		 * @param size 指定的包含边距值的大小
 		 */
-		public function getBottomSize(size:IntDimension=null):IntDimension
+		public function getBottomSize(size:Dimension=null):Dimension
 		{
-			if(size == null) size = new IntDimension();
-			var s:IntDimension = size.clone();
+			if(size == null) size = new Dimension();
+			var s:Dimension = size.clone();
 			s.width -= (left + right);
 			s.height = bottom;
 			return s;
@@ -277,10 +277,10 @@ package jsion
 		 * 通过一个指定的包含边距值的大小获取左边不包含边距值的大小 宽度为左边距 高度为指定的包含边距值的大小的高度减去上下边距
 		 * @param size 指定的包含边距值的大小
 		 */
-		public function getLeftSize(size:IntDimension=null):IntDimension
+		public function getLeftSize(size:Dimension=null):Dimension
 		{
-			if(size == null) size = new IntDimension();
-			var s:IntDimension = size.clone();
+			if(size == null) size = new Dimension();
+			var s:Dimension = size.clone();
 			s.width = left;
 			s.height -= (top + bottom);
 			return s;
@@ -290,10 +290,10 @@ package jsion
 		 * 通过一个指定的包含边距值的大小获取右边不包含边距值的大小 宽度为右边距 高度为指定的包含边距值的大小的高度减去上下边距
 		 * @param size 指定的包含边距值的大小
 		 */
-		public function getRightSize(size:IntDimension=null):IntDimension
+		public function getRightSize(size:Dimension=null):Dimension
 		{
-			if(size == null) size = new IntDimension();
-			var s:IntDimension = size.clone();
+			if(size == null) size = new Dimension();
+			var s:Dimension = size.clone();
 			s.width = right;
 			s.height -= (top + bottom);
 			return s;
@@ -303,10 +303,10 @@ package jsion
 		 * 通过一个指定的包含边距值的大小获取左上角的大小
 		 * @param size 通过一个指定的包含边距值的大小
 		 */		
-		public function getLeftTopCornerSize(size:IntDimension=null):IntDimension
+		public function getLeftTopCornerSize(size:Dimension=null):Dimension
 		{
-			if(size == null) size = new IntDimension();
-			var s:IntDimension = size.clone();
+			if(size == null) size = new Dimension();
+			var s:Dimension = size.clone();
 			s.width = left;
 			s.height = top;
 			return s;
@@ -316,10 +316,10 @@ package jsion
 		 * 通过一个指定的包含边距值的大小获取右上角的大小
 		 * @param size 通过一个指定的包含边距值的大小
 		 */		
-		public function getRightTopCornerSize(size:IntDimension=null):IntDimension
+		public function getRightTopCornerSize(size:Dimension=null):Dimension
 		{
-			if(size == null) size = new IntDimension();
-			var s:IntDimension = size.clone();
+			if(size == null) size = new Dimension();
+			var s:Dimension = size.clone();
 			s.width = right;
 			s.height = top;
 			return s;
@@ -329,10 +329,10 @@ package jsion
 		 * 通过一个指定的包含边距值的大小获取左下角的大小
 		 * @param size 通过一个指定的包含边距值的大小
 		 */		
-		public function getLeftBottomCornerSize(size:IntDimension=null):IntDimension
+		public function getLeftBottomCornerSize(size:Dimension=null):Dimension
 		{
-			if(size == null) size = new IntDimension();
-			var s:IntDimension = size.clone();
+			if(size == null) size = new Dimension();
+			var s:Dimension = size.clone();
 			s.width = left;
 			s.height = bottom;
 			return s;
@@ -342,10 +342,10 @@ package jsion
 		 * 通过一个指定的包含边距值的大小获取右下角的大小
 		 * @param size 通过一个指定的包含边距值的大小
 		 */		
-		public function getRightBottomCornerSize(size:IntDimension=null):IntDimension
+		public function getRightBottomCornerSize(size:Dimension=null):Dimension
 		{
-			if(size == null) size = new IntDimension();
-			var s:IntDimension = size.clone();
+			if(size == null) size = new Dimension();
+			var s:Dimension = size.clone();
 			s.width = right;
 			s.height = bottom;
 			return s;
