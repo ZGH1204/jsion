@@ -1,6 +1,5 @@
 package jsion.rpg.engine
 {
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -9,8 +8,8 @@ package jsion.rpg.engine
 	import jsion.Constant;
 	import jsion.HashMap;
 	import jsion.IDispose;
-	import jsion.core.loaders.ImageLoader;
-	import jsion.rpg.RPGGlobal;
+	import jsion.core.loader.BitmapDataLoader;
+	import jsion.core.loader.JsionLoader;
 	import jsion.rpg.engine.datas.MapInfo;
 	import jsion.rpg.engine.datas.RPGInfo;
 	import jsion.utils.DisposeUtil;
@@ -110,8 +109,6 @@ package jsion.rpg.engine
 		
 		protected var m_loadings:HashMap;
 		
-		protected var m_loaderConfig:Object;
-		
 		protected var m_loadComplete:HashMap;
 		
 		public function RPGMap(info:RPGInfo, cameraWidth:int, cameraHeight:int)
@@ -151,7 +148,6 @@ package jsion.rpg.engine
 			
 			m_mapRoot = PathUtil.combinPath(m_rpgInfo.mapRoot, m_mapInfo.mapID);
 			m_tilesRoot = PathUtil.combinPath(m_mapRoot, "tiles");
-			m_loaderConfig = { root: m_tilesRoot };
 			
 			m_maxTileX = Math.ceil(m_mapInfo.mapWidth / m_mapInfo.tileWidth);
 			m_maxTileY = Math.ceil(m_mapInfo.mapHeight / m_mapInfo.tileHeight);
@@ -495,7 +491,7 @@ package jsion.rpg.engine
 					{
 						if(m_loadings.containsKey(key)) continue;
 						
-						var loader:ImageLoader = new ImageLoader(key + m_mapInfo.tileExt, m_loaderConfig);
+						var loader:BitmapDataLoader = new BitmapDataLoader(key + m_mapInfo.tileExt, m_tilesRoot);
 						
 						loader.tag = key;
 						
@@ -508,13 +504,13 @@ package jsion.rpg.engine
 		}
 		
 		
-		private function tileLoadCallback(loader:ImageLoader):void
+		private function tileLoadCallback(loader:BitmapDataLoader):void
 		{
 			m_loadings.remove(loader.tag);
 			
-			if(loader.isComplete == false)
+			if(loader.status == JsionLoader.ERROR)
 			{
-				trace(StringUtil.format("加载{0}出错", loader.uri));
+				trace(StringUtil.format("加载{0}出错", loader.fullUrl));
 				
 				DisposeUtil.free(loader);
 				
@@ -527,7 +523,7 @@ package jsion.rpg.engine
 			var x:int = int(pos[1]);
 			var y:int = int(pos[0]);
 			
-			var bmd:BitmapData = Bitmap(loader.content).bitmapData.clone();
+			var bmd:BitmapData = BitmapData(loader.data).clone();
 			
 			m_pool.addResource(key, bmd);
 			
@@ -561,7 +557,6 @@ package jsion.rpg.engine
 			DisposeUtil.free(m_buffer);
 			m_buffer = null;
 			
-			m_loaderConfig = null;
 			m_tempPoint = null;
 			m_tempRect = null;
 			m_center = null;

@@ -1,19 +1,20 @@
 package jsion.rpg.engine
 {
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
 	
-	import jsion.core.loaders.BinaryLoader;
-	import jsion.core.loaders.ImageLoader;
+	import jsion.core.loader.BitmapDataLoader;
+	import jsion.core.loader.BytesLoader;
+	import jsion.core.loader.JsionLoader;
 	import jsion.rpg.RPGGlobal;
 	import jsion.rpg.engine.datas.MapInfo;
 	import jsion.rpg.engine.datas.RPGInfo;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.PathUtil;
-	import jsion.utils.StringUtil;
 	
 	public class RPGEngine extends RPGSprite
 	{
@@ -28,9 +29,9 @@ package jsion.rpg.engine
 		
 		protected var m_rpgInfo:RPGInfo;
 		
-		protected var m_mapLoader:BinaryLoader;
+		protected var m_mapLoader:BytesLoader;
 		
-		protected var m_loader:ImageLoader;
+		protected var m_loader:BitmapDataLoader;
 		
 		protected var m_root:String;
 		
@@ -99,20 +100,20 @@ package jsion.rpg.engine
 		private function loadMapInfo(id:int):void
 		{
 			DisposeUtil.free(m_mapLoader);
-			m_mapLoader = new BinaryLoader(id + ".map", { root: m_mapRoot });
+			m_mapLoader = new BytesLoader(id + ".map", m_mapRoot);
 			m_mapLoader.tag = id;
 			m_mapLoader.loadAsync(mapInfoLoadCallback);
 		}
 		
-		private function mapInfoLoadCallback(loader:BinaryLoader):void
+		private function mapInfoLoadCallback(loader:BytesLoader):void
 		{
-			if(loader.isComplete == false)
+			if(loader.status == JsionLoader.ERROR)
 			{
 				throw new Error("地图信息加载失败!");
 				return;
 			}
 			
-			var bytes:ByteArray = loader.content as ByteArray;
+			var bytes:ByteArray = loader.data as ByteArray;
 			
 			m_rpgInfo = new RPGInfo();
 			m_rpgInfo.mapRoot = m_root;
@@ -126,27 +127,27 @@ package jsion.rpg.engine
 			
 			if(mapInfo.mapType == MapInfo.TileMap)
 			{
-				m_loader = new ImageLoader("small.jpg", { root: root });
+				m_loader = new BitmapDataLoader("small.jpg", root);
 			}
 			else
 			{
-				m_loader = new ImageLoader("loop.jpg", { root: root });
+				m_loader = new BitmapDataLoader("loop.jpg", root);
 			}
 			
 			m_loader.loadAsync(smallMapLoadCallback);
 		}
 		
-		private function smallMapLoadCallback(loader:ImageLoader):void
+		private function smallMapLoadCallback(loader:BitmapDataLoader):void
 		{
-			if(loader.isComplete == false)
+			if(loader.status == JsionLoader.ERROR)
 			{
 				throw new Error("小地图或循环背景加载失败!");
 				return;
 			}
 			
-			if(loader.isComplete)
+			if(loader.status == JsionLoader.COMPLETE)
 			{
-				m_rpgInfo.smallOrLoopBmd = Bitmap(loader.content).bitmapData.clone();
+				m_rpgInfo.smallOrLoopBmd = BitmapData(loader.data).clone();
 				
 				m_game.setMap(m_rpgInfo);
 				
