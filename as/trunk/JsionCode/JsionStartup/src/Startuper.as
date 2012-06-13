@@ -31,6 +31,8 @@ package
 		
 		private var m_coreLoader:Loader;
 		
+		private var m_loadingLoader:Loader;
+		
 		private var m_stage:Stage;
 		
 		public function Startuper(stage:Stage)
@@ -111,6 +113,8 @@ package
 			
 			
 			
+			removeConfigLoaderEvent();
+			
 			
 			m_coreLoader = new Loader();
 			addCoreLoaderEvent();
@@ -163,9 +167,23 @@ package
 			
 			if(fn != null) fn(m_stage, m_configXml);
 			
+			removeCoreLoaderEvent();
 			
 			
-			if(m_callback != null) m_callback();
+			m_loadingLoader = new Loader();
+			addLoadingLoaderEvent();
+			
+			var loadingLib:String = String(m_configXml.Loading.@lib);
+			
+			if(loadingLib != null && loadingLib != "")
+			{
+				var url:String = loadingLib + "?v=" + m_version.toString();
+				m_loadingLoader.load(new URLRequest(url), new LoaderContext(false, ApplicationDomain.currentDomain));
+			}
+			else if(m_callback != null)
+			{
+				m_callback();
+			}
 		}
 		
 		private function __coreErrorHandler(e:IOErrorEvent):void
@@ -178,12 +196,49 @@ package
 		
 		
 		
+		private function addLoadingLoaderEvent():void
+		{
+			m_loadingLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, __loadingCompleteHandler);
+			m_loadingLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, __loadingErrorHandler);
+		}
+		
+		private function removeLoadingLoaderEvent():void
+		{
+			if(m_loadingLoader == null) return;
+			
+			m_loadingLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __loadingCompleteHandler);
+			m_loadingLoader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, __loadingErrorHandler);
+		}
+		
+		private function __loadingCompleteHandler(e:Event):void
+		{
+			var mainFn:String = String(m_configXml.Loading.@mainFn);
+			
+			var fn:Function = ApplicationDomain.currentDomain.getDefinition(mainFn) as Function;
+			
+			if(fn != null) fn(m_stage, m_configXml);
+			
+			removeLoadingLoaderEvent();
+			
+			if(m_callback != null) m_callback();
+		}
+		
+		private function __loadingErrorHandler(e:IOErrorEvent):void
+		{
+			throw new Error(e.text);
+		}
+		
+		
 		
 		
 		
 		public function dispose():void
 		{
 			removeConfigLoaderEvent();
+			
+			removeCoreLoaderEvent();
+			
+			removeLoadingLoaderEvent();
 			
 			if(m_configLoader)
 			{
@@ -196,6 +251,8 @@ package
 			m_configXml = null;
 			
 			m_coreLoader = null;
+			
+			m_loadingLoader = null;
 		}
 		
 		
