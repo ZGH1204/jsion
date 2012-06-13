@@ -1,0 +1,9 @@
+ 1. 打开浏览器。
+ 2. 浏览器加载 swf 启动器。
+ 3. 启动器加载完成后加载 config.xml 配置文件。
+ 4. 启动器加载配置文件完成后加载 JsionCore.swf 基础库。
+ 5. 启动器基础库加载完成后，
+    将配置文件的 XML 对象保存到 jsion.core.Global.ConfigXml 变量上，
+    并运行 jsion.JsionCoreSetup(Stage, XML) 方法初始化基础库。
+ 6. 基础库初始化完成后，加载大 Loading 类库。
+ 7. 大 Loading 类库加载完成后启动 Loading 加载游戏模块。
