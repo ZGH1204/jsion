@@ -1,5 +1,6 @@
 package jsion.debug
 {
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -32,9 +33,6 @@ package jsion.debug
 		
 		static private  const tfDelayMax:int = 10;
 		
-		[Embed(source="fps.jpg")]
-		private var m_cls:Class;
-		
 		private var m_showOrHideBtn:Sprite;
 		
 		public function JsionFPS()
@@ -45,7 +43,7 @@ package jsion.debug
 			
 			m_showOrHideBtn = new Sprite();
 			m_showOrHideBtn.buttonMode = true;
-			m_showOrHideBtn.addChild(new m_cls());
+			m_showOrHideBtn.addChild(new Bitmap(new FPS_Asset(0, 0)));
 			m_showOrHideBtn.addEventListener(MouseEvent.CLICK, __showOrHideClickHandler);
 			
 			addEventListener(Event.ADDED_TO_STAGE, __addToStageHandler);

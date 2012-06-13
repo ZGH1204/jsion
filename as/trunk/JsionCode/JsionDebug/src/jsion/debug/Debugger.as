@@ -30,12 +30,6 @@ package jsion.debug
 		private static const LOADING:int = 1;
 		private static const COMPLETE:int = 2;
 		
-		[Embed(source="arrow.jpg")]
-		private var m_arrowCLS:Class;
-		
-		[Embed(source="clean.jpg")]
-		private var m_cleanCLS:Class;
-		
 		private var m_list:Array;
 		
 		private var m_style:StyleSheet;
@@ -85,7 +79,7 @@ package jsion.debug
 			m_textField.styleSheet = m_style;
 			addChild(m_textField);
 			
-			m_showOrHideBmp = new m_arrowCLS();
+			m_showOrHideBmp = new Bitmap(new Arrow_Asset(0, 0));
 			m_showOrHideBmp.scaleX = -1;
 			m_showOrHideBmp.x = m_showOrHideBmp.width;
 			
@@ -98,7 +92,7 @@ package jsion.debug
 			m_showOrHideBtn.alpha = 0.7;
 //			addChild(m_showOrHideBtn);
 			
-			m_cleanBmp = new m_cleanCLS();
+			m_cleanBmp = new Bitmap(new Clean_Asset(0, 0));
 			
 			m_clearBtn = new Sprite();
 			m_clearBtn.addChild(m_cleanBmp);
