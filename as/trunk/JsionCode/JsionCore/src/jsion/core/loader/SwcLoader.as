@@ -11,8 +11,14 @@ package jsion.core.loader
 	import jsion.core.zip.ZipFile;
 	import jsion.utils.ReflectionUtil;
 
+	/**
+	 * Swc 类库加载器，自动嵌入到当前应用程序域。
+	 * @author Jsion
+	 * 
+	 */	
 	public class SwcLoader extends BytesLoader
 	{
+		/** @private */
 		protected var m_loader:Loader;
 		
 		public function SwcLoader(file:String, root:String = "", managed:Boolean = true)
@@ -20,11 +26,14 @@ package jsion.core.loader
 			super(file, root, managed);
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function onLoadCompleted():void
 		{
 			if(m_loader == null && m_status == LOADING)
 			{
-				var bytes:ByteArray = m_cryptor.decry(m_urlLoader.data as ByteArray);
+				var bytes:ByteArray = decrypt(m_urlLoader.data as ByteArray);
 				
 				if(m_cache) Cache.cacheData(m_urlKey, bytes, m_cacheInMemory);
 
@@ -77,6 +86,9 @@ package jsion.core.loader
 			}
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override protected function loadCache():void
 		{
 			if(m_loader == null && m_status == LOADING)
@@ -91,13 +103,23 @@ package jsion.core.loader
 			}
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function cancel():void
 		{
-			if(m_status == LOADING && m_loader) m_loader.unload();
+			if(m_status == LOADING && m_loader)
+			{
+				m_loader.close();
+				m_loader.unload();
+			}
 			
 			super.cancel();
 		}
 		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function dispose():void
 		{
 			if(m_loader)

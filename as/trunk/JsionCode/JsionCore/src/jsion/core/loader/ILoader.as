@@ -19,7 +19,13 @@ package jsion.core.loader
 		
 		function get errorMsg():String;
 		
+		function get loadedBytes():int;
+		
+		function get totalBytes():int;
+		
 		function loadAsync(callback:Function = null):void;
+		
+		function loadTotalBytes(callback:Function = null):void;
 		
 		function cancel():void;
 	}
