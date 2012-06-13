@@ -15,8 +15,6 @@ package jsion.tool.piccuter
 	import flash.utils.Timer;
 	
 	import jsion.Constant;
-	import jsion.core.encoders.JPGEncoder;
-	import jsion.core.encoders.PNGEncoder;
 	import jsion.tool.BaseFrame;
 	import jsion.tool.ToolGlobal;
 	import jsion.tool.mgrs.FileMgr;
@@ -490,10 +488,12 @@ import flash.filesystem.FileStream;
 import flash.geom.Rectangle;
 import flash.utils.ByteArray;
 
-import jsion.core.encoders.JPGEncoder;
-import jsion.core.encoders.PNGEncoder;
 import jsion.tool.piccuter.PicCuterFrame;
 import jsion.utils.StringUtil;
+
+import mx.graphics.codec.JPEGEncoder;
+import mx.graphics.codec.PNGEncoder;
+
 
 class CutData
 {
@@ -556,11 +556,13 @@ class CutData
 	{
 		if(extension == PicCuterFrame.PNG_EXT)
 		{
-			return PNGEncoder.encode(bmd);
+			var encoder:PNGEncoder = new PNGEncoder();
+			return encoder.encode(bmd);
 		}
 		else
 		{
-			return JPGEncoder.encode(bmd);
+			var jpgencoder:JPEGEncoder = new JPEGEncoder(100);
+			return jpgencoder.encode(bmd);
 		}
 	}
 	
