@@ -93,9 +93,11 @@ package jsion
 			{
 				if(_index.cachable && _changed)
 				{
-					var list:Array = DictionaryUtil.getValues(_changedList);
-					for each(var so:SharedObject in list)
+					for each(var val:* in _changedList)
 					{
+						if(val is Function) continue;
+						
+						var so:SharedObject = val as SharedObject;
 						state = so.flush();
 						if(state == SharedObjectFlushStatus.PENDING) break;
 					}

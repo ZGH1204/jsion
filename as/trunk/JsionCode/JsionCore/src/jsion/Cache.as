@@ -5,8 +5,6 @@ package jsion
 	import flash.utils.Dictionary;
 	
 	import jsion.utils.CacheUtil;
-	import jsion.utils.DictionaryUtil;
-	import jsion.utils.StringUtil;
 	
 	/**
 	 * 缓存类，使用前确保已执行过Cache.setup()安装方法。<br /><br />
@@ -156,8 +154,7 @@ package jsion
 					return;
 				}
 				
-				var keys:Array = DictionaryUtil.getKeys(changes);
-				for each(var key:String in keys)
+				for(var key:* in changes)
 				{
 					indexs.saveIndex(key);
 					datas.saveCacheData(key, changes[key]);
@@ -191,7 +188,7 @@ package jsion
 		 */		
 		public static function loadInMemory(key:String):*
 		{
-			if(StringUtil.isNullOrEmpty(key)) return null;
+			if(key == null || key == "") return null;
 			key = CacheUtil.path2Key(key);
 			return cacheMemory[key];
 		}
@@ -204,7 +201,7 @@ package jsion
 		 */		
 		public static function cacheInMemory(key:String, data:*):void
 		{
-			if(StringUtil.isNullOrEmpty(key)) return;
+			if(key == null || key == "") return;
 			key = CacheUtil.path2Key(key);
 			cacheMemory[key] = data;
 		}
@@ -216,11 +213,9 @@ package jsion
 		 */		
 		public static function delMemoryCache(key:String = null):void
 		{
-			if(StringUtil.isNullOrEmpty(key))
+			if(key == null || key == "")
 			{
-				var keys:Array = DictionaryUtil.getKeys(cacheMemory);
-				
-				for each(var k:* in keys)
+				for(var k:* in cacheMemory)
 				{
 					delete cacheMemory[k];
 				}
@@ -273,9 +268,10 @@ package jsion
 			for each(var x:XML in xl)
 			{
 				var str:String = String(x.@value);
+				if(str == null || str == "") continue;
 				//str = StringUtil.replace(str, ".", "_");
 				str = CacheUtil.path2Key(str);
-				str = StringUtil.replace(str, "*","\\w*");
+				str = str.split("*").join("\\w*");
 				regList.push(new RegExp(str + "$"));
 			}
 			

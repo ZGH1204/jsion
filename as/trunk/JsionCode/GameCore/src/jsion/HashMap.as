@@ -2,7 +2,7 @@ package jsion
 {
 	import flash.utils.Dictionary;
 	
-	import jsion.utils.*;
+	import jsion.utils.DisposeUtil;
 	
 	/**
 	 * 提供键/值对的哈希表
@@ -213,13 +213,10 @@ package jsion
 		 */		
 		public function removeAll():void
 		{
-//			var keys:Array = DictionaryUtil.getKeys(content);
-//			for each(var key:* in keys)
-//			{
-//				delete content[key];
-//			}
-			
-			DictionaryUtil.delAll(content);
+			for(var key:* in content)
+			{
+				delete content[key];
+			}
 			
 			length = 0;
 		}

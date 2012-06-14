@@ -39,7 +39,11 @@ package jsion.utils
 		{
 			if(domain == ApplicationDomain.currentDomain) return;
 			
-			ArrayUtil.remove(domains, domain);
+			var index:int = domains.indexOf(domain);
+			
+			if(index == -1) return;
+			
+			domains.splice(index, 1);
 		}
 		
 		/**

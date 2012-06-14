@@ -30,7 +30,7 @@ package jsion.utils
 			
 			for each(var arg:String in args)
 			{
-				if(StringUtil.isNullOrEmpty(arg)) continue;
+				if(arg == null || arg == "") continue;
 				
 				if(path.lastIndexOf("\\") == (path.length - 1) || path.lastIndexOf("/") == (path.length - 1))
 				{

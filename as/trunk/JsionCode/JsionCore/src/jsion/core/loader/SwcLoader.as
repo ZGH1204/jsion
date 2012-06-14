@@ -9,10 +9,10 @@ package jsion.core.loader
 	import jsion.Cache;
 	import jsion.core.zip.ZipEntry;
 	import jsion.core.zip.ZipFile;
-	import jsion.utils.ReflectionUtil;
 
 	/**
 	 * Swc 类库加载器，自动嵌入到当前应用程序域。
+	 * data 属性的值为类库中所有类的完全限定名列表。
 	 * @author Jsion
 	 * 
 	 */	
@@ -58,7 +58,7 @@ package jsion.core.loader
 				entry = zip.getEntry("catalog.xml");
 				var xmlBytes:ByteArray = zip.getInput(entry);
 				
-				m_data = ReflectionUtil.parseAssembly(new XML(xmlBytes));
+				m_data = parseCatalogXml(new XML(xmlBytes));
 				
 				
 				
@@ -70,6 +70,42 @@ package jsion.core.loader
 				m_loader.loadBytes(libBytes, new LoaderContext(false, ApplicationDomain.currentDomain));
 				m_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, __embedInDomainHandler);
 			}
+		}
+		
+		/**
+		 * 解析类库内的所有类的完整类路径列表
+		 * @param catalogXml
+		 */		
+		private function parseCatalogXml(catalogXml:XML):Array
+		{
+			if(catalogXml == null) return [];
+			
+			var cList:Array = [];
+			
+			var nodes:XMLList = catalogXml.children();
+			
+			for (var j:int = 0; j < nodes.length(); j++)
+			{
+				if (nodes[j].name().localName == "libraries")
+				{
+					var libraries:XML = nodes[j];
+					var libList:XMLList = libraries.children();
+					for(var k:int = 0 ; k < libList.length(); k++)
+					{
+						var library:XML = libList[k];
+						var classList:XMLList = library.children();
+						for(var l:int = 0 ; l < classList.length(); l++)
+						{
+							var classDef:XML = classList[l] as XML;
+							if(classDef.name().localName != "script") continue;
+							//							trace('asset class name: ' + StringUtil.replace(String(classDef.@name),"\/", "\."));
+							cList.push(String(classDef.@name).split("\/").join("\."));
+						}
+					}
+				}
+			}
+			
+			return cList;
 		}
 		
 		private function __embedInDomainHandler(e:Event):void
