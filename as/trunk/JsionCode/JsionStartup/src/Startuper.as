@@ -46,6 +46,12 @@ package
 			m_stage = stage;
 		}
 		
+		/**
+		 * 运行启动器。
+		 * @param configPath xml 配置文件路径
+		 * @param corePath swf类型的核心库文件路径
+		 * @param callback 在加载完成后的回调函数，如果配置文件中配置了正确的 Loading 节点则在加载并启动 Loading 函数后执行回调函数，否则直接执行此回调函数
+		 */		
 		public function startup(configPath:String, corePath:String, callback:Function = null):void
 		{
 			m_callback = callback;
