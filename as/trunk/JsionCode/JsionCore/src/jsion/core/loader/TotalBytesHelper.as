@@ -1,14 +1,12 @@
 package jsion.core.loader
 {
-	import jsion.HashMap;
 	import jsion.IDispose;
-	import jsion.utils.ArrayUtil;
 	
 	internal class TotalBytesHelper implements IDispose
 	{
 		private var m_list:Array;
 		
-		private var m_errorList:HashMap;
+		private var m_addToErrorListFn:Function;
 		
 		private var m_callback:Function;
 		
@@ -18,10 +16,10 @@ package jsion.core.loader
 		
 		private var m_loadingList:Array;
 		
-		public function TotalBytesHelper(list:Array, errorList:HashMap)
+		public function TotalBytesHelper(list:Array, addToErrorListFn:Function)
 		{
 			m_list = list;
-			m_errorList = errorList;
+			m_addToErrorListFn = addToErrorListFn;
 			
 			m_totalBytes = 0;
 			m_maxLoading = 1;
@@ -41,7 +39,7 @@ package jsion.core.loader
 			{
 				var loader:ILoader = m_list.shift() as ILoader;
 				
-				ArrayUtil.push(m_loadingList, loader);
+				pushLoadingLoader(loader);
 				
 				loader.loadTotalBytes(loadCallback);
 			}
@@ -63,27 +61,44 @@ package jsion.core.loader
 			}
 			else
 			{
-				m_errorList.put(loader.urlKey, loader);
+				m_addToErrorListFn(loader);
 			}
 			
-			ArrayUtil.remove(m_loadingList, loader);
+			removeLoadingLoader(loader);
 			
 			tryLoadTotalBytesNext();
 			
 			tryComplete();
 		}
 		
+		public function pushLoadingLoader(loader:ILoader):void
+		{
+			if(m_loadingList.indexOf(loader) == -1)
+			{
+				m_loadingList.push(loader);
+			}
+		}
+		
+		public function removeLoadingLoader(loader:ILoader):void
+		{
+			var index:int = m_loadingList.indexOf(loader);
+			
+			if(index == -1) return;
+			
+			m_loadingList.splice(index, 1);
+		}
+		
 		public function dispose():void
 		{
-			m_errorList = null;
-			
-			ArrayUtil.removeAll(m_list);
+			if(m_list) m_list.splice(0);
 			m_list = null;
 			
-			ArrayUtil.removeAll(m_loadingList);
+			if(m_loadingList) m_loadingList.splice(0);
 			m_loadingList = null;
 			
 			m_callback = null;
+			
+			m_addToErrorListFn = null;
 		}
 	}
 }

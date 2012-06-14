@@ -53,12 +53,10 @@ package jsion.utils
 			}
 			else if(obj is Dictionary)
 			{
-				var keys:Array = DictionaryUtil.getKeys(obj as Dictionary);
-
-				for each(var str:* in keys)
+				for(var key:* in obj)
 				{
-					free(obj[str], freeBmd);
-					delete obj[str];
+					free(obj[key], freeBmd);
+					delete obj[key];
 				}
 			}
 		}

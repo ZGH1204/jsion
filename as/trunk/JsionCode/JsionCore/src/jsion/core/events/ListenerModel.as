@@ -1,7 +1,6 @@
 package jsion.core.events
 {
 	import jsion.IDispose;
-	import jsion.utils.ArrayUtil;
 
 	/**
 	 * 事件监听信息
@@ -32,7 +31,7 @@ package jsion.core.events
 		 */		
 		public function dispose():void
 		{
-			ArrayUtil.removeAll(listener);
+			if(listener) listener.splice(0);
 			listener = null;
 		}
 	}

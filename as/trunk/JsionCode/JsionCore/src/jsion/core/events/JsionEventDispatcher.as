@@ -2,10 +2,9 @@ package jsion.core.events
 {
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
+	import flash.utils.Dictionary;
 	
-	import jsion.HashMap;
 	import jsion.IDispose;
-	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 	
 	/**
@@ -19,11 +18,11 @@ package jsion.core.events
 		/**
 		 * 保存监听本对象事件的监听信息
 		 */		
-		private var m_listeners:HashMap;
+		private var m_listeners:Dictionary;
 		
 		public function JsionEventDispatcher(target:IEventDispatcher=null)
 		{
-			m_listeners = new HashMap();
+			m_listeners = new Dictionary();
 			
 			super(target);
 		}
@@ -48,11 +47,14 @@ package jsion.core.events
 			
 			var model:ListenerModel;
 			
-			if(m_listeners.containsKey(str))
+			if(m_listeners[str] != undefined)
 			{
-				model = m_listeners.get(str);
-				if(ArrayUtil.containsValue(model.listener, listener) == false)
+				model = m_listeners[str];
+				
+				if(model.listener.indexOf(listener) == -1)
+				{
 					model.listener.push(listener);
+				}
 			}
 			else
 			{
@@ -63,7 +65,7 @@ package jsion.core.events
 				model.listener.push(listener);
 				model.useCapture = useCapture;
 				
-				m_listeners.put(str, model);
+				m_listeners[str] = model;
 			}
 		}
 		
@@ -83,13 +85,22 @@ package jsion.core.events
 			
 			if(m_listeners)
 			{
-				var model:ListenerModel = m_listeners.get(str);
+				var model:ListenerModel = m_listeners[str];
 				
 				if(model != null)
 				{
-					ArrayUtil.remove(model.listener, listener);
+					var index:int = model.listener.indexOf(listener);
 					
-					if(model.listener.length == 0) DisposeUtil.free(m_listeners.remove(str));
+					if(index == -1) return;
+					
+					model.listener.splice(index, 1);
+					
+					if(model.listener.length == 0)
+					{
+						DisposeUtil.free(m_listeners[str]);
+						
+						delete m_listeners[str];
+					}
 				}
 			}
 		}
@@ -107,11 +118,11 @@ package jsion.core.events
 		{
 			if(m_listeners == null) return;
 			
-			var list:Array = m_listeners.getValues();
-			
-			while(list.length > 0)
+			for(var val:* in m_listeners)
 			{
-				var model:ListenerModel = list.pop() as ListenerModel;
+				var model:ListenerModel = m_listeners[val];
+				
+				delete m_listeners[val];
 				
 				for each(var fn:Function in model.listener)
 				{
@@ -123,6 +134,7 @@ package jsion.core.events
 		public function dispose():void
 		{
 			removeAllEventListeners();
+			
 			DisposeUtil.free(m_listeners);
 			m_listeners = null;
 		}
