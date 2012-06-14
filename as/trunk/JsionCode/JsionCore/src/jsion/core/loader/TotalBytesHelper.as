@@ -2,6 +2,12 @@ package jsion.core.loader
 {
 	import jsion.IDispose;
 	
+	/**
+	 * 获取加载总字节数
+	 * @private
+	 * @author Jsion
+	 * 
+	 */	
 	internal class TotalBytesHelper implements IDispose
 	{
 		private var m_list:Array;

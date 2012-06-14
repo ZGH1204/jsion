@@ -12,7 +12,7 @@ package jsion.core.loader
 
 	/**
 	 * Swc 类库加载器，自动嵌入到当前应用程序域。
-	 * data 属性的值为类库中所有类的完全限定名列表。
+	 * <p>data 属性的值为类库中所有类的完全限定名列表。</p>
 	 * @author Jsion
 	 * 
 	 */	
