@@ -14,6 +14,12 @@ package
 
 	/**
 	 * 游戏启动器，加载的 xml 配置文件内容保存在 jsion.Cache.ConfigXml 属性上。
+	 * <p>核心库加载完成后加载指定的 大 Loading 界面所在的类库，其中的 mainFn 属性指定的开始加载函数形式应该为：</p>
+	 * <p><b>function StartLoading(stage:Stage, config:XML):void { }</b></p>
+	 * <p>
+	 * Xml 配置项必需是根节点的直接子节点，其格式为：
+	 * <b>&lt;Loading lib="必须是 swf 类型的类库文件，扩展名可任意。" mainFn="StartLoading" /&gt;</b>
+	 * </p>
 	 * @author Jsion
 	 * 
 	 */	
@@ -22,7 +28,7 @@ package
 		private var m_corePath:String;
 		
 		private var m_configXml:XML;
-		
+
 		private var m_callback:Function;
 		
 		private var m_configLoader:URLLoader;
@@ -232,6 +238,25 @@ package
 		
 		
 		
+		public function get stage():Stage
+		{
+			return m_stage;
+		}
+		
+		public function get configXml():XML
+		{
+			return m_configXml;
+		}
+		
+		public function get version():int
+		{
+			return m_version;
+		}
+		
+		
+		
+		
+		
 		public function dispose():void
 		{
 			removeConfigLoaderEvent();
@@ -253,19 +278,6 @@ package
 			m_coreLoader = null;
 			
 			m_loadingLoader = null;
-		}
-		
-		
-		
-
-		public function get configXml():XML
-		{
-			return m_configXml;
-		}
-
-		public function get version():int
-		{
-			return m_version;
 		}
 	}
 }
