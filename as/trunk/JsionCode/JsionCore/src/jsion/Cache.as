@@ -26,6 +26,11 @@ package jsion
 	public final class Cache
 	{
 		/**
+		 * 配置文件内容
+		 */		
+		public static var ConfigXml:XML;
+		
+		/**
 		 * 初始缓存大小
 		 */		
 		public static const CacheSize:int = 50 * 1024 * 1024;

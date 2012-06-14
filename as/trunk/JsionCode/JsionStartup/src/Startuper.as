@@ -13,7 +13,7 @@ package
 	import flash.system.Security;
 
 	/**
-	 * 游戏启动器
+	 * 游戏启动器，加载的 xml 配置文件内容保存在 jsion.Cache.ConfigXml 属性上。
 	 * @author Jsion
 	 * 
 	 */	
@@ -159,13 +159,13 @@ package
 		
 		private function __coreCompleteHandler(e:Event):void
 		{
-			var global:Object = ApplicationDomain.currentDomain.getDefinition("jsion.core.Global");
+			var cache:Object = ApplicationDomain.currentDomain.getDefinition("jsion.Cache");
 			
-			if(global) global.ConfigXml = m_configXml;
+			if(cache) cache.ConfigXml = m_configXml;
 			
 			var fn:Function = ApplicationDomain.currentDomain.getDefinition("jsion.JsionCoreSetup") as Function;
 			
-			if(fn != null) fn(m_stage, m_configXml);
+			if(fn != null) fn(m_configXml);
 			
 			removeCoreLoaderEvent();
 			
