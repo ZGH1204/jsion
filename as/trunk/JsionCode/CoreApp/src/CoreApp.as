@@ -13,7 +13,7 @@ package
 		{
 			m_startuper = new Startuper(stage);
 			
-			m_startuper.startup("config.xml", "JsionCore.swf", callback);
+			m_startuper.startup("config.xml", callback);
 		}
 		
 		private function callback():void
