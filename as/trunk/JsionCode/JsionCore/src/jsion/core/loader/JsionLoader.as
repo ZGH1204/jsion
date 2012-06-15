@@ -18,6 +18,14 @@ package jsion.core.loader
 	import jsion.utils.PathUtil;
 	
 	
+	/**
+	 * 获取到所需加载的总字节数后触发。
+	 * @eventType jsion.core.events.JsionEvent
+	 * @langversion 3.0
+	 * @playerversion Flash 9
+	 * @playerversion AIR 1.1
+	 */	
+	[Event(name="totalBytes", type="jsion.core.events.JsionEvent")]
 	
 	/**
 	 * 文件加载完成后触发。
