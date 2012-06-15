@@ -1,4 +1,4 @@
-package
+package jsion.startup
 {
 	import flash.display.Loader;
 	import flash.display.Stage;
