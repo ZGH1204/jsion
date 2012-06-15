@@ -7,9 +7,9 @@ package jsion.rpg.engine
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
 	
-	import jsion.core.loader.BitmapDataLoader;
-	import jsion.core.loader.BytesLoader;
-	import jsion.core.loader.JsionLoader;
+	import jsion.loaders.BitmapDataLoader;
+	import jsion.loaders.BytesLoader;
+	import jsion.loaders.JsionLoader;
 	import jsion.rpg.RPGGlobal;
 	import jsion.rpg.engine.datas.MapInfo;
 	import jsion.rpg.engine.datas.RPGInfo;

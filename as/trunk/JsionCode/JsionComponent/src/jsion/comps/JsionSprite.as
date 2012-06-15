@@ -13,7 +13,7 @@ package jsion.comps
 	
 	import jsion.HashMap;
 	import jsion.IDispose;
-	import jsion.core.events.ListenerModel;
+	import jsion.events.ListenerModel;
 	import jsion.events.ReleaseEvent;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DepthUtil;

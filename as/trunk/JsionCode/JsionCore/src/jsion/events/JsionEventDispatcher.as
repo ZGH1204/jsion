@@ -1,151 +1,30 @@
-package jsion.comps
+package jsion.events
 {
 	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
+	import flash.utils.Dictionary;
 	
-	import jsion.HashMap;
 	import jsion.IDispose;
-	import jsion.events.ListenerModel;
-	import jsion.events.StateEvent;
-	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 	
 	/**
-	 * 状态改变事件，在 enabled、rollOver、armed、pressed 任一属性变更时派发。
-	 */	
-	[Event(name="stateChanged", type="jsion.events.StateEvent")]
-	/**
-	 * 选择状态改变事件，在 selected 属性变更时派发。
-	 */	
-	[Event(name="selectionChanged", type="jsion.events.StateEvent")]
-	/**
-	 * 状态模型
+	 * 继承自 flash.events.EventDispatcher。
+	 * <p>增加dispose时自动释放所有监听函数</p>
 	 * @author Jsion
 	 * 
 	 */	
-	public class StateModel extends EventDispatcher implements IDispose
+	public class JsionEventDispatcher extends EventDispatcher implements IDispose
 	{
-		
 		/**
 		 * 保存监听本对象事件的监听信息
 		 */		
-		private var m_listeners:HashMap;
+		private var m_listeners:Dictionary;
 		
-		/** @private */
-		protected var m_enabled:Boolean;
-		/** @private */
-		protected var m_rollOver:Boolean;
-		/** @private */
-		protected var m_armed:Boolean;
-		/** @private */
-		protected var m_pressed:Boolean;
-		/** @private */
-		protected var m_selected:Boolean;
-		
-		public function StateModel()
+		public function JsionEventDispatcher(target:IEventDispatcher=null)
 		{
-			m_enabled = true;
-			m_rollOver = false;
-			m_armed = false;
-			m_pressed = false;
-			m_selected = false;
-			m_listeners = new HashMap();
-		}
-		
-		
-		/**
-		 * 获取或设置是否可用
-		 */		
-		public function get enabled():Boolean
-		{
-			return m_enabled;
-		}
-		
-		/** @private */
-		public function set enabled(value:Boolean):void
-		{
-			if(m_enabled == value) return;
+			m_listeners = new Dictionary();
 			
-			m_enabled = value;
-			
-			if(m_enabled == false)
-			{
-				m_pressed = false;
-				m_armed = false;
-			}
-			
-			fireStateChanged();
-		}
-		
-		/**
-		 * 获取或设置鼠标是否经过
-		 */		
-		public function get rollOver():Boolean
-		{
-			return m_rollOver;
-		}
-		
-		/** @private */
-		public function set rollOver(value:Boolean):void
-		{
-			if(m_rollOver == value || enabled == false) return;
-			
-			m_rollOver = value;
-			
-			fireStateChanged();
-		}
-		
-		/**
-		 * 获取或设置鼠标是否按住
-		 */		
-		public function get armed():Boolean
-		{
-			return m_armed;
-		}
-		
-		/** @private */
-		public function set armed(value:Boolean):void
-		{
-			if(m_armed == value || enabled == false) return;
-			m_armed = value;
-			fireStateChanged();
-		}
-		
-		/**
-		 * 获取或设置鼠标是否按下
-		 */		
-		public function get pressed():Boolean
-		{
-			return m_pressed;
-		}
-		
-		/** @private */
-		public function set pressed(value:Boolean):void
-		{
-			if(m_pressed == value || enabled == false) return;
-			
-			m_pressed = value;
-			
-			fireStateChanged();
-		}
-		
-		/**
-		 * 获取或设置是否选中
-		 */		
-		public function get selected():Boolean
-		{
-			return m_selected;
-		}
-		
-		/** @private */
-		public function set selected(value:Boolean):void
-		{
-			if(m_selected == value) return;
-			
-			m_selected = value;
-			
-			fireStateChanged();
-			
-			fireSelectionChanged();
+			super(target);
 		}
 		
 		//==========================================		保存事件监听信息			==========================================
@@ -168,11 +47,14 @@ package jsion.comps
 			
 			var model:ListenerModel;
 			
-			if(m_listeners.containsKey(str))
+			if(m_listeners[str] != undefined)
 			{
-				model = m_listeners.get(str);
-				if(ArrayUtil.containsValue(model.listener, listener) == false)
+				model = m_listeners[str];
+				
+				if(model.listener.indexOf(listener) == -1)
+				{
 					model.listener.push(listener);
+				}
 			}
 			else
 			{
@@ -183,7 +65,7 @@ package jsion.comps
 				model.listener.push(listener);
 				model.useCapture = useCapture;
 				
-				m_listeners.put(str, model);
+				m_listeners[str] = model;
 			}
 		}
 		
@@ -203,18 +85,28 @@ package jsion.comps
 			
 			if(m_listeners)
 			{
-				var model:ListenerModel = m_listeners.get(str);
+				var model:ListenerModel = m_listeners[str];
 				
 				if(model != null)
 				{
-					ArrayUtil.remove(model.listener, listener);
+					var index:int = model.listener.indexOf(listener);
 					
-					if(model.listener.length == 0) DisposeUtil.free(m_listeners.remove(str));
+					if(index == -1) return;
+					
+					model.listener.splice(index, 1);
+					
+					if(model.listener.length == 0)
+					{
+						DisposeUtil.free(m_listeners[str]);
+						
+						delete m_listeners[str];
+					}
 				}
 			}
 		}
 		
 		//==========================================		保存事件监听信息			==========================================
+		
 		
 		
 		/**
@@ -226,11 +118,11 @@ package jsion.comps
 		{
 			if(m_listeners == null) return;
 			
-			var list:Array = m_listeners.getValues();
-			
-			while(list.length > 0)
+			for(var val:* in m_listeners)
 			{
-				var model:ListenerModel = list.pop() as ListenerModel;
+				var model:ListenerModel = m_listeners[val];
+				
+				delete m_listeners[val];
 				
 				for each(var fn:Function in model.listener)
 				{
@@ -239,28 +131,10 @@ package jsion.comps
 			}
 		}
 		
-		/**
-		 * 派发 StateEvent.STATE_CHANGED 事件
-		 */		
-		protected function fireStateChanged():void
-		{
-			dispatchEvent(new StateEvent(StateEvent.STATE_CHANGED));
-		}
-		
-		/**
-		 * 派发 StateEvent.SELECTION_CHANGED 事件
-		 */		
-		protected function fireSelectionChanged():void
-		{
-			dispatchEvent(new StateEvent(StateEvent.SELECTION_CHANGED));
-		}
-		
-		/**
-		 * 释放资源
-		 */		
 		public function dispose():void
 		{
 			removeAllEventListeners();
+			
 			DisposeUtil.free(m_listeners);
 			m_listeners = null;
 		}

@@ -1,7 +1,7 @@
 package jsion.comps
 {
 	import jsion.IDispose;
-	import jsion.core.events.JsionEventDispatcher;
+	import jsion.events.JsionEventDispatcher;
 	import jsion.display.ToggleButton;
 	import jsion.events.DisplayEvent;
 	import jsion.utils.ArrayUtil;

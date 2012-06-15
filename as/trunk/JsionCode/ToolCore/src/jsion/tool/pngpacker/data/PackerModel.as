@@ -8,9 +8,9 @@ package jsion.tool.pngpacker.data
 	
 	import jsion.HashMap;
 	import jsion.IDispose;
-	import jsion.core.Global;
-	import jsion.core.serialize.res.ResPacker;
-	import jsion.core.serialize.res.ResUnpacker;
+	import jsion.Global;
+	import jsion.serialize.res.ResPacker;
+	import jsion.serialize.res.ResUnpacker;
 	import jsion.utils.DisposeUtil;
 	
 	import org.aswing.tree.DefaultMutableTreeNode;

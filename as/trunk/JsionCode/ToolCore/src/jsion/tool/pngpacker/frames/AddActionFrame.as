@@ -2,7 +2,7 @@ package jsion.tool.pngpacker.frames
 {
 	import flash.events.Event;
 	
-	import jsion.core.Global;
+	import jsion.Global;
 	import jsion.tool.BaseFrame;
 	import jsion.tool.ToolGlobal;
 	import jsion.tool.pngpacker.PackerFrame;

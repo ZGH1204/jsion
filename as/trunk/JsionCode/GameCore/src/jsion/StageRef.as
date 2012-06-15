@@ -10,7 +10,8 @@ package jsion
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
-	import jsion.core.actions.*;
+	import jsion.actions.Action;
+	import jsion.actions.ActionLine;
 	
 
 	/**

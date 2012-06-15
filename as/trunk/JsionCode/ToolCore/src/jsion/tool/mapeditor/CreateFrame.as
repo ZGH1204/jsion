@@ -11,7 +11,7 @@ package jsion.tool.mapeditor
 	import flash.net.FileFilter;
 	import flash.utils.ByteArray;
 	
-	import jsion.core.loader.BitmapDataLoader;
+	import jsion.loaders.BitmapDataLoader;
 	import jsion.rpg.RPGGlobal;
 	import jsion.rpg.engine.datas.MapInfo;
 	import jsion.tool.BaseFrame;
