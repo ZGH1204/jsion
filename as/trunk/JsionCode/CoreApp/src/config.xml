@@ -1,9 +1,9 @@
-<root>
-	<Policys>
-		<!-- <policy file="crossdomain.xml" /> -->
-	</Policys>
+<Root LibRoot="">
+	<policy file="http://127.0.0.1/crossdomain.xml" />
+	
 	<version from="0" to="1">
 		<file value="*.png" />
 	</version>
-	<Loading lib="" mainFn="startLoading" background="" />
-</root>
+	
+	<Startup CoreLib="JsionCore.swf" CoreStartFn="jsion.JsionCoreSetup" LoadingLib="" LoadingStartFn="StartLoading" />
+</Root>
