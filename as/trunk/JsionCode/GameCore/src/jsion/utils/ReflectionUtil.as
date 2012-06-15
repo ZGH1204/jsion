@@ -3,7 +3,7 @@ package jsion.utils
 	import flash.utils.Dictionary;
 	import flash.utils.describeType;
 	
-	import jsion.core.reflection.*;
+	import jsion.reflection.*;
 	
 	/**
 	 * 反射工具

@@ -1,6 +1,6 @@
 package jsion.utils
 {
-	import jsion.core.serialize.xml.*;
+	import jsion.serialize.xml.*;
 
 	/**
 	 * Xml数据格式化工具

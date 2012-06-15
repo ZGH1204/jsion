@@ -8,8 +8,8 @@ package jsion.rpg.engine
 	import jsion.Constant;
 	import jsion.HashMap;
 	import jsion.IDispose;
-	import jsion.core.loader.BitmapDataLoader;
-	import jsion.core.loader.JsionLoader;
+	import jsion.loaders.BitmapDataLoader;
+	import jsion.loaders.JsionLoader;
 	import jsion.rpg.engine.datas.MapInfo;
 	import jsion.rpg.engine.datas.RPGInfo;
 	import jsion.utils.DisposeUtil;
