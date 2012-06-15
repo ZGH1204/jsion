@@ -4,6 +4,6 @@ package knightage
 
 	public function StartLoading(stage:Stage, config:XML):void
 	{
-		trace("loading...");
+		trace("Please wait, now is loading...");
 	}
 }
