@@ -5,5 +5,5 @@
 		<file value="*.png" />
 	</version>
 	
-	<Startup CoreLib="KAssets/libs/JsionCore.swf" CoreStartFn="jsion.JsionCoreSetup" LoadingLib="KLoading\bin\KLoading.swf" LoadingStartFn="knightage.StartLoading" />
+	<Startup CoreLib="Assets/libs/JsionCore.swf" CoreStartFn="jsion.JsionCoreSetup" LoadingLib="Loading\bin\Loading.swf" LoadingStartFn="knightage.StartLoading" />
 </Root>
