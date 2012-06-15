@@ -16,8 +16,8 @@ package jsion
 	 */	
 	public function JsionCoreSetup(config:XML):void
 	{
-		Policy.loadPolicyFile(config.Policys..policy);
-		
 		Cache.setup(config);
+		
+		Policy.loadPolicyFile(config..policy);
 	}
 }

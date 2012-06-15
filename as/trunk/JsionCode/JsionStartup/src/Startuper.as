@@ -13,19 +13,29 @@ package
 	import flash.system.Security;
 
 	/**
-	 * 游戏启动器，加载的 xml 配置文件内容保存在 jsion.Cache.ConfigXml 属性上。
-	 * <p>核心库加载完成后加载指定的 大 Loading 界面所在的类库，其中的 mainFn 属性指定的开始加载函数形式应该为：</p>
-	 * <p><b>function StartLoading(stage:Stage, config:XML):void { }</b></p>
-	 * <p>
-	 * Xml 配置项必需是根节点的直接子节点，其格式为：
-	 * <b>&lt;Loading lib="必须是 swf 类型的类库文件，扩展名可任意。" mainFn="StartLoading" /&gt;</b>
-	 * </p>
+	 * 游戏启动器。启动时加载指定的 xml 配置文件。
+	 * <p>配置文件加载完成后首先解析并加载配置在 Root.Policys 下的所有跨域安全策略文件，然后加载核心库以及 Loading 界面库。</p>
+	 * <p>跨域安全策略文件的 xml 配置在根节点下可以有多个，其格式为：</p>
+	 * <p><b>&lt;policy file="http://127.0.0.1/crossdomain.xml" /&gt;</b></p>
+	 * <p>加载核心库以及 Loading 界面库的 xml 配置在根节点下有且仅有一个，其格式为：</p>
+	 * <p><b>&lt;Startup CoreLib="JsionCore.swf" CoreStartFn="jsion.JsionCoreSetup" LoadingLib="Loading.swf" LoadingStartFn="StartLoading" /&gt;</b></p>
+	 * <p>其中各配置属性的作用为：</p>
+	 * <ul>
+	 * 	<li>CoreLib 表示核心库文件路径，此路径为根节点 LibRoot 属性指定的目录的相对路径。</li>
+	 * 	<li>CoreStartFn 表示核心库加载完成后执行的函数(需包含完整包路径)。其函数原形为：<b>function JsionCoreSetup(config:XML):void { }</b></li>
+	 * 	<li>LoadingLib 表示外部 Loading 界面所在的类库文件路径，此路径为根节点 LibRoot 属性指定的目录的相对路径。</li>
+	 * 	<li>LoadingStartFn 表示Loading 类库加载完成后执行的函数(需包含完整包路径)。其函数原形为：<b>function StartLoading(stage:Stage, config:XML):void { }</b></li>
+	 * </ul>
 	 * @author Jsion
 	 * 
 	 */	
 	public class Startuper
 	{
-		private var m_corePath:String;
+		private var m_version:int;
+		
+		private var m_libRoot:String;
+		
+		private var m_stage:Stage;
 		
 		private var m_configXml:XML;
 
@@ -33,13 +43,9 @@ package
 		
 		private var m_configLoader:URLLoader;
 		
-		private var m_version:int;
-		
 		private var m_coreLoader:Loader;
 		
 		private var m_loadingLoader:Loader;
-		
-		private var m_stage:Stage;
 		
 		public function Startuper(stage:Stage)
 		{
@@ -49,14 +55,11 @@ package
 		/**
 		 * 运行启动器。
 		 * @param configPath xml 配置文件路径
-		 * @param corePath swf类型的核心库文件路径
 		 * @param callback 在加载完成后的回调函数，如果配置文件中配置了正确的 Loading 节点则在加载并启动 Loading 函数后执行回调函数，否则直接执行此回调函数
 		 */		
-		public function startup(configPath:String, corePath:String, callback:Function = null):void
+		public function startup(configPath:String, callback:Function = null):void
 		{
 			m_callback = callback;
-			
-			m_corePath = corePath;
 			
 			Security.allowDomain("*");
 			
@@ -100,7 +103,19 @@ package
 			
 			
 			
-			var policys:XMLList = m_configXml.Policys..policy;
+			var versionXL:XMLList = m_configXml.version;
+			
+			for each(var verXML:XML in versionXL)
+			{
+				m_version = Math.max(m_version, int(verXML.@to));
+			}
+			
+			
+			
+			
+			
+			//加载跨域文件
+			var policys:XMLList = m_configXml..policy;
 			
 			for each(var xml:XML in policys)
 			{
@@ -114,14 +129,26 @@ package
 			
 			
 			
+			//获取类库根目录
+			m_libRoot = String(m_configXml.@LibRoot);
 			
-			
-			var versionXL:XMLList = m_configXml.version;
-			
-			for each(var verXML:XML in versionXL)
+			if(m_libRoot != null && m_libRoot != "")
 			{
-				m_version = Math.max(m_version, int(verXML.@to));
+				var ind:int = m_libRoot.indexOf("\\");
+				
+				if(ind != (m_libRoot.length - 1))
+				{
+					ind = m_libRoot.indexOf("\/");
+					
+					if(ind != (m_libRoot.length - 1))
+					{
+						m_libRoot += "\/";
+					}
+				}
 			}
+			
+			
+			
 			
 			
 			
@@ -131,7 +158,7 @@ package
 			m_coreLoader = new Loader();
 			addCoreLoaderEvent();
 			
-			var url:String = m_corePath + "?v=" + m_version.toString();
+			var url:String = m_libRoot + String(m_configXml.Startup.@CoreLib) + "?v=" + m_version.toString();
 			m_coreLoader.load(new URLRequest(url), new LoaderContext(false, ApplicationDomain.currentDomain));
 		}
 		
@@ -171,13 +198,16 @@ package
 		
 		private function __coreCompleteHandler(e:Event):void
 		{
-			var cache:Object = ApplicationDomain.currentDomain.getDefinition("jsion.Cache");
-			
-			if(cache) cache.ConfigXml = m_configXml;
-			
-			var fn:Function = ApplicationDomain.currentDomain.getDefinition("jsion.JsionCoreSetup") as Function;
-			
-			if(fn != null) fn(m_configXml);
+			try
+			{
+				var fn:Function = ApplicationDomain.currentDomain.getDefinition(String(m_configXml.Startup.@CoreStartFn)) as Function;
+				
+				if(fn != null) fn(m_configXml);
+			}
+			catch(err:Error)
+			{
+				throw err;
+			}
 			
 			removeCoreLoaderEvent();
 			
@@ -185,11 +215,11 @@ package
 			m_loadingLoader = new Loader();
 			addLoadingLoaderEvent();
 			
-			var loadingLib:String = String(m_configXml.Loading.@lib);
+			var loadingLib:String = String(m_configXml.Startup.@LoadingLib);
 			
 			if(loadingLib != null && loadingLib != "")
 			{
-				var url:String = loadingLib + "?v=" + m_version.toString();
+				var url:String = m_libRoot + loadingLib + "?v=" + m_version.toString();
 				m_loadingLoader.load(new URLRequest(url), new LoaderContext(false, ApplicationDomain.currentDomain));
 			}
 			else if(m_callback != null)
@@ -224,11 +254,18 @@ package
 		
 		private function __loadingCompleteHandler(e:Event):void
 		{
-			var mainFn:String = String(m_configXml.Loading.@mainFn);
+			var mainFn:String = String(m_configXml.Startup.@LoadingStartFn);
 			
-			var fn:Function = ApplicationDomain.currentDomain.getDefinition(mainFn) as Function;
-			
-			if(fn != null) fn(m_stage, m_configXml);
+			try
+			{
+				var fn:Function = ApplicationDomain.currentDomain.getDefinition(mainFn) as Function;
+				
+				if(fn != null) fn(m_stage, m_configXml);
+			}
+			catch(err:Error)
+			{
+				throw err;
+			}
 			
 			removeLoadingLoaderEvent();
 			
