@@ -1,6 +1,6 @@
 <project name="UnzipSwcFile" default="main">
 
-	<property name="SWC_ROOT" value="E:\Code\JsionCode\as\trunk\KGame" />
+	<property name="SWC_ROOT" value="E:\Code\JsionCode\as\trunk\JsionClient" />
 	<property name="TEMP_DIR" value="c:/temp" />
 	
 	<target name="main">
@@ -15,14 +15,14 @@
 	
 	<target name="UnzipJsionCore">
 		<echo>Unzip the JsionCore.swc file.</echo>
-		<unzip src="${SWC_ROOT}/KAssets/libs/JsionCore.swc" dest="${TEMP_DIR}"></unzip>
-		<copyfile src="${TEMP_DIR}/library.swf" dest="${SWC_ROOT}/KAssets/libs/JsionCore.swf" />
+		<unzip src="${SWC_ROOT}/Assets/libs/JsionCore.swc" dest="${TEMP_DIR}"></unzip>
+		<copyfile src="${TEMP_DIR}/library.swf" dest="${SWC_ROOT}/Assets/libs/JsionCore.swf" />
 	</target>
 	
 	<target name="UnzipLoading">
 		<echo>Unzip the JsionCore.swc file.</echo>
-		<unzip src="${SWC_ROOT}/KLoading/bin/KLoading.swc" dest="${TEMP_DIR}"></unzip>
-		<copyfile src="${TEMP_DIR}/library.swf" dest="${SWC_ROOT}/KLoading/bin/KLoading.swf" />
+		<unzip src="${SWC_ROOT}/Loading/bin/Loading.swc" dest="${TEMP_DIR}"></unzip>
+		<copyfile src="${TEMP_DIR}/library.swf" dest="${SWC_ROOT}/Loading/bin/Loading.swf" />
 	</target>
 
 	<target name="prepare">
