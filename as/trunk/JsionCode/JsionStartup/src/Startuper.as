@@ -134,11 +134,11 @@ package
 			
 			if(m_libRoot != null && m_libRoot != "")
 			{
-				var ind:int = m_libRoot.indexOf("\\");
+				var ind:int = m_libRoot.lastIndexOf("\\");
 				
 				if(ind != (m_libRoot.length - 1))
 				{
-					ind = m_libRoot.indexOf("\/");
+					ind = m_libRoot.lastIndexOf("\/");
 					
 					if(ind != (m_libRoot.length - 1))
 					{
