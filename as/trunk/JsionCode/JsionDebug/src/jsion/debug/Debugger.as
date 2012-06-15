@@ -16,6 +16,7 @@ package jsion.debug
 	
 	/**
 	 * 调试信息记录/显示类
+	 * @private
 	 * @author Jsion
 	 */	
 	internal class Debugger extends DebugView

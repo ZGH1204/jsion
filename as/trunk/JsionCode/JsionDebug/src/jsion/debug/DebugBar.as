@@ -8,7 +8,12 @@ package jsion.debug
 	import flash.display.Stage;
 	import flash.events.Event;
 	
-	public class DebugBar extends Sprite
+	/**
+	 * @private
+	 * @author Jsion
+	 * 
+	 */	
+	internal class DebugBar extends Sprite
 	{
 		private var m_width:int;
 		

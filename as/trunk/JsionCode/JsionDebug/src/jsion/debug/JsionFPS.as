@@ -15,9 +15,10 @@ package jsion.debug
 	
 	/**
 	 * 显示FPS和其他相关环境信息
+	 * @private
 	 * @author Jsion
 	 */	
-	public class JsionFPS extends DebugView
+	internal class JsionFPS extends DebugView
 	{
 //		static private  var instance:JsionFPS;
 		private var m_style:StyleSheet;
