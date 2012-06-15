@@ -2,6 +2,8 @@ package
 {
 	import flash.display.Sprite;
 	
+	import jsion.startup.Startuper;
+	
 	[SWF(width="1250", height="650", frameRate="30")]
 	public class KLoader extends Sprite
 	{
