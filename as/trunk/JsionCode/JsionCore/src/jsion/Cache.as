@@ -62,10 +62,12 @@ package jsion
 		{
 			if(_isSetup == false)
 			{
+				ConfigXml = config;
+				
 				indexs.loadLocalCache();
 				_isSetup = true;
 				
-				parseConfig(config);
+				parseConfig(ConfigXml);
 			}
 		}
 		
