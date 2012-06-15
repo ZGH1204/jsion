@@ -3,7 +3,12 @@ package jsion.debug
 	import flash.display.Sprite;
 	import flash.display.Stage;
 
-	public class DebugView extends Sprite
+	/**
+	 * @private
+	 * @author Jsion
+	 * 
+	 */	
+	internal class DebugView extends Sprite
 	{
 		public function DebugView()
 		{
