@@ -7,6 +7,11 @@ package jsion.display
 	import jsion.comps.CompUtil;
 	import jsion.utils.DisposeUtil;
 
+	/**
+	 * 包含图标的按钮。
+	 * @author Jsion
+	 * 
+	 */	
 	public class IconButton extends Button
 	{
 		/**
