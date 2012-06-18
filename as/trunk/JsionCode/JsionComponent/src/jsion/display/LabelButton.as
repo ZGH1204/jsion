@@ -43,37 +43,37 @@ package jsion.display
 		public static const OFFSET:String = Button.OFFSET;
 		
 		/**
-		 * 水平左边对齐，用于 hAlign 属性。
+		 * 水平左边对齐，用于 labelHAlign 属性。
 		 * @see jsion.comps.CompGlobal#LEFT
 		 */		
 		public static const LEFT:String = CompGlobal.LEFT;
 		
 		/**
-		 * 水平右边对齐，用于 hAlign 属性。
+		 * 水平右边对齐，用于 labelHAlign 属性。
 		 * @see jsion.comps.CompGlobal#RIGHT
 		 */		
 		public static const RIGHT:String = CompGlobal.RIGHT;
 		
 		/**
-		 * 水平居中对齐，用于 hAlign 属性。
+		 * 水平居中对齐，用于 labelHAlign 属性。
 		 * @see jsion.comps.CompGlobal#CENTER
 		 */		
 		public static const CENTER:String = CompGlobal.CENTER;
 		
 		/**
-		 * 垂直顶边对齐，用于 vAlign 属性。
+		 * 垂直顶边对齐，用于 labelVAlign 属性。
 		 * @see jsion.comps.CompGlobal#TOP
 		 */		
 		public static const TOP:String = CompGlobal.TOP;
 		
 		/**
-		 * 垂直底边对齐，用于 vAlign 属性。
+		 * 垂直底边对齐，用于 labelVAlign 属性。
 		 * @see jsion.comps.CompGlobal#BOTTOM
 		 */		
 		public static const BOTTOM:String = CompGlobal.BOTTOM;
 		
 		/**
-		 * 垂直居中对齐，用于 vAlign 属性。
+		 * 垂直居中对齐，用于 labelVAlign 属性。
 		 * @see jsion.comps.CompGlobal#MIDDLE
 		 */		
 		public static const MIDDLE:String = CompGlobal.MIDDLE;
@@ -94,8 +94,10 @@ package jsion.display
 //		public static const LABELOFFSET:String = "labelOffset";
 		
 		
-		private var m_text:String;
-		private var m_textColor:uint;
+		/** @private */
+		protected var m_text:String;
+		/** @private */
+		protected var m_textColor:uint;
 		
 		/** @private */
 		protected var m_label:Label;
@@ -149,6 +151,9 @@ package jsion.display
 			
 			m_hAlign = CENTER;
 			m_vAlign = MIDDLE;
+			
+			m_labelOverFilters = OVERFILTERS;
+			m_labelDisableFilters = DISABLEDFILTERS;
 		}
 		
 		/**
@@ -158,7 +163,8 @@ package jsion.display
 		{
 			super.addChildren();
 			
-			super.addChild(m_label);
+			//m_imageLayer.addChild(m_label);
+			addChild(m_label);
 		}
 		
 		/**
@@ -210,7 +216,7 @@ package jsion.display
 		 */		
 		protected function validateSize():void
 		{
-			if(StringUtil.isNullOrEmpty(m_text) == false || m_labelChange)
+			if(StringUtil.isNotNullOrEmpty(m_text) || m_labelChange)
 			{
 				if(m_width < m_label.width)
 				{
@@ -225,6 +231,8 @@ package jsion.display
 					
 					m_changeProperties.put(Component.HEIGHT, true);
 				}
+				
+				checkSizeWidthMinSize();
 			}
 		}
 		
@@ -246,24 +254,32 @@ package jsion.display
 				
 				CompUtil.layoutPosition(width, height, m_hAlign, m_hOffset, m_vAlign, m_vOffset, m_rect);
 				
-				if(model.pressed)
-				{
-					m_rect.x += m_downOffsetX;
-					m_rect.y += m_downOffsetY;
-				}
-				else if(model.rollOver)
-				{
-					m_rect.x += m_overOffsetX;
-					m_rect.y += m_overOffsetY;
-				}
-				else
-				{
-					m_rect.x += m_offsetX;
-					m_rect.y += m_offsetY;
-				}
+				refreshStateRectWidthOffset(m_rect)
 				
 				m_label.x = m_rect.x;
 				m_label.y = m_rect.y;
+			}
+		}
+		
+		/**
+		 * 根据当前按钮状态更新坐标偏移
+		 */		
+		protected function refreshStateRectWidthOffset(rect:Rectangle):void
+		{
+			if(model.pressed)
+			{
+				rect.x += m_downOffsetX;
+				rect.y += m_downOffsetY;
+			}
+			else if(model.rollOver)
+			{
+				rect.x += m_overOffsetX;
+				rect.y += m_overOffsetY;
+			}
+			else
+			{
+				rect.x += m_offsetX;
+				rect.y += m_offsetY;
 			}
 		}
 		
@@ -461,13 +477,13 @@ package jsion.display
 		/**
 		 * 获取或设置文本水平偏移量
 		 */		
-		public function get labelHOffset():int
+		public function get hOffset():int
 		{
 			return m_hOffset;
 		}
 		
 		/** @private */
-		public function set labelHOffset(value:int):void
+		public function set hOffset(value:int):void
 		{
 			if(m_hOffset != value)
 			{
@@ -483,13 +499,13 @@ package jsion.display
 		 * @see jsion.display.LabelButton#vAlign
 		 * @throws Error 水平对齐方式错误。
 		 */		
-		public function get labelHAlign():String
+		public function get hAlign():String
 		{
 			return m_hAlign;
 		}
 		
 		/** @private */
-		public function set labelHAlign(value:String):void
+		public function set hAlign(value:String):void
 		{
 			if(m_hAlign != value)
 			{
@@ -508,13 +524,13 @@ package jsion.display
 		/**
 		 * 获取或设置文本垂直偏移量
 		 */		
-		public function get labelVOffset():int
+		public function get vOffset():int
 		{
 			return m_vOffset;
 		}
 		
 		/** @private */
-		public function set labelVOffset(value:int):void
+		public function set vOffset(value:int):void
 		{
 			if(m_vOffset != value)
 			{
@@ -530,13 +546,13 @@ package jsion.display
 		 * @see jsion.display.LabelButton#hAlign
 		 * @throws Error 垂直对齐方式错误。
 		 */		
-		public function get labelVAlign():String
+		public function get vAlign():String
 		{
 			return m_vAlign;
 		}
 		
 		/** @private */
-		public function set labelVAlign(value:String):void
+		public function set vAlign(value:String):void
 		{
 			if(m_vAlign != value)
 			{

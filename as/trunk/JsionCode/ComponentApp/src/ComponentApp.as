@@ -828,21 +828,15 @@ package
 			labelBtn.upImage = new m_cls();
 			labelBtn.freeBMD = true;
 			labelBtn.frozen = true;
-			labelBtn.autoMouseDown = true;
+//			labelBtn.autoMouseDown = true;
 //			labelBtn.overFilters = [new BlurFilter()];
 //			labelBtn.labelOverFilters = [new BlurFilter(2,2,1)];
 			labelBtn.disableFilters = [new ColorMatrixFilter([0.3, 0.59, 0.11, 0, 0,  0.3, 0.59, 0.11, 0, 0,  0.3, 0.59, 0.11, 0, 0,  0, 0, 0, 1, 0])];
-			labelBtn.labelDisableFilters = [new ColorMatrixFilter([0.3, 0.59, 0.11, 0, 0,  0.3, 0.59, 0.11, 0, 0,  0.3, 0.59, 0.11, 0, 0,  0, 0, 0, 1, 0])]
-//			labelBtn.labelOffsetX = -1;
-//			labelBtn.labelOffsetY = -1;
-//			labelBtn.overOffsetX = 1;
-//			labelBtn.overOffsetY = 1;
-//			labelBtn.downOffsetX = 1;
-//			labelBtn.downOffsetY = 1;
-//			labelBtn.labelOverOffsetX = 1;
-//			labelBtn.labelOverOffsetY = 1;
-//			labelBtn.labelDownOffsetX = 1;
-//			labelBtn.labelDownOffsetY = 1;
+			labelBtn.labelDisableFilters = [new ColorMatrixFilter([0.3, 0.59, 0.11, 0, 0,  0.3, 0.59, 0.11, 0, 0,  0.3, 0.59, 0.11, 0, 0,  0, 0, 0, 1, 0])];
+			labelBtn.overOffsetX = 1;
+			labelBtn.overOffsetY = 1;
+			labelBtn.downOffsetX = 1;
+			labelBtn.downOffsetY = 1;
 			labelBtn.commitChanges();
 			
 			labelBtn.addEventListener(MouseEvent.MOUSE_DOWN, __testAutoMouseDownHandler);
