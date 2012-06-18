@@ -4,6 +4,7 @@ package jsion.display
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.filters.ColorMatrixFilter;
 	
 	import jsion.comps.Component;
 	import jsion.events.ReleaseEvent;
@@ -20,6 +21,16 @@ package jsion.display
 	 */	
 	public class Button extends Component
 	{
+		/**
+		 * 鼠标经过按钮时默认的高亮滤镜
+		 */		
+		public static const OVERFILTERS:Array = [new ColorMatrixFilter([1, 0, 0, 0, 25,   0, 1, 0, 0, 25,   0, 0, 1, 0, 25,   0, 0, 0, 1, 0])];
+		
+		/**
+		 * 禁用按钮时默认的灰显滤镜
+		 */		
+		public static const DISABLEDFILTERS:Array = [new ColorMatrixFilter([0.3, 0.59, 0.11, 0, 0,  0.3, 0.59, 0.11, 0, 0,  0.3, 0.59, 0.11, 0, 0,  0, 0, 0, 1, 0])];
+		
 		/**
 		 * 宽度属性变更
 		 */		
@@ -158,6 +169,9 @@ package jsion.display
 			m_imageLayer = new Sprite();
 			m_imageLayer.mouseEnabled = false;
 			m_imageLayer.mouseChildren = false;
+			
+			m_overFilters = OVERFILTERS;
+			m_disableFilters = DISABLEDFILTERS;
 		}
 		
 		/**
@@ -194,6 +208,34 @@ package jsion.display
 //			}
 			
 			invalidate();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		override public function set width(value:Number):void
+		{
+			if(value < m_minWidth)
+			{
+				throw new Error("参数值小于允许的最小宽度值");
+				return;
+			}
+			
+			super.width = value;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		override public function set height(value:Number):void
+		{
+			if(value < m_minHeight)
+			{
+				throw new Error("参数值小于允许的最小高度值");
+				return;
+			}
+			
+			super.height = value;
 		}
 		
 		/**
@@ -239,6 +281,8 @@ package jsion.display
 					{
 						m_minWidth = Image(m_upImage).minWidth;
 						m_minHeight = Image(m_upImage).minHeight;
+						
+						checkSizeWidthMinSize();
 					}
 					else
 					{
@@ -709,6 +753,15 @@ package jsion.display
 		}
 		
 		/**
+		 * 检查是否小于允许的最小 Size ，如果小于则重置为最小的 Size。
+		 */		
+		protected function checkSizeWidthMinSize():void
+		{
+			m_width = Math.max(m_width, m_minWidth);
+			m_height = Math.max(m_height, m_minHeight);
+		}
+		
+		/**
 		 * 更新当前状态的显示对象
 		 */		
 		protected function updateCurrentStateImage():void
@@ -754,7 +807,7 @@ package jsion.display
 					m_imageLayer.addChild(m_curImage);
 				}
 				
-				updateImageSize();
+				//updateImageSize();
 			}
 		}
 		
@@ -810,8 +863,8 @@ package jsion.display
 				m_curImage.width = m_width;
 				m_curImage.height = m_height;
 				
-				m_width = m_curImage.width;
-				m_height = m_curImage.height;
+				//m_width = m_curImage.width;
+				//m_height = m_curImage.height;
 			}
 		}
 		

@@ -203,9 +203,7 @@ package jsion.display
 				m_minHeight = 0;
 			}
 			
-			if(m_width <= m_minWidth) m_width = m_minWidth;
-			
-			if(m_height <= m_minHeight) m_height = m_minHeight;
+			checkSizeWidthMinSize();
 			
 			onPropertiesChanged(SCALE9INSETS);
 		}
@@ -242,6 +240,15 @@ package jsion.display
 		public function set freeSource(value:Boolean):void
 		{
 			m_freeSource = value;
+		}
+		
+		/**
+		 * 检查是否小于允许的最小 Size ，如果小于则重置为最小的 Size。
+		 */		
+		protected function checkSizeWidthMinSize():void
+		{
+			m_width = Math.max(m_width, m_minWidth);
+			m_height = Math.max(m_height, m_minHeight);
 		}
 		
 		/**
