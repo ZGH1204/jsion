@@ -12,57 +12,57 @@ package jsion.socket
 	
 	/**
 	 * 处理数据包错误时分派，其中eData为错误提示消息。
-	 * @eventType jsocket.events.SocketEvent
+	 * @eventType jsion.events.SocketEvent
 	 * @langversion 3.0
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="handleError", type="jsocket.events.SocketEvent")]
+	[Event(name="handleError", type="jsion.events.SocketEvent")]
 	
 	/**
 	 * 发送数据包错误时分派，其中eData为错误提示消息。
-	 * @eventType jsocket.events.SocketEvent
+	 * @eventType jsion.events.SocketEvent
 	 * @langversion 3.0
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="sendError", type="jsocket.events.SocketEvent")]
+	[Event(name="sendError", type="jsion.events.SocketEvent")]
 	
 	/**
 	 * 收到并成功解析数据包时分派，其中eData为Packet对象。
-	 * @eventType jsocket.events.SocketEvent
+	 * @eventType jsion.events.SocketEvent
 	 * @langversion 3.0
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="received", type="jsocket.events.SocketEvent")]
+	[Event(name="received", type="jsion.events.SocketEvent")]
 	
 	/**
 	 * 连接关闭时分派
-	 * @eventType jsocket.events.SocketEvent
+	 * @eventType jsion.events.SocketEvent
 	 * @langversion 3.0
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="closed", type="jsocket.events.SocketEvent")]
+	[Event(name="closed", type="jsion.events.SocketEvent")]
 	
 	/**
 	 * 发生错误时分派，其中eData为错误提示消息。
-	 * @eventType jsocket.events.SocketEvent
+	 * @eventType jsion.events.SocketEvent
 	 * @langversion 3.0
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="error", type="jsocket.events.SocketEvent")]
+	[Event(name="error", type="jsion.events.SocketEvent")]
 	
 	/**
 	 * 连接成功后分派
-	 * @eventType jsocket.events.SocketEvent
+	 * @eventType jsion.events.SocketEvent
 	 * @langversion 3.0
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="connected", type="jsocket.events.SocketEvent")]
+	[Event(name="connected", type="jsion.events.SocketEvent")]
 	
 	/**
 	 * 数据包通信器
