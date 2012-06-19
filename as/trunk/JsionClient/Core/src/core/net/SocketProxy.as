@@ -5,6 +5,7 @@ package core.net
 	import jsion.socket.IPacketCryptor;
 	import jsion.socket.PacketFactory;
 	import jsion.socket.PacketSocket;
+	import jsion.utils.DisposeUtil;
 	
 	public class SocketProxy
 	{
@@ -82,6 +83,26 @@ package core.net
 			// TODO Auto-generated method stub
 			
 			DEBUG.error("已连接!");
+		}
+		
+		public static function sendTCP(pkg:GamePacket):void
+		{
+			if(m_socket && m_socket.isConnected) m_socket.send(pkg);
+		}
+		
+		public static function forceConnect(ip:String, port:int):void
+		{
+			removeSocketEvent(m_socket);
+			
+			DisposeUtil.free(m_socket);
+			m_socket = null;
+			
+			connect(ip, port);
+		}
+		
+		public static function close():void
+		{
+			if(m_socket && m_socket.isConnected) m_socket.close();
 		}
 	}
 }
