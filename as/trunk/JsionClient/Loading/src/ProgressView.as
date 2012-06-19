@@ -50,7 +50,7 @@ package
 				return;
 			}
 			
-			var temp:int = (m_targetWidth - m_asset.loadingBar.width) * .08;
+			var temp:int = (m_targetWidth - m_asset.loadingBar.width) * .1;
 			
 			temp = Math.max(temp, 2);
 			
