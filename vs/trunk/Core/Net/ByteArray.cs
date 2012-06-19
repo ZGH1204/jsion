@@ -109,7 +109,7 @@ namespace Net
         /// <returns></returns>
         public virtual int CopyTo(byte[] dst, int dstOffset, int offset)
         {
-            return CopyTo(dst, dstOffset, Buffer, offset, Length);
+            return CopyTo(Buffer, offset, dst, dstOffset, Length);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Net
         /// <param name="dstOffset"> dst 中从零开始的字节偏移量</param>
         /// <param name="srcOffset">当前ByteArray对象缓冲区从零开始的字节偏移量</param>
         /// <returns></returns>
-        public static int CopyTo(byte[] dst, int dstOffset, byte[] src, int srcOffset, int count)
+        public static int CopyTo(byte[] src, int srcOffset, byte[] dst, int dstOffset, int count)
         {
             int len = Math.Min(dst.Length - dstOffset, count - srcOffset);
 
