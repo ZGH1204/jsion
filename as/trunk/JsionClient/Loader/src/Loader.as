@@ -5,7 +5,7 @@ package
 	
 	import jsion.startup.Startuper;
 	
-	[SWF(width="1250", height="650", frameRate="30", backgroundColor="#000000")]
+	[SWF(width="1250", height="650", frameRate="30", backgroundColor="#FFFFFF")]
 	public class Loader extends Sprite
 	{
 		private var m_loadingView:SmallLoadingAsset;

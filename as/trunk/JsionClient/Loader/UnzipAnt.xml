@@ -1,6 +1,6 @@
 <project name="UnzipSwcFile" default="main">
 
-	<property name="SWC_ROOT" value="F:\GoogleCode\jsion\as\trunk\JsionClient" />
+	<property name="SWC_ROOT" value="E:\Code\JsionCode\as\trunk\JsionClient" />
 	<property name="TEMP_DIR" value="c:/temp" />
 	
 	<target name="main">
