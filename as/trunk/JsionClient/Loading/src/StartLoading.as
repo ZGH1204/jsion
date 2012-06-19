@@ -1,4 +1,4 @@
-package knightage
+package 
 {
 	import flash.display.Stage;
 
