@@ -2,15 +2,17 @@ package
 {
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.events.Event;
 	import flash.system.ApplicationDomain;
 	
 	import jsion.IDispose;
 	import jsion.loaders.LoaderQueue;
 	import jsion.loaders.LoaderQueue2;
+	import jsion.utils.DisposeUtil;
 	
 	public class LoadingView extends Sprite implements IDispose
 	{
-		private var m_progressView:BigLoadingAsset;
+		private var m_progressView:ProgressView;
 		
 		private var m_stage:Stage;
 		
@@ -37,13 +39,13 @@ package
 		
 		private function initialize():void
 		{
-			m_progressView = new BigLoadingAsset();
+			m_progressView = new ProgressView();
 			addChild(m_progressView);
 			
-			m_progressView.x = (m_stage.stageWidth - 100) / 2;
-			m_progressView.y = (m_stage.stageHeight - 65) / 2;
+			m_progressView.x = (m_stage.stageWidth - m_progressView.width) / 2;
+			m_progressView.y = (m_stage.stageHeight - m_progressView.height) / 2 + 150;
 			
-			m_progressView.gotoAndStop(1);
+			m_progressView.setCallback(progressCompleteCallback);
 			
 			m_libRoot = String(m_config.@LibRoot);
 			
@@ -69,7 +71,15 @@ package
 			
 			m_queue.setProgressCallback(progressCallback);
 			
-			m_queue.start(loadCallback);
+			//m_queue.start(loadCallback);
+			m_queue.start();
+		}
+		
+		private function progressCompleteCallback():void
+		{
+			// TODO Auto Generated method stub
+			
+			loadCallback(m_queue);
 		}
 		
 		private function progressCallback(bytesLoaded:int, bytesTotal:int):void
@@ -78,12 +88,21 @@ package
 			
 			trace("正在加载第", loading + "/" + m_queue.loaderCount, "个", "已加载：", bytesLoaded, "\t\t\t需加载：", bytesTotal);
 			
-			m_progressView.gotoAndStop(int(bytesLoaded / bytesTotal * 100));
+			m_progressView.updateProgress(bytesLoaded, bytesTotal);
 		}
 		
 		private function loadCallback(queue:LoaderQueue):void
 		{
+			DisposeUtil.free(m_progressView);
+			m_progressView = null;
+			
 			var mainFns:Array = String(m_config.@Mains).split(",");
+			
+			if(mainFns.length == 0)
+			{
+				throw new Error("游戏启动主函数未定义!");
+				return;
+			}
 			
 			for each(var fnStr:String in mainFns)
 			{
@@ -98,10 +117,18 @@ package
 					trace("函数", fnStr, "未定义!");
 				}
 			}
+			
+			DisposeUtil.free(this);
 		}
 		
 		public function dispose():void
 		{
+			DisposeUtil.free(m_progressView);
+			m_progressView = null;
+			
+			DisposeUtil.free(m_queue);
+			m_queue = null;
+			
 			m_stage = null;
 			
 			m_config = null;
