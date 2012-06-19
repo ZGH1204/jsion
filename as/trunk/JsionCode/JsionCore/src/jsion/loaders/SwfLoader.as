@@ -110,6 +110,7 @@ package jsion.loaders
 			{
 				m_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __embedInDomainHandler);
 				try { m_loader.close(); } catch (err:Error) { }
+				m_loader.unload();
 				m_loader = null;
 			}
 			
