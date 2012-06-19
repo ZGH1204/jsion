@@ -10,6 +10,8 @@ package
 	
 	public class LoadingView extends Sprite implements IDispose
 	{
+		private var m_progressView:BigLoadingAsset;
+		
 		private var m_stage:Stage;
 		
 		private var m_config:XML;
@@ -35,6 +37,14 @@ package
 		
 		private function initialize():void
 		{
+			m_progressView = new BigLoadingAsset();
+			addChild(m_progressView);
+			
+			m_progressView.x = (m_stage.stageWidth - 100) / 2;
+			m_progressView.y = (m_stage.stageHeight - 65) / 2;
+			
+			m_progressView.gotoAndStop(1);
+			
 			m_libRoot = String(m_config.@LibRoot);
 			
 			var loadingMode:int = int(m_config.@LoadingMode);
@@ -67,6 +77,8 @@ package
 			var loading:int = m_queue.completeCount + m_queue.errorCount + 1;
 			
 			trace("正在加载第", loading + "/" + m_queue.loaderCount, "个", "已加载：", bytesLoaded, "\t\t\t需加载：", bytesTotal);
+			
+			m_progressView.gotoAndStop(int(bytesLoaded / bytesTotal * 100));
 		}
 		
 		private function loadCallback(queue:LoaderQueue):void

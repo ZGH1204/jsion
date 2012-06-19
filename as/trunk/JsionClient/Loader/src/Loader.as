@@ -5,9 +5,11 @@ package
 	
 	import jsion.startup.Startuper;
 	
-	[SWF(width="1250", height="650", frameRate="30")]
+	[SWF(width="1250", height="650", frameRate="30", backgroundColor="#000000")]
 	public class Loader extends Sprite
 	{
+		private var m_loadingView:SmallLoadingAsset;
+		
 		private var m_startuper:Startuper;
 		
 		public function Loader()
@@ -31,9 +33,26 @@ package
 		
 		private function initialize():void
 		{
+			m_loadingView = new SmallLoadingAsset();
+			
+			addChild(m_loadingView);
+			
+			m_loadingView.x = (stage.stageWidth - m_loadingView.width) / 2;
+			m_loadingView.y = (stage.stageHeight - m_loadingView.height) / 2;
+			
 			m_startuper = new Startuper(stage);
 			
-			m_startuper.startup("config.xml");
+			m_startuper.startup("config.xml", loadCallback);
+		}
+		
+		private function loadCallback():void
+		{
+			if(m_loadingView && m_loadingView.parent)
+			{
+				m_loadingView.parent.removeChild(m_loadingView);
+				
+				m_loadingView = null;
+			}
 		}
 	}
 }
