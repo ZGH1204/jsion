@@ -1,11 +1,9 @@
 <project name="UnzipSwcFile" default="main">
 
-	<property name="SWC_ROOT" value="E:\Code\JsionCode\as\trunk\JsionClient" />
+	<property name="SWC_ROOT" value="F:\GoogleCode\jsion\as\trunk\JsionClient" />
 	<property name="TEMP_DIR" value="c:/temp" />
 	
 	<target name="main">
-		<antcall target="prepare"></antcall>
-		
 		<antcall target="UnzipJsionCore"></antcall>
 		
 		<antcall target="UnzipLoading"></antcall>
@@ -26,10 +24,11 @@
 	</target>
 
 	<target name="prepare">
-		<echo>Delete files in temp dir dir.</echo>
-		<delete quiet="true">
+		<echo>Delete files in temp dir.</echo>
+		<delete dir="${TEMP_DIR}" />
+		<!--<delete quiet="true">
 			<fileset dir="${TEMP_DIR}" includes="*.*"></fileset>
-		</delete>
+		</delete>-->
 	</target>
 	
 </project>
