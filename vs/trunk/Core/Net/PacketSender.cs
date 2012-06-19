@@ -30,11 +30,14 @@ namespace Net
 
         private SocketAsyncEventArgs m_sendAsyncEvent;
 
+        private byte[] m_cryptorBuffer;
+
         public PacketSender(JSocket socket, byte[] buffer)
         {
             m_socket = socket;
             m_buffer = buffer;
             m_pkgQueue = new Queue();
+            m_cryptorBuffer = new byte[m_buffer.Length];
 
             m_cryptor = m_socket.SendCryptor;
             if (m_cryptor == null) m_cryptor = new NoneCryptor();
@@ -114,6 +117,7 @@ namespace Net
             PacketSender ps = (PacketSender)e.UserToken;
             JSocket socket = ps.m_socket;
             Queue q = ps.m_pkgQueue;
+            byte[] cryptorBuffer = ps.m_cryptorBuffer;
             IPacketCryptor cryptor = ps.m_cryptor;
             int sended = e.BytesTransferred;
             byte[] data = ps.m_buffer;
@@ -138,10 +142,11 @@ namespace Net
 
                         if (dataOffset == 0)
                         {
-                            cryptor.Encrypt(pkg.Buffer, pkg.Length);
+                            System.Buffer.BlockCopy(pkg.Buffer, 0, cryptorBuffer, 0, pkg.Length);
+                            cryptor.Encrypt(cryptorBuffer, pkg.Length);
                         }
 
-                        len = pkg.CopyTo(data, count, dataOffset);
+                        len = ByteArray.CopyTo(data, count, cryptorBuffer, dataOffset, pkg.Length);
 
                         dataOffset += len;
                         count += len;
