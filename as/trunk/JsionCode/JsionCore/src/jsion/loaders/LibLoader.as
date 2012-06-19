@@ -92,7 +92,7 @@ package jsion.loaders
 		{
 			if(m_status == LOADING && m_loader)
 			{
-				m_loader.close();
+				try { m_loader.close(); } catch (err:Error) { }
 				m_loader.unload();
 			}
 			
@@ -107,7 +107,7 @@ package jsion.loaders
 			if(m_loader)
 			{
 				m_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __embedInDomainHandler);
-				m_loader.close();
+				try { m_loader.close(); } catch (err:Error) { }
 				m_loader = null;
 			}
 			

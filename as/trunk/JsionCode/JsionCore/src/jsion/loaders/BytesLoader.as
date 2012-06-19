@@ -89,7 +89,7 @@ package jsion.loaders
 		 */		
 		override protected function onLoadTotalBytesComplete():void
 		{
-			if(m_urlLoader) m_urlLoader.close();
+			try { m_urlLoader.close(); } catch (err:Error) { }
 			
 			super.onLoadTotalBytesComplete();
 		}
@@ -103,7 +103,7 @@ package jsion.loaders
 			{
 				removeLoadEvent(m_urlLoader);
 				
-				if(m_urlLoader) m_urlLoader.close();
+				try { m_urlLoader.close(); } catch (err:Error) { }
 			}
 			
 			super.cancel();
@@ -119,7 +119,7 @@ package jsion.loaders
 			removeLoadEvent(m_urlLoader);
 			removeLoadTotalBytesEvent(m_urlLoader);
 			
-			if(m_urlLoader) m_urlLoader.close();
+			try { m_urlLoader.close(); } catch (err:Error) { }
 			removeLoadEvent(m_urlLoader);
 			m_urlLoader = null;
 			
