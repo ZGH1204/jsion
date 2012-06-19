@@ -146,7 +146,7 @@ namespace Net
                             cryptor.Encrypt(cryptorBuffer, pkg.Length);
                         }
 
-                        len = ByteArray.CopyTo(data, count, cryptorBuffer, dataOffset, pkg.Length);
+                        len = ByteArray.CopyTo(cryptorBuffer, dataOffset, data, count, pkg.Length);
 
                         dataOffset += len;
                         count += len;
