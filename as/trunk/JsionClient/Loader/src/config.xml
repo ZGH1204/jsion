@@ -1,4 +1,4 @@
-<Root LibRoot="../../" LoadingMode="2">
+<Root Mains="StartGame,DebugLogin" LibRoot="../../" LoadingMode="2" DebugCSS="Loader\src\assets\debug.css">
 	<policy file="http://127.0.0.1/crossdomain.xml" />
 	
 	<version from="0" to="1">
@@ -16,4 +16,12 @@
 	<Loading id="login" 		libPath="Login\bin\Login.swc" />
 	<Loading id="template" 		libPath="Loader\src\assets\Templates.xml" />
 	<Loading id="language" 		libPath="Loader\src\assets\Language-zh_CN.txt" />
+	
+	<Config 
+	ServerIP="192.168.1.20"
+	ServerPort="10000"
+	GameWidth="1250"
+	GameHeight="650"
+	ResRoot="assets/"
+	/>
 </Root>

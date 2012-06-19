@@ -71,9 +71,21 @@ package
 		
 		private function loadCallback(queue:LoaderQueue):void
 		{
-			var fn:Function = ApplicationDomain.currentDomain.getDefinition("StartGame") as Function;
+			var mainFns:Array = String(m_config.@Mains).split(",");
 			
-			if(fn != null) fn(m_stage, m_config, queue);
+			for each(var fnStr:String in mainFns)
+			{
+				if(ApplicationDomain.currentDomain.hasDefinition(fnStr))
+				{
+					var fn:Function = ApplicationDomain.currentDomain.getDefinition(fnStr) as Function;
+					
+					if(fn != null) fn(m_stage, m_config, queue);
+				}
+				else
+				{
+					trace("函数", fnStr, "未定义!");
+				}
+			}
 		}
 		
 		public function dispose():void

@@ -5,16 +5,21 @@ package
 	import core.net.GamePacket;
 	import core.net.PacketHandlers;
 	import core.net.SocketProxy;
+	import core.scene.SceneCreator;
 	import core.start.StartMgr;
 	
+	import flash.display.Sprite;
 	import flash.display.Stage;
 	
 	import jsion.GameCoreSetup;
 	import jsion.SetupComps;
+	import jsion.comps.UIMgr;
 	import jsion.debug.DEBUG;
 	import jsion.lang.Local;
 	import jsion.loaders.LoaderQueue;
 	import jsion.reflection.Assembly;
+	import jsion.scenes.SceneMgr;
+	import jsion.utils.PathUtil;
 	import jsion.utils.StringUtil;
 
 	/**
@@ -31,7 +36,11 @@ package
 		//安装UI框架
 		SetupComps(stage);
 		
+		//安装加载库列表
 		LibMgr.setup(config);
+		
+		//安装配置信息
+		Config.setup(config);
 		
 		var file:String;
 		
@@ -64,8 +73,22 @@ package
 		PacketHandlers.setup(ass);
 		
 		
+		//初始化场景管理
+		var sceneContainer:Sprite = new Sprite();
+		stage.addChild(sceneContainer);
+		SceneMgr.setup(sceneContainer, new SceneCreator());
+		
+		
+		//初始化UI层级管理
+		var uiLayer:Sprite = new Sprite();
+		stage.addChild(uiLayer);
+		UIMgr.setup(uiLayer);
+		
+		
 		//初始化调试控制台
-		DEBUG.setup(stage, 200);
+		DEBUG.setup(stage, 250);
+		var cssPath:String = PathUtil.combinPath(String(config.@LibRoot), String(config.@DebugCSS));
+		DEBUG.loadCSS(cssPath);
 		
 		//初始化完成后触发事件
 		StartMgr.dispatchEvent(new StartEvent(StartEvent.INITIALIZED));
