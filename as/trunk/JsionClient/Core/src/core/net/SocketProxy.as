@@ -1,5 +1,6 @@
 package core.net
 {
+	import jsion.debug.DEBUG;
 	import jsion.events.SocketEvent;
 	import jsion.socket.IPacketCryptor;
 	import jsion.socket.PacketFactory;
@@ -59,24 +60,28 @@ package core.net
 		{
 			// TODO Auto-generated method stub
 			
+			PacketHandlers.receivePacket(e.eData as GamePacket);
 		}
 		
 		private static function __erroredHandler(e:SocketEvent):void
 		{
 			// TODO Auto-generated method stub
 			
+			DEBUG.error("连接错误!");
 		}
 		
 		private static function __closedHandler(e:SocketEvent):void
 		{
 			// TODO Auto-generated method stub
 			
+			DEBUG.error("连接关闭!");
 		}
 		
 		private static function __connectedHandler(e:SocketEvent):void
 		{
 			// TODO Auto-generated method stub
 			
+			DEBUG.error("已连接!");
 		}
 	}
 }

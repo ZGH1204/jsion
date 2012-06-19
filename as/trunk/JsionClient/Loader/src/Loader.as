@@ -1,6 +1,7 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
 	
 	import jsion.startup.Startuper;
 	
@@ -10,6 +11,25 @@ package
 		private var m_startuper:Startuper;
 		
 		public function Loader()
+		{
+			if(stage)
+			{
+				initialize();
+			}
+			else 
+			{
+				addEventListener(Event.ADDED_TO_STAGE, onAddToStageHandler);
+			}
+		}
+		
+		private function onAddToStageHandler(e:Event):void
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, onAddToStageHandler);
+			
+			initialize();
+		}
+		
+		private function initialize():void
 		{
 			m_startuper = new Startuper(stage);
 			

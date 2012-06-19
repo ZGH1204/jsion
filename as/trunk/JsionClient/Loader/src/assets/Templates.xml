@@ -1,0 +1,13 @@
+<Root>
+  <ArrayOfBuildingTemplate>
+    <BuildingTemplate TemplateID="1" TemplateName="主殿" Pic="buildings/building01.png" BuildingType="1" PosX="860" PosY="0" LabelPosX="-20" LabelPosY="15" DisplayLv="0" Description="就是一主殿,你懂的." />
+    <BuildingTemplate TemplateID="2" TemplateName="将军府" Pic="buildings/building02.png" BuildingType="2" PosX="1012" PosY="148" LabelPosX="64" LabelPosY="-19" DisplayLv="0" Description="就是一将军府,你懂的." />
+    <BuildingTemplate TemplateID="3" TemplateName="拍卖行" Pic="buildings/building03.png" BuildingType="3" PosX="308" PosY="125" LabelPosX="132" LabelPosY="-28" DisplayLv="0" Description="就是一拍卖行,你懂的." />
+    <BuildingTemplate TemplateID="4" TemplateName="铁匠铺" Pic="buildings/building04.png" BuildingType="4" PosX="418" PosY="179" LabelPosX="196" LabelPosY="-9" DisplayLv="0" Description="就是一铁匠铺,你懂的." />
+    <BuildingTemplate TemplateID="5" TemplateName="军营" Pic="buildings/building05.png" BuildingType="5" PosX="756" PosY="201" LabelPosX="176" LabelPosY="-22" DisplayLv="0" Description="就是一军营,你懂的." />
+    <BuildingTemplate TemplateID="6" TemplateName="竞技场" Pic="buildings/building06.png" BuildingType="6" PosX="857" PosY="315" LabelPosX="166" LabelPosY="-30" DisplayLv="0" Description="就是一竞技场,你懂的." />
+    <BuildingTemplate TemplateID="7" TemplateName="仓库" Pic="buildings/building07.png" BuildingType="7" PosX="7" PosY="211" LabelPosX="78" LabelPosY="2" DisplayLv="0" Description="就是一仓库,你懂的." />
+    <BuildingTemplate TemplateID="8" TemplateName="商店" Pic="buildings/building08.png" BuildingType="8" PosX="198" PosY="205" LabelPosX="217" LabelPosY="30" DisplayLv="0" Description="就是一商店,你懂的." />
+    <BuildingTemplate TemplateID="9" TemplateName="酒馆" Pic="buildings/building09.png" BuildingType="9" PosX="522" PosY="235" LabelPosX="169" LabelPosY="32" DisplayLv="0" Description="就是一酒馆,你懂的." />
+  </ArrayOfBuildingTemplate>
+</Root>
