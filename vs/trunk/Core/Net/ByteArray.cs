@@ -109,11 +109,24 @@ namespace Net
         /// <returns></returns>
         public virtual int CopyTo(byte[] dst, int dstOffset, int offset)
         {
-            int len = Math.Min(dst.Length - dstOffset, Length - offset);
+            return CopyTo(dst, dstOffset, Buffer, offset, Length);
+        }
+
+        /// <summary>
+        /// 将 ByteArray 对象的缓冲区中 offset 参数指定位置开始的缓冲区数据复制到
+        /// 起始于 dstOffset 参数指定位置的 dst 参数指定的缓冲区中
+        /// </summary>
+        /// <param name="dst">要复制到的目标缓冲区</param>
+        /// <param name="dstOffset"> dst 中从零开始的字节偏移量</param>
+        /// <param name="srcOffset">当前ByteArray对象缓冲区从零开始的字节偏移量</param>
+        /// <returns></returns>
+        public static int CopyTo(byte[] dst, int dstOffset, byte[] src, int srcOffset, int count)
+        {
+            int len = Math.Min(dst.Length - dstOffset, count - srcOffset);
 
             if (len > 0)
             {
-                System.Buffer.BlockCopy(Buffer, offset, dst, dstOffset, len);
+                System.Buffer.BlockCopy(src, srcOffset, dst, dstOffset, len);
             }
             else
             {
