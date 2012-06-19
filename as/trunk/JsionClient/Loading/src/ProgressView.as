@@ -14,6 +14,10 @@ package
 		
 		private var m_targetWidth:int;
 		
+		private var m_cur:int;
+		private var m_delay:int;
+		private var m_callback:Function;
+		
 		public function ProgressView()
 		{
 			super();
@@ -57,9 +61,6 @@ package
 			m_asset.loadingBar.width = m_asset.loadingBar.width + temp;
 		}
 		
-		private var m_cur:int;
-		private var m_delay:int;
-		private var m_callback:Function;
 		private function __delayDispatchHandler(e:Event):void
 		{
 			// TODO Auto-generated method stub
