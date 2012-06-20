@@ -1,6 +1,5 @@
 package jsion.core.reflection
 {
-	import flash.events.EventDispatcher;
 	import flash.utils.describeType;
 	import flash.utils.getQualifiedClassName;
 	
@@ -11,7 +10,7 @@ package jsion.core.reflection
 	 * @author Jsion
 	 * 
 	 */	
-	public class Assembly extends EventDispatcher
+	public class Assembly
 	{
 		public var clsList:Array;
 		
