@@ -10,6 +10,7 @@
 	<Loading id="debug" 		libPath="Assets\libs\JsionDebug.swc" />
 	<Loading id="gameCore" 		libPath="Assets\libs\GameCore.swc" />
 	<Loading id="component"		libPath="Assets\libs\JsionComponent.swc" />
+	<Loading id="embedFont"		libPath="Assets\libs\FontLibrary2.swf" />
 	
 	<Loading id="core" 			libPath="Core\bin\Core.swc" />
 	<Loading id="debugLogin" 	libPath="DebugLogin\bin\DebugLogin.swc" />
