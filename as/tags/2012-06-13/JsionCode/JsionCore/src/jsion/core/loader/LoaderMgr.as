@@ -1,6 +1,5 @@
 package jsion.core.loader
 {
-	import jsion.utils.ArrayUtil;
 
 	public class LoaderMgr
 	{
@@ -18,20 +17,20 @@ package jsion.core.loader
 		
 		public static function canLoad(loader:ILoader):Boolean
 		{
-			return ArrayUtil.containsValue(loadingList, loader);
+			return loadingList.indexOf(loader) != -1;
 		}
 		
 		public static function putLoader(loader:ILoader):void
 		{
-			ArrayUtil.push(loaderList, loader);
+			pushLoader(loader);
 			
 			tryLoadNext();
 		}
 		
 		public static function removeLoader(loader:ILoader):void
 		{
-			ArrayUtil.remove(loaderList, loader);
-			ArrayUtil.remove(loadingList, loader);
+			remvLoader(loader);
+			removeLoadingLoader(loader);
 			
 			tryLoadNext();
 		}
@@ -42,10 +41,44 @@ package jsion.core.loader
 			{
 				var loader:ILoader = loaderList.shift() as ILoader;
 				
-				ArrayUtil.push(loadingList, loader);
+				pushLoadingLoader(loader);
 				
 				loader.loadAsync();
 			}
+		}
+		
+		private static function pushLoader(loader:ILoader):void
+		{
+			if(loaderList.indexOf(loader) == -1)
+			{
+				loaderList.push(loader);
+			}
+		}
+		
+		private static function remvLoader(loader:ILoader):void
+		{
+			var index:int = loaderList.indexOf(loader);
+			
+			if(index == -1) return;
+			
+			loaderList.splice(index, 1);
+		}
+		
+		private static function pushLoadingLoader(loader:ILoader):void
+		{
+			if(loadingList.indexOf(loader) == -1)
+			{
+				loadingList.push(loader);
+			}
+		}
+		
+		private static function removeLoadingLoader(loader:ILoader):void
+		{
+			var index:int = loadingList.indexOf(loader);
+			
+			if(index == -1) return;
+			
+			loadingList.splice(index, 1);
 		}
 	}
 }

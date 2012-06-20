@@ -18,6 +18,14 @@ package jsion.core.loader
 	import jsion.utils.PathUtil;
 	
 	
+	/**
+	 * 获取到所需加载的总字节数后触发。
+	 * @eventType jsion.core.events.JsionEvent
+	 * @langversion 3.0
+	 * @playerversion Flash 9
+	 * @playerversion AIR 1.1
+	 */	
+	[Event(name="totalBytes", type="jsion.events.JsionEvent")]
 	
 	/**
 	 * 文件加载完成后触发。
@@ -26,7 +34,7 @@ package jsion.core.loader
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="complete", type="jsion.core.events.JsionEvent")]
+	[Event(name="complete", type="jsion.events.JsionEvent")]
 	/**
 	 * 取消加载时触发，如果未在加载或加载完成则不触发。
 	 * @eventType jsion.core.events.JsionEvent
@@ -34,7 +42,7 @@ package jsion.core.loader
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="cancel", type="jsion.core.events.JsionEvent")]
+	[Event(name="cancel", type="jsion.events.JsionEvent")]
 	/**
 	 * 文件加载失败时触发。
 	 * @eventType jsion.core.events.JsionEvent
@@ -42,7 +50,7 @@ package jsion.core.loader
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="error", type="jsion.core.events.JsionEvent")]
+	[Event(name="error", type="jsion.events.JsionEvent")]
 	/**
 	 * 文件加载进度变更时派发。
 	 * @eventType flash.events.ProgressEvent

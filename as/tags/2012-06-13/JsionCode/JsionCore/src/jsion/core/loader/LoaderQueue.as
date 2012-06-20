@@ -6,16 +6,13 @@ package jsion.core.loader
 	import flash.display.PixelSnapping;
 	import flash.events.ProgressEvent;
 	import flash.utils.ByteArray;
+	import flash.utils.Dictionary;
 	
-	import jsion.HashMap;
 	import jsion.IDispose;
 	import jsion.core.events.JsionEvent;
 	import jsion.core.events.JsionEventDispatcher;
-	import jsion.core.reflection.Assembly;
-	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.JUtil;
-	import jsion.utils.StringUtil;
 	
 	
 	/**
@@ -25,7 +22,7 @@ package jsion.core.loader
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="complete", type="jsion.core.events.JsionEvent")]
+	[Event(name="complete", type="jsion.events.JsionEvent")]
 	/**
 	 * 所有文件加载完成后，有文件加载失败时触发。
 	 * 可通过 errorList、errorUrlList 属性获取加载失败文件列表。
@@ -35,7 +32,7 @@ package jsion.core.loader
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="error", type="jsion.core.events.JsionEvent")]
+	[Event(name="error", type="jsion.events.JsionEvent")]
 	/**
 	 * 单个文件加载进度变更时派发。
 	 * @eventType flash.events.ProgressEvent
@@ -84,7 +81,7 @@ package jsion.core.loader
 		 */		
 		public static function registeNewType(ext:String, loaderCls:Class):void
 		{
-			if(StringUtil.isNullOrEmpty(ext) || loaderCls == null)
+			if(ext == null || ext == "" || loaderCls == null)
 			{
 				throw new ArgumentError("参数错误，有一个或多个参数为空。");
 				return;
@@ -107,9 +104,13 @@ package jsion.core.loader
 		
 		protected var m_loadingList:Array;
 		
-		protected var m_completeList:HashMap;
+		protected var m_completeList:Dictionary;
 		
-		protected var m_errorList:HashMap;
+		protected var m_completeCount:int;
+		
+		protected var m_errorList:Dictionary;
+		
+		protected var m_errorCount:int;
 		
 		protected var m_callback:Function;
 		
@@ -127,9 +128,13 @@ package jsion.core.loader
 			
 			m_loadingList = [];
 			
-			m_completeList = new HashMap();
+			m_completeList = new Dictionary();
 			
-			m_errorList = new HashMap();
+			m_completeCount = 0;
+			
+			m_errorList = new Dictionary();
+			
+			m_errorCount = 0;
 		}
 		
 		/**
@@ -153,7 +158,7 @@ package jsion.core.loader
 		 */		
 		public function get completeCount():int
 		{
-			return m_completeList.size;
+			return m_completeCount;
 		}
 		
 		/**
@@ -161,7 +166,7 @@ package jsion.core.loader
 		 */		
 		public function get errorCount():int
 		{
-			return m_errorList.size;
+			return m_errorCount;
 		}
 		
 		/**
@@ -169,7 +174,7 @@ package jsion.core.loader
 		 */		
 		public function get hasError():Boolean
 		{
-			return m_errorList.size != 0;
+			return m_errorCount != 0;
 		}
 		
 		/**
@@ -177,7 +182,14 @@ package jsion.core.loader
 		 */		
 		public function get completeList():Array
 		{
-			return m_completeList.getValues();
+			var list:Array = [];
+			
+			for each(var val:* in m_completeList)
+			{
+				list.push(val);
+			}
+			
+			return list;
 		}
 		
 		/**
@@ -185,7 +197,14 @@ package jsion.core.loader
 		 */		
 		public function get errorList():Array
 		{
-			return m_errorList.getValues();
+			var list:Array = [];
+			
+			for each(var val:* in m_errorList)
+			{
+				list.push(val);
+			}
+			
+			return list;
 		}
 		
 		/**
@@ -198,7 +217,7 @@ package jsion.core.loader
 			
 			for each(var loader:ILoader in list)
 			{
-				ArrayUtil.push(rlt, loader.fullUrl);
+				rlt.push(loader.fullUrl);
 			}
 			
 			return rlt;
@@ -214,7 +233,7 @@ package jsion.core.loader
 			
 			for each(var loader:ILoader in list)
 			{
-				ArrayUtil.push(rlt, loader.fullUrl);
+				rlt.push(loader.fullUrl);
 			}
 			
 			return rlt;
@@ -271,7 +290,10 @@ package jsion.core.loader
 		 */		
 		public function addLoader(loader:ILoader):void
 		{
-			ArrayUtil.push(m_loaderList, loader);
+			if(m_loaderList.indexOf(loader) == -1)
+			{
+				m_loaderList.push(loader);
+			}
 			
 			m_loaderCount = m_loaderList.length;
 		}
@@ -294,7 +316,7 @@ package jsion.core.loader
 			{
 				var loader:ILoader = m_loaderList.shift() as ILoader;
 				
-				ArrayUtil.push(m_loadingList, loader);
+				pushLoadingLoader(loader);
 				
 				loader.addEventListener(JsionEvent.COMPLETE, __loaderCompleteHandler);
 				loader.addEventListener(JsionEvent.ERROR, __loaderErrorHandler);
@@ -312,9 +334,9 @@ package jsion.core.loader
 			// TODO Auto Generated method stub
 			var loader:ILoader = e.currentTarget as ILoader;
 			
-			ArrayUtil.remove(m_loadingList, loader);
+			removeLoadingLoader(loader);
 			
-			m_completeList.put(loader.urlKey, loader);
+			addCompleteLoader(loader);
 			
 			tryLoadNext();
 			
@@ -326,7 +348,7 @@ package jsion.core.loader
 			// TODO Auto Generated method stub
 			var loader:ILoader = e.currentTarget as ILoader;
 			
-			m_errorList.put(loader.urlKey, loader);
+			addErrorLoader(loader);
 			
 			tryLoadNext();
 			
@@ -344,9 +366,9 @@ package jsion.core.loader
 		private function tryLoadComplete():void
 		{
 			if(m_loadingList.length == 0 && m_loaderList.length == 0 && 
-				(m_completeList.size != 0 || m_errorList.size != 0))
+				(m_completeCount != 0 || m_errorCount != 0))
 			{
-				if(m_errorList.size > 0) dispatchEvent(new JsionEvent(JsionEvent.ERROR));
+				if(m_errorCount > 0) dispatchEvent(new JsionEvent(JsionEvent.ERROR));
 				
 				if(m_callback != null) m_callback(this);
 				
@@ -355,12 +377,64 @@ package jsion.core.loader
 		}
 		
 		/**
+		 * 将加载器添加到正在加载列表上
+		 * @private
+		 */		
+		protected function pushLoadingLoader(loader:ILoader):void
+		{
+			var index:int = m_loadingList.indexOf(loader);
+			
+			if(index == -1) m_loadingList.push(loader);
+		}
+		
+		/**
+		 * 将加载器从正在加载列表上移除
+		 * @private
+		 */		
+		protected function removeLoadingLoader(loader:ILoader):void
+		{
+			var index:int = m_loadingList.indexOf(loader);
+			
+			if(index == -1) return;
+			
+			m_loadingList.splice(index, 1);
+		}
+		
+		/**
+		 * 将加载器添加到完成列表上
+		 * @private
+		 */		
+		protected function addCompleteLoader(loader:ILoader):void
+		{
+			if(m_completeList[loader.urlKey] == null)
+			{
+				m_completeCount++;
+			}
+			
+			m_completeList[loader.urlKey] = loader;
+		}
+		
+		/**
+		 * 将加载器添加到错误列表上
+		 * @private
+		 */		
+		protected function addErrorLoader(loader:ILoader):void
+		{
+			if(m_errorList[loader.urlKey] == null)
+			{
+				m_errorCount++;
+			}
+			
+			m_errorList[loader.urlKey] = loader;
+		}
+		
+		/**
 		 * 获取资源文件对应加载器
 		 * @param file 资源文件
 		 */		
 		public function getLoader(file:String):ILoader
 		{
-			return m_completeList.get(JUtil.path2Key(file)) || m_errorList.get(JUtil.path2Key(file));
+			return m_completeList[JUtil.path2Key(file)] || m_errorList[JUtil.path2Key(file)];
 		}
 		
 		/**
@@ -454,12 +528,12 @@ package jsion.core.loader
 		}
 		
 		/**
-		 * 通过资源文件获取 Assembly 对象。
+		 * 通过资源文件获取数组对象。
 		 * @param file 资源文件
 		 */		
-		public function getAssembly(file:String):Assembly
+		public function getArray(file:String):Array
 		{
-			return getContent(file) as Assembly;
+			return getContent(file) as Array;
 		}
 		
 		/**

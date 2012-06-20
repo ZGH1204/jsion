@@ -34,6 +34,6 @@ package jsion
 		
 		Cache.setup(config);
 		
-		//ModuleMgr.setup(config);
+		ModuleMgr.setup(config);
 	}
 }

@@ -3,7 +3,6 @@ package jsion.core.loader
 	import flash.events.ProgressEvent;
 	
 	import jsion.core.events.JsionEvent;
-	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 	
 	
@@ -22,7 +21,7 @@ package jsion.core.loader
 	 * @playerversion Flash 9
 	 * @playerversion AIR 1.1
 	 */	
-	[Event(name="totalBytes", type="jsion.core.events.JsionEvent")]
+	[Event(name="totalBytes", type="jsion.events.JsionEvent")]
 	/**
 	 * 资源队列加载器，支持先取总字节数后加载。默认文件对应加载器如下：
 	 * <ul>
@@ -77,7 +76,7 @@ package jsion.core.loader
 			
 			if(m_totalBytes == 0)
 			{
-				m_totalBytesHelper = new TotalBytesHelper(ArrayUtil.clone(m_loaderList), m_errorList);
+				m_totalBytesHelper = new TotalBytesHelper(m_loaderList.concat(), addErrorLoader);
 				
 				m_totalBytesHelper.start(loadTotalBytesCallback);
 			}
@@ -112,7 +111,7 @@ package jsion.core.loader
 			
 			m_bytesComplete += loader.totalBytes;
 			
-			ArrayUtil.remove(m_loadingList, loader);
+			removeLoadingLoader(loader);
 			
 			calcBytesLoaded();
 			

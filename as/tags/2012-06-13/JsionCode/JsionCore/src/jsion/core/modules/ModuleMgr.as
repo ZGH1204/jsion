@@ -1,5 +1,6 @@
 package jsion.core.modules
 {
+	import flash.events.ProgressEvent;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.utils.Dictionary;
@@ -7,19 +8,17 @@ package jsion.core.modules
 	import jsion.Cache;
 	import jsion.core.cryptor.ICryption;
 	import jsion.core.cryptor.ModuleCrytor;
-	import jsion.core.events.JLoaderEvent;
-	import jsion.core.events.JLoaderProgressEvent;
-	import jsion.core.loaders.ILoader;
-	import jsion.core.loaders.ILoaders;
-	import jsion.core.loaders.JLoaders;
-	import jsion.core.loaders.LoaderGlobal;
-	import jsion.core.loaders.SwcLoader;
+	import jsion.core.events.JsionEvent;
+	import jsion.core.loader.ILoader;
+	import jsion.core.loader.LoaderQueue;
+	import jsion.core.loader.SwcLoader;
 	import jsion.core.reflection.Assembly;
 	import jsion.utils.AppDomainUtil;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DictionaryUtil;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.JUtil;
+	import jsion.utils.ReflectionUtil;
 	import jsion.utils.StringUtil;
 	import jsion.utils.XmlUtil;
 
@@ -31,7 +30,6 @@ package jsion.core.modules
 	public class ModuleMgr
 	{
 		private static var Module_Cryptor:ICryption = new ModuleCrytor();
-		private static var Module_Loader_Cfg:Object = {type: LoaderGlobal.TYPE_SWC, context: null};
 		
 		private static var m_modules:Dictionary = new Dictionary();
 		
@@ -50,8 +48,6 @@ package jsion.core.modules
 		public static function setup(config:XML):void
 		{
 			m_resRoot = String(config.config.@ModRoot);
-			Module_Loader_Cfg["root"] = m_resRoot;
-			Module_Loader_Cfg["urlVariables"] = { v: Cache.version };
 			
 			var moduleXL:XMLList = config.Modules.Module;
 			
@@ -173,7 +169,16 @@ package jsion.core.modules
 		 */		
 		public static function getAssembly(id:String):Assembly
 		{
-			return getModuleLoadInfo(id).assembly;
+			var ass:Assembly = getModuleLoadInfo(id).assembly;
+			
+			if(ass == null)
+			{
+				ass = new Assembly(getModuleLoadInfo(id).clsList);
+				
+				getModuleLoadInfo(id).assembly = ass;
+			}
+			
+			return ass;
 		}
 		
 		
@@ -286,18 +291,13 @@ package jsion.core.modules
 			
 			loadInfo.loading = true;
 			
-			updateConfig(Module_Loader_Cfg, loadInfo);
+			loadInfo.loader = new SwcLoader(loadInfo.moduleInfo.url, m_resRoot);
 			
-			loadInfo.loader = new SwcLoader(loadInfo.moduleInfo.url, Module_Loader_Cfg);
-			
-			Module_Loader_Cfg["cryptor"] = null;
-			Module_Loader_Cfg["context"] = null;
-			
-			loadInfo.loader.addEventListener(JLoaderEvent.EmbedComplete, __moduleLoadCompleteHandler, false, int.MAX_VALUE);
-			loadInfo.loader.addEventListener(JLoaderEvent.Error, __moduleLoadErrorHandler, false, int.MAX_VALUE);
-			loadInfo.loader.addEventListener(JLoaderProgressEvent.PROGRESS, __progressHandler, false, int.MAX_VALUE);
-			loadInfo.loader.addEventListener(JLoaderEvent.EmbedComplete, __disposeHandler, false, int.MIN_VALUE);
-			loadInfo.loader.addEventListener(JLoaderEvent.Error, __disposeHandler, false, int.MIN_VALUE);
+			loadInfo.loader.addEventListener(JsionEvent.COMPLETE, __moduleLoadCompleteHandler, false, int.MAX_VALUE);
+			loadInfo.loader.addEventListener(JsionEvent.ERROR, __moduleLoadErrorHandler, false, int.MAX_VALUE);
+			loadInfo.loader.addEventListener(ProgressEvent.PROGRESS, __progressHandler, false, int.MAX_VALUE);
+			loadInfo.loader.addEventListener(JsionEvent.COMPLETE, __disposeHandler, false, int.MIN_VALUE);
+			loadInfo.loader.addEventListener(JsionEvent.ERROR, __disposeHandler, false, int.MIN_VALUE);
 			
 			m_loadingModule[loadInfo.loader] = loadInfo;
 			
@@ -320,7 +320,7 @@ package jsion.core.modules
 			return loader;
 		}
 		
-		private static function __moduleLoadCompleteHandler(e:JLoaderEvent):void
+		private static function __moduleLoadCompleteHandler(e:JsionEvent):void
 		{
 			var loader:ILoader = e.currentTarget as ILoader;
 			
@@ -329,27 +329,27 @@ package jsion.core.modules
 			if(m_loadViewController) m_loadViewController.complete();
 		}
 		
-		private static function __moduleLoadErrorHandler(e:JLoaderEvent):void
+		private static function __moduleLoadErrorHandler(e:JsionEvent):void
 		{
 			var loader:ILoader = e.currentTarget as ILoader;
 			
 			moduleLoadError(loader);
 		}
 		
-		private static function __progressHandler(e:JLoaderProgressEvent):void
+		private static function __progressHandler(e:ProgressEvent):void
 		{
 			if(m_loadViewController) m_loadViewController.progress(e.bytesLoaded, e.bytesTotal);
 		}
 		
-		private static function __disposeHandler(e:JLoaderEvent):void
+		private static function __disposeHandler(e:JsionEvent):void
 		{
 			var loader:ILoader = e.currentTarget as ILoader;
 			
-			loader.removeEventListener(JLoaderEvent.EmbedComplete, __moduleLoadCompleteHandler);
-			loader.removeEventListener(JLoaderEvent.Error, __moduleLoadErrorHandler);
-			loader.removeEventListener(JLoaderProgressEvent.PROGRESS, __progressHandler);
-			loader.removeEventListener(JLoaderEvent.EmbedComplete, __disposeHandler);
-			loader.removeEventListener(JLoaderEvent.Error, __disposeHandler);
+			loader.removeEventListener(JsionEvent.COMPLETE, __moduleLoadCompleteHandler);
+			loader.removeEventListener(JsionEvent.ERROR, __moduleLoadErrorHandler);
+			loader.removeEventListener(ProgressEvent.PROGRESS, __progressHandler);
+			loader.removeEventListener(JsionEvent.COMPLETE, __disposeHandler);
+			loader.removeEventListener(JsionEvent.ERROR, __disposeHandler);
 			
 			if(m_loadingModule[loader])
 			{
@@ -375,7 +375,8 @@ package jsion.core.modules
 				loadInfo.loaded = true;
 				loadInfo.errored = false;
 				loadInfo.loading = false;
-				loadInfo.assembly = loader.content as Assembly;
+				//loadInfo.assembly = loader.data as Assembly;
+				loadInfo.clsList = loader.data as Array;
 				AppDomainUtil.registeAppDomain(loadInfo.domain);
 				
 				
@@ -425,7 +426,7 @@ package jsion.core.modules
 		
 		
 		private static var autoLoading:Boolean;
-		private static var moduleLoaders:ILoaders;
+		private static var moduleLoaders:LoaderQueue;
 		private static var loadAutoModuleCallback:Function;
 		
 		private static var tmpQueue:Array = [];
@@ -436,32 +437,26 @@ package jsion.core.modules
 		 * 加载自启动加载模块
 		 * @param callback 回调函数
 		 */		
-		public static function loadAutoLoadModule(callback:Function = null):ILoaders
+		public static function loadAutoLoadModule(callback:Function = null):LoaderQueue
 		{
 			if(m_autoLoadList.length > 0 && autoLoading == false)
 			{
-				var loaders:ILoaders = new JLoaders("AutoLoad");
+				var loaders:LoaderQueue = new LoaderQueue();
 				
 				moduleLoaders = loaders;
 				
 				for each(var loadInfo:ModuleLoadInfo in m_autoLoadList)
 				{
-					updateConfig(Module_Loader_Cfg, loadInfo);
-					
-					var loader:ILoader = loaders.add(loadInfo.moduleInfo.url, Module_Loader_Cfg);
-					loader.autoEmbed = false;
+					var loader:ILoader = loaders.addFile(loadInfo.moduleInfo.url, m_resRoot);
 					loadInfo.loading = true;
 					loadInfo.loader = loader;
 					m_loadingModule[loader] = loadInfo;
 				}
 				
-				Module_Loader_Cfg["cryptor"] = null;
-				Module_Loader_Cfg["context"] = null;
-				
 				loadAutoModuleCallback = callback;
 				
-				loaders.addEventListener(JLoaderEvent.EmbedComplete, __modulesLoadCompleteHandler, false, int.MAX_VALUE);
-				loaders.addEventListener(JLoaderEvent.EmbedComplete, __modulesDisposeHandler, false, int.MIN_VALUE);
+				loaders.addEventListener(JsionEvent.COMPLETE, __modulesLoadCompleteHandler, false, int.MAX_VALUE);
+				loaders.addEventListener(JsionEvent.COMPLETE, __modulesDisposeHandler, false, int.MIN_VALUE);
 				
 				loaders.start();
 				autoLoading = true;
@@ -474,9 +469,9 @@ package jsion.core.modules
 			return loaders;
 		}
 		
-		private static function __modulesLoadCompleteHandler(e:JLoaderEvent):void
+		private static function __modulesLoadCompleteHandler(e:JsionEvent):void
 		{
-			var loaders:ILoaders = e.currentTarget as ILoaders;
+			var loaders:LoaderQueue = e.currentTarget as LoaderQueue;
 			
 			if(loaders.hasError)
 			{
@@ -505,12 +500,12 @@ package jsion.core.modules
 //			startEmbedQueue();
 		}
 		
-		private static function __modulesDisposeHandler(e:JLoaderEvent):void
+		private static function __modulesDisposeHandler(e:JsionEvent):void
 		{
-			var loaders:ILoaders = e.currentTarget as ILoaders;
+			var loaders:LoaderQueue = e.currentTarget as LoaderQueue;
 			
-			loaders.removeEventListener(JLoaderEvent.EmbedComplete, __modulesLoadCompleteHandler);
-			loaders.removeEventListener(JLoaderEvent.EmbedComplete, __modulesDisposeHandler);
+			loaders.removeEventListener(JsionEvent.COMPLETE, __modulesLoadCompleteHandler);
+			loaders.removeEventListener(JsionEvent.COMPLETE, __modulesDisposeHandler);
 			
 //			if(embeding) return;
 			
@@ -578,43 +573,6 @@ package jsion.core.modules
 //				}
 //			}
 //		}
-		
-		private static function updateConfig(cfg:Object, loadInfo:ModuleLoadInfo):void
-		{
-			if(loadInfo.moduleInfo.crypted)
-			{
-				cfg["cryptor"] = Module_Cryptor;
-			}
-			else
-			{
-				cfg["cryptor"] = null;
-			}
-			
-			var context:LoaderContext = null;
-			var domain:ApplicationDomain = null;
-			
-			if(loadInfo.moduleInfo.target == ModuleTarget.Blank)
-			{
-				domain = JUtil.createNewDomain();
-				context = JUtil.createContext(domain);
-				AppDomainUtil.registeAppDomain(context.applicationDomain);
-			}
-			else if(loadInfo.moduleInfo.target == ModuleTarget.Child)
-			{
-				domain = JUtil.createChildDomain();
-				context = JUtil.createContext(domain);
-				AppDomainUtil.registeAppDomain(context.applicationDomain);
-			}
-			else
-			{
-				domain = JUtil.createCurrentDomain();
-				context = JUtil.createContext(domain);
-			}
-			
-			loadInfo.domain = domain;
-			
-			cfg["context"] = context;
-		}
 	}
 }
 
@@ -627,7 +585,7 @@ class ModuleLoadInfo
 {
 	import flash.system.ApplicationDomain;
 	
-	import jsion.core.loaders.ILoader;
+	import jsion.core.loader.ILoader;
 	import jsion.core.modules.BaseModule;
 	import jsion.core.modules.ModuleInfo;
 	import jsion.core.reflection.Assembly;
@@ -671,6 +629,11 @@ class ModuleLoadInfo
 	 * 模块程序集
 	 */	
 	public var assembly:Assembly;
+	
+	/**
+	 * 类列表
+	 */	
+	public var clsList:Array;
 	
 	/**
 	 * 是否正在加载
