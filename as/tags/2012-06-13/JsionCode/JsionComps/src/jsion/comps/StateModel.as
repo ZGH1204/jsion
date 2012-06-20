@@ -1,13 +1,12 @@
 package jsion.comps
 {
-	import flash.events.EventDispatcher;
-	
 	import jsion.IDispose;
 	import jsion.comps.events.StateEvent;
+	import jsion.core.events.JsionEventDispatcher;
 	
 	[Event(name="stateChanged", type="jsion.comps.events.StateEvent")]
 	[Event(name="selectionChanged", type="jsion.comps.events.StateEvent")]
-	public class StateModel extends EventDispatcher implements IDispose
+	public class StateModel extends JsionEventDispatcher implements IDispose
 	{
 		protected var m_enabled:Boolean;
 		protected var m_rollOver:Boolean;
@@ -115,9 +114,9 @@ package jsion.comps
 			dispatchEvent(new StateEvent(StateEvent.SELECTION_CHANGED));
 		}
 		
-		public function dispose():void
+		override public function dispose():void
 		{
-			
+			super.dispose();
 		}
 	}
 }
