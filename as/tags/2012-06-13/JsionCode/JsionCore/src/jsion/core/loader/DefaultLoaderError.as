@@ -1,5 +1,6 @@
 package jsion.core.loader
 {
+
 	public class DefaultLoaderError implements ILoaderError
 	{
 		public function DefaultLoaderError()

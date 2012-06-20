@@ -90,12 +90,27 @@ package jsion.core.loader
 		/**
 		 * @inheritDoc
 		 */		
+		override public function cancel():void
+		{
+			if(m_status == LOADING && m_loader)
+			{
+				try { m_loader.close(); } catch (err:Error) { }
+				m_loader.unload();
+			}
+			
+			super.cancel();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
 		override public function dispose():void
 		{
 			if(m_loader)
 			{
 				m_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __embedInDomainHandler);
-				m_loader.close();
+				try { m_loader.close(); } catch (err:Error) { }
+				m_loader.unload();
 				m_loader = null;
 			}
 			
