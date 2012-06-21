@@ -67,7 +67,7 @@ package jsion.comps
 			}
 			
 			TEXT_FIELD_EXT.text = str;
-			TEXT_FIELD_EXT.setTextFormat(tf);
+			if(tf) TEXT_FIELD_EXT.setTextFormat(tf);
 			
 			if(includeGutters)
 			{

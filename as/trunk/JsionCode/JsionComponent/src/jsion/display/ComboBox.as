@@ -95,6 +95,8 @@ package jsion.display
 			}
 			
 			m_listView.visible = false;
+			
+			dispatchEvent(new DisplayEvent(DisplayEvent.SELECT_CHANGED, m_group.selected));
 		}
 		
 		private function __clickHandler(e:MouseEvent):void
@@ -1182,7 +1184,7 @@ package jsion.display
 		 */
 		override public function dispose():void
 		{
-			if(stage) stage.addEventListener(MouseEvent.CLICK, __stageClickHandler);
+			if(stage) stage.removeEventListener(MouseEvent.CLICK, __stageClickHandler);
 			
 			DisposeUtil.free(m_group);
 			m_group = null;

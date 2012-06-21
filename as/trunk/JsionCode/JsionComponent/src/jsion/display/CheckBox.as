@@ -216,9 +216,9 @@ package jsion.display
 		{
 			//super.updateImagePos();
 			
-			//refreshSize();
+			refreshSize();
 			
-			if(m_stateChange || 
+			if(m_stateChange || m_labelChange || 
 				isChanged(IMAGEDIRANDALIGN) || 
 				isChanged(STATEIMAGE) || 
 				isChanged(WIDTH) || 

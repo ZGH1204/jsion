@@ -83,9 +83,6 @@ package jsion.display
 
 		
 		/** @private */
-		protected var m_freeBMD:Boolean;
-		
-		/** @private */
 		protected var m_background:DisplayObject;
 		
 		/** @private */

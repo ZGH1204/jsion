@@ -509,7 +509,7 @@ package jsion.display
 		{
 			if(m_hAlign != value)
 			{
-				if(value == LEFT || value == RIGHT || value == CENTER)
+				if(value != LEFT && value != RIGHT && value != CENTER)
 				{
 					throw new Error("水平对齐方式错误。");
 					return;
@@ -556,7 +556,7 @@ package jsion.display
 		{
 			if(m_vAlign != value)
 			{
-				if(value == TOP || value == BOTTOM || value == MIDDLE)
+				if(value != TOP && value != BOTTOM && value != MIDDLE)
 				{
 					throw new Error("垂直对齐方式错误。");
 					return;

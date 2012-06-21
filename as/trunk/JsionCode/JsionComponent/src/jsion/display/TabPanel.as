@@ -108,8 +108,6 @@ package jsion.display
 		
 		private var m_paneContainer:Sprite;
 		
-		private var m_freeBMD:Boolean;
-		
 		private var m_tabGap:int;
 		
 		private var m_tabAlign:String;

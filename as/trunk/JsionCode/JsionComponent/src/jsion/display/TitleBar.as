@@ -51,8 +51,6 @@ package jsion.display
 		 */		
 		public static const MIDDLE:String = CompGlobal.MIDDLE;
 		
-		private var m_freeBMD:Boolean;
-		
 		private var m_background:DisplayObject;
 		
 		private var m_titleLabel:Label;

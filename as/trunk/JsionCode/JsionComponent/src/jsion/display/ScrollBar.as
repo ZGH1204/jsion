@@ -80,8 +80,6 @@ package jsion.display
 		private var m_bar:Button;
 		private var m_thumb:DisplayObject;
 		
-		private var m_freeBMD:Boolean;
-		
 		private var m_scrollType:int;
 		
 		private var m_btnGap:int;

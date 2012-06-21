@@ -105,10 +105,6 @@ package jsion.display
 		/** @private */
 		protected var m_disableFilters:Array;
 		
-		
-		/** @private */
-		protected var m_freeBMD:Boolean;
-		
 		/** @private */
 		protected var m_stateChange:Boolean;
 		
@@ -1018,16 +1014,16 @@ package jsion.display
 		 */		
 		override public function dispose():void
 		{
-			DisposeUtil.free(m_upImage);
+			DisposeUtil.free(m_upImage, m_freeBMD);
 			m_upImage = null;
 			
-			DisposeUtil.free(m_downImage);
+			DisposeUtil.free(m_downImage, m_freeBMD);
 			m_downImage = null;
 			
-			DisposeUtil.free(m_overImage);
+			DisposeUtil.free(m_overImage, m_freeBMD);
 			m_overImage = null;
 			
-			DisposeUtil.free(m_disableImage);
+			DisposeUtil.free(m_disableImage, m_freeBMD);
 			m_disableImage = null;
 			
 			m_curImage = null;
