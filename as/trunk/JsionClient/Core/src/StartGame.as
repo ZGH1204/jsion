@@ -10,6 +10,7 @@ package
 	
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.media.Sound;
 	
 	import jsion.GameCoreSetup;
 	import jsion.SetupComps;
@@ -19,6 +20,8 @@ package
 	import jsion.loaders.LoaderQueue;
 	import jsion.reflection.Assembly;
 	import jsion.scenes.SceneMgr;
+	import jsion.sounds.SoundMgr;
+	import jsion.utils.AppDomainUtil;
 	import jsion.utils.PathUtil;
 	import jsion.utils.StringUtil;
 
@@ -71,6 +74,35 @@ package
 		var clsList:Array = queue.getArray(file);
 		var ass:Assembly = new Assembly(clsList);
 		PacketHandlers.setup(ass);
+		
+		//解析模板文件
+		file = LibMgr.getLibPath(LibMgr.TEMPLATE);
+		
+		if(StringUtil.isNullOrEmpty(file))
+		{
+			throw new Error("模板文件路径未配置。");
+			return;
+		}
+		//TODO: 解析模板文件
+		
+		
+		//解析声音、音效
+		file = LibMgr.getLibPath(LibMgr.SOUND);
+		
+		if(StringUtil.isNullOrEmpty(file))
+		{
+			throw new Error("音效类库文件路径未配置。");
+			return;
+		}
+		
+		var soundClsList:Array = queue.getArray(file);
+		
+		for each(var cls:String in soundClsList)
+		{
+			var sound:Sound = AppDomainUtil.create(cls) as Sound;
+			
+			if(sound) SoundMgr.registeSound(cls.replace("Sound", ""), sound);
+		}
 		
 		
 		//初始化场景管理
