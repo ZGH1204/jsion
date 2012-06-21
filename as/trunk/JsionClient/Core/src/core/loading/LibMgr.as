@@ -15,6 +15,8 @@ package core.loading
 		public static const LOGIN:String = "login";
 		public static const TEMPLATE:String = "template";
 		public static const LANGUAGE:String = "language";
+		public static const EMBED_FONT:String = "embedFont";
+		public static const SOUND:String = "sound";
 		
 		private static const libs:HashMap = new HashMap();
 		
