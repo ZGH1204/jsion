@@ -157,6 +157,14 @@ package jsion.display
 			super();
 		}
 		
+		override protected function initialize():void
+		{
+			super.initialize();
+			
+			m_selectedOverFilters = OVERFILTERS;
+			m_selectedDisableFilters = DISABLEDFILTERS;
+		}
+		
 		/**
 		 * @inheritDoc
 		 */
@@ -1034,16 +1042,16 @@ package jsion.display
 			if(m_group) m_group.remove(this);
 			m_group = null;
 			
-			DisposeUtil.free(m_selectedUpImage);
+			DisposeUtil.free(m_selectedUpImage, m_freeBMD);
 			m_selectedUpImage = null;
 			
-			DisposeUtil.free(m_selectedOverImage);
+			DisposeUtil.free(m_selectedOverImage, m_freeBMD);
 			m_selectedOverImage = null;
 			
-			DisposeUtil.free(m_selectedDownImage);
+			DisposeUtil.free(m_selectedDownImage, m_freeBMD);
 			m_selectedDownImage = null;
 			
-			DisposeUtil.free(m_selectedDisableImage);
+			DisposeUtil.free(m_selectedDisableImage, m_freeBMD);
 			m_selectedDisableImage = null;
 			
 			m_selectedUpFilters = null;

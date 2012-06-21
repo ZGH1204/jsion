@@ -57,6 +57,10 @@ package jsion.comps
 		private var m_enabled:Boolean;
 		
 		
+		/** @private */
+		protected var m_freeBMD:Boolean;
+		
+		
 		
 		//========	update state model	========
 		
@@ -419,7 +423,7 @@ package jsion.comps
 		{
 			if(child == null) return null;
 			
-			super.removeChild(child);
+			if(child.parent == this) super.removeChild(child);
 			
 			ArrayUtil.remove(m_children, child);
 			
@@ -857,7 +861,7 @@ package jsion.comps
 			DisposeUtil.free(m_listeners);
 			m_listeners = null;
 			
-			DisposeUtil.free(m_children);
+			DisposeUtil.free(m_children, m_freeBMD);
 			m_children = null;
 			
 			DisposeUtil.free(m_model);

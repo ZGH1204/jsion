@@ -111,8 +111,6 @@ package jsion.display
 		private var m_wheelStep:int;
 		
 		
-		private var m_freeBMD:Boolean;
-		
 		
 		/**
 		 * 鼠标按下时拖动条的起始位置

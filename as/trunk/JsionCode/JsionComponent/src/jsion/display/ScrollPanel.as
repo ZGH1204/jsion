@@ -78,8 +78,6 @@ package jsion.display
 		
 		protected var m_scrollBar:ScrollBar;
 		
-		private var m_freeBMD:Boolean;
-		
 		protected var m_scrollType:int;
 		
 		private var m_scrollPos:int;
@@ -129,7 +127,8 @@ package jsion.display
 		 */
 		override public function addChild(child:DisplayObject):DisplayObject
 		{
-			throw new Error("不支持此方法，要添加显示对象请使用 addToContent() 方法。");
+			return super.addChild(child);
+			//throw new Error("不支持此方法，要添加显示对象请使用 addToContent() 方法。");
 		}
 		
 		/**
@@ -139,7 +138,8 @@ package jsion.display
 		 */
 		override public function addChildAt(child:DisplayObject, index:int):DisplayObject
 		{
-			throw new Error("不支持此方法，要添加显示对象请使用 addToContentAt() 方法。");
+			return super.addChildAt(child, index);
+			//throw new Error("不支持此方法，要添加显示对象请使用 addToContentAt() 方法。");
 		}
 		
 		/**
@@ -148,7 +148,8 @@ package jsion.display
 		 */
 		override public function removeChild(child:DisplayObject):DisplayObject
 		{
-			throw new Error("不支持此方法，要添加显示对象请使用 removeFromContent() 方法。");
+			return super.removeChild(child);
+			//throw new Error("不支持此方法，要添加显示对象请使用 removeFromContent() 方法。");
 		}
 		
 		/**
@@ -157,7 +158,8 @@ package jsion.display
 		 */
 		override public function removeChildAt(index:int):DisplayObject
 		{
-			throw new Error("不支持此方法，要添加显示对象请使用 removeFromContentAt() 方法。");
+			return super.removeChildAt(index);
+			//throw new Error("不支持此方法，要添加显示对象请使用 removeFromContentAt() 方法。");
 		}
 		
 		/**
@@ -188,7 +190,7 @@ package jsion.display
 		 */		
 		public function removeFromContent(child:DisplayObject):void
 		{
-			m_contentPane.removeChild(child);
+			if(child.parent == m_contentPane) m_contentPane.removeChild(child);
 		}
 		
 		/**
@@ -1475,6 +1477,8 @@ package jsion.display
 			m_scrollView = null;
 			
 			m_viewRect = null;
+			
+			m_contentPane = null;
 			
 			super.dispose();
 		}

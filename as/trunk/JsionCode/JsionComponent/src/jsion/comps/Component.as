@@ -45,6 +45,7 @@ package jsion.comps
 			
 			initialize();
 			initEvents();
+			configUI();
 		}
 		
 		/**

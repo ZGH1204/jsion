@@ -106,8 +106,6 @@ package jsion.display
 		private var m_value:Number;
 		
 		
-		private var m_freeBMD:Boolean;
-		
 		
 		public function ProgressBar(orientation:int = HORIZONTAL, progressType:int = MASK)
 		{
