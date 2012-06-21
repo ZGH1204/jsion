@@ -1,0 +1,34 @@
+<project name="UnzipSwcFile" default="main">
+
+	<property name="SWC_ROOT" value="E:\Code\JsionCode\as\trunk\JsionClient" />
+	<property name="TEMP_DIR" value="c:/temp" />
+	
+	<target name="main">
+		<antcall target="UnzipJsionCore"></antcall>
+		
+		<antcall target="UnzipLoading"></antcall>
+		
+		<antcall target="prepare"></antcall>
+	</target>
+	
+	<target name="UnzipJsionCore">
+		<echo>Unzip the JsionCore.swc file.</echo>
+		<unzip src="${SWC_ROOT}/Assets/libs/JsionCore.swc" dest="${TEMP_DIR}"></unzip>
+		<copyfile src="${TEMP_DIR}/library.swf" dest="${SWC_ROOT}/Assets/libs/JsionCore.swf" />
+	</target>
+	
+	<target name="UnzipLoading">
+		<echo>Unzip the JsionCore.swc file.</echo>
+		<unzip src="${SWC_ROOT}/Loading/bin/Loading.swc" dest="${TEMP_DIR}"></unzip>
+		<copyfile src="${TEMP_DIR}/library.swf" dest="${SWC_ROOT}/Loading/bin/Loading.swf" />
+	</target>
+
+	<target name="prepare">
+		<echo>Delete files in temp dir.</echo>
+		<delete dir="${TEMP_DIR}" />
+		<!--<delete quiet="true">
+			<fileset dir="${TEMP_DIR}" includes="*.*"></fileset>
+		</delete>-->
+	</target>
+	
+</project>
