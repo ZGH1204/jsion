@@ -24,6 +24,8 @@ package
 	import jsion.utils.AppDomainUtil;
 	import jsion.utils.PathUtil;
 	import jsion.utils.StringUtil;
+	
+	import knightage.display.Alert;
 
 	/**
 	 * Loading模块加载游戏基础库完成后执行。

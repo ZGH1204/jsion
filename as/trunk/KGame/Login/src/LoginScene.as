@@ -6,11 +6,15 @@ package
 	import flash.filters.GlowFilter;
 	
 	import jsion.StageRef;
+	import jsion.comps.UIMgr;
 	import jsion.debug.DEBUG;
 	import jsion.display.Label;
 	import jsion.scenes.BaseScene;
 	import jsion.sounds.SoundMgr;
 	import jsion.utils.DisposeUtil;
+	
+	import knightage.display.Alert;
+	import knightage.display.Frame;
 	
 	public class LoginScene extends BaseScene
 	{
@@ -52,15 +56,6 @@ package
 			label.addEventListener(MouseEvent.DOUBLE_CLICK, __doubleClickHandler);
 		}
 		
-		override public function enter(preScene:BaseScene, data:Object=null):void
-		{
-			DEBUG.debug("Enter login scene!");
-			
-			LoginMgr.account = data as String;
-			
-			testEmbedFont();
-		}
-		
 		private function __clickHandler(e:MouseEvent):void
 		{
 			SoundMgr.play("008");
@@ -69,6 +64,15 @@ package
 		private function __doubleClickHandler(e:MouseEvent):void
 		{
 			SoundMgr.play("064");
+		}
+		
+		override public function enter(preScene:BaseScene, data:Object=null):void
+		{
+			DEBUG.debug("Enter login scene!");
+			
+			LoginMgr.account = data as String;
+			
+			Alert.show();
 		}
 		
 		override public function leaving(nextScene:BaseScene):void
