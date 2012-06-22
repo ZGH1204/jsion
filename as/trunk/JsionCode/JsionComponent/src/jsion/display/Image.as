@@ -135,7 +135,7 @@ package jsion.display
 		{
 			if(value <= minWidth) value = minWidth;
 			
-			super.width = value + (value % 2);
+			super.width = value;// + (value % 2);
 		}
 		
 		/**
@@ -145,7 +145,7 @@ package jsion.display
 		{
 			if(value <= minHeight) value = minHeight;
 			
-			super.height = value + (value % 2);
+			super.height = value;// + (value % 2);
 		}
 		
 		/**
@@ -399,7 +399,7 @@ package jsion.display
 				
 				if(m_scaleType == SCALE)
 				{
-					needCreateBMD = change9Insets || changeSource || changeType;
+					needCreateBMD = change9Insets || changeSource || changeType || isChanged(WIDTH) || isChanged(HEIGHT);
 					
 					needUpdateBMD = needCreateBMD;
 					
