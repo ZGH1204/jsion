@@ -107,6 +107,14 @@ package jsion.comps
 		}
 		
 		/**
+		 * 指示是否在显示列表上呈现
+		 */		
+		public function get isOnStage():Boolean
+		{
+			return parent != null;
+		}
+		
+		/**
 		 * 初始化组件
 		 */		
 		protected function initialize():void

@@ -117,7 +117,7 @@ package jsion.display
 			
 			super();
 		}
-		
+
 		/**
 		 * @inheritDoc
 		 */		

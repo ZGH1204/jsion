@@ -6,6 +6,7 @@ package jsion.display
 	import flash.text.TextFormat;
 	
 	import jsion.comps.CompUtil;
+	import jsion.ddrop.DDropMgr;
 	import jsion.utils.StringUtil;
 
 	/**
@@ -112,6 +113,8 @@ package jsion.display
 		/** @private */
 		protected var m_dragger:TitleDragger;
 		
+		private var m_dragEnabled:Boolean;
+		
 		public function TitleWindow(modal:Boolean = true)
 		{
 			super(modal);
@@ -151,6 +154,7 @@ package jsion.display
 			m_titleBar.mouseEnabled = false;
 			m_titleBar.mouseChildren = false;
 			
+			m_dragEnabled = true;
 			m_dragger = new TitleDragger(this);
 		}
 		
@@ -468,6 +472,32 @@ package jsion.display
 			}
 		}
 		
+		/**
+		 * 是否启动窗体拖动，默认为 true。
+		 */		
+		public function get dragEnabled():Boolean
+		{
+			return m_dragEnabled;
+		}
+		
+		/** @private */
+		public function set dragEnabled(value:Boolean):void
+		{
+			if(m_dragEnabled != value)
+			{
+				m_dragEnabled = value;
+				
+				if(m_dragEnabled)
+				{
+					DDropMgr.registeDrag(m_dragger);
+				}
+				else
+				{
+					DDropMgr.unregisteDrag(m_dragger);
+				}
+			}
+		}
+		
 		
 		
 		//==============================	Label组件属性	==============================
@@ -605,7 +635,6 @@ package jsion.display
 			
 			return style;
 		}
-
 		
 		//==============================	Label组件属性	==============================
 		
