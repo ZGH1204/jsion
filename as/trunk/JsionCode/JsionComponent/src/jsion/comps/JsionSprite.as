@@ -832,6 +832,8 @@ package jsion.comps
 		{
 			DisposeUtil.free(m_bitmapForHit);
 			m_bitmapForHit = null;
+			
+			drawBitmapHit();
 		}
 		
 		//==============================================		忽略透明像素			==============================================
