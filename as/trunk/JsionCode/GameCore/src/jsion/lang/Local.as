@@ -47,7 +47,7 @@ package jsion.lang
 		 */		
 		public static function getTrans(key:String, ...args):String
 		{
-			var input:String = languages[key] ? languages[key] : "";
+			var input:String = languages[key] ? languages[key] : "未找到语言包对应值";
 			
 			var argList:Array = ArrayUtil.clone(args);
 			argList.unshift(input);
