@@ -1,13 +1,13 @@
 package jsion.socket
 {
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.net.Socket;
 	
 	import jsion.IDispose;
+	import jsion.events.JsionEventDispatcher;
 	import jsion.events.SocketEvent;
 	
 	/**
@@ -68,7 +68,7 @@ package jsion.socket
 	 * 数据包通信器
 	 * @author Jsion
 	 */	
-	public class PacketSocket extends EventDispatcher implements IDispose
+	public class PacketSocket extends JsionEventDispatcher implements IDispose
 	{
 		public static const UNCONNECTED:String = "unconnected";
 		public static const CONNECTING:String = "connecting";
@@ -270,12 +270,16 @@ package jsion.socket
 			}
 		}
 		
-		public function dispose():void
+		override public function dispose():void
 		{
 			removeEvent(_socket);
+			
 			close();
+			
 			_socket = null;
 			_reader = null;
+			
+			super.dispose();
 		}
 	}
 }
