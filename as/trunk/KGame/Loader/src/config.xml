@@ -20,10 +20,11 @@
 	<Loading id="language" 		libPath="Loader\src\assets\Language-zh_CN.txt" />
 	
 	<Config 
-		ServerIP="192.168.1.20"
-		ServerPort="10000"
-		GameWidth="1250"
+		ServerIP="192.168.1.3"
+		ServerPort="6000"
+		GameWidth="760"
 		GameHeight="650"
 		ResRoot="assets/"
+		Request="http://localhost:6692/"
 	/>
 </Root>

@@ -21,6 +21,9 @@ package core.scene
 				case SceneType.LOGIN:
 					return tryCreate("LoginScene");
 					break;
+				case SceneType.HALL:
+					return tryCreate("knightage.hall.HallScene");
+					break;
 			}
 			
 			return null;

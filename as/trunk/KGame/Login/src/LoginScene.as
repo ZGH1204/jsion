@@ -15,6 +15,7 @@ package
 	
 	import knightage.display.Alert;
 	import knightage.display.Frame;
+	import knightage.mgrs.PlayerMgr;
 	
 	public class LoginScene extends BaseScene
 	{
@@ -66,13 +67,21 @@ package
 			SoundMgr.play("064");
 		}
 		
+		
+		
+		private var m_controller:LoginController;
+		
 		override public function enter(preScene:BaseScene, data:Object=null):void
 		{
 			DEBUG.debug("Enter login scene!");
 			
+			if(PlayerMgr.logined) return;
+			
 			LoginMgr.account = data as String;
 			
-			Alert.show();
+			m_controller = new LoginController();
+			
+			m_controller.connectServer();
 		}
 		
 		override public function leaving(nextScene:BaseScene):void
@@ -83,6 +92,9 @@ package
 			
 			DisposeUtil.free(label);
 			label = null;
+			
+			DisposeUtil.free(m_controller);
+			m_controller = null;
 		}
 	}
 }

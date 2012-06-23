@@ -26,6 +26,7 @@ package
 	import jsion.utils.StringUtil;
 	
 	import knightage.display.Alert;
+	import knightage.mgrs.TemplateMgr;
 
 	/**
 	 * Loading模块加载游戏基础库完成后执行。
@@ -86,7 +87,7 @@ package
 			return;
 		}
 		//TODO: 解析模板文件
-		
+		TemplateMgr.setup(queue.getXML(file));
 		
 		//解析声音、音效
 		file = LibMgr.getLibPath(LibMgr.SOUND);
