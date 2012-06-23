@@ -212,6 +212,13 @@ package knightage.display
 			}
 		}
 		
+		override public function show(center:Boolean = true):void
+		{
+			if(parent == null) onShowing();
+			
+			UIMgr.addAlert(this);
+		}
+		
 		override public function dispose():void
 		{
 			m_okBtn = null;
@@ -226,7 +233,7 @@ package knightage.display
 		{
 			var alert:Alert = new Alert(msg, html, callback, buttons, okLabel, cancelLabel, closabe, modal);
 			
-			UIMgr.addAlert(alert);
+			alert.show();
 		}
 	}
 }
