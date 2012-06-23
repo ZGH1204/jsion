@@ -16,6 +16,8 @@ package
 		
 		public static var ResRoot:String;
 		
+		public static var Request:String;
+		
 		public static function setup(config:XML):void
 		{
 			var cfg:XML = config.Config[0];

@@ -7,6 +7,8 @@ package core.net
 	import jsion.socket.PacketSocket;
 	import jsion.utils.DisposeUtil;
 	
+	import knightage.display.Alert;
+	
 	public class SocketProxy
 	{
 		private static var m_socket:PacketSocket;
@@ -32,9 +34,9 @@ package core.net
 			
 			m_socket = new PacketSocket(ip, port);
 			
-			m_socket.connect();
-			
 			addSocketEvent(m_socket);
+			
+			m_socket.connect();
 		}
 		
 		private static function addSocketEvent(socket:PacketSocket):void
@@ -76,13 +78,15 @@ package core.net
 			// TODO Auto-generated method stub
 			
 			DEBUG.error("连接关闭!");
+			
+			Alert.show("连接关闭", false, null, Alert.OK, null, null, false);
 		}
 		
 		private static function __connectedHandler(e:SocketEvent):void
 		{
 			// TODO Auto-generated method stub
 			
-			DEBUG.error("已连接!");
+			DEBUG.debug("已连接!");
 		}
 		
 		public static function sendTCP(pkg:GamePacket):void

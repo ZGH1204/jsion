@@ -41,5 +41,25 @@ package
 		 * 被踢下线
 		 */		
 		public static const KitPlayer:int = 1015;
+		
+		/**
+		 * 服务端消息
+		 */		
+		public static const ServerMsg:int = 10000;
+		
+		
+		
+		
+		
+		
+		
+		/**
+		 * 玩家登陆信息
+		 */		
+		public static const LoginPlayer:int = 1101;
+		/**
+		 * 登陆玩家的英雄信息
+		 */		
+		public static const LoginHero:int = 1016;
 	}
 }
