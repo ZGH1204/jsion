@@ -10,6 +10,8 @@ package core.login
 		
 		public static var account:String;
 		
+		public static var nickName:String;
+		
 		public static var cryptString:String;
 		
 		public static var logined:Boolean;

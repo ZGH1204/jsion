@@ -9,7 +9,7 @@ package core.net.handlers
 	{
 		public function get code():int
 		{
-			return PacketCodes.RegistFailed;
+			return PacketCodes.Regist;
 		}
 		
 		public function handle(pkg:GamePacket):void

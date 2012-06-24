@@ -5,7 +5,10 @@ package
 	import flash.events.Event;
 	import flash.system.ApplicationDomain;
 	
+	import jsion.Cache;
 	import jsion.IDispose;
+	import jsion.loaders.ILoader;
+	import jsion.loaders.JsionLoader;
 	import jsion.loaders.LoaderQueue;
 	import jsion.loaders.LoaderQueue2;
 	import jsion.utils.DisposeUtil;
@@ -66,7 +69,9 @@ package
 			{
 				var libPath:String = String(libXml.@libPath);
 				
-				m_queue.addFile(libPath, m_libRoot, false);
+				var loader:JsionLoader = m_queue.addFile(libPath, m_libRoot, false) as JsionLoader;
+				
+				loader.setURLVariables("v", Cache.version);
 			}
 			
 			m_queue.setProgressCallback(progressCallback);

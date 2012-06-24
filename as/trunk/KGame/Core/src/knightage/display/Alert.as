@@ -186,7 +186,7 @@ package knightage.display
 			
 			if(m_callback != null) m_callback(true);
 			
-			super.close();
+			if(m_closabe) super.close();
 		}
 		
 		private function __cancelClickHandler(e:MouseEvent):void
@@ -195,7 +195,7 @@ package knightage.display
 			
 			if(m_callback != null) m_callback(false);
 			
-			super.close();
+			if(m_closabe) super.close();
 		}
 		
 		override public function close():void

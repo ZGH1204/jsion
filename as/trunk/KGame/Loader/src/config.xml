@@ -1,5 +1,7 @@
-<Root Mains="StartGame,DebugLogin" LibRoot="../../" LoadingMode="2" DebugCSS="Loader\src\assets\debug.css">
+<Root Mains="StartGame,DebugLogin" LibRoot="../../" LoadingMode="2" DebugCSS="debug.css">
 	<policy file="http://127.0.0.1/crossdomain.xml" />
+	
+	<music files="assets/backgroundmusic.flv" />
 	
 	<version from="0" to="1">
 		<file value="*.png" />

@@ -4,6 +4,7 @@ package core.net.handlers
 	import core.net.IPacketHandler;
 	
 	import jsion.debug.DEBUG;
+	import jsion.scenes.SceneMgr;
 
 	public class NoticeRegistPlayerHandler implements IPacketHandler
 	{
@@ -19,6 +20,8 @@ package core.net.handlers
 		public function handle(pkg:GamePacket):void
 		{
 			DEBUG.debug("通知注册玩家角色");
+			
+			SceneMgr.setScene(SceneType.REGISTE);
 		}
 	}
 }

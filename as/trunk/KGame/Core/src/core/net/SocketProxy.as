@@ -70,16 +70,14 @@ package core.net
 		{
 			// TODO Auto-generated method stub
 			
-			DEBUG.error("连接错误!");
+			Alert.show("连接错误", false, null, Alert.OK, null, null, false);
 		}
 		
 		private static function __closedHandler(e:SocketEvent):void
 		{
 			// TODO Auto-generated method stub
 			
-			DEBUG.error("连接关闭!");
-			
-			Alert.show("连接关闭", false, null, Alert.OK, null, null, false);
+			Alert.show("远程服务器已关闭", false, null, Alert.OK, null, null, false);
 		}
 		
 		private static function __connectedHandler(e:SocketEvent):void
