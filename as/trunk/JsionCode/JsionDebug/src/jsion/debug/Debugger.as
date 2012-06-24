@@ -9,6 +9,7 @@ package jsion.debug
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
+	import flash.net.URLVariables;
 	import flash.text.StyleSheet;
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
@@ -179,9 +180,9 @@ package jsion.debug
 		{
 			if(m_loader) return;
 			
-			var obj:Object = {};
+			var obj:URLVariables = new URLVariables();
 			
-			obj.rnd = Math.random();
+			obj["rnd"] = Math.random();
 			
 			var request:URLRequest = new URLRequest(path);
 			

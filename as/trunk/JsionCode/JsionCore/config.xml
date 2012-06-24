@@ -1,6 +1,6 @@
 <Root LibRoot="">
 	<policy file="http://127.0.0.1/crossdomain.xml" />
-	
+	<music files="" />
 	<version from="0" to="1">
 		<file value="*.png" />
 	</version>
