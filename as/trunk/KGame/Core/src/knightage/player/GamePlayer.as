@@ -19,9 +19,9 @@ package knightage.player
 		public var nickName:String;
 		
 		/**
-		 * 等级
+		 * 城堡等级模板ID(即人物等级)
 		 */		
-		public var grade:int;
+		public var castleTID:int;
 		
 		/**
 		 * 农田等级模板ID
@@ -29,9 +29,9 @@ package knightage.player
 		public var farmlandTID:int;
 		
 		/**
-		 * 民居等级模板ID
+		 * 酒馆等级模板ID
 		 */		
-		public var residenceTID:int;
+		public var tavernTID:int;
 		
 		/**
 		 * 兵营等级模板ID
@@ -39,39 +39,9 @@ package knightage.player
 		public var barracksTID:int;
 		
 		/**
-		 * 教堂等级模板ID
-		 */		
-		public var churchTID:int;
-		
-		/**
-		 * 国库等级模板ID
-		 */		
-		public var treasuryTID:int;
-		
-		/**
 		 * 训练场等级模板ID
 		 */		
 		public var trainingTID:int;
-		
-		/**
-		 * 潘朵拉等级模板ID
-		 */		
-		public var pandoraTID:int;
-		
-		/**
-		 * 铁匠铺等级模板ID
-		 */		
-		public var blacksmithTID:int;
-		
-		/**
-		 * 占卜屋等级模板ID
-		 */		
-		public var divinationTID:int;
-		
-		/**
-		 * 酒馆等级模板ID
-		 */		
-		public var pubTID:int;
 		
 		/**
 		 * 市场等级模板ID
@@ -83,7 +53,34 @@ package knightage.player
 		 */		
 		public var prisonTID:int;
 		
+		/**
+		 * 占卜屋等级模板ID
+		 */		
+		public var divineTID:int;
 		
+		/**
+		 * 潘朵拉等级模板ID
+		 */		
+		public var pandoraTID:int;
+		
+		/**
+		 * 铁匠铺等级模板ID
+		 */		
+		public var smithyTID:int;
+		
+		/**
+		 * 研究学院等级模板ID
+		 */		
+		public var collegeTID:int;
+		
+		/**
+		 * 雕像等级模板ID
+		 */		
+		public var efigyTID:int;
+		
+		/**
+		 * 英雄Mode
+		 */		
 		public var heroMode:HeroMode;
 		
 		public function GamePlayer()
