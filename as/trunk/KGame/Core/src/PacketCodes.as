@@ -33,9 +33,9 @@ package
 		public static const NoticeRegist:int = 1013;
 		
 		/**
-		 * 玩家角色注册失败
+		 * 玩家角色注册(注册失败时以此协议返回)
 		 */		
-		public static const RegistFailed:int = 1014;
+		public static const Regist:int = 1014;
 		
 		/**
 		 * 被踢下线

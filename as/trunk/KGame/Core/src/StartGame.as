@@ -20,6 +20,7 @@ package
 	import jsion.loaders.LoaderQueue;
 	import jsion.reflection.Assembly;
 	import jsion.scenes.SceneMgr;
+	import jsion.sounds.MusicMgr;
 	import jsion.sounds.SoundMgr;
 	import jsion.utils.AppDomainUtil;
 	import jsion.utils.PathUtil;
@@ -38,6 +39,12 @@ package
 		
 		//安装基础核心库
 		GameCoreSetup(stage);
+		
+		
+		//初始化场景管理
+		var sceneContainer:Sprite = new Sprite();
+		stage.addChild(sceneContainer);
+		SceneMgr.setup(sceneContainer, new SceneCreator());
 		
 		//安装UI框架
 		SetupComps(stage);
@@ -108,21 +115,21 @@ package
 		}
 		
 		
-		//初始化场景管理
-		var sceneContainer:Sprite = new Sprite();
-		stage.addChild(sceneContainer);
-		SceneMgr.setup(sceneContainer, new SceneCreator());
-		
-		
 		//初始化UI层级管理
 		var uiLayer:Sprite = new Sprite();
 		stage.addChild(uiLayer);
 		UIMgr.setup(uiLayer);
 		
 		
+		//初始化背景音乐
+		MusicMgr.setup(config);
+		MusicMgr.volume = 80;
+		MusicMgr.playMusic();
+		
+		
 		//初始化调试控制台
 		DEBUG.setup(stage, 250);
-		var cssPath:String = PathUtil.combinPath(String(config.@LibRoot), String(config.@DebugCSS));
+		var cssPath:String = PathUtil.combinPath(Config.ResRoot, String(config.@DebugCSS));
 		DEBUG.loadCSS(cssPath);
 		
 		//初始化完成后触发事件
