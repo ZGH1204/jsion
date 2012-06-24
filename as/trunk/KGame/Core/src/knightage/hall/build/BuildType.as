@@ -1,5 +1,10 @@
 package knightage.hall.build
 {
+	/**
+	 * 城堡、农田、酒馆、研究学院、兵营、训练场、市场、吊牢、占卜屋、潘多拉黑屋、雕像
+	 * @author Jsion
+	 * 
+	 */	
 	public class BuildType
 	{
 		/**
@@ -10,12 +15,12 @@ package knightage.hall.build
 		/**
 		 * 农田
 		 */		
-		public static const Fram:int = 2;
+		public static const Framland:int = 2;
 		
 		/**
-		 * 民居
+		 * 酒馆
 		 */		
-		public static const Resident:int = 3;
+		public static const Tavern:int = 3;
 		
 		/**
 		 * 兵营
@@ -23,48 +28,43 @@ package knightage.hall.build
 		public static const Barracks:int = 4;
 		
 		/**
-		 * 教堂
-		 */		
-		public static const Church:int = 5;
-		
-		/**
-		 * 国库
-		 */		
-		public static const Bank:int = 6;
-		
-		/**
 		 * 训练场
 		 */		
-		public static const Training:int = 7;
-		
-		/**
-		 * 潘多拉
-		 */		
-		public static const Pandora:int = 8;
-		
-		/**
-		 * 占卜屋
-		 */		
-		public static const Divine:int = 9;
+		public static const Training:int = 5;
 		
 		/**
 		 * 市场
 		 */		
-		public static const Market:int = 10;
-		
-		/**
-		 * 酒馆
-		 */		
-		public static const Tavern:int = 11;
+		public static const Market:int = 6;
 		
 		/**
 		 * 监狱
 		 */		
-		public static const Prison:int = 12;
+		public static const Prison:int = 7;
+		
+		/**
+		 * 占卜屋
+		 */		
+		public static const Divine:int = 8;
+		
+		/**
+		 * 潘多拉
+		 */		
+		public static const Pandora:int = 9;
 		
 		/**
 		 * 铁匠铺
 		 */		
-		public static const Weapon:int = 13;
+		public static const Smithy:int = 10;
+		
+		/**
+		 * 研究学院
+		 */		
+		public static const College:int = 11;
+		
+		/**
+		 * 雕像
+		 */		
+		public static const Efigy:int = 12;
 	}
 }

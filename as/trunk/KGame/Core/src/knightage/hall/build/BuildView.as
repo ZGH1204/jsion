@@ -32,43 +32,40 @@ package knightage.hall.build
 			switch(m_type)
 			{
 				case BuildType.Castle:
-					m_templateID = PlayerMgr.self.grade;
+					m_templateID = PlayerMgr.self.castleTID;
 					break;
-				case BuildType.Fram:
+				case BuildType.Framland:
 					m_templateID = PlayerMgr.self.farmlandTID;
 					break;
-				case BuildType.Resident:
-					m_templateID = PlayerMgr.self.residenceTID;
+				case BuildType.Tavern:
+					m_templateID = PlayerMgr.self.tavernTID;
+					break;
+				case BuildType.College:
+					m_templateID = PlayerMgr.self.collegeTID;
 					break;
 				case BuildType.Barracks:
 					m_templateID = PlayerMgr.self.barracksTID;
 					break;
-				case BuildType.Church:
-					m_templateID = PlayerMgr.self.churchTID;
-					break;
-				case BuildType.Bank:
-					m_templateID = PlayerMgr.self.treasuryTID;
-					break;
 				case BuildType.Training:
 					m_templateID = PlayerMgr.self.trainingTID;
-					break;
-				case BuildType.Pandora:
-					m_templateID = PlayerMgr.self.pandoraTID;
-					break;
-				case BuildType.Divine:
-					m_templateID = PlayerMgr.self.divinationTID;
 					break;
 				case BuildType.Market:
 					m_templateID = PlayerMgr.self.marketTID;
 					break;
-				case BuildType.Tavern:
-					m_templateID = PlayerMgr.self.pubTID;
-					break;
 				case BuildType.Prison:
 					m_templateID = PlayerMgr.self.prisonTID;
 					break;
-				case BuildType.Weapon:
-					m_templateID = PlayerMgr.self.blacksmithTID;
+				case BuildType.Divine:
+					m_templateID = PlayerMgr.self.divineTID;
+					break;
+				case BuildType.Pandora:
+					m_templateID = PlayerMgr.self.pandoraTID;
+					break;
+				case BuildType.Efigy:
+					m_templateID = PlayerMgr.self.efigyTID;
+					break;
+				case BuildType.Smithy:
+					m_templateID = PlayerMgr.self.smithyTID;
 					break;
 			}
 			
