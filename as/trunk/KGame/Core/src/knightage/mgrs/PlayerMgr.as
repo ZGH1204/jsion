@@ -54,6 +54,48 @@ package knightage.mgrs
 			return m_dispatcher.dispatchEvent(event);
 		}
 		
+		public static function updatePlayerExp(value:int):void
+		{
+			m_self.experience = value;
+			
+			dispatchEvent(new PlayerEvent(PlayerEvent.EXP_CHANGED, m_self.experience));
+		}
+		
+		public static function updatePlayerCoin(value:int):void
+		{
+			m_self.coins = value;
+			
+			dispatchEvent(new PlayerEvent(PlayerEvent.COIN_CHANGED, m_self.coins));
+		}
+		
+		public static function updatePlayerGold(value:int):void
+		{
+			m_self.gold = value;
+			
+			dispatchEvent(new PlayerEvent(PlayerEvent.GOLD_CHANGED, m_self.gold));
+		}
+		
+		public static function updatePlayerSolider(value:int):void
+		{
+			m_self.soliders = value;
+			
+			dispatchEvent(new PlayerEvent(PlayerEvent.SOLIDER_CHANGED, m_self.soliders));
+		}
+		
+		public static function updatePlayerFood(value:int):void
+		{
+			m_self.foods = value;
+			
+			dispatchEvent(new PlayerEvent(PlayerEvent.FOOD_CHANGED, m_self.foods));
+		}
+		
+		public static function updatePlayerOrder(value:int):void
+		{
+			m_self.orders = value;
+			
+			dispatchEvent(new PlayerEvent(PlayerEvent.ORDER_CHANGED, m_self.orders));
+		}
+		
 		public static function onLogin():void
 		{
 			if(LoginMgr.logined) return;

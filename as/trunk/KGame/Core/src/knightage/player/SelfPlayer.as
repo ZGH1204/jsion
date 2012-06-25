@@ -33,6 +33,11 @@ package knightage.player
 		public var coinsLimit:int;
 		
 		/**
+		 * 金币
+		 */		
+		public var gold:int;
+		
+		/**
 		 * 士气数量
 		 */		
 		public var soliders:int;
