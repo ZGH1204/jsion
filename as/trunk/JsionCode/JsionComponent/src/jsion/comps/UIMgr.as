@@ -16,6 +16,7 @@ package jsion.comps
 	public class UIMgr
 	{
 		private static var m_root:DisplayObjectContainer;
+		private static var m_fixLayer:Sprite;
 		private static var m_uiLayer:Sprite;
 		private static var m_uiAlert:Sprite;
 		private static var m_uiMessageTip:Sprite;
@@ -34,13 +35,26 @@ package jsion.comps
 			if(m_root || parent == null) return;
 			
 			m_root = parent;
+			m_fixLayer = new Sprite();
 			m_uiLayer = new Sprite();
 			m_uiAlert = new Sprite();
 			m_uiMessageTip = new Sprite();
 			
+			m_root.addChild(m_fixLayer);
 			m_root.addChild(m_uiLayer);
 			m_root.addChild(m_uiAlert);
 			m_root.addChild(m_uiMessageTip);
+		}
+		
+		/**
+		 * 将固定UI显示对象添加到固定UI显示层上
+		 * @param child UI显示对象
+		 */		
+		public static function addFixUI(child:DisplayObject):void
+		{
+			if(child == null) return;
+			
+			m_fixLayer.addChild(child);
 		}
 		
 		/**
