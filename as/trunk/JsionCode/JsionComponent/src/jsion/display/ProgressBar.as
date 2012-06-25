@@ -294,6 +294,12 @@ package jsion.display
 				{
 					if(m_manualBarWidth == false) m_barWidth = m_progressBar.width;
 					if(m_manualBarHeight == false) m_barHeight = m_progressBar.height;
+					
+					if(m_background == null)
+					{
+						if(manualWidth == false) m_width = m_barWidth;
+						if(manualHeight == false) m_height = m_barHeight;
+					}
 				}
 				
 				onPropertiesChanged(PROGRESSBAR);
@@ -435,7 +441,7 @@ package jsion.display
 		/** @private */
 		public function set value(value:Number):void
 		{
-			if(m_value != value && value >= m_minValue && value <= m_maxValue)
+			if(m_value != value)// && value >= m_minValue && value <= m_maxValue)
 			{
 				m_value = value;
 				

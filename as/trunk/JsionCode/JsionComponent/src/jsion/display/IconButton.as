@@ -141,8 +141,13 @@ package jsion.display
 		{
 			super.initialize();
 			
+			m_rect = new Rectangle();
+			
 			m_iconHAlign = CENTER;
 			m_iconVAlign = MIDDLE;
+			
+			m_iconOverFilters = OVERFILTERS;
+			m_iconDisableFilters = DISABLEDFILTERS;
 		}
 		
 		/**
@@ -375,6 +380,13 @@ package jsion.display
 			}
 		}
 		
+		override protected function addChildren():void
+		{
+			super.addChildren();
+			
+			if(m_curIconImage) addChild(m_curIconImage);
+		}
+		
 		/**
 		 * 更新当前状态和图标的显示对象
 		 */		
@@ -416,11 +428,6 @@ package jsion.display
 					}
 					
 					m_curIconImage = image;
-				}
-				
-				if(m_curIconImage)
-				{
-					addChild(m_curIconImage);
 				}
 			}
 		}

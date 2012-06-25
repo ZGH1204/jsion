@@ -155,6 +155,8 @@ package jsion.display
 		{
 			super.initialize();
 			
+			m_iconDir = LEFT;
+			
 			m_iconOverFilters = OVERFILTERS;
 			m_iconDisableFilters = DISABLEDFILTERS;
 		}
@@ -369,13 +371,40 @@ package jsion.display
 			}
 		}
 		
+		override protected function addChildren():void
+		{
+			super.addChildren();
+			
+			if(m_curIconImage) addChild(m_curIconImage);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		override protected function onProppertiesUpdate():void
+		{
+			super.updateLabel();
+			
+			updateCurrentIconStateImage();
+			
+			updateCurrentIconStateFilters();
+			
+			super.onProppertiesUpdate();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		override protected function updateLabel():void
+		{
+			
+		}
+		
 		/**
 		 * 更新当前状态的显示对象和图标显示对象
 		 */		
-		override protected function updateCurrentStateImage():void
+		protected function updateCurrentIconStateImage():void
 		{
-			super.updateCurrentStateImage();
-			
 			if(isChanged(ICONIMAGE) || m_stateChange)
 			{
 				var image:DisplayObject;
@@ -411,21 +440,14 @@ package jsion.display
 					
 					m_curIconImage = image;
 				}
-				
-				if(m_curIconImage)
-				{
-					addChild(m_curIconImage);
-				}
 			}
 		}
 		
 		/**
 		 * 更新当前状态和图标的滤镜对象
 		 */		
-		override protected function updateCurrentStateFilters():void
+		protected function updateCurrentIconStateFilters():void
 		{
-			super.updateCurrentStateFilters();
-			
 			if((isChanged(ICONFILTERS) || m_stateChange) && m_curIconImage)
 			{
 				var filters:Array;
@@ -521,6 +543,7 @@ package jsion.display
 				isChanged(LABELALIGN) || 
 				isChanged(ICONIMAGE) || 
 				isChanged(ICONGAP) || 
+				isChanged(ICONDIR) || 
 				isChanged(WIDTH) || 
 				isChanged(HEIGHT) || 
 				isChanged(OFFSET))
