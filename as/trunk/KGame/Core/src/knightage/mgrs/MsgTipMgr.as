@@ -88,7 +88,7 @@ package knightage.mgrs
 			if(m_cartoon)
 			{
 				m_cartoon.x = Config.GameWidth / 2;
-				m_cartoon.y = Config.GameHeight / 4;
+				m_cartoon.y = Config.GameHeight / 3;
 			}
 		}
 		

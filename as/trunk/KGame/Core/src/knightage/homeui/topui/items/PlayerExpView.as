@@ -1,19 +1,18 @@
-package knightage.homeui.topui
+package knightage.homeui.topui.items
 {
 	import flash.display.Bitmap;
 	
-	import jsion.display.Label;
 	import jsion.display.ProgressBar;
 	import jsion.utils.DisposeUtil;
 	
+	import knightage.StaticConfig;
 	import knightage.StaticRes;
 	import knightage.events.PlayerEvent;
+	import knightage.homeui.LevelView;
 	import knightage.mgrs.PlayerMgr;
 
 	public class PlayerExpView extends InfoView
 	{
-		private var m_lvLabel:Label;
-		
 		private var m_progress:ProgressBar;
 		
 		public function PlayerExpView()
@@ -25,34 +24,23 @@ package knightage.homeui.topui
 		{
 			super.initialized();
 			
-			m_icon = new Bitmap(StaticRes.LvIcon);
+			m_icon = new LevelView(PlayerMgr.self.castleTID, LevelView.TOP);
 			addChild(m_icon);
 			
 			m_progress = new ProgressBar();
 			m_progress.beginChanges();
 			m_progress.freeBMD = false;
 			m_progress.progressBar = new Bitmap(StaticRes.ProgressBarBMD);
-			m_progress.maxValue = StaticRes.CastleUpGradeExp[PlayerMgr.self.castleTID];
+			m_progress.maxValue = StaticConfig.CastleUpGradeExp[PlayerMgr.self.castleTID];
 			m_progress.value = PlayerMgr.self.experience;
 			m_progress.commitChanges();
 			addChild(m_progress);
-			
-			m_lvLabel = new Label();
-			m_lvLabel.beginChanges();
-			m_lvLabel.text = PlayerMgr.self.castleTID.toString();
-			m_lvLabel.filters = StaticRes.TopUINumFilters;
-			m_lvLabel.textColor = StaticRes.TopUINumColor;
-			m_lvLabel.textFormat = StaticRes.TopUINumTextFormat;
-			m_lvLabel.commitChanges();
-			addChild(m_lvLabel);
 			
 			m_icon.x = 4;
 			m_icon.y = 6;
 			
 			m_progress.x = 46;
 			m_progress.y = 15;
-			
-			refreshLvLabelPos();
 			
 			PlayerMgr.addEventListener(PlayerEvent.EXP_CHANGED, __expChangeHandler);
 		}
@@ -61,34 +49,23 @@ package knightage.homeui.topui
 		{
 			// TODO Auto Generated method stub
 			
-			m_lvLabel.text = PlayerMgr.self.castleTID.toString();
+			LevelView(m_icon).setLevel(PlayerMgr.self.castleTID);
 			
 			m_progress.beginChanges();
-			m_progress.maxValue = StaticRes.CastleUpGradeExp[PlayerMgr.self.castleTID];
+			m_progress.maxValue = StaticConfig.CastleUpGradeExp[PlayerMgr.self.castleTID];
 			m_progress.value = PlayerMgr.self.experience;
 			m_progress.commitChanges();
-			
-			refreshLvLabelPos();
-		}
-		
-		private function refreshLvLabelPos():void
-		{
-			m_lvLabel.x = m_icon.x + (m_icon.width - m_lvLabel.width) / 2;
-			m_lvLabel.y = m_icon.y + 3;
 		}
 		
 		override public function dispose():void
 		{
 			PlayerMgr.removeEventListener(PlayerEvent.EXP_CHANGED, __expChangeHandler);
 			
-			DisposeUtil.free(m_icon, false);
+			DisposeUtil.free(m_icon);
 			m_icon = null;
 			
 			DisposeUtil.free(m_progress, false);
 			m_progress = null;
-			
-			DisposeUtil.free(m_lvLabel);
-			m_lvLabel = null;
 			
 			super.dispose();
 		}

@@ -57,7 +57,7 @@ package knightage.hall
 		
 		private function __buildClickHandler(e:MouseEvent):void
 		{
-			MsgTipMgr.show("功能开发中");
+			MsgTipMgr.show("功能开发中...");
 		}
 		
 		
