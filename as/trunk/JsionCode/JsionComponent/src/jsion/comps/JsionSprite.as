@@ -812,7 +812,7 @@ package jsion.comps
 			DisposeUtil.free(m_bitmapForHit);
 			m_bitmapForHit = null;
 			
-			var b:Rectangle = getBounds(this);
+			var b:Rectangle = new Rectangle(0, 0, width, height);
 			
 			if(b.width <= 0 || b.height <= 0) return;
 			
@@ -833,7 +833,7 @@ package jsion.comps
 			DisposeUtil.free(m_bitmapForHit);
 			m_bitmapForHit = null;
 			
-			drawBitmapHit();
+			if(m_ignoreTransparents) drawBitmapHit();
 		}
 		
 		//==============================================		忽略透明像素			==============================================
