@@ -6,6 +6,7 @@ package knightage.hall.build
 	import jsion.loaders.SwfLoader;
 	import jsion.utils.DisposeUtil;
 	
+	import knightage.StaticRes;
 	import knightage.mgrs.PlayerMgr;
 	import knightage.mgrs.TemplateMgr;
 	import knightage.templates.BuildTemplate;
@@ -92,7 +93,7 @@ package knightage.hall.build
 			
 			m_loader.loadAsync(loadCallback);
 			
-			clickSoundID = "008";
+			clickSoundID = StaticRes.ButtonClickSoundID;
 		}
 		
 		private function loadCallback(loader:SwfLoader, success:Boolean):void

@@ -1,4 +1,4 @@
-package knightage.homeui.topui
+package knightage.homeui.topui.items
 {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;

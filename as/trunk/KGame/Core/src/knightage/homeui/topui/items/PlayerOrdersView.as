@@ -1,4 +1,4 @@
-package knightage.homeui.topui
+package knightage.homeui.topui.items
 {
 	import flash.display.Bitmap;
 	
@@ -9,11 +9,11 @@ package knightage.homeui.topui
 	import knightage.events.PlayerEvent;
 	import knightage.mgrs.PlayerMgr;
 
-	public class PlayerFoodView extends InfoView
+	public class PlayerOrdersView extends InfoView
 	{
 		private var m_numLabel:Label;
 		
-		public function PlayerFoodView()
+		public function PlayerOrdersView()
 		{
 			super(2);
 		}
@@ -23,12 +23,13 @@ package knightage.homeui.topui
 			super.initialized();
 			
 			
-			m_icon = new Bitmap(StaticRes.FoodsIcon);
+			m_icon = new Bitmap(StaticRes.OrderIcon);
+			m_icon.y = -5;
 			addChild(m_icon);
 			
 			m_numLabel = new Label();
 			m_numLabel.beginChanges();
-			m_numLabel.text = PlayerMgr.self.foods.toString();
+			m_numLabel.text = PlayerMgr.self.orders.toString();
 			m_numLabel.filters = StaticRes.TopUINumFilters;
 			m_numLabel.textColor = StaticRes.TopUINumColor;
 			m_numLabel.textFormat = StaticRes.TopUINumTextFormat;
@@ -40,14 +41,14 @@ package knightage.homeui.topui
 			
 			refreshNumLabelPos();
 			
-			PlayerMgr.addEventListener(PlayerEvent.FOOD_CHANGED, __foodChangedHandler);
+			PlayerMgr.addEventListener(PlayerEvent.ORDER_CHANGED, __ordersChangedHandler);
 		}
 		
-		private function __foodChangedHandler(e:PlayerEvent):void
+		private function __ordersChangedHandler(e:PlayerEvent):void
 		{
 			// TODO Auto Generated method stub
 			
-			m_numLabel.text = PlayerMgr.self.foods.toString();
+			m_numLabel.text = PlayerMgr.self.orders.toString();
 			
 			refreshNumLabelPos();
 		}
@@ -60,7 +61,7 @@ package knightage.homeui.topui
 		
 		override public function dispose():void
 		{
-			PlayerMgr.removeEventListener(PlayerEvent.FOOD_CHANGED, __foodChangedHandler);
+			PlayerMgr.removeEventListener(PlayerEvent.ORDER_CHANGED, __ordersChangedHandler);
 			
 			DisposeUtil.free(m_icon, false);
 			m_icon = null;

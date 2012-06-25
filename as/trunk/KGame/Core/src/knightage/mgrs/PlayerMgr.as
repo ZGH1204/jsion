@@ -7,6 +7,7 @@ package knightage.mgrs
 	import jsion.scenes.SceneMgr;
 	
 	import knightage.events.PlayerEvent;
+	import knightage.homeui.bottomui.BottomUIView;
 	import knightage.homeui.topui.TopUIView;
 	import knightage.player.SelfPlayer;
 
@@ -103,6 +104,8 @@ package knightage.mgrs
 			LoginMgr.logined = true;
 			
 			UIMgr.addFixUI(new TopUIView());
+			
+			UIMgr.addFixUI(new BottomUIView());
 			
 			SceneMgr.setScene(SceneType.HALL);
 		}
