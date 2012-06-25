@@ -27,6 +27,7 @@ package
 	import jsion.utils.StringUtil;
 	
 	import knightage.display.Alert;
+	import knightage.mgrs.MsgTipMgr;
 	import knightage.mgrs.TemplateMgr;
 
 	/**
@@ -48,6 +49,9 @@ package
 		
 		//安装UI框架
 		SetupComps(stage);
+		
+		//安装消息提示
+		MsgTipMgr.setup();
 		
 		//安装加载库列表
 		LibMgr.setup(config);
