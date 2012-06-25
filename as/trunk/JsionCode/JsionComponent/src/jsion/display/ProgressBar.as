@@ -194,6 +194,10 @@ package jsion.display
 				
 				var temp:Number = (m_value - m_minValue) / (m_maxValue - m_minValue);
 				
+				if(isNaN(temp)) temp = 0;
+				
+				temp = Math.min(temp, 1);
+				
 				m_progressBar.x = m_barOffsetX;
 				m_progressBar.y = m_barOffsetY;
 				
