@@ -1,8 +1,10 @@
 package knightage.player.heros
 {
 	import jsion.HashMap;
+	import jsion.events.JsionEventDispatcher;
+	import jsion.utils.DisposeUtil;
 
-	public class HeroMode
+	public class HeroMode extends JsionEventDispatcher
 	{
 		private var m_list:HashMap;
 		
@@ -25,6 +27,14 @@ package knightage.player.heros
 			}
 			
 			m_list.put(hero.heroID, hero);
+		}
+		
+		override public function dispose():void
+		{
+			DisposeUtil.free(m_list)
+			m_list = null;
+			
+			super.dispose();
 		}
 	}
 }

@@ -16,6 +16,8 @@ package knightage.hall.build
 		
 		private var m_templateID:int;
 		
+		private var m_imgFile:String;
+		
 		private var m_loader:SwfLoader;
 		
 		public function BuildView(type:int)
@@ -25,6 +27,11 @@ package knightage.hall.build
 			super();
 		}
 		
+		public function get buildType():int
+		{
+			return m_type;
+		}
+
 		override protected function configUI():void
 		{
 			stopMouseDownPropagation();
@@ -78,6 +85,8 @@ package knightage.hall.build
 				throw new Error("建筑类型不匹配");
 				return;
 			}
+			
+			m_imgFile = template.profileURL;
 			
 			m_loader = new SwfLoader(template.profileURL, Config.ResRoot);
 			

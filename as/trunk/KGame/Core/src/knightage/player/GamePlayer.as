@@ -1,12 +1,11 @@
 package knightage.player
 {
-	import flash.events.IEventDispatcher;
-	
-	import jsion.events.JsionEventDispatcher;
+	import jsion.IDispose;
+	import jsion.utils.DisposeUtil;
 	
 	import knightage.player.heros.HeroMode;
 	
-	public class GamePlayer extends JsionEventDispatcher
+	public class GamePlayer implements IDispose
 	{
 		/**
 		 * 玩家ID
@@ -88,6 +87,12 @@ package knightage.player
 			heroMode = new HeroMode();
 			
 			super();
+		}
+		
+		public function dispose():void
+		{
+			DisposeUtil.free(heroMode);
+			heroMode = null;
 		}
 	}
 }

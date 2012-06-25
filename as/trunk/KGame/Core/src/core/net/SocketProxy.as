@@ -13,6 +13,8 @@ package core.net
 	{
 		private static var m_socket:PacketSocket;
 		
+		private static var m_errored:Boolean;
+		
 		public static function setPacketClass(cls:Class):void
 		{
 			PacketFactory.setPacketClass(cls);
@@ -70,12 +72,23 @@ package core.net
 		{
 			// TODO Auto-generated method stub
 			
-			Alert.show("连接错误", false, null, Alert.OK, null, null, false);
+			//removeSocketEvent(m_socket);
+			
+			if(m_errored == false)
+			{
+				m_errored = true;
+				
+				Alert.show("连接错误" as String, false, null, Alert.OK, null, null, false);
+			}
+			
+			DEBUG.error(e.eData);
 		}
 		
 		private static function __closedHandler(e:SocketEvent):void
 		{
 			// TODO Auto-generated method stub
+			
+			removeSocketEvent(m_socket);
 			
 			Alert.show("远程服务器已关闭", false, null, Alert.OK, null, null, false);
 		}

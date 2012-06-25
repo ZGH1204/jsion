@@ -3,12 +3,15 @@ package knightage.hall
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	
 	import jsion.IDispose;
 	import jsion.ddrop.DDropMgr;
 	import jsion.ddrop.IDragDrop;
+	import jsion.utils.DisposeUtil;
 	
 	import knightage.hall.build.BuildView;
+	import knightage.mgrs.MsgTipMgr;
 	
 	public class HallView extends Sprite implements IDragDrop, IDispose
 	{
@@ -43,11 +46,20 @@ package knightage.hall
 			{
 				var buildView:BuildView = new BuildView(i);
 				
+				buildView.addEventListener(MouseEvent.CLICK, __buildClickHandler);
+				
 				addChild(buildView);
 				
 				m_buildList.push(buildView);
 			}
 		}
+		
+		
+		private function __buildClickHandler(e:MouseEvent):void
+		{
+			MsgTipMgr.show("功能开发中");
+		}
+		
 		
 		
 		
@@ -148,6 +160,12 @@ package knightage.hall
 		public function dispose():void
 		{
 			DDropMgr.unregisteDrag(this);
+			
+			DisposeUtil.free(m_buildList);
+			m_buildList = null;
+			
+			DisposeUtil.free(m_background);
+			m_background = null;
 		}
 	}
 }
