@@ -6,6 +6,7 @@ package knightage.homeui.topui
 	import jsion.utils.DisposeUtil;
 	
 	import knightage.StaticRes;
+	import knightage.events.PlayerEvent;
 	import knightage.mgrs.PlayerMgr;
 
 	public class PlayerFoodView extends InfoView
@@ -37,12 +38,30 @@ package knightage.homeui.topui
 			m_background.x = m_icon.width - 14;
 			m_background.y = 7;
 			
+			refreshNumLabelPos();
+			
+			PlayerMgr.addEventListener(PlayerEvent.FOOD_CHANGED, __foodChangedHandler);
+		}
+		
+		private function __foodChangedHandler(e:PlayerEvent):void
+		{
+			// TODO Auto Generated method stub
+			
+			m_numLabel.text = PlayerMgr.self.foods.toString();
+			
+			refreshNumLabelPos();
+		}
+		
+		private function refreshNumLabelPos():void
+		{
 			m_numLabel.x = width - m_numLabel.width - 10;
 			m_numLabel.y = m_background.y + (m_background.height - m_numLabel.height) / 2 - 2;
 		}
 		
 		override public function dispose():void
 		{
+			PlayerMgr.removeEventListener(PlayerEvent.FOOD_CHANGED, __foodChangedHandler);
+			
 			DisposeUtil.free(m_icon, false);
 			m_icon = null;
 			

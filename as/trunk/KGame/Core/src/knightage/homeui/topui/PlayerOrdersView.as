@@ -6,17 +6,14 @@ package knightage.homeui.topui
 	import jsion.utils.DisposeUtil;
 	
 	import knightage.StaticRes;
-	import knightage.display.YellowButton;
 	import knightage.events.PlayerEvent;
 	import knightage.mgrs.PlayerMgr;
 
-	public class PlayerGoldView extends InfoView
+	public class PlayerOrdersView extends InfoView
 	{
 		private var m_numLabel:Label;
 		
-		private var m_selectBtn:YellowButton;
-		
-		public function PlayerGoldView()
+		public function PlayerOrdersView()
 		{
 			super(2);
 		}
@@ -26,45 +23,32 @@ package knightage.homeui.topui
 			super.initialized();
 			
 			
-			m_icon = new Bitmap(StaticRes.GoldsIcon);
+			m_icon = new Bitmap(StaticRes.OrderIcon);
+			m_icon.y = -5;
 			addChild(m_icon);
 			
 			m_numLabel = new Label();
 			m_numLabel.beginChanges();
-			m_numLabel.text = PlayerMgr.self.gold.toString();
+			m_numLabel.text = PlayerMgr.self.orders.toString();
 			m_numLabel.filters = StaticRes.TopUINumFilters;
 			m_numLabel.textColor = StaticRes.TopUINumColor;
 			m_numLabel.textFormat = StaticRes.TopUINumTextFormat;
 			m_numLabel.commitChanges();
 			addChild(m_numLabel);
 			
-			
-			
-			m_selectBtn = new YellowButton("查询");
-			m_selectBtn.beginChanges();
-			m_selectBtn.width = 60;
-			m_selectBtn.height = 36;
-			m_selectBtn.enabled = false;
-			m_selectBtn.commitChanges();
-			addChild(m_selectBtn);
-			
-			
-			
-			m_background.x = m_icon.width - 12;
-			m_background.y = 2;
+			m_background.x = m_icon.width - 14;
+			m_background.y = 7;
 			
 			refreshNumLabelPos();
 			
-			m_selectBtn.x = m_background.x + m_background.width - 3;
-			
-			PlayerMgr.addEventListener(PlayerEvent.GOLD_CHANGED, __goldChangedHandler);
+			PlayerMgr.addEventListener(PlayerEvent.ORDER_CHANGED, __ordersChangedHandler);
 		}
 		
-		private function __goldChangedHandler(e:PlayerEvent):void
+		private function __ordersChangedHandler(e:PlayerEvent):void
 		{
 			// TODO Auto Generated method stub
 			
-			m_numLabel.text = PlayerMgr.self.gold.toString();
+			m_numLabel.text = PlayerMgr.self.orders.toString();
 			
 			refreshNumLabelPos();
 		}
@@ -77,16 +61,13 @@ package knightage.homeui.topui
 		
 		override public function dispose():void
 		{
-			PlayerMgr.removeEventListener(PlayerEvent.GOLD_CHANGED, __goldChangedHandler);
+			PlayerMgr.removeEventListener(PlayerEvent.ORDER_CHANGED, __ordersChangedHandler);
 			
 			DisposeUtil.free(m_icon, false);
 			m_icon = null;
 			
 			DisposeUtil.free(m_numLabel);
 			m_numLabel = null;
-			
-			DisposeUtil.free(m_selectBtn);
-			m_selectBtn = null;
 			
 			super.dispose();
 		}

@@ -6,6 +6,7 @@ package knightage.homeui.topui
 	import jsion.utils.DisposeUtil;
 	
 	import knightage.StaticRes;
+	import knightage.events.PlayerEvent;
 	import knightage.mgrs.PlayerMgr;
 
 	public class PlayerSoliderView extends InfoView
@@ -36,12 +37,30 @@ package knightage.homeui.topui
 			m_background.x = m_icon.width - 14;
 			m_background.y = 7;
 			
+			refreshNumLabelPos();
+			
+			PlayerMgr.addEventListener(PlayerEvent.SOLIDER_CHANGED, __soliderChangedHandler);
+		}
+		
+		private function __soliderChangedHandler(e:PlayerEvent):void
+		{
+			// TODO Auto Generated method stub
+			
+			m_numLabel.text = PlayerMgr.self.soliders.toString();
+			
+			refreshNumLabelPos();
+		}
+		
+		private function refreshNumLabelPos():void
+		{
 			m_numLabel.x = width - m_numLabel.width - 10;
 			m_numLabel.y = m_background.y + (m_background.height - m_numLabel.height) / 2 - 2;
 		}
 		
 		override public function dispose():void
 		{
+			PlayerMgr.removeEventListener(PlayerEvent.SOLIDER_CHANGED, __soliderChangedHandler);
+			
 			DisposeUtil.free(m_icon, false);
 			m_icon = null;
 			
