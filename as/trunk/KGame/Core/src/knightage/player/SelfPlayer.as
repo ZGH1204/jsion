@@ -110,7 +110,7 @@ package knightage.player
 		/**
 		 * 军团信息(军团编号,军团等级,英雄ID,英雄ID......|军团编号,军团等级,英雄ID,英雄ID......)
 		 */		
-		public var teamInfo:String;
+		public var teamStr:String;
 		
 		/**
 		 * 军功
