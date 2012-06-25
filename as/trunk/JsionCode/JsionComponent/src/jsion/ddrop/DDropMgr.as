@@ -430,8 +430,6 @@ package jsion.ddrop
 			
 			//回调
 			_dragger.dragingCallback();
-			
-			if(e is MouseEvent) MouseEvent(e).updateAfterEvent();
 		}
 		
 		private static function __dropHandler(e:MouseEvent):void
