@@ -1,5 +1,6 @@
 package jsion.events
 {
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
@@ -107,6 +108,18 @@ package jsion.events
 		
 		//==========================================		保存事件监听信息			==========================================
 		
+		/**
+		 * 重写发送事件方法 释放 Event 事件数据对象
+		 * @param event 事件数据对象
+		 */		
+		override public function dispatchEvent(event:Event):Boolean
+		{
+			var rlt:Boolean = super.dispatchEvent(event);
+			
+			DisposeUtil.free(event);
+			
+			return rlt;
+		}
 		
 		
 		/**
