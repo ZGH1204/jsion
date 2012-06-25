@@ -15,7 +15,7 @@ package jsion.comps
 	 */	
 	public class UIMgr
 	{
-		private static var m_root:Sprite;
+		private static var m_root:DisplayObjectContainer;
 		private static var m_uiLayer:Sprite;
 		private static var m_uiAlert:Sprite;
 		private static var m_uiMessageTip:Sprite;
@@ -33,7 +33,7 @@ package jsion.comps
 		{
 			if(m_root || parent == null) return;
 			
-			m_root = new Sprite();
+			m_root = parent;
 			m_uiLayer = new Sprite();
 			m_uiAlert = new Sprite();
 			m_uiMessageTip = new Sprite();
@@ -41,8 +41,6 @@ package jsion.comps
 			m_root.addChild(m_uiLayer);
 			m_root.addChild(m_uiAlert);
 			m_root.addChild(m_uiMessageTip);
-			
-			parent.addChild(m_root);
 		}
 		
 		/**
@@ -72,7 +70,7 @@ package jsion.comps
 		{
 			if(child == null) return;
 			
-			m_uiLayer.addChild(child);
+			m_uiAlert.addChild(child);
 			
 			child.x = (m_root.stage.stageWidth - child.width) / 2;
 			child.y = (m_root.stage.stageHeight - child.height) / 2;
@@ -87,7 +85,7 @@ package jsion.comps
 		{
 			if(child == null) return;
 			
-			m_uiLayer.addChild(child);
+			m_uiMessageTip.addChild(child);
 			
 			child.x = (m_root.stage.stageWidth - child.width) / 2;
 			child.y = (m_root.stage.stageHeight - child.height) / 2;
