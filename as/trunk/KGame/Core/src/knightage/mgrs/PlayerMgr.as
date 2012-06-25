@@ -2,10 +2,12 @@ package knightage.mgrs
 {
 	import core.login.LoginMgr;
 	
+	import jsion.comps.UIMgr;
 	import jsion.events.JsionEventDispatcher;
 	import jsion.scenes.SceneMgr;
 	
 	import knightage.events.PlayerEvent;
+	import knightage.homeui.topui.TopUIView;
 	import knightage.player.SelfPlayer;
 
 	public class PlayerMgr
@@ -54,7 +56,11 @@ package knightage.mgrs
 		
 		public static function onLogin():void
 		{
+			if(LoginMgr.logined) return;
+			
 			LoginMgr.logined = true;
+			
+			UIMgr.addFixUI(new TopUIView());
 			
 			SceneMgr.setScene(SceneType.HALL);
 		}
