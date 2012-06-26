@@ -32,7 +32,7 @@ package jsion.display
 		/**
 		 * 禁用按钮时默认的灰显滤镜
 		 */		
-		public static const DISABLEDFILTERS:Array = [new ColorMatrixFilter([0.3, 0.59, 0.11, 0, 0,  0.3, 0.59, 0.11, 0, 0,  0.3, 0.59, 0.11, 0, 0,  0, 0, 0, 1, 0])];
+		public static const DISABLEDFILTERS:Array = [new ColorMatrixFilter([0.2, 0.2, 0.2, 0, 0,  0.2, 0.2, 0.2, 0, 0,  0.2, 0.2, 0.2, 0, 0,  0, 0, 0, 1, 0])];
 		
 		/**
 		 * 宽度属性变更
@@ -852,8 +852,6 @@ package jsion.display
 		 */		
 		override protected function onProppertiesUpdate():void
 		{
-			super.onProppertiesUpdate();
-			
 			updateCurrentStateImage();
 			
 			updateCurrentStateFilters();
@@ -861,6 +859,8 @@ package jsion.display
 			updateImageSize();
 			
 			updateImagePos();
+			
+			super.onProppertiesUpdate();
 			
 			m_stateChange = false;
 		}
