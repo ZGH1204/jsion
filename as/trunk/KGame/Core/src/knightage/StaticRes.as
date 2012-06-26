@@ -91,5 +91,18 @@ package knightage
 		 * 按钮文本描边滤镜
 		 */		
 		public static const TopUIButtonLabelFilters:Array = [new GlowFilter(0x412419, 1, 8, 8, 8, 1)];
+		
+		
+		
+		/**
+		 * 建造建筑的按钮图片资源
+		 */		
+		public static const BuildCreateBMD:BuildCreateAsset = new BuildCreateAsset(0, 0);
+		
+		
+		/**
+		 * 升级建筑的按钮图片资源
+		 */		
+		public static const BuildUpgradeBMD:BuildUpgradeAsset = new BuildUpgradeAsset(0, 0);
 	}
 }

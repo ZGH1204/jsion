@@ -61,5 +61,16 @@ package
 		 * 登陆玩家的英雄信息
 		 */		
 		public static const LoginHero:int = 1016;
+		
+		
+		/**
+		 * 升级建筑
+		 */		
+		public static const UpgradeBuilding:int = 1501;
+		
+		/**
+		 * 建造建筑
+		 */		
+		public static const CreateBuilding:int = 1502;
 	}
 }

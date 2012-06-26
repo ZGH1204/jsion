@@ -6,6 +6,9 @@ package knightage.events
 	
 	public class PlayerEvent extends Event implements IDispose
 	{
+		/**
+		 * 建筑升级
+		 */		
 		public static const BUILD_UPGRADE:String = "buildUpgrade";
 		
 		/**

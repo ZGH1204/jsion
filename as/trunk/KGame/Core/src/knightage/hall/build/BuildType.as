@@ -8,6 +8,11 @@ package knightage.hall.build
 	public class BuildType
 	{
 		/**
+		 * 建筑种类数量
+		 */		
+		public static const Count:int = 12;
+		
+		/**
 		 * 城堡
 		 */		
 		public static const Castle:int = 1;
