@@ -258,6 +258,7 @@ package knightage.mgrs
 				setBuildTID(type, tid);
 				
 				dispatchEvent(new PlayerEvent(PlayerEvent.BUILD_UPGRADE, type));
+				dispatchEvent(new PlayerEvent(PlayerEvent.EXP_CHANGED, m_self.experience));
 			}
 		}
 		
@@ -276,6 +277,16 @@ package knightage.mgrs
 			if(m_self.coins != value)
 			{
 				m_self.coins = value;
+				
+				dispatchEvent(new PlayerEvent(PlayerEvent.COIN_CHANGED, m_self.coins));
+			}
+		}
+		
+		public static function updatePlayerCoinLimit(value:int):void
+		{
+			if(m_self.coinsLimit != value)
+			{
+				m_self.coinsLimit = value;
 				
 				dispatchEvent(new PlayerEvent(PlayerEvent.COIN_CHANGED, m_self.coins));
 			}
@@ -316,6 +327,16 @@ package knightage.mgrs
 			if(m_self.orders != value)
 			{
 				m_self.orders = value;
+				
+				dispatchEvent(new PlayerEvent(PlayerEvent.ORDER_CHANGED, m_self.orders));
+			}
+		}
+		
+		public static function updatePlayerOrderLimit(value:int):void
+		{
+			if(m_self.ordersLimit!= value)
+			{
+				m_self.ordersLimit = value;
 				
 				dispatchEvent(new PlayerEvent(PlayerEvent.ORDER_CHANGED, m_self.orders));
 			}
