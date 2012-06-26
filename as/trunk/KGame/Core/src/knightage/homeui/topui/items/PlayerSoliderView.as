@@ -34,7 +34,7 @@ package knightage.homeui.topui.items
 			m_numLabel.commitChanges();
 			addChild(m_numLabel);
 			
-			m_background.x = m_icon.width - 14;
+			m_background.x = m_icon.width - 19;
 			m_background.y = 7;
 			
 			refreshNumLabelPos();

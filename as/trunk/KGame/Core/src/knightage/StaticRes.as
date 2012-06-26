@@ -60,7 +60,7 @@ package knightage
 		/**
 		 * 顶部UI数字显示文本样式
 		 */		
-		public static const TopUINumTextFormat:TextFormat = new TextFormat(null, 16);
+		public static const TopUINumTextFormat:TextFormat = new TextFormat(null, 15);
 		
 		/**
 		 * 底部好友关系左侧按钮资源
@@ -75,7 +75,7 @@ package knightage
 		/**
 		 * 底部UI数字显示文本样式
 		 */		
-		public static const BottomUINumTextFormat:TextFormat = new TextFormat(null, 16);
+		public static const BottomUINumTextFormat:TextFormat = new TextFormat(null, 15);
 		/**
 		 * 底部UI数字显示滤镜
 		 */		
@@ -85,5 +85,11 @@ package knightage
 		 * 关系好友头像框背景
 		 */		
 		public static const RelationItemBackgroundBMD:RelationIconBGAsset = new RelationIconBGAsset(0, 0);
+		
+		
+		/**
+		 * 按钮文本描边滤镜
+		 */		
+		public static const TopUIButtonLabelFilters:Array = [new GlowFilter(0x412419, 1, 8, 8, 8, 1)];
 	}
 }

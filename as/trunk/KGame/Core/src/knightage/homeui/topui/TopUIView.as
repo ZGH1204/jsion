@@ -1,9 +1,12 @@
 package knightage.homeui.topui
 {
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	
 	import jsion.IDispose;
+	import jsion.display.Button;
 	import jsion.utils.DisposeUtil;
+	
 	import knightage.homeui.topui.items.PlayerCoinView;
 	import knightage.homeui.topui.items.PlayerExpView;
 	import knightage.homeui.topui.items.PlayerFoodView;
@@ -15,6 +18,8 @@ package knightage.homeui.topui
 	{
 		private static const OffsetY:int = 5;
 		private static const PADDING:int = 6;
+		
+		private static const ButtonPadding:int = 16;
 		
 		private var m_playerExpView:PlayerExpView;
 		
@@ -28,6 +33,12 @@ package knightage.homeui.topui
 		
 		private var m_playerOrderView:PlayerOrdersView;
 		
+		private var m_messageButton:Button;
+		
+		private var m_noticeButton:Button;
+		
+		private var m_giftButton:Button;
+		
 		public function TopUIView()
 		{
 			super();
@@ -39,6 +50,7 @@ package knightage.homeui.topui
 		{
 			m_playerExpView = new PlayerExpView();
 			addChild(m_playerExpView);
+			m_playerExpView.x = 8;
 			m_playerExpView.y = OffsetY;
 			
 			m_playerCoinView = new PlayerCoinView();
@@ -65,6 +77,30 @@ package knightage.homeui.topui
 			addChild(m_playerOrderView);
 			m_playerOrderView.x = m_playerFoodView.x + m_playerFoodView.width + PADDING;
 			m_playerOrderView.y = OffsetY;
+			
+			
+			
+			
+			m_messageButton = new Button();
+			m_messageButton.freeBMD = true;
+			m_messageButton.upImage = new Bitmap(new MessageIcon(0, 0));
+			addChild(m_messageButton);
+			m_messageButton.x = 570;
+			m_messageButton.y = 50;
+			
+			m_noticeButton = new Button();
+			m_noticeButton.freeBMD = true;
+			m_noticeButton.upImage = new Bitmap(new NoticeIcon(0, 0));
+			addChild(m_noticeButton);
+			m_noticeButton.x = m_messageButton.x + m_messageButton.width + ButtonPadding;
+			m_noticeButton.y = m_messageButton.y;
+			
+			m_giftButton = new Button();
+			m_giftButton.freeBMD = true;
+			m_giftButton.upImage = new Bitmap(new GiftIcon(0, 0));
+			addChild(m_giftButton);
+			m_giftButton.x = m_noticeButton.x + m_noticeButton.width + ButtonPadding;
+			m_giftButton.y = m_noticeButton.y;
 		}
 		
 		public function dispose():void

@@ -32,7 +32,7 @@ package knightage.display
 			img.beginChanges();
 			img.freeSource = false;
 			img.source = UpImageBMD;
-			img.scale9Insets = new Insets(15, 20, 15, 20);
+			img.scale9Insets = new Insets(14, 20, 14, 20);
 			img.commitChanges();
 			
 			beginChanges();

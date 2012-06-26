@@ -1,6 +1,8 @@
 package knightage.homeui.topui.items
 {
 	import flash.display.Bitmap;
+	import flash.filters.ColorMatrixFilter;
+	import flash.text.TextFormat;
 	
 	import jsion.display.Label;
 	import jsion.utils.DisposeUtil;
@@ -42,20 +44,25 @@ package knightage.homeui.topui.items
 			
 			m_selectBtn = new YellowButton("查询");
 			m_selectBtn.beginChanges();
-			m_selectBtn.width = 60;
-			m_selectBtn.height = 36;
-			m_selectBtn.enabled = false;
+			m_selectBtn.width = 52;
+			m_selectBtn.height = 35;
+			//m_selectBtn.enabled = false;
+			m_selectBtn.embedFonts = true;
+			m_selectBtn.textFormat = new TextFormat("MyFont1", 16, null, true);
+			m_selectBtn.labelUpFilters = StaticRes.TopUIButtonLabelFilters;
+			m_selectBtn.labelOverFilters = StaticRes.TopUIButtonLabelFilters;
+			m_selectBtn.labelDownFilters = StaticRes.TopUIButtonLabelFilters;
 			m_selectBtn.commitChanges();
 			addChild(m_selectBtn);
 			
 			
 			
-			m_background.x = m_icon.width - 12;
+			m_background.x = m_icon.width - 17;
 			m_background.y = 2;
 			
 			refreshNumLabelPos();
 			
-			m_selectBtn.x = m_background.x + m_background.width - 3;
+			m_selectBtn.x = m_background.x + m_background.width;
 			
 			PlayerMgr.addEventListener(PlayerEvent.GOLD_CHANGED, __goldChangedHandler);
 		}

@@ -5,22 +5,26 @@ package knightage.homeui.bottomui
 	
 	import jsion.IDispose;
 	import jsion.display.Button;
+	import jsion.display.IconButton;
+	import jsion.utils.DepthUtil;
 	
 	public class RelationListView extends Sprite implements IDispose
 	{
-		private static const ListItemPadding:int = 1;
+		private static const ListItemPadding:int = -2;
+		
+		private static const ArrowOffsetX:int = 5;
 		
 		private static const ArrowOffsetY:int = 15;
 		
-		private static const ArrowPadding:int = 8;
+		private static const ArrowPadding:int = 10;
 		
-		private var m_leftButton:Button;
+		private var m_leftButton:IconButton;
 		
-		private var m_lastLeftButton:Button;
+		private var m_lastLeftButton:IconButton;
 		
-		private var m_rightButton:Button;
+		private var m_rightButton:IconButton;
 		
-		private var m_lastRightButton:Button;
+		private var m_lastRightButton:IconButton;
 		
 		private var m_inviteButton:Button;
 		
@@ -39,16 +43,18 @@ package knightage.homeui.bottomui
 			// TODO Auto Generated method stub
 			
 			
-			m_leftButton = new Button();
+			m_leftButton = new IconButton();
 			m_leftButton.freeBMD = true;
-			m_leftButton.upImage = new Bitmap(new RelationRightArrowAsset(0, 0));
+			m_leftButton.upImage = new Bitmap(new RelationArrowBackgroundAsset(0, 0));
+			m_leftButton.iconUpImage = new Bitmap(new RelationRightArrowAsset(0, 0));
 			m_leftButton.x = 0;
 			m_leftButton.y = ArrowOffsetY;
 			addChild(m_leftButton);
 			
-			m_lastLeftButton = new Button();
+			m_lastLeftButton = new IconButton();
 			m_lastLeftButton.freeBMD = true;
-			m_lastLeftButton.upImage = new Bitmap(new RelationLastRightArrowAsset(0, 0));
+			m_lastLeftButton.upImage = new Bitmap(new RelationArrowBackgroundAsset(0, 0));
+			m_lastLeftButton.iconUpImage = new Bitmap(new RelationLastRightArrowAsset(0, 0));
 			m_lastLeftButton.x = m_leftButton.x;
 			m_lastLeftButton.y = m_leftButton.y + m_leftButton.height + ArrowPadding;
 			addChild(m_lastLeftButton);
@@ -57,7 +63,7 @@ package knightage.homeui.bottomui
 			m_items = [];
 			m_buttons = [];
 			
-			var posX:int = m_leftButton.x + m_leftButton.width;
+			var posX:int = m_leftButton.x + m_leftButton.width - ArrowOffsetX;
 			
 			var button:Button;
 			var item:RelationListItemView;
@@ -77,19 +83,23 @@ package knightage.homeui.bottomui
 				posX += button.width;
 			}
 			
-			m_rightButton = new Button();
+			m_rightButton = new IconButton();
 			m_rightButton.freeBMD = true;
-			m_rightButton.upImage = new Bitmap(new RelationLeftArrowAsset(0, 0));
-			m_rightButton.x = button.x + button.width;
+			m_rightButton.upImage = new Bitmap(new RelationArrowBackgroundAsset(0, 0));
+			m_rightButton.iconUpImage = new Bitmap(new RelationLeftArrowAsset(0, 0));
+			m_rightButton.x = button.x + button.width - ArrowOffsetX;
 			m_rightButton.y = ArrowOffsetY;
 			addChild(m_rightButton);
+			m_rightButton.bring2Bottom();
 			
-			m_lastRightButton = new Button();
+			m_lastRightButton = new IconButton();
 			m_lastRightButton.freeBMD = true;
-			m_lastRightButton.upImage = new Bitmap(new RelationLastLeftArrowAsset(0, 0));
+			m_lastRightButton.upImage = new Bitmap(new RelationArrowBackgroundAsset(0, 0));
+			m_lastRightButton.iconUpImage = new Bitmap(new RelationLastLeftArrowAsset(0, 0));
 			m_lastRightButton.x = m_rightButton.x;
 			m_lastRightButton.y = m_rightButton.y + m_rightButton.height + ArrowPadding;
 			addChild(m_lastRightButton);
+			m_lastRightButton.bring2Bottom();
 			
 			m_inviteButton = new Button();
 			m_inviteButton.freeBMD = true;

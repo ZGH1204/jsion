@@ -3,6 +3,7 @@ package knightage.homeui.bottomui
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.filters.ColorMatrixFilter;
 	
 	import jsion.IDispose;
 	import jsion.display.IconButton;
@@ -43,18 +44,20 @@ package knightage.homeui.bottomui
 			
 			m_enemyIcon = new Bitmap(new EnemyIcon(0, 0));
 			m_enemyButton = createIconLabelButton(m_enemyIcon, 80, 10, 10);
+			m_enemyButton.upFilters = [new ColorMatrixFilter([0.6, 0, 0, 0, 0,  0, 0.6, 0, 0, 0,  0, 0, 0.6, 0, 0,  0, 0, 0, 1, 0])];
 			addChild(m_enemyButton);
 			
 			m_familyIcon = new Bitmap(new FamilyIcon(0, 0));
 			m_familyButton = createIconLabelButton(m_familyIcon, 80, 10, 10);
+			m_familyButton.upFilters = [new ColorMatrixFilter([0.5, 0, 0, 0, 0,  0, 0.5, 0, 0, 0,  0, 0, 0.5, 0, 0,  0, 0, 0, 1, 0])];
 			addChild(m_familyButton);
 			
 			
 			
 			
 			
-			m_friendButton.x = 0;
-			m_friendButton.y = -2;
+			m_friendButton.x = 5;
+			m_friendButton.y = 2;
 			
 			m_enemyButton.x = m_friendButton.x;
 			m_enemyButton.y = m_friendButton.y + m_friendButton.height + ButtonPadding;
