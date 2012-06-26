@@ -3,17 +3,18 @@ package knightage.net.handlers.build
 	import core.net.GamePacket;
 	import core.net.IPacketHandler;
 	
+	import knightage.StaticConfig;
 	import knightage.mgrs.PlayerMgr;
 	
-	public class CreateBuildingHandler implements IPacketHandler
+	public class UpgradeBuildingHandler implements IPacketHandler
 	{
-		public function CreateBuildingHandler()
+		public function UpgradeBuildingHandler()
 		{
 		}
 		
 		public function get code():int
 		{
-			return PacketCodes.CreateBuilding;
+			return PacketCodes.UpgradeBuilding;
 		}
 		
 		public function handle(pkg:GamePacket):void
