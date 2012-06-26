@@ -1,12 +1,17 @@
 package knightage.hall.build
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	
 	import jsion.display.Button;
+	import jsion.loaders.BitmapDataLoader;
 	import jsion.loaders.SwfLoader;
 	import jsion.utils.DisposeUtil;
 	
+	import knightage.StaticConfig;
 	import knightage.StaticRes;
+	import knightage.events.PlayerEvent;
 	import knightage.mgrs.PlayerMgr;
 	import knightage.mgrs.TemplateMgr;
 	import knightage.templates.BuildTemplate;
@@ -19,7 +24,7 @@ package knightage.hall.build
 		
 		private var m_imgFile:String;
 		
-		private var m_loader:SwfLoader;
+		private var m_loader:BitmapDataLoader;
 		
 		public function BuildView(type:int)
 		{
@@ -37,49 +42,22 @@ package knightage.hall.build
 		{
 			stopMouseDownPropagation();
 			
-			switch(m_type)
+			freeBMD = true;
+			
+			clickSoundID = StaticRes.ButtonClickSoundID;
+			
+			loadBuildRes();
+		}
+		
+		public function loadBuildRes():void
+		{
+			var template:BuildTemplate = PlayerMgr.getBuildTemplate(m_type);
+			
+			if(template == null)
 			{
-				case BuildType.Castle:
-					m_templateID = PlayerMgr.self.castleTID;
-					break;
-				case BuildType.Framland:
-					m_templateID = PlayerMgr.self.farmlandTID;
-					break;
-				case BuildType.Tavern:
-					m_templateID = PlayerMgr.self.tavernTID;
-					break;
-				case BuildType.College:
-					m_templateID = PlayerMgr.self.collegeTID;
-					break;
-				case BuildType.Barracks:
-					m_templateID = PlayerMgr.self.barracksTID;
-					break;
-				case BuildType.Training:
-					m_templateID = PlayerMgr.self.trainingTID;
-					break;
-				case BuildType.Market:
-					m_templateID = PlayerMgr.self.marketTID;
-					break;
-				case BuildType.Prison:
-					m_templateID = PlayerMgr.self.prisonTID;
-					break;
-				case BuildType.Divine:
-					m_templateID = PlayerMgr.self.divineTID;
-					break;
-				case BuildType.Pandora:
-					m_templateID = PlayerMgr.self.pandoraTID;
-					break;
-				case BuildType.Efigy:
-					m_templateID = PlayerMgr.self.efigyTID;
-					break;
-				case BuildType.Smithy:
-					m_templateID = PlayerMgr.self.smithyTID;
-					break;
+				//throw new Error("找不到对应的建筑模板");
+				return;
 			}
-			
-			var template:BuildTemplate = TemplateMgr.findBuildTemplate(m_templateID);
-			
-			if(template == null) return;
 			
 			if(template.BuildType != m_type)
 			{
@@ -87,29 +65,33 @@ package knightage.hall.build
 				return;
 			}
 			
+			if(m_imgFile == template.profileURL) return;
+			
 			m_imgFile = template.profileURL;
 			
-			m_loader = new SwfLoader(template.profileURL, Config.ResRoot);
+			DisposeUtil.free(m_loader);
+			
+			m_loader = new BitmapDataLoader(template.profileURL, Config.ResRoot);
 			
 			m_loader.loadAsync(loadCallback);
-			
-			clickSoundID = StaticRes.ButtonClickSoundID;
 		}
 		
-		private function loadCallback(loader:SwfLoader, success:Boolean):void
+		private function loadCallback(loader:BitmapDataLoader, success:Boolean):void
 		{
 			// TODO Auto Generated method stub
 			
 			if(success)
 			{
-				upImage = m_loader.data as DisplayObject;
+				upImage = new Bitmap(m_loader.data as BitmapData);
 				
 				ignoreTransparents = true;
 			}
 			
-			var template:BuildTemplate = TemplateMgr.findBuildTemplate(m_templateID);
-			x = template.PosX;
-			y = template.PosY;
+			x = -int(width / 2);
+			y = -int(height);
+			
+			DisposeUtil.free(m_loader);
+			m_loader = null;
 		}
 		
 		override public function dispose():void

@@ -10,6 +10,8 @@ package knightage.hall
 	import jsion.ddrop.IDragDrop;
 	import jsion.utils.DisposeUtil;
 	
+	import knightage.hall.build.BuildSprite;
+	import knightage.hall.build.BuildType;
 	import knightage.hall.build.BuildView;
 	import knightage.mgrs.MsgTipMgr;
 	
@@ -42,22 +44,14 @@ package knightage.hall
 			
 			m_buildList = [];
 			
-			for(var i:int = 1; i <= 13; i++)
+			for(var i:int = 1; i <= BuildType.Count; i++)
 			{
-				var buildView:BuildView = new BuildView(i);
-				
-				buildView.addEventListener(MouseEvent.CLICK, __buildClickHandler);
+				var buildView:BuildSprite = new BuildSprite(i);
 				
 				addChild(buildView);
 				
 				m_buildList.push(buildView);
 			}
-		}
-		
-		
-		private function __buildClickHandler(e:MouseEvent):void
-		{
-			MsgTipMgr.show("功能开发中...");
 		}
 		
 		

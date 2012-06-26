@@ -8,8 +8,11 @@ package knightage.homeui.topui.items
 	import knightage.StaticConfig;
 	import knightage.StaticRes;
 	import knightage.events.PlayerEvent;
+	import knightage.hall.build.BuildType;
 	import knightage.homeui.LevelView;
 	import knightage.mgrs.PlayerMgr;
+	import knightage.mgrs.TemplateMgr;
+	import knightage.templates.BuildTemplate;
 
 	public class PlayerExpView extends InfoView
 	{
@@ -24,14 +27,14 @@ package knightage.homeui.topui.items
 		{
 			super.initialized();
 			
-			m_icon = new LevelView(PlayerMgr.self.castleTID, LevelView.TOP);
+			m_icon = new LevelView(PlayerMgr.getPlayerLv(), LevelView.TOP);
 			addChild(m_icon);
 			
 			m_progress = new ProgressBar();
 			m_progress.beginChanges();
 			m_progress.freeBMD = false;
 			m_progress.progressBar = new Bitmap(StaticRes.ProgressBarBMD);
-			m_progress.maxValue = StaticConfig.CastleUpGradeExp[PlayerMgr.self.castleTID];
+			m_progress.maxValue = PlayerMgr.getCastleNextUpgradeExp();
 			m_progress.value = PlayerMgr.self.experience;
 			m_progress.commitChanges();
 			addChild(m_progress);
@@ -43,16 +46,19 @@ package knightage.homeui.topui.items
 			m_progress.y = 15;
 			
 			PlayerMgr.addEventListener(PlayerEvent.EXP_CHANGED, __expChangeHandler);
+			PlayerMgr.addEventListener(PlayerEvent.BUILD_UPGRADE, __expChangeHandler);
 		}
 		
 		private function __expChangeHandler(e:PlayerEvent):void
 		{
 			// TODO Auto Generated method stub
 			
-			LevelView(m_icon).setLevel(PlayerMgr.self.castleTID);
+			if(e.type == PlayerEvent.BUILD_UPGRADE && e.data != BuildType.Castle) return;
+			
+			LevelView(m_icon).setLevel(PlayerMgr.getPlayerLv());
 			
 			m_progress.beginChanges();
-			m_progress.maxValue = StaticConfig.CastleUpGradeExp[PlayerMgr.self.castleTID];
+			m_progress.maxValue = PlayerMgr.getCastleNextUpgradeExp();
 			m_progress.value = PlayerMgr.self.experience;
 			m_progress.commitChanges();
 		}
@@ -60,6 +66,7 @@ package knightage.homeui.topui.items
 		override public function dispose():void
 		{
 			PlayerMgr.removeEventListener(PlayerEvent.EXP_CHANGED, __expChangeHandler);
+			PlayerMgr.removeEventListener(PlayerEvent.BUILD_UPGRADE, __expChangeHandler);
 			
 			DisposeUtil.free(m_icon);
 			m_icon = null;
