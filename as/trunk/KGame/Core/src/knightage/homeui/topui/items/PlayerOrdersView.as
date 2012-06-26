@@ -3,6 +3,7 @@ package knightage.homeui.topui.items
 	import flash.display.Bitmap;
 	
 	import jsion.display.Label;
+	import jsion.display.ProgressBar;
 	import jsion.utils.DisposeUtil;
 	
 	import knightage.StaticRes;
@@ -12,6 +13,8 @@ package knightage.homeui.topui.items
 	public class PlayerOrdersView extends InfoView
 	{
 		private var m_numLabel:Label;
+		
+		private var m_progress:ProgressBar;
 		
 		public function PlayerOrdersView()
 		{
@@ -27,6 +30,16 @@ package knightage.homeui.topui.items
 			m_icon.y = -5;
 			addChild(m_icon);
 			
+			m_progress = new ProgressBar();
+			m_progress.beginChanges();
+			m_progress.freeBMD = true;
+			m_progress.background = new Bitmap(new OrdersProgressBGAsset(0, 0));
+			m_progress.progressBar = new Bitmap(new OrdersProgressBarAsset(0, 0));
+			m_progress.maxValue = PlayerMgr.self.ordersLimit;
+			m_progress.value = PlayerMgr.self.orders;
+			m_progress.commitChanges();
+			addChild(m_progress);
+			
 			m_numLabel = new Label();
 			m_numLabel.beginChanges();
 			m_numLabel.text = PlayerMgr.self.orders.toString();
@@ -35,6 +48,9 @@ package knightage.homeui.topui.items
 			m_numLabel.textFormat = StaticRes.TopUINumTextFormat;
 			m_numLabel.commitChanges();
 			addChild(m_numLabel);
+			
+			m_progress.x = 33;
+			m_progress.y = 10;
 			
 			m_background.x = m_icon.width - 19;
 			m_background.y = 7;
@@ -48,6 +64,11 @@ package knightage.homeui.topui.items
 		{
 			// TODO Auto Generated method stub
 			
+			m_progress.beginChanges();
+			m_progress.maxValue = PlayerMgr.self.ordersLimit;
+			m_progress.value = PlayerMgr.self.orders;
+			m_progress.commitChanges();
+			
 			m_numLabel.text = PlayerMgr.self.orders.toString();
 			
 			refreshNumLabelPos();
@@ -55,8 +76,8 @@ package knightage.homeui.topui.items
 		
 		private function refreshNumLabelPos():void
 		{
-			m_numLabel.x = width - m_numLabel.width - 10;
-			m_numLabel.y = m_background.y + (m_background.height - m_numLabel.height) / 2 - 2;
+			m_numLabel.x = m_progress.x + (m_progress.width - m_numLabel.width) / 2;
+			m_numLabel.y = m_progress.y + (m_progress.height - m_numLabel.height) / 2;
 		}
 		
 		override public function dispose():void

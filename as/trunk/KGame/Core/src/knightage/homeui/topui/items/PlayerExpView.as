@@ -46,14 +46,11 @@ package knightage.homeui.topui.items
 			m_progress.y = 15;
 			
 			PlayerMgr.addEventListener(PlayerEvent.EXP_CHANGED, __expChangeHandler);
-			PlayerMgr.addEventListener(PlayerEvent.BUILD_UPGRADE, __expChangeHandler);
 		}
 		
 		private function __expChangeHandler(e:PlayerEvent):void
 		{
 			// TODO Auto Generated method stub
-			
-			if(e.type == PlayerEvent.BUILD_UPGRADE && e.data != BuildType.Castle) return;
 			
 			LevelView(m_icon).setLevel(PlayerMgr.getPlayerLv());
 			
@@ -66,7 +63,6 @@ package knightage.homeui.topui.items
 		override public function dispose():void
 		{
 			PlayerMgr.removeEventListener(PlayerEvent.EXP_CHANGED, __expChangeHandler);
-			PlayerMgr.removeEventListener(PlayerEvent.BUILD_UPGRADE, __expChangeHandler);
 			
 			DisposeUtil.free(m_icon);
 			m_icon = null;
