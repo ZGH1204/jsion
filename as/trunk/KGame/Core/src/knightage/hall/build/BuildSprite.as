@@ -17,6 +17,7 @@ package knightage.hall.build
 	import knightage.mgrs.PlayerMgr;
 	import knightage.mgrs.TemplateMgr;
 	import knightage.net.packets.build.CreateBuildingPacket;
+	import knightage.net.packets.build.UpgradeBuildingPacket;
 	import knightage.templates.BuildTemplate;
 	
 	public class BuildSprite extends Sprite implements IDispose
@@ -195,7 +196,7 @@ package knightage.hall.build
 		
 		private function __createBuildHandler(e:MouseEvent):void
 		{
-			//MsgTipMgr.show("建造:" + StaticConfig.BuildTypeNameList[m_type]);
+			MsgTipMgr.show("建造:" + StaticConfig.BuildTypeNameList[m_type]);
 			
 			var pkg:CreateBuildingPacket = new CreateBuildingPacket();
 			
@@ -207,6 +208,12 @@ package knightage.hall.build
 		private function __upgradeBuildHandler(e:MouseEvent):void
 		{
 			MsgTipMgr.show("升级:" + StaticConfig.BuildTypeNameList[m_type]);
+			
+			var pkg:UpgradeBuildingPacket = new UpgradeBuildingPacket();
+			
+			pkg.buildType = m_type;
+			
+			SocketProxy.sendTCP(pkg);
 		}
 		
 		public function dispose():void

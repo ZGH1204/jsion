@@ -128,7 +128,7 @@ package
 		//初始化背景音乐
 		MusicMgr.setup(config);
 		MusicMgr.volume = 80;
-		//MusicMgr.playMusic();
+		MusicMgr.playMusic();
 		
 		
 		//初始化调试控制台
