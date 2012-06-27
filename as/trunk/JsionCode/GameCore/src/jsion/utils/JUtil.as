@@ -246,5 +246,48 @@ package jsion.utils
 		{
 			return new LoaderContext(checkPolicyFile, domain);
 		}
+		
+		/**
+		 * 横向排列显示对象
+		 * @param padding 间隔像素
+		 * @param args 显示对象列表
+		 */		
+		public static function layeroutOneByOneHorizontal(padding:int = 0, ...args):void
+		{
+			if(args.length < 2) return;
+			
+			var last:DisplayObject = args[0] as DisplayObject;
+			
+			for(var i:int = 1; i < args.length; i++)
+			{
+				var current:DisplayObject = args[i];
+				
+				current.x = last.x + last.width + padding;
+				
+				last = current;
+			}
+		}
+		
+		/**
+		 * 纵向排列显示对象
+		 * @param padding 间隔像素
+		 * @param args 显示对象列表
+		 * 
+		 */		
+		public static function layeroutOneByOneVertical(padding:int = 0, ...args):void
+		{
+			if(args.length < 2) return;
+			
+			var last:DisplayObject = args[0] as DisplayObject;
+			
+			for(var i:int = 1; i < args.length; i++)
+			{
+				var current:DisplayObject = args[i];
+				
+				current.y = last.y + last.height + padding;
+				
+				last = current;
+			}
+		}
 	}
 }

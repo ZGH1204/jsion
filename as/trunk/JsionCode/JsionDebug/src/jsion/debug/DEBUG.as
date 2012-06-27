@@ -9,6 +9,7 @@ package jsion.debug
 	public class DEBUG
 	{
 		private static var m_bar:DebugBar;
+		private static var m_visible:Boolean;
 		private static var m_debugger:Debugger;
 		
 		public static function setup(stage:Stage, w:int):void
@@ -23,6 +24,7 @@ package jsion.debug
 			
 			m_debugger = m_bar.add(new Debugger(w, stage.stageHeight)) as Debugger;
 			
+			m_visible = false;
 		}
 		
 		public static function loadCSS(path:String):void
@@ -52,6 +54,25 @@ package jsion.debug
 		{
 			args.unshift(obj);
 			m_debugger.error.apply(null, args);
+		}
+		
+		public static function showBar():void
+		{
+			if(m_visible) return;
+			
+			m_visible = true;
+			
+			m_bar.y = m_bar.y - m_bar.height;
+		}
+		
+		public static function hideBar():void
+		{
+			if(m_visible)
+			{
+				m_visible = false;
+				
+				m_bar.y = m_bar.y - m_bar.height;
+			}
 		}
 	}
 }
