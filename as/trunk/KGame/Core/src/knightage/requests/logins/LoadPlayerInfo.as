@@ -1,9 +1,11 @@
 package knightage.requests.logins
 {
 	import jsion.loaders.JsionLoader;
+	import jsion.utils.DateUtil;
 	import jsion.utils.XmlUtil;
 	
 	import knightage.display.Alert;
+	import knightage.mgrs.DateMgr;
 	import knightage.mgrs.PlayerMgr;
 	import knightage.player.SelfPlayer;
 	import knightage.player.heros.PlayerHero;
@@ -25,6 +27,12 @@ package knightage.requests.logins
 			super.onLoadCompleted();
 			
 			var xml:XML = data as XML;
+			
+			var date:Date = DateUtil.parse(String(xml.player.@today));
+			
+			DateMgr.setup(date);
+			
+			
 			
 			if(String(xml.@value) != "true")
 			{

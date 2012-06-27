@@ -93,26 +93,6 @@ package knightage.player
 		public var prestigeLv:int;
 		
 		/**
-		 * 酒馆上次刷新时间
-		 */		
-		public var lastRefreshTime:Date;
-		
-		/**
-		 * 酒馆刷新出现的英雄1
-		 */		
-		public var lastHero1TID:int;
-		
-		/**
-		 * 酒馆刷新出现的英雄2
-		 */		
-		public var lastHero2TID:int;
-		
-		/**
-		 * 酒馆刷新出现的英雄3
-		 */		
-		public var lastHero3TID:int;
-		
-		/**
 		 * 军团信息(军团编号,军团等级,英雄ID,英雄ID......|军团编号,军团等级,英雄ID,英雄ID......)
 		 */		
 		public var teamStr:String;

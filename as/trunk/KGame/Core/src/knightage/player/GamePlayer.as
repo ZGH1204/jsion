@@ -77,6 +77,27 @@ package knightage.player
 		 */		
 		public var efigyTID:int;
 		
+		
+		/**
+		 * 酒馆上次刷新时间
+		 */		
+		public var lastRefreshTime:Date;
+		
+		/**
+		 * 酒馆刷新出现的英雄1
+		 */		
+		public var lastHero1TID:int;
+		
+		/**
+		 * 酒馆刷新出现的英雄2
+		 */		
+		public var lastHero2TID:int;
+		
+		/**
+		 * 酒馆刷新出现的英雄3
+		 */		
+		public var lastHero3TID:int;
+		
 		/**
 		 * 英雄Mode
 		 */		

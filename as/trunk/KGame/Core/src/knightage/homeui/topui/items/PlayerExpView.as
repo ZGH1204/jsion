@@ -5,14 +5,11 @@ package knightage.homeui.topui.items
 	import jsion.display.ProgressBar;
 	import jsion.utils.DisposeUtil;
 	
-	import knightage.StaticConfig;
+	import knightage.GameUtil;
 	import knightage.StaticRes;
 	import knightage.events.PlayerEvent;
-	import knightage.hall.build.BuildType;
 	import knightage.homeui.LevelView;
 	import knightage.mgrs.PlayerMgr;
-	import knightage.mgrs.TemplateMgr;
-	import knightage.templates.BuildTemplate;
 
 	public class PlayerExpView extends InfoView
 	{
@@ -27,14 +24,14 @@ package knightage.homeui.topui.items
 		{
 			super.initialized();
 			
-			m_icon = new LevelView(PlayerMgr.getPlayerLv(), LevelView.TOP);
+			m_icon = new LevelView(GameUtil.getPlayerLv(PlayerMgr.self), LevelView.TOP);
 			addChild(m_icon);
 			
 			m_progress = new ProgressBar();
 			m_progress.beginChanges();
 			m_progress.freeBMD = false;
 			m_progress.progressBar = new Bitmap(StaticRes.ProgressBarBMD);
-			m_progress.maxValue = PlayerMgr.getCastleNextUpgradeExp();
+			m_progress.maxValue = GameUtil.getCastleNextUpgradeExp(PlayerMgr.self);
 			m_progress.value = PlayerMgr.self.experience;
 			m_progress.commitChanges();
 			addChild(m_progress);
@@ -52,10 +49,10 @@ package knightage.homeui.topui.items
 		{
 			// TODO Auto Generated method stub
 			
-			LevelView(m_icon).setLevel(PlayerMgr.getPlayerLv());
+			LevelView(m_icon).setLevel(GameUtil.getPlayerLv(PlayerMgr.self));
 			
 			m_progress.beginChanges();
-			m_progress.maxValue = PlayerMgr.getCastleNextUpgradeExp();
+			m_progress.maxValue = GameUtil.getCastleNextUpgradeExp(PlayerMgr.self);
 			m_progress.value = PlayerMgr.self.experience;
 			m_progress.commitChanges();
 		}

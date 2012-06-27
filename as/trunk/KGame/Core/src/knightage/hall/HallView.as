@@ -14,6 +14,7 @@ package knightage.hall
 	import knightage.hall.build.BuildType;
 	import knightage.hall.build.BuildView;
 	import knightage.mgrs.MsgTipMgr;
+	import knightage.player.GamePlayer;
 	
 	public class HallView extends Sprite implements IDragDrop, IDispose
 	{
@@ -23,8 +24,12 @@ package knightage.hall
 		
 		private var m_buildList:Array;
 		
-		public function HallView()
+		private var m_player:GamePlayer;
+		
+		public function HallView(gp:GamePlayer)
 		{
+			m_player = gp;
+			
 			super();
 			
 			initialized();
@@ -46,7 +51,7 @@ package knightage.hall
 			
 			for(var i:int = 1; i <= BuildType.Count; i++)
 			{
-				var buildView:BuildSprite = new BuildSprite(i);
+				var buildView:BuildSprite = new BuildSprite(m_player, i);
 				
 				addChild(buildView);
 				

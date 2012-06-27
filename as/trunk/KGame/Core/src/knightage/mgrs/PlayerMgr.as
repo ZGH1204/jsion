@@ -6,11 +6,13 @@ package knightage.mgrs
 	import jsion.events.JsionEventDispatcher;
 	import jsion.scenes.SceneMgr;
 	
+	import knightage.GameUtil;
 	import knightage.StaticConfig;
 	import knightage.events.PlayerEvent;
 	import knightage.hall.build.BuildType;
 	import knightage.homeui.bottomui.BottomUIView;
 	import knightage.homeui.topui.TopUIView;
+	import knightage.player.GamePlayer;
 	import knightage.player.SelfPlayer;
 	import knightage.templates.BuildTemplate;
 
@@ -58,182 +60,19 @@ package knightage.mgrs
 			return m_dispatcher.dispatchEvent(event);
 		}
 		
-		/**
-		 * 获取玩家等级
-		 */		
-		public static function getPlayerLv():int
-		{
-			var temp:BuildTemplate = getBuildTemplate(BuildType.Castle);
-			
-			if(temp) return temp.Lv;
-			
-			return 0;
-		}
 		
-		/**
-		 * 获取指定建筑类型一级对应的建筑模板
-		 * @param type
-		 * @return 
-		 * 
-		 */		
-		public static function getBuildFirstLvTemplate(type:int):BuildTemplate
-		{
-			var tid:int = StaticConfig.BuildFirstLvTIDList[type];
-			
-			return TemplateMgr.findBuildTemplate(tid);
-		}
 		
-		/**
-		 * 获取当前玩家指定建筑类型下一级的建筑模板
-		 * @param type
-		 * @return 
-		 * 
-		 */		
-		public static function getBuildNextTemplate(type:int):BuildTemplate
-		{
-			var tid:int = getBuildTID(type);
-			
-			var temp:BuildTemplate = TemplateMgr.findBuildTemplate(tid);
-			
-			if(temp == null) return null;
-			
-			tid = temp.NextTemplateID;
-			
-			return TemplateMgr.findBuildTemplate(tid);
-		}
 		
-		/**
-		 * 获取当前玩家城堡升下一级所需的经验值
-		 * @param type
-		 * @return 
-		 * 
-		 */		
-		public static function getCastleNextUpgradeExp():int
-		{
-			var tid:int = getBuildTID(BuildType.Castle);
-			
-			var nextTemplate:BuildTemplate = getBuildNextTemplate(BuildType.Castle);
-			
-			if(tid == 0)
-			{
-				nextTemplate = getBuildFirstLvTemplate(BuildType.Castle);
-			}
-			
-			if(nextTemplate)
-			{
-				return StaticConfig.CastleUpGradeExp[nextTemplate.Lv];
-			}
-			
-			return int.MAX_VALUE;
-		}
 		
-		/**
-		 * 获取当前玩家指定建筑类型的建筑模板
-		 * @param type
-		 * @return 
-		 * 
-		 */		
-		public static function getBuildTemplate(type:int):BuildTemplate
-		{
-			var tid:int = getBuildTID(type);
-			
-			return TemplateMgr.findBuildTemplate(tid);
-		}
 		
-		/**
-		 * 获取当前玩家指定建筑类型的建筑模板ID
-		 * @param type
-		 * 
-		 */		
-		public static function getBuildTID(type:int):int
-		{
-			var m_templateID:int;
-			
-			switch(type)
-			{
-				case BuildType.Castle:
-					m_templateID = PlayerMgr.self.castleTID;
-					break;
-				case BuildType.Framland:
-					m_templateID = PlayerMgr.self.farmlandTID;
-					break;
-				case BuildType.Tavern:
-					m_templateID = PlayerMgr.self.tavernTID;
-					break;
-				case BuildType.College:
-					m_templateID = PlayerMgr.self.collegeTID;
-					break;
-				case BuildType.Barracks:
-					m_templateID = PlayerMgr.self.barracksTID;
-					break;
-				case BuildType.Training:
-					m_templateID = PlayerMgr.self.trainingTID;
-					break;
-				case BuildType.Market:
-					m_templateID = PlayerMgr.self.marketTID;
-					break;
-				case BuildType.Prison:
-					m_templateID = PlayerMgr.self.prisonTID;
-					break;
-				case BuildType.Divine:
-					m_templateID = PlayerMgr.self.divineTID;
-					break;
-				case BuildType.Pandora:
-					m_templateID = PlayerMgr.self.pandoraTID;
-					break;
-				case BuildType.Efigy:
-					m_templateID = PlayerMgr.self.efigyTID;
-					break;
-				case BuildType.Smithy:
-					m_templateID = PlayerMgr.self.smithyTID;
-					break;
-			}
-			
-			return m_templateID;
-		}
 		
-		public static function setBuildTID(type:int, tid:int):void
-		{
-			switch(type)
-			{
-				case BuildType.Castle:
-					PlayerMgr.self.castleTID = tid;
-					break;
-				case BuildType.Framland:
-					PlayerMgr.self.farmlandTID = tid;
-					break;
-				case BuildType.Tavern:
-					PlayerMgr.self.tavernTID = tid;
-					break;
-				case BuildType.College:
-					PlayerMgr.self.collegeTID = tid;
-					break;
-				case BuildType.Barracks:
-					PlayerMgr.self.barracksTID = tid;
-					break;
-				case BuildType.Training:
-					PlayerMgr.self.trainingTID = tid;
-					break;
-				case BuildType.Market:
-					PlayerMgr.self.marketTID = tid;
-					break;
-				case BuildType.Prison:
-					PlayerMgr.self.prisonTID = tid;
-					break;
-				case BuildType.Divine:
-					PlayerMgr.self.divineTID = tid;
-					break;
-				case BuildType.Pandora:
-					PlayerMgr.self.pandoraTID = tid;
-					break;
-				case BuildType.Efigy:
-					PlayerMgr.self.efigyTID = tid;
-					break;
-				case BuildType.Smithy:
-					PlayerMgr.self.smithyTID = tid;
-					break;
-			}
-		}
+		
+		
+		
+		
+		
+		
+		
 		
 		public static function updateBuildTID(type:int, tid:int):void
 		{
@@ -251,11 +90,11 @@ package knightage.mgrs
 				return;
 			}
 			
-			var oldTID:int = getBuildTID(type);
+			var oldTID:int = GameUtil.getBuildTID(m_self, type);
 			
 			if(oldTID != tid && tid > 0)
 			{
-				setBuildTID(type, tid);
+				GameUtil.setBuildTID(m_self, type, tid);
 				
 				dispatchEvent(new PlayerEvent(PlayerEvent.BUILD_UPGRADE, type));
 				dispatchEvent(new PlayerEvent(PlayerEvent.EXP_CHANGED, m_self.experience));
@@ -351,6 +190,8 @@ package knightage.mgrs
 			UIMgr.addFixUI(new TopUIView());
 			
 			UIMgr.addFixUI(new BottomUIView());
+			
+			VisitMgr.player = m_self;
 			
 			SceneMgr.setScene(SceneType.HALL);
 		}

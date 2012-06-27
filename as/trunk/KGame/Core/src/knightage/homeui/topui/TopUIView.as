@@ -7,12 +7,14 @@ package knightage.homeui.topui
 	import jsion.display.Button;
 	import jsion.utils.DisposeUtil;
 	
+	import knightage.events.VisitEvent;
 	import knightage.homeui.topui.items.PlayerCoinView;
 	import knightage.homeui.topui.items.PlayerExpView;
 	import knightage.homeui.topui.items.PlayerFoodView;
 	import knightage.homeui.topui.items.PlayerGoldView;
 	import knightage.homeui.topui.items.PlayerOrdersView;
 	import knightage.homeui.topui.items.PlayerSoliderView;
+	import knightage.mgrs.VisitMgr;
 	
 	public class TopUIView extends Sprite implements IDispose
 	{
@@ -101,6 +103,23 @@ package knightage.homeui.topui
 			addChild(m_giftButton);
 			m_giftButton.x = m_noticeButton.x + m_noticeButton.width + ButtonPadding;
 			m_giftButton.y = m_noticeButton.y;
+			
+			
+			VisitMgr.addEventListener(VisitEvent.VISIT_FRIEND, __visitFriendHandler);
+		}
+		
+		private function __visitFriendHandler(e:VisitEvent):void
+		{
+			// TODO Auto Generated method stub
+			
+			if(VisitMgr.isSelf)
+			{
+				visible = true;
+			}
+			else
+			{
+				visible = false;
+			}
 		}
 		
 		public function dispose():void

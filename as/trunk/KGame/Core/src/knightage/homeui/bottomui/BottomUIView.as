@@ -8,7 +8,9 @@ package knightage.homeui.bottomui
 	import jsion.display.Button;
 	
 	import knightage.StaticRes;
+	import knightage.events.VisitEvent;
 	import knightage.mgrs.MsgTipMgr;
+	import knightage.mgrs.VisitMgr;
 	
 	public class BottomUIView extends Sprite implements IDispose
 	{
@@ -133,6 +135,27 @@ package knightage.homeui.bottomui
 			m_relationView = new RelationView();
 			m_relationView.y = 18;
 			addChild(m_relationView);
+			
+			
+			
+			
+			VisitMgr.addEventListener(VisitEvent.VISIT_FRIEND, __visitFriendHandler);
+		}
+		
+		private function __visitFriendHandler(e:VisitEvent):void
+		{
+			// TODO Auto Generated method stub
+			
+			var rlt:Boolean = VisitMgr.isSelf;
+			
+			m_heroButton.visible = rlt;
+			m_expeditionButton.visible = rlt;
+			m_embattleButton.visible = rlt;
+			m_strengthenButton.visible = rlt;
+			m_bagButton.visible = rlt;
+			m_mallButton.visible = rlt;
+			m_taskButton.visible = rlt;
+			m_relationView.visible = rlt;
 		}
 		
 		private function __clickHandler(e:MouseEvent):void

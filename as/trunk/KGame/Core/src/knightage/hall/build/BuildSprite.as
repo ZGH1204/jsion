@@ -11,15 +11,18 @@ package knightage.hall.build
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.InstanceUtil;
 	
+	import knightage.GameUtil;
 	import knightage.StaticConfig;
 	import knightage.StaticRes;
+	import knightage.display.Frame;
 	import knightage.events.PlayerEvent;
 	import knightage.hall.tavern.TavernUIView;
 	import knightage.mgrs.MsgTipMgr;
 	import knightage.mgrs.PlayerMgr;
-	import knightage.mgrs.TemplateMgr;
+	import knightage.mgrs.VisitMgr;
 	import knightage.net.packets.build.CreateBuildingPacket;
 	import knightage.net.packets.build.UpgradeBuildingPacket;
+	import knightage.player.GamePlayer;
 	import knightage.templates.BuildTemplate;
 	
 	public class BuildSprite extends Sprite implements IDispose
@@ -32,8 +35,12 @@ package knightage.hall.build
 		
 		private var m_upgradeButton:Button;
 		
-		public function BuildSprite(type:int)
+		private var m_player:GamePlayer;
+		
+		public function BuildSprite(gp:GamePlayer, type:int)
 		{
+			m_player = gp;
+			
 			m_type = type;
 			
 			super();
@@ -48,11 +55,11 @@ package knightage.hall.build
 
 		private function initialized():void
 		{
-			m_buildView = new BuildView(m_type);
+			m_buildView = new BuildView(m_player, m_type);
 			addChild(m_buildView);
 			m_buildView.addEventListener(MouseEvent.CLICK, __buildClickHandler);
 			
-			var template:BuildTemplate = PlayerMgr.getBuildTemplate(m_type);
+			var template:BuildTemplate = GameUtil.getBuildTemplate(m_player, m_type);
 			
 			if(template)
 			{
@@ -82,15 +89,17 @@ package knightage.hall.build
 		
 		private function checkCreateOrUpgrade(type:int):void
 		{
-			var template:BuildTemplate = PlayerMgr.getBuildTemplate(type);
+			if(VisitMgr.isSelf == false) return;
 			
-			var castleTemplate:BuildTemplate = PlayerMgr.getBuildTemplate(BuildType.Castle);
+			var template:BuildTemplate = GameUtil.getBuildTemplate(m_player, type);
+			
+			var castleTemplate:BuildTemplate = GameUtil.getBuildTemplate(m_player, BuildType.Castle);
 			
 			if(template == null)
 			{
 				var canShowCreateBtn:Boolean = false;
 				
-				template = PlayerMgr.getBuildFirstLvTemplate(type);
+				template = GameUtil.getBuildFirstLvTemplate(type);
 				
 				if(template == null)
 				{
@@ -138,7 +147,7 @@ package knightage.hall.build
 				DisposeUtil.free(m_createButton);
 				m_createButton = null;
 				
-				var nextTemplate:BuildTemplate = PlayerMgr.getBuildNextTemplate(m_type);
+				var nextTemplate:BuildTemplate = GameUtil.getBuildNextTemplate(m_player, m_type);
 				
 				var canShowUpgradeBtn:Boolean = false;
 				
@@ -193,10 +202,21 @@ package knightage.hall.build
 		
 		private function __buildClickHandler(e:MouseEvent):void
 		{
+			var frame:Frame;
+			
 			switch(m_type)
 			{
 				case BuildType.Tavern:
-					InstanceUtil.createSingletion(TavernUIView).show();
+					frame = InstanceUtil.createSingletion(TavernUIView);
+					if(frame.isOnStage)
+					{
+						frame.close();
+						frame = null;
+					}
+					else
+					{
+						frame.show();
+					}
 					break;
 				default:
 					MsgTipMgr.show(StaticConfig.BuildTypeNameList[m_type] + "功能开发中...");
