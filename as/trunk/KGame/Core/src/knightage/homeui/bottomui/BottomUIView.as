@@ -137,7 +137,34 @@ package knightage.homeui.bottomui
 		
 		private function __clickHandler(e:MouseEvent):void
 		{
-			MsgTipMgr.show("功能开发中...");
+			var btnName:String = "";
+			
+			switch(e.currentTarget)
+			{
+				case m_heroButton:
+					btnName = "英雄";
+					break;
+				case m_expeditionButton:
+					btnName = "出征";
+					break;
+				case m_embattleButton:
+					btnName = "布阵";
+					break;
+				case m_strengthenButton:
+					btnName = "强化";
+					break;
+				case m_bagButton:
+					btnName = "背包";
+					break;
+				case m_mallButton:
+					btnName = "商城";
+					break;
+				case m_taskButton:
+					btnName = "任务";
+					break;
+			}
+			
+			MsgTipMgr.show(btnName + "功能开发中...");
 		}
 		
 		public function dispose():void

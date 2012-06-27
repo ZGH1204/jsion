@@ -9,10 +9,12 @@ package knightage.hall.build
 	import jsion.IDispose;
 	import jsion.display.Button;
 	import jsion.utils.DisposeUtil;
+	import jsion.utils.InstanceUtil;
 	
 	import knightage.StaticConfig;
 	import knightage.StaticRes;
 	import knightage.events.PlayerEvent;
+	import knightage.hall.tavern.TavernUIView;
 	import knightage.mgrs.MsgTipMgr;
 	import knightage.mgrs.PlayerMgr;
 	import knightage.mgrs.TemplateMgr;
@@ -191,7 +193,15 @@ package knightage.hall.build
 		
 		private function __buildClickHandler(e:MouseEvent):void
 		{
-			MsgTipMgr.show(StaticConfig.BuildTypeNameList[m_type] + "功能开发中...");
+			switch(m_type)
+			{
+				case BuildType.Tavern:
+					InstanceUtil.createSingletion(TavernUIView).show();
+					break;
+				default:
+					MsgTipMgr.show(StaticConfig.BuildTypeNameList[m_type] + "功能开发中...");
+					break;
+			}
 		}
 		
 		private function __createBuildHandler(e:MouseEvent):void

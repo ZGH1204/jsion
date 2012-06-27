@@ -6,8 +6,9 @@ package knightage.display
 	
 	public class KhakiButton extends LabelButton
 	{
-		private static const LabelColor:uint = 0xFFFFFF;
-		private static const UpImageBMD:KhakiButtonUpAsset = new KhakiButtonUpAsset(0, 0);
+		public static const LabelColor:uint = 0xFFFFFF;
+		public static const UpImageBMD:KhakiButtonUpAsset = new KhakiButtonUpAsset(0, 0);
+		public static const ScaleInsets:Insets = new Insets(20, 30, 20, 30);
 		
 		private var m_txt:String;
 		
@@ -24,7 +25,7 @@ package knightage.display
 			img.beginChanges();
 			img.freeSource = false;
 			img.source = UpImageBMD;
-			img.scale9Insets = new Insets(20, 30, 20, 30);
+			img.scale9Insets = ScaleInsets;
 			img.commitChanges();
 			
 			beginChanges();

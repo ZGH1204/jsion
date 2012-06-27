@@ -34,9 +34,9 @@ package knightage.homeui.topui.items
 			m_numLabel = new Label();
 			m_numLabel.beginChanges();
 			m_numLabel.text = PlayerMgr.self.gold.toString();
-			m_numLabel.filters = StaticRes.TopUINumFilters;
-			m_numLabel.textColor = StaticRes.TopUINumColor;
-			m_numLabel.textFormat = StaticRes.TopUINumTextFormat;
+			m_numLabel.filters = StaticRes.TextFilters4;
+			m_numLabel.textColor = StaticRes.WhiteColor;
+			m_numLabel.textFormat = StaticRes.TextFormat15;
 			m_numLabel.commitChanges();
 			addChild(m_numLabel);
 			
@@ -49,9 +49,9 @@ package knightage.homeui.topui.items
 			//m_selectBtn.enabled = false;
 			m_selectBtn.embedFonts = true;
 			m_selectBtn.textFormat = new TextFormat("MyFont1", 16, null, true);
-			m_selectBtn.labelUpFilters = StaticRes.TopUIButtonLabelFilters;
-			m_selectBtn.labelOverFilters = StaticRes.TopUIButtonLabelFilters;
-			m_selectBtn.labelDownFilters = StaticRes.TopUIButtonLabelFilters;
+			m_selectBtn.labelUpFilters = StaticRes.TextFilters8;
+			m_selectBtn.labelOverFilters = StaticRes.TextFilters8;
+			m_selectBtn.labelDownFilters = StaticRes.TextFilters8;
 			m_selectBtn.commitChanges();
 			addChild(m_selectBtn);
 			

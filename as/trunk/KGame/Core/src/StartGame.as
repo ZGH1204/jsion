@@ -135,6 +135,7 @@ package
 		DEBUG.setup(stage, 250);
 		var cssPath:String = PathUtil.combinPath(Config.ResRoot, String(config.@DebugCSS));
 		DEBUG.loadCSS(cssPath);
+		DEBUG.showBar();
 		
 		//初始化完成后触发事件
 		StartMgr.dispatchEvent(new StartEvent(StartEvent.INITIALIZED));
