@@ -327,7 +327,7 @@ package jsion.display
 		/**
 		 * 获取无标签的真实文本
 		 */		
-		public function get text():String
+		public function get realLabel():String
 		{
 			return m_label.realText;
 		}
@@ -469,6 +469,65 @@ package jsion.display
 			invalidate();
 			
 			return style;
+		}
+		
+		/**
+		 * 文本抗锯齿类型，可能的值：
+		 * <ul>
+		 * 	<li>AntiAliasType.NORMAL</li>
+		 * 	<li>AntiAliasType.ADVANCED</li>
+		 * </ul>
+		 * @see flash.text.AntiAliasType
+		 */		
+		public function get antiAliasType():String
+		{
+			return m_label.antiAliasType;
+		}
+		
+		/** @private */
+		public function set antiAliasType(value:String):void
+		{
+			m_label.antiAliasType = value;
+			
+			m_labelChange = true;
+			
+			invalidate();
+		}
+		
+		/**
+		 * 自定义消除锯齿的粗细
+		 */		
+		public function get thickness():int
+		{
+			return m_label.thickness;
+		}
+		
+		/** @private */
+		public function set thickness(value:int):void
+		{
+			m_label.thickness = value;
+			
+			m_labelChange = true;
+			
+			invalidate();
+		}
+		
+		/**
+		 * 自定义消除锯齿的清晰度
+		 */		
+		public function get sharpness():int
+		{
+			return m_label.sharpness;
+		}
+		
+		/** @private */
+		public function set sharpness(value:int):void
+		{
+			m_label.sharpness = value;
+			
+			m_labelChange = true;
+			
+			invalidate();
 		}
 		
 		

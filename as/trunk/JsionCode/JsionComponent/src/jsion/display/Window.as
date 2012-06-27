@@ -261,9 +261,9 @@ package jsion.display
 			
 			if(m_background) addChild(m_background);
 			
-			addChild(m_closeButton);
-			
 			addChild(m_content);
+			
+			addChild(m_closeButton);
 		}
 		
 		/**
