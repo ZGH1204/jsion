@@ -47,7 +47,19 @@ package knightage.display
 			width = 550;
 			height = 400;
 			
+			contentOffsetX = 50;
+			contentOffsetY = 35;
+			
 			commitChanges();
+		}
+		
+		public function setContentSize(w:int, h:int):void
+		{
+			w = w + contentOffsetX * 2;
+			h = h + contentOffsetY * 2;
+			
+			width = w + w % 2;
+			height = h + h % 2;
 		}
 	}
 }

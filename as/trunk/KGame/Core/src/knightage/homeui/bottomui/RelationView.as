@@ -80,11 +80,11 @@ package knightage.homeui.bottomui
 			btn.freeBMD = false;
 			btn.upImage = new Bitmap(StaticRes.RelationButtonUpBMD);
 			btn.label = formatNum(num);
-			btn.labelColor = StaticRes.BottomUINumColor;
-			btn.textFormat = StaticRes.BottomUINumTextFormat;
-			btn.labelUpFilters = StaticRes.BottomUINumFilters;
-			btn.labelOverFilters = StaticRes.BottomUINumFilters;
-			btn.labelDownFilters = StaticRes.BottomUINumFilters;
+			btn.labelColor = StaticRes.WhiteColor;
+			btn.textFormat = StaticRes.TextFormat15;
+			btn.labelUpFilters = StaticRes.TextFilters4;
+			btn.labelOverFilters = StaticRes.TextFilters4;
+			btn.labelDownFilters = StaticRes.TextFilters4;
 			btn.iconUpImage = icon;
 			btn.hAlign = IconButton.RIGHT;
 			btn.hOffset = hOffset;

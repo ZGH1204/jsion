@@ -43,9 +43,9 @@ package knightage.homeui.topui.items
 			m_numLabel = new Label();
 			m_numLabel.beginChanges();
 			m_numLabel.text = PlayerMgr.self.orders.toString();
-			m_numLabel.filters = StaticRes.TopUINumFilters;
-			m_numLabel.textColor = StaticRes.TopUINumColor;
-			m_numLabel.textFormat = StaticRes.TopUINumTextFormat;
+			m_numLabel.filters = StaticRes.TextFilters4;
+			m_numLabel.textColor = StaticRes.WhiteColor;
+			m_numLabel.textFormat = StaticRes.TextFormat15;
 			m_numLabel.commitChanges();
 			addChild(m_numLabel);
 			

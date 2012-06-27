@@ -45,15 +45,15 @@ package knightage.homeui
 			setLevel(m_lv);
 			if(m_type == TOP)
 			{
-				m_levelLabel.filters = StaticRes.TopUINumFilters;
-				m_levelLabel.textColor = StaticRes.TopUINumColor;
-				m_levelLabel.textFormat = StaticRes.TopUINumTextFormat;
+				m_levelLabel.filters = StaticRes.TextFilters4;
+				m_levelLabel.textColor = StaticRes.WhiteColor;
+				m_levelLabel.textFormat = StaticRes.TextFormat15;
 			}
 			else
 			{
-				m_levelLabel.filters = StaticRes.BottomUINumFilters;
-				m_levelLabel.textColor = StaticRes.BottomUINumColor;
-				m_levelLabel.textFormat = StaticRes.BottomUINumTextFormat;
+				m_levelLabel.filters = StaticRes.TextFilters4;
+				m_levelLabel.textColor = StaticRes.WhiteColor;
+				m_levelLabel.textFormat = StaticRes.TextFormat15;
 			}
 			m_levelLabel.commitChanges();
 			addChild(m_levelLabel);
