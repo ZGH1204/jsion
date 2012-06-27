@@ -29,6 +29,8 @@ package
 	import knightage.display.Alert;
 	import knightage.mgrs.MsgTipMgr;
 	import knightage.mgrs.TemplateMgr;
+	import knightage.mgrs.VisitMgr;
+	import knightage.timer.TimerMgr;
 
 	/**
 	 * Loading模块加载游戏基础库完成后执行。
@@ -128,7 +130,14 @@ package
 		//初始化背景音乐
 		MusicMgr.setup(config);
 		MusicMgr.volume = 80;
-		MusicMgr.playMusic();
+		//MusicMgr.playMusic();
+		
+		
+		//每秒执行管理
+		TimerMgr.setup();
+		
+		//初始化访问管理
+		VisitMgr.setup();
 		
 		
 		//初始化调试控制台

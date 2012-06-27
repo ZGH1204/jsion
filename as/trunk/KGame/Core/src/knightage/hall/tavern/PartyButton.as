@@ -56,7 +56,7 @@ package knightage.hall.tavern
 			m_moneyLabel.width = 65;
 			m_moneyLabel.text = "30";
 			m_moneyLabel.embedFonts = true;
-			m_moneyLabel.textFormat = StaticRes.HaiBaoEmbedTextFormat18;
+			m_moneyLabel.textFormat = StaticRes.HaiBaoEmbedTextFormat20;
 			m_moneyLabel.commitChanges();
 			
 			if(m_type == Party)

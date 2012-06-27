@@ -91,7 +91,7 @@ package
 		{
 			var loading:int = m_queue.completeCount + m_queue.errorCount + 1;
 			
-			trace("正在加载第", loading + "/" + m_queue.loaderCount, "个", "已加载：", bytesLoaded, "\t\t\t需加载：", bytesTotal);
+			//trace("正在加载第", loading + "/" + m_queue.loaderCount, "个", "已加载：", bytesLoaded, "\t\t\t需加载：", bytesTotal);
 			
 			m_progressView.updateProgress(bytesLoaded, bytesTotal);
 		}

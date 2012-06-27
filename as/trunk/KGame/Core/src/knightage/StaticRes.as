@@ -89,6 +89,11 @@ package knightage
 		public static const TextFormat15:TextFormat = new TextFormat(null, 15, null, true);
 		
 		/**
+		 * 文本样式:18号，加粗。
+		 */		
+		public static const TextFormat18:TextFormat = new TextFormat(null, 18);
+		
+		/**
 		 * 描边4像素8强度滤镜。
 		 */		
 		public static const TextFilters4:Array = [new GlowFilter(0x412419, 1, 4, 4, 8, 1)];
@@ -111,9 +116,9 @@ package knightage
 		
 		
 		/**
-		 * 嵌入字体文本样式(字体大小：18，加粗。)
+		 * 嵌入字体文本样式(字体大小：20。)
 		 */		
-		public static const HaiBaoEmbedTextFormat18:TextFormat = new TextFormat("MyFont2", 20, null);
+		public static const HaiBaoEmbedTextFormat20:TextFormat = new TextFormat("MyFont2", 20, null);
 		
 		
 		

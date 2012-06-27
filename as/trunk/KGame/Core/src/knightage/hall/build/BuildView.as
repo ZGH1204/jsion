@@ -2,18 +2,14 @@ package knightage.hall.build
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
 	
 	import jsion.display.Button;
 	import jsion.loaders.BitmapDataLoader;
-	import jsion.loaders.SwfLoader;
 	import jsion.utils.DisposeUtil;
 	
-	import knightage.StaticConfig;
+	import knightage.GameUtil;
 	import knightage.StaticRes;
-	import knightage.events.PlayerEvent;
-	import knightage.mgrs.PlayerMgr;
-	import knightage.mgrs.TemplateMgr;
+	import knightage.player.GamePlayer;
 	import knightage.templates.BuildTemplate;
 	
 	public class BuildView extends Button
@@ -26,8 +22,12 @@ package knightage.hall.build
 		
 		private var m_loader:BitmapDataLoader;
 		
-		public function BuildView(type:int)
+		private var m_player:GamePlayer;
+		
+		public function BuildView(gp:GamePlayer, type:int)
 		{
+			m_player = gp;
+			
 			m_type = type;
 			
 			super();
@@ -51,7 +51,7 @@ package knightage.hall.build
 		
 		public function loadBuildRes():void
 		{
-			var template:BuildTemplate = PlayerMgr.getBuildTemplate(m_type);
+			var template:BuildTemplate = GameUtil.getBuildTemplate(m_player, m_type);
 			
 			if(template == null)
 			{

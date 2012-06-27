@@ -30,9 +30,11 @@ package knightage.hall.tavern
 		
 		private var m_progress:ProgressBar;
 		
+		private var m_countDown:CountDown;
+		
 		public function TavernUIView()
 		{
-			super("", true);
+			super("", false);
 		}
 		
 		override protected function configUI():void
@@ -94,6 +96,14 @@ package knightage.hall.tavern
 			
 			
 			
+			m_countDown = new CountDown();
+			m_countDown.x = 498;
+			m_countDown.y = 423;
+			m_countDown.setSeconds(5000);
+			addToContent(m_countDown);
+			
+			
+			
 			
 			m_partyButton = new PartyButton(PartyButton.Party);
 			m_partyButton.x = 205;
@@ -129,6 +139,18 @@ package knightage.hall.tavern
 		{
 			MsgTipMgr.show("豪华派对开发中...");
 		}
+		
+		
+		
+		
+		
+		public function setData():void
+		{
+			
+		}
+		
+		
+		
 		
 		override public function dispose():void
 		{
