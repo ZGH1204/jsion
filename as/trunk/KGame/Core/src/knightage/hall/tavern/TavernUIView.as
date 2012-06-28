@@ -6,8 +6,10 @@ package knightage.hall.tavern
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	import jsion.display.ProgressBar;
+	import jsion.loaders.DisplayLoader;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.InstanceUtil;
 	import jsion.utils.JUtil;
@@ -33,6 +35,14 @@ package knightage.hall.tavern
 		private var m_item2:TavernHeroInfoView;
 		
 		private var m_item3:TavernHeroInfoView;
+		
+		
+		
+		private var m_loader1:DisplayLoader;
+		private var m_loader2:DisplayLoader;
+		private var m_loader3:DisplayLoader;
+		
+		
 		
 		private var m_partyButton:PartyButton;
 		
@@ -227,12 +237,72 @@ package knightage.hall.tavern
 			
 			template = TemplateMgr.findHeroTemplate(m_player.lastHero1TID);
 			m_item1.setData(template);
+			DisposeUtil.free(m_loader1);
+			if(template)
+			{
+				m_loader1 = new DisplayLoader(template.BustImg, Config.ResRoot);
+				m_loader1.loadAsync(bustLoadCallback);
+			}
+			else
+			{
+				m_loader1 = null;
+			}
 			
 			template = TemplateMgr.findHeroTemplate(m_player.lastHero2TID);
 			m_item2.setData(template);
+			DisposeUtil.free(m_loader2);
+			if(template)
+			{
+				m_loader2 = new DisplayLoader(template.BustImg, Config.ResRoot);
+				m_loader2.loadAsync(bustLoadCallback);
+			}
+			else
+			{
+				m_loader2 = null;
+			}
 			
 			template = TemplateMgr.findHeroTemplate(m_player.lastHero3TID);
 			m_item3.setData(template);
+			DisposeUtil.free(m_loader3);
+			if(template)
+			{
+				m_loader3 = new DisplayLoader(template.BustImg, Config.ResRoot);
+				m_loader3.loadAsync(bustLoadCallback);
+			}
+			else
+			{
+				m_loader3 = null;
+			}
+			
+			
+			
+			
+		}
+		
+		
+		private static const Point1:Point = new Point(172, 168);
+		private static const Point2:Point = new Point(329, 168);
+		private static const Point3:Point = new Point(473, 168);
+		
+		private function bustLoadCallback(loader:DisplayLoader, successed:Boolean):void
+		{
+			switch(loader)
+			{
+				case m_loader1:
+					m_loader1.x = Point1.x - int(m_loader1.width / 2);
+					m_loader1.y = Point1.y - m_loader1.height;
+					break;
+				case m_loader2:
+					m_loader2.x = Point2.x - int(m_loader2.width / 2);
+					m_loader2.y = Point2.y - m_loader2.height;
+					break;
+				case m_loader3:
+					m_loader3.x = Point3.x - int(m_loader3.width / 2);
+					m_loader3.y = Point3.y - m_loader3.height;
+					break;
+			}
+			
+			addToContent(loader);
 		}
 		
 		
