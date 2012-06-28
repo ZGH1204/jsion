@@ -121,6 +121,8 @@ package jsion.components
 			updateLabelFilters();
 			updateLabelAndPos();
 			
+			reDrawBitmapHit();
+			
 			super.draw();
 		}
 		
