@@ -114,8 +114,6 @@ package jsion.loaders
 		 */		
 		override public function dispose():void
 		{
-			LoaderMgr.removeLoader(this);
-			
 			removeLoadEvent(m_urlLoader);
 			removeLoadTotalBytesEvent(m_urlLoader);
 			
