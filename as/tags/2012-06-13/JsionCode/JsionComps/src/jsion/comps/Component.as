@@ -447,6 +447,14 @@ package jsion.comps
 			return m_bitmapForHit.bitmapData.hitTest(CompGlobal.ZeroPoint, m_threshold, m_mousePoint);
 		}
 		
+		protected function reDrawBitmapHit():void
+		{
+			DisposeUtil.free(m_bitmapForHit);
+			m_bitmapForHit = null;
+			
+			if(m_ignoreTransparents) drawBitmapHit();
+		}
+		
 		protected function drawBitmapHit():void
 		{
 			if(m_bitmapForHit)
