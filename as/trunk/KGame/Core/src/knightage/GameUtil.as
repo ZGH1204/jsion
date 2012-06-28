@@ -4,6 +4,7 @@ package knightage
 	import knightage.mgrs.TemplateMgr;
 	import knightage.player.GamePlayer;
 	import knightage.templates.BuildTemplate;
+	import knightage.templates.SoilderTemplate;
 
 	public class GameUtil
 	{
@@ -185,6 +186,20 @@ package knightage
 					player.smithyTID = tid;
 					break;
 			}
+		}
+		
+		
+		/**
+		 * 获取指定兵系默认兵种模板
+		 * @param category
+		 * @return 
+		 * 
+		 */		
+		public static function getDefaultSoilderTemplateByCategory(category:int):SoilderTemplate
+		{
+			var tid:int = StaticConfig.DefaultSoilderTypeList[category];
+			
+			return TemplateMgr.findSoilderTemplate(tid);
 		}
 	}
 }

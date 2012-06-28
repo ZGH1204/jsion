@@ -26,7 +26,7 @@ package knightage.templates
          * 射手：4
          * 法师：5
          */
-        public var SoilderSys:int;
+        public var SoliderCategory:int;
 
         /**
          * 需要卡片

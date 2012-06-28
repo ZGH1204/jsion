@@ -58,5 +58,16 @@ package knightage.mgrs
 				dispatchEvent(new VisitEvent(VisitEvent.VISIT_FRIEND, m_player));
 			}
 		}
+		
+		
+		public static function updateTavernHeros(heroTID1:int, heroTID2:int, heroTID3:int, lastTime:Date):void
+		{
+			m_player.lastHero1TID = heroTID1;
+			m_player.lastHero2TID = heroTID2;
+			m_player.lastHero3TID = heroTID3;
+			m_player.lastRefreshTime = lastTime;
+			
+			dispatchEvent(new VisitEvent(VisitEvent.REFRESH_TAVERN_HERO, m_player));
+		}
 	}
 }

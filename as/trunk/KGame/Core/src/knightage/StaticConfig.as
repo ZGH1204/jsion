@@ -6,7 +6,16 @@ package knightage
 		 * 建筑类型一级对应的建筑模板ID
 		 */		
 		public static const BuildFirstLvTIDList:Array = [0, 1, 101, 201, 301, 401, 501, 601, 701, 801, 901, 1001, 1101];
+		
+		/**
+		 * 建筑名称列表，与建筑类型一一对应。
+		 */		
 		public static const BuildTypeNameList:Array = ["", "城堡", "农田", "酒馆", "兵营", "训练场", "市场", "监狱", "占卜屋", "潘多拉", "铁匠铺", "研究学院", "雕像"];
+		
+		/**
+		 * 各兵系对应的默认兵种列表
+		 */		
+		public static const DefaultSoilderTypeList:Array = [0, 11, 21, 31, 41, 51];
 		
 		/**
 		 * 城堡提升下一级所需要经验值列表
