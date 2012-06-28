@@ -4,7 +4,7 @@ package jsion.loaders
 
 	public interface ILoader extends IEventDispatcher
 	{
-		function get root():String;
+		function get rootPath():String;
 		
 		function get file():String;
 		
@@ -18,6 +18,8 @@ package jsion.loaders
 		function set tag(value:Object):void;
 		
 		function get errorMsg():String;
+		
+		function get status():int;
 		
 		function get loadedBytes():int;
 		
