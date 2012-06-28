@@ -572,6 +572,8 @@ package jsion.loaders
 			removeLoadEvent(contentLoaderInfo);
 			removeLoadTotalBytesEvent(contentLoaderInfo);
 			
+			try { close(); } catch (err:Error) { }
+			
 			m_request = null;
 			
 			m_callback = null;
