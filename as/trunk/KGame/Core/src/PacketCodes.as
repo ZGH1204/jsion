@@ -63,6 +63,18 @@ package
 		public static const LoginHero:int = 1016;
 		
 		
+		
+		
+		
+		/**
+		 * 刷新酒馆英雄
+		 */		
+		public static const RefreshTavernHeros:int = 1017;
+		
+		
+		
+		
+		
 		/**
 		 * 升级建筑
 		 */		

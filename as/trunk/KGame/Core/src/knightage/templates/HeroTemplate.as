@@ -93,7 +93,7 @@ package knightage.templates
         /**
          * 兵系类型
          */
-        public var SoliderType:int;
+        public var SoliderCategory:int;
 
         /**
          * 擅长兵种
@@ -134,6 +134,11 @@ package knightage.templates
          * 格挡成长
          */
         public var ParryGrowth:int;
+		
+		/**
+		 * 雇佣价格
+		 */		
+		public var EmployPrice:int;
 
         /**
          * 是否特殊英雄

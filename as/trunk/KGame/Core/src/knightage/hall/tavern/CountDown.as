@@ -33,7 +33,18 @@ package knightage.hall.tavern
 		{
 			m_seconds = value;
 			
-			TimerMgr.addTimer(this);
+			if(m_seconds > 0)
+			{
+				TimerMgr.addTimer(this);
+			}
+			else
+			{
+				m_seconds = 0;
+				
+				TimerMgr.removeTimer(this);
+				
+				dispatchEvent(new Event(Event.COMPLETE));
+			}
 			
 			refreshView();
 		}
@@ -43,18 +54,22 @@ package knightage.hall.tavern
 			// TODO Auto Generated method stub
 			m_seconds -= 1;
 			
-			refreshView();
-			
 			if(m_seconds <= 0)
 			{
+				m_seconds = 0;
+				
 				TimerMgr.removeTimer(this);
 				
 				dispatchEvent(new Event(Event.COMPLETE));
 			}
+			
+			refreshView();
 		}
 		
 		private function refreshView():void
 		{
+			if(m_seconds < 0) m_seconds = 0;
+			
 			text = DateUtil.getTimeStr(m_seconds);
 		}
 		

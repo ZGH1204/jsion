@@ -16,6 +16,11 @@ package knightage.events
 		 */		
 		public static const VISIT_FRIEND:String = "visitFriend";
 		
+		/**
+		 * 刷新酒馆英雄
+		 */		
+		public static const REFRESH_TAVERN_HERO:String = "refreshTavernHero";
+		
 		public var data:*;
 		
 		public function VisitEvent(type:String, data:*)

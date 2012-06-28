@@ -1,7 +1,10 @@
 package knightage.hall.tavern
 {
+	import core.net.SocketProxy;
+	
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import jsion.display.ProgressBar;
@@ -10,7 +13,14 @@ package knightage.hall.tavern
 	import jsion.utils.JUtil;
 	
 	import knightage.display.Frame;
+	import knightage.events.VisitEvent;
+	import knightage.mgrs.DateMgr;
 	import knightage.mgrs.MsgTipMgr;
+	import knightage.mgrs.TemplateMgr;
+	import knightage.mgrs.VisitMgr;
+	import knightage.net.packets.hero.RefreshTavernHerosPacket;
+	import knightage.player.GamePlayer;
+	import knightage.templates.HeroTemplate;
 	
 	public class TavernUIView extends Frame
 	{
@@ -32,6 +42,8 @@ package knightage.hall.tavern
 		
 		private var m_countDown:CountDown;
 		
+		private var m_player:GamePlayer;
+		
 		public function TavernUIView()
 		{
 			super("", false);
@@ -48,16 +60,16 @@ package knightage.hall.tavern
 			var posY:int = 230;
 			
 			
-			m_item1 = new TavernHeroInfoView();
+			m_item1 = new TavernHeroInfoView(1);
 			m_item1.x = 20;
 			m_item1.y = posY;
 			addToContent(m_item1);
 			
-			m_item2 = new TavernHeroInfoView();
+			m_item2 = new TavernHeroInfoView(2);
 			m_item2.y = posY;
 			addToContent(m_item2);
 			
-			m_item3 = new TavernHeroInfoView();
+			m_item3 = new TavernHeroInfoView(3);
 			m_item3.y = posY;
 			addToContent(m_item3);
 			
@@ -99,7 +111,6 @@ package knightage.hall.tavern
 			m_countDown = new CountDown();
 			m_countDown.x = 498;
 			m_countDown.y = 423;
-			m_countDown.setSeconds(5000);
 			addToContent(m_countDown);
 			
 			
@@ -128,6 +139,16 @@ package knightage.hall.tavern
 			m_partyButton.addEventListener(MouseEvent.CLICK, __partyClickHandler);
 			
 			m_grandPartyButton.addEventListener(MouseEvent.CLICK, __grandPartyClickHandler);
+			
+			m_countDown.addEventListener(Event.COMPLETE, __countDownCompleteHandler);
+			
+			
+			
+			VisitMgr.addEventListener(VisitEvent.VISIT_FRIEND, __visitFriendHandler);
+			VisitMgr.addEventListener(VisitEvent.REFRESH_TAVERN_HERO, __refreshTavernHeroHandler);
+			
+			
+			refreshData();
 		}
 		
 		private function __partyClickHandler(e:MouseEvent):void
@@ -141,12 +162,77 @@ package knightage.hall.tavern
 		}
 		
 		
-		
-		
-		
-		public function setData():void
+		private function __countDownCompleteHandler(e:Event):void
 		{
+			var pkg:RefreshTavernHerosPacket = new RefreshTavernHerosPacket();
 			
+			pkg.pid = m_player.playerID;
+			
+			SocketProxy.sendTCP(pkg);
+		}
+		
+		
+		
+		private function __visitFriendHandler(e:VisitEvent):void
+		{
+			refreshData();
+		}
+		
+		
+		
+		private function __refreshTavernHeroHandler(e:VisitEvent):void
+		{
+			refreshView();
+		}
+		
+		
+		
+		
+		public function refreshData():void
+		{
+			if(m_player == VisitMgr.player) return;
+			
+			m_player = VisitMgr.player;
+			
+			refreshView();
+		}
+		
+		
+		private function refreshView():void
+		{
+			var now:Date = DateMgr.getCurrentDateTime();
+			
+			var timeSpan:* = (now.time - m_player.lastRefreshTime.time) / 1000;
+			
+			var maxSeconds:int = 3600;
+			
+			var seconds:int = 0;
+			
+			if(timeSpan >= maxSeconds)
+			{
+				seconds = 0;
+			}
+			else
+			{
+				seconds = int(maxSeconds - timeSpan);
+			}
+			
+			m_countDown.setSeconds(seconds);
+			
+			
+			if(seconds == 0) return;
+			
+			
+			var template:HeroTemplate;
+			
+			template = TemplateMgr.findHeroTemplate(m_player.lastHero1TID);
+			m_item1.setData(template);
+			
+			template = TemplateMgr.findHeroTemplate(m_player.lastHero2TID);
+			m_item2.setData(template);
+			
+			template = TemplateMgr.findHeroTemplate(m_player.lastHero3TID);
+			m_item3.setData(template);
 		}
 		
 		

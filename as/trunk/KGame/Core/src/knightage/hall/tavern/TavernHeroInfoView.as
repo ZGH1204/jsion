@@ -12,9 +12,12 @@ package knightage.hall.tavern
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.ScaleUtil;
 	
+	import knightage.GameUtil;
 	import knightage.StaticRes;
 	import knightage.display.KhakiButton;
 	import knightage.mgrs.MsgTipMgr;
+	import knightage.templates.HeroTemplate;
+	import knightage.templates.SoilderTemplate;
 	
 	public class TavernHeroInfoView extends Sprite implements IDispose
 	{
@@ -38,8 +41,14 @@ package knightage.hall.tavern
 		
 		private var m_employButton:KhakiButton;
 		
-		public function TavernHeroInfoView()
+		private var m_template:HeroTemplate;
+		
+		private var m_index:int;
+		
+		public function TavernHeroInfoView(index:int)
 		{
+			m_index = index;
+			
 			super();
 			
 			initialized();
@@ -53,7 +62,7 @@ package knightage.hall.tavern
 			m_heroNameLabel = new Label();
 			m_heroNameLabel.beginChanges();
 			m_heroNameLabel.x = 26;
-			m_heroNameLabel.text = "LV32 卡福利";
+			m_heroNameLabel.text = "";
 			m_heroNameLabel.textColor = StaticRes.WhiteColor;
 			m_heroNameLabel.textFormat = StaticRes.TextFormat14;
 			m_heroNameLabel.filters = StaticRes.TextFilters4;
@@ -69,7 +78,7 @@ package knightage.hall.tavern
 			m_attackLabel.beginChanges();
 			m_attackLabel.x = 35;
 			m_attackLabel.y = posY;
-			m_attackLabel.text = "300";
+			m_attackLabel.text = "0";
 			m_attackLabel.width = 35;
 			m_attackLabel.textFormat = StaticRes.TextFormat14;
 			m_attackLabel.commitChanges();
@@ -80,7 +89,7 @@ package knightage.hall.tavern
 			m_defenseLabel.beginChanges();
 			m_defenseLabel.x = 95;
 			m_defenseLabel.y = posY;
-			m_defenseLabel.text = "300";
+			m_defenseLabel.text = "0";
 			m_defenseLabel.width = 35;
 			m_defenseLabel.textFormat = StaticRes.TextFormat14;
 			m_defenseLabel.commitChanges();
@@ -91,7 +100,7 @@ package knightage.hall.tavern
 			m_critLabel.beginChanges();
 			m_critLabel.x = 157;
 			m_critLabel.y = posY;
-			m_critLabel.text = "300";
+			m_critLabel.text = "0";
 			m_critLabel.width = 35;
 			m_critLabel.textFormat = StaticRes.TextFormat14;
 			m_critLabel.commitChanges();
@@ -106,7 +115,7 @@ package knightage.hall.tavern
 			m_soliderTypeLabel.x = 20;
 			m_soliderTypeLabel.y = 72;
 			m_soliderTypeLabel.width = 80;
-			m_soliderTypeLabel.text = "钉棒兵";
+			m_soliderTypeLabel.text = "";
 			m_soliderTypeLabel.textColor = 0xC79A47;
 			m_soliderTypeLabel.textFormat = StaticRes.TextFormat14;
 			m_soliderTypeLabel.filters = StaticRes.TextFilters4;
@@ -122,7 +131,7 @@ package knightage.hall.tavern
 			m_coinLabel.x = 115;
 			m_coinLabel.y = 72;
 			m_coinLabel.width = 60;
-			m_coinLabel.text = "500";
+			m_coinLabel.text = "0";
 			m_coinLabel.textColor = 0xC79A47;
 			m_coinLabel.textFormat = StaticRes.TextFormat14;
 			m_coinLabel.filters = StaticRes.TextFilters4;
@@ -146,6 +155,7 @@ package knightage.hall.tavern
 			
 			m_employButton = new KhakiButton("雇 佣");
 			m_employButton.beginChanges();
+			m_employButton.enabled = false;
 			m_employButton.clickSoundID = StaticRes.ButtonClickSoundID;
 			m_employButton.x = int((width - m_employButton.width) / 2);
 			m_employButton.y = 102;
@@ -176,6 +186,47 @@ package knightage.hall.tavern
 		{
 			MsgTipMgr.show("雇佣英雄开发中...");
 		}
+		
+		
+		
+		public function setData(template:HeroTemplate):void
+		{
+			if(m_template != template)
+			{
+				m_template = template;
+				
+				refreshView(m_template);
+			}
+		}
+		
+		private function refreshView(template:HeroTemplate):void
+		{
+			if(template)
+			{
+				m_heroNameLabel.text = template.TemplateName;
+				m_attackLabel.text = template.BasicAttack.toString();
+				m_defenseLabel.text = template.BasicDefense.toString();
+				m_critLabel.text = template.BasicCrit.toString();
+				m_coinLabel.text = template.EmployPrice.toString();
+				
+				var solider:SoilderTemplate = GameUtil.getDefaultSoilderTemplateByCategory(template.SoliderCategory);
+				m_soliderTypeLabel.text = solider.TemplateName;
+				
+				m_employButton.enabled = true;
+			}
+			else
+			{
+				m_heroNameLabel.text = "";
+				m_attackLabel.text = "0";
+				m_defenseLabel.text = "0";
+				m_critLabel.text = "0";
+				m_coinLabel.text = "0";
+				
+				m_employButton.enabled = false;
+			}
+		}
+		
+		
 		
 		public function dispose():void
 		{
