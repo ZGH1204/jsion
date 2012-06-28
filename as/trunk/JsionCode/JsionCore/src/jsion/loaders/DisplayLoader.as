@@ -14,88 +14,55 @@ package jsion.loaders
 	import jsion.utils.CacheUtil;
 	import jsion.utils.PathUtil;
 	
+	/**
+	 * 获取到所需加载的总字节数后触发。
+	 * @eventType jsion.core.events.JsionEvent
+	 * @langversion 3.0
+	 * @playerversion Flash 9
+	 * @playerversion AIR 1.1
+	 */	
+	[Event(name="totalBytes", type="jsion.events.JsionEvent")]
 	
+	/**
+	 * 文件加载完成后触发。
+	 * @eventType jsion.core.events.JsionEvent
+	 * @langversion 3.0
+	 * @playerversion Flash 9
+	 * @playerversion AIR 1.1
+	 */	
+	[Event(name="complete", type="jsion.events.JsionEvent")]
+	/**
+	 * 取消加载时触发，如果未在加载或加载完成则不触发。
+	 * @eventType jsion.core.events.JsionEvent
+	 * @langversion 3.0
+	 * @playerversion Flash 9
+	 * @playerversion AIR 1.1
+	 */	
+	[Event(name="cancel", type="jsion.events.JsionEvent")]
+	/**
+	 * 文件加载失败时触发。
+	 * @eventType jsion.core.events.JsionEvent
+	 * @langversion 3.0
+	 * @playerversion Flash 9
+	 * @playerversion AIR 1.1
+	 */	
+	[Event(name="error", type="jsion.events.JsionEvent")]
+	/**
+	 * 文件加载进度变更时派发。
+	 * @eventType flash.events.ProgressEvent
+	 * @langversion 3.0
+	 * @playerversion Flash 9
+	 * @playerversion AIR 1.1
+	 */	
+	[Event(name="progress", type="flash.events.ProgressEvent")]
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/**
+	 * 显示对象加载器
+	 * @author Jsion
+	 * 
+	 */	
 	public class DisplayLoader extends Loader implements ILoader, IDispose
 	{
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		/** @private */
 		protected var m_managed:Boolean;
@@ -151,12 +118,6 @@ package jsion.loaders
 		
 		
 		
-		/** @private */
-		protected var m_cache:Boolean;
-		
-		/** @private */
-		protected var m_cacheInMemory:Boolean;
-		
 		
 		/** @private */
 		protected var m_loadFromCache:Boolean;
@@ -167,6 +128,11 @@ package jsion.loaders
 		
 		/** @private */
 		protected var m_totalBytes:int;
+		
+		
+		
+		/** @private */
+		protected var m_enableUnloadAndStop:Boolean;
 		
 		
 		public function DisplayLoader(file:String, root:String = "", managed:Boolean = true)
@@ -193,6 +159,10 @@ package jsion.loaders
 			m_urlVariables = new URLVariables();
 			
 			m_data = null;
+			
+			setURLVariables("v", Cache.version);
+			
+			m_enableUnloadAndStop = true;
 		}
 		
 		/**
@@ -272,18 +242,22 @@ package jsion.loaders
 			{
 				m_status = JsionLoader.LOADING;
 				
-				if(Cache.contains(m_urlKey))
-				{
-					m_loadFromCache = true;
-					
-					loadCache();
-				}
-				else
-				{
-					m_loadFromCache = false;
-					
-					loadFile();
-				}
+//				if(Cache.contains(m_urlKey))
+//				{
+//					m_loadFromCache = true;
+//					
+//					loadCache();
+//				}
+//				else
+//				{
+//					m_loadFromCache = false;
+//					
+//					loadFile();
+//				}
+				
+				m_loadFromCache = false;
+				
+				loadFile();
 			}
 			else
 			{
@@ -301,7 +275,16 @@ package jsion.loaders
 		{
 			setLoadTotalBytesCallabck(callback);
 			
-			if(m_totalBytes > 0) onLoadTotalBytesComplete();
+			if(m_totalBytes > 0)
+			{
+				onLoadTotalBytesComplete();
+				
+				return;
+			}
+			
+			listenLoadTotalBytesEvent(contentLoaderInfo);
+			
+			load(m_request);
 		}
 		
 		/**
@@ -311,6 +294,10 @@ package jsion.loaders
 		{
 			if(m_status == JsionLoader.LOADING)
 			{
+				removeLoadEvent(contentLoaderInfo);
+				
+				try { close(); } catch (err:Error) { }
+				
 				m_status = JsionLoader.CANCEL;
 				
 				LoaderMgr.removeLoader(this);
@@ -325,6 +312,9 @@ package jsion.loaders
 		 */		
 		protected function loadFile():void
 		{
+			listenLoadEvent(contentLoaderInfo);
+			
+			load(m_request);
 		}
 		/**
 		 * 子类缓存加载实现方法
@@ -365,12 +355,12 @@ package jsion.loaders
 			removeLoadEvent(e.currentTarget as LoaderInfo);
 		}
 		
-		//		private function __securityErrorHandler(e:SecurityErrorEvent):void
-		//		{
-		//			if(tryLoad(e.text)) return;
-		//			
-		//			removeLoadEvent(e.currentTarget as EventDispatcher);
-		//		}
+//		private function __securityErrorHandler(e:SecurityErrorEvent):void
+//		{
+//			if(tryLoad(e.text)) return;
+//			
+//			removeLoadEvent(e.currentTarget as EventDispatcher);
+//		}
 		
 		private function __progressHandler(e:ProgressEvent):void
 		{
@@ -470,6 +460,8 @@ package jsion.loaders
 		 */		
 		protected function onLoadTotalBytesComplete():void
 		{
+			try { close(); } catch (err:Error) { }
+			
 			if(m_totalBytesCallback != null) m_totalBytesCallback(this, m_totalBytes);
 			
 			dispatchEvent(new JsionEvent(JsionEvent.TOTAL_BYTES));
@@ -518,6 +510,11 @@ package jsion.loaders
 		 */		
 		protected function onLoadCompleted():void
 		{
+			if(m_data == null && m_status == JsionLoader.LOADING)
+			{
+				m_data = content;
+			}
+			
 			m_status = JsionLoader.COMPLETE;
 			
 			if(m_callback != null) m_callback(this, true);
@@ -572,6 +569,9 @@ package jsion.loaders
 		{
 			LoaderMgr.removeLoader(this);
 			
+			removeLoadEvent(contentLoaderInfo);
+			removeLoadTotalBytesEvent(contentLoaderInfo);
+			
 			m_request = null;
 			
 			m_callback = null;
@@ -582,7 +582,7 @@ package jsion.loaders
 			
 			m_tag = null;
 			
-			
+			if(m_enableUnloadAndStop) unloadAndStop();
 		}
 		
 		/**
@@ -656,48 +656,6 @@ package jsion.loaders
 		}
 		
 		/**
-		 * 指示在网络加载完成时是否缓存到本地缓存。
-		 */		
-		public function get cache():Boolean
-		{
-			return m_cache;
-		}
-		
-		/** @private */
-		public function set cache(value:Boolean):void
-		{
-			m_cache = value;
-		}
-		
-		/**
-		 * 指示在网络加载或缓存加载完成时是否缓存到内存。
-		 */		
-		public function get cacheInMemory():Boolean
-		{
-			return m_cacheInMemory;
-		}
-		
-		/** @private */
-		public function set cacheInMemory(value:Boolean):void
-		{
-			m_cacheInMemory = value;
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/**
 		 * 要加载的总字节数
 		 */		
 		public function get totalBytes():int
@@ -712,7 +670,19 @@ package jsion.loaders
 		{
 			return m_loadedBytes;
 		}
+
+		/**
+		 * 是否允许在释放时卸载并停止子对象
+		 */		
+		public function get enableUnloadAndStop():Boolean
+		{
+			return m_enableUnloadAndStop;
+		}
 		
-		
+		/** @private */
+		public function set enableUnloadAndStop(value:Boolean):void
+		{
+			m_enableUnloadAndStop = value;
+		}
 	}
 }

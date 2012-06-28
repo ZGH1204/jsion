@@ -191,6 +191,8 @@ package jsion.loaders
 			m_urlVariables = new URLVariables();
 			
 			m_data = null;
+			
+			setURLVariables("v", Cache.version);
 		}
 		
 		/**
