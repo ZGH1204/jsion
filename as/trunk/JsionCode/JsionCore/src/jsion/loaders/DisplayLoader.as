@@ -1,100 +1,100 @@
 package jsion.loaders
 {
+	import flash.display.Loader;
+	import flash.display.LoaderInfo;
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
-	import flash.events.SecurityErrorEvent;
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
-	import flash.utils.ByteArray;
 	
 	import jsion.Cache;
-	import jsion.cryptor.ICryption;
+	import jsion.IDispose;
 	import jsion.events.JsionEvent;
-	import jsion.events.JsionEventDispatcher;
 	import jsion.utils.CacheUtil;
 	import jsion.utils.PathUtil;
 	
 	
-	/**
-	 * 获取到所需加载的总字节数后触发。
-	 * @eventType jsion.core.events.JsionEvent
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 */	
-	[Event(name="totalBytes", type="jsion.events.JsionEvent")]
 	
-	/**
-	 * 文件加载完成后触发。
-	 * @eventType jsion.core.events.JsionEvent
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 */	
-	[Event(name="complete", type="jsion.events.JsionEvent")]
-	/**
-	 * 取消加载时触发，如果未在加载或加载完成则不触发。
-	 * @eventType jsion.core.events.JsionEvent
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 */	
-	[Event(name="cancel", type="jsion.events.JsionEvent")]
-	/**
-	 * 文件加载失败时触发。
-	 * @eventType jsion.core.events.JsionEvent
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 */	
-	[Event(name="error", type="jsion.events.JsionEvent")]
-	/**
-	 * 文件加载进度变更时派发。
-	 * @eventType flash.events.ProgressEvent
-	 * @langversion 3.0
-	 * @playerversion Flash 9
-	 * @playerversion AIR 1.1
-	 */	
-	[Event(name="progress", type="flash.events.ProgressEvent")]
 	
-	/**
-	 * 加载器基类
-	 * @author Jsion
-	 * 
-	 */	
-	public class JsionLoader extends JsionEventDispatcher implements ILoader
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public class DisplayLoader extends Loader implements ILoader, IDispose
 	{
-		/**
-		 * 加载器初始化状态。
-		 */		
-		public static const INITIALIZE:int = 0;
 		
-		/**
-		 * 加载器被 LoaderMgr 阻塞，等待加载状态。
-		 */		
-		public static const WAITING:int = 1;
 		
-		/**
-		 * 加载器正在加载状态。
-		 */		
-		public static const LOADING:int = 2;
 		
-		/**
-		 * 加载器加载出错状态。
-		 */		
-		public static const ERROR:int = 3;
 		
-		/**
-		 * 加载器加载完成状态。
-		 */		
-		public static const COMPLETE:int = 4;
 		
-		/**
-		 * 取消加载状态。
-		 */		
-		public static const CANCEL:int = 5;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		/** @private */
@@ -133,8 +133,8 @@ package jsion.loaders
 		/** @private */
 		protected var m_totalBytesCallback:Function;
 		
-		/** @private */
-		protected var m_cryptor:ICryption;
+		
+		
 		
 		
 		
@@ -169,8 +169,10 @@ package jsion.loaders
 		protected var m_totalBytes:int;
 		
 		
-		public function JsionLoader(file:String, root:String = "", managed:Boolean = true)
+		public function DisplayLoader(file:String, root:String = "", managed:Boolean = true)
 		{
+			super();
+			
 			m_managed = managed;
 			
 			m_file = file;
@@ -179,7 +181,7 @@ package jsion.loaders
 			m_urlKey = CacheUtil.path2Key(m_file);
 			m_fullUrl = PathUtil.combinPath(m_root, m_file);
 			
-			m_status = INITIALIZE;
+			m_status = JsionLoader.INITIALIZE;
 			
 			initialize();
 		}
@@ -243,14 +245,14 @@ package jsion.loaders
 		{
 			setLoadCallback(callback);
 			
-			if(m_status == ERROR)
+			if(m_status == JsionLoader.ERROR)
 			{
 				onLoadErrored();
 				
 				return;
 			}
 			
-			if(m_status == COMPLETE)
+			if(m_status == JsionLoader.COMPLETE)
 			{
 				if(m_loadFromCache)
 				{
@@ -264,11 +266,11 @@ package jsion.loaders
 				return;
 			}
 			
-			if(m_status == LOADING) return;
+			if(m_status == JsionLoader.LOADING) return;
 			
 			if(m_managed == false || LoaderMgr.canLoad(this))
 			{
-				m_status = LOADING;
+				m_status = JsionLoader.LOADING;
 				
 				if(Cache.contains(m_urlKey))
 				{
@@ -280,12 +282,12 @@ package jsion.loaders
 				{
 					m_loadFromCache = false;
 					
-					load();
+					loadFile();
 				}
 			}
 			else
 			{
-				m_status = WAITING;
+				m_status = JsionLoader.WAITING;
 				
 				LoaderMgr.putLoader(this);
 			}
@@ -295,7 +297,7 @@ package jsion.loaders
 		 * 加载总字节数
 		 * @param callback 回调函数，其形式为 function callback(loader:ILoader, totalBytes:int):void { totalBytes 为0时表示获取失败! }。
 		 */		
-		public function loadTotalBytes(callback:Function = null):void
+		public function loadTotalBytes(callback:Function=null):void
 		{
 			setLoadTotalBytesCallabck(callback);
 			
@@ -307,9 +309,9 @@ package jsion.loaders
 		 */		
 		public function cancel():void
 		{
-			if(m_status == LOADING)
+			if(m_status == JsionLoader.LOADING)
 			{
-				m_status = CANCEL;
+				m_status = JsionLoader.CANCEL;
 				
 				LoaderMgr.removeLoader(this);
 				
@@ -321,7 +323,7 @@ package jsion.loaders
 		 * 子类网络加载实现方法
 		 * @private
 		 */		
-		protected function load():void
+		protected function loadFile():void
 		{
 		}
 		/**
@@ -335,10 +337,10 @@ package jsion.loaders
 		/**
 		 * 监听网络加载时需要的监听事件
 		 */		
-		protected function listenLoadEvent(dispatcher:EventDispatcher):void
+		protected function listenLoadEvent(dispatcher:LoaderInfo):void
 		{
 			dispatcher.addEventListener(IOErrorEvent.IO_ERROR, 				__ioErrorHandler, 		false, int.MAX_VALUE, false);
-			dispatcher.addEventListener(SecurityErrorEvent.SECURITY_ERROR, 	__securityErrorHandler, false, int.MAX_VALUE, false);
+			//dispatcher.addEventListener(SecurityErrorEvent.SECURITY_ERROR, 	__securityErrorHandler, false, int.MAX_VALUE, false);
 			dispatcher.addEventListener(ProgressEvent.PROGRESS, 			__progressHandler, 		false, int.MAX_VALUE, false);
 			dispatcher.addEventListener(Event.COMPLETE, 					__completeHandler, 		false, int.MAX_VALUE, false);
 		}
@@ -346,12 +348,12 @@ package jsion.loaders
 		/**
 		 * 移除网络加载时需要的监听事件
 		 */		
-		protected function removeLoadEvent(dispatcher:EventDispatcher):void
+		protected function removeLoadEvent(dispatcher:LoaderInfo):void
 		{
 			if(dispatcher == null) return;
 			
 			dispatcher.removeEventListener(IOErrorEvent.IO_ERROR, 				__ioErrorHandler, 		false);
-			dispatcher.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, 	__securityErrorHandler, false);
+			//dispatcher.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, 	__securityErrorHandler, false);
 			dispatcher.removeEventListener(ProgressEvent.PROGRESS, 				__progressHandler, 		false);
 			dispatcher.removeEventListener(Event.COMPLETE, 						__completeHandler, 		false);
 		}
@@ -360,15 +362,15 @@ package jsion.loaders
 		{
 			if(tryLoad(e.text)) return;
 			
-			removeLoadEvent(e.currentTarget as EventDispatcher);
+			removeLoadEvent(e.currentTarget as LoaderInfo);
 		}
 		
-		private function __securityErrorHandler(e:SecurityErrorEvent):void
-		{
-			if(tryLoad(e.text)) return;
-			
-			removeLoadEvent(e.currentTarget as EventDispatcher);
-		}
+		//		private function __securityErrorHandler(e:SecurityErrorEvent):void
+		//		{
+		//			if(tryLoad(e.text)) return;
+		//			
+		//			removeLoadEvent(e.currentTarget as EventDispatcher);
+		//		}
 		
 		private function __progressHandler(e:ProgressEvent):void
 		{
@@ -381,7 +383,7 @@ package jsion.loaders
 		{
 			onLoadCompleted();
 			
-			removeLoadEvent(e.currentTarget as EventDispatcher);
+			removeLoadEvent(e.currentTarget as LoaderInfo);
 		}
 		
 		private function tryLoad(errMsg:String):Boolean
@@ -396,7 +398,7 @@ package jsion.loaders
 				}
 				else
 				{
-					load();
+					loadFile();
 				}
 				
 				return true;
@@ -412,27 +414,25 @@ package jsion.loaders
 		}
 		
 		
-		
-		
 		/**
 		 * 监听获取总字节数时所需要的监听事件。
 		 */		
-		protected function listenLoadTotalBytesEvent(dispatcher:EventDispatcher):void
+		protected function listenLoadTotalBytesEvent(dispatcher:LoaderInfo):void
 		{
 			dispatcher.addEventListener(IOErrorEvent.IO_ERROR, 				__totalBytesIOErrorHandler, 		false, int.MAX_VALUE, false);
-			dispatcher.addEventListener(SecurityErrorEvent.SECURITY_ERROR, 	__totalBytesSecurityErrorHandler, 	false, int.MAX_VALUE, false);
+			//dispatcher.addEventListener(SecurityErrorEvent.SECURITY_ERROR, 	__totalBytesSecurityErrorHandler, 	false, int.MAX_VALUE, false);
 			dispatcher.addEventListener(ProgressEvent.PROGRESS, 			__totalBytesProgressHandler, 		false, int.MAX_VALUE, false);
 		}
 		
 		/**
 		 * 移除获取总字节数时所需要的监听事件。
 		 */		
-		protected function removeLoadTotalBytesEvent(dispatcher:EventDispatcher):void
+		protected function removeLoadTotalBytesEvent(dispatcher:LoaderInfo):void
 		{
 			if(dispatcher == null) return;
 			
 			dispatcher.removeEventListener(IOErrorEvent.IO_ERROR, 				__totalBytesIOErrorHandler, 		false);
-			dispatcher.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, 	__totalBytesSecurityErrorHandler, 	false);
+			//dispatcher.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, 	__totalBytesSecurityErrorHandler, 	false);
 			dispatcher.removeEventListener(ProgressEvent.PROGRESS, 				__totalBytesProgressHandler, 		false);
 		}
 		
@@ -442,17 +442,17 @@ package jsion.loaders
 			
 			m_tryTimes = 0;
 			
-			removeLoadTotalBytesEvent(e.currentTarget as EventDispatcher);
+			removeLoadTotalBytesEvent(e.currentTarget as LoaderInfo);
 		}
 		
-		private function __totalBytesSecurityErrorHandler(e:SecurityErrorEvent):void
-		{
-			if(tryLoadTotalBytes(e.text)) return;
-			
-			m_tryTimes = 0;
-			
-			removeLoadTotalBytesEvent(e.currentTarget as EventDispatcher);
-		}
+//		private function __totalBytesSecurityErrorHandler(e:SecurityErrorEvent):void
+//		{
+//			if(tryLoadTotalBytes(e.text)) return;
+//			
+//			m_tryTimes = 0;
+//			
+//			removeLoadTotalBytesEvent(e.currentTarget as EventDispatcher);
+//		}
 		
 		private function __totalBytesProgressHandler(e:ProgressEvent):void
 		{
@@ -460,7 +460,7 @@ package jsion.loaders
 			
 			m_totalBytes = e.bytesTotal;
 			
-			removeLoadTotalBytesEvent(e.currentTarget as EventDispatcher);
+			removeLoadTotalBytesEvent(e.currentTarget as LoaderInfo);
 			
 			onLoadTotalBytesComplete();
 		}
@@ -499,26 +499,26 @@ package jsion.loaders
 		
 		
 		
-		/**
-		 * 解密字节流，当未设置 cryptor 解密器属性时则返回参数对象。
-		 * @param bytes 加载的字节流
-		 */		
-		protected function decrypt(bytes:ByteArray):ByteArray
-		{
-			if(m_cryptor && bytes)
-			{
-				return m_cryptor.decry(bytes);
-			}
-			
-			return bytes;
-		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		/**
 		 * 网络加载完成时被调用
 		 */		
 		protected function onLoadCompleted():void
 		{
-			m_status = COMPLETE;
+			m_status = JsionLoader.COMPLETE;
 			
 			if(m_callback != null) m_callback(this, true);
 			
@@ -532,7 +532,7 @@ package jsion.loaders
 		 */		
 		protected function onLoadCacheComplete():void
 		{
-			m_status = COMPLETE;
+			m_status = JsionLoader.COMPLETE;
 			
 			if(m_callback != null) m_callback(this, true);
 			
@@ -546,7 +546,7 @@ package jsion.loaders
 		 */		
 		protected function onLoadErrored():void
 		{
-			m_status = ERROR;
+			m_status = JsionLoader.ERROR;
 			
 			if(m_callback != null) m_callback(this, false);
 			
@@ -568,7 +568,7 @@ package jsion.loaders
 		/**
 		 * 释放资源
 		 */		
-		override public function dispose():void
+		public function dispose():void
 		{
 			LoaderMgr.removeLoader(this);
 			
@@ -582,7 +582,7 @@ package jsion.loaders
 			
 			m_tag = null;
 			
-			super.dispose();
+			
 		}
 		
 		/**
@@ -608,7 +608,7 @@ package jsion.loaders
 		{
 			return m_urlKey;
 		}
-
+		
 		/**
 		 * 加载到的数据，在加载完成时有效。
 		 */		
@@ -616,7 +616,7 @@ package jsion.loaders
 		{
 			return m_data;
 		}
-
+		
 		/**
 		 * 额外保存的数据。
 		 */		
@@ -646,7 +646,7 @@ package jsion.loaders
 		{
 			return m_status;
 		}
-
+		
 		/**
 		 * 完整的资源路径，通过合并 root 和 file 两个路径获取。
 		 */		
@@ -682,21 +682,21 @@ package jsion.loaders
 		{
 			m_cacheInMemory = value;
 		}
-
-		/**
-		 * 字节流解密器。
-		 */		
-		public function get cryptor():ICryption
-		{
-			return m_cryptor;
-		}
 		
-		/** @private */
-		public function set cryptor(value:ICryption):void
-		{
-			m_cryptor = value;
-		}
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		/**
 		 * 要加载的总字节数
 		 */		
@@ -704,7 +704,7 @@ package jsion.loaders
 		{
 			return m_totalBytes;
 		}
-
+		
 		/**
 		 * 当前已加载的字节数
 		 */		
@@ -712,7 +712,7 @@ package jsion.loaders
 		{
 			return m_loadedBytes;
 		}
-
-
+		
+		
 	}
 }
