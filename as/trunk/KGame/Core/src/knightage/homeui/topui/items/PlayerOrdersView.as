@@ -90,6 +90,9 @@ package knightage.homeui.topui.items
 			DisposeUtil.free(m_numLabel);
 			m_numLabel = null;
 			
+			DisposeUtil.free(m_progress);
+			m_progress = null;
+			
 			super.dispose();
 		}
 	}

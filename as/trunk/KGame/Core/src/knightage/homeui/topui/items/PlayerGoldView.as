@@ -48,7 +48,7 @@ package knightage.homeui.topui.items
 			m_selectBtn.height = 35;
 			//m_selectBtn.enabled = false;
 			m_selectBtn.embedFonts = true;
-			m_selectBtn.textFormat = new TextFormat("MyFont1", 16, null, true);
+			m_selectBtn.textFormat = StaticRes.WaWaEmbedTextFormat16;
 			m_selectBtn.labelUpFilters = StaticRes.TextFilters8;
 			m_selectBtn.labelOverFilters = StaticRes.TextFilters8;
 			m_selectBtn.labelDownFilters = StaticRes.TextFilters8;

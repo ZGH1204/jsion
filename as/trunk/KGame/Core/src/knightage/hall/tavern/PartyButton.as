@@ -8,6 +8,7 @@ package knightage.hall.tavern
 	import jsion.display.IconLabelButton;
 	import jsion.display.Image;
 	import jsion.display.Label;
+	import jsion.utils.DisposeUtil;
 	
 	import knightage.StaticRes;
 	import knightage.display.KhakiButton;
@@ -18,7 +19,7 @@ package knightage.hall.tavern
 		
 		public static const GrandParty:int = 2;
 		
-		public static const PartyButtonWidth:int = 130;
+		public static const PartyButtonWidth:int = 110;
 		public static const PartyButtonHeight:int = 70;
 		
 		private var m_type:int;
@@ -110,6 +111,20 @@ package knightage.hall.tavern
 		public function setMoney(value:int):void
 		{
 			m_moneyLabel.text = value.toString();
+		}
+		
+		override public function dispose():void
+		{
+			DisposeUtil.free(m_iconContainer);
+			m_iconContainer = null;
+			
+			DisposeUtil.free(m_moneyIcon, false);
+			m_moneyIcon = null;
+			
+			DisposeUtil.free(m_moneyLabel);
+			m_moneyLabel = null;
+			
+			super.dispose();
 		}
 	}
 }

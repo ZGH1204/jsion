@@ -6,6 +6,7 @@ package knightage.homeui.bottomui
 	
 	import jsion.IDispose;
 	import jsion.display.Button;
+	import jsion.utils.DisposeUtil;
 	
 	import knightage.StaticRes;
 	import knightage.events.VisitEvent;
@@ -192,6 +193,34 @@ package knightage.homeui.bottomui
 		
 		public function dispose():void
 		{
+			VisitMgr.removeEventListener(VisitEvent.VISIT_FRIEND, __visitFriendHandler);
+			
+			DisposeUtil.free(m_background);
+			m_background = null;
+			
+			DisposeUtil.free(m_heroButton);
+			m_heroButton = null;
+			
+			DisposeUtil.free(m_expeditionButton);
+			m_expeditionButton = null;
+			
+			DisposeUtil.free(m_embattleButton);
+			m_embattleButton = null;
+			
+			DisposeUtil.free(m_strengthenButton);
+			m_strengthenButton = null;
+			
+			DisposeUtil.free(m_bagButton);
+			m_bagButton = null;
+			
+			DisposeUtil.free(m_mallButton);
+			m_mallButton = null;
+			
+			DisposeUtil.free(m_taskButton);
+			m_taskButton = null;
+			
+			DisposeUtil.free(m_relationView);
+			m_relationView = null;
 		}
 	}
 }

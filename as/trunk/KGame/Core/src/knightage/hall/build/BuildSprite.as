@@ -248,8 +248,18 @@ package knightage.hall.build
 		
 		public function dispose():void
 		{
+			PlayerMgr.removeEventListener(PlayerEvent.BUILD_UPGRADE, __buildChangeHandler);
+			
 			DisposeUtil.free(m_buildView);
 			m_buildView = null;
+			
+			DisposeUtil.free(m_createButton);
+			m_createButton = null;
+			
+			DisposeUtil.free(m_upgradeButton);
+			m_upgradeButton = null;
+			
+			m_player = null;
 		}
 	}
 }
