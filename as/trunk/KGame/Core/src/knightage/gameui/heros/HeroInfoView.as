@@ -3,15 +3,21 @@ package knightage.gameui.heros
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	import flash.text.AntiAliasType;
 	
 	import jsion.IDispose;
 	import jsion.display.Image;
+	import jsion.display.Label;
 	import jsion.display.ProgressBar;
+	import jsion.utils.DisposeUtil;
 	
 	import knightage.StaticRes;
+	import knightage.display.BlueButton;
 	import knightage.display.KhakiButton;
+	import knightage.display.RedButton;
 	import knightage.homeui.LevelView;
+	import knightage.mgrs.MsgTipMgr;
 	import knightage.player.goods.EquipType;
 	
 	public class HeroInfoView extends Sprite implements IDispose
@@ -40,6 +46,13 @@ package knightage.gameui.heros
 		
 		
 		
+		private var m_attackLabel:Label;
+		
+		private var m_defenseLabel:Label;
+		
+		private var m_critLabel:Label;
+		
+		private var m_soilderLabel:Label;
 		
 		private var m_propBackground:DisplayObject;
 		
@@ -47,7 +60,9 @@ package knightage.gameui.heros
 		
 		private var m_tabEquipButton:KhakiButton;
 		
+		private var m_cultivateButton:BlueButton;
 		
+		private var m_fireButton:RedButton;
 		
 		public function HeroInfoView()
 		{
@@ -106,8 +121,51 @@ package knightage.gameui.heros
 			
 			
 			
+			
+			
+			
 			m_propBackground = new Bitmap(new HeroPropAsset(0, 0));
 			addChild(m_propBackground);
+			
+			m_attackLabel = new Label();
+			m_attackLabel.beginChanges();
+			m_attackLabel.text = "200";
+			m_attackLabel.width = 40;
+			m_attackLabel.hAlign = Label.LEFT;
+			m_attackLabel.textFormat = StaticRes.TextFormat14;
+			m_attackLabel.commitChanges();
+			addChild(m_attackLabel);
+			
+			m_defenseLabel = new Label();
+			m_defenseLabel.beginChanges();
+			m_defenseLabel.text = "200";
+			m_defenseLabel.width = 40;
+			m_defenseLabel.hAlign = Label.LEFT;
+			m_defenseLabel.textFormat = StaticRes.TextFormat14;
+			m_defenseLabel.commitChanges();
+			addChild(m_defenseLabel);
+			
+			m_critLabel = new Label();
+			m_critLabel.beginChanges();
+			m_critLabel.text = "000";
+			m_critLabel.width = 40;
+			m_critLabel.hAlign = Label.LEFT;
+			m_critLabel.textFormat = StaticRes.TextFormat14;
+			m_critLabel.commitChanges();
+			addChild(m_critLabel);
+			
+			m_soilderLabel = new Label();
+			m_soilderLabel.beginChanges();
+			m_soilderLabel.text = "000";
+			m_soilderLabel.width = 40;
+			m_soilderLabel.hAlign = Label.LEFT;
+			m_soilderLabel.textFormat = StaticRes.TextFormat14;
+			m_soilderLabel.commitChanges();
+			addChild(m_soilderLabel);
+			
+			
+			
+			
 			
 			
 			
@@ -127,7 +185,33 @@ package knightage.gameui.heros
 			
 			
 			
+			m_cultivateButton = new BlueButton("培养");
+			m_cultivateButton.beginChanges();
+			m_cultivateButton.embedFonts = true;
+			m_cultivateButton.textFormat = StaticRes.HaiBaoEmbedTextFormat20;
+			m_cultivateButton.labelUpFilters = StaticRes.TextFilters8;
+			m_cultivateButton.labelOverFilters = StaticRes.TextFilters8;
+			m_cultivateButton.labelDownFilters = StaticRes.TextFilters8;
+			m_cultivateButton.vOffset = -2;
+			m_cultivateButton.width = 85;
+			m_cultivateButton.height = 46;
+			m_cultivateButton.commitChanges();
+			addChild(m_cultivateButton);
 			
+			
+			
+			m_fireButton = new RedButton("解雇");
+			m_fireButton.beginChanges();
+			m_fireButton.embedFonts = true;
+			m_fireButton.textFormat = StaticRes.HaiBaoEmbedTextFormat20;
+			m_fireButton.labelUpFilters = StaticRes.TextFilters8;
+			m_fireButton.labelOverFilters = StaticRes.TextFilters8;
+			m_fireButton.labelDownFilters = StaticRes.TextFilters8;
+			m_fireButton.vOffset = -2;
+			m_fireButton.width = 85;
+			m_fireButton.height = 46;
+			m_fireButton.commitChanges();
+			addChild(m_fireButton);
 			
 			
 			
@@ -160,12 +244,59 @@ package knightage.gameui.heros
 			
 			m_propBackground.y = m_armorItem.y + m_armorItem.height + 3;
 			
-			m_tabEquipButton.x = 8;
+			m_attackLabel.x = 40;
+			m_attackLabel.y = m_propBackground.y + (m_propBackground.height - m_attackLabel.height) / 2;
+			m_defenseLabel.x = 108;
+			m_defenseLabel.y = m_propBackground.y + (m_propBackground.height - m_defenseLabel.height) / 2;
+			m_critLabel.x = 185;
+			m_critLabel.y = m_propBackground.y + (m_propBackground.height - m_critLabel.height) / 2;
+			m_soilderLabel.x = 255;
+			m_soilderLabel.y = m_propBackground.y + (m_propBackground.height - m_soilderLabel.height) / 2;
+			
+			m_tabEquipButton.x = 2;
 			m_tabEquipButton.y = m_propBackground.y + m_propBackground.height + 6;
+			
+			m_cultivateButton.x = m_tabEquipButton.x + m_tabEquipButton.width + 6;
+			m_cultivateButton.y = m_tabEquipButton.y;
+			
+			m_fireButton.x = m_cultivateButton.x + m_cultivateButton.width + 6;
+			m_fireButton.y = m_cultivateButton.y;
+			
+			
+			
+			
+			m_tabEquipButton.addEventListener(MouseEvent.CLICK, __tabEquipClickHandler);
+			m_cultivateButton.addEventListener(MouseEvent.CLICK, __cultivateClickHandler);
+			m_fireButton.addEventListener(MouseEvent.CLICK, __fireClickHandler);
+		}
+		
+		private function __tabEquipClickHandler(e:MouseEvent):void
+		{
+			MsgTipMgr.show("更换装备功能开发中...");
+		}
+		
+		private function __cultivateClickHandler(e:MouseEvent):void
+		{
+			MsgTipMgr.show("培养功能开发中...");
+		}
+		
+		private function __fireClickHandler(e:MouseEvent):void
+		{
+			MsgTipMgr.show("解雇功能开发中...");
 		}
 		
 		public function dispose():void
 		{
+			DisposeUtil.free(m_tabEquipButton);
+			m_tabEquipButton = null;
+			
+			DisposeUtil.free(m_cultivateButton);
+			m_cultivateButton = null;
+			
+			DisposeUtil.free(m_fireButton);
+			m_fireButton = null;
+			
+			DisposeUtil.freeChildren(this);
 		}
 	}
 }
