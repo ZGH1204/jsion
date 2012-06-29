@@ -68,7 +68,7 @@ package jsion.utils
 
 			while(doc.numChildren > 0)
 			{
-				var child:DisplayObject = doc.getChildAt(0);
+				var child:DisplayObject = doc.getChildAt(doc.numChildren - 1);
 				free(child, freeBmd);
 			}
 		}
