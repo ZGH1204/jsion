@@ -1,4 +1,4 @@
-package knightage.net.handlers.hero
+package knightage.net.handlers.tavern
 {
 	import core.net.GamePacket;
 	import core.net.IPacketHandler;

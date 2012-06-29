@@ -1,4 +1,4 @@
-package knightage.net.packets.hero
+package knightage.net.packets.tavern
 {
 	import knightage.net.LogicPacket;
 	

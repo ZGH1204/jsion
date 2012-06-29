@@ -99,6 +99,16 @@ package knightage.player
 		public var lastHero3TID:int;
 		
 		/**
+		 * 声望经验
+		 */		
+		public var prestige:int;
+		
+		/**
+		 * 声望等级
+		 */		
+		public var prestigeLv:int;
+		
+		/**
 		 * 英雄Mode
 		 */		
 		public var heroMode:HeroMode;

@@ -72,6 +72,11 @@ package
 		public static const RefreshTavernHeros:int = 1017;
 		
 		
+		/**
+		 * 举行派对
+		 */		
+		public static const Party:int = 1019;
+		
 		
 		
 		
