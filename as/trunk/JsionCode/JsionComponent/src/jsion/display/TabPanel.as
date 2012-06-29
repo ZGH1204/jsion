@@ -12,6 +12,33 @@ package jsion.display
 	import jsion.utils.DisposeUtil;
 	
 	/**
+	 * 面板被创建时发生,事件数据为被创建的面板对象引用。
+	 * @eventType jsion.events.DisplayEvent
+	 * @langversion 3.0
+	 * @playerversion Flash 9
+	 * @playerversion AIR 1.1
+	 */	
+	[Event(name="panelCreated", type="jsion.events.DisplayEvent")]
+	
+	/**
+	 * 当开启 autoFreePanel 属性，在上一个面板被释放前发生，事件数据为即将被释放的面板对象引用。
+	 * @eventType jsion.events.DisplayEvent
+	 * @langversion 3.0
+	 * @playerversion Flash 9
+	 * @playerversion AIR 1.1
+	 */	
+	[Event(name="panelFree", type="jsion.events.DisplayEvent")]
+	
+	/**
+	 * 当前选中的标签面板变更时发生，事件数据为变更后的面板对象引用。
+	 * @eventType jsion.events.DisplayEvent
+	 * @langversion 3.0
+	 * @playerversion Flash 9
+	 * @playerversion AIR 1.1
+	 */	
+	[Event(name="panelActiveChanged", type="jsion.events.DisplayEvent")]
+	
+	/**
 	 * 标签面板组。
 	 * 当标签按钮在上面，靠左对齐时，可以不设置宽度和高度；其他的都需要设置其宽度和高度。
 	 * 支持 jsion.display.ITabPanel 回调接口。
@@ -181,6 +208,8 @@ package jsion.display
 			if(m_panels[m_selectedIndex] == null)
 			{
 				m_panels[m_selectedIndex] = new m_paneClasses[index]();
+				
+				dispatchEvent(new DisplayEvent(DisplayEvent.PANEL_CREATED, m_panels[m_selectedIndex]));
 			}
 			
 			if(m_curPane)
@@ -195,6 +224,8 @@ package jsion.display
 					{
 						m_panels[index] = null;
 					}
+					
+					dispatchEvent(new DisplayEvent(DisplayEvent.PANEL_FREE, m_curPane));
 					
 					DisposeUtil.free(m_curPane);
 				}
@@ -212,6 +243,8 @@ package jsion.display
 				
 				m_paneContainer.addChild(m_curPane);
 			}
+			
+			dispatchEvent(new DisplayEvent(DisplayEvent.PANEL_ACTIVE_CHANGED, m_curPane));
 		}
 		
 		/**
@@ -538,6 +571,38 @@ package jsion.display
 				
 				onPropertiesChanged(PANEOFFSET);
 			}
+		}
+		
+		/**
+		 * 当前激活的标签索引
+		 */		
+		public function get activedIndex():int
+		{
+			return m_group.selectedIndex;
+		}
+		
+		/**
+		 * 当前激活的标签按钮对象
+		 */		
+		public function get activedTab():ToggleButton
+		{
+			return m_group.selected;
+		}
+		
+		/**
+		 * 当前激活的标签面板
+		 */		
+		public function get activedPanel():DisplayObject
+		{
+			return m_curPane;
+		}
+		
+		/**
+		 * 标签按钮数组，此数组为克隆数组。
+		 */		
+		public function get tabButtons():Array
+		{
+			return ArrayUtil.clone(m_buttons);
 		}
 		
 		/**
