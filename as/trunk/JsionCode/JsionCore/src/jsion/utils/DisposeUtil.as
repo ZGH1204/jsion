@@ -25,18 +25,19 @@ package jsion.utils
 				IDispose(obj).dispose();
 				disposeDisplayObject(obj as DisplayObject);
 			}
-			else if(obj is Bitmap)
+			else if(obj.hasOwnProperty("dispose"))
+			{
+				obj["dispose"]();
+				disposeDisplayObject(obj as DisplayObject);
+			}
+			
+			if(obj is Bitmap)
 			{
 				disposeBitMap(obj as Bitmap, freeBmd);
 			}
 			else if(obj is BitmapData)
 			{
 				disposeBitMapData(obj as BitmapData, freeBmd);
-			}
-			else if(obj.hasOwnProperty("dispose"))
-			{
-				obj["dispose"]();
-				disposeDisplayObject(obj as DisplayObject);
 			}
 			else if(obj is DisplayObject)
 			{
