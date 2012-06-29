@@ -16,6 +16,8 @@ package knightage.homeui
 		
 		public static const BOTTOM:int = 2;
 		
+		public static const HERO:int = 3;
+		
 		private var m_levelBackground:DisplayObject;
 		
 		private var m_levelLabel:Label;
@@ -49,11 +51,17 @@ package knightage.homeui
 				m_levelLabel.textColor = StaticRes.WhiteColor;
 				m_levelLabel.textFormat = StaticRes.TextFormat15;
 			}
-			else
+			else if(m_type == BOTTOM)
 			{
 				m_levelLabel.filters = StaticRes.TextFilters4;
 				m_levelLabel.textColor = StaticRes.WhiteColor;
 				m_levelLabel.textFormat = StaticRes.TextFormat15;
+			}
+			else
+			{
+				m_levelLabel.filters = StaticRes.TextFilters4;
+				m_levelLabel.textColor = StaticRes.WhiteColor;
+				m_levelLabel.textFormat = StaticRes.HaiBaoEmbedTextFormat15;
 			}
 			m_levelLabel.commitChanges();
 			addChild(m_levelLabel);

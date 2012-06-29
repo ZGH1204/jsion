@@ -1,14 +1,38 @@
 package knightage
 {
 	import flash.filters.GlowFilter;
+	import flash.text.StyleSheet;
 	import flash.text.TextFormat;
+	
+	import jsion.Insets;
 
 	public class StaticRes
 	{
 		/**
-		 * 按钮点击时的音效
+		 * 公共按钮点击时的音效
 		 */		
 		public static const ButtonClickSoundID:String = "008";
+		
+		/**
+		 * 公共按钮默认CSS样式表
+		 */		
+		public static const ButtonDefaultStyle:StyleSheet = new StyleSheet();
+		
+		/**
+		 * 公共按钮文本默认滤镜
+		 */		
+		public static const ButtonDefaultFilters:Array = [new GlowFilter(0x412419, 1, 4, 4, 8, 1)];
+		
+		/**
+		 * 公共按钮文本默认样式
+		 */		
+		public static const ButtonDefaultTextFormat:TextFormat = new TextFormat(null, 15, null, true);
+		
+		
+		
+		
+		
+		
 		
 		/**
 		 * TopUI等级背景图标
@@ -104,7 +128,7 @@ package knightage
 		public static const TextFilters8:Array = [new GlowFilter(0x412419, 1, 8, 8, 10, 1)];
 		
 		/**
-		 * 嵌入字体文本样式(字体大小：22，加粗。)
+		 * 嵌入字体文本样式(字体大小：16，加粗。)
 		 */		
 		public static const WaWaEmbedTextFormat16:TextFormat = new TextFormat("MyFont1", 16, null, true);
 		
@@ -114,6 +138,11 @@ package knightage
 		public static const WaWaEmbedTextFormat22:TextFormat = new TextFormat("MyFont1", 22, null, true);
 		
 		
+		
+		/**
+		 * 嵌入字体文本样式(字体大小：15。)
+		 */		
+		public static const HaiBaoEmbedTextFormat15:TextFormat = new TextFormat("MyFont2", 15, null);
 		
 		/**
 		 * 嵌入字体文本样式(字体大小：20。)
@@ -128,5 +157,19 @@ package knightage
 		 */		
 		public static const TavernHeroInfoBackgroundBMD:TavernHeroPropAsset = new TavernHeroPropAsset(0, 0);
 		
+		
+		/**
+		 * 英雄界面棕色背景图片资源
+		 */		
+		public static const HeroBackgroundBMD:HeroBackgroundAsset = new HeroBackgroundAsset(0, 0);
+		/**
+		 * 英雄界面棕色背景图片九宫格划分参数
+		 */		
+		public static const HeroBackgroundInsets:Insets = new Insets(20, 20, 20, 20);
+		
+		/**
+		 * 装备背景框
+		 */		
+		public static const EquipItemBackgroundBMD:EquipItemBackgroundAsset = new EquipItemBackgroundAsset(0, 0);
 	}
 }

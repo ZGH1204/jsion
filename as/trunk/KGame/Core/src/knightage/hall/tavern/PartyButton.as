@@ -95,7 +95,7 @@ package knightage.hall.tavern
 			antiAliasType = AntiAliasType.ADVANCED;
 			thickness = 200;
 			sharpness = 100;
-			labelColor = KhakiButton.LabelColor;
+			labelColor = StaticRes.WhiteColor;
 			textFormat = StaticRes.WaWaEmbedTextFormat22;
 			labelUpFilters = StaticRes.TextFilters8;
 			labelOverFilters = StaticRes.TextFilters8;

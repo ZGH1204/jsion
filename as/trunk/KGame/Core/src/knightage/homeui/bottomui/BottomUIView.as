@@ -7,9 +7,11 @@ package knightage.homeui.bottomui
 	import jsion.IDispose;
 	import jsion.display.Button;
 	import jsion.utils.DisposeUtil;
+	import jsion.utils.InstanceUtil;
 	
 	import knightage.StaticRes;
 	import knightage.events.VisitEvent;
+	import knightage.gameui.heros.HeroUIView;
 	import knightage.mgrs.MsgTipMgr;
 	import knightage.mgrs.VisitMgr;
 	
@@ -167,6 +169,7 @@ package knightage.homeui.bottomui
 			{
 				case m_heroButton:
 					btnName = "英雄";
+					InstanceUtil.createSingletion(HeroUIView).show();
 					break;
 				case m_expeditionButton:
 					btnName = "出征";

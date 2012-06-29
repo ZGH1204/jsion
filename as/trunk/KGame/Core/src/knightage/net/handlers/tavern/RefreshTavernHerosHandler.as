@@ -18,8 +18,6 @@ package knightage.net.handlers.tavern
 		
 		public function handle(pkg:GamePacket):void
 		{
-			pkg.readInt();
-			
 			var tid1:int = pkg.readInt();
 			var tid2:int = pkg.readInt();
 			var tid3:int = pkg.readInt();
