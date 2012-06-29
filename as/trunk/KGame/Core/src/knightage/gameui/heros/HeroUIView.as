@@ -3,6 +3,7 @@ package knightage.gameui.heros
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	
+	import jsion.utils.DisposeUtil;
 	import jsion.utils.InstanceUtil;
 	
 	import knightage.display.Frame;
@@ -48,6 +49,11 @@ package knightage.gameui.heros
 		override public function dispose():void
 		{
 			InstanceUtil.removeSingletion(HeroUIView);
+			
+			DisposeUtil.free(m_titleIcon);
+			m_titleIcon = null;
+			
+			m_heroInfoView = null;
 			
 			super.dispose();
 		}
