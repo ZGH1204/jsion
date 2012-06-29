@@ -8,23 +8,16 @@ package knightage
 
 	public class GameUtil
 	{
-		
-		
-		
 		/**
-		 * 获取玩家等级
+		 * 获取玩家等级(即城堡等级)，未建造时返回 0。
 		 */		
 		public static function getPlayerLv(player:GamePlayer):int
 		{
-			var temp:BuildTemplate = getBuildTemplate(player, BuildType.Castle);
-			
-			if(temp) return temp.Lv;
-			
-			return 0;
+			return getBuildLv(player, BuildType.Castle);
 		}
 		
 		/**
-		 * 获取指定建筑类型一级对应的建筑模板
+		 * 获取指定建筑类型对应的一级建筑模板
 		 * @param type
 		 * @return 
 		 * 
@@ -37,7 +30,7 @@ package knightage
 		}
 		
 		/**
-		 * 获取当前玩家指定建筑类型下一级的建筑模板
+		 * 获取当前玩家指定建筑类型的下一级建筑模板
 		 * @param type
 		 * @return 
 		 * 
@@ -56,7 +49,7 @@ package knightage
 		}
 		
 		/**
-		 * 获取当前玩家城堡升下一级所需的经验值
+		 * 获取当前玩家城堡升下一级的所需经验值
 		 * @param type
 		 * @return 
 		 * 
@@ -78,6 +71,22 @@ package knightage
 			}
 			
 			return int.MAX_VALUE;
+		}
+		
+		/**
+		 * 获取指定建筑等级,不存在时返回 0。
+		 * @param player
+		 * @param type
+		 * @return 
+		 * 
+		 */		
+		public static function getBuildLv(player:GamePlayer, type:int):int
+		{
+			var build:BuildTemplate = getBuildTemplate(player, type);
+			
+			if(build) return build.Lv;
+			
+			return 0;
 		}
 		
 		/**
@@ -200,6 +209,42 @@ package knightage
 			var tid:int = StaticConfig.DefaultSoilderTypeList[category];
 			
 			return TemplateMgr.findSoilderTemplate(tid);
+		}
+		
+		/**
+		 * 获取玩家当前酒馆等级下举行派对的价格
+		 * @param player
+		 * @return 
+		 * 
+		 */		
+		public static function getPartyPrice(player:GamePlayer):int
+		{
+			var tavernLv:int = GameUtil.getBuildLv(player, BuildType.Tavern);
+			
+			return StaticConfig.PartyPrice[tavernLv];
+		}
+		
+		/**
+		 * 获取玩家当前酒馆等级下豪华派对的价格
+		 * @param player
+		 * @return 
+		 * 
+		 */		
+		public static function getGrandPartyPrice(player:GamePlayer):int
+		{
+			var tavernLv:int = GameUtil.getBuildLv(player, BuildType.Tavern);
+			
+			return StaticConfig.GrandPartyPrice[tavernLv];
+		}
+		
+		/**
+		 * 获取玩家当前声望升下一级所需要的经验值
+		 * @param player
+		 * 
+		 */		
+		public static function getPrestigeUpgradeExp(player:GamePlayer):int
+		{
+			return StaticConfig.PrestigeUpgradeExp[player.prestigeLv];
 		}
 	}
 }

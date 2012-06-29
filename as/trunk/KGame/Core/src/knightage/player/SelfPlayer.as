@@ -83,16 +83,6 @@ package knightage.player
 		public var currentTeam:int;
 		
 		/**
-		 * 声望经验
-		 */		
-		public var prestige:int;
-		
-		/**
-		 * 声望等级
-		 */		
-		public var prestigeLv:int;
-		
-		/**
 		 * 军团信息(军团编号,军团等级,英雄ID,英雄ID......|军团编号,军团等级,英雄ID,英雄ID......)
 		 */		
 		public var teamStr:String;

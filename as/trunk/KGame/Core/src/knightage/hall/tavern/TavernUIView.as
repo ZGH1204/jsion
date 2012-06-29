@@ -15,13 +15,16 @@ package knightage.hall.tavern
 	import jsion.utils.InstanceUtil;
 	import jsion.utils.JUtil;
 	
+	import knightage.GameUtil;
 	import knightage.display.Frame;
 	import knightage.events.VisitEvent;
+	import knightage.hall.build.BuildType;
 	import knightage.mgrs.DateMgr;
 	import knightage.mgrs.MsgTipMgr;
 	import knightage.mgrs.TemplateMgr;
 	import knightage.mgrs.VisitMgr;
-	import knightage.net.packets.hero.RefreshTavernHerosPacket;
+	import knightage.net.packets.tavern.PartyPacket;
+	import knightage.net.packets.tavern.RefreshTavernHerosPacket;
 	import knightage.player.GamePlayer;
 	import knightage.templates.HeroTemplate;
 	
@@ -152,13 +155,13 @@ package knightage.hall.tavern
 			m_partyButton.x = 247;
 			m_partyButton.y = 388;
 			addToContent(m_partyButton);
-			m_partyButton.setMoney(1000);
+			m_partyButton.setMoney(0);
 			
 			m_grandPartyButton = new PartyButton(PartyButton.GrandParty);
 			m_grandPartyButton.x = m_partyButton.x + m_partyButton.width + 3;
 			m_grandPartyButton.y = m_partyButton.y;
 			addToContent(m_grandPartyButton);
-			m_grandPartyButton.setMoney(30);
+			m_grandPartyButton.setMoney(0);
 			
 			
 			
@@ -185,12 +188,16 @@ package knightage.hall.tavern
 		
 		private function __treasureChestClickHandler(e:MouseEvent):void
 		{
-			MsgTipMgr.show("宝箱派对开发中...");
+			MsgTipMgr.show("宝箱功能开发中...");
 		}
 		
 		private function __partyClickHandler(e:MouseEvent):void
 		{
 			MsgTipMgr.show("举行派对开发中...");
+			
+			var pkg:PartyPacket = new PartyPacket();
+			
+			//SocketProxy.sendTCP(pkg);
 		}
 		
 		private function __grandPartyClickHandler(e:MouseEvent):void
@@ -301,9 +308,17 @@ package knightage.hall.tavern
 				m_loader3 = null;
 			}
 			
+			var partyPrice:int = GameUtil.getPartyPrice(m_player);
+			m_partyButton.setMoney(partyPrice);
 			
+			var grandPrice:int = GameUtil.getGrandPartyPrice(m_player);
+			m_grandPartyButton.setMoney(grandPrice);
 			
+			m_progress.maxValue = GameUtil.getPrestigeUpgradeExp(m_player);
+			m_progress.value = m_player.prestige;
 			
+			//m_partyButton.enabled = VisitMgr.isSelf;
+			//m_grandPartyButton.enabled = VisitMgr.isSelf;
 		}
 		
 		private function bustLoadCallback(loader:DisplayLoader, successed:Boolean):void
