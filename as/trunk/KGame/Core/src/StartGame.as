@@ -130,7 +130,7 @@ package
 		//初始化背景音乐
 		MusicMgr.setup(config);
 		MusicMgr.volume = 70;
-		MusicMgr.playMusic();
+		//MusicMgr.playMusic();
 		
 		
 		//每秒执行管理

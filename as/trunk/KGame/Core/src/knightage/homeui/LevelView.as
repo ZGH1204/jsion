@@ -81,7 +81,7 @@ package knightage.homeui
 			DisposeUtil.free(m_levelBackground, false);
 			m_levelBackground = null;
 			
-			DisposeUtil.free(m_levelLabel, false);
+			DisposeUtil.free(m_levelLabel);
 			m_levelLabel = null;
 		}
 	}

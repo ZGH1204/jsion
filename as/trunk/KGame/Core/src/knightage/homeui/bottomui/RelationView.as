@@ -8,6 +8,7 @@ package knightage.homeui.bottomui
 	import jsion.IDispose;
 	import jsion.display.IconButton;
 	import jsion.display.IconLabelButton;
+	import jsion.utils.DisposeUtil;
 	
 	import knightage.StaticRes;
 	
@@ -108,6 +109,30 @@ package knightage.homeui.bottomui
 		
 		public function dispose():void
 		{
+			DisposeUtil.free(m_friendIcon);
+			m_friendIcon = null;
+			
+			DisposeUtil.free(m_friendButton);
+			m_friendButton = null;
+			
+			
+			DisposeUtil.free(m_enemyIcon);
+			m_enemyIcon = null;
+			
+			DisposeUtil.free(m_enemyButton);
+			m_enemyButton = null;
+			
+			
+			DisposeUtil.free(m_familyIcon);
+			m_familyIcon = null;
+			
+			DisposeUtil.free(m_familyButton);
+			m_familyButton = null;
+			
+			
+			
+			DisposeUtil.free(m_listView);
+			m_listView = null;
 		}
 	}
 }

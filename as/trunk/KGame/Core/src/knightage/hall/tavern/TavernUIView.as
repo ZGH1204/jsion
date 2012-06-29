@@ -8,6 +8,7 @@ package knightage.hall.tavern
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	
+	import jsion.display.Button;
 	import jsion.display.ProgressBar;
 	import jsion.loaders.DisplayLoader;
 	import jsion.utils.DisposeUtil;
@@ -26,9 +27,22 @@ package knightage.hall.tavern
 	
 	public class TavernUIView extends Frame
 	{
+		private static const Point1:Point = new Point(172, 168);
+		private static const Point2:Point = new Point(329, 168);
+		private static const Point3:Point = new Point(473, 168);
+		
+		
 		private var m_titleIcon:DisplayObject;
 		
 		private var m_tavernBackground:DisplayObject;
+		
+		
+		
+		private var m_loader1:DisplayLoader;
+		private var m_loader2:DisplayLoader;
+		private var m_loader3:DisplayLoader;
+		
+		
 		
 		private var m_item1:TavernHeroInfoView;
 		
@@ -38,11 +52,7 @@ package knightage.hall.tavern
 		
 		
 		
-		private var m_loader1:DisplayLoader;
-		private var m_loader2:DisplayLoader;
-		private var m_loader3:DisplayLoader;
-		
-		
+		private var m_treasureChestsButton:Button;
 		
 		private var m_partyButton:PartyButton;
 		
@@ -126,8 +136,20 @@ package knightage.hall.tavern
 			
 			
 			
+			m_treasureChestsButton = new Button();
+			m_treasureChestsButton.beginChanges();
+			m_treasureChestsButton.x = 200;
+			m_treasureChestsButton.y = 410;
+			m_treasureChestsButton.freeBMD = true;
+			m_treasureChestsButton.upImage = new Bitmap(new TreasureChestsAsset(0, 0));
+			m_treasureChestsButton.commitChanges();
+			addToContent(m_treasureChestsButton);
+			
+			
+			
+			
 			m_partyButton = new PartyButton(PartyButton.Party);
-			m_partyButton.x = 205;
+			m_partyButton.x = 247;
 			m_partyButton.y = 388;
 			addToContent(m_partyButton);
 			m_partyButton.setMoney(1000);
@@ -144,7 +166,7 @@ package knightage.hall.tavern
 			
 			
 			
-			
+			m_treasureChestsButton.addEventListener(MouseEvent.CLICK, __treasureChestClickHandler);
 			
 			m_partyButton.addEventListener(MouseEvent.CLICK, __partyClickHandler);
 			
@@ -159,6 +181,11 @@ package knightage.hall.tavern
 			
 			
 			refreshData();
+		}
+		
+		private function __treasureChestClickHandler(e:MouseEvent):void
+		{
+			MsgTipMgr.show("宝箱派对开发中...");
 		}
 		
 		private function __partyClickHandler(e:MouseEvent):void
@@ -224,7 +251,7 @@ package knightage.hall.tavern
 			}
 			else
 			{
-				seconds = int(maxSeconds - timeSpan);
+				seconds = maxSeconds - int(timeSpan);
 			}
 			
 			m_countDown.setSeconds(seconds);
@@ -279,11 +306,6 @@ package knightage.hall.tavern
 			
 		}
 		
-		
-		private static const Point1:Point = new Point(172, 168);
-		private static const Point2:Point = new Point(329, 168);
-		private static const Point3:Point = new Point(473, 168);
-		
 		private function bustLoadCallback(loader:DisplayLoader, successed:Boolean):void
 		{
 			switch(loader)
@@ -315,6 +337,9 @@ package knightage.hall.tavern
 			DisposeUtil.free(m_titleIcon);
 			m_titleIcon = null;
 			
+			DisposeUtil.free(m_tavernBackground);
+			m_tavernBackground = null;
+			
 			DisposeUtil.free(m_item1);
 			m_item1 = null;
 			
@@ -323,6 +348,32 @@ package knightage.hall.tavern
 			
 			DisposeUtil.free(m_item3);
 			m_item3 = null;
+			
+			DisposeUtil.free(m_loader1);
+			m_loader1 = null;
+			
+			DisposeUtil.free(m_loader2);
+			m_loader2 = null;
+			
+			DisposeUtil.free(m_loader3);
+			m_loader3 = null;
+			
+			DisposeUtil.free(m_treasureChestsButton);
+			m_treasureChestsButton = null;
+			
+			DisposeUtil.free(m_partyButton);
+			m_partyButton = null;
+			
+			DisposeUtil.free(m_grandPartyButton);
+			m_grandPartyButton = null;
+			
+			DisposeUtil.free(m_progress);
+			m_progress = null;
+			
+			DisposeUtil.free(m_countDown);
+			m_countDown = null;
+			
+			m_player = null;
 			
 			super.dispose();
 		}

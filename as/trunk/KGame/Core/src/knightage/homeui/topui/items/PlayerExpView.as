@@ -64,7 +64,7 @@ package knightage.homeui.topui.items
 			DisposeUtil.free(m_icon);
 			m_icon = null;
 			
-			DisposeUtil.free(m_progress, false);
+			DisposeUtil.free(m_progress);
 			m_progress = null;
 			
 			super.dispose();

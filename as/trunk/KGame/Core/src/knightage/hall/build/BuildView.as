@@ -99,6 +99,8 @@ package knightage.hall.build
 			DisposeUtil.free(m_loader);
 			m_loader = null;
 			
+			m_player = null;
+			
 			super.dispose();
 		}
 	}

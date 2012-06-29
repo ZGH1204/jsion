@@ -230,8 +230,7 @@ package knightage.hall.tavern
 		
 		public function dispose():void
 		{
-			DisposeUtil.free(m_background, false);
-			m_background = null;
+			DisposeUtil.freeChildren(this, false);
 		}
 	}
 }

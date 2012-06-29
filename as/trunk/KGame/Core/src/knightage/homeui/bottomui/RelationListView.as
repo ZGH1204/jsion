@@ -7,6 +7,7 @@ package knightage.homeui.bottomui
 	import jsion.display.Button;
 	import jsion.display.IconButton;
 	import jsion.utils.DepthUtil;
+	import jsion.utils.DisposeUtil;
 	
 	public class RelationListView extends Sprite implements IDispose
 	{
@@ -111,6 +112,26 @@ package knightage.homeui.bottomui
 		
 		public function dispose():void
 		{
+			DisposeUtil.free(m_leftButton);
+			m_leftButton = null;
+			
+			DisposeUtil.free(m_lastLeftButton);
+			m_lastLeftButton = null;
+			
+			DisposeUtil.free(m_rightButton);
+			m_rightButton = null;
+			
+			DisposeUtil.free(m_lastRightButton);
+			m_lastRightButton = null;
+			
+			DisposeUtil.free(m_inviteButton);
+			m_inviteButton = null;
+			
+			DisposeUtil.free(m_buttons);
+			m_buttons = null;
+			
+			DisposeUtil.free(m_items);
+			m_items = null;
 		}
 	}
 }

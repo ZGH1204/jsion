@@ -2,11 +2,13 @@ package knightage.homeui.topui
 {
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	
 	import jsion.IDispose;
 	import jsion.display.Button;
 	import jsion.utils.DisposeUtil;
 	
+	import knightage.StaticRes;
 	import knightage.events.VisitEvent;
 	import knightage.homeui.topui.items.PlayerCoinView;
 	import knightage.homeui.topui.items.PlayerExpView;
@@ -14,6 +16,7 @@ package knightage.homeui.topui
 	import knightage.homeui.topui.items.PlayerGoldView;
 	import knightage.homeui.topui.items.PlayerOrdersView;
 	import knightage.homeui.topui.items.PlayerSoliderView;
+	import knightage.mgrs.MsgTipMgr;
 	import knightage.mgrs.VisitMgr;
 	
 	public class TopUIView extends Sprite implements IDispose
@@ -84,6 +87,7 @@ package knightage.homeui.topui
 			
 			
 			m_messageButton = new Button();
+			m_messageButton.clickSoundID = StaticRes.ButtonClickSoundID;
 			m_messageButton.freeBMD = true;
 			m_messageButton.upImage = new Bitmap(new MessageIcon(0, 0));
 			addChild(m_messageButton);
@@ -91,6 +95,7 @@ package knightage.homeui.topui
 			m_messageButton.y = 50;
 			
 			m_noticeButton = new Button();
+			m_noticeButton.clickSoundID = StaticRes.ButtonClickSoundID;
 			m_noticeButton.freeBMD = true;
 			m_noticeButton.upImage = new Bitmap(new NoticeIcon(0, 0));
 			addChild(m_noticeButton);
@@ -98,6 +103,7 @@ package knightage.homeui.topui
 			m_noticeButton.y = m_messageButton.y;
 			
 			m_giftButton = new Button();
+			m_giftButton.clickSoundID = StaticRes.ButtonClickSoundID;
 			m_giftButton.freeBMD = true;
 			m_giftButton.upImage = new Bitmap(new GiftIcon(0, 0));
 			addChild(m_giftButton);
@@ -105,7 +111,30 @@ package knightage.homeui.topui
 			m_giftButton.y = m_noticeButton.y;
 			
 			
+			
+			
+			m_messageButton.addEventListener(MouseEvent.CLICK, __messageClickHandler);
+			m_noticeButton.addEventListener(MouseEvent.CLICK, __noticeClickHandler);
+			m_giftButton.addEventListener(MouseEvent.CLICK, __giftClickHandler);
+			
+			
+			
 			VisitMgr.addEventListener(VisitEvent.VISIT_FRIEND, __visitFriendHandler);
+		}
+		
+		private function __messageClickHandler(e:MouseEvent):void
+		{
+			MsgTipMgr.show("留言功能开发中...");
+		}
+		
+		private function __noticeClickHandler(e:MouseEvent):void
+		{
+			MsgTipMgr.show("公告功能开发中...");
+		}
+		
+		private function __giftClickHandler(e:MouseEvent):void
+		{
+			MsgTipMgr.show("礼物功能开发中...");
 		}
 		
 		private function __visitFriendHandler(e:VisitEvent):void
@@ -124,6 +153,8 @@ package knightage.homeui.topui
 		
 		public function dispose():void
 		{
+			VisitMgr.removeEventListener(VisitEvent.VISIT_FRIEND, __visitFriendHandler);
+			
 			DisposeUtil.free(m_playerExpView);
 			m_playerExpView = null;
 			
@@ -141,6 +172,15 @@ package knightage.homeui.topui
 			
 			DisposeUtil.free(m_playerOrderView);
 			m_playerOrderView = null;
+			
+			DisposeUtil.free(m_messageButton);
+			m_messageButton = null;
+			
+			DisposeUtil.free(m_noticeButton);
+			m_noticeButton = null;
+			
+			DisposeUtil.free(m_giftButton);
+			m_giftButton = null;
 		}
 	}
 }
