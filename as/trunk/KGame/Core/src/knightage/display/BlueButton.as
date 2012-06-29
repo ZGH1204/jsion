@@ -1,22 +1,19 @@
 package knightage.display
 {
-	import flash.filters.GlowFilter;
-	import flash.text.StyleSheet;
-	import flash.text.TextFormat;
-	
 	import jsion.Insets;
 	import jsion.display.Image;
 	import jsion.display.LabelButton;
 	
 	import knightage.StaticRes;
 	
-	public class YellowButton extends LabelButton
+	public class BlueButton extends LabelButton
 	{
-		private static const UpImageBMD:YellowButtonUpAsset = new YellowButtonUpAsset(0, 0);
+		public static const UpImageBMD:BlueButtonUpAsset = new BlueButtonUpAsset(0, 0);
+		public static const ScaleInsets:Insets = new Insets(12, 20, 15, 20);
 		
 		private var m_txt:String;
 		
-		public function YellowButton(text:String = "Button")
+		public function BlueButton(text:String = "Button")
 		{
 			m_txt = text;
 			super();
@@ -29,14 +26,13 @@ package knightage.display
 			img.beginChanges();
 			img.freeSource = false;
 			img.source = UpImageBMD;
-			img.scale9Insets = new Insets(14, 20, 14, 20);
+			img.scale9Insets = ScaleInsets;
 			img.commitChanges();
 			
 			beginChanges();
 			upImage = img;
 			label = m_txt;
 			labelColor = StaticRes.WhiteColor;
-			vOffset = -1;
 			styleSheet = StaticRes.ButtonDefaultStyle;
 			textFormat = StaticRes.ButtonDefaultTextFormat;
 			labelUpFilters = StaticRes.ButtonDefaultFilters;
