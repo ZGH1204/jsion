@@ -9,6 +9,10 @@ package jsion.events
 		public static const MULTIPLE_SELECTE_CHANGED:String = "multipleSelectChanged";
 		public static const SELECT_CHANGED:String = "selectChanged";
 		
+		public static const PANEL_CREATED:String = "panelCreated";
+		public static const PANEL_FREE:String = "panelFree";
+		public static const PANEL_ACTIVE_CHANGED:String = "panelActiveChanged";
+		
 		public var data:*;
 		
 		public function DisplayEvent(type:String, data:* = null)
