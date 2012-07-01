@@ -41,6 +41,21 @@ package knightage.events
 		 */		
 		public static const ORDER_CHANGED:String = "orderChanged";
 		
+		/**
+		 * 声望值发生变更
+		 */		
+		public static const PRESTIGE_CHANGED:String = "prestige";
+		
+		/**
+		 * 豪华派对金币价格累加变更
+		 */		
+		public static const GRAND_PARTY_PRICE_CHANGED:String = "grandPartyPriceChange"
+		
+		/**
+		 * 刷新酒馆英雄
+		 */		
+		public static const REFRESH_TAVERN_HERO:String = "refreshTavernHero";
+		
 		public var data:*;
 		
 		public function PlayerEvent(type:String, data:*)

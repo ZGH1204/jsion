@@ -27,6 +27,24 @@
     <BuildTemplate TemplateID="1001" TemplateName="研究学院" profileURL="build/college_2.png" BuildType="11" Lv="2" Yield="150" SingleNeed="0" NeedMoney="1500" NeedCastleLv="0" NextTemplateID="0" PosX="234.55" PosY="267.45" Description="就是一建筑,你懂的." />
     <BuildTemplate TemplateID="1101" TemplateName="雕像" profileURL="build/efigy_3.png" BuildType="12" Lv="3" Yield="180" SingleNeed="0" NeedMoney="1800" NeedCastleLv="0" NextTemplateID="0" PosX="891.55" PosY="204.45" Description="就是一建筑,你懂的." />
   </ArrayOfBuildTemplate>
+  <ArrayOfTavernConfig>
+    <TavernConfig TemplateID="1" TemplateName="1级酒馆" CoinPartyPrice="500" GoldPartyPrice="10" GrandGoldStep="15" Prestige="1" GrandPrestige="20" Quality1="1000" Quality2="0" Quality3="0" Quality4="0" Quality5="0" Quality6="0" Weight="0" SpecialHeros="0" />
+    <TavernConfig TemplateID="2" TemplateName="2级酒馆" CoinPartyPrice="800" GoldPartyPrice="20" GrandGoldStep="15" Prestige="1" GrandPrestige="20" Quality1="300" Quality2="700" Quality3="0" Quality4="0" Quality5="0" Quality6="0" Weight="0" SpecialHeros="0" />
+    <TavernConfig TemplateID="3" TemplateName="3级酒馆" CoinPartyPrice="1200" GoldPartyPrice="40" GrandGoldStep="15" Prestige="1" GrandPrestige="20" Quality1="100" Quality2="300" Quality3="600" Quality4="0" Quality5="0" Quality6="0" Weight="0" SpecialHeros="0" />
+    <TavernConfig TemplateID="4" TemplateName="4级酒馆" CoinPartyPrice="1500" GoldPartyPrice="70" GrandGoldStep="15" Prestige="1" GrandPrestige="20" Quality1="50" Quality2="50" Quality3="300" Quality4="600" Quality5="0" Quality6="0" Weight="0" SpecialHeros="0" />
+    <TavernConfig TemplateID="5" TemplateName="5级酒馆" CoinPartyPrice="2000" GoldPartyPrice="110" GrandGoldStep="15" Prestige="1" GrandPrestige="20" Quality1="50" Quality2="50" Quality3="100" Quality4="400" Quality5="400" Quality6="0" Weight="0" SpecialHeros="0" />
+    <TavernConfig TemplateID="6" TemplateName="6级酒馆" CoinPartyPrice="2500" GoldPartyPrice="160" GrandGoldStep="15" Prestige="1" GrandPrestige="20" Quality1="50" Quality2="50" Quality3="50" Quality4="250" Quality5="600" Quality6="0" Weight="0" SpecialHeros="0" />
+    <TavernConfig TemplateID="7" TemplateName="7级酒馆" CoinPartyPrice="3500" GoldPartyPrice="220" GrandGoldStep="15" Prestige="1" GrandPrestige="20" Quality1="0" Quality2="0" Quality3="50" Quality4="150" Quality5="300" Quality6="500" Weight="0" SpecialHeros="0" />
+  </ArrayOfTavernConfig>
+  <ArrayOfPrestigeConfig>
+    <PrestigeConfig TemplateID="1" TemplateName="声望1级" Exp="100" Probability="5" Goods="1 2 3 4" />
+    <PrestigeConfig TemplateID="2" TemplateName="声望2级" Exp="200" Probability="10" Goods="1 2 3 4" />
+    <PrestigeConfig TemplateID="3" TemplateName="声望3级" Exp="300" Probability="15" Goods="1 2 3 4" />
+    <PrestigeConfig TemplateID="4" TemplateName="声望4级" Exp="400" Probability="20" Goods="1 2 3 4" />
+    <PrestigeConfig TemplateID="5" TemplateName="声望5级" Exp="500" Probability="25" Goods="1 2 3 4" />
+    <PrestigeConfig TemplateID="6" TemplateName="声望6级" Exp="600" Probability="30" Goods="1 2 3 4" />
+    <PrestigeConfig TemplateID="7" TemplateName="声望7级" Exp="700" Probability="35" Goods="1 2 3 4" />
+  </ArrayOfPrestigeConfig>
   <ArrayOfHeroTemplate>
     <HeroTemplate TemplateID="1" TemplateName="阿波罗 " HeadImg="" BustImg="heroBust/HeroBust_01.png" Shape="" Sex="1" HeroType="1" Quality="6" BasicTroops="10" BasicAnger="10" BasicAttack="10" BasicDefense="10" BasicVelocity="10" BasicCrit="10" BasicParry="0" BasicDodge="10" TroopsGrowth="10" AttackGrowth="10" DefenseGrowth="10" SoliderCategory="1" GoodAtSolider="0" EnhancedType="1" EnhancedPro="10" AngerGrowth="0" DodgeGrowth="0" VelocityGrowth="0" CritGrowth="0" ParryGrowth="0" EmployPrice="10" IsSpecialHero="0" />
     <HeroTemplate TemplateID="2" TemplateName="阿伽门农" HeadImg="" BustImg="heroBust/HeroBust_02.png" Shape="" Sex="1" HeroType="1" Quality="1" BasicTroops="10" BasicAnger="10" BasicAttack="10" BasicDefense="10" BasicVelocity="10" BasicCrit="10" BasicParry="0" BasicDodge="10" TroopsGrowth="10" AttackGrowth="10" DefenseGrowth="10" SoliderCategory="2" GoodAtSolider="0" EnhancedType="1" EnhancedPro="10" AngerGrowth="0" DodgeGrowth="0" VelocityGrowth="0" CritGrowth="0" ParryGrowth="0" EmployPrice="12" IsSpecialHero="0" />

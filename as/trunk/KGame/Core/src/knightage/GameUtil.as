@@ -4,7 +4,9 @@ package knightage
 	import knightage.mgrs.TemplateMgr;
 	import knightage.player.GamePlayer;
 	import knightage.templates.BuildTemplate;
+	import knightage.templates.PrestigeConfig;
 	import knightage.templates.SoilderTemplate;
+	import knightage.templates.TavernConfig;
 
 	public class GameUtil
 	{
@@ -221,7 +223,9 @@ package knightage
 		{
 			var tavernLv:int = GameUtil.getBuildLv(player, BuildType.Tavern);
 			
-			return StaticConfig.PartyPrice[tavernLv];
+			var tavernConfig:TavernConfig = TemplateMgr.findTavernConfig(tavernLv);
+			
+			return tavernConfig.CoinPartyPrice;
 		}
 		
 		/**
@@ -234,17 +238,65 @@ package knightage
 		{
 			var tavernLv:int = GameUtil.getBuildLv(player, BuildType.Tavern);
 			
-			return StaticConfig.GrandPartyPrice[tavernLv];
+			var tavernConfig:TavernConfig = TemplateMgr.findTavernConfig(tavernLv);
+			
+			return tavernConfig.GoldPartyPrice;
+		}
+		
+		/**
+		 * 获取当前酒馆等级下豪华派对价格累加值
+		 * @param player
+		 * @return 
+		 * 
+		 */		
+		public static function getGrandPartyPriceStep(player:GamePlayer):int
+		{
+			var tavernConfig:TavernConfig = TemplateMgr.findTavernConfig(getBuildLv(player, BuildType.Tavern));
+			
+			return tavernConfig.GrandGoldStep;
+		}
+		
+		/**
+		 * 获取普通派对增加的声望值
+		 * @param player
+		 * @return 
+		 * 
+		 */		
+		public static function getPartyPrestige(player:GamePlayer):int
+		{
+			var tavernLv:int = getBuildLv(player, BuildType.Tavern);
+			
+			var tavernConfig:TavernConfig = TemplateMgr.findTavernConfig(tavernLv);
+			
+			return tavernConfig.Prestige;
+		}
+		
+		/**
+		 * 获取豪华派对增加的声望值
+		 * @param player
+		 * @return 
+		 * 
+		 */		
+		public static function getGrandPartyPrestige(player:GamePlayer):int
+		{
+			var tavernLv:int = getBuildLv(player, BuildType.Tavern);
+			
+			var tavernConfig:TavernConfig = TemplateMgr.findTavernConfig(tavernLv);
+			
+			return tavernConfig.GrandPrestige;
 		}
 		
 		/**
 		 * 获取玩家当前声望升下一级所需要的经验值
+		 * 为0时表示已升到最高级
 		 * @param player
 		 * 
 		 */		
 		public static function getPrestigeUpgradeExp(player:GamePlayer):int
 		{
-			return StaticConfig.PrestigeUpgradeExp[player.prestigeLv];
+			var prestige:PrestigeConfig = TemplateMgr.findPrestigeConfig(player.prestigeLv);
+			
+			return prestige.Exp;
 		}
 	}
 }

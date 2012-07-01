@@ -16,11 +16,14 @@ package knightage.hall.tavern
 	import jsion.utils.JUtil;
 	
 	import knightage.GameUtil;
+	import knightage.StaticRes;
 	import knightage.display.Frame;
+	import knightage.events.PlayerEvent;
 	import knightage.events.VisitEvent;
 	import knightage.hall.build.BuildType;
 	import knightage.mgrs.DateMgr;
 	import knightage.mgrs.MsgTipMgr;
+	import knightage.mgrs.PlayerMgr;
 	import knightage.mgrs.TemplateMgr;
 	import knightage.mgrs.VisitMgr;
 	import knightage.net.packets.tavern.PartyPacket;
@@ -123,7 +126,6 @@ package knightage.hall.tavern
 			m_progress.beginChanges();
 			m_progress.x = 38;
 			m_progress.y = 425;
-			m_progress.value = 50;
 			m_progress.freeBMD = true;
 			m_progress.progressBar = new Bitmap(new LivelyBarAsset(0, 0));
 			m_progress.commitChanges();
@@ -141,6 +143,7 @@ package knightage.hall.tavern
 			
 			m_treasureChestsButton = new Button();
 			m_treasureChestsButton.beginChanges();
+			m_treasureChestsButton.clickSoundID = StaticRes.ButtonClickSoundID;
 			m_treasureChestsButton.x = 200;
 			m_treasureChestsButton.y = 410;
 			m_treasureChestsButton.freeBMD = true;
@@ -181,7 +184,10 @@ package knightage.hall.tavern
 			
 			VisitMgr.addEventListener(VisitEvent.VISIT_FRIEND, __visitFriendHandler);
 			VisitMgr.addEventListener(VisitEvent.REFRESH_TAVERN_HERO, __refreshTavernHeroHandler);
-			
+			PlayerMgr.addEventListener(PlayerEvent.REFRESH_TAVERN_HERO, __refreshSelfTavernHeroHandler);
+			PlayerMgr.addEventListener(PlayerEvent.GRAND_PARTY_PRICE_CHANGED, __grandPartyPriceChangedHandler);
+			PlayerMgr.addEventListener(PlayerEvent.PRESTIGE_CHANGED, __prestigeChangedHandler);
+			PlayerMgr.addEventListener(PlayerEvent.BUILD_UPGRADE, __buildUpgradeHandler);
 			
 			refreshData();
 		}
@@ -193,16 +199,24 @@ package knightage.hall.tavern
 		
 		private function __partyClickHandler(e:MouseEvent):void
 		{
-			MsgTipMgr.show("举行派对开发中...");
+			MsgTipMgr.show("举行派对...");
 			
 			var pkg:PartyPacket = new PartyPacket();
 			
-			//SocketProxy.sendTCP(pkg);
+			pkg.partyType = 1;
+			
+			SocketProxy.sendTCP(pkg);
 		}
 		
 		private function __grandPartyClickHandler(e:MouseEvent):void
 		{
-			MsgTipMgr.show("豪华派对开发中...");
+			MsgTipMgr.show("豪华派对...");
+			
+			var pkg:PartyPacket = new PartyPacket();
+			
+			pkg.partyType = 2;
+			
+			SocketProxy.sendTCP(pkg);
 		}
 		
 		
@@ -229,6 +243,45 @@ package knightage.hall.tavern
 			refreshView();
 		}
 		
+		private function __refreshSelfTavernHeroHandler(e:PlayerEvent):void
+		{
+			if(VisitMgr.isSelf)
+			{
+				refreshView();
+			}
+		}
+		
+		private function __grandPartyPriceChangedHandler(e:PlayerEvent):void
+		{
+			if(VisitMgr.isSelf)
+			{
+				m_grandPartyButton.setMoney(m_player.partyGold);
+			}
+		}
+		
+		private function __prestigeChangedHandler(e:PlayerEvent):void
+		{
+			if(VisitMgr.isSelf)
+			{
+				m_progress.maxValue = GameUtil.getPrestigeUpgradeExp(m_player);
+				m_progress.value = m_player.prestige;
+			}
+		}
+		
+		private function __buildUpgradeHandler(e:PlayerEvent):void
+		{
+			if(VisitMgr.isSelf && e.data == BuildType.Tavern)
+			{
+				var partyPrice:int = GameUtil.getPartyPrice(m_player);
+				m_partyButton.setMoney(partyPrice);
+				
+				var partyGold:int = GameUtil.getGrandPartyPrice(m_player);
+				if(m_player.partyGold < partyGold)
+				{
+					PlayerMgr.addGrandPartyGold(partyGold - m_player.partyGold);
+				}
+			}
+		}
 		
 		
 		
@@ -311,8 +364,7 @@ package knightage.hall.tavern
 			var partyPrice:int = GameUtil.getPartyPrice(m_player);
 			m_partyButton.setMoney(partyPrice);
 			
-			var grandPrice:int = GameUtil.getGrandPartyPrice(m_player);
-			m_grandPartyButton.setMoney(grandPrice);
+			m_grandPartyButton.setMoney(m_player.partyGold);
 			
 			m_progress.maxValue = GameUtil.getPrestigeUpgradeExp(m_player);
 			m_progress.value = m_player.prestige;
@@ -347,6 +399,13 @@ package knightage.hall.tavern
 		
 		override public function dispose():void
 		{
+			VisitMgr.removeEventListener(VisitEvent.VISIT_FRIEND, __visitFriendHandler);
+			VisitMgr.removeEventListener(VisitEvent.REFRESH_TAVERN_HERO, __refreshTavernHeroHandler);
+			PlayerMgr.removeEventListener(PlayerEvent.REFRESH_TAVERN_HERO, __refreshSelfTavernHeroHandler);
+			PlayerMgr.removeEventListener(PlayerEvent.GRAND_PARTY_PRICE_CHANGED, __grandPartyPriceChangedHandler);
+			PlayerMgr.removeEventListener(PlayerEvent.PRESTIGE_CHANGED, __prestigeChangedHandler);
+			PlayerMgr.removeEventListener(PlayerEvent.BUILD_UPGRADE, __buildUpgradeHandler);
+			
 			InstanceUtil.removeSingletion(TavernUIView);
 			
 			DisposeUtil.free(m_titleIcon);

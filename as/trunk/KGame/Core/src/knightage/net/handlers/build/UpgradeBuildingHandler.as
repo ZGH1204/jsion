@@ -19,22 +19,14 @@ package knightage.net.handlers.build
 		
 		public function handle(pkg:GamePacket):void
 		{
-			var rlt:int = pkg.readUnsignedByte();
-			var buildType:int  = pkg.readShort();
+			var buildType:int  = pkg.readUnsignedByte();
 			var templateID:int = pkg.readInt();
 			var coins:int = pkg.readInt();
 			var exp:int = pkg.readInt();
 			
-			if(rlt == 1)
-			{
-				PlayerMgr.updatePlayerCoin(coins);
-				PlayerMgr.updatePlayerExp(exp);
-				PlayerMgr.updateBuildTID(buildType, templateID);
-			}
-			else
-			{
-				trace("结果类型未处理：", rlt);
-			}
+			PlayerMgr.subPlayerCoin(coins);
+			PlayerMgr.subPlayerExp(exp);
+			PlayerMgr.updateBuildTID(buildType, templateID);
 		}
 	}
 }
