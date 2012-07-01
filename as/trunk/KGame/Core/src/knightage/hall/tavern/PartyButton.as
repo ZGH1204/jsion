@@ -85,7 +85,7 @@ package knightage.hall.tavern
 			
 			beginChanges();
 			frozen = true;
-			frozenFrames = 60;
+			frozenFrames = 20;
 			clickSoundID = StaticRes.ButtonClickSoundID;
 			width = PartyButtonWidth;
 			height = PartyButtonHeight;

@@ -1,5 +1,7 @@
 package knightage.player
 {
+	
+
 	public class SelfPlayer extends GamePlayer
 	{
 		/**

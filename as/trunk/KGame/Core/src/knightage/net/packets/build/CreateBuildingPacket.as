@@ -13,7 +13,7 @@ package knightage.net.packets.build
 		
 		override public function writeData():void
 		{
-			writeShort(buildType);
+			writeByte(buildType);
 		}
 	}
 }

@@ -3,6 +3,8 @@ package knightage.player
 	import jsion.IDispose;
 	import jsion.utils.DisposeUtil;
 	
+	import knightage.GameUtil;
+	import knightage.mgrs.DateMgr;
 	import knightage.player.heros.HeroMode;
 	
 	public class GamePlayer implements IDispose
@@ -108,6 +110,7 @@ package knightage.player
 		 */		
 		public var prestigeLv:int;
 		
+		
 		/**
 		 * 英雄Mode
 		 */		
@@ -119,6 +122,34 @@ package knightage.player
 			
 			super();
 		}
+		
+		
+		
+		/**
+		 * 豪华派对累加价格
+		 */		
+		public var partyGold:int;
+		
+		/**
+		 * 重置日期
+		 */		
+		public var resetDateTime:Date;
+		
+		
+		public function checkResetProp():void
+		{
+			var now:Date = DateMgr.getCurrentDateTime();
+			
+			var lastResetDate:Date = resetDateTime;
+			
+			if(now.fullYear > lastResetDate.fullYear || now.month > lastResetDate.month || now.date > lastResetDate.date)
+			{
+				partyGold = GameUtil.getGrandPartyPrice(this);
+				
+				resetDateTime = now;
+			}
+		}
+		
 		
 		public function dispose():void
 		{

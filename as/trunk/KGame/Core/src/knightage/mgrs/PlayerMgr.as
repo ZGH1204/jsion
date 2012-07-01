@@ -101,21 +101,21 @@ package knightage.mgrs
 			}
 		}
 		
-		public static function updatePlayerExp(value:int):void
+		public static function subPlayerExp(value:int):void
 		{
 			if(m_self.experience != value)
 			{
-				m_self.experience = value;
+				m_self.experience -= value;
 				
 				dispatchEvent(new PlayerEvent(PlayerEvent.EXP_CHANGED, m_self.experience));
 			}
 		}
 		
-		public static function updatePlayerCoin(value:int):void
+		public static function subPlayerCoin(value:int):void
 		{
 			if(m_self.coins != value)
 			{
-				m_self.coins = value;
+				m_self.coins -= value;
 				
 				dispatchEvent(new PlayerEvent(PlayerEvent.COIN_CHANGED, m_self.coins));
 			}
@@ -131,41 +131,41 @@ package knightage.mgrs
 			}
 		}
 		
-		public static function updatePlayerGold(value:int):void
+		public static function subPlayerGold(value:int):void
 		{
 			if(m_self.gold != value)
 			{
-				m_self.gold = value;
+				m_self.gold -= value;
 				
 				dispatchEvent(new PlayerEvent(PlayerEvent.GOLD_CHANGED, m_self.gold));
 			}
 		}
 		
-		public static function updatePlayerSolider(value:int):void
+		public static function subPlayerSolider(value:int):void
 		{
 			if(m_self.soliders != value)
 			{
-				m_self.soliders = value;
+				m_self.soliders -= value;
 				
 				dispatchEvent(new PlayerEvent(PlayerEvent.SOLIDER_CHANGED, m_self.soliders));
 			}
 		}
 		
-		public static function updatePlayerFood(value:int):void
+		public static function subPlayerFood(value:int):void
 		{
 			if(m_self.foods != value)
 			{
-				m_self.foods = value;
+				m_self.foods -= value;
 				
 				dispatchEvent(new PlayerEvent(PlayerEvent.FOOD_CHANGED, m_self.foods));
 			}
 		}
 		
-		public static function updatePlayerOrder(value:int):void
+		public static function subPlayerOrder(value:int):void
 		{
 			if(m_self.orders != value)
 			{
-				m_self.orders = value;
+				m_self.orders -= value;
 				
 				dispatchEvent(new PlayerEvent(PlayerEvent.ORDER_CHANGED, m_self.orders));
 			}
@@ -181,11 +181,46 @@ package knightage.mgrs
 			}
 		}
 		
+		
+		public static function addPrestige(prestige:int):void
+		{
+			m_self.prestige += prestige;
+			
+			var upgradePrestige:int = GameUtil.getPrestigeUpgradeExp(m_self);
+			
+			if(m_self.prestige >= upgradePrestige)
+			{
+				m_self.prestige -= upgradePrestige;
+				m_self.prestigeLv += 1;
+			}
+			
+			dispatchEvent(new PlayerEvent(PlayerEvent.PRESTIGE_CHANGED, m_self));
+		}
+		
+		public static function updateTavernHeros(heroTID1:int, heroTID2:int, heroTID3:int, lastTime:Date):void
+		{
+			m_self.lastHero1TID = heroTID1;
+			m_self.lastHero2TID = heroTID2;
+			m_self.lastHero3TID = heroTID3;
+			m_self.lastRefreshTime = lastTime;
+			
+			dispatchEvent(new PlayerEvent(PlayerEvent.REFRESH_TAVERN_HERO, m_self));
+		}
+		
+		public static function addGrandPartyGold(gold:int):void
+		{
+			m_self.partyGold += gold;
+			
+			dispatchEvent(new PlayerEvent(PlayerEvent.GRAND_PARTY_PRICE_CHANGED, m_self.partyGold));
+		}
+		
 		public static function onLogin():void
 		{
 			if(LoginMgr.logined) return;
 			
 			LoginMgr.logined = true;
+			
+			m_self.checkResetProp();
 			
 			UIMgr.addFixUI(new TopUIView());
 			

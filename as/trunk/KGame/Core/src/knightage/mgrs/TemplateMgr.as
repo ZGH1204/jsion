@@ -5,7 +5,9 @@ package knightage.mgrs
 	
 	import knightage.templates.BuildTemplate;
 	import knightage.templates.HeroTemplate;
+	import knightage.templates.PrestigeConfig;
 	import knightage.templates.SoilderTemplate;
+	import knightage.templates.TavernConfig;
 	
 	public class TemplateMgr
 	{
@@ -14,6 +16,10 @@ package knightage.mgrs
 		private static var m_heroTemplate:HashMap;
 		
 		private static var m_soilderTemplate:HashMap;
+		
+		private static var m_tavernConfig:HashMap;
+		
+		private static var m_prestigeConfig:HashMap;
 		
 		public function TemplateMgr()
 		{
@@ -63,6 +69,36 @@ package knightage.mgrs
 				
 				m_soilderTemplate.put(soilderTemplate.TemplateID, soilderTemplate);
 			}
+			
+			
+			
+			m_tavernConfig = new HashMap();
+			
+			var tavernConfigList:XMLList = template.ArrayOfTavernConfig.TavernConfig;
+			
+			for each(var tavernConfigXml:XML in tavernConfigList)
+			{
+				var tavernConfig:TavernConfig = new TavernConfig();
+				
+				XmlUtil.decodeWithProperty(tavernConfig, tavernConfigXml);
+				
+				m_tavernConfig.put(tavernConfig.TemplateID, tavernConfig);
+			}
+			
+			
+			
+			m_prestigeConfig = new HashMap();
+			
+			var prestigeConfigList:XMLList = template.ArrayOfPrestigeConfig.PrestigeConfig;
+			
+			for each(var prestigeConfigXml:XML in prestigeConfigList)
+			{
+				var prestigeConfig:PrestigeConfig = new PrestigeConfig();
+				
+				XmlUtil.decodeWithProperty(prestigeConfig, prestigeConfigXml);
+				
+				m_prestigeConfig.put(prestigeConfig.TemplateID, prestigeConfig);
+			}
 		}
 		
 		public static function findBuildTemplate(templateID:int):BuildTemplate
@@ -78,6 +114,16 @@ package knightage.mgrs
 		public static function findSoilderTemplate(templateID:int):SoilderTemplate
 		{
 			return m_soilderTemplate.get(templateID);
+		}
+		
+		public static function findTavernConfig(lv:int):TavernConfig
+		{
+			return m_tavernConfig.get(lv);
+		}
+		
+		public static function findPrestigeConfig(lv:int):PrestigeConfig
+		{
+			return m_prestigeConfig.get(lv);
 		}
 	}
 }

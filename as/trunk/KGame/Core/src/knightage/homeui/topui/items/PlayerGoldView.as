@@ -78,7 +78,7 @@ package knightage.homeui.topui.items
 		
 		private function refreshNumLabelPos():void
 		{
-			m_numLabel.x = width - m_numLabel.width - 10;
+			m_numLabel.x = m_background.x + m_background.width - m_numLabel.width - 10;
 			m_numLabel.y = m_background.y + (m_background.height - m_numLabel.height) / 2 - 2;
 		}
 		

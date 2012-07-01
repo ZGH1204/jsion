@@ -3,6 +3,7 @@ package knightage.gameui.heros
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	
+	import jsion.display.TabPanel;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.InstanceUtil;
 	
@@ -13,6 +14,8 @@ package knightage.gameui.heros
 		private var m_titleIcon:DisplayObject;
 		
 		private var m_heroInfoView:HeroInfoView;
+		
+		private var m_heroTabPanel:TabPanel;
 		
 		public function HeroUIView()
 		{
@@ -42,8 +45,16 @@ package knightage.gameui.heros
 			
 			
 			m_heroInfoView = new HeroInfoView();
-			
 			addToContent(m_heroInfoView);
+			
+			
+			m_heroTabPanel = new TabPanel();
+			addToContent(m_heroTabPanel);
+			
+			
+			
+			
+			m_heroTabPanel.x = m_heroInfoView.x + m_heroInfoView.width + 15;
 		}
 		
 		override public function dispose():void
