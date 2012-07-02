@@ -78,6 +78,12 @@ package
 		public static const Party:int = 1019;
 		
 		
+		/**
+		 * 招募英雄
+		 */		
+		public static const RecruitHero:int = 1018;
+		
+		
 		
 		
 		/**
