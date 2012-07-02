@@ -2,11 +2,11 @@ package knightage.net.packets.tavern
 {
 	import knightage.net.LogicPacket;
 	
-	public class RecruitHeroPacket extends LogicPacket
+	public class EmployHeroPacket extends LogicPacket
 	{
-		public function RecruitHeroPacket(code:int=0)
+		public function EmployHeroPacket()
 		{
-			super(code);
+			super(PacketCodes.EmployHero);
 		}
 		
 		/**

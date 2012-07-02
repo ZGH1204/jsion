@@ -1,8 +1,10 @@
 package knightage.mgrs
 {
 	import jsion.HashMap;
+	import jsion.utils.ObjectUtil;
 	import jsion.utils.XmlUtil;
 	
+	import knightage.player.heros.PlayerHero;
 	import knightage.templates.BuildTemplate;
 	import knightage.templates.HeroTemplate;
 	import knightage.templates.PrestigeConfig;
@@ -124,6 +126,13 @@ package knightage.mgrs
 		public static function findPrestigeConfig(lv:int):PrestigeConfig
 		{
 			return m_prestigeConfig.get(lv);
+		}
+		
+		public static function fillPlayerHero(hero:PlayerHero):void
+		{
+			var temp:HeroTemplate = findHeroTemplate(hero.templateID);
+			
+			ObjectUtil.copyToTarget(temp, hero);
 		}
 	}
 }

@@ -19,13 +19,11 @@ package knightage.hall.tavern
 	import knightage.StaticRes;
 	import knightage.display.Frame;
 	import knightage.events.PlayerEvent;
-	import knightage.events.VisitEvent;
 	import knightage.hall.build.BuildType;
 	import knightage.mgrs.DateMgr;
 	import knightage.mgrs.MsgTipMgr;
 	import knightage.mgrs.PlayerMgr;
 	import knightage.mgrs.TemplateMgr;
-	import knightage.mgrs.VisitMgr;
 	import knightage.net.packets.tavern.PartyPacket;
 	import knightage.net.packets.tavern.RefreshTavernHerosPacket;
 	import knightage.player.GamePlayer;
@@ -182,12 +180,11 @@ package knightage.hall.tavern
 			
 			
 			
-			VisitMgr.addEventListener(VisitEvent.VISIT_FRIEND, __visitFriendHandler);
-			VisitMgr.addEventListener(VisitEvent.REFRESH_TAVERN_HERO, __refreshTavernHeroHandler);
 			PlayerMgr.addEventListener(PlayerEvent.REFRESH_TAVERN_HERO, __refreshSelfTavernHeroHandler);
 			PlayerMgr.addEventListener(PlayerEvent.GRAND_PARTY_PRICE_CHANGED, __grandPartyPriceChangedHandler);
 			PlayerMgr.addEventListener(PlayerEvent.PRESTIGE_CHANGED, __prestigeChangedHandler);
 			PlayerMgr.addEventListener(PlayerEvent.BUILD_UPGRADE, __buildUpgradeHandler);
+			PlayerMgr.addEventListener(PlayerEvent.EMPLOY_HERO, __employHeroHandler);
 			
 			refreshData();
 		}
@@ -231,46 +228,27 @@ package knightage.hall.tavern
 		
 		
 		
-		private function __visitFriendHandler(e:VisitEvent):void
-		{
-			refreshData();
-		}
 		
 		
-		
-		private function __refreshTavernHeroHandler(e:VisitEvent):void
+		private function __refreshSelfTavernHeroHandler(e:PlayerEvent):void
 		{
 			refreshView();
 		}
 		
-		private function __refreshSelfTavernHeroHandler(e:PlayerEvent):void
-		{
-			if(VisitMgr.isSelf)
-			{
-				refreshView();
-			}
-		}
-		
 		private function __grandPartyPriceChangedHandler(e:PlayerEvent):void
 		{
-			if(VisitMgr.isSelf)
-			{
-				m_grandPartyButton.setMoney(m_player.partyGold);
-			}
+			m_grandPartyButton.setMoney(m_player.partyGold);
 		}
 		
 		private function __prestigeChangedHandler(e:PlayerEvent):void
 		{
-			if(VisitMgr.isSelf)
-			{
-				m_progress.maxValue = GameUtil.getPrestigeUpgradeExp(m_player);
-				m_progress.value = m_player.prestige;
-			}
+			m_progress.maxValue = GameUtil.getPrestigeUpgradeExp(m_player);
+			m_progress.value = m_player.prestige;
 		}
 		
 		private function __buildUpgradeHandler(e:PlayerEvent):void
 		{
-			if(VisitMgr.isSelf && e.data == BuildType.Tavern)
+			if(e.data == BuildType.Tavern)
 			{
 				var partyPrice:int = GameUtil.getPartyPrice(m_player);
 				m_partyButton.setMoney(partyPrice);
@@ -283,13 +261,30 @@ package knightage.hall.tavern
 			}
 		}
 		
+		private function __employHeroHandler(e:PlayerEvent):void
+		{
+			switch(e.data)
+			{
+				case 1:
+					m_item1.setData(null);
+					DisposeUtil.free(m_loader1);
+					break;
+				case 2:
+					m_item2.setData(null);
+					DisposeUtil.free(m_loader2);
+					break;
+				case 3:
+					m_item3.setData(null);
+					DisposeUtil.free(m_loader3);
+					break;
+			}
+		}
+		
 		
 		
 		public function refreshData():void
 		{
-			if(m_player == VisitMgr.player) return;
-			
-			m_player = VisitMgr.player;
+			m_player = PlayerMgr.self;
 			
 			refreshView();
 		}
@@ -399,12 +394,11 @@ package knightage.hall.tavern
 		
 		override public function dispose():void
 		{
-			VisitMgr.removeEventListener(VisitEvent.VISIT_FRIEND, __visitFriendHandler);
-			VisitMgr.removeEventListener(VisitEvent.REFRESH_TAVERN_HERO, __refreshTavernHeroHandler);
 			PlayerMgr.removeEventListener(PlayerEvent.REFRESH_TAVERN_HERO, __refreshSelfTavernHeroHandler);
 			PlayerMgr.removeEventListener(PlayerEvent.GRAND_PARTY_PRICE_CHANGED, __grandPartyPriceChangedHandler);
 			PlayerMgr.removeEventListener(PlayerEvent.PRESTIGE_CHANGED, __prestigeChangedHandler);
 			PlayerMgr.removeEventListener(PlayerEvent.BUILD_UPGRADE, __buildUpgradeHandler);
+			PlayerMgr.removeEventListener(PlayerEvent.EMPLOY_HERO, __employHeroHandler);
 			
 			InstanceUtil.removeSingletion(TavernUIView);
 			

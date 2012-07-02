@@ -5,7 +5,6 @@ package knightage.net.handlers.tavern
 	
 	import knightage.GameUtil;
 	import knightage.mgrs.PlayerMgr;
-	import knightage.mgrs.VisitMgr;
 	
 	public class PartyHandler implements IPacketHandler
 	{
@@ -44,14 +43,7 @@ package knightage.net.handlers.tavern
 			
 			//TODO: 加上声望值，更新声望等级，更新酒馆英雄列表。
 			
-			if(VisitMgr.isSelf)
-			{
-				VisitMgr.updateTavernHeros(heroTID1, heroTID2, heroTID3, date);
-			}
-			else
-			{
-				PlayerMgr.updateTavernHeros(heroTID1, heroTID2, heroTID3, date);
-			}
+			PlayerMgr.updateTavernHeros(heroTID1, heroTID2, heroTID3, date);
 		}
 	}
 }

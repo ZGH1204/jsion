@@ -81,7 +81,7 @@ package
 		/**
 		 * 招募英雄
 		 */		
-		public static const RecruitHero:int = 1018;
+		public static const EmployHero:int = 1018;
 		
 		
 		

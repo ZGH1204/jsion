@@ -56,6 +56,11 @@ package knightage.events
 		 */		
 		public static const REFRESH_TAVERN_HERO:String = "refreshTavernHero";
 		
+		/**
+		 * 雇佣英雄
+		 */		
+		public static const EMPLOY_HERO:String = "employHero";
+		
 		public var data:*;
 		
 		public function PlayerEvent(type:String, data:*)

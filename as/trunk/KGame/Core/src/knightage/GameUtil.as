@@ -1,8 +1,11 @@
 package knightage
 {
+	import jsion.utils.ObjectUtil;
+	
 	import knightage.hall.build.BuildType;
 	import knightage.mgrs.TemplateMgr;
 	import knightage.player.GamePlayer;
+	import knightage.player.heros.PlayerHero;
 	import knightage.templates.BuildTemplate;
 	import knightage.templates.PrestigeConfig;
 	import knightage.templates.SoilderTemplate;
@@ -297,6 +300,18 @@ package knightage
 			var prestige:PrestigeConfig = TemplateMgr.findPrestigeConfig(player.prestigeLv);
 			
 			return prestige.Exp;
+		}
+		
+		public static function createHero(templateID:int, playerID:int):PlayerHero
+		{
+			var hero:PlayerHero = new PlayerHero();
+			
+			hero.templateID = templateID;
+			hero.TemplateID = templateID;
+			
+			TemplateMgr.fillPlayerHero(hero);
+			
+			return hero;
 		}
 	}
 }
