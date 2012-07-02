@@ -7,13 +7,11 @@ package knightage.mgrs
 	import jsion.scenes.SceneMgr;
 	
 	import knightage.GameUtil;
-	import knightage.StaticConfig;
 	import knightage.events.PlayerEvent;
-	import knightage.hall.build.BuildType;
 	import knightage.homeui.bottomui.BottomUIView;
 	import knightage.homeui.topui.TopUIView;
-	import knightage.player.GamePlayer;
 	import knightage.player.SelfPlayer;
+	import knightage.player.heros.PlayerHero;
 	import knightage.templates.BuildTemplate;
 
 	public class PlayerMgr
@@ -212,6 +210,28 @@ package knightage.mgrs
 			m_self.partyGold += gold;
 			
 			dispatchEvent(new PlayerEvent(PlayerEvent.GRAND_PARTY_PRICE_CHANGED, m_self.partyGold));
+		}
+		
+		
+		
+		public static function employ(hero:PlayerHero, index:int):void
+		{
+			m_self.heroMode.addHero(hero);
+			
+			switch(index)
+			{
+				case 1:
+					m_self.lastHero1TID = 0;
+					break;
+				case 2:
+					m_self.lastHero2TID = 0;
+					break;
+				case 3:
+					m_self.lastHero3TID = 0;
+					break;
+			}
+			
+			dispatchEvent(new PlayerEvent(PlayerEvent.EMPLOY_HERO, index));
 		}
 		
 		public static function onLogin():void

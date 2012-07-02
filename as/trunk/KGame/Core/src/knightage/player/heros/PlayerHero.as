@@ -1,6 +1,8 @@
 package knightage.player.heros
 {
-	public class PlayerHero
+	import knightage.templates.HeroTemplate;
+
+	public class PlayerHero extends HeroTemplate
 	{
 		/**
 		 * 玩家ID
@@ -23,44 +25,14 @@ package knightage.player.heros
 		public var lv:int;
 		
 		/**
-		 * 兵系
-		 */		
-		public var soliderCategory:int;
-		
-		/**
 		 * 当前兵种
 		 */		
 		public var curSoliderType:int;
 		
 		/**
-		 * 信仰
-		 */		
-		public var faith:int;
-		
-		/**
-		 * 是否在阵形中
-		 */		
-		public var isAtTeam:Boolean;
-		
-		/**
-		 * 阵形编号
-		 */		
-		public var teamNum:int;
-		
-		/**
-		 * 在阵形中的索引位置
-		 */		
-		public var teamIndex:int;
-		
-		/**
 		 * 带兵数
 		 */		
 		public var soliders:int;
-		
-		/**
-		 * 士气
-		 */		
-		public var morale:int;
 		
 		/**
 		 * 攻击力
@@ -91,5 +63,38 @@ package knightage.player.heros
 		 * 闪避
 		 */		
 		public var dodge:int;
+		
+		
+		
+		/**
+		 * 攻击力培养保存后的加成值
+		 */		
+		public var cultivateAttack:int;
+		
+		/**
+		 * 防御力培养保存后的加成值
+		 */		
+		public var cultivateDefense:int;
+		
+		/**
+		 * 暴击培养保存后的加成值
+		 */		
+		public var cultivateCrit:int;
+		
+		
+		/**
+		 * 攻击力上一次培养未保存的加成值
+		 */		
+		public var lastCultAttack:int;
+		
+		/**
+		 * 防御力上一次培养未保存的加成值
+		 */		
+		public var lastCultDefense:int;
+		
+		/**
+		 * 暴击上一次培养未保存的加成值
+		 */		
+		public var lastCultCrit:int;
 	}
 }

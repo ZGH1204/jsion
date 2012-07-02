@@ -1,5 +1,7 @@
 package knightage.hall.tavern
 {
+	import core.net.SocketProxy;
+	
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.PixelSnapping;
@@ -16,6 +18,7 @@ package knightage.hall.tavern
 	import knightage.StaticRes;
 	import knightage.display.KhakiButton;
 	import knightage.mgrs.MsgTipMgr;
+	import knightage.net.packets.tavern.EmployHeroPacket;
 	import knightage.templates.HeroTemplate;
 	import knightage.templates.SoilderTemplate;
 	
@@ -184,7 +187,13 @@ package knightage.hall.tavern
 		
 		private function __employClickHandler(e:MouseEvent):void
 		{
-			MsgTipMgr.show("雇佣英雄开发中...");
+			MsgTipMgr.show("雇佣英雄...");
+			
+			var pkg:EmployHeroPacket = new EmployHeroPacket();
+			
+			pkg.index = m_index;
+			
+			SocketProxy.sendTCP(pkg);
 		}
 		
 		

@@ -141,14 +141,7 @@ package knightage.homeui.topui
 		{
 			// TODO Auto Generated method stub
 			
-			if(VisitMgr.isSelf)
-			{
-				visible = true;
-			}
-			else
-			{
-				visible = false;
-			}
+			visible = VisitMgr.isSelf;
 		}
 		
 		public function dispose():void

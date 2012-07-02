@@ -3,7 +3,7 @@ package knightage.net.handlers.tavern
 	import core.net.GamePacket;
 	import core.net.IPacketHandler;
 	
-	import knightage.mgrs.VisitMgr;
+	import knightage.mgrs.PlayerMgr;
 	
 	public class RefreshTavernHerosHandler implements IPacketHandler
 	{
@@ -23,7 +23,7 @@ package knightage.net.handlers.tavern
 			var tid3:int = pkg.readInt();
 			var d:Date = pkg.readDate();
 			
-			VisitMgr.updateTavernHeros(tid1, tid2, tid3, d);
+			PlayerMgr.updateTavernHeros(tid1, tid2, tid3, d);
 		}
 	}
 }
