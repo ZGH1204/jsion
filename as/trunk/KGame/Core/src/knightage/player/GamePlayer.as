@@ -142,7 +142,7 @@ package knightage.player
 			
 			var lastResetDate:Date = resetDateTime;
 			
-			if(now.fullYear > lastResetDate.fullYear || now.month > lastResetDate.month || now.date > lastResetDate.date)
+			if(lastResetDate && now && (now.fullYear > lastResetDate.fullYear || now.month > lastResetDate.month || now.date > lastResetDate.date))
 			{
 				partyGold = GameUtil.getGrandPartyPrice(this);
 				
