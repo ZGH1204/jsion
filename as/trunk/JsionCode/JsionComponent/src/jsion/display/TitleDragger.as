@@ -2,6 +2,7 @@ package jsion.display
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	
 	import jsion.IDispose;
 	import jsion.ddrop.DDropMgr;
@@ -15,6 +16,7 @@ package jsion.display
 	internal class TitleDragger extends Sprite implements IDragDrop, IDispose
 	{
 		private var m_window:Window;
+		private var m_autoBring2Top:Boolean;
 		
 		public function TitleDragger(window:Window)
 		{
@@ -139,11 +141,43 @@ package jsion.display
 			graphics.endFill();
 		}
 		
+		public function get autoBring2Top():Boolean
+		{
+			return m_autoBring2Top;
+		}
+		
+		/**
+		 * @private
+		 */		
+		public function set autoBring2Top(value:Boolean):void
+		{
+			if(m_autoBring2Top != value)
+			{
+				m_autoBring2Top = value;
+				
+				if(m_autoBring2Top)
+				{
+					addEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
+				}
+				else
+				{
+					removeEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
+				}
+			}
+		}
+		
+		private function __mouseDownHandler(e:MouseEvent):void
+		{
+			if(m_window) m_window.bring2Top();
+		}
+		
 		/**
 		 * 释放资源
 		 */		
 		public function dispose():void
 		{
+			removeEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
+			
 			graphics.clear();
 			
 			DDropMgr.unregisteDrag(this);

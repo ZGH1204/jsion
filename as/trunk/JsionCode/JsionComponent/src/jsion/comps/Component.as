@@ -5,10 +5,11 @@ package jsion.comps
 	import jsion.utils.DisposeUtil;
 
 	/**
-	 * 所有组件的基类
+	 * 所有组件的基类，覆盖了 width 和 height 属性。
+	 * 子类继承后需要在适当的时候更新这两个属性的真实值。
 	 * @author Jsion
 	 */	
-	public class Component extends JsionSprite
+	public class Component extends CompSprite
 	{
 		/**
 		 * 宽度属性变更

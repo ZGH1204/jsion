@@ -207,7 +207,7 @@ package jsion.display
 			
 			if(m_panels[m_selectedIndex] == null)
 			{
-				m_panels[m_selectedIndex] = new m_paneClasses[index]();
+				m_panels[m_selectedIndex] = new m_paneClasses[m_selectedIndex]();
 				
 				dispatchEvent(new DisplayEvent(DisplayEvent.PANEL_CREATED, m_panels[m_selectedIndex]));
 			}
