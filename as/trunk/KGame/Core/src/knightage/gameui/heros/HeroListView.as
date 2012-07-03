@@ -12,6 +12,7 @@ package knightage.gameui.heros
 	
 	import knightage.StaticRes;
 	import knightage.gameui.PagingView;
+	import knightage.player.heros.PlayerHero;
 	
 	public class HeroListView extends JsionSprite implements ITabPanel
 	{
@@ -36,6 +37,8 @@ package knightage.gameui.heros
 		
 		private var m_pagingView:PagingView;
 		
+		private var m_selectedHero:PlayerHero;
+		
 		public function HeroListView(row:int = 3, column:int = 4)
 		{
 			m_row = row;
@@ -45,6 +48,8 @@ package knightage.gameui.heros
 			super();
 			
 			initialized();
+			
+			initEvent();
 		}
 		
 		private function initialized():void
@@ -102,6 +107,12 @@ package knightage.gameui.heros
 			
 			m_pagingView.x = (width - m_pagingView.width) / 2;
 			m_pagingView.y = height - m_pagingView.height - 8;
+		}
+		
+		private function initEvent():void
+		{
+			// TODO Auto Generated method stub
+			
 		}
 		
 		public function beginChangeBackground():void

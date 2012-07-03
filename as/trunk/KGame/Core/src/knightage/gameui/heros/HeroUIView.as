@@ -22,6 +22,8 @@ package knightage.gameui.heros
 		
 		private var m_heroTabPanel:TabPanel;
 		
+		private var m_heroSoliderView:HeroSoliderView;
+		
 		public function HeroUIView()
 		{
 			super("", false);
@@ -66,10 +68,19 @@ package knightage.gameui.heros
 			m_heroTabPanel.addTab(new HeroTabButton(new Bitmap(new PikemanTabUpAsset(0, 0)), new Bitmap(new PikemanTabSelectedUpAsset(0, 0))), PikemanListPane);
 			m_heroTabPanel.commitChanges();
 			
+			m_heroSoliderView = new HeroSoliderView();
+			addToContent(m_heroSoliderView);
 			
 			
+			m_heroInfoView.x = 0;
+			m_heroInfoView.y = 0;
 			
 			m_heroTabPanel.x = m_heroInfoView.x + m_heroInfoView.width + 10;
+			m_heroTabPanel.y = m_heroInfoView.y;
+			
+			
+			m_heroSoliderView.x = m_heroInfoView.x;
+			m_heroSoliderView.y = m_heroInfoView.y + m_heroInfoView.height + 10;
 		}
 		
 		override public function dispose():void
