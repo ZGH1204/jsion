@@ -290,10 +290,10 @@ package jsion.display
 		{
 			if(isChanged(LABELFILTERS) || m_stateChange)
 			{
-				var filters:Array;
+				var filterlist:Array;
 				var tmpFilters:Array;
 				
-				filters = m_labelUpFilters;
+				filterlist = m_labelUpFilters;
 				
 				if(model.enabled == false)
 				{
@@ -310,12 +310,12 @@ package jsion.display
 				
 				if(tmpFilters != null)
 				{
-					filters = tmpFilters;
+					filterlist = tmpFilters;
 				}
 				
-				if(filters != m_labelCurFilters)
+				if(filterlist != m_labelCurFilters)
 				{
-					m_labelCurFilters = filters;
+					m_labelCurFilters = filterlist;
 				}
 				
 				m_label.filters = m_labelCurFilters;

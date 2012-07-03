@@ -931,10 +931,10 @@ package jsion.display
 		{
 			if(isChanged(STATEFILTERS) || m_stateChange)
 			{
-				var filters:Array;
+				var filterlist:Array;
 				var tmpFilters:Array;
 				
-				filters = m_upFilters;
+				filterlist = m_upFilters;
 				
 				if(model.enabled == false)
 				{
@@ -951,12 +951,12 @@ package jsion.display
 				
 				if(tmpFilters != null)
 				{
-					filters = tmpFilters;
+					filterlist = tmpFilters;
 				}
 				
-				if(filters != m_curFilters)
+				if(filterlist != m_curFilters)
 				{
-					m_curFilters = filters;
+					m_curFilters = filterlist;
 				}
 				
 				m_imageLayer.filters = m_curFilters;

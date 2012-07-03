@@ -441,10 +441,10 @@ package jsion.display
 			
 			if((isChanged(ICONFILTERS) || m_stateChange) && m_curIconImage)
 			{
-				var filters:Array;
+				var filterlist:Array;
 				var tmpFilters:Array;
 				
-				filters = m_iconUpFilters;
+				filterlist = m_iconUpFilters;
 				
 				if(model.enabled == false)
 				{
@@ -461,12 +461,12 @@ package jsion.display
 				
 				if(tmpFilters != null)
 				{
-					filters = tmpFilters;
+					filterlist = tmpFilters;
 				}
 				
-				if(filters != m_iconCurFilters)
+				if(filterlist != m_iconCurFilters)
 				{
-					m_iconCurFilters = filters;
+					m_iconCurFilters = filterlist;
 				}
 				
 				m_curIconImage.filters = m_iconCurFilters;
