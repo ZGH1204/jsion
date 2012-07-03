@@ -1,24 +1,29 @@
 package knightage.gameui
 {
 	import flash.display.Bitmap;
-	import flash.display.PixelSnapping;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
-	import jsion.IDispose;
 	import jsion.comps.JsionSprite;
 	import jsion.debug.DEBUG;
-	import jsion.display.Button;
-	import jsion.display.Label;
+	import jsion.display.IconLabelButton;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 	
 	import knightage.StaticRes;
 	import knightage.events.UIEvent;
 	
-	public class PagingView extends JsionSprite
+	public class BigPagingView extends JsionSprite
 	{
+		protected var m_preButton:IconLabelButton;
+		
+		protected var m_nextButton:IconLabelButton;
+		
+		protected var m_contentWidth:int;
+		
+		protected var m_contentHeight:int;
+		
+		
 		private var m_pageSize:int;
 		
 		private var m_dataCount:int;
@@ -34,26 +39,21 @@ package knightage.gameui
 		private var m_current:int;
 		
 		
-		private var m_leftButton:Button;
-		
-		private var m_rightButton:Button;
-		
-		private var m_pageLabel:Label;
-		
 		private var m_dataList:Array;
 		
 		private var m_currentList:Array;
 		
-		
-		public function PagingView()
+		public function BigPagingView()
 		{
 			super();
 			
 			initialized();
 		}
-
+		
 		private function initialized():void
 		{
+			// TODO Auto Generated method stub
+			
 			m_pages = 1;
 			
 			m_current = 1;
@@ -62,62 +62,41 @@ package knightage.gameui
 			
 			m_dataCount = 1;
 			
-			var tempScale:Number = 0.8;
-			
-			var bmp:Bitmap;
-			
-			m_leftButton = new Button();
-			m_leftButton.beginChanges();
-			m_leftButton.freeBMD = false;
-			bmp = new Bitmap(StaticRes.LeftArrowBMD, PixelSnapping.AUTO, true);
-			bmp.scaleX = tempScale;
-			bmp.scaleY = tempScale;
-			m_leftButton.upImage = bmp;
-			m_leftButton.commitChanges();
-			addChild(m_leftButton);
-			
-			m_rightButton = new Button();
-			m_rightButton.beginChanges();
-			m_rightButton.freeBMD = false;
-			bmp = new Bitmap(StaticRes.RightArrowBMD, PixelSnapping.AUTO, true);
-			bmp.scaleX = tempScale;
-			bmp.scaleY = tempScale;
-			m_rightButton.upImage = bmp;
-			m_rightButton.commitChanges();
-			addChild(m_rightButton);
-			
-			
-			m_pageLabel = new Label();
-			m_pageLabel.beginChanges();
-			m_pageLabel.embedFonts = true;
-			m_pageLabel.textColor = StaticRes.WhiteColor;
-			m_pageLabel.filters = StaticRes.TextFilters4;
-			m_pageLabel.textFormat = StaticRes.HaiBaoEmbedTextFormat15;
-			m_pageLabel.text = m_current + "/" + m_pages;
-			m_pageLabel.commitChanges();
-			addChild(m_pageLabel);
-			
-			var spacing:int = 100;
-			
-			m_leftButton.x = 0;
-			m_rightButton.y = 0;
-			
-			m_rightButton.x = m_leftButton.x + m_leftButton.width + spacing;
-			m_rightButton.y = m_rightButton.y;
-			
-			m_pageLabel.x = (spacing - m_pageLabel.width) / 2 + m_leftButton.x + m_leftButton.width;
-			m_pageLabel.y = m_leftButton.y + (m_leftButton.height - m_pageLabel.height) / 2;
+			m_preButton = new IconLabelButton();
+			m_preButton.beginChanges();
+			m_preButton.freeBMD = false;
+			m_preButton.iconUpImage = new Bitmap(StaticRes.LeftArrowBMD);
+			m_preButton.iconDir = IconLabelButton.LEFT;
+			//m_preButton.label = "上一区域";
+			//m_preButton.labelColor = StaticRes.WhiteColor;
+			//m_preButton.textFormat = StaticRes.TextFormat18;
+			//m_preButton.labelUpFilters = StaticRes.TextFilters4;
+			//m_preButton.labelOverFilters = StaticRes.TextFilters4;
+			//m_preButton.labelDownFilters = StaticRes.TextFilters4;
+			m_preButton.commitChanges();
+			addChild(m_preButton);
 			
 			
 			
-			
-			
+			m_nextButton = new IconLabelButton();
+			m_nextButton.beginChanges();
+			m_nextButton.freeBMD = false;
+			m_nextButton.iconUpImage = new Bitmap(StaticRes.RightArrowBMD);
+			m_nextButton.iconDir = IconLabelButton.RIGHT;
+			//m_nextButton.label = "下一区域";
+			//m_nextButton.labelColor = StaticRes.WhiteColor;
+			//m_nextButton.textFormat = StaticRes.TextFormat18;
+			//m_nextButton.labelUpFilters = StaticRes.TextFilters4;
+			//m_nextButton.labelOverFilters = StaticRes.TextFilters4;
+			//m_nextButton.labelDownFilters = StaticRes.TextFilters4;
+			m_nextButton.commitChanges();
+			addChild(m_nextButton);
 			
 			
 			addEventListener(Event.ADDED_TO_STAGE, __addToStageHandler);
 			
-			m_leftButton.addEventListener(MouseEvent.CLICK, __prePageClickHandler);
-			m_rightButton.addEventListener(MouseEvent.CLICK, __nextPageClickHandler);
+			m_preButton.addEventListener(MouseEvent.CLICK, __preClickHandler);
+			m_nextButton.addEventListener(MouseEvent.CLICK, __nextClickHandler);
 		}
 		
 		private function __addToStageHandler(e:Event):void
@@ -134,15 +113,17 @@ package knightage.gameui
 			}
 		}
 		
-		private function __prePageClickHandler(e:MouseEvent):void
+		private function __preClickHandler(e:MouseEvent):void
 		{
+			// TODO Auto-generated method stub
 			if(m_current <= 1) return;
 			
 			current = m_current - 1;
 		}
 		
-		private function __nextPageClickHandler(e:MouseEvent):void
+		private function __nextClickHandler(e:MouseEvent):void
 		{
+			// TODO Auto-generated method stub
 			if(m_current >= m_pages) return;
 			
 			current = m_current + 1;
@@ -152,7 +133,7 @@ package knightage.gameui
 		{
 			return m_current;
 		}
-
+		
 		public function set current(value:int):void
 		{
 			if(m_current != value)
@@ -162,8 +143,6 @@ package knightage.gameui
 				
 				m_current = value;
 			}
-			
-			m_pageLabel.text = m_current + "/" + m_pages;
 			
 			m_startIndex = (m_current - 1) * m_pageSize;
 			
@@ -188,12 +167,12 @@ package knightage.gameui
 		{
 			return m_endIndex;
 		}
-
+		
 		public function get pages():int
 		{
 			return m_pages;
 		}
-
+		
 		public function setPagingData(pageSize:int, count:int):void
 		{
 			m_pageSize = pageSize;
@@ -223,18 +202,28 @@ package knightage.gameui
 			m_dataList = list;
 		}
 		
+		public function setContentSize(w:int, h:int):void
+		{
+			m_contentWidth = w;
+			m_contentHeight = h;
+			
+			m_preButton.x = 0;
+			m_preButton.y = (m_contentHeight - m_preButton.height) / 2;
+			
+			
+			m_nextButton.x = m_preButton.x + m_preButton.width + m_contentWidth;
+			m_nextButton.y = (m_contentHeight - m_nextButton.height) / 2;
+		}
+		
 		override public function dispose():void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, __addToStageHandler);
 			
-			DisposeUtil.free(m_leftButton);
-			m_leftButton = null;
+			DisposeUtil.free(m_preButton);
+			m_preButton = null;
 			
-			DisposeUtil.free(m_rightButton);
-			m_rightButton = null;
-			
-			DisposeUtil.free(m_pageLabel);
-			m_pageLabel = null;
+			DisposeUtil.free(m_nextButton);
+			m_nextButton = null;
 			
 			super.dispose();
 		}
