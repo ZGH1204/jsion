@@ -293,10 +293,10 @@ package jsion.display
 			{
 				if(isChanged(STATEFILTERS) || m_stateChange)
 				{
-					var filters:Array;
+					var filterlist:Array;
 					var tmpFilters:Array;
 					
-					filters = m_selectedUpFilters;
+					filterlist = m_selectedUpFilters;
 					
 					if(model.enabled == false)
 					{
@@ -313,12 +313,12 @@ package jsion.display
 					
 					if(tmpFilters != null)
 					{
-						filters = tmpFilters;
+						filterlist = tmpFilters;
 					}
 					
-					if(filters != m_curFilters)
+					if(filterlist != m_curFilters)
 					{
-						m_curFilters = filters;
+						m_curFilters = filterlist;
 					}
 					
 					m_imageLayer.filters = m_curFilters;
@@ -339,10 +339,10 @@ package jsion.display
 			{
 				if(model.selected)
 				{
-					var filters:Array;
+					var filterlist:Array;
 					var tmpFilters:Array;
 					
-					filters = m_selectedLabelUpFilters;
+					filterlist = m_selectedLabelUpFilters;
 					
 					if(model.enabled == false)
 					{
@@ -359,12 +359,12 @@ package jsion.display
 					
 					if(tmpFilters != null)
 					{
-						filters = tmpFilters;
+						filterlist = tmpFilters;
 					}
 					
-					if(filters != m_labelCurFilters)
+					if(filterlist != m_labelCurFilters)
 					{
-						m_labelCurFilters = filters;
+						m_labelCurFilters = filterlist;
 					}
 					
 					m_label.filters = m_labelCurFilters;
