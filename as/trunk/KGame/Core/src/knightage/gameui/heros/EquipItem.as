@@ -1,16 +1,19 @@
 package knightage.gameui.heros
 {
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
+	import jsion.IDispose;
+	import jsion.ddrop.DDropMgr;
 	import jsion.ddrop.IDragDrop;
 	import jsion.display.IconButton;
 	
 	import knightage.StaticRes;
 	import knightage.player.goods.EquipType;
 	
-	public class EquipItem extends IconButton implements IDragDrop
+	public class EquipItem extends Sprite implements IDragDrop, IDispose//IconButton implements IDragDrop
 	{
 		private var m_background:Sprite;
 		
@@ -20,14 +23,18 @@ package knightage.gameui.heros
 		
 		private var m_type:int;
 		
+		private var m_equipIcon:DisplayObject;
+		
 		public function EquipItem(type:int)
 		{
 			m_type = type;
 			
 			super();
+			
+			configUI();
 		}
 		
-		override protected function configUI():void
+		protected function configUI():void
 		{
 			m_background = new Sprite();
 			
@@ -59,10 +66,19 @@ package knightage.gameui.heros
 			}
 			
 			
+			addChild(m_background);
+//			beginChanges();
+//			upImage = m_background;
+//			commitChanges();
 			
-			beginChanges();
-			upImage = m_background;
-			commitChanges();
+			
+			DDropMgr.registeDrag(this);
+		}
+		
+		
+		public function dispose():void
+		{
+			DDropMgr.unregisteDrag(this);
 		}
 		
 		
@@ -115,12 +131,23 @@ package knightage.gameui.heros
 		
 		public function get freeDragingIcon():Boolean
 		{
-			return false;
+			return true;
 		}
 		
 		public function get dragingIcon():DisplayObject
 		{
-			return null;
+			if(m_equipIcon)
+			{
+				var bmp:Bitmap = new Bitmap(new BitmapData(m_equipIcon.width, m_equipIcon.height, true, 0x0));
+				
+				bmp.bitmapData.draw(m_equipIcon);
+				
+				bmp.x = m_equipIcon.x;
+				bmp.y = m_equipIcon.y;
+				
+				return bmp;
+			}
+			return null;;
 		}
 		
 		public function groupDragCallback(dragger:IDragDrop, data:*):void

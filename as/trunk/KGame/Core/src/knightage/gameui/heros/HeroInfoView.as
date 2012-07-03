@@ -22,11 +22,7 @@ package knightage.gameui.heros
 	
 	public class HeroInfoView extends Sprite implements IDispose
 	{
-		private var m_background:Image;
-		
-		private var m_topBar:DisplayObject;
-		
-		
+		private var m_heroBustView:HeroBustView;
 		
 		private var m_weaponItem:EquipItem;
 		
@@ -37,24 +33,6 @@ package knightage.gameui.heros
 		
 		private var m_mountItem:EquipItem;
 		
-		
-		
-		
-		private var m_levelView:LevelView;
-		private var m_progressBar:ProgressBar;
-		
-		
-		
-		
-		private var m_attackLabel:Label;
-		
-		private var m_defenseLabel:Label;
-		
-		private var m_critLabel:Label;
-		
-		private var m_soilderLabel:Label;
-		
-		private var m_propBackground:DisplayObject;
 		
 		
 		
@@ -73,20 +51,8 @@ package knightage.gameui.heros
 		
 		private function initialized():void
 		{
-			m_background = new Image();
-			m_background.beginChanges();
-			m_background.freeSource = false;
-			m_background.source = StaticRes.HeroBackgroundBMD;
-			m_background.scale9Insets = StaticRes.HeroBackgroundInsets;
-			m_background.width = 200;
-			m_background.height = 210;
-			m_background.commitChanges();
-			addChild(m_background);
-			
-			m_topBar = new Bitmap(new HeroJinDaiAsset(0, 0));
-			addChild(m_topBar);
-			
-			
+			m_heroBustView = new HeroBustView();
+			addChild(m_heroBustView);
 			
 			m_weaponItem = new EquipItem(EquipType.Weapon);
 			addChild(m_weaponItem);
@@ -100,72 +66,6 @@ package knightage.gameui.heros
 			
 			m_mountItem = new EquipItem(EquipType.Mount);
 			addChild(m_mountItem);
-			
-			
-			
-			m_progressBar = new ProgressBar(ProgressBar.HORIZONTAL, ProgressBar.MASK);
-			m_progressBar.beginChanges();
-			m_progressBar.freeBMD = true;
-			m_progressBar.background = new Bitmap(new ExpProgressBackgroundAsset(0, 0));
-			m_progressBar.progressBar = new Bitmap(new ExpProgressBarAsset(0, 0));
-			m_progressBar.value = 100;
-			m_progressBar.barOffsetX = 1;
-			m_progressBar.barOffsetY = 4;
-			m_progressBar.commitChanges();
-			addChild(m_progressBar);
-			
-			
-			
-			m_levelView = new LevelView(0, LevelView.HERO);
-			addChild(m_levelView);
-			
-			
-			
-			
-			
-			
-			m_propBackground = new Bitmap(new HeroPropAsset(0, 0));
-			addChild(m_propBackground);
-			
-			m_attackLabel = new Label();
-			m_attackLabel.beginChanges();
-			m_attackLabel.text = "200";
-			m_attackLabel.width = 40;
-			m_attackLabel.hAlign = Label.LEFT;
-			m_attackLabel.textFormat = StaticRes.TextFormat14;
-			m_attackLabel.commitChanges();
-			addChild(m_attackLabel);
-			
-			m_defenseLabel = new Label();
-			m_defenseLabel.beginChanges();
-			m_defenseLabel.text = "200";
-			m_defenseLabel.width = 40;
-			m_defenseLabel.hAlign = Label.LEFT;
-			m_defenseLabel.textFormat = StaticRes.TextFormat14;
-			m_defenseLabel.commitChanges();
-			addChild(m_defenseLabel);
-			
-			m_critLabel = new Label();
-			m_critLabel.beginChanges();
-			m_critLabel.text = "000";
-			m_critLabel.width = 40;
-			m_critLabel.hAlign = Label.LEFT;
-			m_critLabel.textFormat = StaticRes.TextFormat14;
-			m_critLabel.commitChanges();
-			addChild(m_critLabel);
-			
-			m_soilderLabel = new Label();
-			m_soilderLabel.beginChanges();
-			m_soilderLabel.text = "000";
-			m_soilderLabel.width = 40;
-			m_soilderLabel.hAlign = Label.LEFT;
-			m_soilderLabel.textFormat = StaticRes.TextFormat14;
-			m_soilderLabel.commitChanges();
-			addChild(m_soilderLabel);
-			
-			
-			
-			
 			
 			
 			
@@ -215,14 +115,11 @@ package knightage.gameui.heros
 			
 			
 			
-			m_topBar.x = 35;
 			
-			m_background.x = m_topBar.x + (m_topBar.width - m_background.width) / 2;
-			m_background.y = m_topBar.y + m_topBar.height - 16;
 			
 			
 			m_weaponItem.x = 0;
-			m_weaponItem.y = m_topBar.height - 10;
+			m_weaponItem.y = 25;
 			
 			m_armorItem.x = m_weaponItem.x;
 			m_armorItem.y = m_weaponItem.y + m_weaponItem.height + 2;
@@ -234,27 +131,8 @@ package knightage.gameui.heros
 			m_mountItem.y = m_armorItem.y;
 			
 			
-			m_levelView.x = m_armorItem.x + m_armorItem.width - 2;
-			m_levelView.y = m_armorItem.y + m_armorItem.height - m_levelView.height + 5;
-			
-			
-			m_progressBar.x = m_levelView.x + m_levelView.width - 2;
-			m_progressBar.y = m_levelView.y + (m_levelView.height - m_progressBar.height) / 2;
-			
-			
-			m_propBackground.y = m_armorItem.y + m_armorItem.height + 3;
-			
-			m_attackLabel.x = 40;
-			m_attackLabel.y = m_propBackground.y + (m_propBackground.height - m_attackLabel.height) / 2;
-			m_defenseLabel.x = 108;
-			m_defenseLabel.y = m_propBackground.y + (m_propBackground.height - m_defenseLabel.height) / 2;
-			m_critLabel.x = 185;
-			m_critLabel.y = m_propBackground.y + (m_propBackground.height - m_critLabel.height) / 2;
-			m_soilderLabel.x = 255;
-			m_soilderLabel.y = m_propBackground.y + (m_propBackground.height - m_soilderLabel.height) / 2;
-			
 			m_tabEquipButton.x = 2;
-			m_tabEquipButton.y = m_propBackground.y + m_propBackground.height + 6;
+			m_tabEquipButton.y = m_heroBustView.y + m_heroBustView.height + 5;
 			
 			m_cultivateButton.x = m_tabEquipButton.x + m_tabEquipButton.width + 6;
 			m_cultivateButton.y = m_tabEquipButton.y;

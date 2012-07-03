@@ -8,6 +8,11 @@ package knightage.gameui.heros
 	import jsion.utils.InstanceUtil;
 	
 	import knightage.display.Frame;
+	import knightage.gameui.heros.lists.ArcherListPane;
+	import knightage.gameui.heros.lists.CavalryListPane;
+	import knightage.gameui.heros.lists.InfantryListPane;
+	import knightage.gameui.heros.lists.MasterListPane;
+	import knightage.gameui.heros.lists.PikemanListPane;
 	
 	public class HeroUIView extends Frame
 	{
@@ -51,10 +56,20 @@ package knightage.gameui.heros
 			m_heroTabPanel = new TabPanel();
 			addToContent(m_heroTabPanel);
 			
+			m_heroTabPanel.beginChanges();
+			m_heroTabPanel.tabOffset = 22;
+			m_heroTabPanel.paneOffset = -11;
+			m_heroTabPanel.addTab(new HeroTabButton(new Bitmap(new InfantryTabUpAsset(0, 0)), new Bitmap(new InfantryTabSelectedUpAsset(0, 0))), InfantryListPane);
+			m_heroTabPanel.addTab(new HeroTabButton(new Bitmap(new CavalryTabUpAsset(0, 0)), new Bitmap(new CavalryTabSelectedUpAsset(0, 0))), CavalryListPane);
+			m_heroTabPanel.addTab(new HeroTabButton(new Bitmap(new ArcherTabUpAsset(0, 0)), new Bitmap(new ArcherTabSelectedUpAsset(0, 0))), ArcherListPane);
+			m_heroTabPanel.addTab(new HeroTabButton(new Bitmap(new MasterTabUpAsset(0, 0)), new Bitmap(new MasterTabSelectedUpAsset(0, 0))), MasterListPane);
+			m_heroTabPanel.addTab(new HeroTabButton(new Bitmap(new PikemanTabUpAsset(0, 0)), new Bitmap(new PikemanTabSelectedUpAsset(0, 0))), PikemanListPane);
+			m_heroTabPanel.commitChanges();
 			
 			
 			
-			m_heroTabPanel.x = m_heroInfoView.x + m_heroInfoView.width + 15;
+			
+			m_heroTabPanel.x = m_heroInfoView.x + m_heroInfoView.width + 10;
 		}
 		
 		override public function dispose():void

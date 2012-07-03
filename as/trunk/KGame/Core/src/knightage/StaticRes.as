@@ -1,5 +1,7 @@
 package knightage
 {
+	import flash.display.BitmapData;
+	import flash.filters.ColorMatrixFilter;
 	import flash.filters.GlowFilter;
 	import flash.text.StyleSheet;
 	import flash.text.TextFormat;
@@ -27,6 +29,8 @@ package knightage
 		 * 公共按钮文本默认样式
 		 */		
 		public static const ButtonDefaultTextFormat:TextFormat = new TextFormat(null, 15, null, true);
+		
+		
 		
 		
 		
@@ -96,6 +100,9 @@ package knightage
 		
 		
 		
+		public static const ButtonDefaultSelectedUpFilters:Array = [new GlowFilter(0x9900CC, 1, 4, 4, 8, 1)];
+		public static const ButtonDefaultSelectedOverFilters:Array = [new GlowFilter(0x9900CC, 1, 4, 4, 8, 1), new ColorMatrixFilter([1, 0, 0, 0, 25,   0, 1, 0, 0, 25,   0, 0, 1, 0, 25,   0, 0, 0, 1, 0])];
+		
 		
 		/**
 		 * 白色
@@ -115,7 +122,7 @@ package knightage
 		/**
 		 * 文本样式:18号，加粗。
 		 */		
-		public static const TextFormat18:TextFormat = new TextFormat(null, 18);
+		public static const TextFormat18:TextFormat = new TextFormat(null, 18, null, true);
 		
 		/**
 		 * 描边4像素8强度滤镜。
@@ -171,5 +178,30 @@ package knightage
 		 * 装备背景框
 		 */		
 		public static const EquipItemBackgroundBMD:EquipItemBackgroundAsset = new EquipItemBackgroundAsset(0, 0);
+		
+		
+		/**
+		 * 英雄列表背景图片资源
+		 */		
+		public static const HeroListBackgroundBMD:HeroListBackgroundAsset = new HeroListBackgroundAsset(0, 0);
+		/**
+		 * 英雄列表背景图片九宫格参数
+		 */		
+		public static const HeroListBackgroundInset:Insets = new Insets(20, 20, 20, 20);
+		
+		
+		/**
+		 * 英雄列表Item背景图片资源
+		 */		
+		public static const HeroListItemBGBMD:HeroListItemAsset = new HeroListItemAsset(0, 0);
+		
+		/**
+		 * 向左的翻页箭头
+		 */		
+		public static const LeftArrowBMD:LeftArrowAsset = new LeftArrowAsset(0, 0);
+		/**
+		 * 向右的翻页箭头
+		 */		
+		public static const RightArrowBMD:RightArrowAsset = new RightArrowAsset(0, 0);
 	}
 }
