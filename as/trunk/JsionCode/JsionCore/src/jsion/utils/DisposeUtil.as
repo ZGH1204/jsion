@@ -23,12 +23,12 @@ package jsion.utils
 			if(obj is IDispose)
 			{
 				IDispose(obj).dispose();
-				disposeDisplayObject(obj as DisplayObject);
+				//disposeDisplayObject(obj as DisplayObject);
 			}
 			else if(obj.hasOwnProperty("dispose"))
 			{
 				obj["dispose"]();
-				disposeDisplayObject(obj as DisplayObject);
+				//disposeDisplayObject(obj as DisplayObject);
 			}
 			
 			if(obj is Bitmap)
