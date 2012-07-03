@@ -177,6 +177,8 @@ package jsion.display
 			
 			m_iconOverFilters = OVERFILTERS;
 			m_iconDisableFilters = DISABLEDFILTERS;
+			m_selectedIconOverFilters = OVERFILTERS;
+			m_selectedIconDisableFilters = DISABLEDFILTERS;
 		}
 		
 		override protected function addChildren():void
