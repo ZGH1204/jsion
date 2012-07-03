@@ -50,6 +50,22 @@ package jsion.comps
 		}
 		
 		/**
+		 * 重写 x 属性，舍去小数部分。
+		 */		
+		override public function set x(value:Number):void
+		{
+			super.x = int(value);
+		}
+		
+		/**
+		 * 重写 y 属性，舍去小数部分。
+		 */		
+		override public function set y(value:Number):void
+		{
+			super.y = int(value);
+		}
+		
+		/**
 		 * 重写宽度属性
 		 */		
 		override public function get width():Number

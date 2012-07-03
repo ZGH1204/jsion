@@ -248,19 +248,35 @@ package jsion.utils
 		}
 		
 		/**
-		 * 横向排列显示对象
+		 * 横向排列显示对象，当可选参数的第一个参数为数组时，之后的所有参数将不会进行处理。
 		 * @param padding 间隔像素
 		 * @param args 显示对象列表
 		 */		
 		public static function layeroutOneByOneHorizontal(padding:int = 0, ...args):void
 		{
-			if(args.length < 2) return;
+			var list:Array;
 			
-			var last:DisplayObject = args[0] as DisplayObject;
-			
-			for(var i:int = 1; i < args.length; i++)
+			if(args.length < 2)
 			{
-				var current:DisplayObject = args[i];
+				if(args[0] is Array)
+				{
+					list = args[0];
+				}
+				else
+				{
+					return;
+				}
+			}
+			else
+			{
+				list = args;
+			}
+			
+			var last:DisplayObject = list[0] as DisplayObject;
+			
+			for(var i:int = 1; i < list.length; i++)
+			{
+				var current:DisplayObject = list[i];
 				
 				current.x = last.x + last.width + padding;
 				
@@ -269,20 +285,36 @@ package jsion.utils
 		}
 		
 		/**
-		 * 纵向排列显示对象
+		 * 纵向排列显示对象，当可选参数的第一个参数为数组时，之后的所有参数将不会进行处理。
 		 * @param padding 间隔像素
 		 * @param args 显示对象列表
 		 * 
 		 */		
 		public static function layeroutOneByOneVertical(padding:int = 0, ...args):void
 		{
-			if(args.length < 2) return;
+			var list:Array;
 			
-			var last:DisplayObject = args[0] as DisplayObject;
-			
-			for(var i:int = 1; i < args.length; i++)
+			if(args.length < 2)
 			{
-				var current:DisplayObject = args[i];
+				if(args[0] is Array)
+				{
+					list = args[0];
+				}
+				else
+				{
+					return;
+				}
+			}
+			else
+			{
+				list = args;
+			}
+			
+			var last:DisplayObject = list[0] as DisplayObject;
+			
+			for(var i:int = 1; i < list.length; i++)
+			{
+				var current:DisplayObject = list[i];
 				
 				current.y = last.y + last.height + padding;
 				

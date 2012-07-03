@@ -160,6 +160,26 @@ package jsion.utils
 		}
 		
 		/**
+		 * 获取数组中从指定的起始索引(包含)到结束索引(包含)之间的所有对象并构造一个新数组，不会对原数组进行任何修改。
+		 * @param array 要搜索的数组
+		 * @param startIndex 从0开始的起始索引
+		 * @param endIndex 从0开始的结束索引
+		 */		
+		public static function getRange(array:Array, startIndex:int, endIndex:int):Array
+		{
+			if(array == null || startIndex < 0 || endIndex >= array.length) return null;
+			
+			var list:Array = [];
+			
+			for(var i:int = startIndex; i <= endIndex; i++)
+			{
+				list.push(array[i]);
+			}
+			
+			return list;
+		}
+		
+		/**
 		 * 以数字格式降序排列指定字段
 		 * @param array 要排序的数组
 		 * @param key 排序字段

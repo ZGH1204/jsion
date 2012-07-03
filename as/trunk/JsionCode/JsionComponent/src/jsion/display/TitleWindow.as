@@ -1,6 +1,7 @@
 package jsion.display
 {
 	import flash.display.DisplayObject;
+	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import flash.text.StyleSheet;
 	import flash.text.TextFormat;
@@ -115,6 +116,8 @@ package jsion.display
 		
 		private var m_dragEnabled:Boolean;
 		
+		private var m_autoBring2Top:Boolean;
+		
 		public function TitleWindow(modal:Boolean = true)
 		{
 			super(modal);
@@ -156,6 +159,8 @@ package jsion.display
 			
 			m_dragEnabled = true;
 			m_dragger = new TitleDragger(this);
+			
+			autoBring2Top = true;
 		}
 		
 		/**
@@ -305,6 +310,44 @@ package jsion.display
 				onPropertiesChanged(TITLEBARALIGN);
 			}
 		}
+		//==================================	TitleDragger 组件属性	==================================
+		
+		
+		/**
+		 * 是否在标题拖拽辅助对象的 MouseDown 事件的时候交窗体提升到最顶层
+		 */		
+		public function get autoBring2Top():Boolean
+		{
+			return m_autoBring2Top;
+		}
+		
+		/**
+		 * @private
+		 */		
+		public function set autoBring2Top(value:Boolean):void
+		{
+			if(m_autoBring2Top != value)
+			{
+				m_autoBring2Top = value;
+				
+				if(m_autoBring2Top)
+				{
+					addEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
+				}
+				else
+				{
+					removeEventListener(MouseEvent.MOUSE_DOWN, __mouseDownHandler);
+				}
+			}
+		}
+		
+		
+		private function __mouseDownHandler(e:MouseEvent):void
+		{
+			bring2Top();
+		}
+		
+		//==================================	TitleDragger 组件属性	==================================
 		
 		//==================================	TitleBar 组件属性	==================================
 		
@@ -499,6 +542,9 @@ package jsion.display
 		}
 		
 		
+		//==================================	TitleBar 组件属性	==================================
+		
+		
 		
 		//==============================	Label组件属性	==============================
 		
@@ -637,8 +683,5 @@ package jsion.display
 		}
 		
 		//==============================	Label组件属性	==============================
-		
-		
-		//==================================	TitleBar 组件属性	==================================
 	}
 }
