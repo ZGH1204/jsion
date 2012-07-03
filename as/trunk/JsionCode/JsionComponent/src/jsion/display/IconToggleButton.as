@@ -6,6 +6,11 @@ package jsion.display
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.StringUtil;
 
+	/**
+	 * 带图标的可选中按钮
+	 * @author Jsion
+	 * 
+	 */	
 	public class IconToggleButton extends ToggleButton
 	{
 		/**
