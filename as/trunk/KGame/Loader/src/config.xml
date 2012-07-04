@@ -20,13 +20,22 @@
 	<Loading id="login" 		libPath="Login\bin\Login.swc" />
 	<Loading id="template" 		libPath="Loader\src\assets\Templates.xml" />
 	<Loading id="language" 		libPath="Loader\src\assets\Language-zh_CN.txt" />
-	
-	<Config 
+	<!--
+		ServerIP="61.155.169.232"
+		Request="http://61.155.169.232:8080/"
+		
+		ServerIP="192.168.1.20"
+		Request="http://localhost:6692/"
+		
 		ServerIP="192.168.1.3"
-		ServerPort="6000"
+		Request="http://localhost:6692/"
+	-->
+	<Config 
 		GameWidth="760"
 		GameHeight="650"
 		ResRoot="assets/"
-		Request="http://localhost:6692/"
+		ServerPort="6000"
+		ServerIP="61.155.169.232"
+		Request="http://61.155.169.232:8080/"
 	/>
 </Root>
