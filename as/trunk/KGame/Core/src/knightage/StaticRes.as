@@ -207,5 +207,10 @@ package knightage
 		 * 英雄兵种背景框图片资源
 		 */		
 		public static const HeroSoliderBackgroundBMD:SoliderItemBackgroundAsset = new SoliderItemBackgroundAsset(0, 0);
+		
+		/**
+		 * 英雄界面 当前兵种 文本图片资源
+		 */		
+		public static const HeroCurrentSoilderTypeBMD:WenZiDangQianBingZhongAsset = new WenZiDangQianBingZhongAsset(0, 0);
 	}
 }

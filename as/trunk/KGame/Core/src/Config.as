@@ -4,6 +4,8 @@ package
 
 	public class Config
 	{
+		public static var PlayMusic:String;
+		
 		public static var LibRoot:String;
 		
 		public static var ServerIP:String;

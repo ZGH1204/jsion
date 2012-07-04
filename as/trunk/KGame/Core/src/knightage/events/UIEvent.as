@@ -13,6 +13,11 @@ package knightage.events
 		 */		
 		public static const PAGE_CHANGED:String = "pageChanged";
 		
+		/**
+		 * 选中的英雄变更
+		 */		
+		public static const HERO_SELECTED_CHANGED:String = "heroSelectedChanged";
+		
 		public var data1:*;
 		public var data2:*;
 		public var data3:*;

@@ -9,9 +9,13 @@ package knightage.gameui.heros
 	import jsion.display.Image;
 	import jsion.display.Label;
 	import jsion.display.ProgressBar;
+	import jsion.loaders.DisplayLoader;
+	import jsion.utils.DepthUtil;
+	import jsion.utils.DisposeUtil;
 	
 	import knightage.StaticRes;
 	import knightage.homeui.LevelView;
+	import knightage.player.heros.PlayerHero;
 	
 	public class HeroBustView extends Sprite implements IDispose
 	{
@@ -42,6 +46,12 @@ package knightage.gameui.heros
 		
 		private var m_propBackground:DisplayObject;
 		
+		private var m_bustFile:String;
+		private var m_loader:DisplayLoader;
+		
+		
+		
+		private var m_hero:PlayerHero;
 		
 		
 		public function HeroBustView()
@@ -79,7 +89,8 @@ package knightage.gameui.heros
 			m_heroNameLabel.antiAliasType = AntiAliasType.ADVANCED;
 			m_heroNameLabel.thickness = 200;
 			m_heroNameLabel.sharpness = 100;
-			m_heroNameLabel.text = "卡福利卡";
+			m_heroNameLabel.text = " ";
+			//m_heroNameLabel.text = "卡福利卡";
 			m_heroNameLabel.commitChanges();
 			addChild(m_heroNameLabel);
 			
@@ -116,7 +127,7 @@ package knightage.gameui.heros
 			
 			m_attackLabel = new Label();
 			m_attackLabel.beginChanges();
-			m_attackLabel.text = "200";
+			m_attackLabel.text = "0";
 			m_attackLabel.width = 40;
 			m_attackLabel.hAlign = Label.LEFT;
 			m_attackLabel.textFormat = StaticRes.TextFormat14;
@@ -125,7 +136,7 @@ package knightage.gameui.heros
 			
 			m_defenseLabel = new Label();
 			m_defenseLabel.beginChanges();
-			m_defenseLabel.text = "200";
+			m_defenseLabel.text = "0";
 			m_defenseLabel.width = 40;
 			m_defenseLabel.hAlign = Label.LEFT;
 			m_defenseLabel.textFormat = StaticRes.TextFormat14;
@@ -134,7 +145,7 @@ package knightage.gameui.heros
 			
 			m_critLabel = new Label();
 			m_critLabel.beginChanges();
-			m_critLabel.text = "000";
+			m_critLabel.text = "0";
 			m_critLabel.width = 40;
 			m_critLabel.hAlign = Label.LEFT;
 			m_critLabel.textFormat = StaticRes.TextFormat14;
@@ -143,7 +154,7 @@ package knightage.gameui.heros
 			
 			m_soilderLabel = new Label();
 			m_soilderLabel.beginChanges();
-			m_soilderLabel.text = "000";
+			m_soilderLabel.text = "0";
 			m_soilderLabel.width = 40;
 			m_soilderLabel.hAlign = Label.LEFT;
 			m_soilderLabel.textFormat = StaticRes.TextFormat14;
@@ -183,6 +194,63 @@ package knightage.gameui.heros
 			m_critLabel.y = m_propBackground.y + (m_propBackground.height - m_critLabel.height) / 2;
 			m_soilderLabel.x = 255;
 			m_soilderLabel.y = m_propBackground.y + (m_propBackground.height - m_soilderLabel.height) / 2;
+		}
+		
+		public function setData(hero:PlayerHero):void
+		{
+			if(m_hero != hero)
+			{
+				m_hero = hero;
+				
+				refreshView(m_hero);
+			}
+		}
+		
+		private function refreshView(hero:PlayerHero):void
+		{
+			if(hero)
+			{
+				if(m_bustFile != hero.BustImg)
+				{
+					m_bustFile = hero.BustImg;
+					DisposeUtil.free(m_loader);
+					m_loader = new DisplayLoader(hero.BustImg, Config.ResRoot);
+					m_loader.loadAsync(loadCallback);
+					addChild(m_loader);
+				}
+				
+				m_heroNameLabel.text = hero.TemplateName;
+				//m_progressBar.value = 0;//TODO: 经验未实现
+				m_levelView.setLevel(hero.lv);
+				m_attackLabel.text = hero.attack.toString();
+				m_defenseLabel.text = hero.defense.toString();
+				m_critLabel.text = hero.crit.toString();
+				m_soilderLabel.text = hero.soliders.toString();
+			}
+			else
+			{
+				m_heroNameLabel.text = "";
+				//m_progressBar.value = 0;//TODO: 经验未实现
+				m_levelView.setLevel(0);
+				m_attackLabel.text = "0";
+				m_defenseLabel.text = "0";
+				m_critLabel.text = "0";
+				m_soilderLabel.text = "0";
+				
+				m_bustFile = null;
+				
+				DisposeUtil.free(m_loader);
+				m_loader = null;
+			}
+		}
+		
+		private function loadCallback(loader:DisplayLoader, success:Boolean):void
+		{
+			loader.x = (width - loader.width) / 2;
+			loader.y = m_progressBar.y + m_progressBar.height - loader.height;
+			
+			DepthUtil.bringToTop(m_levelView);
+			m_progressBar.bring2Top();
 		}
 		
 		public function dispose():void

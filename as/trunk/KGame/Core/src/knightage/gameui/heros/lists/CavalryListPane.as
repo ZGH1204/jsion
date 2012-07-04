@@ -1,12 +1,14 @@
 package knightage.gameui.heros.lists
 {
+	import knightage.HeroType;
 	import knightage.gameui.heros.HeroListView;
 	
 	public class CavalryListPane extends HeroListView
 	{
-		public function CavalryListPane(row:int=3, column:int=4)
+		public function CavalryListPane()
 		{
-			super(row, column);
+			m_heroType = HeroType.Cavalry;
+			super();
 		}
 	}
 }

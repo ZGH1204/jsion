@@ -1,12 +1,14 @@
 package knightage.gameui.heros.lists
 {
+	import knightage.HeroType;
 	import knightage.gameui.heros.HeroListView;
 	
 	public class MasterListPane extends HeroListView
 	{
-		public function MasterListPane(row:int=3, column:int=4)
+		public function MasterListPane()
 		{
-			super(row, column);
+			m_heroType = HeroType.Master;
+			super();
 		}
 	}
 }

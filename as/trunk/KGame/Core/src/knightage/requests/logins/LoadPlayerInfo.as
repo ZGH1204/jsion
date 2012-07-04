@@ -1,5 +1,6 @@
 package knightage.requests.logins
 {
+	import jsion.debug.DEBUG;
 	import jsion.loaders.JsionLoader;
 	import jsion.utils.DateUtil;
 	import jsion.utils.XmlUtil;
@@ -25,6 +26,14 @@ package knightage.requests.logins
 		override protected function onLoadCompleted():void
 		{
 			super.onLoadCompleted();
+			
+			if(m_status != COMPLETE)
+			{
+				DEBUG.error("玩家信息加载失败");
+				
+				throw new Error("玩家信息加载失败");
+				return;
+			}
 			
 			var xml:XML = data as XML;
 			
