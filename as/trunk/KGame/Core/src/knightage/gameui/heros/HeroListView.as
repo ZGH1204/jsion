@@ -13,6 +13,7 @@ package knightage.gameui.heros
 	import jsion.utils.JUtil;
 	
 	import knightage.StaticRes;
+	import knightage.events.HeroEvent;
 	import knightage.events.UIEvent;
 	import knightage.gameui.PagingView;
 	import knightage.mgrs.PlayerMgr;
@@ -195,7 +196,11 @@ package knightage.gameui.heros
 		
 		public function setData(heroMode:HeroMode):void
 		{
+			if(m_heroMode) m_heroMode.removeEventListener(HeroEvent.ADD_HERO, __addHeroHandler);
+			
 			m_heroMode = heroMode;
+			
+			m_heroMode.addEventListener(HeroEvent.ADD_HERO, __addHeroHandler);
 			
 			m_heroList = m_heroMode.getHeroListByType(m_heroType);
 			
@@ -203,6 +208,19 @@ package knightage.gameui.heros
 			
 			m_pagingView.setDataList(m_heroList);
 			m_pagingView.setPagingData(pageSize, m_heroList.length);
+		}
+		
+		private function __addHeroHandler(e:HeroEvent):void
+		{
+			var h:PlayerHero = e.data as PlayerHero;
+			
+			if(h.HeroType == m_heroType)
+			{
+				m_heroList.push(h);
+				
+				m_pagingView.setDataList(m_heroList);
+				m_pagingView.setPagingData(pageSize, m_heroList.length);
+			}
 		}
 		
 		public function clearItemsData():void
@@ -251,6 +269,8 @@ package knightage.gameui.heros
 		
 		override public function dispose():void
 		{
+			if(m_heroMode) m_heroMode.removeEventListener(HeroEvent.ADD_HERO, __addHeroHandler);
+			
 			DisposeUtil.free(m_group, m_freeBMD);
 			m_group = null;
 			
