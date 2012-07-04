@@ -179,6 +179,8 @@ package jsion.display
 		
 		private function __clickHandler(e:MouseEvent):void
 		{
+			if(allowSelected == false) return;
+			
 			if(m_group)
 			{
 				if(m_group.multiple)
@@ -1032,6 +1034,14 @@ package jsion.display
 				
 				invalidate();
 			}
+		}
+		
+		/**
+		 * 指示是否允许为可选中。默认为：true。
+		 */		
+		public function get allowSelected():Boolean
+		{
+			return true;
 		}
 		
 		/**
