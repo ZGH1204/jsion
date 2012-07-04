@@ -1,4 +1,0 @@
-﻿﻿Ok:确定
-Cancel:取消
-Yes:是
-No:否
