@@ -4,6 +4,8 @@ package knightage.events
 	
 	public class HeroEvent extends Event
 	{
+		public static const ADD_HERO:String = "addHero";
+		
 		public var data:*;
 		
 		public function HeroEvent(type:String, data:*)

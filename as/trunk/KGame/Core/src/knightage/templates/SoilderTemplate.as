@@ -2,7 +2,11 @@ package knightage.templates
 {
     public class SoilderTemplate extends TemplateInfo
     {
-
+		/**
+		 * 士兵头像图标
+		 */		
+		public var Icon:String;
+		
         /**
          * 士兵动作资源
          */

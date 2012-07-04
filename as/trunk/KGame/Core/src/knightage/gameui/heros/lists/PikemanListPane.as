@@ -1,12 +1,14 @@
 package knightage.gameui.heros.lists
 {
+	import knightage.HeroType;
 	import knightage.gameui.heros.HeroListView;
 	
 	public class PikemanListPane extends HeroListView
 	{
-		public function PikemanListPane(row:int=3, column:int=4)
+		public function PikemanListPane()
 		{
-			super(row, column);
+			m_heroType = HeroType.Pikeman;
+			super();
 		}
 	}
 }

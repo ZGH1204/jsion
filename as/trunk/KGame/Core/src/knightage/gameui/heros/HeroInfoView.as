@@ -19,6 +19,7 @@ package knightage.gameui.heros
 	import knightage.homeui.LevelView;
 	import knightage.mgrs.MsgTipMgr;
 	import knightage.player.goods.EquipType;
+	import knightage.player.heros.PlayerHero;
 	
 	public class HeroInfoView extends Sprite implements IDispose
 	{
@@ -41,6 +42,9 @@ package knightage.gameui.heros
 		private var m_cultivateButton:BlueButton;
 		
 		private var m_fireButton:RedButton;
+		
+		
+		private var m_hero:PlayerHero;
 		
 		public function HeroInfoView()
 		{
@@ -163,6 +167,21 @@ package knightage.gameui.heros
 			MsgTipMgr.show("解雇功能开发中...");
 		}
 		
+		public function setData(hero:PlayerHero):void
+		{
+			if(m_hero != hero)
+			{
+				m_hero = hero;
+				
+				refreshView(m_hero);
+			}
+		}
+		
+		private function refreshView(hero:PlayerHero):void
+		{
+			m_heroBustView.setData(hero);
+		}
+		
 		public function dispose():void
 		{
 			DisposeUtil.free(m_tabEquipButton);
@@ -175,6 +194,8 @@ package knightage.gameui.heros
 			m_fireButton = null;
 			
 			DisposeUtil.freeChildren(this);
+			
+			m_hero = null;
 		}
 	}
 }

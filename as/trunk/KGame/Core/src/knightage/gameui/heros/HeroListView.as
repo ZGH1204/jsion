@@ -7,11 +7,16 @@ package knightage.gameui.heros
 	import jsion.comps.ToggleGroup;
 	import jsion.display.ITabPanel;
 	import jsion.display.Image;
+	import jsion.events.DisplayEvent;
+	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.JUtil;
 	
 	import knightage.StaticRes;
+	import knightage.events.UIEvent;
 	import knightage.gameui.PagingView;
+	import knightage.mgrs.PlayerMgr;
+	import knightage.player.heros.HeroMode;
 	import knightage.player.heros.PlayerHero;
 	
 	public class HeroListView extends JsionSprite implements ITabPanel
@@ -39,6 +44,12 @@ package knightage.gameui.heros
 		
 		private var m_selectedHero:PlayerHero;
 		
+		protected var m_heroMode:HeroMode;
+		
+		protected var m_heroList:Array;
+		
+		protected var m_heroType:int;
+		
 		public function HeroListView(row:int = 3, column:int = 4)
 		{
 			m_row = row;
@@ -50,6 +61,8 @@ package knightage.gameui.heros
 			initialized();
 			
 			initEvent();
+			
+			setData(PlayerMgr.self.heroMode);
 		}
 		
 		private function initialized():void
@@ -113,6 +126,34 @@ package knightage.gameui.heros
 		{
 			// TODO Auto Generated method stub
 			
+			m_group.addEventListener(DisplayEvent.SELECT_CHANGED, __selectedChangedHandler);
+			m_pagingView.addEventListener(UIEvent.PAGE_CHANGED, __pageChangedHandler);
+		}
+		
+		private function __selectedChangedHandler(e:DisplayEvent):void
+		{
+			if(m_group.selected)
+			{
+				var item:HeroListItemView = HeroListItemView(m_group.selected);
+				
+				if(item.hero && item.hero != m_selectedHero)
+				{
+					m_selectedHero = item.hero;
+				}
+				
+				dispatchEvent(new UIEvent(UIEvent.HERO_SELECTED_CHANGED, m_selectedHero));
+			}
+		}
+		
+		private function __pageChangedHandler(e:UIEvent):void
+		{
+			var list:Array = e.data4 as Array;
+			
+			clearItemsData();
+			
+			if(list == null) return;
+			
+			setItemsData(list);
 		}
 		
 		public function beginChangeBackground():void
@@ -152,6 +193,53 @@ package knightage.gameui.heros
 			return m_row * m_column;
 		}
 		
+		public function setData(heroMode:HeroMode):void
+		{
+			m_heroMode = heroMode;
+			
+			m_heroList = m_heroMode.getHeroListByType(m_heroType);
+			
+			ArrayUtil.sortDescByNum(m_heroList, "heroID");
+			
+			m_pagingView.setDataList(m_heroList);
+			m_pagingView.setPagingData(pageSize, m_heroList.length);
+		}
+		
+		public function clearItemsData():void
+		{
+			for each(var item:HeroListItemView in m_items)
+			{
+				item.clear();
+			}
+			
+			m_group.selected = null;
+		}
+		
+		public function setItemsData(list:Array):void
+		{
+			if(list == null) return;
+			
+			for(var i:int = 0; i < list.length; i++)
+			{
+				var item:HeroListItemView = m_items[i];
+				
+				item.setData(list[i]);
+				
+				if(list[i] == m_selectedHero)
+				{
+					m_group.selected = item;
+				}
+			}
+		}
+		
+		public function setDefaultSelected():void
+		{
+			if(m_heroList && m_heroList.length > 0)
+			{
+				m_group.selectedIndex = 0;
+			}
+		}
+		
 		public function showPanel():void
 		{
 			m_group.selected = m_group.selected;
@@ -174,6 +262,10 @@ package knightage.gameui.heros
 			
 			DisposeUtil.free(m_pagingView, m_freeBMD);
 			m_pagingView = null;
+			
+			m_heroMode = null;
+			m_heroList = null;
+			m_selectedHero = null;
 			
 			super.dispose();
 		}

@@ -144,11 +144,16 @@ package knightage.gameui
 				m_current = value;
 			}
 			
-			m_startIndex = (m_current - 1) * m_pageSize;
-			
-			m_endIndex = m_current * m_pages - 1;
-			
-			if(m_dataList) m_currentList = ArrayUtil.getRange(m_dataList, m_startIndex, m_endIndex);
+			if(m_dataList)
+			{
+				m_startIndex = (m_current - 1) * m_pageSize;
+				
+				m_endIndex = m_startIndex + m_pageSize;
+				
+				m_endIndex = Math.min(m_endIndex, m_dataList.length - 1);
+				
+				m_currentList = ArrayUtil.getRange(m_dataList, m_startIndex, m_endIndex);
+			}
 			
 			dispatchEvent(new UIEvent(UIEvent.PAGE_CHANGED, m_current, m_startIndex, m_endIndex, m_currentList));
 		}

@@ -3,6 +3,9 @@ package knightage.player.heros
 	import jsion.HashMap;
 	import jsion.events.JsionEventDispatcher;
 	import jsion.utils.DisposeUtil;
+	
+	import knightage.events.HeroEvent;
+	import knightage.mgrs.TemplateMgr;
 
 	public class HeroMode extends JsionEventDispatcher
 	{
@@ -26,7 +29,31 @@ package knightage.player.heros
 				return;
 			}
 			
+			TemplateMgr.fillPlayerHero(hero);
+			
 			m_list.put(hero.heroID, hero);
+			
+			dispatchEvent(new HeroEvent(HeroEvent.ADD_HERO, hero));
+		}
+		
+		/**
+		 * 通过英雄类型获取对应的英雄列表
+		 * @param type
+		 * @return 
+		 * 
+		 */		
+		public function getHeroListByType(type:int):Array
+		{
+			var temp:Array = m_list.getValues();
+			
+			var list:Array = [];
+			
+			for each(var h:PlayerHero in temp)
+			{
+				if(h.HeroType == type) list.push(h);
+			}
+			
+			return list;
 		}
 		
 		override public function dispose():void

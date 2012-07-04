@@ -9,6 +9,7 @@ package knightage.gameui.heros
 	import jsion.ddrop.DDropMgr;
 	import jsion.ddrop.IDragDrop;
 	import jsion.display.IconButton;
+	import jsion.utils.DisposeUtil;
 	
 	import knightage.StaticRes;
 	import knightage.player.goods.EquipType;
@@ -79,6 +80,18 @@ package knightage.gameui.heros
 		public function dispose():void
 		{
 			DDropMgr.unregisteDrag(this);
+			
+			DisposeUtil.free(m_wenZi);
+			m_wenZi = null;
+			
+			DisposeUtil.free(m_itemBg, false);
+			m_itemBg = null;
+			
+			DisposeUtil.free(m_background);
+			m_background = null;
+			
+			DisposeUtil.free(m_equipIcon);
+			m_equipIcon = null;
 		}
 		
 		

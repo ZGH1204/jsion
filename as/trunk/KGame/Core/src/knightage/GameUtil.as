@@ -1,5 +1,6 @@
 package knightage
 {
+	import jsion.debug.DEBUG;
 	import jsion.utils.ObjectUtil;
 	
 	import knightage.hall.build.BuildType;
@@ -217,6 +218,36 @@ package knightage
 		}
 		
 		/**
+		 * 获取指定兵系按
+		 * @param category
+		 * @return 
+		 * 
+		 */		
+		public static function getSoilderListByCategory(category:int):Array
+		{
+			var list:Array = [];
+			
+			var temp:SoilderTemplate = getDefaultSoilderTemplateByCategory(category);
+			
+			list.push(temp);
+			
+			while(temp.NextTID > 0)
+			{
+				temp = TemplateMgr.findSoilderTemplate(temp.NextTID);
+				
+				if(temp == null)
+				{
+					DEBUG.error("兵种模板配置的下一个兵种模板ID找不到模板信息");
+					throw new Error("兵种模板配置的下一个兵种模板ID找不到模板信息");
+				}
+				
+				list.push(temp);
+			}
+			
+			return list;
+		}
+		
+		/**
 		 * 获取玩家当前酒馆等级下举行派对的价格
 		 * @param player
 		 * @return 
@@ -310,6 +341,15 @@ package knightage
 			hero.TemplateID = templateID;
 			
 			TemplateMgr.fillPlayerHero(hero);
+			hero.lv = 1;
+			hero.curSoliderType = getDefaultSoilderTemplateByCategory(hero.SoliderCategory).TemplateID;
+			hero.soliders = hero.BasicTroops + hero.TroopsGrowth * hero.lv;
+			hero.attack = hero.BasicAttack + hero.AttackGrowth * hero.lv;
+			hero.defense = hero.BasicDefense + hero.DefenseGrowth * hero.lv;
+			hero.crit = hero.BasicCrit + hero.CritGrowth * hero.lv;
+			hero.parry = hero.BasicParry + hero.ParryGrowth * hero.lv;
+			hero.dodge = hero.BasicDodge + hero.DodgeGrowth * hero.lv;
+			hero.speed = 100;
 			
 			return hero;
 		}

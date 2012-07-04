@@ -4,10 +4,12 @@ package knightage.gameui.heros
 	import flash.display.DisplayObject;
 	
 	import jsion.display.TabPanel;
+	import jsion.events.DisplayEvent;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.InstanceUtil;
 	
 	import knightage.display.Frame;
+	import knightage.events.UIEvent;
 	import knightage.gameui.heros.lists.ArcherListPane;
 	import knightage.gameui.heros.lists.CavalryListPane;
 	import knightage.gameui.heros.lists.InfantryListPane;
@@ -57,6 +59,7 @@ package knightage.gameui.heros
 			
 			m_heroTabPanel = new TabPanel();
 			addToContent(m_heroTabPanel);
+			m_heroTabPanel.addEventListener(DisplayEvent.PANEL_CREATED, __paneCreatedHandler);
 			
 			m_heroTabPanel.beginChanges();
 			m_heroTabPanel.tabOffset = 22;
@@ -81,6 +84,23 @@ package knightage.gameui.heros
 			
 			m_heroSoliderView.x = m_heroInfoView.x;
 			m_heroSoliderView.y = m_heroInfoView.y + m_heroInfoView.height + 10;
+			
+			
+			
+			HeroListView(m_heroTabPanel.activedPanel).setDefaultSelected();
+		}
+		
+		private function __paneCreatedHandler(e:DisplayEvent):void
+		{
+			var pane:DisplayObject = e.data as DisplayObject;
+			
+			pane.addEventListener(UIEvent.HERO_SELECTED_CHANGED, __heroSelectedChangedHandler);
+		}
+		
+		private function __heroSelectedChangedHandler(e:UIEvent):void
+		{
+			m_heroInfoView.setData(e.data1);
+			m_heroSoliderView.setData(e.data1);
 		}
 		
 		override public function dispose():void
