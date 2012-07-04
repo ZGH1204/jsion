@@ -1,8 +1,14 @@
 package knightage.player.heros
 {
+	import flash.events.Event;
+	
+	import jsion.IDispose;
+	import jsion.events.JsionEventDispatcher;
+	import jsion.utils.DisposeUtil;
+	
 	import knightage.templates.HeroTemplate;
 
-	public class PlayerHero extends HeroTemplate
+	public class PlayerHero extends HeroTemplate implements IDispose
 	{
 		/**
 		 * 玩家ID
@@ -96,5 +102,35 @@ package knightage.player.heros
 		 * 暴击上一次培养未保存的加成值
 		 */		
 		public var lastCultCrit:int;
+		
+		
+		public function PlayerHero()
+		{
+			m_dispatcher = new JsionEventDispatcher();
+		}
+		
+		
+		private var m_dispatcher:JsionEventDispatcher;
+		
+		public function addEventListener(type:String, listener:Function, useCapture:Boolean=false, priority:int=0, useWeakReference:Boolean=false):void
+		{
+			m_dispatcher.addEventListener(type, listener, useCapture, priority, useWeakReference);
+		}
+		
+		public function removeEventListener(type:String, listener:Function, useCapture:Boolean=false):void
+		{
+			m_dispatcher.removeEventListener(type, listener, useCapture);
+		}
+		
+		public function dispatchEvent(event:Event):Boolean
+		{
+			return m_dispatcher.dispatchEvent(event);
+		}
+		
+		public function dispose():void
+		{
+			DisposeUtil.free(m_dispatcher);
+			m_dispatcher = null;
+		}
 	}
 }
