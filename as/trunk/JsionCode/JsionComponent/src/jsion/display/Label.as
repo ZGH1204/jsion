@@ -453,9 +453,30 @@ package jsion.display
 			if(m_html) m_textField.htmlText = m_text;
 			else m_textField.text = m_text;
 			
-			if(manualWidth == false) m_width = m_textField.width;
-			
-			if(manualHeight == false) m_height = m_textField.height;
+			if(StringUtil.isNullOrEmpty(m_text))
+			{
+				if(manualWidth == false)
+				{
+					m_width = 0;
+				}
+				
+				if(manualHeight == false)
+				{
+					m_height = 0;
+				}
+			}
+			else
+			{
+				if(manualWidth == false)
+				{
+					m_width = m_textField.width;
+				}
+				
+				if(manualHeight == false)
+				{
+					m_height = m_textField.height;
+				}
+			}
 			
 			if(manualWidth || manualHeight)
 			{
