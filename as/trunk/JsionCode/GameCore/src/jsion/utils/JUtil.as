@@ -321,5 +321,72 @@ package jsion.utils
 				last = current;
 			}
 		}
+		
+		/**
+		 * 表格排列显示对象，当可选参数的第一个参数为数组时，之后的所有参数将不会进行处理。
+		 * @param startX 起始X坐标
+		 * @param startY 起始Y坐标
+		 * @param row 行数
+		 * @param rowPadding 行间隔
+		 * @param col 列数
+		 * @param colPadding 列间隔
+		 * @param args 显示对象列表
+		 * 
+		 */		
+		public static function layeroutByTable(startX:int, startY:int, row:int, rowPadding:int, col:int, colPadding:int, ...args):void
+		{
+			var list:Array;
+			
+			if(args.length < 2)
+			{
+				if(args[0] is Array)
+				{
+					list = args[0];
+				}
+				else
+				{
+					return;
+				}
+			}
+			else
+			{
+				list = args;
+			}
+			
+			var last:DisplayObject;
+			var index:int = 0;
+			
+			var posX:int;
+			var posY:int = startY;
+			
+			for(var i:int = 0; i < row; i++)
+			{
+				posX = startX;
+				
+				for(var j:int = 0; j < col; j++)
+				{
+					var current:DisplayObject = list[index];
+					
+					current.x = posX;
+					current.y = posY;
+					
+					
+					last = current;
+					
+					
+					posX = posX + last.width + colPadding;
+					
+					
+					index += 1;
+					
+					
+					if(index >= list.length) break;
+				}
+				
+				if(index >= list.length) break;
+				
+				posY = posY + last.height + rowPadding;
+			}
+		}
 	}
 }
