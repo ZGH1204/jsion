@@ -111,7 +111,7 @@ package jsion.display
 		/**
 		 * 释放后的回调
 		 */		
-		public function dropCallback():void
+		public function dropCallback(hitObj:IDragDrop):void
 		{
 		}
 		

@@ -109,15 +109,16 @@ package jsion.ddrop
 		function dragingCallback():void;
 		
 		/**
-		 * 释放后的回调
-		 */		
-		function dropCallback():void;
-		
-		/**
 		 * 拖动释放后被碰撞时的回调
 		 * @param dragger 拖动对象
 		 * @param data 传递数据
 		 */		
 		function dropHitCallback(dragger:IDragDrop, data:*):void;
+		
+		/**
+		 * 释放后的回调，如果碰撞到其他拖拽对象则在碰撞回调后执行此回调。
+		 * @param hitObj 被碰撞到的实现拖拽接口的拖拽对象
+		 */		
+		function dropCallback(hitObj:IDragDrop):void;
 	}
 }
