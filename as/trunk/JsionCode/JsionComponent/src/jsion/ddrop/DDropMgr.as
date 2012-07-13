@@ -269,11 +269,15 @@ package jsion.ddrop
 			
 			if(dropHitList.length == 0)
 			{
+				_dragger.dropCallback(null);
+				
 				return;
 			}
 			else if(dropHitList.length == 1)
 			{
 				IDragDrop(dropHitList[0]).dropHitCallback(_dragger, _transData);
+				
+				_dragger.dropCallback(IDragDrop(dropHitList[0]));
 			}
 			else
 			{
@@ -296,6 +300,8 @@ package jsion.ddrop
 				}
 				
 				IDragDrop(topDis).dropHitCallback(_dragger, _transData);
+				
+				_dragger.dropCallback(IDragDrop(topDis));
 			}
 			
 			
@@ -454,8 +460,6 @@ package jsion.ddrop
 					_dragIcon.y = (_dragIcon != _dragger ? _dragIconStartPoint.y : _dragStartPoint.y) + 0 - _dragStartGlobarPoint.y + 5;
 				}
 			}
-			
-			_dragger.dropCallback();
 			
 			if(_dragingGroup)
 			{

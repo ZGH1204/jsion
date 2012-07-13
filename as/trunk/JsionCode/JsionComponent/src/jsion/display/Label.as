@@ -237,8 +237,10 @@ package jsion.display
 		/** @private */
 		public function set text(value:String):void
 		{
-			if(m_text != value && StringUtil.isNotNullOrEmpty(value))
+			if(m_text != value)
 			{
+				if(StringUtil.isNullOrEmpty(value)) value = "";
+				
 				m_text = value;
 				
 				onPropertiesChanged(TEXT);
