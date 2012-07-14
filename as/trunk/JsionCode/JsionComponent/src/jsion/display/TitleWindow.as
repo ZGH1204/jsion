@@ -224,6 +224,19 @@ package jsion.display
 			m_titleBar.freeBMD = value;
 		}
 		
+		/**
+		 * 是否显示标题栏
+		 */		
+		public function get titleBarVisible():Boolean
+		{
+			return m_titleBar.visible;
+		}
+		
+		/** @private */
+		public function set titleBarVisible(value:Boolean):void
+		{
+			m_titleBar.visible = value;
+		}
 		
 		/**
 		 * 标题栏水平偏移量

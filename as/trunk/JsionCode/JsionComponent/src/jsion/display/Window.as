@@ -327,6 +327,20 @@ package jsion.display
 		}
 		
 		/**
+		 * 是否显示关闭按钮
+		 */		
+		public function get closeVisible():Boolean
+		{
+			return m_closeButton.visible;
+		}
+		
+		/** @private */
+		public function set closeVisible(value:Boolean):void
+		{
+			m_closeButton.visible = value;
+		}
+		
+		/**
 		 * 关闭按钮的水平偏移量
 		 */
 		public function get closeHOffset():int

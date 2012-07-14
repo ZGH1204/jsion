@@ -258,9 +258,11 @@ package jsion.utils
 			
 			if(args.length < 2)
 			{
-				if(args[0] is Array)
+				if(args.length > 0 && args[0] is Array)
 				{
 					list = args[0];
+					
+					if(list.length == 0) return;
 				}
 				else
 				{
@@ -296,9 +298,11 @@ package jsion.utils
 			
 			if(args.length < 2)
 			{
-				if(args[0] is Array)
+				if(args.length > 0 && args[0] is Array)
 				{
 					list = args[0];
+					
+					if(list.length == 0) return;
 				}
 				else
 				{
@@ -339,9 +343,11 @@ package jsion.utils
 			
 			if(args.length < 2)
 			{
-				if(args[0] is Array)
+				if(args.length > 0 && args[0] is Array)
 				{
 					list = args[0];
+					
+					if(list.length == 0) return;
 				}
 				else
 				{
