@@ -172,11 +172,11 @@ package jsion.display
 		 * @param center 是否舞台居中
 		 * 
 		 */		
-		public function show(center:Boolean = true):void
+		public function show(offsetX:int = 0, offsetY:int = 0, center:Boolean = true):void
 		{
 			if(parent == null) onShowing();
 			
-			UIMgr.addUI(this, center);
+			UIMgr.addUI(this, offsetX, offsetY, center);
 		}
 		
 		/**
