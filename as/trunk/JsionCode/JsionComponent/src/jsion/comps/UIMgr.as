@@ -63,16 +63,25 @@ package jsion.comps
 		 * @param center 是否舞台居中
 		 * 
 		 */		
-		public static function addUI(child:DisplayObject, center:Boolean = true):void
+		public static function addUI(child:DisplayObject, offsetX:int = 0, offsetY:int = 0, center:Boolean = true):void
 		{
 			if(child == null) return;
 			
 			m_uiLayer.addChild(child);
 			
-			if(center == false) return;
+			if(center)
+			{
+				child.x = (m_root.stage.stageWidth - child.width) / 2;
+				child.y = (m_root.stage.stageHeight - child.height) / 2;
+			}
+			else
+			{
+				child.x = 0;
+				child.y = 0;
+			}
 			
-			child.x = (m_root.stage.stageWidth - child.width) / 2;
-			child.y = (m_root.stage.stageHeight - child.height) / 2;
+			child.x += offsetX;
+			child.y += offsetY;
 		}
 		
 		/**
@@ -80,14 +89,25 @@ package jsion.comps
 		 * @param child 消息框显示对象
 		 * 
 		 */		
-		public static function addAlert(child:DisplayObject):void
+		public static function addAlert(child:DisplayObject, offsetX:int = 0, offsetY:int = 0, center:Boolean = true):void
 		{
 			if(child == null) return;
 			
 			m_uiAlert.addChild(child);
 			
-			child.x = (m_root.stage.stageWidth - child.width) / 2;
-			child.y = (m_root.stage.stageHeight - child.height) / 2;
+			if(center)
+			{
+				child.x = (m_root.stage.stageWidth - child.width) / 2;
+				child.y = (m_root.stage.stageHeight - child.height) / 2;
+			}
+			else
+			{
+				child.x = 0;
+				child.y = 0;
+			}
+			
+			child.x += offsetX;
+			child.y += offsetY;
 		}
 		
 		/**
@@ -95,14 +115,25 @@ package jsion.comps
 		 * @param child 消息提示对象
 		 * 
 		 */		
-		public static function addMsgTip(child:DisplayObject):void
+		public static function addMsgTip(child:DisplayObject, offsetX:int = 0, offsetY:int = 0, center:Boolean = true):void
 		{
 			if(child == null) return;
 			
 			m_uiMessageTip.addChild(child);
 			
-			child.x = (m_root.stage.stageWidth - child.width) / 2;
-			child.y = (m_root.stage.stageHeight - child.height) / 2;
+			if(center)
+			{
+				child.x = (m_root.stage.stageWidth - child.width) / 2;
+				child.y = (m_root.stage.stageHeight - child.height) / 2;
+			}
+			else
+			{
+				child.x = 0;
+				child.y = 0;
+			}
+			
+			child.x += offsetX;
+			child.y += offsetY;
 		}
 	}
 }
