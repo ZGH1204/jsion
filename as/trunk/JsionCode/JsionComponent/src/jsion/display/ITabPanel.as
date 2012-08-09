@@ -8,6 +8,11 @@ package jsion.display
 	public interface ITabPanel
 	{
 		/**
+		 * 创建面板时被调用
+		 */		
+		function createPanel():void;
+		
+		/**
 		 * 显示面板时被调用
 		 */		
 		function showPanel():void;

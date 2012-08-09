@@ -209,6 +209,8 @@ package jsion.display
 			{
 				m_panels[m_selectedIndex] = new m_paneClasses[m_selectedIndex]();
 				
+				if(m_panels[m_selectedIndex] is ITabPanel) ITabPanel(m_panels[m_selectedIndex]).createPanel();
+				
 				dispatchEvent(new DisplayEvent(DisplayEvent.PANEL_CREATED, m_panels[m_selectedIndex]));
 			}
 			
