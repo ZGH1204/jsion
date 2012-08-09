@@ -26,5 +26,12 @@ package
 		{
 			trace("hidePanel", m_color);
 		}
+		
+		public function createPanel():void
+		{
+			// TODO Auto Generated method stub
+			
+		}
+		
 	}
 }
