@@ -85,14 +85,14 @@ package jsion.ddrop
 		function get dragingIcon():DisplayObject;
 		
 		/**
-		 * 组内除正在拖动对象外的所有对象在拖动对象释放后的回调
+		 * 组内的所有对象在拖动对象释放后的回调
 		 * @param dragger 拖动对象
 		 * @param data 传递数据
 		 */		
 		function groupDragCallback(dragger:IDragDrop, data:*):void;
 		
 		/**
-		 * 组内除正在拖动对象外的所有对象在拖动对象开始拖动时的回调
+		 * 组内的所有对象在拖动对象开始拖动时的回调
 		 * @param dragger 拖动对象
 		 * @param data 传递数据
 		 */		

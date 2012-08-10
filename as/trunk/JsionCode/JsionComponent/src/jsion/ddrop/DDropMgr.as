@@ -388,6 +388,7 @@ package jsion.ddrop
 			//添加拖动是的事件监听
 			if(_useFPS) _stage.addEventListener(Event.ENTER_FRAME, __dragingHandler);
 			else _stage.addEventListener(MouseEvent.MOUSE_MOVE, __dragingHandler);
+			
 			if(e.type == MouseEvent.CLICK)
 			{
 				_stage.addEventListener(MouseEvent.CLICK, __dropHandler);
