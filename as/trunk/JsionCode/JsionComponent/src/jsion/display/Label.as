@@ -77,7 +77,9 @@ package jsion.display
 		public static const ANTIALIAS:String = "antiAlias";
 		
 		
-		private var m_text:String;
+		protected var m_textField:TextField;
+		
+		protected var m_text:String;
 		
 		private var m_html:Boolean;
 		
@@ -86,8 +88,6 @@ package jsion.display
 		private var m_textFormat:TextFormat;
 		
 		private var m_styleSheet:StyleSheet;
-		
-		private var m_textField:TextField;
 		
 		private var m_textColor:uint;
 		
@@ -455,6 +455,11 @@ package jsion.display
 			if(m_html) m_textField.htmlText = m_text;
 			else m_textField.text = m_text;
 			
+			updateViewSize();
+		}
+		
+		protected function updateViewSize():void
+		{
 			if(StringUtil.isNullOrEmpty(m_text))
 			{
 				if(manualWidth == false)
