@@ -14,6 +14,9 @@ package jsion.display
 		{
 			super.initialize();
 			
+			mouseEnabled = true;
+			mouseChildren = true;
+			
 			m_textField.type = TextFieldType.INPUT;
 			m_textField.autoSize = TextFieldAutoSize.NONE;
 			
@@ -28,6 +31,26 @@ package jsion.display
 		{
 			m_textField.width = m_width;
 			m_textField.height = m_height;
+		}
+		
+		public function anyInput():void
+		{
+			m_textField.restrict = null;
+		}
+		
+		public function onlyNumber():void
+		{
+			m_textField.restrict = "0-9";
+		}
+		
+		public function onlyChars():void
+		{
+			m_textField.restrict = "a-zA-Z";
+		}
+		
+		public function onlyCharAndNum():void
+		{
+			m_textField.restrict = "a-zA-Z0-9";
 		}
 		
 		/**
