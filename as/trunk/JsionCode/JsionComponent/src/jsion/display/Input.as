@@ -1,8 +1,15 @@
 package jsion.display
 {
+	import flash.events.KeyboardEvent;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
 
+	/**
+	 * 输入控件
+	 * 支持TextField的事件冒泡
+	 * @author Jsion
+	 * 
+	 */	
 	public class Input extends Label
 	{
 		public function Input()
@@ -25,6 +32,20 @@ package jsion.display
 			
 			m_width = m_textField.width;
 			m_height = m_textField.height;
+			
+			m_textField.addEventListener(KeyboardEvent.KEY_UP, __keyUpHandler);
+		}
+		
+		private function __keyUpHandler(e:KeyboardEvent):void
+		{
+			if(html)
+			{
+				m_text = m_textField.htmlText
+			}
+			else
+			{
+				m_text = m_textField.text;
+			}
 		}
 		
 		override protected function updateViewSize():void
@@ -107,6 +128,13 @@ package jsion.display
 		override public function set vAlign(value:String):void
 		{
 			throw new Error("组件不支持此属性");
+		}
+		
+		override public function dispose():void
+		{
+			if(m_textField) m_textField.removeEventListener(KeyboardEvent.KEY_UP, __keyUpHandler);
+			
+			super.dispose();
 		}
 	}
 }
