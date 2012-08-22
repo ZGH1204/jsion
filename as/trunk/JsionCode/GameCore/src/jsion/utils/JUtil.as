@@ -201,6 +201,20 @@ package jsion.utils
 		}
 		
 		/**
+		 * 设置TextField的真实最大字符数,汉字为2个字符.
+		 * @param textfield
+		 * @param max
+		 * @param input
+		 */		
+		public static function checkTextFieldLength(textfield:TextField, max:uint, input:String = null):void
+		{
+			var ulen1:uint = textfield.text ? textfield.text.match(StringUtil.reg).join("").length : 0;
+			var ulen2:uint = input ? input.match(StringUtil.reg).join("").length : 0;
+			
+			textfield.maxChars = max > ulen1 + ulen2 ? max - ulen1 - ulen2 : (max > ulen2 ? max - ulen2 : max /2);
+		}
+		
+		/**
 		 * 获取当前应用程序域
 		 */		
 		public static function createCurrentDomain():ApplicationDomain

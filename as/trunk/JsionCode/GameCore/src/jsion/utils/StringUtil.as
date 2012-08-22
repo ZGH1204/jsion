@@ -237,7 +237,7 @@ package jsion.utils
 			return true;
 		}
 		
-		private static const reg:RegExp = /[^\x00-\xff]{1,}/g;
+		public static const reg:RegExp = /[^\x00-\xff]{1,}/g;
 		/**
 		 * 获取字符串的真实长度 一个中文字符的长度为2。
 		 * @param str 要获取真实长度的字符串
@@ -260,20 +260,6 @@ package jsion.utils
 			}
 			
 			return len;
-		}
-		
-		/**
-		 * 设置TextField的真实最大字符数,汉字为2个字符.
-		 * @param textfield
-		 * @param max
-		 * @param input
-		 */		
-		public static function checkTextFieldLength(textfield:TextField, max:uint, input:String = null):void
-		{
-			var ulen1:uint = textfield.text ? textfield.text.match(reg).join("").length : 0;
-			var ulen2:uint = input ? input.match(reg).join("").length : 0;
-			
-			textfield.maxChars = max > ulen1 + ulen2 ? max - ulen1 - ulen2 : (max > ulen2 ? max - ulen2 : max /2);
 		}
 		
 		/**
