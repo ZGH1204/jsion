@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300" initialize="titlewindow1_initializeHandler(event)" title="Unicode/字符互转" close="titlewindow1_closeHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import jsion.tool.ToolGlobal;
+			import jsion.utils.IntUtil;
+			import jsion.utils.StringUtil;
+			
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.events.ResizeEvent;
+			import mx.managers.PopUpManager;
+			protected function titlewindow1_initializeHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				y = 20;
+				
+				width = ToolGlobal.windowedApp.width;
+				height = ToolGlobal.windowedApp.height - y;
+				
+				isPopUp = false;
+				
+				ToolGlobal.windowedApp.addEventListener(ResizeEvent.RESIZE, __resizeHandler);
+				
+				
+				var str:String = "[Embed(systemFont=\"微软雅黑\", fontName=\"FontName\", \runicodeRange=\"U+8f93,U+5165,U+6587,U+5b57\", \rmimeType=\"application/x-font\")]\rvar ClassName : Class;\rFont.registerFont(ClassName);";
+				
+				bottomText.text = str;
+			}
+			
+			private function __resizeHandler(e:ResizeEvent):void
+			{
+				width = ToolGlobal.windowedApp.width;
+				height = ToolGlobal.windowedApp.height - y;
+			}
+			
+			protected function titlewindow1_closeHandler(event:CloseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				PopUpManager.removePopUp(this);
+				
+//				PopUpManager.removePopUp(ToolGlobal.dragDropCompress);
+//				
+//				ToolGlobal.dragDropCompress = null;
+				
+				ToolGlobal.windowedApp.removeEventListener(ResizeEvent.RESIZE, __resizeHandler);
+			}
+
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				var str:String = sourceText.text;
+				
+				str = StringUtil.replace(str, " ", "");
+				str = StringUtil.replace(str, "\r", "");
+				
+				if(StringUtil.isNullOrEmpty(str)) return;
+				
+				var temp:String = "";
+				
+				var rlt:String = "";
+				
+				for(var i:int = 0; i < str.length; i++)
+				{
+					var s:String = str.charAt(i);
+					
+					if(temp.indexOf(s) == -1)
+					{
+						temp += s;
+						
+						var code:int = s.charCodeAt();
+						
+						rlt = rlt + ",U+" + IntUtil.toHexString(code);
+					}
+				}
+				
+				rlt = rlt.substr(1);
+				
+				resultText.text = rlt;
+			}
+
+
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				var str:String = sourceText.text;
+				
+				if(StringUtil.isNullOrEmpty(str)) return;
+				
+				var list:Array = str.split(",");
+				
+				var rlt:String;
+				
+				var codeList:Array = [];
+				
+				for(var i:int = 0; i < list.length; i++)
+				{
+					var temp:String = list[i];
+					
+					temp = "0x" + temp.substr(2);
+					
+					codeList.push(int(temp));
+				}
+				
+				rlt = String.fromCharCode.apply(null, codeList);
+				
+				resultText.text = rlt;
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:HGroup left="10" right="10" top="40" bottom="120">
+		<s:Group width="50%" height="100%">
+			<mx:TextArea x="0" y="0" width="100%" height="100%" id="sourceText" focusIn="IME.enabled = true"/>
+		</s:Group>
+		<s:Group width="50%" height="100%">
+			<mx:TextArea x="0" y="0" width="100%" height="100%" id="resultText" focusIn="IME.enabled = true"/>
+		</s:Group>
+	</s:HGroup>
+	<s:TextArea id="bottomText" height="100" bottom="10" left="10" right="10" text="" verticalAlign="middle" editable="false"/>
+	<s:Button x="10" y="10" label="字符串转Unicode码" click="button1_clickHandler(event)"/>
+	<s:Button x="145" y="10" label="Unicode码转字符串" click="button2_clickHandler(event)"/>
+</s:TitleWindow>
