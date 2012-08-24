@@ -3,6 +3,8 @@ package jsion.comps
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
+	
+	import jsion.utils.DisposeUtil;
 
 	/**
 	 * UI管理器。
@@ -82,6 +84,17 @@ package jsion.comps
 			
 			child.x += offsetX;
 			child.y += offsetY;
+		}
+		
+		/**
+		 * 将UI显示层上的所有UI清除并释放
+		 */		
+		public static function clearUI():void
+		{
+			while(m_uiLayer.numChildren > 0)
+			{
+				DisposeUtil.free(m_uiLayer.getChildAt(m_uiLayer.numChildren - 1));
+			}
 		}
 		
 		/**
