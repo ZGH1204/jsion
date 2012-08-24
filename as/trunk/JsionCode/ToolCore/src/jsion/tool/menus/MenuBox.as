@@ -17,6 +17,7 @@ package jsion.tool.menus
 	import jsion.tool.mgrs.FileMgr;
 	import jsion.tool.piccuter.PicCuterFrame;
 	import jsion.tool.pngpacker.PackerFrame;
+	import jsion.tool.unicode.TransfPane;
 	import jsion.tool.xmlformats.XmlFormatPane;
 	import jsion.utils.ObjectUtil;
 	
@@ -43,9 +44,13 @@ package jsion.tool.menus
 			var item:JMenuItem;
 			
 			
-			item = new JMenuItem("资源打包器");
+			item = new JMenuItem("Unicode转换");
 			item.setPreferredWidth(150);
-			item.addActionListener(onItemClickHandler);
+			item.addActionListener(onUnicodeClickHandler);
+			tool.append(item);
+			
+			item = new JMenuItem("资源打包器");
+			item.addActionListener(onPackerClickHandler);
 			tool.append(item);
 			
 			item = new JMenuItem("文件压缩");
@@ -71,7 +76,12 @@ package jsion.tool.menus
 			append(tool);
 		}
 		
-		private function onItemClickHandler(e:AWEvent):void
+		private function onUnicodeClickHandler(e:AWEvent):void
+		{
+			PopUpManager.createPopUp(ToolGlobal.windowedApp, TransfPane, true);
+		}
+		
+		private function onPackerClickHandler(e:AWEvent):void
 		{
 			var frame:BaseFrame = new PackerFrame();
 			
