@@ -131,6 +131,7 @@ package jsion.comps
 			return parent != null;
 		}
 		
+		
 		/**
 		 * 初始化组件
 		 */		

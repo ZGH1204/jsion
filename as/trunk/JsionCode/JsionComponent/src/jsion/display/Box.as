@@ -69,6 +69,10 @@ package jsion.display
 		
 		private var m_align:String;
 		
+		private var m_offsetX:int;
+		
+		private var m_offsetY:int;
+		
 		private var m_changed:Boolean;
 		
 		private var m_maxValue:int;
@@ -191,6 +195,44 @@ package jsion.display
 						invalidate();
 					}
 				}
+			}
+		}
+		
+		/**
+		 * 子显示对象的x坐标偏移量
+		 */		
+		public function get offsetX():int
+		{
+			return m_offsetX;
+		}
+		
+		/** @private */		
+		public function set offsetX(value:int):void
+		{
+			if(m_offsetX != value)
+			{
+				m_offsetX = value;
+				
+				invalidate();
+			}
+		}
+		
+		/**
+		 * 子显示对象的y坐标偏移量
+		 */		
+		public function get offsetY():int
+		{
+			return m_offsetY;
+		}
+		
+		/** @private */		
+		public function set offsetY(value:int):void
+		{
+			if(m_offsetY != value)
+			{
+				m_offsetY = value;
+				
+				invalidate();
 			}
 		}
 		
@@ -328,12 +370,14 @@ package jsion.display
 				
 				if(m_type == HORIZONTAL)
 				{
+					pos = m_offsetX;
+					
 					for(i = 0; i < list.length; i++)
 					{
 						child = list[i];
 						
 						child.x = pos + m_gap * i;
-						child.y = 0;
+						child.y = m_offsetY;
 						
 						pos += child.width;
 						
@@ -346,7 +390,7 @@ package jsion.display
 						{
 							child = list[i];
 							
-							child.y = (m_maxValue - child.height) / 2;
+							child.y = (m_maxValue - child.height) / 2 + m_offsetY;
 						}
 					}
 					else if(m_align == BOTTOM)
@@ -355,7 +399,7 @@ package jsion.display
 						{
 							child = list[i];
 							
-							child.y = m_maxValue - child.height;
+							child.y = m_maxValue - child.height + m_offsetY;
 						}
 					}
 					
@@ -366,11 +410,13 @@ package jsion.display
 				}
 				else
 				{
+					pos = m_offsetY;
+					
 					for(i = 0; i < list.length; i++)
 					{
 						child = list[i];
 						
-						child.x = 0;
+						child.x = m_offsetX;
 						child.y = pos + m_gap * i;
 						
 						pos += child.height;
@@ -384,7 +430,7 @@ package jsion.display
 						{
 							child = list[i];
 							
-							child.x = (m_maxValue - child.width) / 2;
+							child.x = (m_maxValue - child.width) / 2 + m_offsetY;
 						}
 					}
 					else if(m_align == RIGHT)
@@ -393,7 +439,7 @@ package jsion.display
 						{
 							child = list[i];
 							
-							child.x = m_maxValue - child.width;
+							child.x = m_maxValue - child.width + m_offsetY;
 						}
 					}
 					

@@ -133,7 +133,7 @@ package jsion.display
 		{
 			super.addChildren();
 			
-			addChild(m_listView);
+			if(parent) parent.addChild(m_listView);
 		}
 		
 		/**
@@ -143,8 +143,11 @@ package jsion.display
 		{
 			super.onProppertiesUpdate();
 			
-			m_listView.x = 0;
-			m_listView.y = m_height;
+			m_listView.x = x;
+			m_listView.y = y + height;
+			
+			//m_listView.x = 0;
+			//m_listView.y = m_height;
 			
 			if(m_listWidth > 0) m_listView.width = m_listWidth;
 			else m_listView.width = m_width;
@@ -193,7 +196,43 @@ package jsion.display
 			return m_listView.removeItemAt(index) as ToggleButton;
 		}
 		
+		/**
+		 * 移除所有的显示列表项，不对列表项进行释放操作。
+		 */		
+		public function removeAll():Array
+		{
+			return m_listView.removeAll();
+		}
 		
+		/**
+		 * 移除所有的显示列表项，并对列表项进行释放。
+		 */		
+		public function clear():void
+		{
+			m_listView.clear();
+		}
+		
+		
+		
+		/**
+		 * 获取或设置子显示对象的对齐方式。
+		 * 可能的值为：ComboBox.LEFT、ComboBox.CENTER、ComboBox.RIGHT；
+		 */		
+		public function get listItemAlign():String
+		{
+			return m_listView.align;
+		}
+		
+		/** @private */		
+		public function set listItemAlign(value:String):void
+		{
+			if(m_listView.align != value)
+			{
+				m_listView.align = value;
+				
+				onPropertiesChanged(LISTVIEW);
+			}
+		}
 		
 		/**
 		 * 列表项之间的间隔
@@ -211,6 +250,44 @@ package jsion.display
 			if(m_listView.itemGap != value)
 			{
 				m_listView.itemGap = value;
+				
+				onPropertiesChanged(LISTVIEW);
+			}
+		}
+		
+		/**
+		 * 列表项的x坐标偏移量
+		 */		
+		public function get listItemOffsetX():int
+		{
+			return m_listView.itemOffsetX;
+		}
+		
+		/** @private */
+		public function set listItemOffsetX(value:int):void
+		{
+			if(m_listView.itemOffsetX != value)
+			{
+				m_listView.itemOffsetX = value;
+				
+				onPropertiesChanged(LISTVIEW);
+			}
+		}
+		
+		/**
+		 * 列表项的y坐标偏移量
+		 */		
+		public function get listItemOffsetY():int
+		{
+			return m_listView.itemOffsetY;
+		}
+		
+		/** @private */
+		public function set listItemOffsetY(value:int):void
+		{
+			if(m_listView.itemOffsetY != value)
+			{
+				m_listView.itemOffsetY = value;
 				
 				onPropertiesChanged(LISTVIEW);
 			}
@@ -1193,6 +1270,22 @@ package jsion.display
 			m_listView = null;
 			
 			super.dispose();
+		}
+		
+		/**
+		 * 获取或设置是否自动选中
+		 */		
+		public function get autoSelected():Boolean
+		{
+			return m_group.autoSelected;
+		}
+		
+		/**
+		 * @private
+		 */		
+		public function set autoSelected(value:Boolean):void
+		{
+			m_group.autoSelected = value;
 		}
 
 		/**

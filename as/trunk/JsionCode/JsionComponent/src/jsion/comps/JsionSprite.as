@@ -55,6 +55,9 @@ package jsion.comps
 		/** @private */
 		protected var m_freeBMD:Boolean;
 		
+		/** @private */
+		protected var m_tag:Object;
+		
 		
 		public function JsionSprite()
 		{
@@ -69,6 +72,20 @@ package jsion.comps
 			
 			
 			addEventListener(MouseEvent.MOUSE_DOWN, __spriteMouseDownListener);
+		}
+		
+		/**
+		 * 额外保存的数据。
+		 */		
+		public function get tag():Object
+		{
+			return m_tag;
+		}
+		
+		/** @private */
+		public function set tag(value:Object):void
+		{
+			m_tag = value;
 		}
 		
 		/**
