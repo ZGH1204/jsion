@@ -5,6 +5,7 @@ package jsion.display
 	
 	import jsion.comps.Component;
 	import jsion.utils.ArrayUtil;
+	import jsion.utils.DisposeUtil;
 
 	/**
 	 * 显示对象垂直排列列表，有垂直滚动条。
@@ -39,6 +40,21 @@ package jsion.display
 		public static const BGGAP:String = ScrollPanel.BGGAP;
 		
 		/**
+		 * 水平左边对齐，当type等于VERTICAL时有效。
+		 */		
+		public static const LEFT:String = Box.LEFT;
+		
+		/**
+		 * 水平右边对齐，当type等于VERTICAL时有效。
+		 */		
+		public static const RIGHT:String = Box.RIGHT;
+		
+		/**
+		 * 水平居中对齐，当type等于VERTICAL时有效。
+		 */		
+		public static const CENTER:String = Box.CENTER;
+		
+		/**
 		 * 添加列表项
 		 */		
 		public static const ADDITEM:String = "addItem";
@@ -46,6 +62,13 @@ package jsion.display
 		 * 移除列表项
 		 */		
 		public static const REMOVEITEM:String = "addItem";
+		
+		/**
+		 * 列表项偏移量
+		 */		
+		public static const OFFSET:String = "offset";
+		
+		
 		
 		private var m_list:Array;
 		
@@ -96,7 +119,7 @@ package jsion.display
 		 */		
 		override protected function onProppertiesUpdate():void
 		{
-			if(isChanged(ADDITEM) || isChanged(REMOVEITEM) || isChanged(SCROLLVIEW))
+			if(isChanged(OFFSET) || isChanged(ADDITEM) || isChanged(REMOVEITEM) || isChanged(SCROLLVIEW))
 			{
 				m_container.beginChanges();
 				
@@ -254,6 +277,35 @@ package jsion.display
 		}
 		
 		/**
+		 * 移除所有的显示列表项，不对列表项进行释放操作。
+		 */		
+		public function removeAll():Array
+		{
+			var lst:Array = ArrayUtil.clone(m_list);
+			
+			beginChanges();
+			
+			while(m_list.length > 0)
+			{
+				removeItemAt(m_list.length - 1);
+			}
+			
+			commitChanges();
+			
+			return lst;
+		}
+		
+		/**
+		 * 移除所有的显示列表项，并对列表项进行释放。
+		 */		
+		public function clear():void
+		{
+			DisposeUtil.free(m_list);
+			
+			onPropertiesChanged(REMOVEITEM);
+		}
+		
+		/**
 		 * @inheritDoc
 		 */		
 		override public function dispose():void
@@ -267,7 +319,22 @@ package jsion.display
 			
 			super.dispose();
 		}
-
+		
+		/**
+		 * 获取或设置子显示对象的对齐方式。
+		 * 可能的值为：List.LEFT、List.CENTER、List.RIGHT；
+		 */		
+		public function get align():String
+		{
+			return m_container.align;
+		}
+		
+		/** @private */		
+		public function set align(value:String):void
+		{
+			m_container.align = value;
+		}
+		
 		/**
 		 * 列表项之间的间隔
 		 */		
@@ -286,6 +353,44 @@ package jsion.display
 				m_container.gap = value;
 				
 				onPropertiesChanged(SCROLLVIEW);
+			}
+		}
+		
+		/**
+		 * 列表项的x坐标偏移量
+		 */		
+		public function get itemOffsetX():int
+		{
+			return m_container.offsetX;
+		}
+		
+		/** @private */
+		public function set itemOffsetX(value:int):void
+		{
+			if(m_container.offsetX != value)
+			{
+				m_container.offsetX = value;
+				
+				onPropertiesChanged(OFFSET);
+			}
+		}
+		
+		/**
+		 * 列表项的y坐标偏移量
+		 */		
+		public function get itemOffsetY():int
+		{
+			return m_container.offsetY;
+		}
+		
+		/** @private */
+		public function set itemOffsetY(value:int):void
+		{
+			if(m_container.offsetY != value)
+			{
+				m_container.offsetY = value;
+				
+				onPropertiesChanged(OFFSET);
 			}
 		}
 	}
