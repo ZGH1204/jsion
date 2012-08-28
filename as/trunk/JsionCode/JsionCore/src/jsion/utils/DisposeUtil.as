@@ -60,6 +60,13 @@ package jsion.utils
 					delete obj[key];
 				}
 			}
+			else if(obj is Vector.<*> || obj is Vector.<int> || obj is Vector.<Number>)
+			{
+				while(obj.length > 0)
+				{
+					free(obj.pop(), freeBmd);
+				}
+			}
 		}
 
 		public static function freeChildren(doc:DisplayObjectContainer, freeBmd:Boolean = true):void
