@@ -12,6 +12,21 @@ package jsion.utils
 	public final class ArrayUtil
 	{
 		/**
+		 * 创建一个指定初始长度的数组
+		 * @param len 要创建的数组长度
+		 * @return 指定长度的数组
+		 * 
+		 */		
+		public static function create(len:int):Array
+		{
+			var array:Array = [];
+			
+			array.length = len;
+			
+			return array;
+		}
+		
+		/**
 		 * 将任意个数组连接，并过滤掉重复项，返回新数组(仅适合引用对象)。
 		 * @param args 数组或对象
 		 * @return 连接后的数组
@@ -156,7 +171,8 @@ package jsion.utils
 		{
 			if(array == null || array.length == 0) return;
 			
-			array.splice(0);
+			array.length = 0;
+			//array.splice(0);
 		}
 		
 		/**
