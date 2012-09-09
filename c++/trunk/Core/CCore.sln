@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TCPIOCP", "TCPIOCP\TCPIOCP.vcxproj", "{A283EAFF-F34C-481B-B362-673303D2D682}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JUtils", "JUtils\JUtils.vcxproj", "{F613DFC2-56DF-4725-AF1B-59D33E534700}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TCPServer", "TCPServer\TCPServer.vcxproj", "{05575D76-D0EC-4F43-8FAF-ED0A897C034D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TCPClient", "TCPClient\TCPClient.vcxproj", "{AC30CB22-A663-46BD-9CD0-5278D28C427C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +19,18 @@ Global
 		{A283EAFF-F34C-481B-B362-673303D2D682}.Debug|Win32.Build.0 = Debug|Win32
 		{A283EAFF-F34C-481B-B362-673303D2D682}.Release|Win32.ActiveCfg = Release|Win32
 		{A283EAFF-F34C-481B-B362-673303D2D682}.Release|Win32.Build.0 = Release|Win32
+		{F613DFC2-56DF-4725-AF1B-59D33E534700}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F613DFC2-56DF-4725-AF1B-59D33E534700}.Debug|Win32.Build.0 = Debug|Win32
+		{F613DFC2-56DF-4725-AF1B-59D33E534700}.Release|Win32.ActiveCfg = Release|Win32
+		{F613DFC2-56DF-4725-AF1B-59D33E534700}.Release|Win32.Build.0 = Release|Win32
+		{05575D76-D0EC-4F43-8FAF-ED0A897C034D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{05575D76-D0EC-4F43-8FAF-ED0A897C034D}.Debug|Win32.Build.0 = Debug|Win32
+		{05575D76-D0EC-4F43-8FAF-ED0A897C034D}.Release|Win32.ActiveCfg = Release|Win32
+		{05575D76-D0EC-4F43-8FAF-ED0A897C034D}.Release|Win32.Build.0 = Release|Win32
+		{AC30CB22-A663-46BD-9CD0-5278D28C427C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AC30CB22-A663-46BD-9CD0-5278D28C427C}.Debug|Win32.Build.0 = Debug|Win32
+		{AC30CB22-A663-46BD-9CD0-5278D28C427C}.Release|Win32.ActiveCfg = Release|Win32
+		{AC30CB22-A663-46BD-9CD0-5278D28C427C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

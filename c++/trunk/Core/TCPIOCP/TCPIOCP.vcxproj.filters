@@ -24,12 +24,30 @@
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ClientBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PackageBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CryptorBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TCPIOCP.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PackageBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CryptorBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
