@@ -434,7 +434,7 @@ bool WINAPI CTCPIOCP::SendTCPImp( CTCPIOCP* lpCTCPIOCP, LPACCEPT_DATA lpAcceptDa
 {
 	if (lpCTCPIOCP == NULL || lpCTCPIOCP->m_isConnector == false || pkg == NULL || lpAcceptData == NULL)
 	{
-		delete pkg;
+		if(pkg != NULL) delete pkg;
 
 		return false;
 	}
