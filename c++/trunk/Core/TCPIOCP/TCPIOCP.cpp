@@ -355,6 +355,16 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 				{
 					lpAcceptData->SendDataLeft = 0;
 					lpAcceptData->SendPKGList.pop();
+
+					EnterCriticalSection(&(lpPKG->Lok));
+						lpPKG->RefCount--;
+
+						if (lpPKG->RefCount == 0)
+						{
+							delete lpPKG;
+						}
+					LeaveCriticalSection(&(lpPKG->Lok));
+
 					lpAcceptData->SenderCryptor->UpdateCryptKey();
 				}
 			}
@@ -424,10 +434,16 @@ bool WINAPI CTCPIOCP::SendTCPImp( CTCPIOCP* lpCTCPIOCP, LPACCEPT_DATA lpAcceptDa
 {
 	if (lpCTCPIOCP == NULL || lpCTCPIOCP->m_isConnector == false || pkg == NULL || lpAcceptData == NULL)
 	{
+		delete pkg;
+
 		return false;
 	}
 
 	EnterCriticalSection(&(lpAcceptData->SendPKGListLok));
+
+	EnterCriticalSection(&(pkg->Lok));
+		pkg->RefCount++;
+	LeaveCriticalSection(&(pkg->Lok));
 
 	lpAcceptData->SendPKGList.push(pkg);
 
