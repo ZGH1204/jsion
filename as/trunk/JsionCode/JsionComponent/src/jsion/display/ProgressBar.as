@@ -189,9 +189,9 @@ package jsion.display
 			
 			updateProgressViewSize();
 			
-			refreshBarView(m_curLen);
-			
 			updateProgressBar(m_value);
+			
+			refreshBarView(m_curLen);
 		}
 		
 		private function updateProgressViewSize():void
