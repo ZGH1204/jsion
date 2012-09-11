@@ -8,10 +8,15 @@ package jsion.comps
 
 	/**
 	 * UI管理器。
-	 * 分为三个UI层级：
-	 * 最下层为普通UI层；
-	 * 中间层为提示框层；
-	 * 最上层为消息提示层。
+	 * 按以下顺序一层一层重叠上来
+	 * 分为以下几个UI层级：
+	 * <ul>
+	 * 	<li>FixUI</li>
+	 * 	<li>UI</li>
+	 * 	<li>Alert</li>
+	 * 	<li>Wait</li>
+	 * 	<li>MsgTip(本层为鼠标穿透层)</li>
+	 * </ul>
 	 * @author Jsion
 	 * 
 	 */	
@@ -21,6 +26,7 @@ package jsion.comps
 		private static var m_fixLayer:Sprite;
 		private static var m_uiLayer:Sprite;
 		private static var m_uiAlert:Sprite;
+		private static var m_waitLayer:Sprite;
 		private static var m_uiMessageTip:Sprite;
 		
 		public function UIMgr()
@@ -40,12 +46,17 @@ package jsion.comps
 			m_fixLayer = new Sprite();
 			m_uiLayer = new Sprite();
 			m_uiAlert = new Sprite();
+			m_waitLayer = new Sprite();
 			m_uiMessageTip = new Sprite();
 			
 			m_root.addChild(m_fixLayer);
 			m_root.addChild(m_uiLayer);
 			m_root.addChild(m_uiAlert);
+			m_root.addChild(m_waitLayer);
 			m_root.addChild(m_uiMessageTip);
+			
+			m_uiMessageTip.mouseEnabled = false;
+			m_uiMessageTip.mouseChildren = false;
 		}
 		
 		/**
@@ -121,6 +132,57 @@ package jsion.comps
 			
 			child.x += offsetX;
 			child.y += offsetY;
+		}
+		
+		/**
+		 * 将确认框层上的所有显示对象清除并释放
+		 */		
+		public static function clearAlert():void
+		{
+			while(m_uiAlert.numChildren > 0)
+			{
+				DisposeUtil.free(m_uiAlert.getChildAt(m_uiAlert.numChildren - 1));
+			}
+		}
+		
+		/**
+		 * 将显示对象添加到加载等待层上
+		 * @param child 显示对象
+		 * @param offsetX x坐标偏移
+		 * @param offsetY y坐标偏移
+		 * @param center 是否居中
+		 * 
+		 */		
+		public static function addWait(child:DisplayObject, offsetX:int = 0, offsetY:int = 0, center:Boolean = true):void
+		{
+			if(child == null) return;
+			
+			m_waitLayer.addChild(child);
+			
+			if(center)
+			{
+				child.x = (m_root.stage.stageWidth - child.width) / 2;
+				child.y = (m_root.stage.stageHeight - child.height) / 2;
+			}
+			else
+			{
+				child.x = 0;
+				child.y = 0;
+			}
+			
+			child.x += offsetX;
+			child.y += offsetY;
+		}
+		
+		/**
+		 * 清除并释放加载等待层上所有的显示对象
+		 */		
+		public static function clearWait():void
+		{
+			while(m_waitLayer.numChildren > 0)
+			{
+				DisposeUtil.free(m_waitLayer.getChildAt(m_waitLayer.numChildren - 1));
+			}
 		}
 		
 		/**
