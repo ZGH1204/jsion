@@ -9,6 +9,7 @@ package jsion.display
 	import jsion.comps.CompUtil;
 	import jsion.comps.Component;
 	import jsion.comps.UIMgr;
+	import jsion.utils.DisplayUtil;
 	import jsion.utils.DisposeUtil;
 	
 	/**
@@ -134,10 +135,7 @@ package jsion.display
 			
 			if(m_modal)
 			{
-				graphics.clear();
-				graphics.beginFill(MODALCOLOR, MODALALPH);
-				graphics.drawRect(-MODALWIDTH, -MODALHEIGHT, MODALWIDTH * 3, MODALHEIGHT * 3);
-				graphics.endFill();
+				DisplayUtil.drawModal(this, MODALCOLOR, MODALALPH, MODALWIDTH, MODALHEIGHT);
 			}
 		}
 		

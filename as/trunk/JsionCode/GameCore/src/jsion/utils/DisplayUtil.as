@@ -33,5 +33,22 @@ package jsion.utils
 			parent.addChildAt(newChild, index);
 			parent.removeChild(oldChild);
 		}
+		
+		/**
+		 * 使用矢量画出一个模态阴影。
+		 * @param display 要画模态阴影的显示对象
+		 * @param color 模态阴影颜色
+		 * @param alpha 模态阴影透明度
+		 * @param width 模态阴影宽度
+		 * @param height 模态阴影高度
+		 * 
+		 */		
+		public static function drawModal(display:Sprite, color:uint = 0xCCCCCC, alpha:Number = 0.5, width:int = 2000, height:int = 2000):void
+		{
+			display.graphics.clear();
+			display.graphics.beginFill(color, alpha);
+			display.graphics.drawRect(-width, -height, width * 3, height * 3);
+			display.graphics.endFill();
+		}
 	}
 }
