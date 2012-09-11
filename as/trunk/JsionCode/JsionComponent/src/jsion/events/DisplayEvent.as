@@ -13,6 +13,8 @@ package jsion.events
 		public static const PANEL_FREE:String = "panelFree";
 		public static const PANEL_ACTIVE_CHANGED:String = "panelActiveChanged";
 		
+		public static const PROGRESS_VIEW_COMPLETE:String = "progressViewComplete";
+		
 		public var data:*;
 		
 		public function DisplayEvent(type:String, data:* = null)
