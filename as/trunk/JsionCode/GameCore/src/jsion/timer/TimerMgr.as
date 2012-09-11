@@ -56,6 +56,11 @@ package jsion.timer
 			
 			for(i = 0; i < m_list.length; i++)
 			{
+				if(ArrayUtil.containsValue(m_removeList, m_list[i]))
+				{
+					continue;
+				}
+				
 				ITimer(m_list[i]).elapsed();
 			}
 			
