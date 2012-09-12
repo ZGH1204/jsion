@@ -112,8 +112,6 @@ package jsion.tool.pngpacker
 		
 		public function read(f:File):void
 		{
-			DisposeUtil.free(m_packerData);
-			
 			m_packerData.clear();
 			
 			var dir:DirectionInfo = m_packerData.read(f);
