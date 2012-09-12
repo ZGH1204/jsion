@@ -6,6 +6,8 @@
 
 4.解压目录下的 Ext.rar 文件,选择解压到当前目录
 
-5.访问网站根 Install.aspx 进行系统初始化
+5.设置网站默认首页为 Default.aspx
 
-6.(可选)在/Scripts/common-text.js和/Scripts/common-int.js中可以配置部分文本和数值
+6.访问网站根 Install.aspx 进行系统初始化
+
+7.(可选)在/Scripts/common-text.js和/Scripts/common-int.js中可以配置部分文本和数值
