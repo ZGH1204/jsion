@@ -363,7 +363,7 @@ package jsion.serialize.res
 				bWidth:int = bytes.readUnsignedShort(), 
 				bHeight:int = bytes.readUnsignedShort();
 			
-			var x:int = offsetX, y:int = offsetY;
+			var x:int = offsetX, y:int = offsetY, temp:int;
 			
 			var bmd:BitmapData = new BitmapData(width, height, true, 0x0);
 			
@@ -389,12 +389,20 @@ package jsion.serialize.res
 				}
 				
 				x += count;
+				temp = bWidth + offsetX;
 				
-				if(x > (bWidth + offsetX))
+				if(x > temp)
 				{
-					x = (x - count) + (count % bWidth) - bWidth;
+					x = x - count;
+					temp = temp - x;//当前行满后用掉的像素数
+					count = count - temp;
+					count = count % bWidth;
 					
-					y += int(count / bWidth) + 1;
+					x = offsetX + count;
+					
+					y = y + int(count / bWidth);
+					
+					y += 1;
 					
 					if(y > (bHeight + offsetY)) break;
 				}
