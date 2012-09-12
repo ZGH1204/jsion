@@ -3,10 +3,7 @@ package jsion.tool.pngpacker.panes
 	import flash.display.BitmapData;
 	import flash.events.FileListEvent;
 	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
 	import flash.net.FileFilter;
-	import flash.utils.ByteArray;
 	
 	import jsion.tool.WaiteFrame;
 	import jsion.tool.mgrs.FileMgr;
@@ -18,9 +15,6 @@ package jsion.tool.pngpacker.panes
 	import jsion.utils.DelayUtil;
 	import jsion.utils.DisposeUtil;
 	import jsion.utils.StringUtil;
-	
-	import mx.graphics.codec.JPEGEncoder;
-	import mx.graphics.codec.PNGEncoder;
 	
 	import org.aswing.AbstractButton;
 	import org.aswing.ButtonGroup;
@@ -340,17 +334,6 @@ package jsion.tool.pngpacker.panes
 					
 					for each(var bmd:BitmapData in list)
 					{
-						var en:PNGEncoder = new PNGEncoder();
-						
-						var bytes:ByteArray = en.encode(bmd);
-						
-						var file:File  = File.desktopDirectory.resolvePath(list.indexOf(bmd) + ".png");
-						
-						var fs:FileStream = new FileStream();
-						fs.open(file, FileMode.WRITE);
-						fs.writeBytes(bytes);
-						fs.close();
-						
 						createItem(bmd);
 					}
 					
