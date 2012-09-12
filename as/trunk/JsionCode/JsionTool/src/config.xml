@@ -8,7 +8,6 @@
 		<file value="*.png" />
 	</version>
 	
-	
 	<Startup id="JsionCore" cls="jsion.core.JsionCoreModule" url="../../JsionCore/bin/JsionCore.swc" crypted="false" />
 	
 	
@@ -18,4 +17,10 @@
 		<Module id="JsionParser" cls="jsion.parser.ParserModule" url="../../JsionParser/bin/JsionParser.swc" autoLoad="false" crypted="false" target="_self" />
 		<Module id="JsionSocket" cls="jsion.core.JsionCoreModule" url="../../JsionSocket/bin/JsionSocket.swc" autoLoad="false" crypted="false" target="_self" />
 	</Modules>
+	
+	
+	<Config
+		ActExtFilter = "*.hy"
+		DefaultExt = ".hy"
+	 />
 </root>

@@ -7,8 +7,10 @@ import flash.utils.ByteArray;
 
 import jsion.GameCoreSetup;
 import jsion.JsionCoreSetup;
+import jsion.tool.Config;
 import jsion.tool.MainWindow;
 import jsion.tool.ToolGlobal;
+import jsion.utils.XmlUtil;
 
 import mx.core.UIComponent;
 import mx.events.FlexEvent;
@@ -41,6 +43,8 @@ private function init(e:FlexEvent):void
 	var configXml:XML = new XML(bytes);
 	
 	JsionCoreSetup(configXml);
+	
+	XmlUtil.decodeWithProperty(Config, configXml.Config[0]);
 	
 	GameCoreSetup(this.stage);
 	

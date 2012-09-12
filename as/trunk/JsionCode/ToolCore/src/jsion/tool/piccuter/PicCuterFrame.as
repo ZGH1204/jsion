@@ -211,7 +211,7 @@ package jsion.tool.piccuter
 		
 		private function openFileHandler(e:AWEvent):void
 		{
-			FileMgr.openBrowse(openPicCallback, [new FileFilter("支持的图片文件", "*.png;*.jpg")]);
+			FileMgr.openBrowse(openPicCallback, null, [new FileFilter("支持的图片文件", "*.png;*.jpg")]);
 		}
 		
 		private function openPicCallback(file:File):void

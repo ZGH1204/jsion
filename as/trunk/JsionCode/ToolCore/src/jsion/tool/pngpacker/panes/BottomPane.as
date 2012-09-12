@@ -106,27 +106,27 @@ package jsion.tool.pngpacker.panes
 		{
 			if(m_loading) return;
 			
-			FileMgr.openMultiBrowse(selectMultiCallback, [new FileFilter("帧图片", "*.png")]);
+			FileMgr.openMultiBrowse(selectMultiCallback, null, [new FileFilter("帧图片", "*.png")]);
 		}
 		
-		private function __selectMultiHandler(e:FileListEvent):void
-		{
-			m_loading = true;
-			
-			DisposeUtil.free(m_queue);
-			m_queue = new QueueLoader();
-			
-			var list:Array = e.files;
-			
-			for each(var f:File in list)
-			{
-				m_queue.add(f);
-			}
-			
-			m_queue.start(loadCallback);
-			
-			WaiteFrame.show("正在加载图片...");
-		}
+//		private function __selectMultiHandler(e:FileListEvent):void
+//		{
+//			m_loading = true;
+//			
+//			DisposeUtil.free(m_queue);
+//			m_queue = new QueueLoader();
+//			
+//			var list:Array = e.files;
+//			
+//			for each(var f:File in list)
+//			{
+//				m_queue.add(f);
+//			}
+//			
+//			m_queue.start(loadCallback);
+//			
+//			WaiteFrame.show("正在加载图片...");
+//		}
 		
 		private function selectMultiCallback(list:Array):void
 		{

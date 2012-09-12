@@ -6,12 +6,15 @@ package jsion.tool.pngpacker.data
 	import flash.filesystem.FileStream;
 	import flash.utils.ByteArray;
 	
+	import jsion.Global;
 	import jsion.HashMap;
 	import jsion.IDispose;
-	import jsion.Global;
 	import jsion.serialize.res.ResPacker;
 	import jsion.serialize.res.ResUnpacker;
+	import jsion.tool.Config;
 	import jsion.utils.DisposeUtil;
+	import jsion.utils.JUtil;
+	import jsion.utils.StringUtil;
 	
 	import org.aswing.tree.DefaultMutableTreeNode;
 	import org.aswing.tree.DefaultTreeModel;
@@ -49,8 +52,9 @@ package jsion.tool.pngpacker.data
 			
 			var dirInfo:DirectionInfo;
 			
-			if(action == null)
+			if(action == null || action.root == null)
 			{
+				m_actions.remove(actionID);
 				action = new ActionInfo(actionName);
 				action.actionID = actionID;
 				action.root = root;
@@ -141,6 +145,17 @@ package jsion.tool.pngpacker.data
 			var bytes:ByteArray = getPackBytes();
 			
 			var f:File = new File(file);
+			
+			if(StringUtil.isNotNullOrEmpty(Config.DefaultExt))
+			{
+				var ext:String = JUtil.getExtension(Config.DefaultExt);
+				
+				if(ext == null) ext = Config.DefaultExt;
+				
+				file = file + "." + ext;
+			}
+			
+			f = new File(file);
 			
 			var fs:FileStream = new FileStream();
 			

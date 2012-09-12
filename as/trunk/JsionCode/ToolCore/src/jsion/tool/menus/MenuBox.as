@@ -109,7 +109,7 @@ package jsion.tool.menus
 		
 		private function onOpenMapHandler(e:AWEvent):void
 		{
-			FileMgr.openBrowse(onOpenMapCallback, [new FileFilter("地图信息文件", "*.map")]);
+			FileMgr.openBrowse(onOpenMapCallback, null, [new FileFilter("地图信息文件", "*.map")]);
 		}
 		
 		private function onOpenMapCallback(file:File):void

@@ -12,6 +12,7 @@ package jsion.tool.mgrs
 	public class FileMgr
 	{
 		private static var m_callbackMap:HashMap = new HashMap();
+		private static var m_cancelCallbackMap:HashMap = new HashMap();
 		
 		public function FileMgr()
 		{
@@ -75,7 +76,7 @@ package jsion.tool.mgrs
 		 * @param callback 将所选文件的 File 对象作为参数回调此方法
 		 * @param typeFilter 过滤显示文件的FileFilter数组对象
 		 */		
-		public static function openBrowse(callback:Function, typeFilter:Array = null):void
+		public static function openBrowse(callback:Function, cancelCallback:Function = null, typeFilter:Array = null):void
 		{
 			if(callback == null) return;
 			
@@ -84,6 +85,7 @@ package jsion.tool.mgrs
 			file.addEventListener(Event.CANCEL, __cancelHandler);
 			
 			m_callbackMap.put(file, callback);
+			m_cancelCallbackMap.put(file, cancelCallback);
 			
 			file.browseForOpen("打开文件", typeFilter);
 		}
@@ -93,7 +95,7 @@ package jsion.tool.mgrs
 		 * @param callback 将所选文件的数组作为参数回调此方法
 		 * @param typeFilter 过滤显示文件的FileFilter数组对象
 		 */		
-		public static function openMultiBrowse(callback:Function, typeFilter:Array = null):void
+		public static function openMultiBrowse(callback:Function, cancelCallback:Function = null, typeFilter:Array = null):void
 		{
 			if(callback == null) return;
 			
@@ -102,6 +104,7 @@ package jsion.tool.mgrs
 			file.addEventListener(Event.CANCEL, __cancelHandler);
 			
 			m_callbackMap.put(file, callback);
+			m_cancelCallbackMap.put(file, cancelCallback);
 			
 			file.browseForOpenMultiple("打开多个文件", typeFilter);
 		}
@@ -110,7 +113,7 @@ package jsion.tool.mgrs
 		 * 浏览选择要保存的文件
 		 * @param callback 将所选保存目标的 File 对象作为参数回调此方法
 		 */		
-		public static function saveBrowse(callback:Function):void
+		public static function saveBrowse(callback:Function, cancelCallback:Function = null):void
 		{
 			if(callback == null) return;
 			
@@ -119,6 +122,7 @@ package jsion.tool.mgrs
 			file.addEventListener(Event.CANCEL, __cancelHandler);
 			
 			m_callbackMap.put(file, callback);
+			m_cancelCallbackMap.put(file, cancelCallback);
 			
 			file.browseForSave("保存文件");
 		}
@@ -127,7 +131,7 @@ package jsion.tool.mgrs
 		 * 浏览选择目录位置
 		 * @param callback 将所选目录的 File 对象作为参数回调此方法
 		 */		
-		public static function directoryBrowse(callback:Function):void
+		public static function directoryBrowse(callback:Function, cancelCallback:Function = null):void
 		{
 			if(callback == null) return;
 			
@@ -136,6 +140,7 @@ package jsion.tool.mgrs
 			file.addEventListener(Event.CANCEL, __cancelHandler);
 			
 			m_callbackMap.put(file, callback);
+			m_cancelCallbackMap.put(file, cancelCallback);
 			
 			file.browseForDirectory("选择目录");
 		}
@@ -170,6 +175,7 @@ package jsion.tool.mgrs
 		{
 			var file:File = e.currentTarget as File;
 			
+			m_cancelCallbackMap.remove(file);
 			var callback:Function = m_callbackMap.remove(file);
 			
 			try
@@ -189,6 +195,7 @@ package jsion.tool.mgrs
 		{
 			var file:File = e.currentTarget as File;
 			
+			m_cancelCallbackMap.remove(file);
 			var callback:Function = m_callbackMap.remove(file);
 			
 			try
@@ -208,6 +215,7 @@ package jsion.tool.mgrs
 		{
 			var file:File = e.currentTarget as File;
 			
+			m_cancelCallbackMap.remove(file);
 			var callback:Function = m_callbackMap.remove(file);
 			
 			try
@@ -227,6 +235,7 @@ package jsion.tool.mgrs
 		{
 			var file:File = e.currentTarget as File;
 			
+			m_cancelCallbackMap.remove(file);
 			var callback:Function = m_callbackMap.remove(file);
 			
 			try
@@ -250,6 +259,16 @@ package jsion.tool.mgrs
 			var file:File = e.currentTarget as File;
 			
 			m_callbackMap.remove(file);
+			var callback:Function = m_cancelCallbackMap.remove(file);
+			
+			try
+			{
+				callback();
+			}
+			catch(err:Error)
+			{
+				trace(err.getStackTrace());
+			}
 			
 			file.removeEventListener(Event.SELECT, 					__openHandler);
 			file.removeEventListener(FileListEvent.SELECT_MULTIPLE, __openMultiHandler);

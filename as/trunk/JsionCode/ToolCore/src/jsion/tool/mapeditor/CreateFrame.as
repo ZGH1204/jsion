@@ -291,7 +291,7 @@ package jsion.tool.mapeditor
 		
 		private function onLoopPicBrowseHandler(e:AWEvent):void
 		{
-			FileMgr.openBrowse(onOpenCallback, [new FileFilter("支持的图片格式", "*.png;*.jpg;*.jpeg;*.bmp")]);
+			FileMgr.openBrowse(onOpenCallback, null, [new FileFilter("支持的图片格式", "*.png;*.jpg;*.jpeg;*.bmp")]);
 		}
 		
 		private function onOpenCallback(file:File):void
@@ -301,7 +301,7 @@ package jsion.tool.mapeditor
 		
 		private function onMapPicBrowseHandler(e:AWEvent):void
 		{
-			FileMgr.openBrowse(onOpenMapPicCallback, [new FileFilter("支持的图片格式", "*.png;*.jpg;*.jpeg;*.bmp")]);
+			FileMgr.openBrowse(onOpenMapPicCallback, null, [new FileFilter("支持的图片格式", "*.png;*.jpg;*.jpeg;*.bmp")]);
 		}
 		
 		private function onOpenMapPicCallback(file:File):void
@@ -327,7 +327,7 @@ package jsion.tool.mapeditor
 		
 		private function onOpenOutPathHandler(e:AWEvent):void
 		{
-			FileMgr.openBrowse(onOpenOutPathCallback, [new FileFilter("支持的图片格式", "*.png;*.jpg;*.jpeg;*.bmp")]);
+			FileMgr.openBrowse(onOpenOutPathCallback, null, [new FileFilter("支持的图片格式", "*.png;*.jpg;*.jpeg;*.bmp")]);
 		}
 		
 		private function onOpenOutPathCallback(file:File):void
