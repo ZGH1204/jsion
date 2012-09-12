@@ -391,7 +391,7 @@ package jsion.serialize.res
 				x += count;
 				temp = bWidth + offsetX;
 				
-				if(x > temp)
+				if(x >= temp)
 				{
 					x = x - count;
 					temp = temp - x;//当前行满后用掉的像素数

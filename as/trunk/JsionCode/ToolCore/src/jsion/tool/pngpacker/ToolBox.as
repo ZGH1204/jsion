@@ -3,6 +3,7 @@ package jsion.tool.pngpacker
 	import flash.filesystem.File;
 	import flash.net.FileFilter;
 	
+	import jsion.tool.Config;
 	import jsion.tool.mgrs.FileMgr;
 	import jsion.tool.pngpacker.frames.AddActionFrame;
 	
@@ -81,7 +82,8 @@ package jsion.tool.pngpacker
 			if(m_browsing == false)
 			{
 				m_browsing = true;
-				FileMgr.openBrowse(openCallback, [new FileFilter("动作资源", "*.hy")]);
+				//FileMgr.openBrowse(openCallback, cancelCallback, [new FileFilter("动作资源", "*.hy")]);
+				FileMgr.openBrowse(openCallback, cancelCallback, [new FileFilter("动作资源", Config.ActExtFilter)]);
 			}
 		}
 		
@@ -99,6 +101,11 @@ package jsion.tool.pngpacker
 			m_openPackBtn.setEnabled(false);
 			
 			m_frame.read(f);
+		}
+		
+		private function cancelCallback():void
+		{
+			m_browsing = false;
 		}
 		
 		public function setDelBtnEnabled(b:Boolean):void
