@@ -76,6 +76,23 @@ package jsion.serialize.res
 		}
 		
 		/**
+		 * 替换掉指定动作序列帧图片列表
+		 * 此方法会强制替换掉已有列表。
+		 * @param action 动作类型
+		 * @param dir 动作方向
+		 * @param list 序列帧图片列表
+		 * 
+		 */		
+		public function putBitmapDataList(action:int, dir:int, list:Array):void
+		{
+			var dirMap:HashMap = m_actions.get(action);
+			
+			if(dirMap == null) return;
+			
+			dirMap.put(dir, list);
+		}
+		
+		/**
 		 * 获取指定动作和方向的图片资源列表
 		 * @param action 动作类型
 		 * @param dir 动作方向
