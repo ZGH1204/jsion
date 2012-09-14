@@ -274,7 +274,8 @@ package jsion.startup
 		
 		private function __loadingErrorHandler(e:IOErrorEvent):void
 		{
-			throw new Error(e.text);
+			//throw new Error(e.text);
+			throw new Error(e);
 		}
 		
 		
