@@ -189,6 +189,16 @@ package jsion
 		}
 		
 		/**
+		 * 删除并释放指定key的项。
+		 * @param key
+		 * 
+		 */		
+		public function removeAndFree(key:*):void
+		{
+			DisposeUtil.free(remove(key));
+		}
+		
+		/**
 		 * 移除指定的项，并返回对应的key。
 		 * @param value
 		 */		
