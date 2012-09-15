@@ -128,20 +128,20 @@ package jsion.utils
 		 * 移除数组中的指定对象
 		 * @param array 数组对象
 		 * @param obj 要移除的对象
-		 * @return 移除个数
+		 * @return 要移除的对象所在索引
 		 * 
 		 */		
 		public static function remove(array:Array, obj:*):int
 		{
-			if(array == null) return 0;
+			if(array == null) return -1;
 			
 			var index:int = array.indexOf(obj);
 			
-			if(index == -1) return 0;
+			if(index == -1) return -1;
 			
-			var list:Array = array.splice(index, 1);
+			array.splice(index, 1);
 			
-			return list ? list.length : 0;
+			return index;
 		}
 		
 		/**
