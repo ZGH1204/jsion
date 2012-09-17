@@ -79,6 +79,7 @@
     <ClInclude Include="ClientBase.h" />
     <ClInclude Include="CryptorBase.h" />
     <ClInclude Include="PackageBase.h" />
+    <ClInclude Include="RecvBuffer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="TCPIOCP.h" />
@@ -87,6 +88,7 @@
     <ClCompile Include="ClientBase.cpp" />
     <ClCompile Include="CryptorBase.cpp" />
     <ClCompile Include="PackageBase.cpp" />
+    <ClCompile Include="RecvBuffer.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

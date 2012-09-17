@@ -347,7 +347,7 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 				CPackageBase* lpPKG = lpAcceptData->SendPKGList.front();
 
 				const char* pBuffer = (const char*)((char*)lpPKG + sizeof(lpPKG->Lok) + sizeof(lpPKG->RefCount));
-				int bufferSize = *(int*)pBuffer;
+				short bufferSize = *(short*)pBuffer;
 
 				lpAcceptData->SenderCryptor->Encrypt(pBuffer, lpAcceptData->SendDataLeft, bufferSize, lpAcceptData->Sender->Buffer, lpAcceptData->sendBytesTotal, BUFF_SIZE);
 
@@ -363,7 +363,10 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 						{
 							delete lpPKG;
 						}
-					LeaveCriticalSection(&(lpPKG->Lok));
+						else
+						{
+							LeaveCriticalSection(&(lpPKG->Lok));
+						}
 
 					lpAcceptData->SenderCryptor->UpdateCryptKey();
 				}
@@ -416,13 +419,93 @@ void CTCPIOCP::OnConnectER(char* ip, int port, DWORD errid)
 
 void CTCPIOCP::OnConnectOK(LPACCEPT_DATA lpAcceptData)
 {
-	printf("远程终点连接成功!");
+	printf("远程终点连接成功!\r\n");
 }
 
 void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 {
 	//TODO: 从字节流解析数据包，并缓存不完整的数据包字节流。
-	printf("处理接收到的字节流!长度：%d", bytesTransferred);
+	printf("处理接收到的字节流!长度：%d\r\n", bytesTransferred);
+
+	char* pkg = NULL;
+	short pkgLen = 0;
+	size_t sOffset = 0;
+	size_t dOffset = 0;
+	int remain = bytesTransferred;
+	CCryptorBase* cryptor = lpIOCPData->LPAcceptData->RecverCryptor;
+
+	EnterCriticalSection(&m_recvPackagesListLok);
+
+	if (m_recvBuffer.HasBuffer())
+	{
+		size_t writeLen = m_recvBuffer.WriteBuffer(lpIOCPData->WSABuf.buf, remain);
+
+		remain = remain - writeLen;
+
+		if (m_recvBuffer.HasCompletePKG())
+		{
+			pkg = new char[BUFF_SIZE];
+
+			cryptor->Decrypt(m_recvBuffer.lpDataBuffer, sOffset, m_recvBuffer.dataSize, pkg, dOffset, BUFF_SIZE);
+			cryptor->UpdateCryptKey();
+			m_recvBuffer.Reset();
+
+			m_recvPackagesList.push(pkg);
+		}
+
+		if (remain == 0)
+		{
+			return;
+		}
+	}
+
+	while(remain > 0)
+	{
+		cryptor->Decrypt((const char*)lpIOCPData->WSABuf.buf, sOffset, PKG_LEN_BYTES, (char*)lpIOCPData->PKGLen, dOffset, PKG_LEN_BYTES);
+		pkgLen = *(short*)lpIOCPData->PKGLen;																					//取数据包长度
+
+		if (pkgLen > BUFF_SIZE || pkgLen <= 0)
+		{																														//非法数据包，断开客户端。
+			break;;
+		}
+
+		if(pkgLen <= remain)
+		{																														//接收到一个完整数据包
+			pkg = new char[BUFF_SIZE];
+
+			//memcpy_s(pkg, pkgLen, (const char*)(lpIOCPData->WSABuf.buf + (bytesTransferred - remain)), pkgLen);
+			cryptor->Decrypt((const char*)(lpIOCPData->WSABuf.buf + (bytesTransferred - remain)), sOffset, pkgLen, pkg, dOffset, pkgLen);
+			cryptor->UpdateCryptKey();
+			remain = remain - pkgLen;
+
+			m_recvPackagesList.push(pkg);
+
+			TEST_PKG* p = (TEST_PKG*)(pkg);
+
+			printf("ID: %d, Account: %s", p->id, p->account);
+		}
+		else
+		{																														//接收包不完整，放到缓冲区
+			m_recvBuffer.SetDataSize(pkgLen);
+
+			m_recvBuffer.WriteBuffer(lpIOCPData->WSABuf.buf, remain);
+
+			if (m_recvBuffer.HasCompletePKG())
+			{
+				pkg = new char[BUFF_SIZE];
+
+				cryptor->Decrypt(m_recvBuffer.lpDataBuffer, sOffset, m_recvBuffer.dataSize, pkg, dOffset, BUFF_SIZE);
+				cryptor->UpdateCryptKey();
+				m_recvBuffer.Reset();
+
+				m_recvPackagesList.push(pkg);
+			}
+
+			break;
+		}
+	}
+
+	LeaveCriticalSection(&m_recvPackagesListLok);
 }
 
 bool CTCPIOCP::SendTCP( CPackageBase* pkg )
@@ -434,8 +517,6 @@ bool WINAPI CTCPIOCP::SendTCPImp( CTCPIOCP* lpCTCPIOCP, LPACCEPT_DATA lpAcceptDa
 {
 	if (lpCTCPIOCP == NULL || lpCTCPIOCP->m_isConnector == false || pkg == NULL || lpAcceptData == NULL)
 	{
-		if(pkg != NULL) delete pkg;
-
 		return false;
 	}
 
@@ -443,9 +524,9 @@ bool WINAPI CTCPIOCP::SendTCPImp( CTCPIOCP* lpCTCPIOCP, LPACCEPT_DATA lpAcceptDa
 
 	EnterCriticalSection(&(pkg->Lok));
 		pkg->RefCount++;
-	LeaveCriticalSection(&(pkg->Lok));
 
-	lpAcceptData->SendPKGList.push(pkg);
+		lpAcceptData->SendPKGList.push(pkg);
+	LeaveCriticalSection(&(pkg->Lok));
 
 	EnterCriticalSection(&(lpAcceptData->SendLok));
 

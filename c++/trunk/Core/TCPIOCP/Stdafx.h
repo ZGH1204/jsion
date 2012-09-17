@@ -11,6 +11,7 @@
 #pragma comment(lib, "ws2_32.lib")
 
 #define BUFF_SIZE					1024
+#define PKG_LEN_BYTES				2
 
 
 #include <queue>
@@ -37,6 +38,7 @@ typedef struct _IOCP_DATA
 	char							Buffer[BUFF_SIZE];								//具体字节缓冲区。
 	_ACCEPT_DATA*					LPAcceptData;									//客户端对象。
 	OP_TYPE							OPType;											//操作类型。
+	char							PKGLen[PKG_LEN_BYTES];							//用于数据接收时临时储存解密后的数据包长度。
 }IOCP_DATA, *LPIOCP_DATA;
 
 typedef struct _ACCEPT_DATA
@@ -55,5 +57,16 @@ typedef struct _ACCEPT_DATA
 	size_t							sendBytesTotal;									//当前需要发送的总字节数。
 	size_t							sendBytesTransferred;							//当前已发送的字节数。
 }ACCEPT_DATA, *LPACCEPT_DATA;
+
+
+
+typedef struct _TEST_PKG
+{
+	short len;
+	int id;
+	char account[20];
+}TEST_PKG;
+
+
 
 #endif
