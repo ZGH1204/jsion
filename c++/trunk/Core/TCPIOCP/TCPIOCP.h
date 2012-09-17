@@ -5,8 +5,6 @@
 #ifndef JSION_TCP_IOCP
 #define JSION_TCP_IOCP
 
-#define BUFF_SIZE					1024
-
 #pragma comment(lib, "ws2_32.lib")
 
 #include <queue>
@@ -16,6 +14,7 @@
 
 
 #include "Stdafx.h"
+#include "RecvBuffer.h"
 #include "PackageBase.h"
 
 
@@ -64,6 +63,7 @@ private:
 	HANDLE m_completionPort;														//关联指定Socket的完成端口句柄。
 	bool m_isConnector;																//是否作为客户端去连接远程服务端。
 	LPACCEPT_DATA m_lpAcceptData;													//作为客户端去连接远程服务端时有效。
+	RecvBuffer m_recvBuffer;														//接收数据缓冲区，仅当数据包不完整需要拼包时才使用。
 
 	std::queue<LPVOID> m_recvPackagesList;											//全局待处理数据包队列。
 	CRITICAL_SECTION m_recvPackagesListLok;											//全局待处理数据包队列互斥信号。

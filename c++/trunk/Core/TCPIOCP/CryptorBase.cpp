@@ -61,8 +61,8 @@ void NoneCryptor::Decrypt(const char* source, size_t& sourceOffset, size_t sourc
 
 	memcpy_s((char*)(dest + destOffset), tlen, (const char*)(source + sourceOffset), slen);
 
-	sourceOffset += slen;
-	destOffset += slen;
+	//sourceOffset += slen;
+	//destOffset += slen;
 }
 
 void NoneCryptor::UpdateCryptKey()

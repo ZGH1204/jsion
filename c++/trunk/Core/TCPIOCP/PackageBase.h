@@ -14,7 +14,7 @@ public:
 public:
 	CRITICAL_SECTION		Lok;
 	int						RefCount;
-	int						PSize;
+	short					PSize;
 };
 
 
