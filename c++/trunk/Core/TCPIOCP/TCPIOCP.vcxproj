@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClInclude Include="ClientBase.h" />
     <ClInclude Include="CryptorBase.h" />
+    <ClInclude Include="MemPool.h" />
     <ClInclude Include="PackageBase.h" />
     <ClInclude Include="RecvBuffer.h" />
     <ClInclude Include="resource.h" />
@@ -87,6 +88,7 @@
   <ItemGroup>
     <ClCompile Include="ClientBase.cpp" />
     <ClCompile Include="CryptorBase.cpp" />
+    <ClCompile Include="MemPool.cpp" />
     <ClCompile Include="PackageBase.cpp" />
     <ClCompile Include="RecvBuffer.cpp" />
     <ClCompile Include="Stdafx.cpp">
