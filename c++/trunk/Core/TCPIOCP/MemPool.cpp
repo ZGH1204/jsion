@@ -33,21 +33,74 @@ CMemPool* CMemPool::GetInstance()
 
 void* CMemPool::Allocate( size_t allocaLen )
 {
+	void* pRtn;
 
+	EnterCriticalSection(&m_lok);
 
-	return NULL;
+	int index = allocaLen / ALIGN_SIZE;
+
+	if (m_lpMemoryPool[index] == NULL)
+	{
+		_AllocateMemory(allocaLen);
+	}
+
+	LPMEMORY_BLOCK& pBlock = m_lpMemoryPool[index];
+
+	LPMEMORY_BLOCK temp = pBlock->Next;
+
+	pBlock->Next = NULL;
+
+	pRtn = pBlock->Data;
+
+	pBlock = temp;
+
+	LeaveCriticalSection(&m_lok);
+
+	return pRtn;
+}
+
+void CMemPool::Free( void* pData )
+{
+	if(pData == NULL) return;
+
+	EnterCriticalSection(&m_lok);
+
+	LPMEMORY_BLOCK pObj = (LPMEMORY_BLOCK)((char*)pObj - sizeof(MEMORY_BLOCK) + sizeof(char*));
+
+	pObj->Next = NULL;
+
+	int index = pObj->Size / ALIGN_SIZE;
+
+	LPMEMORY_BLOCK& pBlock = m_lpMemoryPool[index];
+
+	if(pBlock == NULL)
+	{
+		pBlock = pObj;
+	}
+	else
+	{
+		pObj->Next = pBlock;
+		pBlock = pObj;
+	}
+
+	LeaveCriticalSection(&m_lok);
 }
 
 void CMemPool::_AllocateMemory(size_t s)
 {
-	size_t allocSize = s + sizeof(MEMORY_BLOCK);
-
-	if (allocSize % ALIGN_SIZE != 0)
-	{//对齐字节
-		allocSize = ALIGN_SIZE - allocSize % ALIGN_SIZE + s;
+	size_t alignSize = s;//对齐要申请的字节空间
+	if(s % ALIGN_SIZE != 0)
+	{
+		alignSize = alignSize + ALIGN_SIZE - s % ALIGN_SIZE;
 	}
 
-	size_t count = MAX_MEMORY_SIZE / allocSize;
+	size_t allocSize = alignSize + sizeof(MEMORY_BLOCK);
+	//if (allocSize % ALIGN_SIZE != 0)
+	//{//对齐字节
+	//	allocSize = ALIGN_SIZE - allocSize % ALIGN_SIZE + allocSize;//添加头信息后再次对齐字节空间
+	//}
+
+	size_t count = MAX_MEMORY_SIZE / allocSize + 1;
 
 	count = max(count, MIN_ALLOC_COUNT);
 
@@ -61,6 +114,9 @@ void CMemPool::_AllocateMemory(size_t s)
 	{
 		lpMem = (LPMEMORY_BLOCK)memory;
 
+		lpMem->Size = s;
+		lpMem->Next = NULL;
+
 		memory = memory + allocSize;
 
 		cur = 1;
@@ -70,9 +126,12 @@ void CMemPool::_AllocateMemory(size_t s)
 	{
 		LPMEMORY_BLOCK temp = (LPMEMORY_BLOCK)memory;
 
+		temp->Size = s;
 		temp->Next = lpMem;
 
 		lpMem = temp;
+
+		lpMem->Next = NULL;
 
 		memory = memory + allocSize;
 

@@ -31,6 +31,7 @@ public:
 public:
 	static CMemPool* GetInstance();
 	void* Allocate(size_t allocaLen);					//获取指定大小的字节空间
+	void Free(void* pData);								//释放指定空间到缓冲池
 
 private:
 	void _AllocateMemory(size_t s);						//按字节对齐分配内存空间
