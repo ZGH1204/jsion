@@ -82,6 +82,7 @@
     <ClInclude Include="PackageBase.h" />
     <ClInclude Include="RecvBuffer.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SmartPtr.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="TCPIOCP.h" />
   </ItemGroup>

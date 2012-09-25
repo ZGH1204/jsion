@@ -346,7 +346,7 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 			{
 				CPackageBase* lpPKG = lpAcceptData->SendPKGList.front();
 
-				const char* pBuffer = (const char*)((char*)lpPKG + sizeof(lpPKG->Lok) + sizeof(lpPKG->RefCount));
+				const char* pBuffer = (const char*)lpPKG;
 				short bufferSize = *(short*)pBuffer;
 
 				lpAcceptData->SenderCryptor->Encrypt(pBuffer, lpAcceptData->SendDataLeft, bufferSize, lpAcceptData->Sender->Buffer, lpAcceptData->sendBytesTotal, BUFF_SIZE);
@@ -355,18 +355,6 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 				{
 					lpAcceptData->SendDataLeft = 0;
 					lpAcceptData->SendPKGList.pop();
-
-					EnterCriticalSection(&(lpPKG->Lok));
-						lpPKG->RefCount--;
-
-						if (lpPKG->RefCount == 0)
-						{
-							delete lpPKG;
-						}
-						else
-						{
-							LeaveCriticalSection(&(lpPKG->Lok));
-						}
 
 					lpAcceptData->SenderCryptor->UpdateCryptKey();
 				}
@@ -522,11 +510,7 @@ bool WINAPI CTCPIOCP::SendTCPImp( CTCPIOCP* lpCTCPIOCP, LPACCEPT_DATA lpAcceptDa
 
 	EnterCriticalSection(&(lpAcceptData->SendPKGListLok));
 
-	EnterCriticalSection(&(pkg->Lok));
-		pkg->RefCount++;
-
-		lpAcceptData->SendPKGList.push(pkg);
-	LeaveCriticalSection(&(pkg->Lok));
+	lpAcceptData->SendPKGList.push(pkg);
 
 	EnterCriticalSection(&(lpAcceptData->SendLok));
 

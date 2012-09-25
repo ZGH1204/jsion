@@ -12,8 +12,6 @@ public:
 	~CPackageBase(void);
 
 public:
-	CRITICAL_SECTION		Lok;
-	int						RefCount;
 	short					PSize;
 };
 
