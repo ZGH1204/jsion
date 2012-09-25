@@ -26,6 +26,8 @@ public:
 
 	CSmartPtr(const CSmartPtr& obj)
 	{
+		EnterCriticalSection(obj->m_lok);
+
 		m_lok = obj->m_lok;
 
 		m_count = obj->m_count;
@@ -33,6 +35,8 @@ public:
 		++*m_count;
 
 		m_cdata = obj->m_cdata;
+
+		LeaveCriticalSection(obj->m_lok);
 	}
 
 	~CSmartPtr()
