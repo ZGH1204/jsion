@@ -1,15 +1,15 @@
 #include "StdAfx.h"
 #include "RecvBuffer.h"
 
-void memcpy_s(char* dest, size_t destSize, char* source, size_t cpySize)
-{
-	if (destSize < cpySize)
-	{
-		throw "1";
-	}
-
-	::memcpy_s(dest, destSize, source, cpySize);
-}
+//void memcpy_s(char* dest, size_t destSize, char* source, size_t cpySize)
+//{
+//	if (destSize < cpySize)
+//	{
+//		throw "1";
+//	}
+//
+//	::memcpy_s(dest, destSize, source, cpySize);
+//}
 
 
 RecvBuffer::RecvBuffer(void)
@@ -40,6 +40,13 @@ size_t RecvBuffer::WriteBuffer( char* buffer, size_t writeLen )
 
 	size_t wl = dataSize - m_writeSize;
 
+	if(wl <= 0)
+	{
+		throw "无法写入空数据";
+
+		return 0;
+	}
+
 	if (writeLen < wl) wl = writeLen;
 
 	try
@@ -48,6 +55,8 @@ size_t RecvBuffer::WriteBuffer( char* buffer, size_t writeLen )
 	}
 	catch (void* e)
 	{
+		e;
+
 		return 0;
 	}
 
@@ -56,9 +65,9 @@ size_t RecvBuffer::WriteBuffer( char* buffer, size_t writeLen )
 	return wl;
 }
 
-void RecvBuffer::SetDataSize( size_t dataSize )
+void RecvBuffer::SetDataSize( size_t ds )
 {
-	dataSize = dataSize;
+	dataSize = ds;
 }
 
 bool RecvBuffer::HasCompletePKG()

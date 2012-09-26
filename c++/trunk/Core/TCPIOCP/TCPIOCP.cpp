@@ -105,6 +105,8 @@ bool CTCPIOCP::Connect(char* ip, int port)
 		return false;
 	}
 
+	_InitIOCP();
+
 	m_isConnector = true;
 
 	m_socket = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
@@ -246,9 +248,9 @@ DWORD WINAPI CTCPIOCP::IOCPThreadProc(LPVOID CompletionPort)
 
 				lpAcceptData->sendBytesTransferred += bytesTransferred;
 
-				LeaveCriticalSection(&(lpAcceptData->SendLok));
-
 				lpCTCPIOCP->_SendAsync(lpAcceptData);
+
+				LeaveCriticalSection(&(lpAcceptData->SendLok));
 			}
 			break;
 		case RECVED:
@@ -292,6 +294,9 @@ LPACCEPT_DATA CreateAcceptData(SOCKET *s, SOCKADDR_IN addr)
 	lpAcceptData->Sender->WSABuf.buf = lpAcceptData->Sender->Buffer;
 	lpAcceptData->Recver->WSABuf.len = BUFF_SIZE;
 	lpAcceptData->Recver->WSABuf.buf = lpAcceptData->Recver->Buffer;
+
+	lpAcceptData->sendPKGCount = 0;
+	lpAcceptData->recvPKGCount = 0;
 
 	lpAcceptData->Sender->OPType = SENDED;
 	lpAcceptData->Recver->OPType = RECVED;
@@ -337,6 +342,8 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 
 		//TODO: 检查数据包队列里是否还有数据包未发送。
 
+		lpAcceptData->sendBytesTotal = 0;
+		lpAcceptData->sendBytesTransferred = 0;
 
 		EnterCriticalSection(&(lpAcceptData->SendPKGListLok));
 
@@ -355,10 +362,13 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 				{
 					lpAcceptData->SendDataLeft = 0;
 					lpAcceptData->SendPKGList.pop();
+					lpAcceptData->sendPKGCount++;
 
 					lpAcceptData->SenderCryptor->UpdateCryptKey();
 				}
 			}
+
+			printf("发送成功 %d 个\r\n", lpAcceptData->sendPKGCount);
 
 			LeaveCriticalSection(&(lpAcceptData->SendPKGListLok));
 		}
@@ -389,14 +399,17 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 
 	DWORD dwFlags = 0;
 	DWORD bytesTransferred;
+	int iErrorID = WSASend(lpAcceptData->Socket, &(lpAcceptData->Sender->WSABuf), 1, &bytesTransferred, dwFlags, &(lpAcceptData->Sender->WSAOverLapped), NULL);
 
-	if (WSASend(lpAcceptData->Socket, &(lpAcceptData->Sender->WSABuf), 1, &bytesTransferred, dwFlags, &(lpAcceptData->Sender->WSAOverLapped), NULL) == NULL)
+	if (iErrorID == SOCKET_ERROR)
 	{
-		//TODO: 启动异步发送失败。
+		//TODO: 启动异步发送失败。WSA_IO_PENDING
+		iErrorID = WSAGetLastError();
 	}
 	else
 	{
 		//TODO: 启动异步发送成功。
+		iErrorID = 0;
 	}
 }
 
@@ -438,11 +451,17 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 			cryptor->UpdateCryptKey();
 			m_recvBuffer.Reset();
 
+			lpIOCPData->LPAcceptData->recvPKGCount++;
 			m_recvPackagesList.push(pkg);
+
+			TEST_PKG* p = (TEST_PKG*)(pkg);
+
+			printf("ID: %d, Account: %s, PKGCount: %d\r\n", p->id, p->account, lpIOCPData->LPAcceptData->recvPKGCount);
 		}
 
 		if (remain == 0)
 		{
+			LeaveCriticalSection(&m_recvPackagesListLok);
 			return;
 		}
 	}
@@ -466,11 +485,12 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 			cryptor->UpdateCryptKey();
 			remain = remain - pkgLen;
 
+			lpIOCPData->LPAcceptData->recvPKGCount++;
 			m_recvPackagesList.push(pkg);
 
 			TEST_PKG* p = (TEST_PKG*)(pkg);
 
-			printf("ID: %d, Account: %s", p->id, p->account);
+			printf("ID: %d, Account: %s, PKGCount: %d\r\n", p->id, p->account, lpIOCPData->LPAcceptData->recvPKGCount);
 		}
 		else
 		{																														//接收包不完整，放到缓冲区
@@ -486,7 +506,12 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 				cryptor->UpdateCryptKey();
 				m_recvBuffer.Reset();
 
+				lpIOCPData->LPAcceptData->recvPKGCount++;
 				m_recvPackagesList.push(pkg);
+
+				TEST_PKG* p = (TEST_PKG*)(pkg);
+
+				printf("ID: %d, Account: %s, PKGCount: %d\r\n", p->id, p->account, lpIOCPData->LPAcceptData->recvPKGCount);
 			}
 
 			break;
@@ -501,6 +526,26 @@ bool CTCPIOCP::SendTCP( CPackageBase* pkg )
 	return SendTCPImp(this, m_lpAcceptData, pkg);
 }
 
+bool CTCPIOCP::SendTCP2(  )
+{
+	/*EnterCriticalSection(&(m_lpAcceptData->SendLok));
+
+	if (m_lpAcceptData->Sending == false)
+	{
+	m_lpAcceptData->Sending = true;
+	m_lpAcceptData->SendDataLeft = 0;
+	m_lpAcceptData->sendBytesTotal = 0;
+	m_lpAcceptData->sendBytesTransferred = 0;
+	m_lpAcceptData->Sender->WSABuf.len = BUFF_SIZE;
+	m_lpAcceptData->Sender->WSABuf.buf = m_lpAcceptData->Sender->Buffer;
+	_SendAsync(m_lpAcceptData);
+	}
+
+	LeaveCriticalSection(&(m_lpAcceptData->SendLok));*/
+
+	return true;
+}
+
 bool WINAPI CTCPIOCP::SendTCPImp( CTCPIOCP* lpCTCPIOCP, LPACCEPT_DATA lpAcceptData, CPackageBase* pkg )
 {
 	if (lpCTCPIOCP == NULL || lpCTCPIOCP->m_isConnector == false || pkg == NULL || lpAcceptData == NULL)
@@ -511,6 +556,8 @@ bool WINAPI CTCPIOCP::SendTCPImp( CTCPIOCP* lpCTCPIOCP, LPACCEPT_DATA lpAcceptDa
 	EnterCriticalSection(&(lpAcceptData->SendPKGListLok));
 
 	lpAcceptData->SendPKGList.push(pkg);
+
+	LeaveCriticalSection(&(lpAcceptData->SendPKGListLok));
 
 	EnterCriticalSection(&(lpAcceptData->SendLok));
 
@@ -526,8 +573,6 @@ bool WINAPI CTCPIOCP::SendTCPImp( CTCPIOCP* lpCTCPIOCP, LPACCEPT_DATA lpAcceptDa
 	}
 
 	LeaveCriticalSection(&(lpAcceptData->SendLok));
-
-	LeaveCriticalSection(&(lpAcceptData->SendPKGListLok));
 
 	return true;
 }

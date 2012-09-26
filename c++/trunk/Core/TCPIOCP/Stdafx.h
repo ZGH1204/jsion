@@ -56,6 +56,8 @@ typedef struct _ACCEPT_DATA
 	bool							Sending;										//是否正在发送。
 	size_t							sendBytesTotal;									//当前需要发送的总字节数。
 	size_t							sendBytesTransferred;							//当前已发送的字节数。
+	size_t							sendPKGCount;									//发送数据包数。
+	size_t							recvPKGCount;									//接收数据包数。
 }ACCEPT_DATA, *LPACCEPT_DATA;
 
 

@@ -34,6 +34,7 @@ public:
 	bool Connect(char* ip, int port);												//连接到指定的远程网络终点。
 
 	bool SendTCP(CPackageBase* pkg);												//仅作为客户端去连接远程服务端时可用。
+	bool SendTCP2();																//仅作为客户端去连接远程服务端时可用。
 
 public:
 	virtual void OnAccept(LPACCEPT_DATA lpAcceptData);								//收到连接请求后调用的方法。

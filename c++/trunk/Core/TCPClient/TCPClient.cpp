@@ -11,12 +11,18 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	if(client.Connect("127.0.0.1", 3000))
 	{
-		printf("连接服务器成功！");
+		printf("连接服务器成功！\r\n");
 	}
 
 	TestPackage* pkg = new TestPackage;
 
-	client.SendTCP(pkg);
+	for (int i = 0; i < 100; i++)
+	{
+		//printf("发送数据包！\r\n");
+		client.SendTCP(pkg);
+	}
+
+	client.SendTCP2();
 
 	printf("按任意键退出!\r\n");
 
