@@ -10,7 +10,7 @@ public:
 
 public:
 	bool HasBuffer();
-	void SetDataSize(size_t dataSize);
+	void SetDataSize(size_t ds);
 	size_t WriteBuffer(char* buffer, size_t writeLen);
 	bool HasCompletePKG();
 	void Reset();

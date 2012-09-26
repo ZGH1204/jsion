@@ -65,7 +65,7 @@ void CMemPool::Free( void* pData )
 
 	EnterCriticalSection(&m_lok);
 
-	LPMEMORY_BLOCK pObj = (LPMEMORY_BLOCK)((char*)pObj - sizeof(MEMORY_BLOCK) + sizeof(char*));
+	LPMEMORY_BLOCK pObj = (LPMEMORY_BLOCK)((char*)pData - sizeof(MEMORY_BLOCK) + sizeof(char*));
 
 	pObj->Next = NULL;
 
