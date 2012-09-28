@@ -17,6 +17,7 @@ package jsion.tool.menus
 	import jsion.tool.mgrs.FileMgr;
 	import jsion.tool.piccuter.PicCuterFrame;
 	import jsion.tool.pngpacker.PackerFrame;
+	import jsion.tool.uieditor.UIEditorFrame;
 	import jsion.tool.unicode.TransfPane;
 	import jsion.tool.xmlformats.XmlFormatPane;
 	import jsion.utils.ObjectUtil;
@@ -49,6 +50,10 @@ package jsion.tool.menus
 			item.addActionListener(onUnicodeClickHandler);
 			tool.append(item);
 			
+			item = new JMenuItem("UI编辑器");
+			item.addActionListener(onUIEditorClickHandler);
+			tool.append(item);
+			
 			item = new JMenuItem("资源打包器");
 			item.addActionListener(onPackerClickHandler);
 			tool.append(item);
@@ -79,6 +84,11 @@ package jsion.tool.menus
 		private function onUnicodeClickHandler(e:AWEvent):void
 		{
 			PopUpManager.createPopUp(ToolGlobal.windowedApp, TransfPane, true);
+		}
+		
+		private function onUIEditorClickHandler(e:AWEvent):void
+		{
+			new UIEditorFrame().show();
 		}
 		
 		private function onPackerClickHandler(e:AWEvent):void

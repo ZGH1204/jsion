@@ -315,7 +315,7 @@ package jsion.tool.mapeditor
 			m_imageLoader.loadAsync(mapImageLoadCallback);
 		}
 		
-		private function mapImageLoadCallback(loader:BitmapDataLoader):void
+		private function mapImageLoadCallback(loader:BitmapDataLoader, success:Boolean):void
 		{
 			m_okBtn.setEnabled(true);
 			

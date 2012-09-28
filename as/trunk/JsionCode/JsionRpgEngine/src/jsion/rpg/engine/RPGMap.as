@@ -504,7 +504,7 @@ package jsion.rpg.engine
 		}
 		
 		
-		private function tileLoadCallback(loader:BitmapDataLoader):void
+		private function tileLoadCallback(loader:BitmapDataLoader, success:Boolean):void
 		{
 			m_loadings.remove(loader.tag);
 			

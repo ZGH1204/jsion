@@ -105,7 +105,7 @@ package jsion.rpg.engine
 			m_mapLoader.loadAsync(mapInfoLoadCallback);
 		}
 		
-		private function mapInfoLoadCallback(loader:BytesLoader):void
+		private function mapInfoLoadCallback(loader:BytesLoader, success:Boolean):void
 		{
 			if(loader.status == JsionLoader.ERROR)
 			{
@@ -137,7 +137,7 @@ package jsion.rpg.engine
 			m_loader.loadAsync(smallMapLoadCallback);
 		}
 		
-		private function smallMapLoadCallback(loader:BitmapDataLoader):void
+		private function smallMapLoadCallback(loader:BitmapDataLoader, success:Boolean):void
 		{
 			if(loader.status == JsionLoader.ERROR)
 			{

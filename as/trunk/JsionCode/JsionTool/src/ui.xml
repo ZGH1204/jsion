@@ -1,0 +1,5 @@
+<UI Lib="" ResDir="">
+	<Label CLS="" Required="">
+		<Prop Name="" Default="" Options="" Res="false" />
+	</Label>
+</UI>
