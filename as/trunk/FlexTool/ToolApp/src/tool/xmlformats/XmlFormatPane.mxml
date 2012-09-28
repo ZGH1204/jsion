@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool:BaseTitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:tool="tool.*"
+		 title="格式化XML"
+		 nativeDragEnter="titlewindow1_nativeDragEnterHandler(event)"
+		 nativeDragDrop="titlewindow1_nativeDragDropHandler(event)" >
+
+	<fx:Script>
+		<![CDATA[
+			import flash.filesystem.File;
+			import flash.filesystem.FileMode;
+			import flash.filesystem.FileStream;
+			
+			import jsion.utils.JUtil;
+			import jsion.utils.StringUtil;
+			
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.DragManager;
+			import mx.managers.PopUpManager;
+			
+			import utils.FileMgr;
+			
+			private var list:Array = [];
+			
+			protected function titlewindow1_nativeDragEnterHandler(event:NativeDragEvent):void
+			{
+				// TODO Auto-generated method stub
+				DragManager.showFeedback(DragManager.LINK);
+				DragManager.acceptDragDrop(this);
+			}
+
+			protected function titlewindow1_nativeDragDropHandler(event:NativeDragEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				//trace("取到拖入的文件");
+				
+				var files:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
+				
+				for(var i:int = 0; i < files.length; i++)
+				{
+					list.push(files[i]);
+				}
+				
+				addEventListener(Event.ENTER_FRAME, __enterFrameHandler);
+			}
+			
+			protected function __enterFrameHandler(e:Event):void
+			{
+				if(list.length != 0)
+				{
+					ToolGlobal.windows.statusText.text = "正在格式化...";
+					
+					var file:File = list.pop() as File;
+					
+					var bytes:ByteArray = new ByteArray();
+					
+					var fs:FileStream = new FileStream();
+					
+					fs.open(file, FileMode.READ);
+					fs.readBytes(bytes);
+					fs.close();
+					
+					var xml:XML;
+					
+					try
+					{
+						xml = new XML(bytes);
+					}
+					catch(err:Error)
+					{
+						return;
+					}
+					
+					var back:String = JUtil.path2Key(file.name) + ".bak";
+					
+					var backFile:File = file.parent.resolvePath(back);
+					
+					FileMgr.copy2Target(file, backFile);
+					
+					var root:XmlNode = new XmlNode();
+					
+					var rlt:String = root.parseXML(xml);
+					
+					var bs:ByteArray = new ByteArray();
+					
+					bs.writeUTFBytes(rlt);
+					
+					var f:File = file.parent.resolvePath(file.name);
+					
+					fs.open(f, FileMode.WRITE);
+					fs.writeBytes(bs);
+					fs.close();
+				}
+				else
+				{
+					removeEventListener(Event.ENTER_FRAME, __enterFrameHandler);
+					Alert.show("格式化完成", "提示");
+					ToolGlobal.windows.statusText.text = "格式化完成，输出到文件所在目录！";
+				}
+			}
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Label text="拖拽Xml文件进行格式化" horizontalCenter="8" verticalCenter="0"/>
+</tool:BaseTitleWindow>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool:BaseTitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:tool="tool.*"
+			   title="动作序列帧压缩打包"
+			   width="800" height="520"
+			   initialize="basetitlewindow1_initializeHandler(event)" xmlns:pngpacker="tool.pngpacker.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			
+			import tool.pngpacker.events.PackerEvent;
+			
+			protected var m_timer:Timer;
+			
+			override protected function titlewindow1_closeHandler(event:CloseEvent):void
+			{
+				clearTimer();
+				
+				super.titlewindow1_closeHandler(event);
+			}
+
+			protected function basetitlewindow1_initializeHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				m_timer = new Timer(1000 / 30);
+				
+				m_timer.addEventListener(TimerEvent.TIMER, __timerHandler);
+				
+				m_timer.start();
+			}
+			
+			protected function __timerHandler(e:TimerEvent):void
+			{
+			}
+
+			protected function spinnerinput1_textChangedHandler(event:PackerEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				var i:int = int(fpsInput.text);
+				
+				if(i <= 0)
+				{
+					fpsInput.text = "1";
+					i = 1;
+				}
+				
+				resetTimer(i);
+			}
+			
+			protected function resetTimer(fps:Number):void
+			{
+				clearTimer();
+				
+				m_timer = new Timer(1000 / fps);
+				
+				m_timer.addEventListener(TimerEvent.TIMER, __timerHandler);
+				
+				m_timer.start();
+			}
+			
+			protected function clearTimer():void
+			{
+				if(m_timer)
+				{
+					m_timer.reset();
+					m_timer.removeEventListener(TimerEvent.TIMER, __timerHandler);
+					m_timer = null;
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:HGroup left="10" right="10" top="10" paddingLeft="5" paddingRight="5" paddingTop="5" paddingBottom="5">
+		<s:Button label="添加动作" height="25"/>
+		<s:Button label="删除动作" height="25"/>
+		<s:Button label="打包保存" height="25"/>
+		<pngpacker:SpinnerInput id="fpsInput" defaultText="0" restrict="0-9" text="30" textChanged="spinnerinput1_textChangedHandler(event)">
+		</pngpacker:SpinnerInput>
+	</s:HGroup>
+</tool:BaseTitleWindow>
