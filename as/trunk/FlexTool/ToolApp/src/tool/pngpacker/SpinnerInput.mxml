@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" gap="-1">
+	<fx:Metadata>
+		[Event(name="textChanged", type="tool.pngpacker.events.PackerEvent")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import jsion.utils.StringUtil;
+			
+			import spark.events.TextOperationEvent;
+			
+			import tool.pngpacker.events.PackerEvent;
+			
+			protected var m_defaultText:String = "";
+			
+			protected function spinnerInput_changeHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				
+				inputText.text = String(spinnerInput.value);
+				
+				dispatchEvent(new PackerEvent(PackerEvent.TEXT_CHANGED));
+			}
+
+			protected function inputText_changeHandler(event:TextOperationEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				if(StringUtil.isNullOrEmpty(StringUtil.trim(inputText.text)))
+				{
+					inputText.text = m_defaultText;
+				}
+				
+				spinnerInput.value = int(inputText.text);
+				
+				dispatchEvent(new PackerEvent(PackerEvent.TEXT_CHANGED));
+			}
+			
+			public function get text():String
+			{
+				return inputText.text;
+			}
+			
+			public function set text(value:String):void
+			{
+				inputText.text = value;
+			}
+			
+			public function get restrict():String
+			{
+				return inputText.restrict;
+			}
+			
+			public function set restrict(value:String):void
+			{
+				inputText.restrict = value;
+			}
+
+			public function get defaultText():String
+			{
+				return m_defaultText;
+			}
+
+			public function set defaultText(value:String):void
+			{
+				m_defaultText = value;
+			}
+
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:TextInput id="inputText" height="25" width="30" change="inputText_changeHandler(event)" />
+	<s:Spinner id="spinnerInput" height="25" value="30" stepSize="1" maximum="1000" change="spinnerInput_changeHandler(event)"/>
+</s:HGroup>
