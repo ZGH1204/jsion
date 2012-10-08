@@ -11,7 +11,7 @@ public:
 	~CCryptorBase(void);
 
 public:
-	virtual size_t Encrypt(const char* source, size_t& sourceOffset, size_t sourceSize, char* dest, size_t& destOffset, size_t destSize);
+	virtual size_t Encrypt(const char* source, size_t sourceOffset, size_t sourceSize, char* dest, size_t destOffset, size_t destSize);
 	virtual size_t Decrypt(const char* source, size_t sourceOffset, size_t sourceSize, char* dest, size_t destOffset, size_t destSize);
 	virtual void UpdateCryptKey();
 };
@@ -19,7 +19,7 @@ public:
 
 class NoneCryptor : public CCryptorBase
 {
-	size_t Encrypt(const char* source, size_t& sourceOffset, size_t sourceSize, char* dest, size_t& destOffset, size_t destSize);
+	size_t Encrypt(const char* source, size_t sourceOffset, size_t sourceSize, char* dest, size_t destOffset, size_t destSize);
 
 	size_t Decrypt(const char* source, size_t sourceOffset, size_t sourceSize, char* dest, size_t destOffset, size_t destSize);
 
