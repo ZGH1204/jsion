@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TCPServer", "TCPServer\TCPS
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TCPClient", "TCPClient\TCPClient.vcxproj", "{AC30CB22-A663-46BD-9CD0-5278D28C427C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MemTestApp", "MemTestApp\MemTestApp.vcxproj", "{6F405882-6921-4416-964B-1F6EFEB6ECF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,10 @@ Global
 		{AC30CB22-A663-46BD-9CD0-5278D28C427C}.Debug|Win32.Build.0 = Debug|Win32
 		{AC30CB22-A663-46BD-9CD0-5278D28C427C}.Release|Win32.ActiveCfg = Release|Win32
 		{AC30CB22-A663-46BD-9CD0-5278D28C427C}.Release|Win32.Build.0 = Release|Win32
+		{6F405882-6921-4416-964B-1F6EFEB6ECF9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6F405882-6921-4416-964B-1F6EFEB6ECF9}.Debug|Win32.Build.0 = Debug|Win32
+		{6F405882-6921-4416-964B-1F6EFEB6ECF9}.Release|Win32.ActiveCfg = Release|Win32
+		{6F405882-6921-4416-964B-1F6EFEB6ECF9}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

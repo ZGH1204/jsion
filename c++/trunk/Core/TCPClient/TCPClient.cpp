@@ -9,22 +9,29 @@ CTCPIOCP client;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	if(client.Connect("127.0.0.1", 3000))
+	for (int i = 0; i < 1000; i++)
 	{
-		printf("连接服务器成功！\r\n");
-	}
+		CTCPIOCP* lpClient = new CTCPIOCP;
 
-	TestPackage* pkg = new TestPackage;
+		if(lpClient->Connect("127.0.0.1", 3000))
+		{
+			printf("连接服务器成功！\r\n");
+		}
 
-	for (int i = 0; i < 100; i++)
-	{
 		//TestPackage* pkg = new TestPackage;
-		//pkg->id = i + 1;
-		//printf("发送数据包！\r\n");
-		client.SendTCP(pkg);
-	}
 
-	client.SendTCP2();
+		//for (int i = 0; i < 100; i++)
+		//{
+		//	//TestPackage* pkg = new TestPackage;
+		//	//pkg->id = i + 1;
+		//	//printf("发送数据包！\r\n");
+		//	client.SendTCP(pkg);
+		//}
+
+		//client.SendTCP2();
+
+		//client.StopTCP();
+	}
 
 	printf("按任意键退出!\r\n");
 

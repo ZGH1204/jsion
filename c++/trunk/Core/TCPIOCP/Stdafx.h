@@ -19,6 +19,7 @@
 
 #include "PackageBase.h"
 #include "CryptorBase.h"
+#include "RecvBuffer.h"
 
 //////////////////////////////////////////////////////////////////////////
 //						完成端口数据
@@ -39,6 +40,7 @@ typedef struct _IOCP_DATA
 	_ACCEPT_DATA*					LPAcceptData;									//客户端对象。
 	OP_TYPE							OPType;											//操作类型。
 	char							PKGLen[PKG_LEN_BYTES];							//用于数据接收时临时储存解密后的数据包长度。
+
 }IOCP_DATA, *LPIOCP_DATA;
 
 typedef struct _ACCEPT_DATA
@@ -57,10 +59,26 @@ typedef struct _ACCEPT_DATA
 	size_t							sendBytesTotal;									//当前需要发送的总字节数。
 	size_t							sendBytesTransferred;							//当前已发送的字节数。
 	CRITICAL_SECTION				RecvLok;										//接收数据互斥信号。
-	bool							Recving;										//是否正在接收。
+	RecvBuffer						RecvBuf;										//接收数据缓冲区，仅当数据包不完整需要拼包时才使用。
+	CRITICAL_SECTION				ClosLok;										//关闭客户端互斥信号。
 	bool							Closing;										//是否即将关闭。
 	size_t							sendPKGCount;									//发送数据包数。
 	size_t							recvPKGCount;									//接收数据包数。
+
+	static void* operator new (size_t len)
+	{
+		return CMemPool::GetInstance()->Allocate(len);
+	}
+
+	static void* operator new(size_t len, const char* file, int line)
+	{
+		return CMemPool::GetInstance()->Allocate(len);
+	}
+
+	static void operator delete(void* lpObj)
+	{
+		CMemPool::GetInstance()->Free(lpObj);
+	}
 }ACCEPT_DATA, *LPACCEPT_DATA;
 
 

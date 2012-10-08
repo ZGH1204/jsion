@@ -4,7 +4,7 @@
 
 #include "TCPIOCP.h"
 
-LPACCEPT_DATA CreateAcceptData(SOCKET *s, SOCKADDR_IN addr);
+LPACCEPT_DATA CreateAcceptData(SOCKET& s, SOCKADDR_IN& addr);
 
 
 CTCPIOCP::CTCPIOCP(void)
@@ -22,6 +22,7 @@ CTCPIOCP::CTCPIOCP(void)
 CTCPIOCP::~CTCPIOCP(void)
 {
 	DeleteCriticalSection(&m_recvPackagesListLok);
+	StopTCP();
 	WSACleanup();
 }
 
@@ -119,7 +120,7 @@ bool CTCPIOCP::Connect(char* ip, int port)
 		return false;
 	}
 
-	m_lpAcceptData = CreateAcceptData(&m_socket, m_addr);
+	m_lpAcceptData = CreateAcceptData(m_socket, m_addr);
 
 	//关联重叠I/O完成端口。
 	CreateIoCompletionPort((HANDLE)m_socket, m_completionPort, (DWORD)m_lpAcceptData, 0);
@@ -197,7 +198,7 @@ DWORD WINAPI CTCPIOCP::ListenThreadProc(LPVOID val)
 			//continue;
 		}
 
-		lpAcceptData = CreateAcceptData(&s, addr);
+		lpAcceptData = CreateAcceptData(s, addr);
 
 		//关联重叠I/O完成端口。
 		CreateIoCompletionPort((HANDLE)s, lpCTCPIOCP->m_completionPort, (DWORD)lpAcceptData, 0);
@@ -226,6 +227,14 @@ DWORD WINAPI CTCPIOCP::IOCPThreadProc(LPVOID CompletionPort)
 		if (bytesTransferred == 0)
 		{
 			//TODO: 客户端连接断开。
+			printf("客户端连接断开。\r\n");
+
+			EnterCriticalSection(&(lpIOCPData->LPAcceptData->ClosLok));
+			lpIOCPData->LPAcceptData->Closing = true;
+			LeaveCriticalSection(&(lpIOCPData->LPAcceptData->ClosLok));
+
+			lpCTCPIOCP->OnDisconnected(lpAcceptData);
+
 			continue;
 		}
 
@@ -261,34 +270,47 @@ DWORD WINAPI CTCPIOCP::IOCPThreadProc(LPVOID CompletionPort)
 			}
 			break;
 		}
+
+		EnterCriticalSection(&(lpAcceptData->ClosLok));
+
+		if (lpAcceptData->Closing)
+		{
+			LeaveCriticalSection(&(lpAcceptData->ClosLok));
+
+			StopAcceptData(lpAcceptData);
+		}
+		else
+		{
+			LeaveCriticalSection(&(lpAcceptData->ClosLok));
+		}
 	}
 
 	return 0;
 }
 
-LPACCEPT_DATA CreateAcceptData(SOCKET *s, SOCKADDR_IN addr)
+LPACCEPT_DATA CreateAcceptData(SOCKET& s, SOCKADDR_IN& addr)
 {
 	LPACCEPT_DATA lpAcceptData = new ACCEPT_DATA;
 
 	//lpAcceptData = (LPACCEPT_DATA)GlobalAlloc(GPTR, sizeof(ACCEPT_DATA));
 
-	lpAcceptData->Socket = *s;
+	lpAcceptData->Socket = s;
 	lpAcceptData->SockAddr = addr;
 	lpAcceptData->Sending = false;
 	lpAcceptData->SendDataLeft = 0;
 	lpAcceptData->sendBytesTotal = 0;
 	lpAcceptData->sendBytesTransferred = 0;
-	lpAcceptData->Recving = true;
 	lpAcceptData->Closing = false;
 	InitializeCriticalSection(&(lpAcceptData->SendLok));
 	InitializeCriticalSection(&(lpAcceptData->SendPKGListLok));
 	InitializeCriticalSection(&(lpAcceptData->RecvLok));
+	InitializeCriticalSection(&(lpAcceptData->ClosLok));
 
 	lpAcceptData->SenderCryptor = new NoneCryptor;
 	lpAcceptData->RecverCryptor = new NoneCryptor;
 
-	lpAcceptData->Sender = (LPIOCP_DATA)GlobalAlloc(GPTR, sizeof(IOCP_DATA));
-	lpAcceptData->Recver = (LPIOCP_DATA)GlobalAlloc(GPTR, sizeof(IOCP_DATA));
+	lpAcceptData->Sender = new IOCP_DATA;//(LPIOCP_DATA)GlobalAlloc(GPTR, sizeof(IOCP_DATA));
+	lpAcceptData->Recver = new IOCP_DATA;//(LPIOCP_DATA)GlobalAlloc(GPTR, sizeof(IOCP_DATA));
 
 	lpAcceptData->Sender->LPAcceptData = lpAcceptData;
 	lpAcceptData->Recver->LPAcceptData = lpAcceptData;
@@ -320,6 +342,8 @@ void CTCPIOCP::_RecvAsync(LPACCEPT_DATA lpAcceptData)
 
 	if (lpAcceptData->Socket == INVALID_SOCKET)
 	{
+		LeaveCriticalSection(&(lpAcceptData->RecvLok));
+
 		return;
 	}
 
@@ -345,6 +369,8 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 {
 	//printf("启动异步发送数据。\r\n");
 
+	EnterCriticalSection(&(lpAcceptData->SendLok));
+
 	if(lpAcceptData->sendBytesTransferred == lpAcceptData->sendBytesTotal)
 	{//单次整个数据缓冲区发送完成。
 
@@ -352,8 +378,6 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 
 		lpAcceptData->sendBytesTotal = 0;
 		lpAcceptData->sendBytesTransferred = 0;
-
-		EnterCriticalSection(&(lpAcceptData->SendLok));
 
 		EnterCriticalSection(&(lpAcceptData->SendPKGListLok));
 
@@ -395,9 +419,10 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 			lpAcceptData->sendBytesTransferred = 0;
 			lpAcceptData->Sender->WSABuf.len = BUFF_SIZE;
 			lpAcceptData->Sender->WSABuf.buf = lpAcceptData->Sender->Buffer;*/
+			LeaveCriticalSection(&(lpAcceptData->SendPKGListLok));
+			LeaveCriticalSection(&(lpAcceptData->SendLok));
+			return;
 		}
-
-		LeaveCriticalSection(&(lpAcceptData->SendLok));
 
 		LeaveCriticalSection(&(lpAcceptData->SendPKGListLok));
 	}
@@ -421,6 +446,8 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 		//TODO: 启动异步发送成功。
 		iErrorID = 0;
 	}
+
+	LeaveCriticalSection(&(lpAcceptData->SendLok));
 }
 
 void CTCPIOCP::OnConnectER(char* ip, int port, DWORD errid)
@@ -437,7 +464,9 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 {
 	//TODO: 从字节流解析数据包，并缓存不完整的数据包字节流。
 
-	if(lpIOCPData->LPAcceptData->Recving == false) return;
+	EnterCriticalSection(&(lpIOCPData->LPAcceptData->ClosLok));
+
+	if(lpIOCPData->LPAcceptData->Closing) return;
 
 	printf("处理接收到的字节流!长度：%d\r\n", bytesTransferred);
 
@@ -454,21 +483,21 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 		return;
 	}
 
-	EnterCriticalSection(&m_recvPackagesListLok);
+	//EnterCriticalSection(&m_recvPackagesListLok);
 
-	if (m_recvBuffer.HasBuffer())
+	if (lpIOCPData->LPAcceptData->RecvBuf.HasBuffer())
 	{
-		size_t writeLen = m_recvBuffer.WriteBuffer(lpIOCPData->WSABuf.buf, remain);
+		size_t writeLen = lpIOCPData->LPAcceptData->RecvBuf.WriteBuffer(lpIOCPData->WSABuf.buf, remain);
 
 		remain = remain - writeLen;
 
-		if (m_recvBuffer.HasCompletePKG())
+		if (lpIOCPData->LPAcceptData->RecvBuf.HasCompletePKG())
 		{
 			pkg = new char[BUFF_SIZE];
 
-			sTemp = cryptor->Decrypt(m_recvBuffer.lpDataBuffer, 0, m_recvBuffer.dataSize, pkg, 0, BUFF_SIZE);
+			sTemp = cryptor->Decrypt(lpIOCPData->LPAcceptData->RecvBuf.lpDataBuffer, 0, lpIOCPData->LPAcceptData->RecvBuf.dataSize, pkg, 0, BUFF_SIZE);
 			cryptor->UpdateCryptKey();
-			m_recvBuffer.Reset();
+			lpIOCPData->LPAcceptData->RecvBuf.Reset();
 
 			sOffset += writeLen;
 
@@ -476,15 +505,22 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 			HandlePackage(pkg, lpIOCPData);
 		}
 
-		if (remain == 0)
+		if (remain == 0 || lpIOCPData->LPAcceptData->Closing)
 		{
-			LeaveCriticalSection(&m_recvPackagesListLok);
+			//LeaveCriticalSection(&m_recvPackagesListLok);
+			LeaveCriticalSection(&(lpIOCPData->LPAcceptData->ClosLok));
 			return;
 		}
 	}
 
 	while(remain > 0)
 	{
+		if(lpIOCPData->LPAcceptData->Closing)
+		{
+			//lpIOCPData->LPAcceptData->RecvBuf.Reset();
+			break;
+		}
+
 		cryptor->Decrypt((const char*)lpIOCPData->WSABuf.buf, sOffset, bytesTransferred, (char*)lpIOCPData->PKGLen, 0, PKG_LEN_BYTES);
 		pkgLen = *(short*)lpIOCPData->PKGLen;																					//取数据包长度
 
@@ -510,19 +546,19 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 		}
 		else
 		{																														//接收包不完整，放到缓冲区
-			m_recvBuffer.SetDataSize(pkgLen);
+			lpIOCPData->LPAcceptData->RecvBuf.SetDataSize(pkgLen);
 
-			m_recvBuffer.WriteBuffer(lpIOCPData->WSABuf.buf, remain);
+			lpIOCPData->LPAcceptData->RecvBuf.WriteBuffer(lpIOCPData->WSABuf.buf, remain);
 
-			if (m_recvBuffer.HasCompletePKG())
+			if (lpIOCPData->LPAcceptData->RecvBuf.HasCompletePKG())
 			{
 				sTemp = 0;
 
 				pkg = new char[BUFF_SIZE];
 
-				sTemp = cryptor->Decrypt(m_recvBuffer.lpDataBuffer, 0, m_recvBuffer.dataSize, pkg, 0, BUFF_SIZE);
+				sTemp = cryptor->Decrypt(lpIOCPData->LPAcceptData->RecvBuf.lpDataBuffer, 0, lpIOCPData->LPAcceptData->RecvBuf.dataSize, pkg, 0, BUFF_SIZE);
 				cryptor->UpdateCryptKey();
-				m_recvBuffer.Reset();
+				lpIOCPData->LPAcceptData->RecvBuf.Reset();
 
 				sOffset += sTemp;
 
@@ -534,17 +570,23 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 		}
 	}
 
-	LeaveCriticalSection(&m_recvPackagesListLok);
+	//LeaveCriticalSection(&m_recvPackagesListLok);
+	LeaveCriticalSection(&(lpIOCPData->LPAcceptData->ClosLok));
 }
 
 
 void CTCPIOCP::HandlePackage( char* pkg, LPIOCP_DATA lpIOCPData )
 {
-	m_recvPackagesList.push(pkg);
+	//m_recvPackagesList.push(pkg);
 
 	TEST_PKG* p = (TEST_PKG*)(pkg);
 
 	printf("ID: %d, Account: %s, PKGCount: %d\r\n", p->id, p->account, lpIOCPData->LPAcceptData->recvPKGCount);
+}
+
+void CTCPIOCP::OnDisconnected( LPACCEPT_DATA lpAcceptData )
+{
+	CTCPIOCP::DeleteAcceptData(lpAcceptData);
 }
 
 
@@ -604,59 +646,53 @@ bool WINAPI CTCPIOCP::SendTCPImp( CTCPIOCP* lpCTCPIOCP, LPACCEPT_DATA lpAcceptDa
 	return true;
 }
 
-void CTCPIOCP::_StopAcceptData(LPACCEPT_DATA lpAcceptData)
+void CTCPIOCP::StopAcceptData(LPACCEPT_DATA lpAcceptData)
 {
-	EnterCriticalSection(&(lpAcceptData->RecvLok));
-	/*if(lpAcceptData->Closing)
-	{
-	LeaveCriticalSection(&(lpAcceptData->RecvLok));
-
-	return;
-	}*/
+	EnterCriticalSection(&(lpAcceptData->ClosLok));
+	
 	lpAcceptData->Closing = true;
-	lpAcceptData->Recving = false;
-	LeaveCriticalSection(&(lpAcceptData->RecvLok));
-
-
-
-
-	EnterCriticalSection(&(lpAcceptData->SendPKGListLok));
-	if (lpAcceptData->SendPKGList.size() > 0)
-	{
-		LeaveCriticalSection(&(lpAcceptData->SendPKGListLok));
-
-		return;
-	}
-	LeaveCriticalSection(&(lpAcceptData->SendPKGListLok));
-
-
 
 	EnterCriticalSection(&(lpAcceptData->SendLok));
+
 	if (lpAcceptData->Sending)
 	{
 		LeaveCriticalSection(&(lpAcceptData->SendLok));
 
+		LeaveCriticalSection(&(lpAcceptData->ClosLok));
+
 		return;
 	}
 
-	_DeleteAcceptData(lpAcceptData);
-
 	LeaveCriticalSection(&(lpAcceptData->SendLok));
+
+	closesocket(lpAcceptData->Socket);
+	lpAcceptData->Socket = INVALID_SOCKET;
+
+	LeaveCriticalSection(&(lpAcceptData->ClosLok));
 }
 
-void CTCPIOCP::_DeleteAcceptData( LPACCEPT_DATA lpAcceptData )
+void CTCPIOCP::DeleteAcceptData( LPACCEPT_DATA lpAcceptData )
 {
-	if(lpAcceptData->Closing == false) return;
+	EnterCriticalSection(&(lpAcceptData->ClosLok));
+
+	if(lpAcceptData->Closing == false)
+	{
+		LeaveCriticalSection(&(lpAcceptData->ClosLok));
+		return;
+	}
 
 	delete lpAcceptData->Sender;
 	delete lpAcceptData->Recver;
 	delete lpAcceptData->SenderCryptor;
 	delete lpAcceptData->RecverCryptor;
-	closesocket(lpAcceptData->Socket);
-	lpAcceptData->Socket = INVALID_SOCKET;
 	DeleteCriticalSection(&(lpAcceptData->SendPKGListLok));
 	DeleteCriticalSection(&(lpAcceptData->SendLok));
 	DeleteCriticalSection(&(lpAcceptData->RecvLok));
+
+	LeaveCriticalSection(&(lpAcceptData->ClosLok));
+
+	DeleteCriticalSection(&(lpAcceptData->ClosLok));
+
 	delete lpAcceptData;
 }
 
@@ -678,6 +714,6 @@ void CTCPIOCP::StopTCP()
 	}
 	else
 	{//作为客户端时
-		_StopAcceptData(m_lpAcceptData);
+		StopAcceptData(m_lpAcceptData);
 	}
 }

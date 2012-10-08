@@ -43,10 +43,13 @@ public:
 	virtual void OnConnectOK(LPACCEPT_DATA lpAcceptData);							//连接成功。
 	virtual void OnRecvData(LPIOCP_DATA lpIOCPData, int bytesTransferred);			//接收到客户端数据。
 	virtual void HandlePackage(char* pkg, LPIOCP_DATA lpIOCPData);					//处理数据包。
+	virtual void OnDisconnected(LPACCEPT_DATA lpAcceptData);						//客户端断开连接。
 
 public:
 	static CTCPIOCP* Listener;
 	static bool WINAPI SendTCPImp(CTCPIOCP* lpCTCPIOCP, LPACCEPT_DATA lpAcceptData, CPackageBase* pkg);			//发送数据包实现方法。
+	static void StopAcceptData(LPACCEPT_DATA lpAcceptData);							//停止客户端连接。
+	static void DeleteAcceptData(LPACCEPT_DATA lpAcceptData);						//关闭并释放连接。
 
 private:
 	static DWORD WINAPI	IOCPThreadProc(LPVOID CompletionPort);						//I/O操作的完成通知线程池关联方法。
@@ -56,8 +59,6 @@ private:
 	bool _InitIOCP();																//创建完成端口句柄，并且创建2倍于CPU核心数的线程池(仅创建一次完成端口和对应的线程池)。
 	void _RecvAsync(LPACCEPT_DATA lpAcceptData);									//启动异步接收数据。
 	void _SendAsync(LPACCEPT_DATA lpAcceptData);									//启动异步发送数据。
-	void _StopAcceptData(LPACCEPT_DATA lpAcceptData);								//停止客户端连接。
-	void _DeleteAcceptData(LPACCEPT_DATA lpAcceptData);							//关闭并释放连接。
 
 private:
 	WORD m_wVersionRequested;														//一个WORD（双字节）型数值，指定了应用程序需要使用的Winsock规范的最高版本。
@@ -68,9 +69,8 @@ private:
 	HANDLE m_completionPort;														//关联指定Socket的完成端口句柄。
 	bool m_isConnector;																//是否作为客户端去连接远程服务端。
 	LPACCEPT_DATA m_lpAcceptData;													//作为客户端去连接远程服务端时有效。
-	RecvBuffer m_recvBuffer;														//接收数据缓冲区，仅当数据包不完整需要拼包时才使用。
 
-	std::queue<LPVOID> m_recvPackagesList;											//全局待处理数据包队列。
+	//std::queue<LPVOID> m_recvPackagesList;											//全局待处理数据包队列。
 	CRITICAL_SECTION m_recvPackagesListLok;											//全局待处理数据包队列互斥信号。
 };
 
