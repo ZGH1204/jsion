@@ -18,6 +18,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	for (int i = 0; i < 100; i++)
 	{
+		//TestPackage* pkg = new TestPackage;
+		//pkg->id = i + 1;
 		//printf("发送数据包！\r\n");
 		client.SendTCP(pkg);
 	}

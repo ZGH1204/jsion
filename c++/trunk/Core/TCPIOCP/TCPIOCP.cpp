@@ -349,6 +349,8 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 
 		if (lpAcceptData->SendPKGList.size() != 0)
 		{//TODO: 数据包队列里有数据包未发送。
+			size_t sTemp = 0;
+
 			while(lpAcceptData->sendBytesTotal != BUFF_SIZE && lpAcceptData->SendPKGList.size() != 0)
 			{
 				CPackageBase* lpPKG = lpAcceptData->SendPKGList.front();
@@ -356,7 +358,10 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 				const char* pBuffer = (const char*)lpPKG;
 				short bufferSize = *(short*)pBuffer;
 
-				lpAcceptData->SenderCryptor->Encrypt(pBuffer, lpAcceptData->SendDataLeft, bufferSize, lpAcceptData->Sender->Buffer, lpAcceptData->sendBytesTotal, BUFF_SIZE);
+				sTemp = lpAcceptData->SenderCryptor->Encrypt(pBuffer, lpAcceptData->SendDataLeft, bufferSize, lpAcceptData->Sender->Buffer, lpAcceptData->sendBytesTotal, BUFF_SIZE);
+
+				lpAcceptData->SendDataLeft += sTemp;
+				lpAcceptData->sendBytesTotal += sTemp;
 
 				if (lpAcceptData->SendDataLeft == bufferSize)
 				{
@@ -430,10 +435,16 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 
 	char* pkg = NULL;
 	short pkgLen = 0;
+	size_t sTemp = 0;
 	size_t sOffset = 0;
-	size_t dOffset = 0;
 	int remain = bytesTransferred;
 	CCryptorBase* cryptor = lpIOCPData->LPAcceptData->RecverCryptor;
+
+	if(bytesTransferred == 0)
+	{
+		printf("客户端连接断开\r\n");
+		return;
+	}
 
 	EnterCriticalSection(&m_recvPackagesListLok);
 
@@ -447,9 +458,11 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 		{
 			pkg = new char[BUFF_SIZE];
 
-			cryptor->Decrypt(m_recvBuffer.lpDataBuffer, sOffset, m_recvBuffer.dataSize, pkg, dOffset, BUFF_SIZE);
+			sTemp = cryptor->Decrypt(m_recvBuffer.lpDataBuffer, 0, m_recvBuffer.dataSize, pkg, 0, BUFF_SIZE);
 			cryptor->UpdateCryptKey();
 			m_recvBuffer.Reset();
+
+			sOffset += writeLen;
 
 			lpIOCPData->LPAcceptData->recvPKGCount++;
 			m_recvPackagesList.push(pkg);
@@ -468,12 +481,13 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 
 	while(remain > 0)
 	{
-		cryptor->Decrypt((const char*)lpIOCPData->WSABuf.buf, sOffset, PKG_LEN_BYTES, (char*)lpIOCPData->PKGLen, dOffset, PKG_LEN_BYTES);
+		cryptor->Decrypt((const char*)lpIOCPData->WSABuf.buf, sOffset, bytesTransferred, (char*)lpIOCPData->PKGLen, 0, PKG_LEN_BYTES);
 		pkgLen = *(short*)lpIOCPData->PKGLen;																					//取数据包长度
 
 		if (pkgLen > BUFF_SIZE || pkgLen <= 0)
 		{																														//非法数据包，断开客户端。
-			break;;
+			printf("非法数据包，断开客户端\r\n");
+			break;
 		}
 
 		if(pkgLen <= remain)
@@ -481,9 +495,11 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 			pkg = new char[BUFF_SIZE];
 
 			//memcpy_s(pkg, pkgLen, (const char*)(lpIOCPData->WSABuf.buf + (bytesTransferred - remain)), pkgLen);
-			cryptor->Decrypt((const char*)(lpIOCPData->WSABuf.buf + (bytesTransferred - remain)), sOffset, pkgLen, pkg, dOffset, pkgLen);
+			sTemp = cryptor->Decrypt((const char*)(lpIOCPData->WSABuf.buf), sOffset, bytesTransferred, pkg, 0, pkgLen);
 			cryptor->UpdateCryptKey();
 			remain = remain - pkgLen;
+
+			sOffset += sTemp;
 
 			lpIOCPData->LPAcceptData->recvPKGCount++;
 			m_recvPackagesList.push(pkg);
@@ -500,11 +516,15 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 
 			if (m_recvBuffer.HasCompletePKG())
 			{
+				sTemp = 0;
+
 				pkg = new char[BUFF_SIZE];
 
-				cryptor->Decrypt(m_recvBuffer.lpDataBuffer, sOffset, m_recvBuffer.dataSize, pkg, dOffset, BUFF_SIZE);
+				sTemp = cryptor->Decrypt(m_recvBuffer.lpDataBuffer, 0, m_recvBuffer.dataSize, pkg, 0, BUFF_SIZE);
 				cryptor->UpdateCryptKey();
 				m_recvBuffer.Reset();
+
+				sOffset += sTemp;
 
 				lpIOCPData->LPAcceptData->recvPKGCount++;
 				m_recvPackagesList.push(pkg);
