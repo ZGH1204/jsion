@@ -11,17 +11,17 @@ public:
 	~CCryptorBase(void);
 
 public:
-	virtual void Encrypt(const char* source, size_t& sourceOffset, size_t sourceSize, char* dest, size_t& destOffset, size_t destSize);
-	virtual void Decrypt(const char* source, size_t& sourceOffset, size_t sourceSize, char* dest, size_t& destOffset, size_t destSize);
+	virtual size_t Encrypt(const char* source, size_t& sourceOffset, size_t sourceSize, char* dest, size_t& destOffset, size_t destSize);
+	virtual size_t Decrypt(const char* source, size_t sourceOffset, size_t sourceSize, char* dest, size_t destOffset, size_t destSize);
 	virtual void UpdateCryptKey();
 };
 
 
 class NoneCryptor : public CCryptorBase
 {
-	void Encrypt(const char* source, size_t& sourceOffset, size_t sourceSize, char* dest, size_t& destOffset, size_t destSize);
+	size_t Encrypt(const char* source, size_t& sourceOffset, size_t sourceSize, char* dest, size_t& destOffset, size_t destSize);
 
-	void Decrypt(const char* source, size_t& sourceOffset, size_t sourceSize, char* dest, size_t& destOffset, size_t destSize);
+	size_t Decrypt(const char* source, size_t sourceOffset, size_t sourceSize, char* dest, size_t destOffset, size_t destSize);
 
 	void UpdateCryptKey();
 };

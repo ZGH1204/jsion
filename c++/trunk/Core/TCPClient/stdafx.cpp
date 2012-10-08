@@ -11,7 +11,7 @@ TestPackage::TestPackage()
 {
 	PSize = sizeof(TestPackage);
 
-	id = 223;
+	//id = 223;
 	strcpy(account, "jsion");
 }
 
