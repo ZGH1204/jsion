@@ -12,7 +12,7 @@ CCryptorBase::~CCryptorBase(void)
 {
 }
 
-size_t CCryptorBase::Encrypt( const char* source, size_t& sourceOffset, size_t sourceSize, char* dest, size_t& destOffset, size_t destSize )
+size_t CCryptorBase::Encrypt( const char* source, size_t sourceOffset, size_t sourceSize, char* dest, size_t destOffset, size_t destSize )
 {
 	return 0;
 }
@@ -29,7 +29,7 @@ void CCryptorBase::UpdateCryptKey()
 
 
 
-size_t NoneCryptor::Encrypt(const char* source, size_t& sourceOffset, size_t sourceSize, char* dest, size_t& destOffset, size_t destSize)
+size_t NoneCryptor::Encrypt(const char* source, size_t sourceOffset, size_t sourceSize, char* dest, size_t destOffset, size_t destSize)
 {
 	if (sourceSize <= sourceOffset || destSize <= destOffset)
 	{
@@ -44,9 +44,6 @@ size_t NoneCryptor::Encrypt(const char* source, size_t& sourceOffset, size_t sou
 	memcpy_s((char*)(dest + destOffset), tlen, (const char*)(source + sourceOffset), slen);
 
 	return slen;
-
-	//sourceOffset += slen;
-	//destOffset += slen;
 }
 
 size_t NoneCryptor::Decrypt(const char* source, size_t sourceOffset, size_t sourceSize, char* dest, size_t destOffset, size_t destSize)

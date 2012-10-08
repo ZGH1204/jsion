@@ -30,17 +30,19 @@ public:
 
 public:
 	bool Listen(int port);															//监听本地端口。
-	void StopListen();																//停止监听端口。
 	bool Connect(char* ip, int port);												//连接到指定的远程网络终点。
 
 	bool SendTCP(CPackageBase* pkg);												//仅作为客户端去连接远程服务端时可用。
 	bool SendTCP2();																//仅作为客户端去连接远程服务端时可用。
+
+	void StopTCP();																	//停止TCP。
 
 public:
 	virtual void OnAccept(LPACCEPT_DATA lpAcceptData);								//收到连接请求后调用的方法。
 	virtual void OnConnectER(char* ip, int port, DWORD errid);						//连接失败，其中 errid 为通过 GetLastError() 取得。
 	virtual void OnConnectOK(LPACCEPT_DATA lpAcceptData);							//连接成功。
 	virtual void OnRecvData(LPIOCP_DATA lpIOCPData, int bytesTransferred);			//接收到客户端数据。
+	virtual void HandlePackage(char* pkg, LPIOCP_DATA lpIOCPData);					//处理数据包。
 
 public:
 	static CTCPIOCP* Listener;
@@ -54,6 +56,8 @@ private:
 	bool _InitIOCP();																//创建完成端口句柄，并且创建2倍于CPU核心数的线程池(仅创建一次完成端口和对应的线程池)。
 	void _RecvAsync(LPACCEPT_DATA lpAcceptData);									//启动异步接收数据。
 	void _SendAsync(LPACCEPT_DATA lpAcceptData);									//启动异步发送数据。
+	void _StopAcceptData(LPACCEPT_DATA lpAcceptData);								//停止客户端连接。
+	void _DeleteAcceptData(LPACCEPT_DATA lpAcceptData);							//关闭并释放连接。
 
 private:
 	WORD m_wVersionRequested;														//一个WORD（双字节）型数值，指定了应用程序需要使用的Winsock规范的最高版本。
