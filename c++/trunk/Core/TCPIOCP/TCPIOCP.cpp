@@ -399,6 +399,7 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 
 				if(lpAcceptData->SendDataLeft == 0)
 				{
+					//int os = (char*)((char*)&(lpPKG->OwnerID)) - (char*)((char*)&(lpPKG->PSize));
 					lpAcceptData->SenderCryptor->Encrypt((const char*)(&(lpAcceptData->OwnerID)), 0, sizeof(lpAcceptData->OwnerID), lpAcceptData->Sender->Buffer, lpAcceptData->sendBytesTotal + sizeof(lpPKG->PSize), BUFF_SIZE);
 				}
 
@@ -501,7 +502,7 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 
 		if (lpIOCPData->LPAcceptData->RecvBuf.HasCompletePKG())
 		{
-			pkg = new char[BUFF_SIZE];
+			pkg = (char*)CMemPool::GetInstance()->Allocate(pkgLen);//new char[BUFF_SIZE];
 
 			sTemp = cryptor->Decrypt(lpIOCPData->LPAcceptData->RecvBuf.lpDataBuffer, 0, lpIOCPData->LPAcceptData->RecvBuf.dataSize, pkg, 0, BUFF_SIZE);
 			cryptor->UpdateCryptKey();
@@ -540,7 +541,7 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 
 		if(pkgLen <= remain)
 		{																														//接收到一个完整数据包
-			pkg = new char[BUFF_SIZE];
+			pkg = (char*)CMemPool::GetInstance()->Allocate(pkgLen);//new char[BUFF_SIZE];
 
 			//memcpy_s(pkg, pkgLen, (const char*)(lpIOCPData->WSABuf.buf + (bytesTransferred - remain)), pkgLen);
 			sTemp = cryptor->Decrypt((const char*)(lpIOCPData->WSABuf.buf), sOffset, bytesTransferred, pkg, 0, pkgLen);
@@ -562,7 +563,7 @@ void CTCPIOCP::OnRecvData( LPIOCP_DATA lpIOCPData, int bytesTransferred )
 			{
 				sTemp = 0;
 
-				pkg = new char[BUFF_SIZE];
+				pkg = (char*)CMemPool::GetInstance()->Allocate(pkgLen);//new char[BUFF_SIZE];
 
 				sTemp = cryptor->Decrypt(lpIOCPData->LPAcceptData->RecvBuf.lpDataBuffer, 0, lpIOCPData->LPAcceptData->RecvBuf.dataSize, pkg, 0, BUFF_SIZE);
 				cryptor->UpdateCryptKey();
@@ -590,6 +591,8 @@ void CTCPIOCP::HandlePackage( char* pkg, LPIOCP_DATA lpIOCPData )
 	TEST_PKG* p = (TEST_PKG*)(pkg);
 
 	printf("OwnerID: %d, ID: %d, Account: %s, PKGCount: %d\r\n", p->OwnerID, p->id, p->account, lpIOCPData->LPAcceptData->recvPKGCount);
+
+	CMemPool::GetInstance()->Free(pkg);
 }
 
 void CTCPIOCP::OnDisconnected( LPACCEPT_DATA lpAcceptData )
