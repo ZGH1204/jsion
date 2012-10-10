@@ -1,4 +1,5 @@
 #pragma once
+#pragma   pack(push,   1)
 
 #ifndef _CPACKAGE_BASE
 #define _CPACKAGE_BASE
@@ -33,5 +34,6 @@ public:
 	int						OwnerID;
 };
 
+#pragma   pack(pop)
 
 #endif

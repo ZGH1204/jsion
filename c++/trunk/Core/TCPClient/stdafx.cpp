@@ -12,7 +12,8 @@ TestPackage::TestPackage()
 	PSize = sizeof(TestPackage);
 
 	//id = 223;
-	strcpy(account, "jsion");
+	tLong = 4300000000;
+	strcpy_s(account, "jsion");
 }
 
 TestPackage::~TestPackage()

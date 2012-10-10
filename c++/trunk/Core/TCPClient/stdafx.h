@@ -27,5 +27,6 @@ public:
 	~TestPackage();
 public:
 	int id;
+	long long tLong;
 	char account[20];
 };
