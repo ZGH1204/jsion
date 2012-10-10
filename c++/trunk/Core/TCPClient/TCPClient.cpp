@@ -18,15 +18,15 @@ int _tmain(int argc, _TCHAR* argv[])
 			printf("连接服务器成功！\r\n");
 		}
 
-		//TestPackage* pkg = new TestPackage;
+		TestPackage* pkg = new TestPackage;
 
-		//for (int i = 0; i < 100; i++)
-		//{
-		//	//TestPackage* pkg = new TestPackage;
-		//	//pkg->id = i + 1;
-		//	//printf("发送数据包！\r\n");
-		//	client.SendTCP(pkg);
-		//}
+		for (int i = 0; i < 1; i++)
+		{
+			//TestPackage* pkg = new TestPackage;
+			pkg->id = i + 1;
+			//printf("发送数据包！\r\n");
+			lpClient->SendTCP(pkg);
+		}
 
 		//client.SendTCP2();
 

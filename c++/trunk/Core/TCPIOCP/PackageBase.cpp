@@ -4,6 +4,7 @@
 
 CPackageBase::CPackageBase(void)
 {
+	OwnerID = 0;
 }
 
 

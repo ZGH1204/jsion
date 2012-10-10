@@ -51,6 +51,7 @@ typedef struct _ACCEPT_DATA
 	CCryptorBase*					RecverCryptor;									//接收数据解密器。
 	SOCKET							Socket;											//已连接的远程网络套接字。
 	SOCKADDR_IN						SockAddr;										//已连接的远程网络端点。
+	int								OwnerID;										//拥有者ID。
 	std::queue<CPackageBase*>		SendPKGList;									//发送数据包队列。
 	CRITICAL_SECTION				SendPKGListLok;									//发送数据包队列互斥信号。
 	size_t							SendDataLeft;									//数据包队列第一个数据包已发送的字节数。
@@ -83,12 +84,20 @@ typedef struct _ACCEPT_DATA
 
 
 
-typedef struct _TEST_PKG
+//typedef struct _TEST_PKG
+//{
+//	short len;
+//	int ownerID;
+//	int id;
+//	char account[20];
+//}TEST_PKG;
+
+class TEST_PKG : public CPackageBase
 {
-	short len;
+public:
 	int id;
 	char account[20];
-}TEST_PKG;
+};
 
 
 

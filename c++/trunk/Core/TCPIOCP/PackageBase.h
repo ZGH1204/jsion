@@ -30,6 +30,7 @@ public:
 
 public:
 	short					PSize;
+	int						OwnerID;
 };
 
 
