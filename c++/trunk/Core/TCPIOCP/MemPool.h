@@ -5,7 +5,7 @@
 #define _MEMORY_POOL
 
 
-#define MAX_MEMORY_SIZE			1024					//申请内存空间大小基准值
+#define MAX_MEMORY_SIZE			1024 * 4				//申请内存空间大小基准值
 #define ALIGN_SIZE				8						//内存空间对齐大小
 #define MIN_ALLOC_COUNT			5						//内存池中申请空间最小个数
 

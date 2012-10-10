@@ -3,6 +3,9 @@
 
 #include "stdafx.h"
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 
 CTCPIOCP server;
 
@@ -16,7 +19,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	printf("按任意键退出!\r\n");
 
 	_getch();
-
-	return 1;
+	_CrtDumpMemoryLeaks();
+ 	return 1;
 }
 
