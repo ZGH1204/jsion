@@ -122,6 +122,8 @@ bool CTCPIOCP::Connect(char* ip, int port)
 
 	m_lpAcceptData = CreateAcceptData(m_socket, m_addr);
 
+	m_lpAcceptData->OwnerID = 85643;
+
 	//关联重叠I/O完成端口。
 	CreateIoCompletionPort((HANDLE)m_socket, m_completionPort, (DWORD)m_lpAcceptData, 0);
 
@@ -296,6 +298,7 @@ LPACCEPT_DATA CreateAcceptData(SOCKET& s, SOCKADDR_IN& addr)
 
 	lpAcceptData->Socket = s;
 	lpAcceptData->SockAddr = addr;
+	lpAcceptData->OwnerID = 0;
 	lpAcceptData->Sending = false;
 	lpAcceptData->SendDataLeft = 0;
 	lpAcceptData->sendBytesTotal = 0;
@@ -393,6 +396,11 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 				short bufferSize = *(short*)pBuffer;
 
 				sTemp = lpAcceptData->SenderCryptor->Encrypt(pBuffer, lpAcceptData->SendDataLeft, bufferSize, lpAcceptData->Sender->Buffer, lpAcceptData->sendBytesTotal, BUFF_SIZE);
+
+				if(lpAcceptData->SendDataLeft == 0)
+				{
+					lpAcceptData->SenderCryptor->Encrypt((const char*)(&(lpAcceptData->OwnerID)), 0, sizeof(lpAcceptData->OwnerID), lpAcceptData->Sender->Buffer, lpAcceptData->sendBytesTotal + sizeof(lpPKG->PSize), BUFF_SIZE);
+				}
 
 				lpAcceptData->SendDataLeft += sTemp;
 				lpAcceptData->sendBytesTotal += sTemp;
@@ -581,7 +589,7 @@ void CTCPIOCP::HandlePackage( char* pkg, LPIOCP_DATA lpIOCPData )
 
 	TEST_PKG* p = (TEST_PKG*)(pkg);
 
-	printf("ID: %d, Account: %s, PKGCount: %d\r\n", p->id, p->account, lpIOCPData->LPAcceptData->recvPKGCount);
+	printf("OwnerID: %d, ID: %d, Account: %s, PKGCount: %d\r\n", p->OwnerID, p->id, p->account, lpIOCPData->LPAcceptData->recvPKGCount);
 }
 
 void CTCPIOCP::OnDisconnected( LPACCEPT_DATA lpAcceptData )
