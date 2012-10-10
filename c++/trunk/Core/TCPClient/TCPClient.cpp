@@ -9,7 +9,7 @@ CTCPIOCP client;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		CTCPIOCP* lpClient = new CTCPIOCP;
 
