@@ -3,6 +3,12 @@
 template<class T>
 class CSmartPtr
 {
+//private:
+//	static void* operator new (size_t len)
+//	{
+//		return NULL;
+//	}
+
 public:
 	CSmartPtr()
 	{
@@ -16,27 +22,12 @@ public:
 
 	CSmartPtr(const T* pObj)
 	{
-		m_lok = (CRITICAL_SECTION*)CMemPool::GetInstance()->Allocate(sizeof(CRITICAL_SECTION));
-		InitializeCriticalSection(m_lok);
-
-		m_count = (size_t*)CMemPool::GetInstance()->Allocate(sizeof(size_t));
-		*m_count = 1;
-		m_cdata = pObj;
+		_ResetObject(pObj);
 	}
 
 	CSmartPtr(const CSmartPtr& obj)
 	{
-		EnterCriticalSection(obj->m_lok);
-
-		m_lok = obj->m_lok;
-
-		m_count = obj->m_count;
-
-		++*m_count;
-
-		m_cdata = obj->m_cdata;
-
-		LeaveCriticalSection(obj->m_lok);
+		_RefObject(obj);
 	}
 
 	~CSmartPtr()
@@ -49,14 +40,69 @@ public:
 		return m_data;
 	}
 
+	T* operator ->()
+	{
+		return m_data;
+	}
+
+	CSmartPtr& operator = (CSmartPtr& obj)
+	{
+		_CheckRefCountAndDel();
+
+		_RefObject(obj);
+
+		return *this;
+	}
+
 	CSmartPtr& operator = (const CSmartPtr& obj)
 	{
 		_CheckRefCountAndDel();
 
-		EnterCriticalSection(m_lok);
+		_RefObject(obj);
 
-		CRITICAL_SECTION* tempLok = m_lok;
+		return *this;
+	}
 
+	CSmartPtr& operator = (T* obj)
+	{
+		_CheckRefCountAndDel();
+
+		_ResetObject(obj);
+
+		return *this;
+	}
+
+	const CSmartPtr& operator = (const T* pObj)
+	{
+		_CheckRefCountAndDel();
+
+		_ResetObject(obj);
+
+		return *this;
+	}
+
+	bool operator == (const T& pObj)
+	{
+		return pObj == *m_data;
+	}
+
+	bool operator == (const T* pData)
+	{
+		return pData == m_data;
+	}
+
+private:
+	void _ResetObject(const T* pObj)
+	{
+		m_lok = (CRITICAL_SECTION*)CMemPool::GetInstance()->Allocate(sizeof(CRITICAL_SECTION));
+		InitializeCriticalSection(m_lok);
+
+		m_count = (size_t*)CMemPool::GetInstance()->Allocate(sizeof(size_t));
+		*m_count = 1;
+		m_cdata = pObj;
+	}
+	void _RefObject(const CSmartPtr& obj)
+	{
 		EnterCriticalSection(obj->m_lok);
 
 		m_lok = obj->m_lok;
@@ -68,13 +114,7 @@ public:
 		m_cdata = obj->m_cdata;
 
 		LeaveCriticalSection(obj->m_lok);
-
-		LeaveCriticalSection(tempLok);
-
-		return *this;
 	}
-
-private:
 	void _CheckRefCountAndDel()
 	{
 		EnterCriticalSection(m_lok);
