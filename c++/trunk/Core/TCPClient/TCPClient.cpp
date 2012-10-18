@@ -6,10 +6,14 @@
 
 CTCPIOCP client;
 
-
-int _tmain(int argc, _TCHAR* argv[])
+void testConnect()
 {
-	for (int i = 0; i < 1; i++)
+	CSmartPtr<CPackageBase> pkg = new TestPackage();
+
+	TestPackage* p = (TestPackage*)pkg.Get();
+	p->id = 1;
+
+	for (int i = 0; i < 10; i++)
 	{
 		CTCPIOCP* lpClient = new CTCPIOCP;
 
@@ -18,13 +22,12 @@ int _tmain(int argc, _TCHAR* argv[])
 			printf("连接服务器成功！\r\n");
 		}
 
-		TestPackage* pkg = new TestPackage;
-
 		for (int i = 0; i < 1; i++)
 		{
 			//TestPackage* pkg = new TestPackage;
-			pkg->id = i + 1;
+			//p->id = i + 1;
 			//printf("发送数据包！\r\n");
+			lpClient->SendTCP(pkg);
 			lpClient->SendTCP(pkg);
 		}
 
@@ -32,6 +35,12 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		//client.StopTCP();
 	}
+}
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	testConnect();
 
 	printf("按任意键退出!\r\n");
 

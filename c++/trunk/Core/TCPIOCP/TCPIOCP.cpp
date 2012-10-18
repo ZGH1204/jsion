@@ -390,9 +390,9 @@ void CTCPIOCP::_SendAsync( LPACCEPT_DATA lpAcceptData )
 
 			while(lpAcceptData->sendBytesTotal != BUFF_SIZE && lpAcceptData->SendPKGList.size() != 0)
 			{
-				CPackageBase* lpPKG = lpAcceptData->SendPKGList.front();
+				CSmartPtr<CPackageBase> lpPKG = lpAcceptData->SendPKGList.front();
 
-				const char* pBuffer = (const char*)lpPKG;
+				const char* pBuffer = (const char*)lpPKG.Get();
 				short bufferSize = *(short*)pBuffer;
 
 				sTemp = lpAcceptData->SenderCryptor->Encrypt(pBuffer, lpAcceptData->SendDataLeft, bufferSize, lpAcceptData->Sender->Buffer, lpAcceptData->sendBytesTotal, BUFF_SIZE);
@@ -601,7 +601,7 @@ void CTCPIOCP::OnDisconnected( LPACCEPT_DATA lpAcceptData )
 }
 
 
-bool CTCPIOCP::SendTCP( CPackageBase* pkg )
+bool CTCPIOCP::SendTCP( CSmartPtr<CPackageBase> pkg )
 {
 	return SendTCPImp(this, m_lpAcceptData, pkg);
 }
@@ -626,18 +626,18 @@ bool CTCPIOCP::SendTCP2(  )
 	return true;
 }
 
-bool WINAPI CTCPIOCP::SendTCPImp( CTCPIOCP* lpCTCPIOCP, LPACCEPT_DATA lpAcceptData, CPackageBase* pkg )
+bool WINAPI CTCPIOCP::SendTCPImp( CTCPIOCP* lpCTCPIOCP, LPACCEPT_DATA lpAcceptData, CSmartPtr<CPackageBase> pkg )
 {
 	if (lpCTCPIOCP == NULL || lpCTCPIOCP->m_isConnector == false || pkg == NULL || lpAcceptData == NULL)
 	{
 		return false;
 	}
 
+	EnterCriticalSection(&(lpAcceptData->SendLok));
+
 	EnterCriticalSection(&(lpAcceptData->SendPKGListLok));
 
 	lpAcceptData->SendPKGList.push(pkg);
-
-	EnterCriticalSection(&(lpAcceptData->SendLok));
 
 	if (lpAcceptData->Sending == false)
 	{
@@ -650,9 +650,9 @@ bool WINAPI CTCPIOCP::SendTCPImp( CTCPIOCP* lpCTCPIOCP, LPACCEPT_DATA lpAcceptDa
 		lpCTCPIOCP->_SendAsync(lpAcceptData);
 	}
 
-	LeaveCriticalSection(&(lpAcceptData->SendLok));
-
 	LeaveCriticalSection(&(lpAcceptData->SendPKGListLok));
+
+	LeaveCriticalSection(&(lpAcceptData->SendLok));
 
 	return true;
 }

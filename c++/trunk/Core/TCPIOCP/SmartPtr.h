@@ -103,17 +103,17 @@ private:
 	}
 	void _RefObject(const CSmartPtr& obj)
 	{
-		EnterCriticalSection(obj->m_lok);
+		EnterCriticalSection(obj.m_lok);
 
-		m_lok = obj->m_lok;
+		m_lok = obj.m_lok;
 
-		m_count = obj->m_count;
+		m_count = obj.m_count;
 
 		++*m_count;
 
-		m_cdata = obj->m_cdata;
+		m_cdata = obj.m_cdata;
 
-		LeaveCriticalSection(obj->m_lok);
+		LeaveCriticalSection(obj.m_lok);
 	}
 	void _CheckRefCountAndDel()
 	{
@@ -133,6 +133,8 @@ private:
 
 			CMemPool::GetInstance()->Free(m_lok);
 			CMemPool::GetInstance()->Free(m_count);
+
+			printf("ÖÇÄÜÉ¾³ı!\r\n");
 		}
 		else
 		{

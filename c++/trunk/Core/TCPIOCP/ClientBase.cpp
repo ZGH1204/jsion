@@ -5,7 +5,7 @@ CClientBase::~CClientBase(void)
 {
 }
 
-bool CClientBase::SendTCP( CPackageBase* pkg )
+bool CClientBase::SendTCP( CSmartPtr<CPackageBase> pkg )
 {
 	return CTCPIOCP::SendTCPImp(m_lpCTCPIOCP, m_lpAcceptData, pkg);
 }

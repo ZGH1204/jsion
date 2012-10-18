@@ -32,7 +32,7 @@ public:
 	bool Listen(int port);															//监听本地端口。
 	bool Connect(char* ip, int port);												//连接到指定的远程网络终点。
 
-	bool SendTCP(CPackageBase* pkg);												//仅作为客户端去连接远程服务端时可用。
+	bool SendTCP(CSmartPtr<CPackageBase> pkg);										//仅作为客户端去连接远程服务端时可用。
 	bool SendTCP2();																//仅作为客户端去连接远程服务端时可用。
 
 	void StopTCP();																	//停止TCP。
@@ -47,7 +47,9 @@ public:
 
 public:
 	static CTCPIOCP* Listener;
-	static bool WINAPI SendTCPImp(CTCPIOCP* lpCTCPIOCP, LPACCEPT_DATA lpAcceptData, CPackageBase* pkg);			//发送数据包实现方法。
+	static bool WINAPI SendTCPImp(CTCPIOCP* lpCTCPIOCP
+		, LPACCEPT_DATA lpAcceptData
+		, CSmartPtr<CPackageBase> pkg);												//发送数据包实现方法。
 	static void StopAcceptData(LPACCEPT_DATA lpAcceptData);							//停止客户端连接。
 	static void DeleteAcceptData(LPACCEPT_DATA lpAcceptData);						//关闭并释放连接。
 
