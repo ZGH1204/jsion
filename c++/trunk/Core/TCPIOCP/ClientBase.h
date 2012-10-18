@@ -13,7 +13,7 @@ public:
 	~CClientBase(void);
 
 public:
-	bool SendTCP(CPackageBase* pkg);
+	bool SendTCP(CSmartPtr<CPackageBase> pkg);
 
 private:
 	LPACCEPT_DATA			m_lpAcceptData;

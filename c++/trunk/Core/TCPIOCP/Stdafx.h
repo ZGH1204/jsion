@@ -20,6 +20,7 @@
 #include "PackageBase.h"
 #include "CryptorBase.h"
 #include "RecvBuffer.h"
+#include "SmartPtr.h"
 
 //////////////////////////////////////////////////////////////////////////
 //						完成端口数据
@@ -45,26 +46,26 @@ typedef struct _IOCP_DATA
 
 typedef struct _ACCEPT_DATA
 {
-	LPIOCP_DATA						Sender;											//数据发送重叠I/O对象。
-	LPIOCP_DATA						Recver;											//数据接收重叠I/O对象。
-	CCryptorBase*					SenderCryptor;									//发送数据加密器。
-	CCryptorBase*					RecverCryptor;									//接收数据解密器。
-	SOCKET							Socket;											//已连接的远程网络套接字。
-	SOCKADDR_IN						SockAddr;										//已连接的远程网络端点。
-	int								OwnerID;										//拥有者ID。
-	std::queue<CPackageBase*>		SendPKGList;									//发送数据包队列。
-	CRITICAL_SECTION				SendPKGListLok;									//发送数据包队列互斥信号。
-	size_t							SendDataLeft;									//数据包队列第一个数据包已发送的字节数。
-	CRITICAL_SECTION				SendLok;										//发送数据互斥信号。
-	bool							Sending;										//是否正在发送。
-	size_t							sendBytesTotal;									//当前需要发送的总字节数。
-	size_t							sendBytesTransferred;							//当前已发送的字节数。
-	CRITICAL_SECTION				RecvLok;										//接收数据互斥信号。
-	RecvBuffer						RecvBuf;										//接收数据缓冲区，仅当数据包不完整需要拼包时才使用。
-	CRITICAL_SECTION				ClosLok;										//关闭客户端互斥信号。
-	bool							Closing;										//是否即将关闭。
-	size_t							sendPKGCount;									//发送数据包数。
-	size_t							recvPKGCount;									//接收数据包数。
+	LPIOCP_DATA							Sender;											//数据发送重叠I/O对象。
+	LPIOCP_DATA							Recver;											//数据接收重叠I/O对象。
+	CCryptorBase*						SenderCryptor;									//发送数据加密器。
+	CCryptorBase*						RecverCryptor;									//接收数据解密器。
+	SOCKET								Socket;											//已连接的远程网络套接字。
+	SOCKADDR_IN							SockAddr;										//已连接的远程网络端点。
+	int									OwnerID;										//拥有者ID。
+	std::queue<CSmartPtr<CPackageBase>>	SendPKGList;											//发送数据包队列。
+	CRITICAL_SECTION					SendPKGListLok;									//发送数据包队列互斥信号。
+	size_t								SendDataLeft;									//数据包队列第一个数据包已发送的字节数。
+	CRITICAL_SECTION					SendLok;										//发送数据互斥信号。
+	bool								Sending;										//是否正在发送。
+	size_t								sendBytesTotal;									//当前需要发送的总字节数。
+	size_t								sendBytesTransferred;							//当前已发送的字节数。
+	CRITICAL_SECTION					RecvLok;										//接收数据互斥信号。
+	RecvBuffer							RecvBuf;										//接收数据缓冲区，仅当数据包不完整需要拼包时才使用。
+	CRITICAL_SECTION					ClosLok;										//关闭客户端互斥信号。
+	bool								Closing;										//是否即将关闭。
+	size_t								sendPKGCount;									//发送数据包数。
+	size_t								recvPKGCount;									//接收数据包数。
 
 	static void* operator new (size_t len)
 	{
