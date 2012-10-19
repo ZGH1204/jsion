@@ -15,8 +15,10 @@ import mx.events.MenuEvent;
 import mx.events.ResizeEvent;
 import mx.managers.PopUpManager;
 
+import tool.pngpacker.PNGPackerPane;
 import tool.unicode.TransfPane;
 import tool.waiting.Waiting;
+import tool.xmlformats.XmlFormatPane;
 import tool.zlibcompress.ZLIBCompressPane;
 
 protected var m_configLoader:URLLoader;
@@ -130,6 +132,12 @@ protected function menuBar_itemClickHandler(event:MenuEvent):void
 			break;
 		case "zlib压缩/解压":
 			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, ZLIBCompressPane));
+			break;
+		case "XML格式化对齐":
+			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, XmlFormatPane));
+			break;
+		case "新建压缩包":
+			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, PNGPackerPane));
 			break;
 	}
 }

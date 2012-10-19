@@ -44,7 +44,7 @@
 				
 				fileList = files;
 				
-				DelayUtil.setDelayApply(tryCompress);
+				tryCompress();
 			}
 			
 			protected function openCancelCallback():void
@@ -54,7 +54,7 @@
 			
 			protected function tryCompress():void
 			{
-				Waiting.show("压缩中...");
+				if(fileList.length > 0) Waiting.show("压缩中...");
 				
 				DelayUtil.setDelayApply(tryCompressImp);
 			}
@@ -72,7 +72,6 @@
 				{
 					//TODO:完成
 					Waiting.hide();
-					//Alert.show("", "压缩");
 					return;
 				}
 				
@@ -93,7 +92,7 @@
 			
 			protected function tryUncompress():void
 			{
-				Waiting.show("解压缩中...");
+				if(fileList.length > 0) Waiting.show("解压缩中...");
 				
 				DelayUtil.setDelayApply(tryUncompressImp);
 			}
