@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool:BaseTitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:tool="tool.*" width="200" height="120">
+
+	<fx:Script>
+		<![CDATA[
+			import jsion.HashMap;
+			import jsion.utils.DelayUtil;
+			import jsion.utils.JUtil;
+			import jsion.utils.StringUtil;
+			import jsion.zip.ZipEntry;
+			import jsion.zip.ZipFile;
+			import jsion.zip.ZipOutput;
+			
+			import mx.controls.Alert;
+			
+			import tool.waiting.Waiting;
+			
+			import utils.FileMgr;
+			
+			protected var fileList:Array;
+			
+			protected var rltBytes:ByteArray;
+			
+			protected var defaultName:String;
+			
+			protected var isCompress:Boolean;
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				isCompress = true;
+				
+				FileMgr.openMultiFiles(openCallback, openCancelCallback);
+				
+				Waiting.show("选择并加载文件...");
+			}
+			
+			protected function openCallback(files:Array, hasError:Boolean, errorList:Array):void
+			{
+				//trace("选取文件数:", files.length);
+				
+				fileList = files;
+				
+				DelayUtil.setDelayApply(tryCompress);
+			}
+			
+			protected function openCancelCallback():void
+			{
+				Waiting.hide();
+			}
+			
+			protected function tryCompress():void
+			{
+				Waiting.show("压缩中...");
+				
+				DelayUtil.setDelayApply(tryCompressImp);
+			}
+			
+			protected function tryCompressImp():void
+			{
+				var file:FileReference = null;
+				
+				while(fileList.length > 0 && (file == null || file.data == null))
+				{
+					file = fileList.shift() as FileReference;
+				}
+				
+				if(file == null)
+				{
+					//TODO:完成
+					Waiting.hide();
+					//Alert.show("", "压缩");
+					return;
+				}
+				
+				var bytes:ByteArray = null;
+				
+				bytes = new ByteArray();
+				
+				bytes.writeBytes(file.data, 0, file.data.length);
+				
+				bytes.compress();
+				
+				rltBytes = bytes;
+				
+				defaultName = "zlib_compress_" + file.name;
+				
+				DelayUtil.setDelayApply(saveBytes);
+			}
+			
+			protected function tryUncompress():void
+			{
+				Waiting.show("解压缩中...");
+				
+				DelayUtil.setDelayApply(tryUncompressImp);
+			}
+			
+			protected function tryUncompressImp():void
+			{
+				var file:FileReference = null;
+				
+				while(fileList.length > 0 && (file == null || file.data == null))
+				{
+					file = fileList.shift() as FileReference;
+				}
+				
+				if(file == null)
+				{
+					//TODO:完成
+					Waiting.hide();
+					//Alert.show("", "压缩");
+					return;
+				}
+				
+				var bytes:ByteArray = null;
+				
+				bytes = new ByteArray();
+				
+				bytes.writeBytes(file.data, 0, file.data.length);
+				
+				bytes.uncompress();
+				
+				rltBytes = bytes;
+				
+				defaultName = "zlib_uncompress_" + file.name;
+				
+				DelayUtil.setDelayApply(saveBytes);
+			}
+			
+			
+			protected function saveBytes():void
+			{
+				Waiting.show("压缩/解压完成!正在保存...");
+				
+				FileMgr.save(rltBytes, defaultName, completeCallback, cancelCallback, errorCallback);
+			}
+			
+			protected function completeCallback(file:FileReference):void
+			{
+				Waiting.show("保存成功!");
+				
+				if(isCompress) DelayUtil.setDelayApply(tryCompress);
+				else DelayUtil.setDelayApply(tryUncompress);
+			}
+			
+			protected function cancelCallback(file:FileReference):void
+			{
+				if(isCompress) DelayUtil.setDelayApply(tryCompress);
+				else DelayUtil.setDelayApply(tryUncompress);
+				
+				//Alert.show("取消保存!", "压缩");
+			}
+			
+			protected function errorCallback(file:FileReference, errorMsg:String):void
+			{
+				if(isCompress) DelayUtil.setDelayApply(tryCompress);
+				else DelayUtil.setDelayApply(tryUncompress);
+				
+				Alert.show("保存失败!\r\n" + errorMsg, "压缩/解压");
+			}
+
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				isCompress = false;
+				
+				FileMgr.openMultiFiles(openUncompressCallback, openCancelCallback);
+				
+				Waiting.show("选择并加载文件...");
+			}
+			
+			protected function openUncompressCallback(files:Array, hasError:Boolean, errorList:Array):void
+			{
+				fileList = files;
+				
+				DelayUtil.setDelayApply(tryUncompress);
+			}
+
+		]]>
+	</fx:Script>
+
+	<tool:layout>
+		<s:BasicLayout/>
+	</tool:layout>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Button label="Zlib压缩" left="10" right="10" top="10" height="30" click="button1_clickHandler(event)"/>
+	<s:Button label="Zlib解压" height="30" y="50" left="10" right="10" click="button2_clickHandler(event)" />
+</tool:BaseTitleWindow>

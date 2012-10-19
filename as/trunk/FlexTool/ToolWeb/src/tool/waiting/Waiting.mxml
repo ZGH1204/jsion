@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="500" height="120" 
+		 contentBackgroundAlpha="1.0" backgroundAlpha="1.0" borderVisible="true" borderColor="#000000">
+	<fx:Script>
+		<![CDATA[
+			import jsion.utils.StringUtil;
+			
+			import mx.core.FlexGlobals;
+			import mx.managers.ISystemManager;
+			import mx.managers.PopUpManager;
+			
+			protected static var wait:Waiting;
+			
+			public static function show(msg:String, modal:Boolean = true):void
+			{
+				if(wait == null)
+				{
+					wait = new Waiting();
+					
+					wait.x = (ToolGlobal.windows.width - wait.width) / 2;
+					wait.y = (ToolGlobal.windows.height - wait.height) / 2;
+				}
+				
+				
+				
+				var parent:Sprite = null;
+				
+				var sm:ISystemManager = ISystemManager(FlexGlobals.topLevelApplication.systemManager);
+				// no types so no dependencies
+				var mp:Object = sm.getImplementation("mx.managers.IMarshallPlanSystemManager");
+				if (mp && mp.useSWFBridge())
+					parent = Sprite(sm.getSandboxRoot());
+				else
+					parent = Sprite(FlexGlobals.topLevelApplication);
+				
+				
+				
+				if(wait.parent == null) PopUpManager.addPopUp(wait, parent, modal);
+				//else wait.parent.addChild(wait);
+				
+				if(StringUtil.isNotNullOrEmpty(msg)) wait.msgLabel.text = msg;
+			}
+			
+			public static function hide():void
+			{
+				PopUpManager.removePopUp(wait);
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Label text="正在初始化..." left="10" right="10" bottom="10" top="10" verticalAlign="middle" textAlign="center" id="msgLabel" fontSize="14" fontFamily="Arial" fontWeight="normal" textDecoration="none" backgroundAlpha="1.0"/>
+</s:BorderContainer>

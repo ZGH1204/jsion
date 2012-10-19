@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   minWidth="1000" minHeight="600" 
+			   width="1000" height="600" 
+			   initialize="application1_initializeHandler(event)" 
+			   creationComplete="application1_creationCompleteHandler(event)" 
+			   addedToStage="application1_addedToStageHandler(event)" 
+			   applicationComplete="application1_applicationCompleteHandler(event)" 
+			   contentCreationComplete="application1_contentCreationCompleteHandler(event)" 
+			   preinitialize="application1_preinitializeHandler(event)" 
+			   resize="application1_resizeHandler(event)">
+	<fx:Script source="ToolWeb.as" />
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<s:XMLListCollection id="menuData">
+			<fx:XMLList xmlns="">
+				<menuitem label="小工具">
+					<submenu label="Unicode字符" />
+					<submenu label="zlib压缩/解压" />
+					<submenu label="XML格式化对齐" />
+				</menuitem>
+				<menuitem label="序列帧工具">
+					<submenu label="新建压缩包" />
+				</menuitem>
+			</fx:XMLList>
+		</s:XMLListCollection>
+	</fx:Declarations>
+	
+	<mx:MenuBar id="menuBar" dataProvider="{menuData}" labelField="@label" iconField="@icon" itemClick="menuBar_itemClickHandler(event)" right="0" left="0"></mx:MenuBar>
+</s:Application>
