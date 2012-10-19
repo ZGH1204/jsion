@@ -1,0 +1,7 @@
+preinitialize
+contentCreationComplete
+initialized
+resize
+creation
+addedToStage
+applicationComplete
