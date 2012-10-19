@@ -59,6 +59,15 @@
 				
 				rlt = rlt.substr(1);
 				
+//				rlt = "[Embed(source=\"字体文件\", " +
+//					"fontName=\"EmbedFont\", " +
+//					"\runicodeRange=\"" +
+//					rlt +
+//					"\", \r" +
+//					"mimeType=\"application/x-font\")]\r" +
+//					"protected var MyFont : Class;\r\r" +
+//					"Font.registerFont(MyFont);";
+				
 				resultText.text = rlt;
 			}
 			

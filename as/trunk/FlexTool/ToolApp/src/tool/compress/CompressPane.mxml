@@ -10,7 +10,6 @@
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
 			import mx.managers.DragManager;
-			import mx.managers.PopUpManager;
 
 			protected function titlewindow1_initializeHandler(event:FlexEvent):void
 			{
