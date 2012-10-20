@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool:BaseTitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx" 
+					  xmlns:tool="tool.*" 
+					  title="添加动作" 
+					  width="246" height="305">
+	<fx:Script>
+		<![CDATA[
+			import jsion.Global;
+			import jsion.utils.DisposeUtil;
+			
+			import tool.pngpacker.events.PackerEvent;
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				dispatchEvent(new PackerEvent(PackerEvent.CREATE_ACTION));
+				
+				close();
+			}
+			
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				close();
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[Event(name="createAction", type="tool.pngpacker.events.PackerEvent")]
+	</fx:Metadata>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:VGroup left="40" top="30" bottom="50" width="100" horizontalAlign="center"
+			  verticalAlign="middle">
+		<s:CheckBox id="NormalCB" label="{Global.ActionNames[Global.NormalMotion]}" />
+		<s:CheckBox id="WalkCB" label="{Global.ActionNames[Global.WalkMotion]}" />
+		<s:CheckBox id="RunCB" label="{Global.ActionNames[Global.RunMotion]}" />
+		<s:CheckBox id="AttackCB" label="{Global.ActionNames[Global.AttackMotion]}" />
+		<s:CheckBox id="DefenseCB" label="{Global.ActionNames[Global.DefenseMotion]}" />
+		<s:CheckBox id="HurtCB" label="{Global.ActionNames[Global.HurtMotion]}" />
+		<s:CheckBox id="SkillCB" label="{Global.ActionNames[Global.SkillMotion]}" />
+		<s:CheckBox id="DieCB" label="{Global.ActionNames[Global.DieMotion]}" />
+	</s:VGroup>
+	<s:VGroup right="20" top="30" bottom="50" width="70" horizontalAlign="left"
+			  verticalAlign="middle">
+		<s:CheckBox id="UpCB" label="{Global.DirNames[Global.UpWard]}" />
+		<s:CheckBox id="DownCB" label="{Global.DirNames[Global.DownWard]}" />
+		<s:CheckBox id="LeftCB" label="{Global.DirNames[Global.LeftWard]}" />
+		<s:CheckBox id="RightCB" label="{Global.DirNames[Global.RightWard]}" />
+		<s:CheckBox id="LeftTopCB" label="{Global.DirNames[Global.LeftTopWard]}" />
+		<s:CheckBox id="RightTopCB" label="{Global.DirNames[Global.RightTopWard]}" />
+		<s:CheckBox id="LeftBottomCB" label="{Global.DirNames[Global.LeftBottomWard]}" />
+		<s:CheckBox id="RightBottomCB" label="{Global.DirNames[Global.RightBottomWard]}" />
+	</s:VGroup>
+	<s:HGroup left="20" right="20" bottom="10" height="33" gap="10" horizontalAlign="center"
+			  verticalAlign="middle">
+		<s:Button label="确 定" click="button1_clickHandler(event)"/>
+		<s:Button label="取消" click="button2_clickHandler(event)"/>
+	</s:HGroup>
+	<s:Label left="20" right="20" top="5" height="20" color="#F50000" text="每个动作都会创建所有选择的方向"
+			 textAlign="center" verticalAlign="middle"/>
+</tool:BaseTitleWindow>

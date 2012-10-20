@@ -13,9 +13,14 @@
 			{
 				// TODO Auto-generated method stub
 				
+				close();
+			}
+			
+			
+			public function close():void
+			{
 				PopUpManager.removePopUp(this);
 			}
-
 		]]>
 	</fx:Script>
 	<fx:Declarations>

@@ -19,9 +19,6 @@
 				if(wait == null)
 				{
 					wait = new Waiting();
-					
-					wait.x = (ToolGlobal.windows.width - wait.width) / 2;
-					wait.y = (ToolGlobal.windows.height - wait.height) / 2;
 				}
 				
 				
@@ -38,8 +35,11 @@
 				
 				
 				
-				if(wait.parent == null) PopUpManager.addPopUp(wait, parent, modal);
-				//else wait.parent.addChild(wait);
+				if(wait.parent == null)
+				{
+					PopUpManager.addPopUp(wait, parent, modal);
+					PopUpManager.centerPopUp(wait);
+				}
 				
 				if(StringUtil.isNotNullOrEmpty(msg)) wait.msgLabel.text = msg;
 			}

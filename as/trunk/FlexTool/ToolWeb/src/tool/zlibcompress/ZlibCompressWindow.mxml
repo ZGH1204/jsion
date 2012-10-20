@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tool:BaseTitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
 					  xmlns:s="library://ns.adobe.com/flex/spark" 
-					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:tool="tool.*" width="200" height="120">
+					  xmlns:mx="library://ns.adobe.com/flex/mx" 
+					  xmlns:tool="tool.*" 
+					  title="Zlib压缩/解压" 
+					  width="200" height="120">
 
 	<fx:Script>
 		<![CDATA[
@@ -158,7 +161,7 @@
 				if(isCompress) DelayUtil.setDelayApply(tryCompress);
 				else DelayUtil.setDelayApply(tryUncompress);
 				
-				Alert.show("保存失败!\r\n" + errorMsg, "压缩/解压");
+				Alert.show("保存失败!\r\n" + errorMsg, "Zlib压缩/解压");
 			}
 
 			protected function button2_clickHandler(event:MouseEvent):void
