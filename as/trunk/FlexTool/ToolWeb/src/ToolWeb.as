@@ -15,11 +15,11 @@ import mx.events.MenuEvent;
 import mx.events.ResizeEvent;
 import mx.managers.PopUpManager;
 
-import tool.pngpacker.PNGPackerPane;
-import tool.unicode.TransfPane;
+import tool.pngpacker.PNGPackerWindow;
+import tool.unicode.TransfWindow;
 import tool.waiting.Waiting;
-import tool.xmlformats.XmlFormatPane;
-import tool.zlibcompress.ZLIBCompressPane;
+import tool.xmlformats.XmlFormatWindow;
+import tool.zlibcompress.ZlibCompressWindow;
 
 protected var m_configLoader:URLLoader;
 
@@ -128,16 +128,16 @@ protected function menuBar_itemClickHandler(event:MenuEvent):void
 	switch(String(menuItem.@label))
 	{
 		case "Unicode字符":
-			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, TransfPane));
+			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, TransfWindow));
 			break;
 		case "zlib压缩/解压":
-			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, ZLIBCompressPane));
+			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, ZlibCompressWindow));
 			break;
 		case "XML格式化对齐":
-			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, XmlFormatPane));
+			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, XmlFormatWindow));
 			break;
 		case "新建压缩包":
-			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, PNGPackerPane));
+			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, PNGPackerWindow));
 			break;
 	}
 }

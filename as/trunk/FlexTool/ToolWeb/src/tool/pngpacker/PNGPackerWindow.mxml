@@ -10,6 +10,7 @@
 		<![CDATA[
 			import mx.events.CloseEvent;
 			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
 			
 			import tool.pngpacker.events.PackerEvent;
 			
@@ -73,16 +74,32 @@
 					m_timer = null;
 				}
 			}
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, CreateActionFrame, true));
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<s:HGroup left="10" right="10" top="10" paddingLeft="5" paddingRight="5" paddingTop="5" paddingBottom="5">
-		<s:Button label="添加动作" height="25"/>
-		<s:Button label="删除动作" height="25"/>
-		<s:Button label="打包保存" height="25"/>
-		<pngpacker:SpinnerInput id="fpsInput" defaultText="0" restrict="0-9" text="30" textChanged="spinnerinput1_textChangedHandler(event)">
-		</pngpacker:SpinnerInput>
-	</s:HGroup>
+	<mx:Accordion left="10" top="48" bottom="10" width="152">
+		<s:NavigatorContent width="100%" height="100%" label="测试一">
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="测试二">
+		</s:NavigatorContent>
+	</mx:Accordion>
+	<s:BorderContainer left="10" right="10" top="5" height="38">
+		<s:HGroup left="0" right="0" top="0" bottom="0" paddingBottom="5" paddingLeft="5"
+				  paddingRight="5" paddingTop="5">
+			<s:Button height="25" label="添加动作" click="button1_clickHandler(event)"/>
+			<s:Button label="删除动作" height="25"/>
+			<s:Button label="打包保存" height="25"/>
+			<pngpacker:SpinnerInput id="fpsInput" defaultText="0" restrict="0-9" text="30" textChanged="spinnerinput1_textChangedHandler(event)">
+			</pngpacker:SpinnerInput>
+		</s:HGroup>
+	</s:BorderContainer>
 </tool:BaseTitleWindow>
