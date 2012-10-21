@@ -100,6 +100,16 @@ package tool.pngpacker.datas
 			dispatchEvent(new PackerEvent(PackerEvent.REMOVE_BITMAP_DATA, bitmapData));
 		}
 		
+		public function clearBitmapData():void
+		{
+			while(m_bitmapDatas && m_bitmapDatas.length > 0)
+			{
+				var bmd:BitmapData = m_bitmapDatas.pop();
+				removeBitmapData(bmd);
+				DisposeUtil.free(bmd);
+			}
+		}
+		
 		override public function dispose():void
 		{
 			// TODO Auto Generated method stub
