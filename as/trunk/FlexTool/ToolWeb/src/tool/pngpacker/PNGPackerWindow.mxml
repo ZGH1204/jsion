@@ -232,12 +232,13 @@
 	<pngpacker:LeftAccordion id="accordionActions" left="10" top="48" bottom="180" selecteChanged="accordionActions_selecteChangedHandler(event)">
 	</pngpacker:LeftAccordion>
 	<s:BorderContainer left="10" right="10" top="5" height="38">
-		<s:HGroup left="0" right="0" top="0" bottom="0" verticalAlign="middle">
-			<s:Button height="25" label="选择动作" click="button1_clickHandler(event)"/>
-			<s:Button label="打包保存" height="25" click="button2_clickHandler(event)" />
-			<pngpacker:SpinnerInput id="fpsInput" label="FPS:" defaultText="0" restrict="0-9" text="30" textChanged="__fpsChangedHandler(event)" />
-			<pngpacker:SpinnerInput id="splitInput" label="间隔帧:" defaultText="0" restrict="0-9" text="0" textChanged="__splitChangedHandler(event)" />
-		</s:HGroup>
+		<s:layout>
+			<s:HorizontalLayout verticalAlign="middle"/>
+		</s:layout>
+		<s:Button height="25" label="选择动作" click="button1_clickHandler(event)"/>
+		<s:Button label="打包保存" height="25" click="button2_clickHandler(event)" />
+		<pngpacker:SpinnerInput id="fpsInput" label="FPS:" defaultText="0" restrict="0-9" text="30" textChanged="__fpsChangedHandler(event)" />
+		<pngpacker:SpinnerInput id="splitInput" label="间隔帧:" defaultText="0" restrict="0-9" text="0" textChanged="__splitChangedHandler(event)" />
 	</s:BorderContainer>
 	<pngpacker:BottomScroller id="frameView" left="10" right="10" bottom="10" height="170">
 	</pngpacker:BottomScroller>
