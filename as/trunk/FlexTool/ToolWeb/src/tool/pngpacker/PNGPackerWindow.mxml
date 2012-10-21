@@ -2,44 +2,81 @@
 <tool:BaseTitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
-			   xmlns:tool="tool.*"
-			   title="动作序列帧压缩打包"
-			   width="800" height="520"
-			   initialize="basetitlewindow1_initializeHandler(event)" xmlns:pngpacker="tool.pngpacker.*">
+			   xmlns:pngpacker="tool.pngpacker.*"
+			   xmlns:tool="tool.*" 
+			   title="动作序列帧图片压缩打包"
+			   initialize="__packerWinInitializeHandler(event)">
 	<fx:Script>
 		<![CDATA[
-			import mx.events.CloseEvent;
+			import jsion.serialize.res.ResPacker;
+			import jsion.utils.DelayUtil;
+			import jsion.utils.DisposeUtil;
+			
+			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 			
+			import tool.pngpacker.datas.ActionData;
+			import tool.pngpacker.datas.DirData;
+			import tool.pngpacker.datas.PackerData;
 			import tool.pngpacker.events.PackerEvent;
+			import tool.waiting.Waiting;
+			
+			import utils.FileMgr;
 			
 			protected var m_timer:Timer;
+			protected var m_timer2:FPSTimer;
 			
-			override protected function titlewindow1_closeHandler(event:CloseEvent):void
+			protected var m_packerData:PackerData;
+			
+			protected var m_respacker:ResPacker;
+			protected var m_packedBytes:ByteArray;
+			
+			public function get packerData():PackerData
 			{
-				clearTimer();
-				
-				super.titlewindow1_closeHandler(event);
+				return m_packerData;
 			}
 
-			protected function basetitlewindow1_initializeHandler(event:FlexEvent):void
+			protected function __packerWinInitializeHandler(event:FlexEvent):void
 			{
 				// TODO Auto-generated method stub
 				
-				m_timer = new Timer(1000 / 30);
+				m_timer2 = new FPSTimer(this);
 				
-				m_timer.addEventListener(TimerEvent.TIMER, __timerHandler);
+				m_packerData = new PackerData();
 				
-				m_timer.start();
+				accordionActions.setData(m_packerData);
 			}
 			
-			protected function __timerHandler(e:TimerEvent):void
+			public function onFPSTimerHandler():void
 			{
-				//trace("FPS");
+				frameRenderer.enterFrame();
 			}
-
-			protected function spinnerinput1_textChangedHandler(event:PackerEvent):void
+			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				var frame:CreateActionFrame = new CreateActionFrame();
+				
+				frame.PackerWin = this;
+				
+				PopUpManager.addPopUp(frame, ToolGlobal.windows, true);
+				
+				PopUpManager.centerPopUp(frame);
+				
+				frame.addListener(PackerEvent.CREATE_ACTION, __createActionHandler);
+			}
+			
+			protected function __createActionHandler(event:PackerEvent):void
+			{
+				// TODO Auto-generated method stub
+				var newList:Array = event.data;
+				
+				m_packerData.setActions(newList);
+			}
+			
+			protected function __fpsChangedHandler(event:PackerEvent):void
 			{
 				// TODO Auto-generated method stub
 				
@@ -47,59 +84,163 @@
 				
 				if(i <= 0)
 				{
-					fpsInput.text = "1";
 					i = 1;
+					fpsInput.text = "1";
 				}
 				
-				resetTimer(i);
+				m_timer2.resetTimer(i);
 			}
 			
-			protected function resetTimer(fps:Number):void
-			{
-				clearTimer();
-				
-				m_timer = new Timer(1000 / fps);
-				
-				m_timer.addEventListener(TimerEvent.TIMER, __timerHandler);
-				
-				m_timer.start();
-			}
-			
-			protected function clearTimer():void
-			{
-				if(m_timer)
-				{
-					m_timer.reset();
-					m_timer.removeEventListener(TimerEvent.TIMER, __timerHandler);
-					m_timer = null;
-				}
-			}
-			
-			protected function button1_clickHandler(event:MouseEvent):void
+			protected function __splitChangedHandler(event:PackerEvent):void
 			{
 				// TODO Auto-generated method stub
-				PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, CreateActionFrame, true));
+				
+				var i:int = int(splitInput.text);
+				
+				if(i < 0)
+				{
+					i = 0;
+					splitInput.text = "0";
+				}
+				
+				frameRenderer.setSplits(i);
 			}
 			
+			protected function accordionActions_selecteChangedHandler(event:PackerEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				frameView.setData(event.data);
+				frameRenderer.setData(event.data);
+				
+//				if(event.data)
+//				{
+//					trace(event.data.name);
+//				}
+//				else
+//				{
+//					trace("未选择方向");
+//				}
+			}
+			
+			override public function dispose():void
+			{
+				DisposeUtil.free(m_timer2);
+				m_timer2 = null;
+				
+				DisposeUtil.free(m_packerData);
+				m_packerData = null;
+				
+				frameRenderer.dispose();
+				frameView.dispose();
+				accordionActions.dispose();
+				super.dispose();
+			}
+			
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				if(m_packerData.canPack() == false)
+				{
+					Alert.show("无序列帧数据不能打包!", "打包");
+					return;
+				}
+				
+				var packer:ResPacker = new ResPacker();
+				
+				var actions:Array = m_packerData.getActions();
+				
+				for each(var a:ActionData in actions)
+				{
+					var dirs:Array = a.getDirs();
+					
+					for each(var d:DirData in dirs)
+					{
+						var bmds:Array = d.bitmapDatas;
+						
+						for each(var bmd:BitmapData in bmds)
+						{
+							packer.addImage(bmd.clone(), a.id, d.dir);
+						}
+					}
+				}
+				
+				m_respacker = packer;
+				
+				pack();
+			}
+			
+			protected function pack():void
+			{
+				Waiting.show("正在打包压缩资源...");
+				
+				DelayUtil.setDelayApply(packImp);
+			}
+			
+			protected function packImp():void
+			{
+				// TODO Auto Generated method stub
+				m_packedBytes = m_respacker.pack();
+				
+				Waiting.show("打包成功!正在保存...");
+				
+				DelayUtil.setDelayApply(savePackedBytes);
+			}
+			
+			protected function savePackedBytes():void
+			{
+				// TODO Auto Generated method stub
+				FileMgr.save(m_packedBytes, "序列帧压缩打包文件." + Config.DefaultExt, saveCallback, saveCancelCallback, saveErrorCallback);
+			}
+			
+			protected function saveCallback(file:FileReference):void
+			{
+				// TODO Auto Generated method stub
+				clearTempSaveData();
+				Alert.show("文件保存成功!\r\nFile: " + file.name, "保存");
+			}
+			
+			protected function saveCancelCallback():void
+			{
+				// TODO Auto Generated method stub
+				clearTempSaveData();
+			}
+			
+			protected function saveErrorCallback(file:FileReference, errorMsg:String):void
+			{
+				// TODO Auto Generated method stub
+				clearTempSaveData();
+				Alert.show("文件保存失败!\r\n" + errorMsg, "保存");
+			}
+			
+			protected function clearTempSaveData():void
+			{
+				Waiting.hide();
+				
+				DisposeUtil.free(m_respacker);
+				m_respacker = null;
+				
+				DisposeUtil.free(m_packedBytes);
+				m_packedBytes = null;
+			}
 		]]>
 	</fx:Script>
 	<fx:Declarations>
+		<s:RadioButtonGroup id="radiogroup1"/>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<mx:Accordion left="10" top="48" bottom="10" width="152">
-		<s:NavigatorContent width="100%" height="100%" label="测试一">
-		</s:NavigatorContent>
-		<s:NavigatorContent width="100%" height="100%" label="测试二">
-		</s:NavigatorContent>
-	</mx:Accordion>
+	<pngpacker:LeftAccordion id="accordionActions" left="10" top="48" bottom="180" selecteChanged="accordionActions_selecteChangedHandler(event)">
+	</pngpacker:LeftAccordion>
 	<s:BorderContainer left="10" right="10" top="5" height="38">
-		<s:HGroup left="0" right="0" top="0" bottom="0" paddingBottom="5" paddingLeft="5"
-				  paddingRight="5" paddingTop="5">
-			<s:Button height="25" label="添加动作" click="button1_clickHandler(event)"/>
-			<s:Button label="删除动作" height="25"/>
-			<s:Button label="打包保存" height="25"/>
-			<pngpacker:SpinnerInput id="fpsInput" defaultText="0" restrict="0-9" text="30" textChanged="spinnerinput1_textChangedHandler(event)">
-			</pngpacker:SpinnerInput>
+		<s:HGroup left="0" right="0" top="0" bottom="0" verticalAlign="middle">
+			<s:Button height="25" label="选择动作" click="button1_clickHandler(event)"/>
+			<s:Button label="打包保存" height="25" click="button2_clickHandler(event)" />
+			<pngpacker:SpinnerInput id="fpsInput" label="FPS:" defaultText="0" restrict="0-9" text="30" textChanged="__fpsChangedHandler(event)" />
+			<pngpacker:SpinnerInput id="splitInput" label="间隔帧:" defaultText="0" restrict="0-9" text="0" textChanged="__splitChangedHandler(event)" />
 		</s:HGroup>
 	</s:BorderContainer>
+	<pngpacker:BottomScroller id="frameView" left="10" right="10" bottom="10" height="170">
+	</pngpacker:BottomScroller>
+	<pngpacker:FrameRender id="frameRenderer" left="170" right="10" top="48" bottom="180">
+	</pngpacker:FrameRender>
 </tool:BaseTitleWindow>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				   xmlns:s="library://ns.adobe.com/flex/spark" 
+				   xmlns:mx="library://ns.adobe.com/flex/mx"
+				   initialize="__initializedHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import jsion.utils.ArrayUtil;
+			
+			import mx.events.FlexEvent;
+			
+			import tool.pngpacker.datas.DirData;
+			import tool.pngpacker.events.PackerEvent;
+			
+			protected var m_dir:DirData;
+			
+			protected var m_frameSplits:int;
+			
+			protected var m_frames:Array;
+			
+			protected var m_bitmapDatas:Array;
+			
+			
+			
+			protected var m_index:int = -1;
+			
+			protected function __initializedHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+			}
+			
+			public function setSplits(splits:int):void
+			{
+				m_frameSplits = Math.max(splits, 0);
+				
+				update();
+			}
+			
+			public function setData(dir:DirData):void
+			{
+				if(m_dir)
+				{
+					m_dir.removeEventListener(PackerEvent.INDEX_CHANGED, __bitmapDataChangedHandler);
+					m_dir.removeEventListener(PackerEvent.ADD_BITMAP_DATA, __bitmapDataChangedHandler);
+					m_dir.removeEventListener(PackerEvent.REMOVE_BITMAP_DATA, __bitmapDataChangedHandler);
+				}
+				
+				m_dir = dir;
+				
+				m_index = -1;
+				
+				if(m_dir)
+				{
+					m_dir.addEventListener(PackerEvent.INDEX_CHANGED, __bitmapDataChangedHandler);
+					m_dir.addEventListener(PackerEvent.ADD_BITMAP_DATA, __bitmapDataChangedHandler);
+					m_dir.addEventListener(PackerEvent.REMOVE_BITMAP_DATA, __bitmapDataChangedHandler);
+				}
+				
+				refreshData(m_dir);
+			}
+			
+			protected function __bitmapDataChangedHandler(event:PackerEvent):void
+			{
+				// TODO Auto-generated method stub
+				refreshData(m_dir);
+			}
+			
+			protected function refreshData(dir:DirData):void
+			{
+				if(dir && dir.bitmapDatas.length > 0)
+				{
+					m_bitmapDatas = ArrayUtil.clone(dir.bitmapDatas);
+					
+					update();
+				}
+				else
+				{
+					ArrayUtil.removeAll(m_bitmapDatas);
+					m_bitmapDatas = null;
+					
+					rendererImg.source = null;
+					m_frames = null;
+				}
+			}
+			
+			protected function update():void
+			{
+				if(m_bitmapDatas)
+				{
+					m_frames = [];
+					
+					for(var i:int = 0; i < m_bitmapDatas.length; i++)
+					{
+						m_frames.push(i);
+						
+						for(var j:int = 0; j < m_frameSplits; j++)
+						{
+							m_frames.push(i);
+						}
+					}
+				}
+			}
+			
+			public function enterFrame():void
+			{
+				if(m_bitmapDatas == null) return;
+				
+				m_index += 1;
+				
+				if(m_index >= m_frames.length) m_index = 0;
+				
+				rendererImg.source = m_bitmapDatas[m_frames[m_index]];
+			}
+			
+			public function dispose():void
+			{
+				if(m_dir)
+				{
+					m_dir.removeEventListener(PackerEvent.INDEX_CHANGED, __bitmapDataChangedHandler);
+					m_dir.removeEventListener(PackerEvent.ADD_BITMAP_DATA, __bitmapDataChangedHandler);
+					m_dir.removeEventListener(PackerEvent.REMOVE_BITMAP_DATA, __bitmapDataChangedHandler);
+					m_dir = null;
+				}
+				
+				m_bitmapDatas = null;
+				m_frames = null;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:Scroller left="0" right="0" top="0" bottom="0">
+		<s:HGroup horizontalAlign="center" verticalAlign="middle">
+			<s:Image id="rendererImg" />
+		</s:HGroup>
+	</s:Scroller>
+</s:BorderContainer>

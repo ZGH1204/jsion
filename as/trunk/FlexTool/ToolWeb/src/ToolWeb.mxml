@@ -2,8 +2,8 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx" 
-			   minWidth="1000" minHeight="600" 
-			   width="1000" height="600" 
+			   minWidth="1000" minHeight="760" 
+			   width="1000" height="760" 
 			   initialize="application1_initializeHandler(event)" 
 			   creationComplete="application1_creationCompleteHandler(event)" 
 			   addedToStage="application1_addedToStageHandler(event)" 
@@ -22,7 +22,7 @@
 					<submenu label="XML格式化对齐" />
 				</menuitem>
 				<menuitem label="序列帧工具">
-					<submenu label="新建压缩包" />
+					<submenu label="序列帧图片打包" />
 				</menuitem>
 			</fx:XMLList>
 		</s:XMLListCollection>
