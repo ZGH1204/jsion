@@ -20,6 +20,8 @@
 					<submenu label="Unicode字符" />
 					<submenu label="zlib压缩/解压" />
 					<submenu label="XML格式化对齐" />
+					<submenu label="批量重命名" />
+					<submenu label="批量图片裁剪" />
 				</menuitem>
 				<menuitem label="序列帧工具">
 					<submenu label="序列帧图片打包" />
