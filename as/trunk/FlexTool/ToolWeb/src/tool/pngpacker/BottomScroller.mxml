@@ -273,12 +273,19 @@
 				m_group.selected = m_toggleMap.get(m_dir.bitmapDatas[index]);
 			}
 			
+			protected function clearFrameBtn_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				if(m_dir) m_dir.clearBitmapData();
+			}
+			
 			protected function refreshButtons():void
 			{
 				addFramesBtn.enabled = m_dir != null;
 				delFramesBtn.enabled = m_group.selected != null;
 				leftMoveBtn.enabled = m_group.selected != null;
 				rightMoveBtn.enabled = m_group.selected != null;
+				clearFrameBtn.enabled = m_dir != null;
 			}
 			
 			public function dispose():void
@@ -320,6 +327,7 @@
 	</fx:Declarations>
 	<s:HGroup left="0" right="0" top="0" height="30" verticalAlign="middle">
 		<s:Button id="addFramesBtn" label="添加帧图片" enabled="false" click="addFramesBtn_clickHandler(event)" />
+		<s:Button id="clearFrameBtn" label="清空帧图片" enabled="false" click="clearFrameBtn_clickHandler(event)" />
 		<s:Button id="delFramesBtn" label="删除帧图片" enabled="false" click="delFramesBtn_clickHandler(event)" />
 		<s:Button id="leftMoveBtn" label="向左移动" enabled="false" click="leftMoveBtn_clickHandler(event)" />
 		<s:Button id="rightMoveBtn" label="向右移动" enabled="false" click="rightMoveBtn_clickHandler(event)" />
