@@ -27,6 +27,45 @@ package jsion.utils
 		}
 		
 		/**
+		 * 查找arr1中在arr2中不存在的项，创建新的数组。
+		 * @param arr1  数组对象
+		 * @param arr2  数组对象
+		 * @param prop 要比较的属性
+		 * @return 新的数组对象
+		 * 
+		 */		
+		public static function diffrence(arr1:Array, arr2:Array, prop:String = null):Array
+		{
+			var list:Array = clone(arr1);
+			
+			var obj:Object;
+			var obj2:Object;
+			
+			if(StringUtil.isNullOrEmpty(prop))
+			{
+				for each(obj in arr1)
+				{
+					for each(obj2 in arr2)
+					{
+						if(obj == obj2) remove(list, obj);
+					}
+				}
+			}
+			else
+			{
+				for each(obj in arr1)
+				{
+					for each(obj2 in arr2)
+					{
+						if(obj[prop] == obj2[prop]) remove(list, obj);
+					}
+				}
+			}
+			
+			return list;
+		}
+		
+		/**
 		 * 将任意个数组连接，并过滤掉重复项，返回新数组(仅适合引用对象)。
 		 * @param args 数组或对象
 		 * @return 连接后的数组

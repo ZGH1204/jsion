@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				   xmlns:s="library://ns.adobe.com/flex/spark"
+				   xmlns:mx="library://ns.adobe.com/flex/mx"
+				   borderVisible="false" initialize="__initializedHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import jsion.HashMap;
+			import jsion.utils.ArrayUtil;
+			import jsion.utils.DelayUtil;
+			import jsion.utils.DisposeUtil;
+			
+			import mx.events.FlexEvent;
+			
+			import spark.components.ToggleButton;
+			
+			import tool.pngpacker.datas.DirData;
+			import tool.pngpacker.events.PackerEvent;
+			import tool.waiting.Waiting;
+			
+			import utils.FileMgr;
+			
+			protected var m_dir:DirData;
+			
+			protected var m_toggleMap:HashMap;
+			
+			protected var m_group:ToggleButtonGroup;
+			
+			
+			protected var m_loader:Loader;
+			protected var fileList:Array;
+			
+			
+			protected function __initializedHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				m_toggleMap = new HashMap();
+				m_group = new ToggleButtonGroup();
+				
+				m_group.addEventListener(Event.CHANGE, __frameSelecteChangedHandler);
+			}
+			
+			public function setData(dir:DirData):void
+			{
+				if(m_dir)
+				{
+					m_dir.removeEventListener(PackerEvent.INDEX_CHANGED, __bitmapDataChangedHandler);
+					m_dir.removeEventListener(PackerEvent.ADD_BITMAP_DATA, __bitmapDataChangedHandler);
+					m_dir.removeEventListener(PackerEvent.REMOVE_BITMAP_DATA, __bitmapDataChangedHandler);
+				}
+				
+				clearRepeatToggle(m_dir, dir);
+				
+				m_dir = dir;
+				
+				refreshButtons();
+				
+				if(m_dir)
+				{
+					m_dir.addEventListener(PackerEvent.INDEX_CHANGED, __bitmapDataChangedHandler);
+					m_dir.addEventListener(PackerEvent.ADD_BITMAP_DATA, __bitmapDataChangedHandler);
+					m_dir.addEventListener(PackerEvent.REMOVE_BITMAP_DATA, __bitmapDataChangedHandler);
+				}
+				
+				refreshToggle(m_dir);
+			}
+			
+			protected function __bitmapDataChangedHandler(event:PackerEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				clearRepeatToggle(m_dir, m_dir);
+				
+				refreshToggle(m_dir);
+			}
+			
+			protected function clearRepeatToggle(oldDir:DirData, newDir:DirData):void
+			{
+				if(oldDir)
+				{
+					var removeList:Array;
+					
+					if(newDir)
+					{
+						removeList = ArrayUtil.diffrence(oldDir.bitmapDatas, newDir.bitmapDatas);
+					}
+					else
+					{
+						removeList = ArrayUtil.clone(oldDir.bitmapDatas);
+					}
+					
+					for each(var bmd:BitmapData in removeList)
+					{
+						var button:ToggleButton = m_toggleMap.remove(bmd);
+						
+						if(button) m_group.removeToggle(button);
+					}
+				}
+			}
+			
+			protected function refreshToggle(dir:DirData):void
+			{
+				while(frameListView.numElements > 0) frameListView.removeElementAt(0);
+				
+				if(dir)
+				{
+					for each(var bmd:BitmapData in dir.bitmapDatas)
+					{
+						frameListView.addElement(getToggle(bmd));
+					}
+					
+					frameListViewScroller.verticalScrollBar.value = frameListViewScroller.verticalScrollBar.maximum / 2;
+				}
+			}
+			
+			protected function getToggle(bmd:BitmapData):ToggleButton
+			{
+				if(m_toggleMap.containsKey(bmd)) return m_toggleMap.get(bmd);
+				
+				var button:ToggleButton = new ToggleButton();
+				button.setStyle("icon", bmd);
+				m_toggleMap.put(bmd, button);
+				m_group.addToggle(button);
+				return button;
+			}
+			
+			protected function __frameSelecteChangedHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				refreshButtons();
+			}
+			
+			protected function addFramesBtn_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				Waiting.show("打开并加载帧图片中...");
+				
+				FileMgr.openMultiFiles(openFrameCallback, cancelFrameCallback);
+			}
+			
+			protected function openFrameCallback(files:Array, hasError:Boolean, errorList:Array):void
+			{
+				// TODO Auto Generated method stub
+				
+				fileList = ArrayUtil.diffrence(files, errorList);
+				
+				tryLoadBitmapData();
+			}
+			
+			protected function tryLoadBitmapData():void
+			{
+				var file:FileReference = null;
+				
+				while(fileList.length > 0 && (file == null || file.data == null))
+				{
+					file = fileList.shift() as FileReference;
+				}
+				
+				if(file == null)
+				{
+					//TODO:完成
+					Waiting.hide();
+					clearLoader();
+					return;
+				}
+				
+				clearLoader();
+				
+				m_loader = new Loader();
+				
+				m_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, __bitmapDataCompleteHandler);
+				
+				m_loader.loadBytes(file.data);
+			}
+			
+			protected function clearLoader():void
+			{
+				if(m_loader)
+				{
+					m_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __bitmapDataCompleteHandler);
+					
+					m_loader.unloadAndStop();
+					
+					m_loader = null;
+				}
+			}
+			
+			protected function __bitmapDataCompleteHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				m_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __bitmapDataCompleteHandler);
+				
+				var bmd:BitmapData = Bitmap(m_loader.content).bitmapData.clone();
+				
+				if(m_dir) m_dir.addBitmapData(bmd);
+				
+				DelayUtil.setDelayApply(tryLoadBitmapData);
+			}
+			
+			protected function cancelFrameCallback():void
+			{
+				// TODO Auto Generated method stub
+				Waiting.hide();
+			}
+			
+			protected function delFramesBtn_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				if(m_group.selected == null) return;
+				
+				var bmd:BitmapData = m_group.selected.getStyle("icon");
+				
+				if(bmd == null) return;
+				
+				var index:int = m_dir.bitmapDatas.indexOf(bmd);
+				
+				m_dir.removeBitmapData(bmd);
+				
+				if(m_dir.bitmapDatas.length > 0)
+				{
+					if(m_dir.bitmapDatas.length <= index)
+					{
+						index -= 1;
+					}
+					
+					m_group.selected = m_toggleMap.get(m_dir.bitmapDatas[index]);
+				}
+				else
+				{
+					m_group.selected = null;
+				}
+			}
+			
+			protected function leftMoveBtn_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				if(m_group.selected == null) return;
+				
+				var bmd:BitmapData = m_group.selected.getStyle("icon");
+				
+				if(bmd == null) return;
+				
+				var index:int = m_dir.bitmapDatas.indexOf(bmd);
+				
+				m_dir.left(index);
+				
+				index -= 1;
+				
+				if(index < 0) index = 0;
+				
+				m_group.selected = m_toggleMap.get(m_dir.bitmapDatas[index]);
+			}
+			
+			protected function rightMoveBtn_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				if(m_group.selected == null) return;
+				
+				var bmd:BitmapData = m_group.selected.getStyle("icon");
+				
+				if(bmd == null) return;
+				
+				var index:int = m_dir.bitmapDatas.indexOf(bmd);
+				
+				m_dir.right(index);
+				
+				index += 1;
+				
+				if(index >= m_dir.bitmapDatas.length) index = m_dir.bitmapDatas.length - 1;
+				
+				m_group.selected = m_toggleMap.get(m_dir.bitmapDatas[index]);
+			}
+			
+			protected function refreshButtons():void
+			{
+				addFramesBtn.enabled = m_dir != null;
+				delFramesBtn.enabled = m_group.selected != null;
+				leftMoveBtn.enabled = m_group.selected != null;
+				rightMoveBtn.enabled = m_group.selected != null;
+			}
+			
+			public function dispose():void
+			{
+				if(m_dir)
+				{
+					m_dir.removeEventListener(PackerEvent.INDEX_CHANGED, __bitmapDataChangedHandler);
+					m_dir.removeEventListener(PackerEvent.ADD_BITMAP_DATA, __bitmapDataChangedHandler);
+					m_dir.removeEventListener(PackerEvent.REMOVE_BITMAP_DATA, __bitmapDataChangedHandler);
+				}
+				
+				clearLoader();
+				
+				if(m_toggleMap)
+				{
+					var list:Array = m_toggleMap.getKeys();
+					
+					for each(var bmd:BitmapData in list)
+					{
+						m_toggleMap.remove(bmd);
+					}
+					
+					DisposeUtil.free(m_toggleMap);
+					m_toggleMap = null;
+				}
+				
+				while(frameListView.numElements > 0) frameListView.removeElementAt(0);
+				
+				DisposeUtil.free(m_group);
+				m_group = null;
+				
+				m_dir = null;
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:HGroup left="0" right="0" top="0" height="30" verticalAlign="middle">
+		<s:Button id="addFramesBtn" label="添加帧图片" enabled="false" click="addFramesBtn_clickHandler(event)" />
+		<s:Button id="delFramesBtn" label="删除帧图片" enabled="false" click="delFramesBtn_clickHandler(event)" />
+		<s:Button id="leftMoveBtn" label="向左移动" enabled="false" click="leftMoveBtn_clickHandler(event)" />
+		<s:Button id="rightMoveBtn" label="向右移动" enabled="false" click="rightMoveBtn_clickHandler(event)" />
+	</s:HGroup>
+	<s:BorderContainer left="0" right="0" top="30" bottom="0">
+		<s:Scroller id="frameListViewScroller" left="0" right="0" top="0" bottom="0">
+			<s:HGroup id="frameListView"></s:HGroup>
+		</s:Scroller>
+	</s:BorderContainer>
+</s:BorderContainer>

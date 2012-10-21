@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Accordion xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			  xmlns:s="library://ns.adobe.com/flex/spark" 
+			  xmlns:mx="library://ns.adobe.com/flex/mx" 
+			  width="152" change="__actionChangeHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.IndexChangedEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			import tool.pngpacker.datas.ActionData;
+			import tool.pngpacker.datas.DirData;
+			import tool.pngpacker.datas.PackerData;
+			import tool.pngpacker.events.PackerEvent;
+			
+			protected var m_packerData:PackerData;
+			
+			public function getSelecteActionView():ActionView
+			{
+				return selectedChild as ActionView;
+			}
+			
+			public function getSelectedDirData():DirData
+			{
+				var view:ActionView = getSelecteActionView();
+				
+				if(view)
+				{
+					if(view.dirListView.selectedIndex != -1)
+					{
+						return view.dirListView.selectedItem.data;
+					}
+				}
+				
+				return null;
+			}
+			
+			public function setData(data:PackerData):void
+			{
+				m_packerData = data;
+				
+				m_packerData.addEventListener(PackerEvent.ADD_ACTION_DATA, __addActionHandler);
+				m_packerData.addEventListener(PackerEvent.REMOVE_ACTION_DATA, __removeActionHandler);
+			}
+			
+			protected function __addActionHandler(event:PackerEvent):void
+			{
+				// TODO Auto-generated method stub
+				var data:ActionData = event.data as ActionData;
+				
+				var view:ActionView = new ActionView();
+				
+				view.label = data.name;
+				view.percentWidth = 100;
+				view.percentHeight = 100;
+				
+				addChild(view);
+				
+				view.setData(data);
+				
+				view.dirListView.addEventListener(IndexChangeEvent.CHANGE, __dirChangedHandler);
+			}
+			
+			protected function __removeActionHandler(event:PackerEvent):void
+			{
+				// TODO Auto-generated method stub
+				for(var i:int = 0; i < numChildren; i++)
+				{
+					var view:ActionView = getChildAt(i) as ActionView;
+					
+					if(view.actionData == event.data)
+					{
+						i--;
+						view.dispose();
+						removeChild(view);
+						view.dirListView.removeEventListener(IndexChangeEvent.CHANGE, __dirChangedHandler);
+					}
+				}
+			}
+			
+			public function dispose():void
+			{
+				// TODO Auto Generated method stub
+				
+				for(var i:int = 0; i < numChildren; i++)
+				{
+					var view:ActionView = getChildAt(i) as ActionView;
+					
+					view.dirListView.removeEventListener(IndexChangeEvent.CHANGE, __dirChangedHandler);
+				}
+				
+				m_packerData = null;
+			}
+			
+			protected function __dirChangedHandler(event:IndexChangeEvent):void
+			{
+				// TODO Auto-generated method stub
+				dispatchEvent(new PackerEvent(PackerEvent.SELECTE_CHANGED, getSelectedDirData()));
+			}
+			
+			protected function __actionChangeHandler(event:IndexChangedEvent):void
+			{
+				// TODO Auto-generated method stub
+				dispatchEvent(new PackerEvent(PackerEvent.SELECTE_CHANGED, getSelectedDirData()));
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[Event(name="selecteChanged", type="tool.pngpacker.events.PackerEvent")]
+	</fx:Metadata>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+</mx:Accordion>

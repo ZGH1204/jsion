@@ -121,7 +121,7 @@
 				DelayUtil.setDelayApply(tryFormat);
 			}
 			
-			protected function saveCancelCallback(file:FileReference):void
+			protected function saveCancelCallback():void
 			{
 				// TODO Auto Generated method stub
 				

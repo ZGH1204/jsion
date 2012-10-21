@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" gap="-1">
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  gap="-1" verticalAlign="middle">
 	<fx:Metadata>
 		[Event(name="textChanged", type="tool.pngpacker.events.PackerEvent")]
 	</fx:Metadata>
@@ -46,6 +47,7 @@
 			public function set text(value:String):void
 			{
 				inputText.text = value;
+				spinnerInput.value = int(inputText.text);
 			}
 			
 			public function get restrict():String
@@ -67,13 +69,23 @@
 			{
 				m_defaultText = value;
 			}
-
+			
+			public function get label():String
+			{
+				return preLabel.text;
+			}
+			
+			public function set label(value:String):void
+			{
+				preLabel.text = value;
+			}
 		]]>
 	</fx:Script>
 
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
+	<s:Label id="preLabel" fontSize="14" text=""/>
 	<s:TextInput id="inputText" height="25" width="30" change="inputText_changeHandler(event)" />
 	<s:Spinner id="spinnerInput" height="25" value="30" stepSize="1" maximum="1000" change="spinnerInput_changeHandler(event)"/>
 </s:HGroup>

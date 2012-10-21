@@ -265,12 +265,12 @@ package utils
 		 * @param data
 		 * @param defaultFileName
 		 * @param callback 保存后的回调，需要一个参数: FileReference。
-		 * @param cancelCallback 取消的回调，需要两个参数: FileReference。
+		 * @param cancelCallback 取消的回调，无参数。
 		 * @param errorCallback 保存出错的回调，需要两个参数: FileReference，出错信息字符串。
 		 * @param typeFilter
 		 * 
 		 */		
-		public static function save(data:*, defaultFileName:String = null, callback:Function = null, cancelCallback:Function = null, errorCallback:Function = null, typeFilter:Array = null):void
+		public static function save(data:*, defaultFileName:String = null, callback:Function = null, cancelCallback:Function = null, errorCallback:Function = null):void
 		{
 			var file:FileReference = new FileReference();
 			
@@ -309,7 +309,7 @@ package utils
 			{
 				var fn:Function = m_cancelCallbackMap.get(file);
 				
-				if(fn != null) fn.apply(null, [file]);
+				if(fn != null) fn.apply();
 			}
 			
 			disposeSaveFileRef(file);

@@ -148,7 +148,7 @@
 				else DelayUtil.setDelayApply(tryUncompress);
 			}
 			
-			protected function cancelCallback(file:FileReference):void
+			protected function cancelCallback():void
 			{
 				if(isCompress) DelayUtil.setDelayApply(tryCompress);
 				else DelayUtil.setDelayApply(tryUncompress);

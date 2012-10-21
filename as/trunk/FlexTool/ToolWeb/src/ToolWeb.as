@@ -136,7 +136,7 @@ protected function menuBar_itemClickHandler(event:MenuEvent):void
 		case "XML格式化对齐":
 			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, XmlFormatWindow));
 			break;
-		case "新建压缩包":
+		case "序列帧图片打包":
 			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, PNGPackerWindow));
 			break;
 	}

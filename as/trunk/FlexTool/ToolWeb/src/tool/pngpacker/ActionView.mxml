@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="100%" height="100%" 
+		 initialize="__initializedHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import tool.pngpacker.datas.ActionData;
+			import tool.pngpacker.datas.DirData;
+			import tool.pngpacker.events.PackerEvent;
+			
+			protected var m_action:ActionData;
+			
+			public function get actionData():ActionData
+			{
+				return m_action;
+			}
+			
+			protected function __initializedHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+			}
+			
+			public function setData(data:ActionData):void
+			{
+				m_action = data;
+				
+				m_action.addEventListener(PackerEvent.ADD_DIR_DATA, __addDirHandler);
+				m_action.addEventListener(PackerEvent.REMOVE_DIR_DATA, __removeDirHandler);
+				
+				dirListData.removeAll();
+				
+				var dirs:Array = m_action.getDirs();
+				
+				for each(var dir:DirData in dirs)
+				{
+					dirListData.addItem({label: dir.name, data:dir});
+				}
+				
+				//dirListView.setStyle("contentBackgroundColor", "#" + uint(Math.random() * 0xFFFFFF).toString(16));
+			}
+			
+			protected function __addDirHandler(event:PackerEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				var dir:DirData = event.data as DirData;
+				
+				dirListData.addItem({label: dir.name, data:dir});
+			}
+			
+			protected function __removeDirHandler(event:PackerEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				var removeList:Array = [];
+				
+				for each(var obj:Object in dirListData.source)
+				{
+					if(obj.label == event.data.name)
+					{
+						removeList.push(obj);
+					}
+				}
+				
+				while(removeList.length > 0)
+				{
+					dirListData.removeItemAt(dirListData.getItemIndex(removeList.pop()));
+				}
+			}
+			
+			public function dispose():void
+			{
+				m_action = null;
+				
+				dirListData.removeAll();
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:ArrayCollection id="dirListData" />
+		<mx:DefaultListEffect id="defaultListEffect" />
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:List id="dirListView" width="100%" height="100%" dataProvider="{dirListData}" addedEffect="{defaultListEffect}"></s:List>
+</mx:VBox>
