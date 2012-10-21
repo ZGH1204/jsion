@@ -2,8 +2,7 @@
 <s:BorderContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
-		 width="500" height="120" 
-		 borderVisible="true" borderColor="#000000">
+		 width="500" height="120">
 	<fx:Script>
 		<![CDATA[
 			import jsion.utils.StringUtil;
@@ -53,5 +52,5 @@
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<s:Label text="正在初始化..." left="10" right="10" bottom="10" top="10" verticalAlign="middle" textAlign="center" id="msgLabel" fontSize="14" fontFamily="Arial" fontWeight="normal" textDecoration="none" backgroundAlpha="1.0"/>
+	<s:Label id="msgLabel" left="10" right="10" top="10" bottom="10" text="正在初始化..." textAlign="center" verticalAlign="middle"/>
 </s:BorderContainer>

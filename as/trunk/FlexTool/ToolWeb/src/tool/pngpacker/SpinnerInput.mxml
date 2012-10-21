@@ -85,7 +85,7 @@
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<s:Label id="preLabel" fontSize="14" text=""/>
-	<s:TextInput id="inputText" height="25" width="30" change="inputText_changeHandler(event)" />
-	<s:Spinner id="spinnerInput" height="25" value="30" stepSize="1" maximum="1000" change="spinnerInput_changeHandler(event)"/>
+	<s:Label id="preLabel" text=""/>
+	<s:TextInput id="inputText" width="30" change="inputText_changeHandler(event)" />
+	<s:Spinner id="spinnerInput" value="30" stepSize="1" maximum="1000" change="spinnerInput_changeHandler(event)"/>
 </s:HGroup>

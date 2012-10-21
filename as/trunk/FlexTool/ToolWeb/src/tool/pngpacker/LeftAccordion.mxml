@@ -2,7 +2,8 @@
 <mx:Accordion xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			  xmlns:s="library://ns.adobe.com/flex/spark" 
 			  xmlns:mx="library://ns.adobe.com/flex/mx" 
-			  width="152" change="__actionChangeHandler(event)">
+			  width="152" 
+			  change="__actionChangeHandler(event)">
 	<fx:Script>
 		<![CDATA[
 			import mx.events.IndexChangedEvent;
