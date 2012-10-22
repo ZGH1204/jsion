@@ -1,8 +1,15 @@
 package tool.pngpacker.datas
 {
+	import flash.display.BitmapData;
+	import flash.utils.ByteArray;
+	
 	import jsion.events.JsionEventDispatcher;
+	import jsion.serialize.res.ResPacker;
+	import jsion.serialize.res.ResUnpacker;
 	import jsion.utils.ArrayUtil;
 	import jsion.utils.DisposeUtil;
+	
+	import mx.controls.Alert;
 	
 	import tool.pngpacker.events.PackerEvent;
 	
@@ -114,6 +121,16 @@ package tool.pngpacker.datas
 			return null;
 		}
 		
+		public function clearActions():void
+		{
+			var list:Array = getActions();
+			
+			for each(var a:ActionData in list)
+			{
+				removeAction(a.id);
+			}
+		}
+		
 		public function getAction(id:int):ActionData
 		{
 			for each(var item:ActionData in m_actions)
@@ -127,6 +144,65 @@ package tool.pngpacker.datas
 		public function getActions():Array
 		{
 			return ArrayUtil.clone(m_actions);
+		}
+		
+		
+		public function createResPacker():ResPacker
+		{
+			var packer:ResPacker = new ResPacker();
+			
+			var actions:Array = getActions();
+			
+			for each(var a:ActionData in actions)
+			{
+				var dirs:Array = a.getDirs();
+				
+				for each(var d:DirData in dirs)
+				{
+					var bmds:Array = d.bitmapDatas;
+					
+					for each(var bmd:BitmapData in bmds)
+					{
+						packer.addImage(bmd.clone(), a.id, d.dir);
+					}
+				}
+			}
+			
+			return packer;
+		}
+		
+		public function parseBytes(bytes:ByteArray):void
+		{
+			if(bytes == null) return;
+			
+			clearActions();
+			
+			var unpacker:ResUnpacker = new ResUnpacker(bytes);
+			
+			var actions:Array = unpacker.getActionIDs();
+			
+			for each(var aid:int in actions)
+			{
+				var a:ActionData = new ActionData(aid);
+				
+				addAction(a);
+				
+				var dirs:Array = unpacker.getDirIDs(aid);
+				
+				for each(var did:int in dirs)
+				{
+					var d:DirData = new DirData(did);
+					
+					a.addDir(d);
+					
+					var bmds:Array = unpacker.getBitmapDataList(aid, did);
+					
+					d.addBitmapDatas(bmds);
+				}
+			}
+			
+			DisposeUtil.free(unpacker);
+			unpacker = null;
 		}
 		
 		override public function dispose():void

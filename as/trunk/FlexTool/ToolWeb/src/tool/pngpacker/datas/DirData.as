@@ -76,6 +76,14 @@ package tool.pngpacker.datas
 			
 			dispatchEvent(new PackerEvent(PackerEvent.INDEX_CHANGED));
 		}
+		
+		public function addBitmapDatas(list:Array):void
+		{
+			for each(var bmd:BitmapData in list)
+			{
+				addBitmapData(bmd.clone());
+			}
+		}
 
 		public function addBitmapData(bitmapData:BitmapData):void
 		{
