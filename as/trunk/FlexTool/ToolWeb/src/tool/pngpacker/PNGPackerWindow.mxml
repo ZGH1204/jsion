@@ -16,8 +16,6 @@
 			import mx.events.FlexEvent;
 			import mx.managers.PopUpManager;
 			
-			import tool.pngpacker.datas.ActionData;
-			import tool.pngpacker.datas.DirData;
 			import tool.pngpacker.datas.PackerData;
 			import tool.pngpacker.events.PackerEvent;
 			import tool.waiting.Waiting;
@@ -146,26 +144,7 @@
 					return;
 				}
 				
-				var packer:ResPacker = new ResPacker();
-				
-				var actions:Array = m_packerData.getActions();
-				
-				for each(var a:ActionData in actions)
-				{
-					var dirs:Array = a.getDirs();
-					
-					for each(var d:DirData in dirs)
-					{
-						var bmds:Array = d.bitmapDatas;
-						
-						for each(var bmd:BitmapData in bmds)
-						{
-							packer.addImage(bmd.clone(), a.id, d.dir);
-						}
-					}
-				}
-				
-				m_respacker = packer;
+				m_respacker = m_packerData.createResPacker();
 				
 				pack();
 			}
@@ -223,6 +202,49 @@
 				DisposeUtil.free(m_packedBytes);
 				m_packedBytes = null;
 			}
+			
+			protected function button3_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				Waiting.show("选择打开文件...");
+				
+				FileMgr.openFile(openCallback, openCancelCallback, [new FileFilter("打包文件(*." + Config.DefaultExt + ")", "*." + Config.DefaultExt), new FileFilter("所有文件(*.*)", "*.*")]);
+			}
+			
+			protected function openCallback(file:FileReference):void
+			{
+				m_packedBytes = file.data;
+				
+				tryParseBytes();
+			}
+			
+			protected function tryParseBytes():void
+			{
+				Waiting.show("正在解析帧图片资源...");
+				
+				DelayUtil.setDelayApply(tryParseBytesImp);
+			}
+			
+			protected function tryParseBytesImp():void
+			{
+				m_packerData.parseBytes(m_packedBytes);
+				
+				clearParseTempData();
+			}
+			
+			protected function clearParseTempData():void
+			{
+				Waiting.hide();
+				
+				DisposeUtil.free(m_packedBytes);
+				m_packedBytes = null;
+			}
+			
+			protected function openCancelCallback():void
+			{
+				clearParseTempData();
+			}
+
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -232,13 +254,15 @@
 	<pngpacker:LeftAccordion id="accordionActions" left="10" top="48" bottom="180" selecteChanged="accordionActions_selecteChangedHandler(event)">
 	</pngpacker:LeftAccordion>
 	<s:BorderContainer left="10" right="10" top="5" height="38">
-		<s:layout>
-			<s:HorizontalLayout verticalAlign="middle"/>
-		</s:layout>
-		<s:Button height="25" label="选择动作" click="button1_clickHandler(event)"/>
-		<s:Button label="打包保存" height="25" click="button2_clickHandler(event)" />
-		<pngpacker:SpinnerInput id="fpsInput" label="FPS:" defaultText="0" restrict="0-9" text="30" textChanged="__fpsChangedHandler(event)" />
-		<pngpacker:SpinnerInput id="splitInput" label="间隔帧:" defaultText="0" restrict="0-9" text="0" textChanged="__splitChangedHandler(event)" />
+		<s:HGroup top="0" bottom="0" verticalAlign="middle" left="0" paddingLeft="6">
+			<s:Button height="25" label="选择动作" click="button1_clickHandler(event)"/>
+			<s:Button label="打包保存" height="25" click="button2_clickHandler(event)" />
+			<pngpacker:SpinnerInput id="fpsInput" label="FPS:" defaultText="0" restrict="0-9" text="30" textChanged="__fpsChangedHandler(event)" />
+			<pngpacker:SpinnerInput id="splitInput" label="间隔帧:" defaultText="0" restrict="0-9" text="0" textChanged="__splitChangedHandler(event)" />
+		</s:HGroup>
+		<s:HGroup right="0" verticalAlign="middle" top="0" bottom="0" paddingRight="6">
+			<s:Button label="打开文件" click="button3_clickHandler(event)" />
+		</s:HGroup>
 	</s:BorderContainer>
 	<pngpacker:BottomScroller id="frameView" left="10" right="10" bottom="10" height="170">
 	</pngpacker:BottomScroller>

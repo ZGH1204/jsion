@@ -326,7 +326,7 @@
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<s:HGroup left="0" right="0" top="0" height="30" verticalAlign="middle">
+	<s:HGroup left="0" right="0" top="0" height="30" verticalAlign="middle" horizontalAlign="right">
 		<s:Button id="addFramesBtn" label="添加帧图片" enabled="false" click="addFramesBtn_clickHandler(event)" />
 		<s:Button id="clearFrameBtn" label="清空帧图片" enabled="false" click="clearFrameBtn_clickHandler(event)" />
 		<s:Button id="delFramesBtn" label="删除帧图片" enabled="false" click="delFramesBtn_clickHandler(event)" />
