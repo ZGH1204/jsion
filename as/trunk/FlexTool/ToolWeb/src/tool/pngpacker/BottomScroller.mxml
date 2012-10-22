@@ -6,6 +6,7 @@
 				   initialize="__initializedHandler(event)">
 	<fx:Script>
 		<![CDATA[
+			import tool.ToggleButtonGroup;
 			import jsion.HashMap;
 			import jsion.utils.ArrayUtil;
 			import jsion.utils.DelayUtil;

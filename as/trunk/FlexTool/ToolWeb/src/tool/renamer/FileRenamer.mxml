@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool:BaseTitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx" 
+					  xmlns:tool="tool.*" 
+					  title="文件重命名(批量)"
+					  width="800" height="600"
+					  initialize="__initializeHandler(event)">
+
+	<fx:Script>
+		<![CDATA[
+			import mx.events.CollectionEvent;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+
+			protected function __initializeHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				fileListData.addItem({file: "文件1", ext: "png", preview: "", data: null});
+				fileListData.addItem({file: "文件2", ext: "png", preview: "", data: null});
+				fileListData.addItem({file: "文件3", ext: "png", preview: "", data: null});
+			}
+			
+			protected function extCB_changeHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				
+				if(extCB.selected)
+				{
+					extTxt.text = "";
+				}
+				else
+				{
+					extTxt.text = "扩展名";
+				}
+			}
+
+			protected function datagrid1_changeHandler(event:ListEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				//if(fileListView.selectedItem) trace(fileListView.selectedItem.file);
+			}
+
+
+			protected function fileListData_collectionChangeHandler(event:CollectionEvent):void
+			{
+				// TODO Auto-generated method stub
+				if(fileListData == null) return;
+				
+				for (var i:int = 0; i < fileListData.length; i++)
+				{
+					var obj:Object = fileListData.getItemAt(i);
+					
+					trace(obj.file);
+				}
+			}
+
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<s:ArrayCollection id="fileListData" collectionChange="fileListData_collectionChangeHandler(event)" />
+		<s:ArrayList id="numLenData" source="[1,2,3,4,5,6,7,8,9]">
+		</s:ArrayList>
+	</fx:Declarations>
+	<mx:DataGrid id="fileListView" headerSeparatorSkin="mx.skins.ProgrammaticSkin" 
+				 left="10" top="48" bottom="10" right="228" 
+				 dataProvider="{fileListData}" 
+				 dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"
+				 change="datagrid1_changeHandler(event)">
+		<mx:columns>
+			<mx:DataGridColumn headerText="文件名" dataField="file"/>
+			<mx:DataGridColumn headerText="扩展名" dataField="ext"/>
+			<mx:DataGridColumn headerText="预览" dataField="preview"/>
+		</mx:columns>
+	</mx:DataGrid>
+	<s:BorderContainer height="30" left="10" top="10" right="10">
+		<s:HGroup top="0" bottom="0" left="6" verticalAlign="middle" right="6">
+			<s:Button label="添加文件"/>
+		</s:HGroup>
+	</s:BorderContainer>
+	<s:BorderContainer width="210" right="10" top="48" bottom="10">
+		<s:HGroup verticalAlign="middle" left="10" right="10" height="30" top="10">
+			<s:TextInput restrict="a-zA-Z0-9~!@#$%^()_-+=;',." />
+			<s:Label text="+  数字"/>
+		</s:HGroup>
+		
+		<s:HGroup verticalAlign="middle" top="50" left="10" right="10" height="30">
+			<s:TextInput id="extTxt" text="扩展名" enabled="{extCB.selected}" restrict="a-zA-Z0-9~!@#$%^()_-+=;',." />
+			<s:CheckBox id="extCB" fontSize="14" change="extCB_changeHandler(event)" />
+		</s:HGroup>
+		
+		<s:HGroup verticalAlign="middle" top="90" left="10" right="10" height="30">
+			<s:Label text="起始数字" />
+			<s:TextInput id="numStartTxt" restrict="0-9" text="0" />
+		</s:HGroup>
+		
+		<s:HGroup verticalAlign="middle" top="130" left="10" right="10" height="30">
+			<s:Label text="数字位数" />
+			<s:DropDownList id="numLenDDL" width="128" dataProvider="{numLenData}" selectedIndex="0"></s:DropDownList>
+		</s:HGroup>
+	</s:BorderContainer>
+</tool:BaseTitleWindow>
