@@ -4,23 +4,25 @@
 					  xmlns:mx="library://ns.adobe.com/flex/mx" 
 					  xmlns:tool="tool.*" 
 					  title="文件重命名(批量)"
-					  width="800" height="600"
-					  initialize="__initializeHandler(event)">
+					  width="600" height="350">
 
 	<fx:Script>
 		<![CDATA[
-			import mx.events.CollectionEvent;
-			import mx.events.FlexEvent;
-			import mx.events.ListEvent;
-
-			protected function __initializeHandler(event:FlexEvent):void
-			{
-				// TODO Auto-generated method stub
-				
-				fileListData.addItem({file: "文件1", ext: "png", preview: "", data: null});
-				fileListData.addItem({file: "文件2", ext: "png", preview: "", data: null});
-				fileListData.addItem({file: "文件3", ext: "png", preview: "", data: null});
-			}
+			import jsion.utils.ArrayUtil;
+			import jsion.utils.DelayUtil;
+			import jsion.utils.IntUtil;
+			import jsion.utils.JUtil;
+			import jsion.utils.StringUtil;
+			import jsion.zip.ZipEntry;
+			import jsion.zip.ZipOutput;
+			
+			import mx.controls.Alert;
+			
+			import tool.waiting.Waiting;
+			
+			import utils.FileMgr;
+			
+			protected var zipBytes:ByteArray;
 			
 			protected function extCB_changeHandler(event:Event):void
 			{
@@ -36,41 +38,212 @@
 				}
 			}
 
-			protected function datagrid1_changeHandler(event:ListEvent):void
+			protected function button1_clickHandler(event:MouseEvent):void
 			{
 				// TODO Auto-generated method stub
+				Waiting.show("添加文件...");
 				
-				//if(fileListView.selectedItem) trace(fileListView.selectedItem.file);
+				FileMgr.openMultiFiles(openMultiCallback, openMultiCancelCallback);
 			}
-
-
-			protected function fileListData_collectionChangeHandler(event:CollectionEvent):void
+			
+			protected function openMultiCallback(files:Array, hasError:Boolean, errorList:Array):void
+			{
+				// TODO Auto Generated method stub
+				var list:Array = ArrayUtil.diffrence(files, errorList);
+				
+				for each(var file:FileReference in list)
+				{
+					var name:String = file.name.split(".")[0];
+					var ext:String = JUtil.getExtension(file.name);
+					
+					var obj:Object = {file: name, ext: ext, preview: "", data: file.data};
+					
+					fileListData.addItem(obj);
+				}
+				
+				Waiting.hide();
+			}
+			
+			protected function openMultiCancelCallback():void
+			{
+				// TODO Auto Generated method stub
+				
+				Waiting.hide();
+			}
+			
+			protected function button2_clickHandler(event:MouseEvent):void
 			{
 				// TODO Auto-generated method stub
-				if(fileListData == null) return;
 				
-				for (var i:int = 0; i < fileListData.length; i++)
+				fileListData.removeAll();
+			}
+			
+			protected function button3_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				updateNewFileName();
+			}
+			
+			protected function updateNewFileName():void
+			{
+				var list:Array = ArrayUtil.clone(fileListData.source);
+				
+				fileListData.removeAll();
+				
+				for(var i:int = 0; i < list.length; i++)
 				{
-					var obj:Object = fileListData.getItemAt(i);
+					var obj:Object = list[i];
 					
-					trace(obj.file);
+					obj.preview = getNewFileName(i, obj.ext);
+					
+					fileListData.addItem(obj);
 				}
 			}
-
+			
+			protected function getNewFileName(index:int, oldExt:String):String
+			{
+				var start:int = int(numStartTxt.text);
+				var name:String = preNameTxt.text;
+				name = name + IntUtil.getIntStrByLength(index + start, int(numLenDDL.selectedItem));
+				var ext:String = oldExt;
+				
+				if(extCB.selected)
+				{
+					if(StringUtil.isNotNullOrEmpty(StringUtil.trim(extTxt.text)))
+					{
+						ext = extTxt.text;
+					}
+				}
+				
+				name = name + "." + ext;
+				
+				return name;
+			}
+			
+			protected function button4_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				updateNewFileName();
+				
+				tryRename();
+			}
+			
+			
+			protected function tryRename():void
+			{
+				Waiting.show("正在重命名...");
+				
+				DelayUtil.setDelayApply(tryRenameImp);
+			}
+			
+			protected function tryRenameImp():void
+			{
+				var list:Array = ArrayUtil.clone(fileListData.source);
+				
+				var str:String = "";
+				
+				var zo:ZipOutput = new ZipOutput();
+				
+				for each(var obj:Object in list)
+				{
+					var ze:ZipEntry = new ZipEntry(obj.preview);
+					
+					zo.putNextEntry(ze);
+					
+					zo.write(obj.data as ByteArray);
+					
+					zo.closeEntry();
+				}
+				
+				zo.finish();
+				
+				zipBytes = new ByteArray();
+				zipBytes.writeBytes(zo.byteArray);
+				zipBytes.position = 0;
+				
+				saveZipBytes();
+			}
+			
+			protected function saveZipBytes():void
+			{
+				Waiting.show("正在保存...");
+				
+				DelayUtil.setDelayApply(saveZipBytesImp);
+			}
+			
+			protected function saveZipBytesImp():void
+			{
+				FileMgr.save(zipBytes, "Rename.zip", saveCallback, saveCancelCallback, saveErrorCallback);
+			}
+			
+			protected function saveCallback(file:FileReference):void
+			{
+				// TODO Auto Generated method stub
+				
+				Alert.show("保存成功!", "保存");
+				
+				clearSaveTempData();
+			}
+			
+			protected function saveCancelCallback():void
+			{
+				// TODO Auto Generated method stub
+				
+				clearSaveTempData();
+			}
+			
+			protected function saveErrorCallback(file:FileReference, errorMsg:String):void
+			{
+				// TODO Auto Generated method stub
+				
+				clearSaveTempData();
+				
+				Alert.show("保存失败!\r\n" + errorMsg, "保存");
+			}
+			
+			protected function clearSaveTempData():void
+			{
+				Waiting.hide();
+				
+				zipBytes = null;
+			}
+			
+			protected function button5_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				var index:int = fileListView.selectedIndex;
+				
+				if(index == (fileListData.length - 1))
+				{
+					fileListView.selectedIndex = index - 1;
+				}
+				else
+				{
+					fileListView.selectedIndex = index + 1;
+				}
+				
+				if(index != -1)
+				{
+					fileListData.removeItemAt(index);
+				}
+			}
+			
 		]]>
 	</fx:Script>
 
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
-		<s:ArrayCollection id="fileListData" collectionChange="fileListData_collectionChangeHandler(event)" />
+		<s:ArrayCollection id="fileListData" />
 		<s:ArrayList id="numLenData" source="[1,2,3,4,5,6,7,8,9]">
 		</s:ArrayList>
 	</fx:Declarations>
 	<mx:DataGrid id="fileListView" headerSeparatorSkin="mx.skins.ProgrammaticSkin" 
 				 left="10" top="48" bottom="10" right="228" 
-				 dataProvider="{fileListData}" 
-				 dragEnabled="true" dragMoveEnabled="true" dropEnabled="true"
-				 change="datagrid1_changeHandler(event)">
+				 dataProvider="{fileListData}" sortableColumns="false"
+				 dragEnabled="true" dragMoveEnabled="true" dropEnabled="true">
 		<mx:columns>
 			<mx:DataGridColumn headerText="文件名" dataField="file"/>
 			<mx:DataGridColumn headerText="扩展名" dataField="ext"/>
@@ -79,28 +252,32 @@
 	</mx:DataGrid>
 	<s:BorderContainer height="30" left="10" top="10" right="10">
 		<s:HGroup top="0" bottom="0" left="6" verticalAlign="middle" right="6">
-			<s:Button label="添加文件"/>
+			<s:Button label="添加文件" click="button1_clickHandler(event)"/>
+			<s:Button label="清空文件" click="button2_clickHandler(event)"/>
+			<s:Button label="删除文件" click="button5_clickHandler(event)" enabled="{fileListView.selectedIndex != -1}"/>
+			<s:Button label="保存" click="button4_clickHandler(event)"/>
 		</s:HGroup>
 	</s:BorderContainer>
 	<s:BorderContainer width="210" right="10" top="48" bottom="10">
-		<s:HGroup verticalAlign="middle" left="10" right="10" height="30" top="10">
-			<s:TextInput restrict="a-zA-Z0-9~!@#$%^()_-+=;',." />
+		<s:HGroup verticalAlign="middle" left="10" right="10" height="30" top="15">
+			<s:TextInput id="preNameTxt" restrict="a-zA-Z0-9~!@#$%\^_\-\+=;',." />
 			<s:Label text="+  数字"/>
 		</s:HGroup>
 		
-		<s:HGroup verticalAlign="middle" top="50" left="10" right="10" height="30">
-			<s:TextInput id="extTxt" text="扩展名" enabled="{extCB.selected}" restrict="a-zA-Z0-9~!@#$%^()_-+=;',." />
+		<s:HGroup verticalAlign="middle" top="60" left="10" right="10" height="30">
+			<s:TextInput id="extTxt" text="扩展名" enabled="{extCB.selected}" restrict="a-zA-Z0-9~!@#$%\^_\-\+=" />
 			<s:CheckBox id="extCB" fontSize="14" change="extCB_changeHandler(event)" />
 		</s:HGroup>
 		
-		<s:HGroup verticalAlign="middle" top="90" left="10" right="10" height="30">
+		<s:HGroup verticalAlign="middle" top="105" left="10" right="10" height="30">
 			<s:Label text="起始数字" />
 			<s:TextInput id="numStartTxt" restrict="0-9" text="0" />
 		</s:HGroup>
 		
-		<s:HGroup verticalAlign="middle" top="130" left="10" right="10" height="30">
+		<s:HGroup verticalAlign="middle" top="150" left="10" right="10" height="30">
 			<s:Label text="数字位数" />
 			<s:DropDownList id="numLenDDL" width="128" dataProvider="{numLenData}" selectedIndex="0"></s:DropDownList>
 		</s:HGroup>
+		<s:Button top="210" label="预  览" click="button3_clickHandler(event)" horizontalCenter="0"/>
 	</s:BorderContainer>
 </tool:BaseTitleWindow>
