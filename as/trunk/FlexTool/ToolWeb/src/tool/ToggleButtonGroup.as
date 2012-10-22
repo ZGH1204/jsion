@@ -1,4 +1,4 @@
-package tool.pngpacker
+package tool
 {
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;

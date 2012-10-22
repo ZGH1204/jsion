@@ -16,6 +16,7 @@ import mx.events.ResizeEvent;
 import mx.managers.PopUpManager;
 
 import tool.pngpacker.PNGPackerWindow;
+import tool.renamer.FileRenamer;
 import tool.unicode.TransfWindow;
 import tool.waiting.Waiting;
 import tool.xmlformats.XmlFormatWindow;
@@ -138,6 +139,9 @@ protected function menuBar_itemClickHandler(event:MenuEvent):void
 			break;
 		case "序列帧图片打包":
 			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, PNGPackerWindow));
+			break;
+		case "批量重命名":
+			PopUpManager.centerPopUp(PopUpManager.createPopUp(ToolGlobal.windows, FileRenamer));
 			break;
 	}
 }
