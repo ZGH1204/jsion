@@ -187,6 +187,26 @@ package jsion.serialize.res
 		}
 		
 		/**
+		 * 获取所有动作ID列表
+		 */		
+		public function getActionIDs():Array
+		{
+			return m_actions.getKeys();
+		}
+		
+		/**
+		 * 获取指定动作的所有方向ID列表
+		 */		
+		public function getDirIDs(action:int):Array
+		{
+			var dMap:HashMap = m_actions.get(action) as HashMap;
+			
+			if(dMap == null) return null;
+			
+			return dMap.getKeys();
+		}
+		
+		/**
 		 * 释放资源
 		 * 
 		 */		
