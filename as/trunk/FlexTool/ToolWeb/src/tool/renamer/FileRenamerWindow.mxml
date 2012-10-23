@@ -143,12 +143,19 @@
 				var list:Array = ArrayUtil.clone(fileListData.source);
 				
 				var str:String = "";
+				var oldFileNames:Array = [];
+				var newFileNames:Array = [];
 				
 				var zo:ZipOutput = new ZipOutput();
 				
+				var ze:ZipEntry;
+				
 				for each(var obj:Object in list)
 				{
-					var ze:ZipEntry = new ZipEntry(obj.preview);
+					oldFileNames.push(obj.file + "." + obj.ext);
+					newFileNames.push(obj.preview);
+					
+					ze = new ZipEntry(obj.preview);
 					
 					zo.putNextEntry(ze);
 					
@@ -156,6 +163,42 @@
 					
 					zo.closeEntry();
 				}
+				
+				var maxLen:int = 0, oldName:String, newName:String;
+				
+				for each(oldName in oldFileNames)
+				{
+					maxLen = Math.max(maxLen, StringUtil.getRealLength(oldName));
+				}
+				
+				maxLen += 1;
+				
+				for(var i:int = 0; i < oldFileNames.length; i++)
+				{
+					oldName = oldFileNames[i];
+					newName = newFileNames[i];
+					
+					str += oldName;
+					
+					var temp:int = StringUtil.getRealLength(oldName);
+					temp = maxLen - temp;
+					
+					while(temp > 0)
+					{
+						str += " ";
+						temp -= 1;
+					}
+					
+					str += "-> " + newName + "\r\n";
+				}
+				
+				
+				var bytes:ByteArray = new ByteArray();
+				bytes.writeUTFBytes(str);
+				ze = new ZipEntry("FileCompare.txt");
+				zo.putNextEntry(ze);
+				zo.write(bytes);
+				zo.closeEntry();
 				
 				zo.finish();
 				
@@ -200,7 +243,7 @@
 				
 				clearSaveTempData();
 				
-				Alert.show("保存失败!\r\n" + errorMsg, "保存");
+				Alert.show("保存失败!\r" + errorMsg, "保存");
 			}
 			
 			protected function clearSaveTempData():void

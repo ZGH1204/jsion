@@ -87,7 +87,7 @@
 				}
 				catch(err:Error)
 				{
-					Alert.show("Xml格式错误无法格式化!\r\nFile:" + file.name, "Xml格式化");
+					Alert.show("Xml格式错误无法格式化!\rFile:" + file.name, "Xml格式化");
 					
 					DelayUtil.setDelayApply(tryFormat);
 					
@@ -134,7 +134,7 @@
 				
 				DelayUtil.setDelayApply(tryFormat);
 				
-				Alert.show("保存失败!\r\n" + errorMsg, "Xml格式化");
+				Alert.show("保存失败!\r" + errorMsg, "Xml格式化");
 			}
 			
 		]]>
