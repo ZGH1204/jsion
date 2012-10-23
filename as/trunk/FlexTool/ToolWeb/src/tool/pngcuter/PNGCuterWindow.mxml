@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tool:BaseTitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
-					  xmlns:s="library://ns.adobe.com/flex/spark" 
-					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:tool="tool.*" 
-					  title="图片自动裁剪"
-					  width="800" height="600">
+<tool:BaseTitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009"
+					  xmlns:s="library://ns.adobe.com/flex/spark"
+					  xmlns:mx="library://ns.adobe.com/flex/mx"
+					  xmlns:tool="tool.*"
+					  xmlns:pngcuter="tool.pngcuter.*"
+					  width="800" height="600" title="图片自动裁剪">
 	<fx:Script>
 		<![CDATA[
 			import jsion.utils.ArrayUtil;
 			import jsion.utils.DelayUtil;
+			import jsion.utils.IntUtil;
+			import jsion.zip.ZipEntry;
+			import jsion.zip.ZipOutput;
 			
+			import mx.controls.Alert;
 			import mx.events.ResizeEvent;
+			import mx.graphics.codec.PNGEncoder;
 			
 			import spark.events.IndexChangeEvent;
+			import spark.events.TextOperationEvent;
+			import spark.primitives.Rect;
 			
 			import tool.waiting.Waiting;
 			
@@ -21,6 +29,8 @@
 			
 			protected var loader:Loader;
 			protected var loaderName:String;
+			
+			protected var zipBytes:ByteArray;
 
 			protected function image1_resizeHandler(event:ResizeEvent):void
 			{
@@ -60,6 +70,7 @@
 				if(file == null)
 				{
 					//TODO:完成
+					updateImageView();
 					Waiting.hide();
 					return;
 				}
@@ -93,6 +104,7 @@
 			
 			protected function openMultiCancelCallback():void
 			{
+				updateImageView();
 				Waiting.hide();
 			}
 
@@ -101,16 +113,202 @@
 			{
 				// TODO Auto-generated method stub
 				
+				updateImageView();
+			}
+			
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				tryCutPNG();
+			}
+			
+			protected function tryCutPNG():void
+			{
+				Waiting.show("正在裁剪图片...");
+				
+				DelayUtil.setDelayApply(tryCutPNGImp);
+			}
+			
+			protected function tryCutPNGImp():void
+			{
+				var rect:Rectangle = getUnionRect();
+				var padding:Rectangle = getPaddingRect();
+				
+				var coder:PNGEncoder = new PNGEncoder();
+				
+				var zo:ZipOutput = new ZipOutput();
+				
+				for (var i:int = 0; i < pngListData.length; i++)
+				{
+					var obj:Object = pngListData.getItemAt(i);
+					
+					var bmd:BitmapData = getCutBitmapData(obj.data as BitmapData, rect, padding);
+					
+					var bytes:ByteArray = coder.encode(bmd);
+					
+					var name:String = IntUtil.getIntStrByLength(i, 4) + ".png";
+					
+					var ze:ZipEntry = new ZipEntry(name);
+					
+					zo.putNextEntry(ze);
+					zo.write(bytes);
+					zo.closeEntry();
+				}
+				
+				zo.finish();
+				
+				zipBytes = zo.byteArray;
+				
+				saveZip();
+			}
+			
+			protected function saveZip():void
+			{
+				Waiting.show("图片裁剪完成!正在保存...");
+				
+				DelayUtil.setDelayApply(saveZipImp);
+			}
+			
+			protected function saveZipImp():void
+			{
+				FileMgr.save(zipBytes, "CutPNGList.zip", saveCallback, saveCancelCallback, saveErrorCallback);
+			}
+			
+			protected function saveCallback(file:FileReference):void
+			{
+				// TODO Auto Generated method stub
+				Alert.show("保存成功!\r" + file.name, "保存");
+				clearSaveTempData();
+			}
+			
+			protected function saveCancelCallback():void
+			{
+				clearSaveTempData();
+			}
+			
+			protected function saveErrorCallback(file:FileReference, errorMsg:String):void
+			{
+				Alert.show("保存失败!\r" + errorMsg, "保存");
+				clearSaveTempData();
+			}
+			
+			protected function clearSaveTempData():void
+			{
+				Waiting.hide();
+				zipBytes = null;
+			}
+			
+			protected function button3_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				pngListData.removeAll();
+				
+				updateImageView();
+			}
+			
+			protected function updateImageView():void
+			{
 				if(pngListView.selectedItem)
 				{
-					imgView.source = pngListView.selectedItem.data;
+					var bmd:BitmapData = pngListView.selectedItem.data;
+					
+					if(previewCB.selected)
+					{
+						var rect:Rectangle = getUnionRect();
+						var padding:Rectangle = getPaddingRect();
+						var newBMD:BitmapData = getCutBitmapData(bmd, rect, padding);
+						
+						imgView.source = newBMD;
+					}
+					else
+					{
+						imgView.source = bmd;
+					}
 				}
 				else
 				{
 					imgView.source = null;
 				}
 			}
-
+			
+			protected function getCutBitmapData(bmd:BitmapData, rect:Rectangle, padding:Rectangle):BitmapData
+			{
+				if(bmd == null) return null;
+				
+				var newBMD:BitmapData = new BitmapData(rect.width + padding.x + padding.y, rect.height + padding.width + padding.height, true, 0);
+				
+				newBMD.copyPixels(bmd, rect, new Point(padding.x, padding.width));
+				
+				return newBMD;
+			}
+			
+			protected function getUnionRect():Rectangle
+			{
+				var rect:Rectangle = new Rectangle();
+				
+				for(var i:int = 0; i < pngListData.length; i++)
+				{
+					var obj:Object = pngListData.getItemAt(i);
+					
+					var bmd:BitmapData = obj.data;
+					
+					var temp:Rectangle = bmd.getColorBoundsRect(0xFF000000, 0x00000000, false);
+					
+					rect = rect.union(temp);
+				}
+				
+				return rect;
+			}
+			
+			protected function getPaddingRect():Rectangle
+			{
+				var rect:Rectangle = new Rectangle();
+				
+				rect.x = int(paddingLeft.text);
+				rect.y = int(paddingRight.text);
+				rect.width = int(paddingTop.text);
+				rect.height = int(paddingBottom.text);
+				
+				return rect;
+			}
+			
+			protected function previewCB_changeHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				updateImageView();
+			}
+			
+			protected function button4_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				if(pngListView.selectedIndex != -1)
+				{
+					var index:int = pngListView.selectedIndex;
+					
+					pngListData.removeItemAt(pngListView.selectedIndex);
+					
+					if(index >= pngListData.length) index = pngListData.length - 1;
+					
+					pngListView.selectedIndex = index;
+					
+					updateImageView();
+				}
+			}
+			
+			protected function paddingLeft_changeHandler(event:TextOperationEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				updateImageView();
+			}
+			
+			override public function dispose():void
+			{
+				pngListData.removeAll();
+				
+				super.dispose();
+			}
 		]]>
 	</fx:Script>
 	<tool:layout>
@@ -121,16 +319,31 @@
 		<s:ArrayCollection id="pngListData" />
 	</fx:Declarations>
 	<s:BorderContainer top="10" height="30" left="10" right="10">
-		<s:HGroup top="0" bottom="0" verticalAlign="middle" left="6" right="6">
+		<s:HGroup left="6" top="0" bottom="0" verticalAlign="middle">
 			<s:Button label="添加图片" click="button1_clickHandler(event)"/>
-			
+			<s:Button label="裁剪保存" click="button2_clickHandler(event)"/>
+		</s:HGroup>
+		<s:HGroup right="6" top="0" bottom="0" verticalAlign="middle">
+			<s:Button label="清空图片" click="button3_clickHandler(event)" enabled="{pngListData.length != 0}"/>
+			<s:Button label="删除图片" click="button4_clickHandler(event)" enabled="{pngListView.selectedIndex != -1}"/>
 		</s:HGroup>
 	</s:BorderContainer>
 	<s:List id="pngListView" top="48" bottom="10" right="10" width="180" dataProvider="{pngListData}" change="pngListView_changeHandler(event)">
 	</s:List>
 	<s:BorderContainer left="10" right="198" top="48" bottom="10">
-		<s:HGroup left="6" right="6" top="0" height="30">
-			
+		<s:HGroup left="6" top="0" height="30" verticalAlign="middle">
+			<s:Label text="内边距" />
+			<pngcuter:LabelInput id="paddingLeft" label="左：" text="0" change="paddingLeft_changeHandler(event)">
+			</pngcuter:LabelInput>
+			<pngcuter:LabelInput id="paddingRight" label="右：" text="0" change="paddingLeft_changeHandler(event)">
+			</pngcuter:LabelInput>
+			<pngcuter:LabelInput id="paddingTop" label="上：" text="0" change="paddingLeft_changeHandler(event)">
+			</pngcuter:LabelInput>
+			<pngcuter:LabelInput id="paddingBottom" label="下：" text="0" change="paddingLeft_changeHandler(event)">
+			</pngcuter:LabelInput>
+		</s:HGroup>
+		<s:HGroup right="6" top="0" height="30" verticalAlign="middle">
+			<s:CheckBox id="previewCB" label="预览" change="previewCB_changeHandler(event)"/>
 		</s:HGroup>
 		<s:HGroup left="0" right="0" top="30" bottom="0" verticalAlign="middle" horizontalAlign="center">
 			<s:Scroller>

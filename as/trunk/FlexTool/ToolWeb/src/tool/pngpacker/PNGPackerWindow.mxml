@@ -176,7 +176,7 @@
 			{
 				// TODO Auto Generated method stub
 				clearTempSaveData();
-				Alert.show("文件保存成功!\r\nFile: " + file.name, "保存");
+				Alert.show("文件保存成功!\rFile: " + file.name, "保存");
 			}
 			
 			protected function saveCancelCallback():void
@@ -189,7 +189,7 @@
 			{
 				// TODO Auto Generated method stub
 				clearTempSaveData();
-				Alert.show("文件保存失败!\r\n" + errorMsg, "保存");
+				Alert.show("文件保存失败!\r" + errorMsg, "保存");
 			}
 			
 			protected function clearTempSaveData():void

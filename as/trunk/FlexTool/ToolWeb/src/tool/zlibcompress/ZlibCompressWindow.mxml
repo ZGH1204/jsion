@@ -161,7 +161,7 @@
 				if(isCompress) DelayUtil.setDelayApply(tryCompress);
 				else DelayUtil.setDelayApply(tryUncompress);
 				
-				Alert.show("保存失败!\r\n" + errorMsg, "Zlib压缩/解压");
+				Alert.show("保存失败!\r" + errorMsg, "Zlib压缩/解压");
 			}
 
 			protected function button2_clickHandler(event:MouseEvent):void

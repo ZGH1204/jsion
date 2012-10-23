@@ -5,6 +5,6 @@
 	<Config
 		ResRoot=""
 		DebugCSS="debug.css"
-		DefaultExt="hy"
+		DefaultExt="hy" 
 	 />
 </root>
