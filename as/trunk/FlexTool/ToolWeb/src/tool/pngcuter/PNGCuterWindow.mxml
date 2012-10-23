@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tool:BaseTitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:tool="tool.*" 
+					  title="图片自动裁剪"
+					  width="800" height="600">
+	<fx:Script>
+		<![CDATA[
+			import jsion.utils.ArrayUtil;
+			import jsion.utils.DelayUtil;
+			
+			import mx.events.ResizeEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			import tool.waiting.Waiting;
+			
+			import utils.FileMgr;
+			
+			protected var fileList:Array;
+			
+			protected var loader:Loader;
+			protected var loaderName:String;
+
+			protected function image1_resizeHandler(event:ResizeEvent):void
+			{
+				// TODO Auto-generated method stub
+				imgBorder.width = imgView.width;
+				imgBorder.height = imgView.height;
+			}
+
+
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				Waiting.show("正在选择图片...");
+				
+				FileMgr.openMultiFiles(openMultiCallback, openMultiCancelCallback, [new FileFilter("PNG图片", "*.png")]);
+			}
+			
+			protected function openMultiCallback(files:Array, hasError:Boolean, errorList:Array):void
+			{
+				fileList = ArrayUtil.diffrence(files, errorList);
+				
+				Waiting.show("正在加载图片...");
+				
+				tryLoadBitmap();
+			}
+			
+			protected function tryLoadBitmap():void
+			{
+				var file:FileReference = null;
+				
+				while(fileList.length > 0 && (file == null || file.data == null))
+				{
+					file = fileList.shift() as FileReference;
+				}
+				
+				if(file == null)
+				{
+					//TODO:完成
+					Waiting.hide();
+					return;
+				}
+				
+				clearLoaderData();
+				
+				loaderName = file.name;
+				loader = new Loader();
+				loader.loadBytes(file.data);
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, __loaderCompleteHandler);
+			}
+			
+			protected function clearLoaderData():void
+			{
+				if(loader)
+				{
+					loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, __loaderCompleteHandler);
+					loader.unloadAndStop();
+					loader = null;
+				}
+			}
+			
+			protected function __loaderCompleteHandler(e:Event):void
+			{
+				var bmd:BitmapData = Bitmap(loader.content).bitmapData.clone();
+				
+				pngListData.addItem({label: loaderName, data: bmd});
+				
+				DelayUtil.setDelayApply(tryLoadBitmap);
+			}
+			
+			protected function openMultiCancelCallback():void
+			{
+				Waiting.hide();
+			}
+
+
+			protected function pngListView_changeHandler(event:IndexChangeEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+				if(pngListView.selectedItem)
+				{
+					imgView.source = pngListView.selectedItem.data;
+				}
+				else
+				{
+					imgView.source = null;
+				}
+			}
+
+		]]>
+	</fx:Script>
+	<tool:layout>
+		<s:BasicLayout/>
+	</tool:layout>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<s:ArrayCollection id="pngListData" />
+	</fx:Declarations>
+	<s:BorderContainer top="10" height="30" left="10" right="10">
+		<s:HGroup top="0" bottom="0" verticalAlign="middle" left="6" right="6">
+			<s:Button label="添加图片" click="button1_clickHandler(event)"/>
+			
+		</s:HGroup>
+	</s:BorderContainer>
+	<s:List id="pngListView" top="48" bottom="10" right="10" width="180" dataProvider="{pngListData}" change="pngListView_changeHandler(event)">
+	</s:List>
+	<s:BorderContainer left="10" right="198" top="48" bottom="10">
+		<s:HGroup left="6" right="6" top="0" height="30">
+			
+		</s:HGroup>
+		<s:HGroup left="0" right="0" top="30" bottom="0" verticalAlign="middle" horizontalAlign="center">
+			<s:Scroller>
+				<s:Group  left="0" right="0" top="0" bottom="0">
+					<s:BorderContainer id="imgBorder">
+						<s:Image id="imgView" resize="image1_resizeHandler(event)" />
+					</s:BorderContainer>
+				</s:Group>
+			</s:Scroller>
+		</s:HGroup>
+	</s:BorderContainer>
+</tool:BaseTitleWindow>
