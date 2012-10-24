@@ -83,16 +83,4 @@ typedef struct _ACCEPT_DATA
 	}
 }ACCEPT_DATA, *LPACCEPT_DATA;
 
-
-
-class TEST_PKG : public CPackageBase
-{
-public:
-	int id;
-	long long tLong;
-	char account[20];
-};
-
-
-
 #endif
