@@ -151,4 +151,3 @@ private:
 	};
 	CRITICAL_SECTION* m_lok;
 };
-

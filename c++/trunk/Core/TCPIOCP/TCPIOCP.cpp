@@ -588,10 +588,6 @@ void CTCPIOCP::HandlePackage( char* pkg, LPIOCP_DATA lpIOCPData )
 {
 	//m_recvPackagesList.push(pkg);
 
-	TEST_PKG* p = (TEST_PKG*)(pkg);
-
-	printf("OwnerID: %d, ID: %d, Account: %s, PKGCount: %d\r\n", p->OwnerID, p->id, p->account, lpIOCPData->LPAcceptData->recvPKGCount);
-
 	CMemPool::GetInstance()->Free(pkg);
 }
 
