@@ -261,7 +261,7 @@
 			<pngpacker:SpinnerInput id="splitInput" label="间隔帧:" defaultText="0" restrict="0-9" text="0" textChanged="__splitChangedHandler(event)" />
 		</s:HGroup>
 		<s:HGroup right="6" verticalAlign="middle" top="0" bottom="0">
-			<s:Button label="打开文件" click="button3_clickHandler(event)" />
+			<s:Button label="打开文件" click="button3_clickHandler(event)" toolTip="打开文件时将清空当前数据" />
 		</s:HGroup>
 	</s:BorderContainer>
 	<pngpacker:BottomScroller id="frameView" left="10" right="10" bottom="10" height="170">

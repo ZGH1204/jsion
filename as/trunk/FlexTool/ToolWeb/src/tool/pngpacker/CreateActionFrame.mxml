@@ -4,7 +4,7 @@
 					  xmlns:mx="library://ns.adobe.com/flex/mx" 
 					  xmlns:tool="tool.*" 
 					  title="添加动作" 
-					  width="246" height="305"
+					  width="246" height="325"
 					  initialize="__initializedHandler(event)">
 	<fx:Script>
 		<![CDATA[
@@ -123,7 +123,7 @@
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<s:VGroup left="40" top="30" bottom="50" width="100" horizontalAlign="center"
+	<s:VGroup left="40" top="50" bottom="50" width="100" horizontalAlign="center"
 			  verticalAlign="middle">
 		<s:CheckBox id="NormalCB" label="{Global.ActionNames[Global.NormalMotion]}" />
 		<s:CheckBox id="WalkCB" label="{Global.ActionNames[Global.WalkMotion]}" />
@@ -134,7 +134,7 @@
 		<s:CheckBox id="SkillCB" label="{Global.ActionNames[Global.SkillMotion]}" />
 		<s:CheckBox id="DieCB" label="{Global.ActionNames[Global.DieMotion]}" />
 	</s:VGroup>
-	<s:VGroup right="20" top="30" bottom="50" width="70" horizontalAlign="left"
+	<s:VGroup right="20" top="50" bottom="50" width="70" horizontalAlign="left"
 			  verticalAlign="middle">
 		<s:CheckBox id="UpCB" label="{Global.DirNames[Global.UpWard]}" />
 		<s:CheckBox id="DownCB" label="{Global.DirNames[Global.DownWard]}" />
@@ -151,5 +151,7 @@
 		<s:Button label="取消" click="button2_clickHandler(event)"/>
 	</s:HGroup>
 	<s:Label left="20" right="20" top="5" height="20" color="#F50000" text="每个动作都会创建所有选择的方向"
+			 textAlign="center" verticalAlign="middle"/>
+	<s:Label left="20" right="20" top="25" height="20" color="#F50000" text="去掉选择将清除相应数据"
 			 textAlign="center" verticalAlign="middle"/>
 </tool:BaseTitleWindow>
